@@ -13,17 +13,18 @@ import Then
 final class ProfileViewController: BaseViewController {
     // MARK: - property
 
-    private let screenText = UILabel().then {
-        $0.textColor = .red
-        $0.text = "Profile"
-    }
+    private let settingButton = SettingButton()
 
     // MARK: - life cycle
 
-    override func render() {
-        view.addSubview(screenText)
-        screenText.snp.makeConstraints {
-            $0.centerX.centerY.equalToSuperview()
-        }
+    override func render() {}
+
+    override func setupNavigationBar() {
+        super.setupNavigationBar()
+
+        let settingButton = makeBarButtonItem(with: settingButton)
+        navigationItem.leftBarButtonItem = nil
+        navigationItem.rightBarButtonItem = settingButton
+        title = "coby5502"
     }
 }
