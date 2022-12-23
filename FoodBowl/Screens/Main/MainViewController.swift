@@ -31,6 +31,7 @@ final class MainViewController: BaseViewController {
         $0.setTitle("전체 ", for: .normal)
         $0.setTitleColor(.black, for: .normal)
         $0.titleLabel?.font = .preferredFont(forTextStyle: .title3, weight: .medium)
+        $0.contentHorizontalAlignment = .left
         $0.setImage(ImageLiteral.btnDown, for: .normal)
         $0.semanticContentAttribute = .forceRightToLeft
         let action = UIAction { [weak self] _ in
