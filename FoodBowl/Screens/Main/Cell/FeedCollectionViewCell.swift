@@ -13,23 +13,7 @@ import Then
 final class FeedCollectionViewCell: BaseCollectionViewCell {
     // MARK: - property
 
-    lazy var userImageView = UIImageView().then {
-        $0.backgroundColor = .gray
-        $0.layer.cornerRadius = 20
-        $0.layer.masksToBounds = true
-    }
-
-    let userNameLabel = UILabel().then {
-        $0.font = UIFont.preferredFont(forTextStyle: .subheadline, weight: .medium)
-        $0.textColor = .black
-        $0.text = "홍길동"
-    }
-
-    let userFollowerLabel = UILabel().then {
-        $0.font = UIFont.preferredFont(forTextStyle: .footnote, weight: .light)
-        $0.textColor = .gray
-        $0.text = "팔로워 100명"
-    }
+    private let userInfoView = UserInfoView()
 
     lazy var feedImageView = UIImageView().then {
         $0.backgroundColor = .gray
@@ -56,26 +40,15 @@ final class FeedCollectionViewCell: BaseCollectionViewCell {
     }
 
     override func render() {
-        contentView.addSubviews(userImageView, userNameLabel, userFollowerLabel, feedImageView, storeNameLabel, popularLabel, dateLabel)
+        contentView.addSubviews(userInfoView, feedImageView, storeNameLabel, popularLabel, dateLabel)
 
-        userImageView.snp.makeConstraints {
-            $0.leading.equalToSuperview().inset(20)
-            $0.top.equalToSuperview().inset(16)
-            $0.width.height.equalTo(40)
-        }
-
-        userNameLabel.snp.makeConstraints {
-            $0.leading.equalTo(userImageView.snp.trailing).offset(16)
-            $0.top.equalToSuperview().inset(16)
-        }
-
-        userFollowerLabel.snp.makeConstraints {
-            $0.leading.equalTo(userImageView.snp.trailing).offset(16)
-            $0.top.equalTo(userNameLabel.snp.bottom).offset(5)
+        userInfoView.snp.makeConstraints {
+            $0.top.leading.trailing.equalToSuperview()
+            $0.height.equalTo(70)
         }
 
         feedImageView.snp.makeConstraints {
-            $0.top.equalTo(userImageView.snp.bottom).offset(16)
+            $0.top.equalTo(userInfoView.snp.bottom)
             $0.width.height.equalTo(UIScreen.main.bounds.size.width)
         }
 
