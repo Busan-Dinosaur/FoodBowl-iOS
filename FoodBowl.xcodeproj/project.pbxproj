@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CBADC2422955989400E56C93 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = CBADC2412955989400E56C93 /* SnapKit */; };
+		CBADC245295598A200E56C93 /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = CBADC244295598A200E56C93 /* Then */; };
+		CBADC2482955993A00E56C93 /* SkeletonUI in Frameworks */ = {isa = PBXBuildFile; productRef = CBADC2472955993A00E56C93 /* SkeletonUI */; };
 		CBC73104295550A100C7F198 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBC73103295550A100C7F198 /* AppDelegate.swift */; };
 		CBC73106295550A100C7F198 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBC73105295550A100C7F198 /* SceneDelegate.swift */; };
 		CBC73108295550A100C7F198 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBC73107295550A100C7F198 /* ViewController.swift */; };
@@ -31,6 +34,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CBADC2422955989400E56C93 /* SnapKit in Frameworks */,
+				CBADC2482955993A00E56C93 /* SkeletonUI in Frameworks */,
+				CBADC245295598A200E56C93 /* Then in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -83,6 +89,11 @@
 			dependencies = (
 			);
 			name = FoodBowl;
+			packageProductDependencies = (
+				CBADC2412955989400E56C93 /* SnapKit */,
+				CBADC244295598A200E56C93 /* Then */,
+				CBADC2472955993A00E56C93 /* SkeletonUI */,
+			);
 			productName = FoodBowl;
 			productReference = CBC73100295550A100C7F198 /* FoodBowl.app */;
 			productType = "com.apple.product-type.application";
@@ -111,6 +122,11 @@
 				Base,
 			);
 			mainGroup = CBC730F7295550A100C7F198;
+			packageReferences = (
+				CBADC2402955989400E56C93 /* XCRemoteSwiftPackageReference "SnapKit" */,
+				CBADC243295598A200E56C93 /* XCRemoteSwiftPackageReference "Then" */,
+				CBADC2462955993A00E56C93 /* XCRemoteSwiftPackageReference "SkeletonUI" */,
+			);
 			productRefGroup = CBC73101295550A100C7F198 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -290,11 +306,13 @@
 				DEVELOPMENT_TEAM = 3Y8YH8GWMM;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = FoodBowl/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.food-and-drink";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -302,9 +320,12 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.coby.FoodBowl;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -318,11 +339,13 @@
 				DEVELOPMENT_TEAM = 3Y8YH8GWMM;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = FoodBowl/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.food-and-drink";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -330,9 +353,12 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.coby.FoodBowl;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -358,6 +384,51 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		CBADC2402955989400E56C93 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
+			requirement = {
+				branch = develop;
+				kind = branch;
+			};
+		};
+		CBADC243295598A200E56C93 /* XCRemoteSwiftPackageReference "Then" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/devxoul/Then.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+		CBADC2462955993A00E56C93 /* XCRemoteSwiftPackageReference "SkeletonUI" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/CSolanaM/SkeletonUI.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		CBADC2412955989400E56C93 /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CBADC2402955989400E56C93 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+		CBADC244295598A200E56C93 /* Then */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CBADC243295598A200E56C93 /* XCRemoteSwiftPackageReference "Then" */;
+			productName = Then;
+		};
+		CBADC2472955993A00E56C93 /* SkeletonUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CBADC2462955993A00E56C93 /* XCRemoteSwiftPackageReference "SkeletonUI" */;
+			productName = SkeletonUI;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = CBC730F8295550A100C7F198 /* Project object */;
 }
