@@ -28,12 +28,12 @@ final class RegionViewController: BaseViewController {
 
     private let regionTagListView = RegionTagListView()
 
-    private lazy var completeButton = UIButton().then {
-        $0.layer.cornerRadius = 15
-        $0.backgroundColor = .mainPink
-        $0.setTitleColor(.white, for: .normal)
-        $0.setTitle("완료", for: .normal)
-        $0.addTarget(self, action: #selector(didTapCompleteButton), for: .touchUpInside)
+    private lazy var completeButton = MainButton().then {
+        $0.label.text = "완료"
+        let action = UIAction { [weak self] _ in
+            self?.setRegion()
+        }
+        $0.addAction(action, for: .touchUpInside)
     }
 
     override func viewDidLoad() {
@@ -98,8 +98,6 @@ final class RegionViewController: BaseViewController {
                 selectedRegions.removeFirst()
             }
         }
-
-        print(selectedRegions)
     }
 
     func removeRegion(region: String) {
@@ -112,9 +110,7 @@ final class RegionViewController: BaseViewController {
         }
     }
 
-    // MARK: - selector
-
-    @objc private func didTapCompleteButton() {
+    private func setRegion() {
         UserDefaults.standard.setValue(selectedState, forKey: "state")
         UserDefaults.standard.set(selectedRegions, forKey: "regions")
 

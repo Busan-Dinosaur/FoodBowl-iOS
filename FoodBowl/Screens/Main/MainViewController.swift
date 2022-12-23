@@ -27,12 +27,21 @@ final class MainViewController: BaseViewController {
     // MARK: - property
 
     private lazy var regionTagButton = UIButton().then {
-        $0.tintColor = .mainPink
+        $0.tintColor = .black
         $0.setTitle("전체 ", for: .normal)
-        $0.setTitleColor(.mainBlack.withAlphaComponent(0.7), for: .normal)
-        $0.titleLabel?.font = .preferredFont(forTextStyle: .body, weight: .semibold)
+        $0.setTitleColor(.black, for: .normal)
+        $0.titleLabel?.font = .preferredFont(forTextStyle: .title3, weight: .medium)
         $0.setImage(ImageLiteral.btnDown, for: .normal)
         $0.semanticContentAttribute = .forceRightToLeft
+        let action = UIAction { [weak self] _ in
+            let regionViewController = RegionViewController()
+            regionViewController.modalPresentationStyle = .pageSheet
+            regionViewController.sheetPresentationController?.detents = [.medium()]
+            regionViewController.delegate = self
+
+            self?.present(regionViewController, animated: true, completion: nil)
+        }
+        $0.addAction(action, for: .touchUpInside)
     }
 
     private let collectionViewFlowLayout = UICollectionViewFlowLayout().then {
@@ -54,12 +63,45 @@ final class MainViewController: BaseViewController {
 
     // MARK: - life cycle
 
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupRefreshControl()
+        loadData()
+    }
+
     override func render() {
         view.addSubviews(listCollectionView)
 
         listCollectionView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
+    }
+
+    override func setupNavigationBar() {
+        super.setupNavigationBar()
+
+        let regionTagView = makeBarButtonItem(with: regionTagButton)
+        navigationItem.leftBarButtonItem = regionTagView
+    }
+
+    private func setupRefreshControl() {
+        let action = UIAction { [weak self] _ in
+            self?.loadData()
+        }
+        refreshControl.addAction(action, for: .valueChanged)
+        refreshControl.tintColor = .lightGray
+        listCollectionView.refreshControl = refreshControl
+    }
+
+    private func loadData() {
+        guard let regions = UserDefaults.standard.stringArray(forKey: "regions") else { return }
+        selectedRegions = regions
+
+        if selectedRegions.isEmpty {
+            selectedRegions = ["전체"]
+        }
+        let count = selectedRegions.count == 1 ? "" : "외 \(selectedRegions.count - 1)곳"
+        regionTagButton.setTitle("\(selectedRegions[0]) \(count) ", for: .normal)
     }
 }
 
@@ -99,5 +141,8 @@ protocol RegionViewControllerDelegate: AnyObject {
 }
 
 extension MainViewController: RegionViewControllerDelegate {
-    func dismissRegionViewController() {}
+    func dismissRegionViewController() {
+        print("닫힘")
+        loadData()
+    }
 }

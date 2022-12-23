@@ -53,6 +53,7 @@
 		CBADC2DB2955AC6A00E56C93 /* RegionCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADC2D92955AC6900E56C93 /* RegionCollectionViewCell.swift */; };
 		CBADC2DC2955AC6A00E56C93 /* StateCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADC2DA2955AC6A00E56C93 /* StateCollectionViewCell.swift */; };
 		CBADC2DE2955ACBB00E56C93 /* EmptyFeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADC2DD2955ACBB00E56C93 /* EmptyFeedView.swift */; };
+		CBADC2E02955B92D00E56C93 /* MainButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADC2DF2955B92D00E56C93 /* MainButton.swift */; };
 		CBC73104295550A100C7F198 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBC73103295550A100C7F198 /* AppDelegate.swift */; };
 		CBC73106295550A100C7F198 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBC73105295550A100C7F198 /* SceneDelegate.swift */; };
 		CBC73108295550A100C7F198 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBC73107295550A100C7F198 /* MainViewController.swift */; };
@@ -104,6 +105,7 @@
 		CBADC2D92955AC6900E56C93 /* RegionCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegionCollectionViewCell.swift; sourceTree = "<group>"; };
 		CBADC2DA2955AC6A00E56C93 /* StateCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StateCollectionViewCell.swift; sourceTree = "<group>"; };
 		CBADC2DD2955ACBB00E56C93 /* EmptyFeedView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptyFeedView.swift; sourceTree = "<group>"; };
+		CBADC2DF2955B92D00E56C93 /* MainButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainButton.swift; sourceTree = "<group>"; };
 		CBC73100295550A100C7F198 /* FoodBowl.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FoodBowl.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CBC73103295550A100C7F198 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CBC73105295550A100C7F198 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -211,6 +213,7 @@
 				CBADC27C29559BC900E56C93 /* PaddingLabel.swift */,
 				CBADC27A29559BC900E56C93 /* SendButton.swift */,
 				CBADC27D29559BC900E56C93 /* BackButton.swift */,
+				CBADC2DF2955B92D00E56C93 /* MainButton.swift */,
 			);
 			path = UIComponent;
 			sourceTree = "<group>";
@@ -505,6 +508,7 @@
 				CBADC2AF2955A11F00E56C93 /* MessageRoomViewController.swift in Sources */,
 				CBADC29429559BC900E56C93 /* Notification+Extension.swift in Sources */,
 				CBADC2C82955A2A600E56C93 /* MyChatTableViewCell.swift in Sources */,
+				CBADC2E02955B92D00E56C93 /* MainButton.swift in Sources */,
 				CBADC2B52955A18C00E56C93 /* SearchStoreViewController.swift in Sources */,
 				CBADC28E29559BC900E56C93 /* UIView+Extension.swift in Sources */,
 				CBADC2CB2955A2A600E56C93 /* ChatSendView.swift in Sources */,
