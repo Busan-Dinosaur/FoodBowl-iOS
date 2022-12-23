@@ -15,11 +15,13 @@
 					<string>Default Configuration</string>
 					<key>UISceneDelegateClassName</key>
 					<string>$(PRODUCT_MODULE_NAME).SceneDelegate</string>
-					<key>UISceneStoryboardFile</key>
-					<string>Main</string>
 				</dict>
 			</array>
 		</dict>
 	</dict>
+	<key>NSCameraUsageDescription</key>
+	<string>Camera permissions for taking photos</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Album permissions to save photos</string>
 </dict>
 </plist>
