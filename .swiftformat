@@ -1,0 +1,4 @@
+--swiftversion 5.0
+--commas inline
+--self init-only
+--exclude Pods
