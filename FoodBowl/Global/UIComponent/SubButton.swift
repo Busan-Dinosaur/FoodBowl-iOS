@@ -1,8 +1,8 @@
 //
-//  MainButton.swift
+//  SubButton.swift
 //  FoodBowl
 //
-//  Created by COBY_PRO on 2022/12/23.
+//  Created by COBY_PRO on 2022/12/24.
 //
 
 import UIKit
@@ -10,13 +10,13 @@ import UIKit
 import SnapKit
 import Then
 
-final class MainButton: UIButton {
+final class SubButton: UIButton {
     // MARK: - property
 
     let label = UILabel().then {
         let label = UILabel()
-        $0.textColor = .white
-        $0.font = UIFont.preferredFont(forTextStyle: .body, weight: .medium)
+        $0.textColor = .black
+        $0.font = UIFont.preferredFont(forTextStyle: .caption1, weight: .medium)
     }
 
     // MARK: - init
@@ -43,8 +43,8 @@ final class MainButton: UIButton {
     }
 
     private func configUI() {
-        backgroundColor = .mainPink
-        layer.cornerRadius = 10
+        backgroundColor = .lightGray
+        layer.cornerRadius = 4
         layer.masksToBounds = false
     }
 }
