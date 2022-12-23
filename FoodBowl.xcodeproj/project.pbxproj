@@ -46,6 +46,13 @@
 		CBADC2CB2955A2A600E56C93 /* ChatSendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADC2C72955A2A600E56C93 /* ChatSendView.swift */; };
 		CBADC2CD2955A35600E56C93 /* ChannelTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADC2CC2955A35600E56C93 /* ChannelTableViewCell.swift */; };
 		CBADC2CF2955A41500E56C93 /* TabbarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADC2CE2955A41500E56C93 /* TabbarViewController.swift */; };
+		CBADC2D32955AB7300E56C93 /* StateTagListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADC2D12955AB7300E56C93 /* StateTagListView.swift */; };
+		CBADC2D42955AB7300E56C93 /* RegionTagListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADC2D22955AB7300E56C93 /* RegionTagListView.swift */; };
+		CBADC2D62955AB9800E56C93 /* RegionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADC2D52955AB9800E56C93 /* RegionViewController.swift */; };
+		CBADC2D82955AC5900E56C93 /* FeedCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADC2D72955AC5900E56C93 /* FeedCollectionViewCell.swift */; };
+		CBADC2DB2955AC6A00E56C93 /* RegionCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADC2D92955AC6900E56C93 /* RegionCollectionViewCell.swift */; };
+		CBADC2DC2955AC6A00E56C93 /* StateCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADC2DA2955AC6A00E56C93 /* StateCollectionViewCell.swift */; };
+		CBADC2DE2955ACBB00E56C93 /* EmptyFeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADC2DD2955ACBB00E56C93 /* EmptyFeedView.swift */; };
 		CBC73104295550A100C7F198 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBC73103295550A100C7F198 /* AppDelegate.swift */; };
 		CBC73106295550A100C7F198 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBC73105295550A100C7F198 /* SceneDelegate.swift */; };
 		CBC73108295550A100C7F198 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBC73107295550A100C7F198 /* MainViewController.swift */; };
@@ -90,6 +97,13 @@
 		CBADC2C72955A2A600E56C93 /* ChatSendView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatSendView.swift; sourceTree = "<group>"; };
 		CBADC2CC2955A35600E56C93 /* ChannelTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChannelTableViewCell.swift; sourceTree = "<group>"; };
 		CBADC2CE2955A41500E56C93 /* TabbarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabbarViewController.swift; sourceTree = "<group>"; };
+		CBADC2D12955AB7300E56C93 /* StateTagListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StateTagListView.swift; sourceTree = "<group>"; };
+		CBADC2D22955AB7300E56C93 /* RegionTagListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegionTagListView.swift; sourceTree = "<group>"; };
+		CBADC2D52955AB9800E56C93 /* RegionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegionViewController.swift; sourceTree = "<group>"; };
+		CBADC2D72955AC5900E56C93 /* FeedCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedCollectionViewCell.swift; sourceTree = "<group>"; };
+		CBADC2D92955AC6900E56C93 /* RegionCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegionCollectionViewCell.swift; sourceTree = "<group>"; };
+		CBADC2DA2955AC6A00E56C93 /* StateCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StateCollectionViewCell.swift; sourceTree = "<group>"; };
+		CBADC2DD2955ACBB00E56C93 /* EmptyFeedView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptyFeedView.swift; sourceTree = "<group>"; };
 		CBC73100295550A100C7F198 /* FoodBowl.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FoodBowl.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CBC73103295550A100C7F198 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CBC73105295550A100C7F198 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -204,8 +218,10 @@
 		CBADC2A22955A05500E56C93 /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				CBADC2D02955AB7300E56C93 /* UIComponent */,
 				CBADC2BE2955A24A00E56C93 /* Cell */,
 				CBC73107295550A100C7F198 /* MainViewController.swift */,
+				CBADC2D52955AB9800E56C93 /* RegionViewController.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -266,6 +282,9 @@
 		CBADC2BE2955A24A00E56C93 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
+				CBADC2D72955AC5900E56C93 /* FeedCollectionViewCell.swift */,
+				CBADC2D92955AC6900E56C93 /* RegionCollectionViewCell.swift */,
+				CBADC2DA2955AC6A00E56C93 /* StateCollectionViewCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -291,6 +310,16 @@
 			isa = PBXGroup;
 			children = (
 				CBADC2C72955A2A600E56C93 /* ChatSendView.swift */,
+			);
+			path = UIComponent;
+			sourceTree = "<group>";
+		};
+		CBADC2D02955AB7300E56C93 /* UIComponent */ = {
+			isa = PBXGroup;
+			children = (
+				CBADC2DD2955ACBB00E56C93 /* EmptyFeedView.swift */,
+				CBADC2D12955AB7300E56C93 /* StateTagListView.swift */,
+				CBADC2D22955AB7300E56C93 /* RegionTagListView.swift */,
 			);
 			path = UIComponent;
 			sourceTree = "<group>";
@@ -447,13 +476,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CBADC2D62955AB9800E56C93 /* RegionViewController.swift in Sources */,
 				CBADC28A29559BC900E56C93 /* UIFont+Extension.swift in Sources */,
 				CBC73108295550A100C7F198 /* MainViewController.swift in Sources */,
 				CBADC2CF2955A41500E56C93 /* TabbarViewController.swift in Sources */,
 				CBC73104295550A100C7F198 /* AppDelegate.swift in Sources */,
 				CBADC2B72955A1BD00E56C93 /* SetPhotoViewCotroller.swift in Sources */,
+				CBADC2DB2955AC6A00E56C93 /* RegionCollectionViewCell.swift in Sources */,
 				CBADC29B29559BC900E56C93 /* BaseTableViewCell.swift in Sources */,
 				CBADC2CD2955A35600E56C93 /* ChannelTableViewCell.swift in Sources */,
+				CBADC2D32955AB7300E56C93 /* StateTagListView.swift in Sources */,
 				CBADC2A129559BC900E56C93 /* BackButton.swift in Sources */,
 				CBADC29A29559BC900E56C93 /* BaseViewController.swift in Sources */,
 				CBADC2B92955A1CC00E56C93 /* SetCommentViewController.swift in Sources */,
@@ -466,6 +498,7 @@
 				CBADC2B32955A16A00E56C93 /* SetStoreViewController.swift in Sources */,
 				CBADC28329559BC900E56C93 /* ImageLiteral.swift in Sources */,
 				CBADC28B29559BC900E56C93 /* UIColor+Extension.swift in Sources */,
+				CBADC2DC2955AC6A00E56C93 /* StateCollectionViewCell.swift in Sources */,
 				CBADC2A92955A0CB00E56C93 /* SearchViewController.swift in Sources */,
 				CBADC28629559BC900E56C93 /* Logger.swift in Sources */,
 				CBADC29E29559BC900E56C93 /* SendButton.swift in Sources */,
@@ -475,10 +508,13 @@
 				CBADC2B52955A18C00E56C93 /* SearchStoreViewController.swift in Sources */,
 				CBADC28E29559BC900E56C93 /* UIView+Extension.swift in Sources */,
 				CBADC2CB2955A2A600E56C93 /* ChatSendView.swift in Sources */,
+				CBADC2D42955AB7300E56C93 /* RegionTagListView.swift in Sources */,
 				CBADC2A029559BC900E56C93 /* PaddingLabel.swift in Sources */,
 				CBADC29C29559BC900E56C93 /* BaseCollectionViewCell.swift in Sources */,
 				CBADC29129559BC900E56C93 /* UICollectionView+Extension.swift in Sources */,
+				CBADC2D82955AC5900E56C93 /* FeedCollectionViewCell.swift in Sources */,
 				CBADC2AD2955A0FF00E56C93 /* ProfileViewController.swift in Sources */,
+				CBADC2DE2955ACBB00E56C93 /* EmptyFeedView.swift in Sources */,
 				CBADC2C92955A2A600E56C93 /* ChatTableViewCell.swift in Sources */,
 				CBADC28D29559BC900E56C93 /* NSObject+Extension.swift in Sources */,
 				CBADC29629559BC900E56C93 /* UITableView+Extension.swift in Sources */,
