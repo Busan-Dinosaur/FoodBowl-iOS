@@ -16,28 +16,31 @@ final class ChannelTableViewCell: BaseTableViewCell {
     lazy var chatUserImageView = UIImageView().then {
         $0.layer.cornerRadius = 20
         $0.layer.masksToBounds = true
+        $0.backgroundColor = .gray
     }
 
     lazy var chatUserNameLabel = UILabel().then {
         $0.textColor = .mainBlack
-        $0.font = UIFont.systemFont(ofSize: 15)
-        $0.font = UIFont.boldSystemFont(ofSize: UIFont.labelFontSize)
+        $0.font = .preferredFont(forTextStyle: .subheadline, weight: .bold)
+        $0.text = "홍길동"
     }
 
     lazy var chatDateLabel = UILabel().then {
-        $0.textColor = UIColor(hex: "#999999")
-        $0.font = UIFont.systemFont(ofSize: 11)
+        $0.textColor = UIColor(hex: "#494949")
+        $0.font = .preferredFont(forTextStyle: .caption2, weight: .light)
+        $0.text = "1시간 전"
     }
 
     lazy var chatLastLabel = UILabel().then {
         $0.textColor = .mainBlack
-        $0.font = UIFont.systemFont(ofSize: 13)
+        $0.font = .preferredFont(forTextStyle: .footnote, weight: .light)
+        $0.text = "안녕하세요"
     }
 
     // MARK: - func
 
     override func render() {
-        contentView.addSubviews(chatUserImageView, chatUserNameLabel, chatDateLabel, chatLastLabel)
+        contentView.addSubviews(chatUserImageView, chatUserNameLabel, chatLastLabel, chatDateLabel)
 
         chatUserImageView.snp.makeConstraints {
             $0.width.height.equalTo(40)
@@ -46,18 +49,18 @@ final class ChannelTableViewCell: BaseTableViewCell {
         }
 
         chatUserNameLabel.snp.makeConstraints {
-            $0.leading.equalTo(chatUserImageView.snp.trailing).offset(20)
-            $0.top.equalToSuperview().inset(14)
-        }
-
-        chatDateLabel.snp.makeConstraints {
-            $0.leading.equalTo(chatUserNameLabel.snp.trailing).offset(10)
-            $0.top.equalToSuperview().inset(18)
+            $0.leading.equalTo(chatUserImageView.snp.trailing).offset(16)
+            $0.top.equalToSuperview().inset(16)
         }
 
         chatLastLabel.snp.makeConstraints {
-            $0.leading.equalTo(chatUserImageView.snp.trailing).offset(20)
-            $0.bottom.equalToSuperview().inset(14)
+            $0.leading.equalTo(chatUserImageView.snp.trailing).offset(16)
+            $0.bottom.equalToSuperview().inset(16)
+        }
+
+        chatDateLabel.snp.makeConstraints {
+            $0.trailing.equalToSuperview().inset(20)
+            $0.top.equalToSuperview().inset(16)
         }
     }
 }
