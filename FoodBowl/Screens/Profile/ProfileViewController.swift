@@ -20,7 +20,7 @@ final class ProfileViewController: BaseViewController {
                                                   right: 0)
     }
 
-    private var feeds: [String] = ["가나", "다라", "마바", "사아", "자차"]
+    private var feeds: [String] = ["가나", "다라", "마바", "사아", "자차", "사아", "자차", "사아", "자차", "사아", "자차"]
 
     // MARK: - property
 
@@ -52,7 +52,7 @@ final class ProfileViewController: BaseViewController {
         userProfileView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
             $0.leading.trailing.equalToSuperview()
-            $0.height.equalTo(200)
+            $0.height.equalTo(220)
         }
 
         listCollectionView.snp.makeConstraints {

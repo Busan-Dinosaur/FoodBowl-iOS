@@ -24,13 +24,66 @@ final class UserProfileView: UIView {
         $0.layer.masksToBounds = true
     }
 
+    let userNameLabel = UILabel().then {
+        $0.font = UIFont.preferredFont(forTextStyle: .subheadline, weight: .medium)
+        $0.textColor = .black
+        $0.text = "coby5502"
+    }
+
     let userInfoLabel = UILabel().then {
         $0.font = UIFont.preferredFont(forTextStyle: .subheadline, weight: .light)
         $0.textColor = .black
         $0.text = "동네 맛집 탐험을 좋아하는 아저씨에요."
     }
 
-    let userStatView = UIStackView()
+    private let followerLabel = UILabel().then {
+        $0.font = UIFont.preferredFont(forTextStyle: .subheadline, weight: .medium)
+        $0.textColor = .black
+        $0.textAlignment = .center
+        $0.text = "팔로워"
+    }
+
+    private let stackView = UIStackView().then {
+        $0.translatesAutoresizingMaskIntoConstraints = false
+        $0.axis = .horizontal
+        $0.alignment = .center
+        $0.distribution = .equalSpacing
+    }
+
+    let followerNumberLabel = UILabel().then {
+        $0.font = UIFont.preferredFont(forTextStyle: .subheadline, weight: .medium)
+        $0.textColor = .black
+        $0.textAlignment = .center
+        $0.text = "100"
+    }
+
+    private let followingLabel = UILabel().then {
+        $0.font = UIFont.preferredFont(forTextStyle: .subheadline, weight: .medium)
+        $0.textColor = .black
+        $0.textAlignment = .center
+        $0.text = "팔로잉"
+    }
+
+    let followingNumberLabel = UILabel().then {
+        $0.font = UIFont.preferredFont(forTextStyle: .subheadline, weight: .medium)
+        $0.textColor = .black
+        $0.textAlignment = .center
+        $0.text = "100"
+    }
+
+    private let scrabLabel = UILabel().then {
+        $0.font = UIFont.preferredFont(forTextStyle: .subheadline, weight: .medium)
+        $0.textColor = .black
+        $0.textAlignment = .center
+        $0.text = "스크랩"
+    }
+
+    let scrabNumberLabel = UILabel().then {
+        $0.font = UIFont.preferredFont(forTextStyle: .subheadline, weight: .medium)
+        $0.textColor = .black
+        $0.textAlignment = .center
+        $0.text = "100"
+    }
 
     let leftButton = SubButton().then {
         $0.label.text = "프로필 수정"
@@ -55,7 +108,11 @@ final class UserProfileView: UIView {
     // MARK: - life cycle
 
     private func render() {
-        addSubviews(userImageView, userInfoLabel, userStatView, leftButton, rightButton)
+        addSubviews(userImageView, userNameLabel, userInfoLabel, stackView, followerNumberLabel, followingNumberLabel, scrabNumberLabel, leftButton, rightButton)
+
+        [followerLabel, followingLabel, scrabLabel].map {
+            stackView.addArrangedSubview($0)
+        }
 
         userImageView.snp.makeConstraints {
             $0.leading.equalToSuperview().inset(20)
@@ -63,16 +120,39 @@ final class UserProfileView: UIView {
             $0.width.height.equalTo(80)
         }
 
-        userInfoLabel.snp.makeConstraints {
+        userNameLabel.snp.makeConstraints {
             $0.leading.equalToSuperview().inset(20)
             $0.top.equalTo(userImageView.snp.bottom).offset(20)
         }
 
-        userStatView.snp.makeConstraints {
+        userInfoLabel.snp.makeConstraints {
+            $0.leading.equalToSuperview().inset(20)
+            $0.top.equalTo(userNameLabel.snp.bottom).offset(8)
+        }
+
+        stackView.snp.makeConstraints {
             $0.leading.equalTo(userImageView.snp.trailing).offset(50)
+            $0.top.trailing.equalToSuperview()
             $0.trailing.equalToSuperview().inset(20)
-            $0.top.equalTo(userImageView.snp.top)
-            $0.bottom.equalTo(userImageView.snp.bottom)
+            $0.height.equalTo(80)
+        }
+
+        followerNumberLabel.snp.makeConstraints {
+            $0.leading.equalTo(followerLabel.snp.leading)
+            $0.trailing.equalTo(followerLabel.snp.trailing)
+            $0.top.equalTo(followerLabel.snp.bottom).offset(8)
+        }
+
+        followingNumberLabel.snp.makeConstraints {
+            $0.leading.equalTo(followingLabel.snp.leading)
+            $0.trailing.equalTo(followingLabel.snp.trailing)
+            $0.top.equalTo(followingLabel.snp.bottom).offset(8)
+        }
+
+        scrabNumberLabel.snp.makeConstraints {
+            $0.leading.equalTo(scrabLabel.snp.leading)
+            $0.trailing.equalTo(scrabLabel.snp.trailing)
+            $0.top.equalTo(scrabLabel.snp.bottom).offset(8)
         }
 
         leftButton.snp.makeConstraints {
