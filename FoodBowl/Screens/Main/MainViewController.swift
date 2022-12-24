@@ -32,8 +32,8 @@ final class MainViewController: BaseViewController {
         $0.setTitleColor(.black, for: .normal)
         $0.titleLabel?.font = .preferredFont(forTextStyle: .title3, weight: .medium)
         $0.contentHorizontalAlignment = .left
-        $0.setImage(ImageLiteral.btnDown, for: .normal)
-        $0.semanticContentAttribute = .forceRightToLeft
+//        $0.setImage(ImageLiteral.btnDown, for: .normal)
+//        $0.semanticContentAttribute = .forceRightToLeft
         let action = UIAction { [weak self] _ in
             let regionViewController = RegionViewController()
             regionViewController.modalPresentationStyle = .pageSheet
@@ -121,7 +121,11 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
         return cell
     }
 
-    func collectionView(_: UICollectionView, didSelectItemAt _: IndexPath) {}
+    func collectionView(_: UICollectionView, didSelectItemAt _: IndexPath) {
+        let feedDetailViewController = FeedDetailViewController()
+        navigationController?.pushViewController(feedDetailViewController, animated: true)
+        navigationController?.setNavigationBarHidden(false, animated: true)
+    }
 }
 
 extension MainViewController {

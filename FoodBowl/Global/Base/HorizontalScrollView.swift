@@ -1,0 +1,55 @@
+//
+//  HorizontalScrollView.swift
+//  FoodBowl
+//
+//  Created by COBY_PRO on 2022/12/25.
+//
+
+import UIKit
+
+class HorizontalScrollView: BaseScrollView<[UIImage]> {
+    let horizontalWidth: CGFloat
+    let horizontalHeight: CGFloat
+
+    init(horizontalWidth: CGFloat, horizontalHeight: CGFloat) {
+        self.horizontalWidth = horizontalWidth
+        self.horizontalHeight = horizontalHeight
+
+        super.init(frame: .zero)
+
+        configUI()
+    }
+
+    override func configUI() {
+        super.configUI()
+
+        isPagingEnabled = true
+        showsHorizontalScrollIndicator = false
+    }
+
+    override func bind(_ model: [UIImage]) {
+        super.bind(model)
+
+        setImages()
+        updateScrollViewContentWidth()
+    }
+
+    private func setImages() {
+        guard let images = model else { return }
+        images
+            .enumerated()
+            .forEach {
+                let imageView = UIImageView(image: $0.element)
+                imageView.contentMode = .scaleAspectFill
+                imageView.layer.masksToBounds = true
+                let xOffset = horizontalWidth * CGFloat($0.offset)
+
+                imageView.frame = CGRect(x: xOffset, y: 0, width: horizontalWidth, height: horizontalHeight)
+                addSubview(imageView)
+            }
+    }
+
+    private func updateScrollViewContentWidth() {
+        contentSize.width = horizontalWidth * CGFloat(model?.count ?? 1)
+    }
+}
