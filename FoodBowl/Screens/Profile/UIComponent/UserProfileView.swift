@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 import Then
 
-final class UserProfileView: UIView {
+final class UserProfileView: UICollectionReusableView {
     private enum Size {
         static let buttonWidth: CGFloat = (UIScreen.main.bounds.size.width - 52) / 2
         static let buttonHeight: CGFloat = 40
@@ -110,7 +110,7 @@ final class UserProfileView: UIView {
     private func render() {
         addSubviews(userImageView, userNameLabel, userInfoLabel, stackView, followerNumberLabel, followingNumberLabel, scrabNumberLabel, leftButton, rightButton)
 
-        [followerLabel, followingLabel, scrabLabel].map {
+        [followerLabel, followingLabel, scrabLabel].forEach {
             stackView.addArrangedSubview($0)
         }
 

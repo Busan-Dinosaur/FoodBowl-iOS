@@ -12,6 +12,7 @@ import Then
 
 final class ProfileViewController: BaseViewController {
     private enum Size {
+        static let headerHeight: CGFloat = 240
         static let cellWidth: CGFloat = (UIScreen.main.bounds.size.width - 8) / 3
         static let cellHeight: CGFloat = cellWidth
         static let collectionInset = UIEdgeInsets(top: 0,
@@ -20,13 +21,11 @@ final class ProfileViewController: BaseViewController {
                                                   right: 0)
     }
 
-    private var feeds: [String] = ["가나", "다라", "마바", "사아", "자차", "사아", "자차", "사아", "자차", "사아", "자차"]
+    private var feeds: [String] = ["가나", "다라", "마바", "사아", "자차", "사아", "자차", "사아", "자차", "사아", "자차", "사아", "자차", "사아", "자차"]
 
     // MARK: - property
 
     private let settingButton = SettingButton()
-
-    private let userProfileView = UserProfileView()
 
     private let collectionViewFlowLayout = UICollectionViewFlowLayout().then {
         $0.scrollDirection = .vertical
@@ -34,6 +33,7 @@ final class ProfileViewController: BaseViewController {
         $0.itemSize = CGSize(width: Size.cellWidth, height: Size.cellHeight)
         $0.minimumLineSpacing = 4
         $0.minimumInteritemSpacing = 4
+        $0.headerReferenceSize = CGSize(width: UIScreen.main.bounds.width, height: Size.headerHeight)
     }
 
     private lazy var listCollectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewFlowLayout).then {
@@ -42,23 +42,16 @@ final class ProfileViewController: BaseViewController {
         $0.delegate = self
         $0.showsVerticalScrollIndicator = false
         $0.register(FeedThumnailCollectionViewCell.self, forCellWithReuseIdentifier: FeedThumnailCollectionViewCell.className)
+        $0.register(UserProfileView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: UserProfileView.className)
     }
 
     // MARK: - life cycle
 
     override func render() {
-        view.addSubviews(userProfileView, listCollectionView)
-
-        userProfileView.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
-            $0.leading.trailing.equalToSuperview()
-            $0.height.equalTo(220)
-        }
+        view.addSubviews(listCollectionView)
 
         listCollectionView.snp.makeConstraints {
-            $0.top.equalTo(userProfileView.snp.bottom).offset(20)
-            $0.leading.trailing.equalToSuperview()
-            $0.bottom.equalToSuperview().inset(20)
+            $0.edges.equalToSuperview()
         }
     }
 
@@ -68,7 +61,7 @@ final class ProfileViewController: BaseViewController {
         let settingButton = makeBarButtonItem(with: settingButton)
         navigationItem.leftBarButtonItem = nil
         navigationItem.rightBarButtonItem = settingButton
-        title = "coby5502"
+        title = "프로필"
     }
 }
 
@@ -83,6 +76,19 @@ extension ProfileViewController: UICollectionViewDataSource, UICollectionViewDel
         }
 
         return cell
+    }
+
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        switch kind {
+        case UICollectionView.elementKindSectionHeader:
+            guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: UserProfileView.className, for: indexPath) as? UserProfileView else {
+                return UICollectionReusableView()
+            }
+
+            return header
+        default:
+            return UICollectionReusableView()
+        }
     }
 
     func collectionView(_: UICollectionView, didSelectItemAt _: IndexPath) {}
