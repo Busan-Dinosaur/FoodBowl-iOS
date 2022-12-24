@@ -1,13 +1,13 @@
 //
-//  BackButton.swift
+//  SettingButton.swift
 //  FoodBowl
 //
-//  Created by COBY_PRO on 2022/12/23.
+//  Created by COBY_PRO on 2022/12/24.
 //
 
 import UIKit
 
-final class BackButton: UIButton {
+final class SettingButton: UIButton {
     // MARK: - init
 
     override init(frame _: CGRect) {
@@ -23,7 +23,7 @@ final class BackButton: UIButton {
     // MARK: - life cycle
 
     private func configUI() {
-        setImage(ImageLiteral.btnBack, for: .normal)
+        setImage(ImageLiteral.btnSetting, for: .normal)
         tintColor = .mainBlack
     }
 }

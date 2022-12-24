@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		CB1A7C5C29560C2300C6431D /* UserInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1A7C5B29560C2300C6431D /* UserInfoView.swift */; };
+		CB1A7C5E295618A900C6431D /* SettingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1A7C5D295618A900C6431D /* SettingButton.swift */; };
+		CB1A7C6129561BCF00C6431D /* UserProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1A7C6029561BCF00C6431D /* UserProfileView.swift */; };
+		CB1A7C6329561CF300C6431D /* SubButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1A7C6229561CF300C6431D /* SubButton.swift */; };
 		CBADC2422955989400E56C93 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = CBADC2412955989400E56C93 /* SnapKit */; };
 		CBADC245295598A200E56C93 /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = CBADC244295598A200E56C93 /* Then */; };
 		CBADC2482955993A00E56C93 /* SkeletonUI in Frameworks */ = {isa = PBXBuildFile; productRef = CBADC2472955993A00E56C93 /* SkeletonUI */; };
@@ -65,6 +68,9 @@
 
 /* Begin PBXFileReference section */
 		CB1A7C5B29560C2300C6431D /* UserInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoView.swift; sourceTree = "<group>"; };
+		CB1A7C5D295618A900C6431D /* SettingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingButton.swift; sourceTree = "<group>"; };
+		CB1A7C6029561BCF00C6431D /* UserProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileView.swift; sourceTree = "<group>"; };
+		CB1A7C6229561CF300C6431D /* SubButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubButton.swift; sourceTree = "<group>"; };
 		CBADC24D29559AA900E56C93 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		CBADC24F29559AB700E56C93 /* .swiftformat */ = {isa = PBXFileReference; lastKnownFileType = text; path = .swiftformat; sourceTree = "<group>"; };
 		CBADC25929559BC900E56C93 /* ImageLiteral.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageLiteral.swift; sourceTree = "<group>"; };
@@ -133,6 +139,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		CB1A7C5F29561B8400C6431D /* UIComponent */ = {
+			isa = PBXGroup;
+			children = (
+				CB1A7C6029561BCF00C6431D /* UserProfileView.swift */,
+			);
+			path = UIComponent;
+			sourceTree = "<group>";
+		};
 		CBADC25129559BC900E56C93 /* Global */ = {
 			isa = PBXGroup;
 			children = (
@@ -217,7 +231,9 @@
 				CBADC27C29559BC900E56C93 /* PaddingLabel.swift */,
 				CBADC27A29559BC900E56C93 /* SendButton.swift */,
 				CBADC27D29559BC900E56C93 /* BackButton.swift */,
+				CB1A7C5D295618A900C6431D /* SettingButton.swift */,
 				CBADC2DF2955B92D00E56C93 /* MainButton.swift */,
+				CB1A7C6229561CF300C6431D /* SubButton.swift */,
 				CB1A7C5B29560C2300C6431D /* UserInfoView.swift */,
 			);
 			path = UIComponent;
@@ -258,6 +274,7 @@
 		CBADC2A52955A07B00E56C93 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
+				CB1A7C5F29561B8400C6431D /* UIComponent */,
 				CBADC2AC2955A0FF00E56C93 /* ProfileViewController.swift */,
 			);
 			path = Profile;
@@ -485,6 +502,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CB1A7C6129561BCF00C6431D /* UserProfileView.swift in Sources */,
 				CBADC2E22955C63300E56C93 /* FeedThumnailCollectionViewCell.swift in Sources */,
 				CBADC2D62955AB9800E56C93 /* RegionViewController.swift in Sources */,
 				CBADC28A29559BC900E56C93 /* UIFont+Extension.swift in Sources */,
@@ -493,6 +511,7 @@
 				CBC73104295550A100C7F198 /* AppDelegate.swift in Sources */,
 				CBADC2B72955A1BD00E56C93 /* SetPhotoViewCotroller.swift in Sources */,
 				CBADC2DB2955AC6A00E56C93 /* RegionCollectionViewCell.swift in Sources */,
+				CB1A7C5E295618A900C6431D /* SettingButton.swift in Sources */,
 				CBADC29B29559BC900E56C93 /* BaseTableViewCell.swift in Sources */,
 				CBADC2CD2955A35600E56C93 /* ChannelTableViewCell.swift in Sources */,
 				CBADC2D32955AB7300E56C93 /* StateTagListView.swift in Sources */,
@@ -505,6 +524,7 @@
 				CBADC29029559BC900E56C93 /* UIViewController+Extension.swift in Sources */,
 				CBADC2AB2955A0EC00E56C93 /* MessageViewController.swift in Sources */,
 				CBADC28C29559BC900E56C93 /* UILabel+Extension.swift in Sources */,
+				CB1A7C6329561CF300C6431D /* SubButton.swift in Sources */,
 				CBADC2B32955A16A00E56C93 /* SetStoreViewController.swift in Sources */,
 				CBADC28329559BC900E56C93 /* ImageLiteral.swift in Sources */,
 				CBADC28B29559BC900E56C93 /* UIColor+Extension.swift in Sources */,
