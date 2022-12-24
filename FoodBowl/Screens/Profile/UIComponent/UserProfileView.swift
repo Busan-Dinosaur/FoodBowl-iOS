@@ -11,11 +11,6 @@ import SnapKit
 import Then
 
 final class UserProfileView: UICollectionReusableView {
-    private enum Size {
-        static let buttonWidth: CGFloat = (UIScreen.main.bounds.size.width - 52) / 2
-        static let buttonHeight: CGFloat = 40
-    }
-
     // MARK: - property
 
     lazy var userImageView = UIImageView().then {
@@ -43,7 +38,7 @@ final class UserProfileView: UICollectionReusableView {
         $0.text = "팔로워"
     }
 
-    private let stackView = UIStackView().then {
+    private let stackTextView = UIStackView().then {
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.axis = .horizontal
         $0.alignment = .center
@@ -85,6 +80,14 @@ final class UserProfileView: UICollectionReusableView {
         $0.text = "100"
     }
 
+    private let stackButtonView = UIStackView().then {
+        $0.translatesAutoresizingMaskIntoConstraints = false
+        $0.axis = .horizontal
+        $0.alignment = .center
+        $0.distribution = .fillEqually
+        $0.spacing = 12
+    }
+
     let leftButton = SubButton().then {
         $0.label.text = "프로필 수정"
     }
@@ -108,10 +111,14 @@ final class UserProfileView: UICollectionReusableView {
     // MARK: - life cycle
 
     private func render() {
-        addSubviews(userImageView, userNameLabel, userInfoLabel, stackView, followerNumberLabel, followingNumberLabel, scrabNumberLabel, leftButton, rightButton)
+        addSubviews(userImageView, userNameLabel, userInfoLabel, stackTextView, followerNumberLabel, followingNumberLabel, scrabNumberLabel, stackButtonView)
 
         [followerLabel, followingLabel, scrabLabel].forEach {
-            stackView.addArrangedSubview($0)
+            stackTextView.addArrangedSubview($0)
+        }
+
+        [leftButton, rightButton].forEach {
+            stackButtonView.addArrangedSubview($0)
         }
 
         userImageView.snp.makeConstraints {
@@ -130,7 +137,7 @@ final class UserProfileView: UICollectionReusableView {
             $0.top.equalTo(userNameLabel.snp.bottom).offset(8)
         }
 
-        stackView.snp.makeConstraints {
+        stackTextView.snp.makeConstraints {
             $0.leading.equalTo(userImageView.snp.trailing).offset(50)
             $0.top.trailing.equalToSuperview()
             $0.trailing.equalToSuperview().inset(20)
@@ -155,18 +162,10 @@ final class UserProfileView: UICollectionReusableView {
             $0.top.equalTo(scrabLabel.snp.bottom).offset(8)
         }
 
-        leftButton.snp.makeConstraints {
-            $0.leading.equalToSuperview().inset(20)
+        stackButtonView.snp.makeConstraints {
             $0.top.equalTo(userInfoLabel.snp.bottom).offset(20)
-            $0.width.equalTo(Size.buttonWidth)
-            $0.height.equalTo(Size.buttonHeight)
-        }
-
-        rightButton.snp.makeConstraints {
-            $0.trailing.equalToSuperview().inset(20)
-            $0.top.equalTo(userInfoLabel.snp.bottom).offset(20)
-            $0.width.equalTo(Size.buttonWidth)
-            $0.height.equalTo(Size.buttonHeight)
+            $0.leading.trailing.equalToSuperview().inset(20)
+            $0.height.equalTo(40)
         }
     }
 }
