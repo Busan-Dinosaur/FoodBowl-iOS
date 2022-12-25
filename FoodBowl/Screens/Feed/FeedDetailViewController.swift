@@ -16,27 +16,55 @@ final class FeedDetailViewController: BaseViewController {
     // MARK: - property
 
     private lazy var backButton = BackButton().then {
-        $0.frame.size.width = 30
-        $0.frame.size.height = 30
         $0.layer.cornerRadius = 15
         $0.backgroundColor = .white.withAlphaComponent(0.7)
         let buttonAction = UIAction { [weak self] _ in
-            self?.navigationController?.popViewController(animated: true)
+            self?.dismiss(animated: true, completion: nil)
+        }
+        $0.addAction(buttonAction, for: .touchUpInside)
+    }
+
+    private lazy var scrapButton = ScrapButton().then {
+        $0.layer.cornerRadius = 15
+        $0.backgroundColor = .white.withAlphaComponent(0.7)
+        let buttonAction = UIAction { [weak self] _ in
+            self?.dismiss(animated: true, completion: nil)
         }
         $0.addAction(buttonAction, for: .touchUpInside)
     }
 
     lazy var horizontalScrollView = HorizontalScrollView(horizontalWidth: UIScreen.main.bounds.size.width, horizontalHeight: UIScreen.main.bounds.size.width)
 
+    private lazy var userInfoView = UserInfoView().then {
+        $0.userImageView.image = ImageLiteral.food2
+    }
+
     // MARK: - life cycle
 
     override func render() {
-        view.addSubviews(horizontalScrollView)
+        view.addSubviews(horizontalScrollView, backButton, scrapButton, userInfoView)
 
         horizontalScrollView.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide)
-            $0.leading.trailing.equalToSuperview()
+            $0.top.leading.trailing.equalToSuperview()
             $0.width.height.equalTo(UIScreen.main.bounds.size.width)
+        }
+
+        backButton.snp.makeConstraints {
+            $0.top.equalTo(view.safeAreaLayoutGuide).inset(10)
+            $0.leading.equalToSuperview().inset(20)
+            $0.width.height.equalTo(30)
+        }
+
+        scrapButton.snp.makeConstraints {
+            $0.top.equalTo(view.safeAreaLayoutGuide).inset(10)
+            $0.trailing.equalToSuperview().inset(20)
+            $0.width.height.equalTo(30)
+        }
+
+        userInfoView.snp.makeConstraints {
+            $0.top.equalTo(horizontalScrollView.snp.bottom)
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(70)
         }
     }
 
@@ -47,8 +75,12 @@ final class FeedDetailViewController: BaseViewController {
 
     override func setupNavigationBar() {
         super.setupNavigationBar()
+        guard let navigationBar = navigationController?.navigationBar else { return }
         let appearance = UINavigationBarAppearance()
         appearance.configureWithTransparentBackground()
+        navigationBar.standardAppearance = appearance
+        navigationBar.compactAppearance = appearance
+        navigationBar.scrollEdgeAppearance = appearance
 
         let backButton = makeBarButtonItem(with: backButton)
         navigationItem.leftBarButtonItem = backButton

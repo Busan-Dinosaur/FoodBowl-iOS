@@ -66,14 +66,14 @@ final class UserProfileView: UICollectionReusableView {
         $0.text = "100"
     }
 
-    private let scrabLabel = UILabel().then {
+    private let scrapLabel = UILabel().then {
         $0.font = UIFont.preferredFont(forTextStyle: .subheadline, weight: .medium)
         $0.textColor = .black
         $0.textAlignment = .center
         $0.text = "스크랩"
     }
 
-    let scrabNumberLabel = UILabel().then {
+    let scrapNumberLabel = UILabel().then {
         $0.font = UIFont.preferredFont(forTextStyle: .subheadline, weight: .medium)
         $0.textColor = .black
         $0.textAlignment = .center
@@ -111,9 +111,9 @@ final class UserProfileView: UICollectionReusableView {
     // MARK: - life cycle
 
     private func render() {
-        addSubviews(userImageView, userNameLabel, userInfoLabel, stackTextView, followerNumberLabel, followingNumberLabel, scrabNumberLabel, stackButtonView)
+        addSubviews(userImageView, userNameLabel, userInfoLabel, stackTextView, followerNumberLabel, followingNumberLabel, scrapNumberLabel, stackButtonView)
 
-        [followerLabel, followingLabel, scrabLabel].forEach {
+        [followerLabel, followingLabel, scrapLabel].forEach {
             stackTextView.addArrangedSubview($0)
         }
 
@@ -156,10 +156,10 @@ final class UserProfileView: UICollectionReusableView {
             $0.top.equalTo(followingLabel.snp.bottom).offset(8)
         }
 
-        scrabNumberLabel.snp.makeConstraints {
-            $0.leading.equalTo(scrabLabel.snp.leading)
-            $0.trailing.equalTo(scrabLabel.snp.trailing)
-            $0.top.equalTo(scrabLabel.snp.bottom).offset(8)
+        scrapNumberLabel.snp.makeConstraints {
+            $0.leading.equalTo(scrapLabel.snp.leading)
+            $0.trailing.equalTo(scrapLabel.snp.trailing)
+            $0.top.equalTo(scrapLabel.snp.bottom).offset(8)
         }
 
         stackButtonView.snp.makeConstraints {

@@ -13,7 +13,7 @@ import Then
 final class FeedCollectionViewCell: BaseCollectionViewCell {
     // MARK: - property
 
-    private let userInfoView = UserInfoView()
+    let userInfoView = UserInfoView()
 
     lazy var feedImageView = UIImageView().then {
         $0.backgroundColor = .gray
