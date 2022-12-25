@@ -41,10 +41,12 @@ final class FeedDetailViewController: BaseViewController {
 
     lazy var storeInfoView = StoreInfoView()
 
+    lazy var commentView = CommentView()
+
     // MARK: - life cycle
 
     override func render() {
-        view.addSubviews(horizontalScrollView, backButton, scrapButton, userInfoView, storeInfoView)
+        view.addSubviews(horizontalScrollView, backButton, scrapButton, userInfoView, storeInfoView, commentView)
 
         horizontalScrollView.snp.makeConstraints {
             $0.top.leading.trailing.equalToSuperview()
@@ -73,6 +75,11 @@ final class FeedDetailViewController: BaseViewController {
             $0.top.equalTo(userInfoView.snp.bottom)
             $0.leading.trailing.equalToSuperview()
             $0.height.equalTo(100)
+        }
+
+        commentView.snp.makeConstraints {
+            $0.top.equalTo(storeInfoView.snp.bottom)
+            $0.leading.trailing.equalToSuperview()
         }
     }
 

@@ -127,6 +127,7 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
     func collectionView(_: UICollectionView, didSelectItemAt _: IndexPath) {
         let feedDetailViewController = FeedDetailViewController()
         feedDetailViewController.modalPresentationStyle = .fullScreen
+        feedDetailViewController.modalTransitionStyle = .crossDissolve
         present(feedDetailViewController, animated: true, completion: nil)
     }
 }
