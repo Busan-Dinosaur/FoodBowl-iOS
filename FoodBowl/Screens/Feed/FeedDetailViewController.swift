@@ -35,14 +35,16 @@ final class FeedDetailViewController: BaseViewController {
 
     lazy var horizontalScrollView = HorizontalScrollView(horizontalWidth: UIScreen.main.bounds.size.width, horizontalHeight: UIScreen.main.bounds.size.width)
 
-    private lazy var userInfoView = UserInfoView().then {
+    lazy var userInfoView = UserInfoView().then {
         $0.userImageView.image = ImageLiteral.food2
     }
+
+    lazy var storeInfoView = StoreInfoView()
 
     // MARK: - life cycle
 
     override func render() {
-        view.addSubviews(horizontalScrollView, backButton, scrapButton, userInfoView)
+        view.addSubviews(horizontalScrollView, backButton, scrapButton, userInfoView, storeInfoView)
 
         horizontalScrollView.snp.makeConstraints {
             $0.top.leading.trailing.equalToSuperview()
@@ -65,6 +67,12 @@ final class FeedDetailViewController: BaseViewController {
             $0.top.equalTo(horizontalScrollView.snp.bottom)
             $0.leading.trailing.equalToSuperview()
             $0.height.equalTo(70)
+        }
+
+        storeInfoView.snp.makeConstraints {
+            $0.top.equalTo(userInfoView.snp.bottom)
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(100)
         }
     }
 
