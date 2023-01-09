@@ -33,6 +33,8 @@ final class UserInfoView: UIView {
 
     let followButton = MiniButton()
 
+    let optionButton = OptionButton()
+
     // MARK: - init
 
     override init(frame: CGRect) {
@@ -46,7 +48,7 @@ final class UserInfoView: UIView {
     }
 
     private func render() {
-        addSubviews(userImageView, userNameLabel, userFollowerLabel, followButton)
+        addSubviews(userImageView, userNameLabel, userFollowerLabel, optionButton, followButton)
 
         userImageView.snp.makeConstraints {
             $0.leading.equalToSuperview().inset(20)
@@ -62,6 +64,18 @@ final class UserInfoView: UIView {
         userFollowerLabel.snp.makeConstraints {
             $0.leading.equalTo(userImageView.snp.trailing).offset(16)
             $0.top.equalTo(userNameLabel.snp.bottom).offset(5)
+        }
+
+        optionButton.snp.makeConstraints {
+            $0.trailing.equalToSuperview().inset(20)
+            $0.centerY.equalToSuperview()
+        }
+
+        followButton.snp.makeConstraints {
+            $0.trailing.equalTo(optionButton.snp.leading).offset(-14)
+            $0.centerY.equalToSuperview()
+            $0.width.equalTo(60)
+            $0.height.equalTo(30)
         }
     }
 }
