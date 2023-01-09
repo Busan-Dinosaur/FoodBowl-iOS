@@ -13,7 +13,7 @@ import Then
 final class MainViewController: BaseViewController {
     private enum Size {
         static let cellWidth: CGFloat = UIScreen.main.bounds.size.width
-        static let cellHeight: CGFloat = cellWidth * 1.35
+        static let cellHeight: CGFloat = cellWidth * 1.6
         static let collectionInset = UIEdgeInsets(top: 0,
                                                   left: 0,
                                                   bottom: 20,

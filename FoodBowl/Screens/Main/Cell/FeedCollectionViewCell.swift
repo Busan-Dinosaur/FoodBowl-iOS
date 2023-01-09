@@ -15,6 +15,16 @@ final class FeedCollectionViewCell: BaseCollectionViewCell {
 
     let userInfoView = UserInfoView()
 
+    let commentLabel = UILabel().then {
+        $0.font = UIFont.preferredFont(forTextStyle: .subheadline, weight: .light)
+        $0.numberOfLines = 2
+        $0.textColor = .black
+        $0.text = """
+        이번에 학교 앞에 새로 생겼길래 가봤는데 너무 맛있었어요.
+        여기서 파는 라면 맛이 일품이에요.
+        """
+    }
+
     lazy var feedImageView = UIImageView().then {
         $0.backgroundColor = .gray
         $0.clipsToBounds = true
@@ -64,15 +74,21 @@ final class FeedCollectionViewCell: BaseCollectionViewCell {
     }
 
     override func render() {
-        contentView.addSubviews(userInfoView, feedImageView, storeNameLabel, categoryLabel, distanceLabel, dateLabel, scrapButton, chatButton, scrapLabel, chatLabel)
+        contentView.addSubviews(userInfoView, commentLabel, feedImageView, storeNameLabel, categoryLabel, distanceLabel, dateLabel, scrapButton, chatButton, scrapLabel, chatLabel)
 
         userInfoView.snp.makeConstraints {
             $0.top.leading.trailing.equalToSuperview()
-            $0.height.equalTo(70)
+            $0.height.equalTo(60)
+        }
+
+        commentLabel.snp.makeConstraints {
+            $0.leading.trailing.equalToSuperview().inset(20)
+            $0.top.equalTo(userInfoView.snp.bottom)
+            $0.height.equalTo(50)
         }
 
         feedImageView.snp.makeConstraints {
-            $0.top.equalTo(userInfoView.snp.bottom)
+            $0.top.equalTo(commentLabel.snp.bottom)
             $0.width.height.equalTo(UIScreen.main.bounds.size.width)
         }
 
