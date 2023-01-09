@@ -11,6 +11,8 @@ import SnapKit
 import Then
 
 final class FeedCollectionViewCell: BaseCollectionViewCell {
+    var images: [String] = ["image1", "image2", "image3"]
+
     // MARK: - property
 
     let userInfoView = UserInfoView()
@@ -25,11 +27,7 @@ final class FeedCollectionViewCell: BaseCollectionViewCell {
         """
     }
 
-    lazy var feedImageView = UIImageView().then {
-        $0.backgroundColor = .gray
-        $0.clipsToBounds = true
-        $0.contentMode = .scaleAspectFill
-    }
+    lazy var feedImageView = HorizontalScrollView(horizontalWidth: UIScreen.main.bounds.size.width, horizontalHeight: UIScreen.main.bounds.size.width)
 
     let storeNameLabel = UILabel().then {
         $0.font = UIFont.preferredFont(forTextStyle: .subheadline, weight: .medium)
@@ -133,5 +131,10 @@ final class FeedCollectionViewCell: BaseCollectionViewCell {
             $0.trailing.equalTo(chatButton.snp.trailing)
             $0.top.equalTo(chatButton.snp.bottom).offset(4)
         }
+    }
+
+    override func configUI() {
+        super.configUI()
+        feedImageView.model = [ImageLiteral.food1, ImageLiteral.food2, ImageLiteral.food3]
     }
 }
