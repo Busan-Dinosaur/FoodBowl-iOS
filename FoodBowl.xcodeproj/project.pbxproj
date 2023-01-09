@@ -60,6 +60,7 @@
 		CBC73110295550A200C7F198 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CBC7310E295550A200C7F198 /* LaunchScreen.storyboard */; };
 		CBE6190C296C635D005295AF /* MiniButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBE6190B296C635D005295AF /* MiniButton.swift */; };
 		CBE6190F296C6435005295AF /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBE6190E296C6435005295AF /* MapViewController.swift */; };
+		CBE61911296C6804005295AF /* OptionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBE61910296C6804005295AF /* OptionButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -115,6 +116,7 @@
 		CBC73111295550A200C7F198 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CBE6190B296C635D005295AF /* MiniButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniButton.swift; sourceTree = "<group>"; };
 		CBE6190E296C6435005295AF /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		CBE61910296C6804005295AF /* OptionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -233,6 +235,7 @@
 				CBADC27C29559BC900E56C93 /* PaddingLabel.swift */,
 				CBADC27A29559BC900E56C93 /* SendButton.swift */,
 				CBADC27D29559BC900E56C93 /* BackButton.swift */,
+				CBE61910296C6804005295AF /* OptionButton.swift */,
 				CB1BCAF42958AEE20021617D /* ScrapButton.swift */,
 				CB1A7C5D295618A900C6431D /* SettingButton.swift */,
 				CBADC2DF2955B92D00E56C93 /* MainButton.swift */,
@@ -515,6 +518,7 @@
 				CBADC29429559BC900E56C93 /* Notification+Extension.swift in Sources */,
 				CBADC2E02955B92D00E56C93 /* MainButton.swift in Sources */,
 				CBADC2B52955A18C00E56C93 /* SearchStoreViewController.swift in Sources */,
+				CBE61911296C6804005295AF /* OptionButton.swift in Sources */,
 				CBADC28E29559BC900E56C93 /* UIView+Extension.swift in Sources */,
 				CBADC2A029559BC900E56C93 /* PaddingLabel.swift in Sources */,
 				CBADC29C29559BC900E56C93 /* BaseCollectionViewCell.swift in Sources */,

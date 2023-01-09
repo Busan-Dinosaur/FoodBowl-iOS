@@ -27,7 +27,7 @@ final class UserInfoView: UIView {
 
     let userFollowerLabel = UILabel().then {
         $0.font = UIFont.preferredFont(forTextStyle: .footnote, weight: .light)
-        $0.textColor = .gray
+        $0.textColor = .subText
         $0.text = "팔로워 100명"
     }
 
@@ -46,7 +46,7 @@ final class UserInfoView: UIView {
     }
 
     private func render() {
-        addSubviews(userImageView, userNameLabel, userFollowerLabel)
+        addSubviews(userImageView, userNameLabel, userFollowerLabel, followButton)
 
         userImageView.snp.makeConstraints {
             $0.leading.equalToSuperview().inset(20)

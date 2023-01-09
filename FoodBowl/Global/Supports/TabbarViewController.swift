@@ -19,7 +19,7 @@ final class TabbarViewController: UITabBarController {
         mainViewController.tabBarItem.image = ImageLiteral.btnMain
         mainViewController.tabBarItem.title = "메인"
 
-        mapViewController.tabBarItem.image = ImageLiteral.btnMessage
+        mapViewController.tabBarItem.image = ImageLiteral.btnMap
         mapViewController.tabBarItem.title = "지도"
 
         searchViewController.tabBarItem.image = ImageLiteral.btnSearch
