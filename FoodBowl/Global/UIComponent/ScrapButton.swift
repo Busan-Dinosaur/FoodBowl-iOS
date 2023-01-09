@@ -24,6 +24,6 @@ final class ScrapButton: UIButton {
 
     private func configUI() {
         setImage(ImageLiteral.btnScrap, for: .normal)
-        tintColor = .mainBlack
+        tintColor = .mainPink
     }
 }

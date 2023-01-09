@@ -22,28 +22,7 @@ final class MainViewController: BaseViewController {
 
     private var refreshControl = UIRefreshControl()
 
-    private var selectedRegions: [String] = ["전체"]
-
     // MARK: - property
-
-    private lazy var regionTagButton = UIButton().then {
-        $0.tintColor = .black
-        $0.setTitle("전체 ", for: .normal)
-        $0.setTitleColor(.black, for: .normal)
-        $0.titleLabel?.font = .preferredFont(forTextStyle: .title3, weight: .medium)
-        $0.contentHorizontalAlignment = .left
-        $0.setImage(ImageLiteral.btnDown, for: .normal)
-        $0.semanticContentAttribute = .forceRightToLeft
-        let action = UIAction { [weak self] _ in
-            let regionViewController = RegionViewController()
-            regionViewController.modalPresentationStyle = .pageSheet
-            regionViewController.sheetPresentationController?.detents = [.medium()]
-            regionViewController.delegate = self
-
-            self?.present(regionViewController, animated: true, completion: nil)
-        }
-        $0.addAction(action, for: .touchUpInside)
-    }
 
     private let collectionViewFlowLayout = UICollectionViewFlowLayout().then {
         $0.scrollDirection = .vertical
@@ -78,13 +57,6 @@ final class MainViewController: BaseViewController {
         }
     }
 
-    override func setupNavigationBar() {
-        super.setupNavigationBar()
-
-        let regionTagView = makeBarButtonItem(with: regionTagButton)
-        navigationItem.leftBarButtonItem = regionTagView
-    }
-
     private func setupRefreshControl() {
         let action = UIAction { [weak self] _ in
             self?.loadData()
@@ -94,16 +66,7 @@ final class MainViewController: BaseViewController {
         listCollectionView.refreshControl = refreshControl
     }
 
-    private func loadData() {
-        guard let regions = UserDefaults.standard.stringArray(forKey: "regions") else { return }
-        selectedRegions = regions
-
-        if selectedRegions.isEmpty {
-            selectedRegions = ["전체"]
-        }
-        let count = selectedRegions.count == 1 ? "" : "외 \(selectedRegions.count - 1)곳"
-        regionTagButton.setTitle("\(selectedRegions[0]) \(count) ", for: .normal)
-    }
+    private func loadData() {}
 }
 
 // MARK: - UICollectionViewDataSource, UICollectionViewDelegate

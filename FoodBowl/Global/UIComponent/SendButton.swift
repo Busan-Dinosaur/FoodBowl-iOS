@@ -24,6 +24,6 @@ final class SendButton: UIButton {
 
     private func configUI() {
         setImage(ImageLiteral.btnSend, for: .normal)
-        tintColor = .mainBlack
+        tintColor = .black
     }
 }

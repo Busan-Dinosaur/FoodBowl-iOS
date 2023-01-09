@@ -24,6 +24,6 @@ final class SettingButton: UIButton {
 
     private func configUI() {
         setImage(ImageLiteral.btnSetting, for: .normal)
-        tintColor = .mainBlack
+        tintColor = .black
     }
 }

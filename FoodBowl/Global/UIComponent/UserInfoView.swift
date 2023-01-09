@@ -31,6 +31,8 @@ final class UserInfoView: UIView {
         $0.text = "팔로워 100명"
     }
 
+    let followButton = MiniButton()
+
     // MARK: - init
 
     override init(frame: CGRect) {
