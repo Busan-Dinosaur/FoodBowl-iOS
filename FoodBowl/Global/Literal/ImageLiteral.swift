@@ -21,8 +21,11 @@ enum ImageLiteral {
     static var btnFoward: UIImage { .load(systemName: "chevron.forward") }
     static var btnCamera: UIImage { .load(systemName: "camera") }
     static var btnSend: UIImage { .load(systemName: "paperplane") }
+    static var btnScrap: UIImage { .load(systemName: "bookmark") }
 
-    // MARK: - icon
+    static var food1: UIImage { .load(name: "food1") }
+    static var food2: UIImage { .load(name: "food2") }
+    static var food3: UIImage { .load(name: "food3") }
 }
 
 extension UIImage {

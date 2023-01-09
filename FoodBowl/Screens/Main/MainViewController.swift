@@ -118,10 +118,18 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
             return UICollectionViewCell()
         }
 
+        cell.userInfoView.userImageView.image = ImageLiteral.food2
+        cell.feedImageView.image = ImageLiteral.food1
+
         return cell
     }
 
-    func collectionView(_: UICollectionView, didSelectItemAt _: IndexPath) {}
+    func collectionView(_: UICollectionView, didSelectItemAt _: IndexPath) {
+        let feedDetailViewController = FeedDetailViewController()
+        feedDetailViewController.modalPresentationStyle = .fullScreen
+        feedDetailViewController.modalTransitionStyle = .crossDissolve
+        present(feedDetailViewController, animated: true, completion: nil)
+    }
 }
 
 extension MainViewController {
