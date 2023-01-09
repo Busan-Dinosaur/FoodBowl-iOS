@@ -1,5 +1,5 @@
 //
-//  PlusButton.swift
+//  ChatButton.swift
 //  FoodBowl
 //
 //  Created by COBY_PRO on 2023/01/10.
@@ -7,11 +7,11 @@
 
 import UIKit
 
-final class PlusButton: UIButton {
+final class ChatButton: UIButton {
     // MARK: - init
 
     override init(frame _: CGRect) {
-        super.init(frame: .init(origin: .zero, size: .init(width: 24, height: 24)))
+        super.init(frame: .init(origin: .zero, size: .init(width: 20, height: 20)))
         configUI()
     }
 
@@ -23,7 +23,7 @@ final class PlusButton: UIButton {
     // MARK: - life cycle
 
     private func configUI() {
-        setImage(ImageLiteral.btnPlus.resize(to: CGSize(width: 24, height: 24)), for: .normal)
-        tintColor = .black
+        setImage(ImageLiteral.btnChat.resize(to: CGSize(width: 20, height: 20)), for: .normal)
+        tintColor = .mainPink
     }
 }
