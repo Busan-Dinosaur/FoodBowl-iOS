@@ -72,21 +72,15 @@ final class FeedCollectionViewCell: BaseCollectionViewCell {
     }
 
     override func render() {
-        contentView.addSubviews(userInfoView, commentLabel, feedImageView, storeNameLabel, categoryLabel, distanceLabel, dateLabel, scrapButton, chatButton, scrapLabel, chatLabel)
+        contentView.addSubviews(userInfoView, feedImageView, storeNameLabel, categoryLabel, distanceLabel, dateLabel, scrapButton, chatButton, scrapLabel, chatLabel, commentLabel)
 
         userInfoView.snp.makeConstraints {
             $0.top.leading.trailing.equalToSuperview()
             $0.height.equalTo(60)
         }
 
-        commentLabel.snp.makeConstraints {
-            $0.leading.trailing.equalToSuperview().inset(20)
-            $0.top.equalTo(userInfoView.snp.bottom)
-            $0.height.equalTo(50)
-        }
-
         feedImageView.snp.makeConstraints {
-            $0.top.equalTo(commentLabel.snp.bottom)
+            $0.top.equalTo(userInfoView.snp.bottom)
             $0.width.height.equalTo(UIScreen.main.bounds.size.width)
         }
 
@@ -112,7 +106,7 @@ final class FeedCollectionViewCell: BaseCollectionViewCell {
 
         scrapButton.snp.makeConstraints {
             $0.trailing.equalToSuperview().inset(20)
-            $0.top.equalTo(feedImageView.snp.bottom).offset(14)
+            $0.top.equalTo(feedImageView.snp.bottom).offset(12)
         }
 
         scrapLabel.snp.makeConstraints {
@@ -123,13 +117,19 @@ final class FeedCollectionViewCell: BaseCollectionViewCell {
 
         chatButton.snp.makeConstraints {
             $0.trailing.equalTo(scrapButton.snp.leading).offset(-20)
-            $0.top.equalTo(feedImageView.snp.bottom).offset(14)
+            $0.top.equalTo(feedImageView.snp.bottom).offset(12)
         }
 
         chatLabel.snp.makeConstraints {
             $0.leading.equalTo(chatButton.snp.leading)
             $0.trailing.equalTo(chatButton.snp.trailing)
             $0.top.equalTo(chatButton.snp.bottom).offset(4)
+        }
+
+        commentLabel.snp.makeConstraints {
+            $0.leading.trailing.equalToSuperview().inset(20)
+            $0.top.equalTo(categoryLabel.snp.bottom).offset(10)
+            $0.height.equalTo(50)
         }
     }
 
