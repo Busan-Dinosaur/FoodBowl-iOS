@@ -263,7 +263,6 @@
 		CBADC2A32955A05B00E56C93 /* Search */ = {
 			isa = PBXGroup;
 			children = (
-				CBADC2BF2955A25600E56C93 /* Cell */,
 				CBADC2A82955A0CB00E56C93 /* SearchViewController.swift */,
 				CBADC2BC2955A22D00E56C93 /* SearchResultViewController.swift */,
 			);
@@ -274,6 +273,7 @@
 			isa = PBXGroup;
 			children = (
 				CB1A7C5F29561B8400C6431D /* UIComponent */,
+				CBADC2BF2955A25600E56C93 /* Cell */,
 				CBADC2AC2955A0FF00E56C93 /* ProfileViewController.swift */,
 			);
 			path = Profile;

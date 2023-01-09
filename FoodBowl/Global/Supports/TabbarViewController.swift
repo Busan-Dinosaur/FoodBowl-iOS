@@ -36,6 +36,17 @@ final class TabbarViewController: UITabBarController {
             searchViewController,
             profileViewController
         ], animated: true)
+
+        if #available(iOS 13.0, *) {
+            let tabBarAppearance: UITabBarAppearance = .init()
+            tabBarAppearance.configureWithDefaultBackground()
+            tabBarAppearance.backgroundColor = .white
+            UITabBar.appearance().standardAppearance = tabBarAppearance
+
+            if #available(iOS 15.0, *) {
+                UITabBar.appearance().scrollEdgeAppearance = tabBarAppearance
+            }
+        }
     }
 
     override func viewWillAppear(_ animated: Bool) {
