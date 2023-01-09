@@ -22,7 +22,7 @@ enum ImageLiteral {
     static var btnCamera: UIImage { .load(systemName: "camera") }
     static var btnSend: UIImage { .load(systemName: "paperplane") }
     static var btnScrap: UIImage { .load(name: "scrap_off") }
-    static var btnPlus: UIImage { .load(name: "plus") }
+    static var btnPlus: UIImage { .load(name: "plus.circle") }
     static var btnOption: UIImage { .load(name: "option") }
 
     static var food1: UIImage { .load(name: "food1") }

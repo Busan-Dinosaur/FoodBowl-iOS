@@ -41,6 +41,13 @@ final class MainViewController: BaseViewController {
 
     private let emptyFeedView = EmptyFeedView()
 
+    private let appLogoView = UILabel().then {
+        $0.font = UIFont.preferredFont(forTextStyle: .title1, weight: .bold)
+        $0.text = "FoodBowl"
+    }
+
+    private let plusButton = PlusButton()
+
     // MARK: - life cycle
 
     override func viewDidLoad() {
@@ -55,6 +62,15 @@ final class MainViewController: BaseViewController {
         listCollectionView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
+    }
+
+    override func setupNavigationBar() {
+        super.setupNavigationBar()
+
+        let appLogoView = makeBarButtonItem(with: appLogoView)
+        let plusButton = makeBarButtonItem(with: plusButton)
+        navigationItem.leftBarButtonItem = appLogoView
+        navigationItem.rightBarButtonItem = plusButton
     }
 
     private func setupRefreshControl() {

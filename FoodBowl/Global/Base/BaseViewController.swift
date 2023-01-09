@@ -41,6 +41,11 @@ class BaseViewController: UIViewController {
         NotificationCenter.default.removeObserver(self)
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setupInteractivePopGestureRecognizer()
+    }
+
     func render() {
         // Override Layout
     }
