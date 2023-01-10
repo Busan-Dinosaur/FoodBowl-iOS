@@ -12,8 +12,6 @@ import Then
 
 final class MainViewController: BaseViewController {
     private enum Size {
-        static let cellWidth: CGFloat = UIScreen.main.bounds.size.width
-        static let cellHeight: CGFloat = cellWidth * 1.6
         static let collectionInset = UIEdgeInsets(top: 0,
                                                   left: 0,
                                                   bottom: 20,
@@ -24,18 +22,15 @@ final class MainViewController: BaseViewController {
 
     // MARK: - property
 
-    private let collectionViewFlowLayout = UICollectionViewFlowLayout().then {
-        $0.scrollDirection = .vertical
+    private let collectionViewFlowLayout = DynamicHeightCollectionViewFlowLayout().then {
         $0.sectionInset = Size.collectionInset
-        $0.itemSize = CGSize(width: Size.cellWidth, height: Size.cellHeight)
         $0.minimumLineSpacing = 10
+        $0.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
     }
 
     private lazy var listCollectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewFlowLayout).then {
-        $0.backgroundColor = .white
         $0.dataSource = self
         $0.delegate = self
-        $0.showsVerticalScrollIndicator = false
         $0.register(FeedCollectionViewCell.self, forCellWithReuseIdentifier: FeedCollectionViewCell.className)
     }
 

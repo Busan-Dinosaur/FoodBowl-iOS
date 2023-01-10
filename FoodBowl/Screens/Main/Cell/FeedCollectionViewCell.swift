@@ -23,7 +23,6 @@ final class FeedCollectionViewCell: BaseCollectionViewCell {
         $0.textColor = .black
         $0.text = """
         이번에 학교 앞에 새로 생겼길래 가봤는데 너무 맛있었어요.
-        여기서 파는 라면 맛이 일품이에요.
         """
     }
 
@@ -129,12 +128,22 @@ final class FeedCollectionViewCell: BaseCollectionViewCell {
         commentLabel.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview().inset(20)
             $0.top.equalTo(categoryLabel.snp.bottom).offset(10)
-            $0.height.equalTo(50)
+            $0.bottom.equalToSuperview().inset(10)
         }
     }
 
     override func configUI() {
         super.configUI()
         feedImageView.model = [ImageLiteral.food1, ImageLiteral.food2, ImageLiteral.food3]
+    }
+    
+    override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
+        super.preferredLayoutAttributesFitting(layoutAttributes)
+        
+        let targetSize = CGSize(width: layoutAttributes.frame.width, height: 0)
+        
+        layoutAttributes.frame.size = contentView.systemLayoutSizeFitting(targetSize, withHorizontalFittingPriority: .required, verticalFittingPriority: .fittingSizeLevel)
+        print(layoutAttributes)
+        return layoutAttributes
     }
 }
