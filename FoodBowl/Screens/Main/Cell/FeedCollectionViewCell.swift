@@ -20,7 +20,6 @@ final class FeedCollectionViewCell: BaseCollectionViewCell {
     let commentLabel = UILabel().then {
         $0.font = UIFont.preferredFont(forTextStyle: .subheadline, weight: .light)
         $0.numberOfLines = 2
-        $0.textColor = .black
         $0.text = """
         이번에 학교 앞에 새로 생겼길래 가봤는데 너무 맛있었어요.
         """
@@ -71,21 +70,26 @@ final class FeedCollectionViewCell: BaseCollectionViewCell {
     }
 
     override func render() {
-        contentView.addSubviews(userInfoView, feedImageView, storeNameLabel, categoryLabel, distanceLabel, dateLabel, scrapButton, chatButton, scrapLabel, chatLabel, commentLabel)
+        contentView.addSubviews(userInfoView, commentLabel, feedImageView, storeNameLabel, categoryLabel, distanceLabel, dateLabel, scrapButton, chatButton, scrapLabel, chatLabel)
 
         userInfoView.snp.makeConstraints {
             $0.top.leading.trailing.equalToSuperview()
             $0.height.equalTo(60)
         }
 
+        commentLabel.snp.makeConstraints {
+            $0.top.equalTo(userInfoView.snp.bottom).offset(4)
+            $0.leading.trailing.equalToSuperview().inset(20)
+        }
+
         feedImageView.snp.makeConstraints {
-            $0.top.equalTo(userInfoView.snp.bottom)
+            $0.top.equalTo(commentLabel.snp.bottom).offset(10)
             $0.width.height.equalTo(UIScreen.main.bounds.size.width)
         }
 
         storeNameLabel.snp.makeConstraints {
             $0.leading.equalToSuperview().inset(20)
-            $0.top.equalTo(feedImageView.snp.bottom).offset(16)
+            $0.top.equalTo(feedImageView.snp.bottom).offset(12)
         }
 
         categoryLabel.snp.makeConstraints {
@@ -105,7 +109,7 @@ final class FeedCollectionViewCell: BaseCollectionViewCell {
 
         scrapButton.snp.makeConstraints {
             $0.trailing.equalToSuperview().inset(20)
-            $0.top.equalTo(feedImageView.snp.bottom).offset(12)
+            $0.top.equalTo(feedImageView.snp.bottom).offset(10)
         }
 
         scrapLabel.snp.makeConstraints {
@@ -116,19 +120,14 @@ final class FeedCollectionViewCell: BaseCollectionViewCell {
 
         chatButton.snp.makeConstraints {
             $0.trailing.equalTo(scrapButton.snp.leading).offset(-20)
-            $0.top.equalTo(feedImageView.snp.bottom).offset(12)
+            $0.top.equalTo(feedImageView.snp.bottom).offset(10)
         }
 
         chatLabel.snp.makeConstraints {
             $0.leading.equalTo(chatButton.snp.leading)
             $0.trailing.equalTo(chatButton.snp.trailing)
             $0.top.equalTo(chatButton.snp.bottom).offset(4)
-        }
-
-        commentLabel.snp.makeConstraints {
-            $0.leading.trailing.equalToSuperview().inset(20)
-            $0.top.equalTo(categoryLabel.snp.bottom).offset(10)
-            $0.bottom.equalToSuperview().inset(10)
+            $0.bottom.equalToSuperview().inset(30)
         }
     }
 
@@ -136,12 +135,12 @@ final class FeedCollectionViewCell: BaseCollectionViewCell {
         super.configUI()
         feedImageView.model = [ImageLiteral.food1, ImageLiteral.food2, ImageLiteral.food3]
     }
-    
+
     override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
         super.preferredLayoutAttributesFitting(layoutAttributes)
-        
+
         let targetSize = CGSize(width: layoutAttributes.frame.width, height: 0)
-        
+
         layoutAttributes.frame.size = contentView.systemLayoutSizeFitting(targetSize, withHorizontalFittingPriority: .required, verticalFittingPriority: .fittingSizeLevel)
         print(layoutAttributes)
         return layoutAttributes
