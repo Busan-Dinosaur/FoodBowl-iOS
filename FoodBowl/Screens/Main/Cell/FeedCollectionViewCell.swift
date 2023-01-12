@@ -12,17 +12,26 @@ import Then
 
 final class FeedCollectionViewCell: BaseCollectionViewCell {
     var images: [String] = ["image1", "image2", "image3"]
+    var collapsed = true {
+        didSet {
+            commentLabel.numberOfLines = collapsed ? 2 : 0
+            commentLabel.invalidateIntrinsicContentSize()
+            commentLabel.setNeedsLayout()
+            commentLabel.setNeedsDisplay()
+            commentLabel.layoutIfNeeded()
+        }
+    }
 
     // MARK: - property
 
     let userInfoView = UserInfoView()
 
-    let commentLabel = UILabel().then {
+    lazy var commentLabel = UILabel().then {
         $0.font = UIFont.preferredFont(forTextStyle: .subheadline, weight: .light)
         $0.numberOfLines = 2
-        $0.text = """
-        이번에 학교 앞에 새로 생겼길래 가봤는데 너무 맛있었어요.
-        """
+        let tap = UITapGestureRecognizer(target: self, action: #selector(invalidate))
+        $0.isUserInteractionEnabled = true
+        $0.addGestureRecognizer(tap)
     }
 
     lazy var feedImageView = HorizontalScrollView(horizontalWidth: UIScreen.main.bounds.size.width, horizontalHeight: UIScreen.main.bounds.size.width)
@@ -67,5 +76,11 @@ final class FeedCollectionViewCell: BaseCollectionViewCell {
         layoutAttributes.frame.size = contentView.systemLayoutSizeFitting(targetSize, withHorizontalFittingPriority: .required, verticalFittingPriority: .fittingSizeLevel)
         print(layoutAttributes)
         return layoutAttributes
+    }
+    
+    @objc private func invalidate() {
+        collapsed = !collapsed
+        guard let collection = superview as? UICollectionView else { return }
+        collection.collectionViewLayout.invalidateLayout()
     }
 }

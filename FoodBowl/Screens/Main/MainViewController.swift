@@ -93,6 +93,11 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
         }
 
         cell.userInfoView.userImageView.image = ImageLiteral.food2
+        cell.commentLabel.text = """
+        이번에 학교 앞에 새로 생겼길래 가봤는데 너무 맛있었어요.
+        이번에 학교 앞에 새로 생겼길래 가봤는데 너무 맛있었어요.
+        이번에 학교 앞에 새로 생겼길래 가봤는데 너무 맛있었어요.
+        """
 
         return cell
     }
