@@ -11,9 +11,9 @@ enum ImageLiteral {
     // MARK: - button
 
     static var btnMain: UIImage { .load(systemName: "house") }
+    static var btnMap: UIImage { .load(systemName: "map") }
     static var btnSearch: UIImage { .load(systemName: "magnifyingglass") }
-    static var btnMessage: UIImage { .load(systemName: "message") }
-    static var btnProfile: UIImage { .load(systemName: "person.crop.circle") }
+    static var btnProfile: UIImage { .load(systemName: "person") }
 
     static var btnSetting: UIImage { .load(systemName: "gearshape") }
     static var btnBack: UIImage { .load(systemName: "chevron.backward") }
@@ -21,7 +21,10 @@ enum ImageLiteral {
     static var btnFoward: UIImage { .load(systemName: "chevron.forward") }
     static var btnCamera: UIImage { .load(systemName: "camera") }
     static var btnSend: UIImage { .load(systemName: "paperplane") }
-    static var btnScrap: UIImage { .load(systemName: "bookmark") }
+    static var btnScrap: UIImage { .load(name: "scrap_off") }
+    static var btnChat: UIImage { .load(name: "chat") }
+    static var btnPlus: UIImage { .load(name: "plus.circle") }
+    static var btnOption: UIImage { .load(name: "option") }
 
     static var food1: UIImage { .load(name: "food1") }
     static var food2: UIImage { .load(name: "food2") }

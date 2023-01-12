@@ -1,8 +1,8 @@
 //
-//  MainButton.swift
+//  MiniButton.swift
 //  FoodBowl
 //
-//  Created by COBY_PRO on 2022/12/23.
+//  Created by COBY_PRO on 2023/01/09.
 //
 
 import UIKit
@@ -10,13 +10,14 @@ import UIKit
 import SnapKit
 import Then
 
-final class MainButton: UIButton {
+final class MiniButton: UIButton {
     // MARK: - property
 
     let label = UILabel().then {
         let label = UILabel()
         $0.textColor = .white
-        $0.font = UIFont.preferredFont(forTextStyle: .body, weight: .medium)
+        $0.font = UIFont.preferredFont(forTextStyle: .footnote, weight: .medium)
+        $0.text = "팔로우"
     }
 
     // MARK: - init
@@ -44,7 +45,7 @@ final class MainButton: UIButton {
 
     private func configUI() {
         backgroundColor = .mainPink
-        layer.cornerRadius = 30
+        layer.cornerRadius = 15
         layer.masksToBounds = false
     }
 }

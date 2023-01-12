@@ -1,17 +1,17 @@
 //
-//  SendButton.swift
+//  PlusButton.swift
 //  FoodBowl
 //
-//  Created by COBY_PRO on 2022/12/23.
+//  Created by COBY_PRO on 2023/01/10.
 //
 
 import UIKit
 
-final class SendButton: UIButton {
+final class PlusButton: UIButton {
     // MARK: - init
 
     override init(frame _: CGRect) {
-        super.init(frame: .init(origin: .zero, size: .init(width: 44, height: 44)))
+        super.init(frame: .init(origin: .zero, size: .init(width: 22, height: 22)))
         configUI()
     }
 
@@ -23,7 +23,7 @@ final class SendButton: UIButton {
     // MARK: - life cycle
 
     private func configUI() {
-        setImage(ImageLiteral.btnSend, for: .normal)
+        setImage(ImageLiteral.btnPlus.resize(to: CGSize(width: 22, height: 22)), for: .normal)
         tintColor = .black
     }
 }

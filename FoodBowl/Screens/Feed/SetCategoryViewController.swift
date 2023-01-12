@@ -1,8 +1,8 @@
 //
-//  MessageRoomViewController.swift
+//  SetCategoryViewController.swift
 //  FoodBowl
 //
-//  Created by COBY_PRO on 2022/12/23.
+//  Created by COBY_PRO on 2023/01/10.
 //
 
 import UIKit
@@ -10,12 +10,12 @@ import UIKit
 import SnapKit
 import Then
 
-final class MessageRoomViewController: BaseViewController {
+final class SetCategoryViewController: BaseViewController {
     // MARK: - property
 
     private let screenText = UILabel().then {
         $0.textColor = .red
-        $0.text = "MessageRoom"
+        $0.text = "SetCategory"
     }
 
     // MARK: - life cycle

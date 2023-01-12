@@ -9,8 +9,8 @@ import UIKit
 
 final class TabbarViewController: UITabBarController {
     private let mainViewController = UINavigationController(rootViewController: MainViewController())
+    private let mapViewController = UINavigationController(rootViewController: MapViewController())
     private let searchViewController = UINavigationController(rootViewController: SearchViewController())
-    private let messageViewController = UINavigationController(rootViewController: MessageViewController())
     private let profileViewController = UINavigationController(rootViewController: ProfileViewController())
 
     override func viewDidLoad() {
@@ -19,11 +19,11 @@ final class TabbarViewController: UITabBarController {
         mainViewController.tabBarItem.image = ImageLiteral.btnMain
         mainViewController.tabBarItem.title = "메인"
 
+        mapViewController.tabBarItem.image = ImageLiteral.btnMap
+        mapViewController.tabBarItem.title = "지도"
+
         searchViewController.tabBarItem.image = ImageLiteral.btnSearch
         searchViewController.tabBarItem.title = "검색"
-
-        messageViewController.tabBarItem.image = ImageLiteral.btnMessage
-        messageViewController.tabBarItem.title = "메세지"
 
         profileViewController.tabBarItem.image = ImageLiteral.btnProfile
         profileViewController.tabBarItem.title = "프로필"
@@ -32,10 +32,21 @@ final class TabbarViewController: UITabBarController {
         tabBar.backgroundColor = .white
         setViewControllers([
             mainViewController,
+            mapViewController,
             searchViewController,
-            messageViewController,
             profileViewController
         ], animated: true)
+
+        if #available(iOS 13.0, *) {
+            let tabBarAppearance: UITabBarAppearance = .init()
+            tabBarAppearance.configureWithDefaultBackground()
+            tabBarAppearance.backgroundColor = .white
+            UITabBar.appearance().standardAppearance = tabBarAppearance
+
+            if #available(iOS 15.0, *) {
+                UITabBar.appearance().scrollEdgeAppearance = tabBarAppearance
+            }
+        }
     }
 
     override func viewWillAppear(_ animated: Bool) {
