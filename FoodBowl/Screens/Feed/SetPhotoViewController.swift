@@ -1,5 +1,5 @@
 //
-//  SetPhotoViewCotroller.swift
+//  SetPhotoViewController.swift
 //  FoodBowl
 //
 //  Created by COBY_PRO on 2022/12/23.
@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 import Then
 
-final class SetPhotoViewCotroller: BaseViewController {
+final class SetPhotoViewController: BaseViewController {
     // MARK: - property
 
     private let screenText = UILabel().then {

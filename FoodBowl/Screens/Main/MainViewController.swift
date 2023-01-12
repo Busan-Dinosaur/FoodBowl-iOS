@@ -41,7 +41,17 @@ final class MainViewController: BaseViewController {
         $0.text = "FoodBowl"
     }
 
-    private let plusButton = PlusButton()
+    private lazy var plusButton = PlusButton().then {
+        let action = UIAction { [weak self] _ in
+            let addFeedViewController = AddFeedViewController()
+            let navigationController = UINavigationController(rootViewController: addFeedViewController)
+            navigationController.modalPresentationStyle = .overFullScreen
+            DispatchQueue.main.async {
+                self?.present(navigationController,animated: true)
+            }
+        }
+        $0.addAction(action, for: .touchUpInside)
+    }
 
     // MARK: - life cycle
 
