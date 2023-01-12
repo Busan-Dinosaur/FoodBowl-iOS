@@ -90,7 +90,8 @@ class AddFeedViewController: BaseViewController {
     override func setupNavigationBar() {
         super.setupNavigationBar()
 
-        let closeButton = makeBarButtonItem(with: closeButton)
+        let leftOffsetCloseButton = removeBarButtonItemOffset(with: closeButton, offsetX: 10)
+        let closeButton = makeBarButtonItem(with: leftOffsetCloseButton)
         let nextButton = makeBarButtonItem(with: nextButton)
         navigationItem.leftBarButtonItem = closeButton
         navigationItem.rightBarButtonItem = nextButton
@@ -98,9 +99,11 @@ class AddFeedViewController: BaseViewController {
     }
     
     private func updateNavigationBar(currentPage: Int) {
-        let backButton = makeBarButtonItem(with: backButton)
+        let leftOffsetBackButton = removeBarButtonItemOffset(with: backButton, offsetX: 10)
+        let backButton = makeBarButtonItem(with: leftOffsetBackButton)
+        let leftOffsetCloseButton = removeBarButtonItemOffset(with: closeButton, offsetX: 10)
+        let closeButton = makeBarButtonItem(with: leftOffsetCloseButton)
         let nextButton = makeBarButtonItem(with: nextButton)
-        let closeButton = makeBarButtonItem(with: closeButton)
         let completeButton = makeBarButtonItem(with: completeButton)
         
         switch currentPage {
