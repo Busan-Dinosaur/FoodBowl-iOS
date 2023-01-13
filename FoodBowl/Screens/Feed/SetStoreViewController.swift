@@ -11,19 +11,66 @@ import SnapKit
 import Then
 
 final class SetStoreViewController: BaseViewController {
+    var selectedStore: Place?
     // MARK: - property
 
-    private let screenText = UILabel().then {
-        $0.textColor = .red
-        $0.text = "SetStore"
+    private let guideLabel = UILabel().then {
+        $0.numberOfLines = 0
+        let guide = NSAttributedString(string: "피드를 작성할\n가게를 찾아보세요.").withLineSpacing(10)
+        $0.attributedText = guide
+        $0.font = UIFont.preferredFont(forTextStyle: .title3, weight: .medium)
+    }
+    
+    lazy var searchBarButton = SearchBarButton().then {
+        $0.label.text = "가게 검색"
+        let action = UIAction { [weak self] _ in
+            let searchStoreViewController = SearchStoreViewController()
+            searchStoreViewController.modalPresentationStyle = .pageSheet
+//            searchStoreViewController.sheetPresentationController?.detents = [.medium()]
+            searchStoreViewController.delegate = self
+            self?.present(searchStoreViewController, animated: true, completion: nil)
+        }
+        $0.addAction(action, for: .touchUpInside)
+    }
+    
+    let selectedStoreView = SelectedStoreView().then {
+        $0.isHidden = true
     }
 
     // MARK: - life cycle
 
     override func render() {
-        view.addSubview(screenText)
-        screenText.snp.makeConstraints {
-            $0.centerX.centerY.equalToSuperview()
+        view.addSubviews(guideLabel, searchBarButton, selectedStoreView)
+        
+        guideLabel.snp.makeConstraints {
+            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).inset(20)
+            $0.leading.equalToSuperview().inset(20)
         }
+        
+        searchBarButton.snp.makeConstraints {
+            $0.top.equalTo(guideLabel.snp.bottom).offset(20)
+            $0.leading.trailing.equalToSuperview().inset(20)
+            $0.height.equalTo(50)
+        }
+        
+        selectedStoreView.snp.makeConstraints {
+            $0.top.equalTo(searchBarButton.snp.bottom).offset(10)
+            $0.leading.trailing.equalToSuperview().inset(20)
+            $0.height.equalTo(70)
+        }
+    }
+}
+
+protocol SearchStoreViewControllerDelegate: AnyObject {
+    func setStore(store: Place)
+}
+
+extension SetStoreViewController: SearchStoreViewControllerDelegate {
+    func setStore(store: Place) {
+        selectedStore = store
+        searchBarButton.label.text = "가게 재검색"
+        selectedStoreView.storeNameLabel.text = selectedStore?.placeName
+        selectedStoreView.storeAdressLabel.text = selectedStore?.address
+        selectedStoreView.isHidden = false
     }
 }

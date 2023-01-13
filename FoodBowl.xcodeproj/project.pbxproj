@@ -59,6 +59,10 @@
 		CBC73110295550A200C7F198 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CBC7310E295550A200C7F198 /* LaunchScreen.storyboard */; };
 		CBDE38F92970745600DDE49A /* AddFeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDE38F82970745600DDE49A /* AddFeedViewController.swift */; };
 		CBDE38FB2970774800DDE49A /* CloseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDE38FA2970774800DDE49A /* CloseButton.swift */; };
+		CBDE38FD29715C5F00DDE49A /* SearchBarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDE38FC29715C5F00DDE49A /* SearchBarButton.swift */; };
+		CBDE39022971947B00DDE49A /* StoreInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDE39012971947B00DDE49A /* StoreInfoTableViewCell.swift */; };
+		CBDE390529719B9700DDE49A /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDE390429719B9700DDE49A /* Place.swift */; };
+		CBDE390729719CB400DDE49A /* SelectedStoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDE390629719CB400DDE49A /* SelectedStoreView.swift */; };
 		CBE6190C296C635D005295AF /* MiniButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBE6190B296C635D005295AF /* MiniButton.swift */; };
 		CBE6190F296C6435005295AF /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBE6190E296C6435005295AF /* MapViewController.swift */; };
 		CBE61911296C6804005295AF /* OptionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBE61910296C6804005295AF /* OptionButton.swift */; };
@@ -119,6 +123,10 @@
 		CBC73111295550A200C7F198 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CBDE38F82970745600DDE49A /* AddFeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFeedViewController.swift; sourceTree = "<group>"; };
 		CBDE38FA2970774800DDE49A /* CloseButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloseButton.swift; sourceTree = "<group>"; };
+		CBDE38FC29715C5F00DDE49A /* SearchBarButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBarButton.swift; sourceTree = "<group>"; };
+		CBDE39012971947B00DDE49A /* StoreInfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreInfoTableViewCell.swift; sourceTree = "<group>"; };
+		CBDE390429719B9700DDE49A /* Place.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Place.swift; sourceTree = "<group>"; };
+		CBDE390629719CB400DDE49A /* SelectedStoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedStoreView.swift; sourceTree = "<group>"; };
 		CBE6190B296C635D005295AF /* MiniButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniButton.swift; sourceTree = "<group>"; };
 		CBE6190E296C6435005295AF /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		CBE61910296C6804005295AF /* OptionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionButton.swift; sourceTree = "<group>"; };
@@ -152,6 +160,7 @@
 		CB1A7C66295767F000C6431D /* UIComponent */ = {
 			isa = PBXGroup;
 			children = (
+				CBDE390629719CB400DDE49A /* SelectedStoreView.swift */,
 			);
 			path = UIComponent;
 			sourceTree = "<group>";
@@ -252,6 +261,7 @@
 				CBADC2DF2955B92D00E56C93 /* MainButton.swift */,
 				CB1A7C6229561CF300C6431D /* SubButton.swift */,
 				CBE6190B296C635D005295AF /* MiniButton.swift */,
+				CBDE38FC29715C5F00DDE49A /* SearchBarButton.swift */,
 				CB1A7C5B29560C2300C6431D /* UserInfoView.swift */,
 				CB1BCAF62958B15B0021617D /* StoreInfoView.swift */,
 			);
@@ -291,6 +301,7 @@
 			isa = PBXGroup;
 			children = (
 				CB1A7C66295767F000C6431D /* UIComponent */,
+				CBDE39002971945300DDE49A /* Cell */,
 				CBDE38F82970745600DDE49A /* AddFeedViewController.swift */,
 				CBADC2B22955A16A00E56C93 /* SetStoreViewController.swift */,
 				CBADC2B42955A18C00E56C93 /* SearchStoreViewController.swift */,
@@ -358,10 +369,27 @@
 		CBC73102295550A100C7F198 /* FoodBowl */ = {
 			isa = PBXGroup;
 			children = (
+				CBDE390329719B8100DDE49A /* Models */,
 				CBADC2B12955A14C00E56C93 /* Screens */,
 				CBADC25129559BC900E56C93 /* Global */,
 			);
 			path = FoodBowl;
+			sourceTree = "<group>";
+		};
+		CBDE39002971945300DDE49A /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				CBDE39012971947B00DDE49A /* StoreInfoTableViewCell.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		CBDE390329719B8100DDE49A /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				CBDE390429719B9700DDE49A /* Place.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		CBE6190D296C6423005295AF /* Map */ = {
@@ -521,6 +549,7 @@
 				CBC73106295550A100C7F198 /* SceneDelegate.swift in Sources */,
 				CB1BCAF52958AEE20021617D /* ScrapButton.swift in Sources */,
 				CBE61917296C7C1F005295AF /* SetCategoryViewController.swift in Sources */,
+				CBDE39022971947B00DDE49A /* StoreInfoTableViewCell.swift in Sources */,
 				CBADC29529559BC900E56C93 /* UITextView+Extension.swift in Sources */,
 				CBADC29229559BC900E56C93 /* Sequence+Extension.swift in Sources */,
 				CBADC29029559BC900E56C93 /* UIViewController+Extension.swift in Sources */,
@@ -541,11 +570,14 @@
 				CBADC29C29559BC900E56C93 /* BaseCollectionViewCell.swift in Sources */,
 				CB1A7C5C29560C2300C6431D /* UserInfoView.swift in Sources */,
 				CBDE38F92970745600DDE49A /* AddFeedViewController.swift in Sources */,
+				CBDE390729719CB400DDE49A /* SelectedStoreView.swift in Sources */,
 				CBADC29129559BC900E56C93 /* UICollectionView+Extension.swift in Sources */,
 				CBADC2D82955AC5900E56C93 /* FeedCollectionViewCell.swift in Sources */,
 				CBADC2AD2955A0FF00E56C93 /* ProfileViewController.swift in Sources */,
+				CBDE38FD29715C5F00DDE49A /* SearchBarButton.swift in Sources */,
 				CBADC2DE2955ACBB00E56C93 /* EmptyFeedView.swift in Sources */,
 				CBADC28D29559BC900E56C93 /* NSObject+Extension.swift in Sources */,
+				CBDE390529719B9700DDE49A /* Place.swift in Sources */,
 				CBADC29629559BC900E56C93 /* UITableView+Extension.swift in Sources */,
 				CBADC2BD2955A22D00E56C93 /* SearchResultViewController.swift in Sources */,
 			);
