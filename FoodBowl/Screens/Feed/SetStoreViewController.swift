@@ -11,6 +11,7 @@ import SnapKit
 import Then
 
 final class SetStoreViewController: BaseViewController {
+    var selectedStore: Place?
     // MARK: - property
 
     private let guideLabel = UILabel().then {
@@ -26,16 +27,20 @@ final class SetStoreViewController: BaseViewController {
             let searchStoreViewController = SearchStoreViewController()
             searchStoreViewController.modalPresentationStyle = .pageSheet
 //            searchStoreViewController.sheetPresentationController?.detents = [.medium()]
-
+            searchStoreViewController.delegate = self
             self?.present(searchStoreViewController, animated: true, completion: nil)
         }
         $0.addAction(action, for: .touchUpInside)
+    }
+    
+    let selectedStoreView = SelectedStoreView().then {
+        $0.isHidden = true
     }
 
     // MARK: - life cycle
 
     override func render() {
-        view.addSubviews(guideLabel, searchBarButton)
+        view.addSubviews(guideLabel, searchBarButton, selectedStoreView)
         
         guideLabel.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).inset(20)
@@ -47,5 +52,25 @@ final class SetStoreViewController: BaseViewController {
             $0.leading.trailing.equalToSuperview().inset(20)
             $0.height.equalTo(50)
         }
+        
+        selectedStoreView.snp.makeConstraints {
+            $0.top.equalTo(searchBarButton.snp.bottom).offset(10)
+            $0.leading.trailing.equalToSuperview().inset(20)
+            $0.height.equalTo(70)
+        }
+    }
+}
+
+protocol SearchStoreViewControllerDelegate: AnyObject {
+    func setStore(store: Place)
+}
+
+extension SetStoreViewController: SearchStoreViewControllerDelegate {
+    func setStore(store: Place) {
+        selectedStore = store
+        searchBarButton.label.text = "가게 재검색"
+        selectedStoreView.storeNameLabel.text = selectedStore?.placeName
+        selectedStoreView.storeAdressLabel.text = selectedStore?.address
+        selectedStoreView.isHidden = false
     }
 }

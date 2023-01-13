@@ -11,6 +11,11 @@ import SnapKit
 import Then
 
 final class SearchStoreViewController: BaseViewController {
+    
+    let stores = [Place(placeName: "틈새라면", address: "묵호동 102-2412415"), Place(placeName: "틈새라면", address: "묵호동 102-2412415"), Place(placeName: "틈새라면", address: "묵호동 102-2412415")]
+    
+    var delegate: SearchStoreViewControllerDelegate?
+    
     // MARK: - property
     
     private lazy var cancelButton = UIButton().then {
@@ -75,13 +80,15 @@ final class SearchStoreViewController: BaseViewController {
 
 extension SearchStoreViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
-        return 10
+        return stores.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: StoreInfoTableViewCell.className, for: indexPath) as? StoreInfoTableViewCell else { return UITableViewCell() }
         
         cell.selectionStyle = .none
+        cell.storeNameLabel.text = stores[indexPath.item].placeName
+        cell.storeAdressLabel.text = stores[indexPath.item].address
         
         return cell
     }
@@ -91,6 +98,7 @@ extension SearchStoreViewController: UITableViewDataSource, UITableViewDelegate 
     }
     
     func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
+        delegate?.setStore(store: stores[indexPath.item])
         dismiss(animated: true, completion: nil)
     }
 }
