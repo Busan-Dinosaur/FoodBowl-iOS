@@ -19,14 +19,25 @@ final class SetStoreViewController: BaseViewController {
         $0.attributedText = guide
         $0.font = UIFont.preferredFont(forTextStyle: .title3, weight: .medium)
     }
+    
+    let searchBarButton = SearchBarButton().then {
+        $0.label.text = "가게 검색"
+    }
 
     // MARK: - life cycle
 
     override func render() {
-        view.addSubviews(guideLabel)
+        view.addSubviews(guideLabel, searchBarButton)
+        
         guideLabel.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).inset(20)
             $0.leading.equalToSuperview().inset(20)
+        }
+        
+        searchBarButton.snp.makeConstraints {
+            $0.top.equalTo(guideLabel.snp.bottom).offset(20)
+            $0.leading.trailing.equalToSuperview().inset(20)
+            $0.height.equalTo(50)
         }
     }
 }
