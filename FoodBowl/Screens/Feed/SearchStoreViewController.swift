@@ -40,22 +40,57 @@ final class SearchStoreViewController: BaseViewController {
         $0.clearButtonMode = .whileEditing
         $0.textColor = .subText
     }
+    
+    private lazy var storeInfoTableView = UITableView().then {
+        $0.register(StoreInfoTableViewCell.self, forCellReuseIdentifier: StoreInfoTableViewCell.className)
+        $0.delegate = self
+        $0.dataSource = self
+        $0.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 20, right: 0)
+    }
 
     // MARK: - life cycle
 
     override func render() {
-        view.addSubviews(cancelButton, searchField)
+        view.addSubviews(cancelButton, searchField, storeInfoTableView)
         
         cancelButton.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(20)
+            $0.top.equalToSuperview().inset(10)
             $0.trailing.equalToSuperview().inset(10)
             $0.width.height.equalTo(40)
         }
         
         searchField.snp.makeConstraints {
-            $0.top.leading.equalToSuperview().inset(20)
+            $0.top.equalToSuperview().inset(10)
+            $0.leading.equalToSuperview().inset(20)
             $0.trailing.equalTo(cancelButton.snp.leading).offset(-10)
             $0.height.equalTo(40)
         }
+        
+        storeInfoTableView.snp.makeConstraints {
+            $0.top.equalTo(searchField.snp.bottom).offset(10)
+            $0.leading.trailing.bottom.equalToSuperview()
+        }
+    }
+}
+
+extension SearchStoreViewController: UITableViewDataSource, UITableViewDelegate {
+    func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
+        return 10
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: StoreInfoTableViewCell.className, for: indexPath) as? StoreInfoTableViewCell else { return UITableViewCell() }
+        
+        cell.selectionStyle = .none
+        
+        return cell
+    }
+    
+    func tableView(_: UITableView, heightForRowAt _: IndexPath) -> CGFloat {
+        return 70
+    }
+    
+    func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
+        dismiss(animated: true, completion: nil)
     }
 }
