@@ -45,7 +45,7 @@ final class SetStoreViewController: BaseViewController {
         searchBarButton.snp.makeConstraints {
             $0.top.equalTo(guideLabel.snp.bottom).offset(20)
             $0.leading.trailing.equalToSuperview().inset(20)
-            $0.height.equalTo(40)
+            $0.height.equalTo(50)
         }
     }
 }

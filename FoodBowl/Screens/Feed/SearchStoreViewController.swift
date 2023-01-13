@@ -29,15 +29,16 @@ final class SearchStoreViewController: BaseViewController {
             NSAttributedString.Key.font : UIFont.preferredFont(forTextStyle: .body, weight: .medium)
         ]
         
-        $0.backgroundColor = .white
+        $0.backgroundColor = .grey003
         $0.attributedPlaceholder = NSAttributedString(string: "가게 검색", attributes: attributes)
         $0.autocapitalizationType = .none
         $0.layer.masksToBounds = true
         $0.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 0))
         $0.leftViewMode = .always
         $0.clipsToBounds = false
+        $0.layer.cornerRadius = 10
+        $0.clearButtonMode = .whileEditing
         $0.textColor = .subText
-        $0.makeBorderLayer(color: .grey002)
     }
 
     // MARK: - life cycle
