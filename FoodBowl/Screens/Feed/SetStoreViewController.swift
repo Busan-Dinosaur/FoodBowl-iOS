@@ -20,8 +20,16 @@ final class SetStoreViewController: BaseViewController {
         $0.font = UIFont.preferredFont(forTextStyle: .title3, weight: .medium)
     }
     
-    let searchBarButton = SearchBarButton().then {
+    lazy var searchBarButton = SearchBarButton().then {
         $0.label.text = "가게 검색"
+        let action = UIAction { [weak self] _ in
+            let searchStoreViewController = SearchStoreViewController()
+            searchStoreViewController.modalPresentationStyle = .pageSheet
+//            searchStoreViewController.sheetPresentationController?.detents = [.medium()]
+
+            self?.present(searchStoreViewController, animated: true, completion: nil)
+        }
+        $0.addAction(action, for: .touchUpInside)
     }
 
     // MARK: - life cycle
@@ -37,7 +45,7 @@ final class SetStoreViewController: BaseViewController {
         searchBarButton.snp.makeConstraints {
             $0.top.equalTo(guideLabel.snp.bottom).offset(20)
             $0.leading.trailing.equalToSuperview().inset(20)
-            $0.height.equalTo(50)
+            $0.height.equalTo(40)
         }
     }
 }
