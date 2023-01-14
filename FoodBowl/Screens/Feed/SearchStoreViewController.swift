@@ -78,15 +78,15 @@ final class SearchStoreViewController: BaseViewController {
                    parameters: parameters,
                    encoding: URLEncoding.default,
                    headers: headers)
-        .responseDecodable(of: Response.self) { response in
-            switch response.result {
-            case let .success(data):
-                self.stores = data.documents
-                self.storeInfoTableView.reloadData()
-            case let .failure(error):
-                print("Request failed with error: \(error)")
+            .responseDecodable(of: Response.self) { response in
+                switch response.result {
+                case let .success(data):
+                    self.stores = data.documents
+                    self.storeInfoTableView.reloadData()
+                case let .failure(error):
+                    print("Request failed with error: \(error)")
+                }
             }
-        }
     }
 }
 
@@ -106,7 +106,7 @@ extension SearchStoreViewController: UITableViewDataSource, UITableViewDelegate 
     }
 
     func tableView(_: UITableView, heightForRowAt _: IndexPath) -> CGFloat {
-        return 70
+        return 60
     }
 
     func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {

@@ -59,7 +59,7 @@ final class SetStoreViewController: BaseViewController {
         selectedStoreView.snp.makeConstraints {
             $0.top.equalTo(searchBarButton.snp.bottom).offset(10)
             $0.leading.trailing.equalToSuperview().inset(20)
-            $0.height.equalTo(70)
+            $0.height.equalTo(60)
         }
     }
 }
