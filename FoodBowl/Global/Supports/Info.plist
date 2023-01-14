@@ -22,6 +22,11 @@
 	<key>NSCameraUsageDescription</key>
 	<string>Camera permissions for taking photos</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Album permissions to save photos</string>
+    <string>Album permissions to save photos</string>
+    <key>NSAppTransportSecurity</key>
+    <dict>
+        <key>NSAllowsArbitraryLoads</key>
+        <true/>
+    </dict>
 </dict>
 </plist>

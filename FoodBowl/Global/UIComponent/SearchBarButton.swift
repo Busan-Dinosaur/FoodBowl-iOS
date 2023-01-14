@@ -17,7 +17,7 @@ final class SearchBarButton: UIButton {
         $0.image = ImageLiteral.btnSearch.withConfiguration(UIImage.SymbolConfiguration(scale: .large))
         $0.tintColor = .subText
     }
-    
+
     let label = UILabel().then {
         let label = UILabel()
         $0.font = UIFont.preferredFont(forTextStyle: .body, weight: .medium)
@@ -41,7 +41,7 @@ final class SearchBarButton: UIButton {
 
     private func render() {
         addSubviews(searchIconView, label)
-        
+
         searchIconView.snp.makeConstraints {
             $0.centerY.equalToSuperview()
             $0.leading.equalToSuperview().inset(14)

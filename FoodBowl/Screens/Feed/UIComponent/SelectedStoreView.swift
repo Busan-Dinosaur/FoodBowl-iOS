@@ -18,13 +18,13 @@ final class SelectedStoreView: UIView {
         $0.textColor = .black
         $0.text = "틈새라면 홍대점"
     }
-    
+
     let storeAdressLabel = UILabel().then {
         $0.font = UIFont.preferredFont(forTextStyle: .subheadline, weight: .light)
         $0.textColor = .subText
         $0.text = "강원도 동해시 묵호진동 15-9"
     }
-    
+
     let storeDistanceLabel = UILabel().then {
         $0.font = UIFont.preferredFont(forTextStyle: .caption1, weight: .light)
         $0.textColor = .black
@@ -51,18 +51,18 @@ final class SelectedStoreView: UIView {
             $0.leading.equalToSuperview().inset(14)
             $0.top.equalToSuperview().inset(12)
         }
-        
+
         storeAdressLabel.snp.makeConstraints {
             $0.leading.equalToSuperview().inset(14)
             $0.bottom.equalToSuperview().inset(12)
         }
-        
+
         storeDistanceLabel.snp.makeConstraints {
             $0.trailing.equalToSuperview().inset(14)
             $0.bottom.equalToSuperview().inset(12)
         }
     }
-    
+
     private func configUI() {
         backgroundColor = .white
         makeBorderLayer(color: .grey002)

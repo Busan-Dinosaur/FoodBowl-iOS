@@ -7,17 +7,30 @@
 
 import UIKit
 
+import Alamofire
 import SnapKit
 import Then
 
 final class SearchStoreViewController: BaseViewController {
-    
-    let stores = [Place(placeName: "틈새라면", address: "묵호동 102-2412415"), Place(placeName: "틈새라면", address: "묵호동 102-2412415"), Place(placeName: "틈새라면", address: "묵호동 102-2412415")]
-    
+    private var stores: [Place]?
+
     var delegate: SearchStoreViewControllerDelegate?
-    
+
+    let headers: HTTPHeaders = [
+        "Content-Type": "application/x-www-form-urlencoded;charset=utf-8",
+        "Authorization": "KakaoAK 855a5bf7cbbe725de0f5b6474fe8d6db"
+    ]
+
+    let parameters: [String: Any] = [
+        "query": "삼성전자",
+//        "x": 1,
+//        "y": 15,
+        "page": 1,
+        "size": 15
+    ]
+
     // MARK: - property
-    
+
     private lazy var cancelButton = UIButton().then {
         $0.setTitle("취소", for: .normal)
         $0.setTitleColor(.mainPink, for: .normal)
@@ -27,13 +40,13 @@ final class SearchStoreViewController: BaseViewController {
         }
         $0.addAction(buttonAction, for: .touchUpInside)
     }
-    
+
     private lazy var searchField = UITextField().then {
         let attributes = [
-            NSAttributedString.Key.foregroundColor : UIColor.grey001,
-            NSAttributedString.Key.font : UIFont.preferredFont(forTextStyle: .body, weight: .medium)
+            NSAttributedString.Key.foregroundColor: UIColor.grey001,
+            NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .body, weight: .medium)
         ]
-        
+
         $0.backgroundColor = .grey003
         $0.attributedPlaceholder = NSAttributedString(string: "가게 검색", attributes: attributes)
         $0.autocapitalizationType = .none
@@ -45,7 +58,7 @@ final class SearchStoreViewController: BaseViewController {
         $0.clearButtonMode = .whileEditing
         $0.textColor = .subText
     }
-    
+
     private lazy var storeInfoTableView = UITableView().then {
         $0.register(StoreInfoTableViewCell.self, forCellReuseIdentifier: StoreInfoTableViewCell.className)
         $0.delegate = self
@@ -57,20 +70,20 @@ final class SearchStoreViewController: BaseViewController {
 
     override func render() {
         view.addSubviews(cancelButton, searchField, storeInfoTableView)
-        
+
         cancelButton.snp.makeConstraints {
             $0.top.equalToSuperview().inset(10)
             $0.trailing.equalToSuperview().inset(10)
             $0.width.height.equalTo(40)
         }
-        
+
         searchField.snp.makeConstraints {
             $0.top.equalToSuperview().inset(10)
             $0.leading.equalToSuperview().inset(20)
             $0.trailing.equalTo(cancelButton.snp.leading).offset(-10)
             $0.height.equalTo(40)
         }
-        
+
         storeInfoTableView.snp.makeConstraints {
             $0.top.equalTo(searchField.snp.bottom).offset(10)
             $0.leading.trailing.bottom.equalToSuperview()
@@ -80,25 +93,25 @@ final class SearchStoreViewController: BaseViewController {
 
 extension SearchStoreViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
-        return stores.count
+        return 3
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: StoreInfoTableViewCell.className, for: indexPath) as? StoreInfoTableViewCell else { return UITableViewCell() }
-        
+
         cell.selectionStyle = .none
-        cell.storeNameLabel.text = stores[indexPath.item].placeName
-        cell.storeAdressLabel.text = stores[indexPath.item].address
-        
+//        cell.storeNameLabel.text = stores[indexPath.item].placeName
+//        cell.storeAdressLabel.text = stores[indexPath.item].address
+
         return cell
     }
-    
+
     func tableView(_: UITableView, heightForRowAt _: IndexPath) -> CGFloat {
         return 70
     }
-    
-    func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
-        delegate?.setStore(store: stores[indexPath.item])
+
+    func tableView(_: UITableView, didSelectRowAt _: IndexPath) {
+//        delegate?.setStore(store: stores[indexPath.item])
         dismiss(animated: true, completion: nil)
     }
 }
