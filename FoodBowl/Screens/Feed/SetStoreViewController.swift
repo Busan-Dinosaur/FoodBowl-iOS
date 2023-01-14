@@ -36,7 +36,7 @@ final class SetStoreViewController: BaseViewController {
         $0.addAction(action, for: .touchUpInside)
     }
 
-    let selectedStoreView = SelectedStoreView().then {
+    lazy var selectedStoreView = SelectedStoreView().then {
         $0.isHidden = true
     }
 
@@ -75,5 +75,15 @@ extension SetStoreViewController: SearchStoreViewControllerDelegate {
         selectedStoreView.storeNameLabel.text = selectedStore?.placeName
         selectedStoreView.storeAdressLabel.text = selectedStore?.addressName
         selectedStoreView.isHidden = false
+        let buttonAction = UIAction { [weak self] _ in
+            let showStoreInfoViewController = ShowStoreInfoViewController()
+            showStoreInfoViewController.url = self?.selectedStore?.placeURL ?? ""
+            let navigationController = UINavigationController(rootViewController: showStoreInfoViewController)
+            navigationController.modalPresentationStyle = .pageSheet
+            DispatchQueue.main.async {
+                self?.present(navigationController, animated: true)
+            }
+        }
+        selectedStoreView.mapButton.addAction(buttonAction, for: .touchUpInside)
     }
 }

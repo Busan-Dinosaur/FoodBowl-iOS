@@ -25,10 +25,11 @@ final class SelectedStoreView: UIView {
         $0.text = "강원도 동해시 묵호진동 15-9"
     }
 
-    let storeDistanceLabel = UILabel().then {
-        $0.font = UIFont.preferredFont(forTextStyle: .caption1, weight: .light)
-        $0.textColor = .black
-        $0.text = "10km"
+    let mapButton = UIButton().then {
+        $0.setTitle("완료", for: .normal)
+        $0.setImage(ImageLiteral.btnKakaomap, for: .normal)
+        $0.clipsToBounds = true
+        $0.layer.cornerRadius = 10
     }
 
     // MARK: - init
@@ -45,7 +46,7 @@ final class SelectedStoreView: UIView {
     }
 
     private func render() {
-        addSubviews(storeNameLabel, storeAdressLabel, storeDistanceLabel)
+        addSubviews(storeNameLabel, storeAdressLabel, mapButton)
 
         storeNameLabel.snp.makeConstraints {
             $0.leading.equalToSuperview().inset(14)
@@ -57,9 +58,10 @@ final class SelectedStoreView: UIView {
             $0.bottom.equalToSuperview().inset(12)
         }
 
-        storeDistanceLabel.snp.makeConstraints {
+        mapButton.snp.makeConstraints {
             $0.trailing.equalToSuperview().inset(14)
-            $0.bottom.equalToSuperview().inset(12)
+            $0.centerY.equalToSuperview()
+            $0.width.height.equalTo(33)
         }
     }
 
