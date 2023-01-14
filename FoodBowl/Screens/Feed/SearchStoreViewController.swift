@@ -18,6 +18,12 @@ final class SearchStoreViewController: BaseViewController {
 
     // MARK: - property
 
+    private lazy var searchBar = UISearchBar().then {
+        $0.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width - 80, height: 0)
+        $0.placeholder = "가게 이름을 검색해주세요"
+        $0.delegate = self
+    }
+
     private lazy var cancelButton = UIButton().then {
         $0.setTitle("취소", for: .normal)
         $0.setTitleColor(.mainPink, for: .normal)
@@ -46,12 +52,9 @@ final class SearchStoreViewController: BaseViewController {
     }
 
     override func setupNavigationBar() {
-        let searchBar = UISearchBar(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width - 80, height: 0))
-        searchBar.placeholder = "가게 이름을 검색해주세요."
-        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: searchBar)
-
         let cancelButton = makeBarButtonItem(with: cancelButton)
         navigationItem.rightBarButtonItem = cancelButton
+        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: searchBar)
     }
 
     private func searchStores(keyword: String) {
@@ -75,28 +78,15 @@ final class SearchStoreViewController: BaseViewController {
                    parameters: parameters,
                    encoding: URLEncoding.default,
                    headers: headers)
-            .validate(statusCode: 200 ..< 300)
-            .responseJSON { response in
-                // 여기서 가져온 데이터를 자유롭게 활용하세요.
-                switch response.result {
-                case let .success(res):
-                    let resultData = String(data: response.data!, encoding: .utf8)
-
-                    do {
-                        // 반환값을 Data 타입으로 변환
-                        let jsonData = try JSONSerialization.data(withJSONObject: res, options: .prettyPrinted)
-                        let json = try JSONDecoder().decode(Response.self, from: jsonData)
-                        self.stores = json.documents
-
-                        print(self.stores)
-                        self.storeInfoTableView.reloadData()
-                    } catch {
-                        print("catch error : \(error.localizedDescription)")
-                    }
-                case let .failure(error):
-                    print("Request failed with error: \(error)")
-                }
+        .responseDecodable(of: Response.self) { response in
+            switch response.result {
+            case let .success(data):
+                self.stores = data.documents
+                self.storeInfoTableView.reloadData()
+            case let .failure(error):
+                print("Request failed with error: \(error)")
             }
+        }
     }
 }
 
@@ -119,8 +109,20 @@ extension SearchStoreViewController: UITableViewDataSource, UITableViewDelegate 
         return 70
     }
 
-    func tableView(_: UITableView, didSelectRowAt _: IndexPath) {
-        //        delegate?.setStore(store: stores[indexPath.item])
+    func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
+        delegate?.setStore(store: stores[indexPath.item])
         dismiss(animated: true, completion: nil)
+    }
+}
+
+extension SearchStoreViewController: UISearchBarDelegate {
+    private func dissmissKeyboard() {
+        searchBar.resignFirstResponder()
+    }
+
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        dissmissKeyboard()
+        guard let searchTerm = searchBar.text, searchTerm.isEmpty == false else { return }
+        searchStores(keyword: searchTerm)
     }
 }

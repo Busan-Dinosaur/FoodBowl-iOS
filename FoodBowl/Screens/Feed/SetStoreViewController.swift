@@ -28,7 +28,6 @@ final class SetStoreViewController: BaseViewController {
             let searchStoreViewController = SearchStoreViewController()
             let navigationController = UINavigationController(rootViewController: searchStoreViewController)
             navigationController.modalPresentationStyle = .pageSheet
-//            searchStoreViewController.sheetPresentationController?.detents = [.medium()]
             searchStoreViewController.delegate = self
             DispatchQueue.main.async {
                 self?.present(navigationController, animated: true)
@@ -73,8 +72,8 @@ extension SetStoreViewController: SearchStoreViewControllerDelegate {
     func setStore(store: Place) {
         selectedStore = store
         searchBarButton.label.text = "가게 재검색"
-//        selectedStoreView.storeNameLabel.text = selectedStore?.placeName
-//        selectedStoreView.storeAdressLabel.text = selectedStore?.address
+        selectedStoreView.storeNameLabel.text = selectedStore?.placeName
+        selectedStoreView.storeAdressLabel.text = selectedStore?.addressName
         selectedStoreView.isHidden = false
     }
 }
