@@ -58,6 +58,8 @@ final class SearchStoreViewController: BaseViewController {
     }
 
     private func searchStores(keyword: String) {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+
         let url = "https://dapi.kakao.com/v2/local/search/keyword"
 
         let headers: HTTPHeaders = [
@@ -67,8 +69,8 @@ final class SearchStoreViewController: BaseViewController {
 
         let parameters: [String: Any] = [
             "query": keyword,
-            //            "x": 1,
-            //            "y": 15,
+            "x": String(appDelegate.currentLoc.coordinate.longitude),
+            "y": String(appDelegate.currentLoc.coordinate.latitude),
             "page": 1,
             "size": 15
         ]
@@ -101,6 +103,7 @@ extension SearchStoreViewController: UITableViewDataSource, UITableViewDelegate 
         cell.selectionStyle = .none
         cell.storeNameLabel.text = stores[indexPath.item].placeName
         cell.storeAdressLabel.text = stores[indexPath.item].addressName
+        cell.storeDistanceLabel.text = stores[indexPath.item].distance.prettyDistance
 
         return cell
     }
@@ -124,5 +127,20 @@ extension SearchStoreViewController: UISearchBarDelegate {
         dissmissKeyboard()
         guard let searchTerm = searchBar.text, searchTerm.isEmpty == false else { return }
         searchStores(keyword: searchTerm)
+    }
+}
+
+extension String {
+    var prettyDistance: String {
+        guard let distance = Double(self) else { return "" }
+        guard distance > -.infinity else { return "?" }
+        let formatter = LengthFormatter()
+        formatter.numberFormatter.maximumFractionDigits = 1
+        if distance >= 1000 {
+            return formatter.string(fromValue: distance / 1000, unit: LengthFormatter.Unit.kilometer)
+        } else {
+            let value = Double(Int(distance)) // 미터로 표시할 땐 소수점 제거
+            return formatter.string(fromValue: value, unit: LengthFormatter.Unit.meter)
+        }
     }
 }
