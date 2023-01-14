@@ -77,7 +77,7 @@ final class FeedCollectionViewCell: BaseCollectionViewCell {
         print(layoutAttributes)
         return layoutAttributes
     }
-    
+
     @objc private func invalidate() {
         collapsed = !collapsed
         guard let collection = superview as? UICollectionView else { return }

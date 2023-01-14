@@ -7,17 +7,23 @@
 
 import UIKit
 
+import Alamofire
 import SnapKit
 import Then
 
 final class SearchStoreViewController: BaseViewController {
-    
-    let stores = [Place(placeName: "틈새라면", address: "묵호동 102-2412415"), Place(placeName: "틈새라면", address: "묵호동 102-2412415"), Place(placeName: "틈새라면", address: "묵호동 102-2412415")]
-    
     var delegate: SearchStoreViewControllerDelegate?
-    
+
+    private var stores = [Place]()
+
     // MARK: - property
-    
+
+    private lazy var searchBar = UISearchBar().then {
+        $0.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width - 80, height: 0)
+        $0.placeholder = "가게 이름을 검색해주세요"
+        $0.delegate = self
+    }
+
     private lazy var cancelButton = UIButton().then {
         $0.setTitle("취소", for: .normal)
         $0.setTitleColor(.mainPink, for: .normal)
@@ -27,25 +33,7 @@ final class SearchStoreViewController: BaseViewController {
         }
         $0.addAction(buttonAction, for: .touchUpInside)
     }
-    
-    private lazy var searchField = UITextField().then {
-        let attributes = [
-            NSAttributedString.Key.foregroundColor : UIColor.grey001,
-            NSAttributedString.Key.font : UIFont.preferredFont(forTextStyle: .body, weight: .medium)
-        ]
-        
-        $0.backgroundColor = .grey003
-        $0.attributedPlaceholder = NSAttributedString(string: "가게 검색", attributes: attributes)
-        $0.autocapitalizationType = .none
-        $0.layer.masksToBounds = true
-        $0.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 0))
-        $0.leftViewMode = .always
-        $0.clipsToBounds = false
-        $0.layer.cornerRadius = 10
-        $0.clearButtonMode = .whileEditing
-        $0.textColor = .subText
-    }
-    
+
     private lazy var storeInfoTableView = UITableView().then {
         $0.register(StoreInfoTableViewCell.self, forCellReuseIdentifier: StoreInfoTableViewCell.className)
         $0.delegate = self
@@ -56,25 +44,51 @@ final class SearchStoreViewController: BaseViewController {
     // MARK: - life cycle
 
     override func render() {
-        view.addSubviews(cancelButton, searchField, storeInfoTableView)
-        
-        cancelButton.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(10)
-            $0.trailing.equalToSuperview().inset(10)
-            $0.width.height.equalTo(40)
-        }
-        
-        searchField.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(10)
-            $0.leading.equalToSuperview().inset(20)
-            $0.trailing.equalTo(cancelButton.snp.leading).offset(-10)
-            $0.height.equalTo(40)
-        }
-        
+        view.addSubviews(storeInfoTableView)
+
         storeInfoTableView.snp.makeConstraints {
-            $0.top.equalTo(searchField.snp.bottom).offset(10)
-            $0.leading.trailing.bottom.equalToSuperview()
+            $0.edges.equalToSuperview()
         }
+    }
+
+    override func setupNavigationBar() {
+        let cancelButton = makeBarButtonItem(with: cancelButton)
+        navigationItem.rightBarButtonItem = cancelButton
+        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: searchBar)
+    }
+
+    private func searchStores(keyword: String) {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+
+        let url = "https://dapi.kakao.com/v2/local/search/keyword"
+
+        let headers: HTTPHeaders = [
+            "Content-Type": "application/x-www-form-urlencoded;charset=utf-8",
+            "Authorization": "KakaoAK 855a5bf7cbbe725de0f5b6474fe8d6db"
+        ]
+
+        let parameters: [String: Any] = [
+            "query": keyword,
+            "x": String(appDelegate.currentLoc.coordinate.longitude),
+            "y": String(appDelegate.currentLoc.coordinate.latitude),
+            "page": 1,
+            "size": 15
+        ]
+
+        AF.request(url,
+                   method: .get,
+                   parameters: parameters,
+                   encoding: URLEncoding.default,
+                   headers: headers)
+            .responseDecodable(of: Response.self) { response in
+                switch response.result {
+                case let .success(data):
+                    self.stores = data.documents
+                    self.storeInfoTableView.reloadData()
+                case let .failure(error):
+                    print("Request failed with error: \(error)")
+                }
+            }
     }
 }
 
@@ -82,23 +96,51 @@ extension SearchStoreViewController: UITableViewDataSource, UITableViewDelegate 
     func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
         return stores.count
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: StoreInfoTableViewCell.className, for: indexPath) as? StoreInfoTableViewCell else { return UITableViewCell() }
-        
+
         cell.selectionStyle = .none
         cell.storeNameLabel.text = stores[indexPath.item].placeName
-        cell.storeAdressLabel.text = stores[indexPath.item].address
-        
+        cell.storeAdressLabel.text = stores[indexPath.item].addressName
+        cell.storeDistanceLabel.text = stores[indexPath.item].distance.prettyDistance
+
         return cell
     }
-    
+
     func tableView(_: UITableView, heightForRowAt _: IndexPath) -> CGFloat {
-        return 70
+        return 60
     }
-    
+
     func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
         delegate?.setStore(store: stores[indexPath.item])
         dismiss(animated: true, completion: nil)
+    }
+}
+
+extension SearchStoreViewController: UISearchBarDelegate {
+    private func dissmissKeyboard() {
+        searchBar.resignFirstResponder()
+    }
+
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        dissmissKeyboard()
+        guard let searchTerm = searchBar.text, searchTerm.isEmpty == false else { return }
+        searchStores(keyword: searchTerm)
+    }
+}
+
+extension String {
+    var prettyDistance: String {
+        guard let distance = Double(self) else { return "" }
+        guard distance > -.infinity else { return "?" }
+        let formatter = LengthFormatter()
+        formatter.numberFormatter.maximumFractionDigits = 1
+        if distance >= 1000 {
+            return formatter.string(fromValue: distance / 1000, unit: LengthFormatter.Unit.kilometer)
+        } else {
+            let value = Double(Int(distance)) // 미터로 표시할 땐 소수점 제거
+            return formatter.string(fromValue: value, unit: LengthFormatter.Unit.meter)
+        }
     }
 }

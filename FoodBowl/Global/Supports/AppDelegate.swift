@@ -7,10 +7,21 @@
 
 import UIKit
 
+import CoreLocation
+
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
+    let locationManager = CLLocationManager()
+    var currentLoc: CLLocation!
+
     func application(_: UIApplication, didFinishLaunchingWithOptions _: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        locationManager.requestWhenInUseAuthorization()
+
+        if CLLocationManager.authorizationStatus() == .authorizedWhenInUse ||
+            CLLocationManager.authorizationStatus() == .authorizedAlways
+        {
+            currentLoc = locationManager.location
+        }
         return true
     }
 

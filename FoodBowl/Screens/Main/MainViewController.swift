@@ -47,7 +47,7 @@ final class MainViewController: BaseViewController {
             let navigationController = UINavigationController(rootViewController: addFeedViewController)
             navigationController.modalPresentationStyle = .overFullScreen
             DispatchQueue.main.async {
-                self?.present(navigationController,animated: true)
+                self?.present(navigationController, animated: true)
             }
         }
         $0.addAction(action, for: .touchUpInside)
