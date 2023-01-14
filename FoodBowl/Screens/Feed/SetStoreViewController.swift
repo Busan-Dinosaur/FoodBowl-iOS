@@ -26,10 +26,13 @@ final class SetStoreViewController: BaseViewController {
         $0.label.text = "가게 검색"
         let action = UIAction { [weak self] _ in
             let searchStoreViewController = SearchStoreViewController()
-            searchStoreViewController.modalPresentationStyle = .pageSheet
+            let navigationController = UINavigationController(rootViewController: searchStoreViewController)
+            navigationController.modalPresentationStyle = .pageSheet
 //            searchStoreViewController.sheetPresentationController?.detents = [.medium()]
             searchStoreViewController.delegate = self
-            self?.present(searchStoreViewController, animated: true, completion: nil)
+            DispatchQueue.main.async {
+                self?.present(navigationController, animated: true)
+            }
         }
         $0.addAction(action, for: .touchUpInside)
     }

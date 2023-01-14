@@ -12,22 +12,9 @@ import SnapKit
 import Then
 
 final class SearchStoreViewController: BaseViewController {
-    private var stores: [Place]?
-
     var delegate: SearchStoreViewControllerDelegate?
 
-    let headers: HTTPHeaders = [
-        "Content-Type": "application/x-www-form-urlencoded;charset=utf-8",
-        "Authorization": "KakaoAK 855a5bf7cbbe725de0f5b6474fe8d6db"
-    ]
-
-    let parameters: [String: Any] = [
-        "query": "삼성전자",
-//        "x": 1,
-//        "y": 15,
-        "page": 1,
-        "size": 15
-    ]
+    private var stores = [Place]()
 
     // MARK: - property
 
@@ -41,24 +28,6 @@ final class SearchStoreViewController: BaseViewController {
         $0.addAction(buttonAction, for: .touchUpInside)
     }
 
-    private lazy var searchField = UITextField().then {
-        let attributes = [
-            NSAttributedString.Key.foregroundColor: UIColor.grey001,
-            NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .body, weight: .medium)
-        ]
-
-        $0.backgroundColor = .grey003
-        $0.attributedPlaceholder = NSAttributedString(string: "가게 검색", attributes: attributes)
-        $0.autocapitalizationType = .none
-        $0.layer.masksToBounds = true
-        $0.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 0))
-        $0.leftViewMode = .always
-        $0.clipsToBounds = false
-        $0.layer.cornerRadius = 10
-        $0.clearButtonMode = .whileEditing
-        $0.textColor = .subText
-    }
-
     private lazy var storeInfoTableView = UITableView().then {
         $0.register(StoreInfoTableViewCell.self, forCellReuseIdentifier: StoreInfoTableViewCell.className)
         $0.delegate = self
@@ -69,39 +38,79 @@ final class SearchStoreViewController: BaseViewController {
     // MARK: - life cycle
 
     override func render() {
-        view.addSubviews(cancelButton, searchField, storeInfoTableView)
-
-        cancelButton.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(10)
-            $0.trailing.equalToSuperview().inset(10)
-            $0.width.height.equalTo(40)
-        }
-
-        searchField.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(10)
-            $0.leading.equalToSuperview().inset(20)
-            $0.trailing.equalTo(cancelButton.snp.leading).offset(-10)
-            $0.height.equalTo(40)
-        }
+        view.addSubviews(storeInfoTableView)
 
         storeInfoTableView.snp.makeConstraints {
-            $0.top.equalTo(searchField.snp.bottom).offset(10)
-            $0.leading.trailing.bottom.equalToSuperview()
+            $0.edges.equalToSuperview()
         }
+    }
+
+    override func setupNavigationBar() {
+        let searchBar = UISearchBar(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width - 80, height: 0))
+        searchBar.placeholder = "가게 이름을 검색해주세요."
+        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: searchBar)
+
+        let cancelButton = makeBarButtonItem(with: cancelButton)
+        navigationItem.rightBarButtonItem = cancelButton
+    }
+
+    private func searchStores(keyword: String) {
+        let url = "https://dapi.kakao.com/v2/local/search/keyword"
+
+        let headers: HTTPHeaders = [
+            "Content-Type": "application/x-www-form-urlencoded;charset=utf-8",
+            "Authorization": "KakaoAK 855a5bf7cbbe725de0f5b6474fe8d6db"
+        ]
+
+        let parameters: [String: Any] = [
+            "query": keyword,
+            //            "x": 1,
+            //            "y": 15,
+            "page": 1,
+            "size": 15
+        ]
+
+        AF.request(url,
+                   method: .get,
+                   parameters: parameters,
+                   encoding: URLEncoding.default,
+                   headers: headers)
+            .validate(statusCode: 200 ..< 300)
+            .responseJSON { response in
+                // 여기서 가져온 데이터를 자유롭게 활용하세요.
+                switch response.result {
+                case let .success(res):
+                    let resultData = String(data: response.data!, encoding: .utf8)
+
+                    do {
+                        // 반환값을 Data 타입으로 변환
+                        let jsonData = try JSONSerialization.data(withJSONObject: res, options: .prettyPrinted)
+                        let json = try JSONDecoder().decode(Response.self, from: jsonData)
+                        self.stores = json.documents
+
+                        print(self.stores)
+                        self.storeInfoTableView.reloadData()
+                    } catch {
+                        print("catch error : \(error.localizedDescription)")
+                    }
+                case let .failure(error):
+                    print("Request failed with error: \(error)")
+                }
+            }
     }
 }
 
 extension SearchStoreViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
-        return 3
+        return stores.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: StoreInfoTableViewCell.className, for: indexPath) as? StoreInfoTableViewCell else { return UITableViewCell() }
 
         cell.selectionStyle = .none
-//        cell.storeNameLabel.text = stores[indexPath.item].placeName
-//        cell.storeAdressLabel.text = stores[indexPath.item].address
+        cell.storeNameLabel.text = stores[indexPath.item].placeName
+        cell.storeAdressLabel.text = stores[indexPath.item].addressName
 
         return cell
     }
@@ -111,7 +120,7 @@ extension SearchStoreViewController: UITableViewDataSource, UITableViewDelegate 
     }
 
     func tableView(_: UITableView, didSelectRowAt _: IndexPath) {
-//        delegate?.setStore(store: stores[indexPath.item])
+        //        delegate?.setStore(store: stores[indexPath.item])
         dismiss(animated: true, completion: nil)
     }
 }
