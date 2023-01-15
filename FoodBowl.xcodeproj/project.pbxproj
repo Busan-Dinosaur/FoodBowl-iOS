@@ -55,6 +55,8 @@
 		CBB582802972C9C400808B0B /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = CBB5827F2972C9C400808B0B /* Alamofire */; };
 		CBB582822973007D00808B0B /* ShowStoreInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBB582812973007D00808B0B /* ShowStoreInfoViewController.swift */; };
 		CBB58284297440A600808B0B /* CategoryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBB58283297440A600808B0B /* CategoryCollectionViewCell.swift */; };
+		CBB582872974568500808B0B /* YPImagePicker in Frameworks */ = {isa = PBXBuildFile; productRef = CBB582862974568500808B0B /* YPImagePicker */; };
+		CBB5828929745A8200808B0B /* GalleryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBB5828829745A8200808B0B /* GalleryButton.swift */; };
 		CBC73104295550A100C7F198 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBC73103295550A100C7F198 /* AppDelegate.swift */; };
 		CBC73106295550A100C7F198 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBC73105295550A100C7F198 /* SceneDelegate.swift */; };
 		CBC73108295550A100C7F198 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBC73107295550A100C7F198 /* MainViewController.swift */; };
@@ -119,6 +121,7 @@
 		CBADC2E12955C63300E56C93 /* FeedThumnailCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedThumnailCollectionViewCell.swift; sourceTree = "<group>"; };
 		CBB582812973007D00808B0B /* ShowStoreInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowStoreInfoViewController.swift; sourceTree = "<group>"; };
 		CBB58283297440A600808B0B /* CategoryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCollectionViewCell.swift; sourceTree = "<group>"; };
+		CBB5828829745A8200808B0B /* GalleryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryButton.swift; sourceTree = "<group>"; };
 		CBC73100295550A100C7F198 /* FoodBowl.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FoodBowl.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CBC73103295550A100C7F198 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CBC73105295550A100C7F198 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -146,6 +149,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CBADC2422955989400E56C93 /* SnapKit in Frameworks */,
+				CBB582872974568500808B0B /* YPImagePicker in Frameworks */,
 				CBB582802972C9C400808B0B /* Alamofire in Frameworks */,
 				CBADC2482955993A00E56C93 /* SkeletonUI in Frameworks */,
 				CBADC245295598A200E56C93 /* Then in Frameworks */,
@@ -264,6 +268,7 @@
 				CB1BCAF42958AEE20021617D /* ScrapButton.swift */,
 				CBE61914296C72AC005295AF /* ChatButton.swift */,
 				CB1A7C5D295618A900C6431D /* SettingButton.swift */,
+				CBB5828829745A8200808B0B /* GalleryButton.swift */,
 				CBADC2DF2955B92D00E56C93 /* MainButton.swift */,
 				CB1A7C6229561CF300C6431D /* SubButton.swift */,
 				CBE6190B296C635D005295AF /* MiniButton.swift */,
@@ -431,6 +436,7 @@
 				CBADC244295598A200E56C93 /* Then */,
 				CBADC2472955993A00E56C93 /* SkeletonUI */,
 				CBB5827F2972C9C400808B0B /* Alamofire */,
+				CBB582862974568500808B0B /* YPImagePicker */,
 			);
 			productName = FoodBowl;
 			productReference = CBC73100295550A100C7F198 /* FoodBowl.app */;
@@ -465,6 +471,7 @@
 				CBADC243295598A200E56C93 /* XCRemoteSwiftPackageReference "Then" */,
 				CBADC2462955993A00E56C93 /* XCRemoteSwiftPackageReference "SkeletonUI" */,
 				CBB5827E2972C9C400808B0B /* XCRemoteSwiftPackageReference "Alamofire" */,
+				CBB582852974568500808B0B /* XCRemoteSwiftPackageReference "YPImagePicker" */,
 			);
 			productRefGroup = CBC73101295550A100C7F198 /* Products */;
 			projectDirPath = "";
@@ -563,6 +570,7 @@
 				CBDE39022971947B00DDE49A /* StoreInfoTableViewCell.swift in Sources */,
 				CBADC29529559BC900E56C93 /* UITextView+Extension.swift in Sources */,
 				CBADC29229559BC900E56C93 /* Sequence+Extension.swift in Sources */,
+				CBB5828929745A8200808B0B /* GalleryButton.swift in Sources */,
 				CBADC29029559BC900E56C93 /* UIViewController+Extension.swift in Sources */,
 				CBADC28C29559BC900E56C93 /* UILabel+Extension.swift in Sources */,
 				CB1A7C6329561CF300C6431D /* SubButton.swift in Sources */,
@@ -845,6 +853,14 @@
 				kind = branch;
 			};
 		};
+		CBB582852974568500808B0B /* XCRemoteSwiftPackageReference "YPImagePicker" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Yummypets/YPImagePicker.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -867,6 +883,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = CBB5827E2972C9C400808B0B /* XCRemoteSwiftPackageReference "Alamofire" */;
 			productName = Alamofire;
+		};
+		CBB582862974568500808B0B /* YPImagePicker */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CBB582852974568500808B0B /* XCRemoteSwiftPackageReference "YPImagePicker" */;
+			productName = YPImagePicker;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
