@@ -12,8 +12,8 @@ import MapKit
 import SnapKit
 import Then
 
-final class MapViewController: BaseViewController {
-    lazy var locationManager: CLLocationManager = {
+final class MapViewController: BaseViewController, MKMapViewDelegate {
+    private lazy var locationManager: CLLocationManager = {
         let manager = CLLocationManager()
         manager.desiredAccuracy = kCLLocationAccuracyBest
         manager.startUpdatingLocation()
@@ -21,9 +21,20 @@ final class MapViewController: BaseViewController {
         return manager
     }()
 
-    let mapView = MKMapView()
+    private lazy var mapView = MKMapView().then {
+        $0.delegate = self
+        $0.mapType = MKMapType.standard
+        $0.showsUserLocation = true
+        $0.setUserTrackingMode(.follow, animated: true)
+        $0.isZoomEnabled = true
+        $0.showsCompass = false
 
-    lazy var searchBarButton = SearchBarButton().then {
+        let userTrackingButton = MKUserTrackingButton(mapView: $0)
+        userTrackingButton.frame.origin = CGPoint(x: self.view.frame.maxX - 60, y: self.view.frame.maxY - 180)
+        $0.addSubview(userTrackingButton)
+    }
+
+    private lazy var searchBarButton = SearchBarButton().then {
         $0.label.text = "가게 이름을 검색해주세요."
         let action = UIAction { [weak self] _ in
         }
@@ -32,17 +43,7 @@ final class MapViewController: BaseViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        getLocationUsagePermission()
-
-        mapView.mapType = MKMapType.standard
-        mapView.showsUserLocation = true
-        mapView.setUserTrackingMode(.follow, animated: true)
-        mapView.isZoomEnabled = true
-    }
-
-    func getLocationUsagePermission() {
-        locationManager.requestWhenInUseAuthorization()
+        findMyLocation()
     }
 
     override func viewWillDisappear(_: Bool) {
@@ -65,6 +66,19 @@ final class MapViewController: BaseViewController {
 
     override func setupNavigationBar() {
         navigationController?.isNavigationBarHidden = true
+    }
+
+    private func getLocationUsagePermission() {
+        locationManager.requestWhenInUseAuthorization()
+    }
+
+    private func findMyLocation() {
+        guard let currentLocation = locationManager.location else {
+            getLocationUsagePermission()
+            return
+        }
+
+        mapView.setRegion(MKCoordinateRegion(center: currentLocation.coordinate, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)), animated: true)
     }
 }
 
