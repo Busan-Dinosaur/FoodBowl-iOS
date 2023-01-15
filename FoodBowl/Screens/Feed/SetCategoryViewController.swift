@@ -11,19 +11,90 @@ import SnapKit
 import Then
 
 final class SetCategoryViewController: BaseViewController {
+    private let categories = Category.allCases
+
     // MARK: - property
 
-    private let screenText = UILabel().then {
-        $0.textColor = .red
-        $0.text = "SetCategory"
+    private let guideLabel = UILabel().then {
+        $0.numberOfLines = 0
+        let guide = NSAttributedString(string: "음식의 카테고리를 선택해주세요.").withLineSpacing(10)
+        $0.attributedText = guide
+        $0.font = UIFont.preferredFont(forTextStyle: .title3, weight: .medium)
+    }
+
+    private lazy var listCollectionView = UICollectionView(frame: .zero, collectionViewLayout: createTagLayout()).then {
+        $0.dataSource = self
+        $0.delegate = self
+        $0.showsHorizontalScrollIndicator = false
+        $0.showsVerticalScrollIndicator = false
+        $0.register(CategoryCollectionViewCell.self, forCellWithReuseIdentifier: CategoryCollectionViewCell.className)
     }
 
     // MARK: - life cycle
 
     override func render() {
-        view.addSubview(screenText)
-        screenText.snp.makeConstraints {
-            $0.centerX.centerY.equalToSuperview()
+        view.addSubviews(guideLabel, listCollectionView)
+
+        guideLabel.snp.makeConstraints {
+            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).inset(20)
+            $0.leading.equalToSuperview().inset(20)
+        }
+
+        listCollectionView.snp.makeConstraints {
+            $0.top.equalTo(guideLabel.snp.bottom).offset(20)
+            $0.leading.trailing.bottom.equalToSuperview()
         }
     }
+
+    private func createTagLayout() -> UICollectionViewLayout {
+        let itemSize = NSCollectionLayoutSize(
+            widthDimension: .estimated(80),
+            heightDimension: .absolute(40)
+        )
+
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+
+        let groupSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1.0),
+            heightDimension: .absolute(40)
+        )
+
+        let group = NSCollectionLayoutGroup.horizontal(
+            layoutSize: groupSize,
+            subitems: [item]
+        )
+        group.interItemSpacing = .fixed(10)
+
+        let section = NSCollectionLayoutSection(group: group)
+        section.interGroupSpacing = 10
+        section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 20, bottom: 20, trailing: 20)
+
+        let config = UICollectionViewCompositionalLayoutConfiguration()
+        config.scrollDirection = .vertical
+
+        let layout = UICollectionViewCompositionalLayout(section: section)
+        layout.configuration = config
+        return layout
+    }
+}
+
+// MARK: - UICollectionViewDataSource, UICollectionViewDelegate
+
+extension SetCategoryViewController: UICollectionViewDataSource, UICollectionViewDelegate {
+    func collectionView(_: UICollectionView, numberOfItemsInSection _: Int) -> Int {
+        return categories.count
+    }
+
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CategoryCollectionViewCell.className, for: indexPath) as? CategoryCollectionViewCell else {
+            return UICollectionViewCell()
+        }
+
+        cell.layer.cornerRadius = 20
+        cell.categoryLabel.text = categories[indexPath.item].rawValue
+
+        return cell
+    }
+
+    func collectionView(_: UICollectionView, didSelectItemAt _: IndexPath) {}
 }
