@@ -14,7 +14,7 @@ final class FeedThumnailCollectionViewCell: BaseCollectionViewCell {
     // MARK: - property
 
     lazy var thumnailImageView = UIImageView().then {
-        $0.backgroundColor = .gray
+        $0.backgroundColor = .grey002
         $0.clipsToBounds = true
         $0.contentMode = .scaleAspectFill
     }
