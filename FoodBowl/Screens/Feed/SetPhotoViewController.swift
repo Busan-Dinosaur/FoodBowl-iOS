@@ -30,13 +30,6 @@ final class SetPhotoViewController: BaseViewController {
         $0.font = UIFont.preferredFont(forTextStyle: .title3, weight: .medium)
     }
 
-    private lazy var galleryButton = GalleryButton().then {
-        let action = UIAction { [weak self] _ in
-            self?.photoAddButtonDidTap()
-        }
-        $0.addAction(action, for: .touchUpInside)
-    }
-
     private let collectionViewFlowLayout = UICollectionViewFlowLayout().then {
         $0.scrollDirection = .vertical
         $0.sectionInset = Size.collectionInset
@@ -49,22 +42,18 @@ final class SetPhotoViewController: BaseViewController {
         $0.dataSource = self
         $0.delegate = self
         $0.showsVerticalScrollIndicator = false
+        $0.register(PhotoCollectionViewCell.self, forCellWithReuseIdentifier: PhotoCollectionViewCell.className)
         $0.register(FeedThumnailCollectionViewCell.self, forCellWithReuseIdentifier: FeedThumnailCollectionViewCell.className)
     }
 
     // MARK: - life cycle
 
     override func render() {
-        view.addSubviews(guideLabel, galleryButton, listCollectionView)
+        view.addSubviews(guideLabel, listCollectionView)
 
         guideLabel.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).inset(20)
             $0.leading.equalToSuperview().inset(20)
-        }
-
-        galleryButton.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).inset(20)
-            $0.trailing.equalToSuperview().inset(20)
         }
 
         listCollectionView.snp.makeConstraints {
@@ -75,6 +64,7 @@ final class SetPhotoViewController: BaseViewController {
 
     private func photoAddButtonDidTap() {
         var config = YPImagePickerConfiguration()
+        config.onlySquareImagesFromCamera = true
         config.library.maxNumberOfItems = 10 // 최대 선택 가능한 사진 개수 제한
         config.library.mediaType = .photo // 미디어타입(사진, 사진/동영상, 동영상)
         config.startOnScreen = YPPickerScreen.library
@@ -134,20 +124,32 @@ final class SetPhotoViewController: BaseViewController {
 
 extension SetPhotoViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_: UICollectionView, numberOfItemsInSection _: Int) -> Int {
-        return selectedImages.count
+        return selectedImages.count + 1
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FeedThumnailCollectionViewCell.className, for: indexPath) as? FeedThumnailCollectionViewCell else {
-            return UICollectionViewCell()
+        if indexPath.item == 0 {
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PhotoCollectionViewCell.className, for: indexPath) as? PhotoCollectionViewCell else {
+                return UICollectionViewCell()
+            }
+
+            return cell
+        } else {
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FeedThumnailCollectionViewCell.className, for: indexPath) as? FeedThumnailCollectionViewCell else {
+                return UICollectionViewCell()
+            }
+
+            cell.thumnailImageView.image = selectedImages[indexPath.item - 1]
+
+            return cell
         }
-
-        cell.thumnailImageView.image = selectedImages[indexPath.item]
-
-        return cell
     }
 
-    func collectionView(_: UICollectionView, didSelectItemAt _: IndexPath) {}
+    func collectionView(_: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if indexPath.item == 0 {
+            photoAddButtonDidTap()
+        }
+    }
 }
 
 extension YPPhotoFiltersVC {
