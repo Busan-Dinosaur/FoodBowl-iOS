@@ -21,6 +21,8 @@ final class SetPhotoViewController: BaseViewController {
                                                   right: 20)
     }
 
+    private var selectedImages = [UIImage]()
+
     // MARK: - property
 
     private let guideLabel = UILabel().then {
@@ -91,13 +93,17 @@ final class SetPhotoViewController: BaseViewController {
 
         let picker = YPImagePicker(configuration: config)
 
-        picker.didFinishPicking { [unowned picker] items, _ in
-            if let photo = items.singlePhoto {
-                print(photo.fromCamera) // Image source (camera or library)
-                print(photo.image) // Final image selected by the user
-                print(photo.originalImage) // original image selected by the user, unfiltered
-                print(photo.modifiedImage) // Transformed image, can be nil
-                print(photo.exifMeta) // Print exif meta data of original image.
+        picker.didFinishPicking { [unowned picker] items, cancelled in
+            if !cancelled {
+                let images: [UIImage] = items.compactMap { item in
+                    if case let .photo(photo) = item {
+                        return photo.image
+                    } else {
+                        return nil
+                    }
+                }
+                self.selectedImages = images
+                self.listCollectionView.reloadData()
             }
             picker.dismiss(animated: true, completion: nil)
         }
@@ -128,13 +134,15 @@ final class SetPhotoViewController: BaseViewController {
 
 extension SetPhotoViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_: UICollectionView, numberOfItemsInSection _: Int) -> Int {
-        return 10
+        return selectedImages.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FeedThumnailCollectionViewCell.className, for: indexPath) as? FeedThumnailCollectionViewCell else {
             return UICollectionViewCell()
         }
+
+        cell.thumnailImageView.image = selectedImages[indexPath.item]
 
         return cell
     }
