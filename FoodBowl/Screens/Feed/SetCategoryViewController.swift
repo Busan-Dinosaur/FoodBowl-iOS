@@ -11,14 +11,7 @@ import SnapKit
 import Then
 
 final class SetCategoryViewController: BaseViewController {
-    private enum Size {
-        static let cellWidth: CGFloat = 60.0
-        static let cellHeight: CGFloat = 30.0
-        static let collectionInset = UIEdgeInsets(top: 0,
-                                                  left: 20,
-                                                  bottom: 20,
-                                                  right: 20)
-    }
+    private let categories = Category.allCases
 
     // MARK: - property
 
@@ -48,33 +41,33 @@ final class SetCategoryViewController: BaseViewController {
         }
 
         listCollectionView.snp.makeConstraints {
-            $0.top.equalTo(guideLabel.snp.bottom)
+            $0.top.equalTo(guideLabel.snp.bottom).offset(20)
             $0.leading.trailing.bottom.equalToSuperview()
         }
     }
 
     private func createTagLayout() -> UICollectionViewLayout {
         let itemSize = NSCollectionLayoutSize(
-            widthDimension: .estimated(60),
-            heightDimension: .absolute(30)
+            widthDimension: .estimated(80),
+            heightDimension: .absolute(40)
         )
 
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
 
         let groupSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1.0),
-            heightDimension: .absolute(30)
+            heightDimension: .absolute(40)
         )
 
         let group = NSCollectionLayoutGroup.horizontal(
             layoutSize: groupSize,
             subitems: [item]
         )
-        group.interItemSpacing = .fixed(8)
+        group.interItemSpacing = .fixed(10)
 
         let section = NSCollectionLayoutSection(group: group)
         section.interGroupSpacing = 10
-        section.contentInsets = NSDirectionalEdgeInsets(top: 20, leading: 20, bottom: 20, trailing: 20)
+        section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 20, bottom: 20, trailing: 20)
 
         let config = UICollectionViewCompositionalLayoutConfiguration()
         config.scrollDirection = .vertical
@@ -89,7 +82,7 @@ final class SetCategoryViewController: BaseViewController {
 
 extension SetCategoryViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_: UICollectionView, numberOfItemsInSection _: Int) -> Int {
-        return 10
+        return categories.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -97,11 +90,8 @@ extension SetCategoryViewController: UICollectionViewDataSource, UICollectionVie
             return UICollectionViewCell()
         }
 
-        cell.layer.cornerRadius = 15
-
-        if indexPath.item == 0 {
-            cell.isSelected = true
-        }
+        cell.layer.cornerRadius = 20
+        cell.categoryLabel.text = categories[indexPath.item].rawValue
 
         return cell
     }

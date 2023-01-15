@@ -25,16 +25,16 @@ final class CategoryCollectionViewCell: BaseCollectionViewCell {
 
     // MARK: - property
 
-    lazy var categoryLabel = UILabel().then {
-        $0.font = UIFont.preferredFont(forTextStyle: .subheadline, weight: .light)
-        $0.text = "한식"
+    let categoryLabel = UILabel().then {
+        $0.font = UIFont.preferredFont(forTextStyle: .headline, weight: .light)
     }
 
     override func render() {
         contentView.addSubviews(categoryLabel)
 
         categoryLabel.snp.makeConstraints {
-            $0.centerX.centerY.equalToSuperview()
+            $0.leading.trailing.equalToSuperview().inset(20)
+            $0.centerY.equalToSuperview()
         }
     }
 
