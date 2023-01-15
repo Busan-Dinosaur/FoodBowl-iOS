@@ -16,9 +16,7 @@ final class SetStoreViewController: BaseViewController {
     // MARK: - property
 
     private let guideLabel = UILabel().then {
-        $0.numberOfLines = 0
-        let guide = NSAttributedString(string: "피드를 작성할 가게를 찾아보세요.").withLineSpacing(10)
-        $0.attributedText = guide
+        $0.text = "피드를 작성할 가게를 찾아보세요."
         $0.font = UIFont.preferredFont(forTextStyle: .title3, weight: .medium)
     }
 

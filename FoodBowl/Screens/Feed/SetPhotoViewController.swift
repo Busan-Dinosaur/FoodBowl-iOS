@@ -13,17 +13,19 @@ import Then
 final class SetPhotoViewController: BaseViewController {
     // MARK: - property
 
-    private let screenText = UILabel().then {
-        $0.textColor = .red
-        $0.text = "SetPhoto"
+    private let guideLabel = UILabel().then {
+        $0.text = "음식 사진들을 등록해주세요."
+        $0.font = UIFont.preferredFont(forTextStyle: .title3, weight: .medium)
     }
 
     // MARK: - life cycle
 
     override func render() {
-        view.addSubview(screenText)
-        screenText.snp.makeConstraints {
-            $0.centerX.centerY.equalToSuperview()
+        view.addSubviews(guideLabel)
+
+        guideLabel.snp.makeConstraints {
+            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).inset(20)
+            $0.leading.equalToSuperview().inset(20)
         }
     }
 }
