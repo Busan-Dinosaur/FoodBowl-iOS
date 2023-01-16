@@ -11,7 +11,7 @@ import SnapKit
 import Then
 
 final class AddFeedViewController: BaseViewController {
-    let newFeed = Feed(id: nil, store: nil, category: nil, photoes: nil, comment: nil)
+    var newFeed = Feed(id: nil, store: nil, category: nil, photoes: nil, comment: nil)
 
     private lazy var pageViewController: UIPageViewController = {
         let vc = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
@@ -166,11 +166,19 @@ final class AddFeedViewController: BaseViewController {
 // MARK: - data transfer delegates
 
 extension AddFeedViewController: SetStoreViewControllerDelegate, SetCategoryViewControllerDelegate, SetPhotoViewControllerDelegate, SetCommentViewControllerDelegate {
-    func setStore(store _: Place?) {}
+    func setStore(store: Place?) {
+        newFeed.store = store
+    }
 
-    func setCategory(category _: Category?) {}
+    func setCategory(category: Category?) {
+        newFeed.category = category
+    }
 
-    func setPhotoes(photoes _: [UIImage]?) {}
+    func setPhotoes(photoes: [UIImage]?) {
+        newFeed.photoes = photoes
+    }
 
-    func setComment(comment _: String?) {}
+    func setComment(comment: String?) {
+        newFeed.comment = comment
+    }
 }

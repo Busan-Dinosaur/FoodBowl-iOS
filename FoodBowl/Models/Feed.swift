@@ -10,11 +10,11 @@ import UIKit
 // MARK: - Feed
 
 struct Feed {
-    let id: String?
-    let store: Place?
-    let category: Category?
-    let photoes: [UIImage]?
-    let comment: String?
+    var id: String?
+    var store: Place?
+    var category: Category?
+    var photoes: [UIImage]?
+    var comment: String?
 }
 
 // MARK: - Category
