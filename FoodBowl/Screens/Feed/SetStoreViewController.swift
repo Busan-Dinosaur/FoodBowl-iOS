@@ -84,6 +84,8 @@ extension SetStoreViewController: SearchStoreViewControllerDelegate {
             }
         }
         selectedStoreView.mapButton.addAction(buttonAction, for: .touchUpInside)
+
+        delegate?.setStore(store: selectedStore)
     }
 }
 

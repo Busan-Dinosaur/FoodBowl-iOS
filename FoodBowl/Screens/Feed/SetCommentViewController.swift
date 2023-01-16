@@ -90,6 +90,8 @@ extension SetCommentViewController: UITextViewDelegate {
         if textView.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
             textView.text = textViewPlaceHolder
             textView.textColor = .grey001
+        } else {
+            delegate?.setComment(comment: textView.text)
         }
     }
 }

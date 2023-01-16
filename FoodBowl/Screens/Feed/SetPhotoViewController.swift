@@ -96,6 +96,8 @@ final class SetPhotoViewController: BaseViewController {
                 }
                 self.selectedImages = images
                 self.listCollectionView.reloadData()
+
+                self.delegate?.setPhotoes(photoes: images)
             }
             picker.dismiss(animated: true, completion: nil)
         }

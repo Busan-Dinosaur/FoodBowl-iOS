@@ -95,7 +95,9 @@ extension SetCategoryViewController: UICollectionViewDataSource, UICollectionVie
         return cell
     }
 
-    func collectionView(_: UICollectionView, didSelectItemAt _: IndexPath) {}
+    func collectionView(_: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        delegate?.setCategory(category: categories[indexPath.item])
+    }
 }
 
 protocol SetCategoryViewControllerDelegate: AnyObject {
