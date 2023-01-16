@@ -10,23 +10,25 @@ import UIKit
 import SnapKit
 import Then
 
-class AddFeedViewController: BaseViewController {
-    lazy var pageViewController: UIPageViewController = {
+final class AddFeedViewController: BaseViewController {
+    let newFeed = Feed(id: nil, store: nil, category: nil, photoes: nil, comment: nil)
+
+    private lazy var pageViewController: UIPageViewController = {
         let vc = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
 
         return vc
     }()
 
-    lazy var vc1 = SetStoreViewController()
-    lazy var vc2 = SetCategoryViewController()
-    lazy var vc3 = SetPhotoViewController()
-    lazy var vc4 = SetCommentViewController()
+    private let vc1 = SetStoreViewController()
+    private let vc2 = SetCategoryViewController()
+    private let vc3 = SetPhotoViewController()
+    private let vc4 = SetCommentViewController()
 
     lazy var dataViewControllers: [UIViewController] = {
         [vc1, vc2, vc3, vc4]
     }()
 
-    var pageControl = UIPageControl()
+    private let pageControl = UIPageControl()
 
     private lazy var closeButton = CloseButton().then {
         let action = UIAction { [weak self] _ in
@@ -84,6 +86,11 @@ class AddFeedViewController: BaseViewController {
         if let firstVC = dataViewControllers.first {
             pageViewController.setViewControllers([firstVC], direction: .forward, animated: true, completion: nil)
         }
+
+        vc1.delegate = self
+        vc2.delegate = self
+        vc3.delegate = self
+        vc4.delegate = self
     }
 
     override func setupNavigationBar() {
@@ -154,4 +161,16 @@ class AddFeedViewController: BaseViewController {
     private func completeAddFeed() {
         dismiss(animated: true, completion: nil)
     }
+}
+
+// MARK: - data transfer delegates
+
+extension AddFeedViewController: SetStoreViewControllerDelegate, SetCategoryViewControllerDelegate, SetPhotoViewControllerDelegate, SetCommentViewControllerDelegate {
+    func setStore(store _: Place?) {}
+
+    func setCategory(category _: Category?) {}
+
+    func setPhotoes(photoes _: [UIImage]?) {}
+
+    func setComment(comment _: String?) {}
 }

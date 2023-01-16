@@ -11,6 +11,7 @@ import SnapKit
 import Then
 
 final class SetStoreViewController: BaseViewController {
+    var delegate: SetStoreViewControllerDelegate?
     var selectedStore: Place?
 
     // MARK: - property
@@ -84,4 +85,8 @@ extension SetStoreViewController: SearchStoreViewControllerDelegate {
         }
         selectedStoreView.mapButton.addAction(buttonAction, for: .touchUpInside)
     }
+}
+
+protocol SetStoreViewControllerDelegate: AnyObject {
+    func setStore(store: Place?)
 }

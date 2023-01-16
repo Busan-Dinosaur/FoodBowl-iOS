@@ -12,6 +12,8 @@ import Then
 import YPImagePicker
 
 final class SetPhotoViewController: BaseViewController {
+    var delegate: SetPhotoViewControllerDelegate?
+
     private enum Size {
         static let cellWidth: CGFloat = (UIScreen.main.bounds.size.width - 48) / 3
         static let cellHeight: CGFloat = cellWidth
@@ -98,27 +100,6 @@ final class SetPhotoViewController: BaseViewController {
             picker.dismiss(animated: true, completion: nil)
         }
         present(picker, animated: true, completion: nil)
-    }
-
-    private func cappedSize(for size: CGSize, cappedAt: CGFloat) -> CGSize {
-        var cappedWidth: CGFloat = 0
-        var cappedHeight: CGFloat = 0
-        if size.width > size.height {
-            // Landscape
-            let heightRatio = size.height / size.width
-            cappedWidth = min(size.width, cappedAt)
-            cappedHeight = cappedWidth * heightRatio
-        } else if size.height > size.width {
-            // Portrait
-            let widthRatio = size.width / size.height
-            cappedHeight = min(size.height, cappedAt)
-            cappedWidth = cappedHeight * widthRatio
-        } else {
-            // Squared
-            cappedWidth = min(size.width, cappedAt)
-            cappedHeight = min(size.height, cappedAt)
-        }
-        return CGSize(width: cappedWidth, height: cappedHeight)
     }
 }
 
@@ -214,4 +195,8 @@ extension YPPhotoFiltersVC {
             title = "필터 선택"
         }
     }
+}
+
+protocol SetPhotoViewControllerDelegate: AnyObject {
+    func setPhotoes(photoes: [UIImage]?)
 }
