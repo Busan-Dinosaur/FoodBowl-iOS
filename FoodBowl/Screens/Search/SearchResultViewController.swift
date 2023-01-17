@@ -91,7 +91,7 @@ final class SearchResultViewController: BaseViewController {
 
         segmentedControl.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide)
-            $0.leading.trailing.equalToSuperview()
+            $0.leading.trailing.equalToSuperview().inset(14)
             $0.height.equalTo(50)
         }
 
