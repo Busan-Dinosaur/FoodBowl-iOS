@@ -151,6 +151,16 @@ final class AddFeedViewController: BaseViewController {
         let currentPage = pageControl.currentPage
         let nextPage = currentPage + 1
 
+        switch currentPage {
+        case 0:
+            if newFeed.store == nil { return }
+        case 1:
+            if newFeed.category == nil { return }
+        case 2:
+            if newFeed.photoes == nil { return }
+        default: ()
+        }
+
         let nextVC = dataViewControllers[nextPage]
         pageViewController.setViewControllers([nextVC], direction: .forward, animated: true) { _ in
             self.pageControl.currentPage = nextPage
