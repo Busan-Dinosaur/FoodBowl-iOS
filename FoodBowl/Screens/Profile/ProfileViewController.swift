@@ -49,7 +49,7 @@ final class ProfileViewController: BaseViewController {
     }()
 
     private let vc1 = UserFeedViewController()
-    private let vc2 = SearchUserResultViewController()
+    private let vc2 = UserMapViewController()
 
     private lazy var pageViewController: UIPageViewController = {
         let vc = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
@@ -87,13 +87,13 @@ final class ProfileViewController: BaseViewController {
         userProfileView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide)
             $0.leading.trailing.equalToSuperview()
-            $0.height.equalTo(100)
+            $0.height.equalTo(80)
         }
 
         segmentedControl.snp.makeConstraints {
             $0.top.equalTo(userProfileView.snp.bottom)
             $0.leading.trailing.equalToSuperview()
-            $0.height.equalTo(50)
+            $0.height.equalTo(40)
         }
 
         pageViewController.view.snp.makeConstraints {

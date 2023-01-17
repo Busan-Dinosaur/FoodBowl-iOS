@@ -16,7 +16,7 @@ final class UserFeedViewController: BaseViewController {
         static let cellHeight: CGFloat = cellWidth
         static let collectionInset = UIEdgeInsets(top: 0,
                                                   left: 0,
-                                                  bottom: 20,
+                                                  bottom: 0,
                                                   right: 0)
     }
 

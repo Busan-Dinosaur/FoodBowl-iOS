@@ -84,7 +84,7 @@ final class UserProfileView: UICollectionReusableView {
         }
 
         stackTextView.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(30)
+            $0.top.equalToSuperview().inset(20)
             $0.leading.equalTo(userImageView.snp.trailing).offset(40)
             $0.width.equalTo(120)
         }
