@@ -23,21 +23,28 @@ final class SearchNewViewController: BaseViewController {
 
     private lazy var searchBar = UISearchBar().then {
         $0.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width - 80, height: 0)
-        $0.placeholder = "가게와 유저 이름을 검색해주세요"
+        $0.placeholder = "가게와 유저 이름을 검색해주세요."
         $0.delegate = self
     }
 
-    private let segmentedControl = UISegmentedControl(items: ["가게", "유저"]).then {
+    private lazy var segmentedControl = UnderlineSegmentedControl(items: ["가게", "유저"]).then {
         $0.translatesAutoresizingMaskIntoConstraints = false
-        $0.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.gray], for: .normal)
         $0.setTitleTextAttributes(
             [
-                NSAttributedString.Key.foregroundColor: UIColor.green,
-                .font: UIFont.systemFont(ofSize: 13, weight: .semibold)
+                NSAttributedString.Key.foregroundColor: UIColor.grey001,
+                .font: UIFont.preferredFont(forTextStyle: .headline, weight: .medium)
+            ],
+            for: .normal
+        )
+        $0.setTitleTextAttributes(
+            [
+                NSAttributedString.Key.foregroundColor: UIColor.black,
+                .font: UIFont.preferredFont(forTextStyle: .headline, weight: .semibold)
             ],
             for: .selected
         )
         $0.selectedSegmentIndex = 0
+        $0.addTarget(self, action: #selector(changeValue(control:)), for: .valueChanged)
     }
 
     private let childView: UIView = {
@@ -73,8 +80,6 @@ final class SearchNewViewController: BaseViewController {
 
     var currentPage: Int = 0 {
         didSet {
-            // from segmentedControl -> pageViewController 업데이트
-            print(oldValue, self.currentPage)
             let direction: UIPageViewController.NavigationDirection = oldValue <= self.currentPage ? .forward : .reverse
             self.pageViewController.setViewControllers(
                 [dataViewControllers[self.currentPage]],
@@ -85,12 +90,17 @@ final class SearchNewViewController: BaseViewController {
         }
     }
 
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        changeValue(control: segmentedControl)
+    }
+
     override func render() {
         view.addSubviews(segmentedControl, pageViewController.view)
 
         segmentedControl.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide)
-            $0.leading.trailing.equalToSuperview().inset(20)
+            $0.leading.trailing.equalToSuperview()
             $0.height.equalTo(50)
         }
 
@@ -104,6 +114,10 @@ final class SearchNewViewController: BaseViewController {
         let cancelButton = makeBarButtonItem(with: cancelButton)
         navigationItem.rightBarButtonItem = cancelButton
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: searchBar)
+    }
+
+    @objc private func changeValue(control: UISegmentedControl) {
+        currentPage = control.selectedSegmentIndex
     }
 }
 
