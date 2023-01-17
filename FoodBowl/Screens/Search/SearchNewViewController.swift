@@ -23,15 +23,22 @@ final class SearchNewViewController: BaseViewController {
 
     private lazy var searchBar = UISearchBar().then {
         $0.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width - 80, height: 0)
-        $0.placeholder = "가게 이름을 검색해주세요"
+        $0.placeholder = "가게와 유저 이름을 검색해주세요"
         $0.delegate = self
     }
 
-    private let segmentedControl: UISegmentedControl = {
-        let segmentedControl = UnderlineSegmentedControl(items: ["전체", "웹툰", "베스트도전"])
-        segmentedControl.translatesAutoresizingMaskIntoConstraints = false
-        return segmentedControl
-    }()
+    private let segmentedControl = UISegmentedControl(items: ["가게", "유저"]).then {
+        $0.translatesAutoresizingMaskIntoConstraints = false
+        $0.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.gray], for: .normal)
+        $0.setTitleTextAttributes(
+            [
+                NSAttributedString.Key.foregroundColor: UIColor.green,
+                .font: UIFont.systemFont(ofSize: 13, weight: .semibold)
+            ],
+            for: .selected
+        )
+        $0.selectedSegmentIndex = 0
+    }
 
     private let childView: UIView = {
         let view = UIView()
@@ -51,12 +58,6 @@ final class SearchNewViewController: BaseViewController {
         return vc
     }()
 
-    private let vc3: UIViewController = {
-        let vc = UIViewController()
-        vc.view.backgroundColor = .blue
-        return vc
-    }()
-
     private lazy var pageViewController: UIPageViewController = {
         let vc = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
         vc.setViewControllers([self.dataViewControllers[0]], direction: .forward, animated: true)
@@ -67,7 +68,7 @@ final class SearchNewViewController: BaseViewController {
     }()
 
     var dataViewControllers: [UIViewController] {
-        [vc1, vc2, vc3]
+        [vc1, vc2]
     }
 
     var currentPage: Int = 0 {
@@ -84,47 +85,25 @@ final class SearchNewViewController: BaseViewController {
         }
     }
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func render() {
+        view.addSubviews(segmentedControl, pageViewController.view)
 
-        view.addSubview(segmentedControl)
-        view.addSubview(pageViewController.view)
+        segmentedControl.snp.makeConstraints {
+            $0.top.equalTo(view.safeAreaLayoutGuide)
+            $0.leading.trailing.equalToSuperview().inset(20)
+            $0.height.equalTo(50)
+        }
 
-        NSLayoutConstraint.activate([
-            segmentedControl.leftAnchor.constraint(equalTo: view.leftAnchor),
-            segmentedControl.rightAnchor.constraint(equalTo: view.rightAnchor),
-            segmentedControl.topAnchor.constraint(equalTo: view.topAnchor, constant: 80),
-            segmentedControl.heightAnchor.constraint(equalToConstant: 50)
-        ])
-        NSLayoutConstraint.activate([
-            pageViewController.view.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 4),
-            pageViewController.view.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -4),
-            pageViewController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -4),
-            pageViewController.view.topAnchor.constraint(equalTo: segmentedControl.bottomAnchor, constant: 5)
-        ])
-
-        segmentedControl.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.gray], for: .normal)
-        segmentedControl.setTitleTextAttributes(
-            [
-                NSAttributedString.Key.foregroundColor: UIColor.green,
-                .font: UIFont.systemFont(ofSize: 13, weight: .semibold)
-            ],
-            for: .selected
-        )
-        segmentedControl.addTarget(self, action: #selector(changeValue(control:)), for: .valueChanged)
-        segmentedControl.selectedSegmentIndex = 0
-        changeValue(control: segmentedControl)
+        pageViewController.view.snp.makeConstraints {
+            $0.top.equalTo(segmentedControl.snp.bottom)
+            $0.leading.trailing.bottom.equalToSuperview()
+        }
     }
 
     override func setupNavigationBar() {
         let cancelButton = makeBarButtonItem(with: cancelButton)
         navigationItem.rightBarButtonItem = cancelButton
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: searchBar)
-    }
-
-    @objc private func changeValue(control: UISegmentedControl) {
-        // 코드로 값을 변경하면 해당 메소드 호출 x
-        currentPage = control.selectedSegmentIndex
     }
 }
 
