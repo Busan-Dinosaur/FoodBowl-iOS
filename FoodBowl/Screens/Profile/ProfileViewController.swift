@@ -11,85 +11,35 @@ import SnapKit
 import Then
 
 final class ProfileViewController: BaseViewController {
-    private enum Size {
-        static let headerHeight: CGFloat = 240
-        static let cellWidth: CGFloat = (UIScreen.main.bounds.size.width - 8) / 3
-        static let cellHeight: CGFloat = cellWidth
-        static let collectionInset = UIEdgeInsets(top: 0,
-                                                  left: 0,
-                                                  bottom: 20,
-                                                  right: 0)
-    }
-
-    private var feeds: [String] = ["가나", "다라", "마바", "사아", "자차", "사아", "자차", "사아", "자차", "사아", "자차", "사아", "자차", "사아", "자차"]
-
     // MARK: - property
+
+    private let userNicknameLabel = UILabel().then {
+        $0.font = UIFont.preferredFont(forTextStyle: .title1, weight: .bold)
+        $0.text = "coby5502"
+    }
 
     private let settingButton = SettingButton()
 
-    private let collectionViewFlowLayout = UICollectionViewFlowLayout().then {
-        $0.scrollDirection = .vertical
-        $0.sectionInset = Size.collectionInset
-        $0.itemSize = CGSize(width: Size.cellWidth, height: Size.cellHeight)
-        $0.minimumLineSpacing = 4
-        $0.minimumInteritemSpacing = 4
-        $0.headerReferenceSize = CGSize(width: UIScreen.main.bounds.width, height: Size.headerHeight)
-    }
-
-    private lazy var listCollectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewFlowLayout).then {
-        $0.backgroundColor = .clear
-        $0.dataSource = self
-        $0.delegate = self
-        $0.showsVerticalScrollIndicator = false
-        $0.register(FeedThumnailCollectionViewCell.self, forCellWithReuseIdentifier: FeedThumnailCollectionViewCell.className)
-        $0.register(UserProfileView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: UserProfileView.className)
-    }
+    private let userProfileView = UserProfileView()
 
     // MARK: - life cycle
 
     override func render() {
-        view.addSubviews(listCollectionView)
+        view.addSubviews(userProfileView)
 
-        listCollectionView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
+        userProfileView.snp.makeConstraints {
+            $0.top.equalTo(view.safeAreaLayoutGuide)
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(100)
         }
     }
 
     override func setupNavigationBar() {
         super.setupNavigationBar()
 
+        let userNicknameLabel = makeBarButtonItem(with: userNicknameLabel)
         let settingButton = makeBarButtonItem(with: settingButton)
-        navigationItem.leftBarButtonItem = nil
+        navigationItem.leftBarButtonItem = userNicknameLabel
         navigationItem.rightBarButtonItem = settingButton
-        title = "프로필"
     }
-}
-
-extension ProfileViewController: UICollectionViewDataSource, UICollectionViewDelegate {
-    func collectionView(_: UICollectionView, numberOfItemsInSection _: Int) -> Int {
-        return feeds.count
-    }
-
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FeedThumnailCollectionViewCell.className, for: indexPath) as? FeedThumnailCollectionViewCell else {
-            return UICollectionViewCell()
-        }
-
-        return cell
-    }
-
-    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        switch kind {
-        case UICollectionView.elementKindSectionHeader:
-            guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: UserProfileView.className, for: indexPath) as? UserProfileView else {
-                return UICollectionReusableView()
-            }
-
-            return header
-        default:
-            return UICollectionReusableView()
-        }
-    }
-
-    func collectionView(_: UICollectionView, didSelectItemAt _: IndexPath) {}
 }
