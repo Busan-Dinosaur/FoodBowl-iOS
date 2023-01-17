@@ -1,8 +1,8 @@
 //
-//  MapViewController.swift
+//  UserMapViewController.swift
 //  FoodBowl
 //
-//  Created by COBY_PRO on 2023/01/10.
+//  Created by COBY_PRO on 2023/01/18.
 //
 
 import UIKit
@@ -12,7 +12,7 @@ import MapKit
 import SnapKit
 import Then
 
-final class MapViewController: BaseViewController, MKMapViewDelegate {
+final class UserMapViewController: BaseViewController, MKMapViewDelegate {
     private enum Size {
         static let collectionInset = UIEdgeInsets(top: 0,
                                                   left: 20,
@@ -37,17 +37,36 @@ final class MapViewController: BaseViewController, MKMapViewDelegate {
         $0.setUserTrackingMode(.follow, animated: true)
         $0.isZoomEnabled = true
         $0.showsCompass = false
-
-        let userTrackingButton = MKUserTrackingButton(mapView: $0)
-        userTrackingButton.frame.origin = CGPoint(x: self.view.frame.maxX - 60, y: self.view.frame.maxY - 180)
-        $0.addSubview(userTrackingButton)
     }
 
-    private lazy var searchBarButton = SearchBarButton().then {
-        $0.label.text = "가게 이름을 검색해주세요."
-        let action = UIAction { [weak self] _ in
-        }
-        $0.addAction(action, for: .touchUpInside)
+    private func createTagLayout() -> UICollectionViewLayout {
+        let itemSize = NSCollectionLayoutSize(
+            widthDimension: .estimated(80),
+            heightDimension: .absolute(40)
+        )
+
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+
+        let groupSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1.0),
+            heightDimension: .absolute(40)
+        )
+
+        let group = NSCollectionLayoutGroup.horizontal(
+            layoutSize: groupSize,
+            subitems: [item]
+        )
+        group.interItemSpacing = .fixed(8)
+
+        let section = NSCollectionLayoutSection(group: group)
+        section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 20)
+
+        let config = UICollectionViewCompositionalLayoutConfiguration()
+        config.scrollDirection = .horizontal
+
+        let layout = UICollectionViewCompositionalLayout(section: section)
+        layout.configuration = config
+        return layout
     }
 
     private let collectionViewFlowLayout = UICollectionViewFlowLayout().then {
@@ -82,20 +101,14 @@ final class MapViewController: BaseViewController, MKMapViewDelegate {
     }
 
     override func render() {
-        view.addSubviews(mapView, searchBarButton, listCollectionView)
+        view.addSubviews(mapView, listCollectionView)
 
         mapView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
 
-        searchBarButton.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide)
-            $0.leading.trailing.equalToSuperview().inset(20)
-            $0.height.equalTo(50)
-        }
-
         listCollectionView.snp.makeConstraints {
-            $0.top.equalTo(searchBarButton.snp.bottom).offset(10)
+            $0.top.equalToSuperview().inset(10)
             $0.leading.trailing.equalToSuperview()
             $0.height.equalTo(40)
         }
@@ -119,7 +132,7 @@ final class MapViewController: BaseViewController, MKMapViewDelegate {
     }
 }
 
-extension MapViewController: CLLocationManagerDelegate {
+extension UserMapViewController: CLLocationManagerDelegate {
     func locationManager(_: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         switch status {
         case .authorizedAlways, .authorizedWhenInUse:
@@ -142,7 +155,7 @@ extension MapViewController: CLLocationManagerDelegate {
 
 // MARK: - UICollectionViewDataSource, UICollectionViewDelegate
 
-extension MapViewController: UICollectionViewDataSource, UICollectionViewDelegate {
+extension UserMapViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_: UICollectionView, numberOfItemsInSection _: Int) -> Int {
         return categories.count
     }

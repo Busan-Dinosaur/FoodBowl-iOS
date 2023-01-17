@@ -11,85 +11,145 @@ import SnapKit
 import Then
 
 final class ProfileViewController: BaseViewController {
-    private enum Size {
-        static let headerHeight: CGFloat = 240
-        static let cellWidth: CGFloat = (UIScreen.main.bounds.size.width - 8) / 3
-        static let cellHeight: CGFloat = cellWidth
-        static let collectionInset = UIEdgeInsets(top: 0,
-                                                  left: 0,
-                                                  bottom: 20,
-                                                  right: 0)
-    }
-
-    private var feeds: [String] = ["가나", "다라", "마바", "사아", "자차", "사아", "자차", "사아", "자차", "사아", "자차", "사아", "자차", "사아", "자차"]
-
     // MARK: - property
+
+    private let userNicknameLabel = UILabel().then {
+        $0.font = UIFont.preferredFont(forTextStyle: .title1, weight: .bold)
+        $0.text = "coby5502"
+    }
 
     private let settingButton = SettingButton()
 
-    private let collectionViewFlowLayout = UICollectionViewFlowLayout().then {
-        $0.scrollDirection = .vertical
-        $0.sectionInset = Size.collectionInset
-        $0.itemSize = CGSize(width: Size.cellWidth, height: Size.cellHeight)
-        $0.minimumLineSpacing = 4
-        $0.minimumInteritemSpacing = 4
-        $0.headerReferenceSize = CGSize(width: UIScreen.main.bounds.width, height: Size.headerHeight)
+    private let userProfileView = UserProfileView()
+
+    private lazy var segmentedControl = UnderlineSegmentedControl(items: ["게시물", "맛집지도"]).then {
+        $0.translatesAutoresizingMaskIntoConstraints = false
+        $0.setTitleTextAttributes(
+            [
+                NSAttributedString.Key.foregroundColor: UIColor.grey001,
+                .font: UIFont.preferredFont(forTextStyle: .headline, weight: .medium)
+            ],
+            for: .normal
+        )
+        $0.setTitleTextAttributes(
+            [
+                NSAttributedString.Key.foregroundColor: UIColor.black,
+                .font: UIFont.preferredFont(forTextStyle: .headline, weight: .semibold)
+            ],
+            for: .selected
+        )
+        $0.selectedSegmentIndex = 0
+        $0.addTarget(self, action: #selector(changeValue(control:)), for: .valueChanged)
     }
 
-    private lazy var listCollectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewFlowLayout).then {
-        $0.backgroundColor = .clear
-        $0.dataSource = self
-        $0.delegate = self
-        $0.showsVerticalScrollIndicator = false
-        $0.register(FeedThumnailCollectionViewCell.self, forCellWithReuseIdentifier: FeedThumnailCollectionViewCell.className)
-        $0.register(UserProfileView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: UserProfileView.className)
+    private let childView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+
+    private let vc1 = UserFeedViewController()
+    private let vc2 = UserMapViewController()
+
+    private lazy var pageViewController: UIPageViewController = {
+        let vc = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
+        vc.setViewControllers([self.dataViewControllers[0]], direction: .forward, animated: true)
+        vc.delegate = self
+        vc.dataSource = self
+        vc.view.translatesAutoresizingMaskIntoConstraints = false
+        return vc
+    }()
+
+    var dataViewControllers: [UIViewController] {
+        [vc1, vc2]
     }
 
-    // MARK: - life cycle
+    var currentPage: Int = 0 {
+        didSet {
+            let direction: UIPageViewController.NavigationDirection = oldValue <= self.currentPage ? .forward : .reverse
+            self.pageViewController.setViewControllers(
+                [dataViewControllers[self.currentPage]],
+                direction: direction,
+                animated: true,
+                completion: nil
+            )
+        }
+    }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        changeValue(control: segmentedControl)
+    }
 
     override func render() {
-        view.addSubviews(listCollectionView)
+        view.addSubviews(userProfileView, segmentedControl, pageViewController.view)
 
-        listCollectionView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
+        userProfileView.snp.makeConstraints {
+            $0.top.equalTo(view.safeAreaLayoutGuide)
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(80)
+        }
+
+        segmentedControl.snp.makeConstraints {
+            $0.top.equalTo(userProfileView.snp.bottom)
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(50)
+        }
+
+        pageViewController.view.snp.makeConstraints {
+            $0.top.equalTo(segmentedControl.snp.bottom)
+            $0.leading.trailing.bottom.equalToSuperview()
         }
     }
 
     override func setupNavigationBar() {
         super.setupNavigationBar()
 
+        let userNicknameLabel = makeBarButtonItem(with: userNicknameLabel)
         let settingButton = makeBarButtonItem(with: settingButton)
-        navigationItem.leftBarButtonItem = nil
+        navigationItem.leftBarButtonItem = userNicknameLabel
         navigationItem.rightBarButtonItem = settingButton
-        title = "프로필"
+    }
+
+    @objc private func changeValue(control: UISegmentedControl) {
+        currentPage = control.selectedSegmentIndex
     }
 }
 
-extension ProfileViewController: UICollectionViewDataSource, UICollectionViewDelegate {
-    func collectionView(_: UICollectionView, numberOfItemsInSection _: Int) -> Int {
-        return feeds.count
+extension ProfileViewController: UIPageViewControllerDataSource, UIPageViewControllerDelegate {
+    func pageViewController(
+        _: UIPageViewController,
+        viewControllerBefore viewController: UIViewController
+    ) -> UIViewController? {
+        guard
+            let index = dataViewControllers.firstIndex(of: viewController),
+            index - 1 >= 0
+        else { return nil }
+        return dataViewControllers[index - 1]
     }
 
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FeedThumnailCollectionViewCell.className, for: indexPath) as? FeedThumnailCollectionViewCell else {
-            return UICollectionViewCell()
-        }
-
-        return cell
+    func pageViewController(
+        _: UIPageViewController,
+        viewControllerAfter viewController: UIViewController
+    ) -> UIViewController? {
+        guard
+            let index = dataViewControllers.firstIndex(of: viewController),
+            index + 1 < dataViewControllers.count
+        else { return nil }
+        return dataViewControllers[index + 1]
     }
 
-    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        switch kind {
-        case UICollectionView.elementKindSectionHeader:
-            guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: UserProfileView.className, for: indexPath) as? UserProfileView else {
-                return UICollectionReusableView()
-            }
-
-            return header
-        default:
-            return UICollectionReusableView()
-        }
+    func pageViewController(
+        _ pageViewController: UIPageViewController,
+        didFinishAnimating _: Bool,
+        previousViewControllers _: [UIViewController],
+        transitionCompleted _: Bool
+    ) {
+        guard
+            let viewController = pageViewController.viewControllers?[0],
+            let index = dataViewControllers.firstIndex(of: viewController)
+        else { return }
+        currentPage = index
+        segmentedControl.selectedSegmentIndex = index
     }
-
-    func collectionView(_: UICollectionView, didSelectItemAt _: IndexPath) {}
 }
