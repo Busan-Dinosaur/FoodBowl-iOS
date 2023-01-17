@@ -179,6 +179,15 @@
 			path = UIComponent;
 			sourceTree = "<group>";
 		};
+		CBAD1C162976C0850079ABE0 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				CBADC2E12955C63300E56C93 /* FeedThumnailCollectionViewCell.swift */,
+				CBB58283297440A600808B0B /* CategoryCollectionViewCell.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
 		CBADC25129559BC900E56C93 /* Global */ = {
 			isa = PBXGroup;
 			children = (
@@ -189,6 +198,7 @@
 				CBADC26F29559BC900E56C93 /* Resource */,
 				CBADC27429559BC900E56C93 /* Base */,
 				CBADC27829559BC900E56C93 /* UIComponent */,
+				CBAD1C162976C0850079ABE0 /* Cell */,
 			);
 			path = Global;
 			sourceTree = "<group>";
@@ -306,7 +316,6 @@
 			isa = PBXGroup;
 			children = (
 				CB1A7C5F29561B8400C6431D /* UIComponent */,
-				CBADC2BF2955A25600E56C93 /* Cell */,
 				CBADC2AC2955A0FF00E56C93 /* ProfileViewController.swift */,
 			);
 			path = Profile;
@@ -344,14 +353,6 @@
 			isa = PBXGroup;
 			children = (
 				CBADC2D72955AC5900E56C93 /* FeedCollectionViewCell.swift */,
-			);
-			path = Cell;
-			sourceTree = "<group>";
-		};
-		CBADC2BF2955A25600E56C93 /* Cell */ = {
-			isa = PBXGroup;
-			children = (
-				CBADC2E12955C63300E56C93 /* FeedThumnailCollectionViewCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -396,7 +397,6 @@
 			isa = PBXGroup;
 			children = (
 				CBDE39012971947B00DDE49A /* StoreInfoTableViewCell.swift */,
-				CBB58283297440A600808B0B /* CategoryCollectionViewCell.swift */,
 				CB558E9929746B5D00921943 /* PhotoCollectionViewCell.swift */,
 			);
 			path = Cell;

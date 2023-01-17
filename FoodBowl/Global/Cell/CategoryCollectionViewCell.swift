@@ -39,6 +39,7 @@ final class CategoryCollectionViewCell: BaseCollectionViewCell {
     }
 
     override func configUI() {
+        backgroundColor = .white
         makeBorderLayer(color: .grey002)
     }
 }
