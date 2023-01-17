@@ -13,6 +13,8 @@ import SnapKit
 import Then
 
 final class MapViewController: BaseViewController, MKMapViewDelegate {
+    private let categories = Category.allCases
+
     private lazy var locationManager: CLLocationManager = {
         let manager = CLLocationManager()
         manager.desiredAccuracy = kCLLocationAccuracyBest
@@ -41,6 +43,44 @@ final class MapViewController: BaseViewController, MKMapViewDelegate {
         $0.addAction(action, for: .touchUpInside)
     }
 
+    private func createTagLayout() -> UICollectionViewLayout {
+        let itemSize = NSCollectionLayoutSize(
+            widthDimension: .estimated(80),
+            heightDimension: .absolute(40)
+        )
+
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+
+        let groupSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1.0),
+            heightDimension: .absolute(40)
+        )
+
+        let group = NSCollectionLayoutGroup.horizontal(
+            layoutSize: groupSize,
+            subitems: [item]
+        )
+        group.interItemSpacing = .fixed(8)
+
+        let section = NSCollectionLayoutSection(group: group)
+        section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 20)
+
+        let config = UICollectionViewCompositionalLayoutConfiguration()
+        config.scrollDirection = .horizontal
+
+        let layout = UICollectionViewCompositionalLayout(section: section)
+        layout.configuration = config
+        return layout
+    }
+
+    private lazy var listCollectionView = UICollectionView(frame: .zero, collectionViewLayout: createTagLayout()).then {
+        $0.backgroundColor = .clear
+        $0.dataSource = self
+        $0.delegate = self
+        $0.showsHorizontalScrollIndicator = false
+        $0.register(CategoryCollectionViewCell.self, forCellWithReuseIdentifier: CategoryCollectionViewCell.className)
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         findMyLocation()
@@ -51,7 +91,7 @@ final class MapViewController: BaseViewController, MKMapViewDelegate {
     }
 
     override func render() {
-        view.addSubviews(mapView, searchBarButton)
+        view.addSubviews(mapView, searchBarButton, listCollectionView)
 
         mapView.snp.makeConstraints {
             $0.edges.equalToSuperview()
@@ -61,6 +101,12 @@ final class MapViewController: BaseViewController, MKMapViewDelegate {
             $0.top.equalTo(view.safeAreaLayoutGuide)
             $0.leading.trailing.equalToSuperview().inset(20)
             $0.height.equalTo(50)
+        }
+
+        listCollectionView.snp.makeConstraints {
+            $0.top.equalTo(searchBarButton.snp.bottom).offset(10)
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(40)
         }
     }
 
@@ -100,5 +146,32 @@ extension MapViewController: CLLocationManagerDelegate {
         default:
             print("GPS: Default")
         }
+    }
+}
+
+// MARK: - UICollectionViewDataSource, UICollectionViewDelegate
+
+extension MapViewController: UICollectionViewDataSource, UICollectionViewDelegate {
+    func collectionView(_: UICollectionView, numberOfItemsInSection _: Int) -> Int {
+        return categories.count
+    }
+
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CategoryCollectionViewCell.className, for: indexPath) as? CategoryCollectionViewCell else {
+            return UICollectionViewCell()
+        }
+
+        cell.layer.cornerRadius = 20
+        cell.categoryLabel.text = categories[indexPath.item].rawValue
+
+        if indexPath.item == 0 {
+            cell.isSelected = true
+        }
+
+        return cell
+    }
+
+    func collectionView(_: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print(categories[indexPath.item].rawValue)
     }
 }

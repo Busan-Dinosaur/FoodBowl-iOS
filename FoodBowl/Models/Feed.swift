@@ -20,6 +20,7 @@ struct Feed {
 // MARK: - Category
 
 enum Category: String, CaseIterable {
+    case all = "전체"
     case cafe = "카페"
     case korean = "한식"
     case western = "양식"

@@ -11,18 +11,6 @@ import SnapKit
 import Then
 
 final class CategoryCollectionViewCell: BaseCollectionViewCell {
-    override var isSelected: Bool {
-        didSet {
-            if isSelected {
-                backgroundColor = .mainBlue
-                categoryLabel.textColor = .white
-            } else {
-                backgroundColor = .white
-                categoryLabel.textColor = .black
-            }
-        }
-    }
-
     // MARK: - property
 
     let categoryLabel = UILabel().then {
