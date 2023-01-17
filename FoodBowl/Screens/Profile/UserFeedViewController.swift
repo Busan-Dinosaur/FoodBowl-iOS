@@ -1,8 +1,8 @@
 //
-//  SearchViewController.swift
+//  UserFeedViewController.swift
 //  FoodBowl
 //
-//  Created by COBY_PRO on 2022/12/23.
+//  Created by COBY_PRO on 2023/01/18.
 //
 
 import UIKit
@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 import Then
 
-final class SearchViewController: BaseViewController {
+final class UserFeedViewController: BaseViewController {
     private enum Size {
         static let cellWidth: CGFloat = (UIScreen.main.bounds.size.width - 8) / 3
         static let cellHeight: CGFloat = cellWidth
@@ -23,19 +23,6 @@ final class SearchViewController: BaseViewController {
     private var feeds: [String] = ["가나", "다라", "마바", "사아", "자차", "사아", "자차", "사아", "자차", "사아", "자차", "사아", "자차", "사아", "자차"]
 
     // MARK: - property
-
-    private lazy var searchBarButton = SearchBarButton().then {
-        $0.label.text = "새로운 가게와 유저를 찾아보세요."
-        let action = UIAction { [weak self] _ in
-            let searchResultViewController = SearchResultViewController()
-            let navigationController = UINavigationController(rootViewController: searchResultViewController)
-            navigationController.modalPresentationStyle = .fullScreen
-            DispatchQueue.main.async {
-                self?.present(navigationController, animated: true)
-            }
-        }
-        $0.addAction(action, for: .touchUpInside)
-    }
 
     private let collectionViewFlowLayout = UICollectionViewFlowLayout().then {
         $0.scrollDirection = .vertical
@@ -56,17 +43,10 @@ final class SearchViewController: BaseViewController {
     // MARK: - life cycle
 
     override func render() {
-        view.addSubviews(searchBarButton, listCollectionView)
-
-        searchBarButton.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide)
-            $0.leading.trailing.equalToSuperview().inset(20)
-            $0.height.equalTo(50)
-        }
+        view.addSubviews(listCollectionView)
 
         listCollectionView.snp.makeConstraints {
-            $0.top.equalTo(searchBarButton.snp.bottom).offset(10)
-            $0.leading.trailing.bottom.equalToSuperview()
+            $0.edges.equalToSuperview()
         }
     }
 
@@ -75,7 +55,7 @@ final class SearchViewController: BaseViewController {
     }
 }
 
-extension SearchViewController: UICollectionViewDataSource, UICollectionViewDelegate {
+extension UserFeedViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_: UICollectionView, numberOfItemsInSection _: Int) -> Int {
         return feeds.count
     }
