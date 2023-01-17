@@ -1,5 +1,5 @@
 //
-//  SearchNewViewController.swift
+//  SearchResultViewController.swift
 //  FoodBowl
 //
 //  Created by COBY_PRO on 2022/12/23.
@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 import Then
 
-final class SearchNewViewController: BaseViewController {
+final class SearchResultViewController: BaseViewController {
     private lazy var cancelButton = UIButton().then {
         $0.setTitle("취소", for: .normal)
         $0.setTitleColor(.mainPink, for: .normal)
@@ -23,7 +23,7 @@ final class SearchNewViewController: BaseViewController {
 
     private lazy var searchBar = UISearchBar().then {
         $0.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width - 80, height: 0)
-        $0.placeholder = "가게와 유저 이름을 검색해주세요."
+        $0.placeholder = "가게 또는 유저의 이름을 검색해주세요."
         $0.delegate = self
     }
 
@@ -53,17 +53,8 @@ final class SearchNewViewController: BaseViewController {
         return view
     }()
 
-    private let vc1: UIViewController = {
-        let vc = UIViewController()
-        vc.view.backgroundColor = .red
-        return vc
-    }()
-
-    private let vc2: UIViewController = {
-        let vc = UIViewController()
-        vc.view.backgroundColor = .green
-        return vc
-    }()
+    private let vc1 = SearchStoreResultViewController()
+    private let vc2 = SearchUserResultViewController()
 
     private lazy var pageViewController: UIPageViewController = {
         let vc = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
@@ -121,7 +112,7 @@ final class SearchNewViewController: BaseViewController {
     }
 }
 
-extension SearchNewViewController: UIPageViewControllerDataSource, UIPageViewControllerDelegate {
+extension SearchResultViewController: UIPageViewControllerDataSource, UIPageViewControllerDelegate {
     func pageViewController(
         _: UIPageViewController,
         viewControllerBefore viewController: UIViewController
@@ -159,7 +150,7 @@ extension SearchNewViewController: UIPageViewControllerDataSource, UIPageViewCon
     }
 }
 
-extension SearchNewViewController: UISearchBarDelegate {
+extension SearchResultViewController: UISearchBarDelegate {
     private func dissmissKeyboard() {
         searchBar.resignFirstResponder()
     }

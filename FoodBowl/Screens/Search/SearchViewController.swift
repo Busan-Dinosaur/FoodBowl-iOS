@@ -16,8 +16,8 @@ final class SearchViewController: BaseViewController {
     private lazy var searchBarButton = SearchBarButton().then {
         $0.label.text = "새로운 가게와 유저를 찾아보세요."
         let action = UIAction { [weak self] _ in
-            let searchNewViewController = SearchNewViewController()
-            let navigationController = UINavigationController(rootViewController: searchNewViewController)
+            let searchResultViewController = SearchResultViewController()
+            let navigationController = UINavigationController(rootViewController: searchResultViewController)
             navigationController.modalPresentationStyle = .fullScreen
             DispatchQueue.main.async {
                 self?.present(navigationController, animated: true)
