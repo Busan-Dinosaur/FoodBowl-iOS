@@ -19,11 +19,19 @@ final class UserProfileView: UICollectionReusableView {
         $0.layer.masksToBounds = true
     }
 
-    private let followerLabel = UILabel().then {
-        $0.font = UIFont.preferredFont(forTextStyle: .subheadline, weight: .medium)
-        $0.textColor = .black
-        $0.textAlignment = .center
-        $0.text = "팔로워"
+    let feedInfoButton = UserInfoButton().then {
+        $0.infoLabel.text = "게시물"
+        $0.numberLabel.text = "24"
+    }
+
+    let followerInfoButton = UserInfoButton().then {
+        $0.infoLabel.text = "팔로워"
+        $0.numberLabel.text = "100"
+    }
+
+    let followingInfoButton = UserInfoButton().then {
+        $0.infoLabel.text = "팔로잉"
+        $0.numberLabel.text = "100"
     }
 
     private let stackTextView = UIStackView().then {
@@ -31,27 +39,6 @@ final class UserProfileView: UICollectionReusableView {
         $0.axis = .horizontal
         $0.alignment = .center
         $0.distribution = .equalSpacing
-    }
-
-    let followerNumberLabel = UILabel().then {
-        $0.font = UIFont.preferredFont(forTextStyle: .subheadline, weight: .regular)
-        $0.textColor = .black
-        $0.textAlignment = .center
-        $0.text = "100"
-    }
-
-    private let followingLabel = UILabel().then {
-        $0.font = UIFont.preferredFont(forTextStyle: .subheadline, weight: .regular)
-        $0.textColor = .black
-        $0.textAlignment = .center
-        $0.text = "팔로잉"
-    }
-
-    let followingNumberLabel = UILabel().then {
-        $0.font = UIFont.preferredFont(forTextStyle: .subheadline, weight: .regular)
-        $0.textColor = .black
-        $0.textAlignment = .center
-        $0.text = "100"
     }
 
     let followButton = MiniButton()
@@ -71,9 +58,9 @@ final class UserProfileView: UICollectionReusableView {
     // MARK: - life cycle
 
     private func render() {
-        addSubviews(userImageView, stackTextView, followerNumberLabel, followingNumberLabel, followButton)
+        addSubviews(userImageView, stackTextView, followButton)
 
-        [followerLabel, followingLabel].forEach {
+        [feedInfoButton, followerInfoButton, followingInfoButton].forEach {
             stackTextView.addArrangedSubview($0)
         }
 
@@ -84,21 +71,9 @@ final class UserProfileView: UICollectionReusableView {
         }
 
         stackTextView.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(20)
-            $0.leading.equalTo(userImageView.snp.trailing).offset(40)
-            $0.width.equalTo(120)
-        }
-
-        followerNumberLabel.snp.makeConstraints {
-            $0.leading.equalTo(followerLabel.snp.leading)
-            $0.trailing.equalTo(followerLabel.snp.trailing)
-            $0.top.equalTo(followerLabel.snp.bottom).offset(4)
-        }
-
-        followingNumberLabel.snp.makeConstraints {
-            $0.leading.equalTo(followingLabel.snp.leading)
-            $0.trailing.equalTo(followingLabel.snp.trailing)
-            $0.top.equalTo(followingLabel.snp.bottom).offset(4)
+            $0.top.bottom.equalToSuperview()
+            $0.leading.equalTo(userImageView.snp.trailing).offset(30)
+            $0.width.equalTo(150)
         }
 
         followButton.snp.makeConstraints {

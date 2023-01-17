@@ -22,7 +22,7 @@ final class ProfileViewController: BaseViewController {
 
     private let userProfileView = UserProfileView()
 
-    private lazy var segmentedControl = UnderlineSegmentedControl(items: ["피드", "지도"]).then {
+    private lazy var segmentedControl = UnderlineSegmentedControl(items: ["게시물", "맛집지도"]).then {
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.setTitleTextAttributes(
             [
