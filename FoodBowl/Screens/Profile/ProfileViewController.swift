@@ -93,7 +93,7 @@ final class ProfileViewController: BaseViewController {
         segmentedControl.snp.makeConstraints {
             $0.top.equalTo(userProfileView.snp.bottom)
             $0.leading.trailing.equalToSuperview()
-            $0.height.equalTo(40)
+            $0.height.equalTo(50)
         }
 
         pageViewController.view.snp.makeConstraints {
