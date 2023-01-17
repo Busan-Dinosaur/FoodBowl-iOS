@@ -90,6 +90,13 @@ final class MapViewController: BaseViewController, MKMapViewDelegate {
         locationManager.stopUpdatingLocation()
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        let indexPath = IndexPath(item: 0, section: 0)
+        listCollectionView.selectItem(at: indexPath, animated: false, scrollPosition: UICollectionView.ScrollPosition(rawValue: 0))
+        collectionView(listCollectionView, didSelectItemAt: indexPath)
+    }
+
     override func render() {
         view.addSubviews(mapView, searchBarButton, listCollectionView)
 
@@ -163,10 +170,6 @@ extension MapViewController: UICollectionViewDataSource, UICollectionViewDelegat
 
         cell.layer.cornerRadius = 20
         cell.categoryLabel.text = categories[indexPath.item].rawValue
-
-        if indexPath.item == 0 {
-            cell.isSelected = true
-        }
 
         return cell
     }
