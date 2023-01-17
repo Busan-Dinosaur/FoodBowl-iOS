@@ -10,23 +10,25 @@ import UIKit
 import SnapKit
 import Then
 
-class AddFeedViewController: BaseViewController {
-    lazy var pageViewController: UIPageViewController = {
+final class AddFeedViewController: BaseViewController {
+    var newFeed = Feed(id: nil, store: nil, category: nil, photoes: nil, comment: nil)
+
+    private lazy var pageViewController: UIPageViewController = {
         let vc = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
 
         return vc
     }()
 
-    lazy var vc1 = SetStoreViewController()
-    lazy var vc2 = SetCategoryViewController()
-    lazy var vc3 = SetPhotoViewController()
-    lazy var vc4 = SetCommentViewController()
+    private let vc1 = SetStoreViewController()
+    private let vc2 = SetCategoryViewController()
+    private let vc3 = SetPhotoViewController()
+    private let vc4 = SetCommentViewController()
 
     lazy var dataViewControllers: [UIViewController] = {
         [vc1, vc2, vc3, vc4]
     }()
 
-    var pageControl = UIPageControl()
+    private let pageControl = UIPageControl()
 
     private lazy var closeButton = CloseButton().then {
         let action = UIAction { [weak self] _ in
@@ -84,6 +86,12 @@ class AddFeedViewController: BaseViewController {
         if let firstVC = dataViewControllers.first {
             pageViewController.setViewControllers([firstVC], direction: .forward, animated: true, completion: nil)
         }
+
+        vc1.delegate = self
+        vc2.delegate = self
+        vc3.delegate = self
+        vc4.delegate = self
+        vc3.delegateForComment = vc4
     }
 
     override func setupNavigationBar() {
@@ -143,6 +151,16 @@ class AddFeedViewController: BaseViewController {
         let currentPage = pageControl.currentPage
         let nextPage = currentPage + 1
 
+        switch currentPage {
+        case 0:
+            if newFeed.store == nil { return }
+        case 1:
+            if newFeed.category == nil { return }
+        case 2:
+            if newFeed.photoes == nil { return }
+        default: ()
+        }
+
         let nextVC = dataViewControllers[nextPage]
         pageViewController.setViewControllers([nextVC], direction: .forward, animated: true) { _ in
             self.pageControl.currentPage = nextPage
@@ -152,6 +170,25 @@ class AddFeedViewController: BaseViewController {
     }
 
     private func completeAddFeed() {
+        print(newFeed)
         dismiss(animated: true, completion: nil)
+    }
+}
+
+extension AddFeedViewController: SetStoreViewControllerDelegate, SetCategoryViewControllerDelegate, SetPhotoViewControllerDelegate, SetCommentViewControllerDelegate {
+    func setStore(store: Place?) {
+        newFeed.store = store
+    }
+
+    func setCategory(category: Category?) {
+        newFeed.category = category
+    }
+
+    func setPhotoes(photoes: [UIImage]?) {
+        newFeed.photoes = photoes
+    }
+
+    func setComment(comment: String?) {
+        newFeed.comment = comment
     }
 }

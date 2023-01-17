@@ -11,6 +11,7 @@ import SnapKit
 import Then
 
 final class SetCategoryViewController: BaseViewController {
+    var delegate: SetCategoryViewControllerDelegate?
     private let categories = Category.allCases
 
     // MARK: - property
@@ -94,5 +95,11 @@ extension SetCategoryViewController: UICollectionViewDataSource, UICollectionVie
         return cell
     }
 
-    func collectionView(_: UICollectionView, didSelectItemAt _: IndexPath) {}
+    func collectionView(_: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        delegate?.setCategory(category: categories[indexPath.item])
+    }
+}
+
+protocol SetCategoryViewControllerDelegate: AnyObject {
+    func setCategory(category: Category?)
 }
