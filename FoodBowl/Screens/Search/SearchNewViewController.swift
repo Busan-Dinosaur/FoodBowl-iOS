@@ -11,11 +11,20 @@ import SnapKit
 import Then
 
 final class SearchNewViewController: BaseViewController {
-    private lazy var closeButton = CloseButton().then {
-        let action = UIAction { [weak self] _ in
+    private lazy var cancelButton = UIButton().then {
+        $0.setTitle("취소", for: .normal)
+        $0.setTitleColor(.mainPink, for: .normal)
+        $0.titleLabel?.font = UIFont.preferredFont(forTextStyle: .headline, weight: .regular)
+        let buttonAction = UIAction { [weak self] _ in
             self?.dismiss(animated: true, completion: nil)
         }
-        $0.addAction(action, for: .touchUpInside)
+        $0.addAction(buttonAction, for: .touchUpInside)
+    }
+
+    private lazy var searchBar = UISearchBar().then {
+        $0.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width - 80, height: 0)
+        $0.placeholder = "가게 이름을 검색해주세요"
+        $0.delegate = self
     }
 
     private let segmentedControl: UISegmentedControl = {
@@ -108,11 +117,9 @@ final class SearchNewViewController: BaseViewController {
     }
 
     override func setupNavigationBar() {
-        super.setupNavigationBar()
-
-        let leftOffsetCloseButton = removeBarButtonItemOffset(with: closeButton, offsetX: 10)
-        let closeButton = makeBarButtonItem(with: leftOffsetCloseButton)
-        navigationItem.leftBarButtonItem = closeButton
+        let cancelButton = makeBarButtonItem(with: cancelButton)
+        navigationItem.rightBarButtonItem = cancelButton
+        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: searchBar)
     }
 
     @objc private func changeValue(control: UISegmentedControl) {
@@ -156,5 +163,17 @@ extension SearchNewViewController: UIPageViewControllerDataSource, UIPageViewCon
         else { return }
         currentPage = index
         segmentedControl.selectedSegmentIndex = index
+    }
+}
+
+extension SearchNewViewController: UISearchBarDelegate {
+    private func dissmissKeyboard() {
+        searchBar.resignFirstResponder()
+    }
+
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        dissmissKeyboard()
+        guard let searchTerm = searchBar.text, searchTerm.isEmpty == false else { return }
+        print(searchTerm)
     }
 }
