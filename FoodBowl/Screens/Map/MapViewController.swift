@@ -13,6 +13,13 @@ import SnapKit
 import Then
 
 final class MapViewController: BaseViewController, MKMapViewDelegate {
+    private enum Size {
+        static let collectionInset = UIEdgeInsets(top: 0,
+                                                  left: 20,
+                                                  bottom: 0,
+                                                  right: 20)
+    }
+
     private let categories = Category.allCases
 
     private lazy var locationManager: CLLocationManager = {
@@ -43,37 +50,14 @@ final class MapViewController: BaseViewController, MKMapViewDelegate {
         $0.addAction(action, for: .touchUpInside)
     }
 
-    private func createTagLayout() -> UICollectionViewLayout {
-        let itemSize = NSCollectionLayoutSize(
-            widthDimension: .estimated(80),
-            heightDimension: .absolute(40)
-        )
-
-        let item = NSCollectionLayoutItem(layoutSize: itemSize)
-
-        let groupSize = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(1.0),
-            heightDimension: .absolute(40)
-        )
-
-        let group = NSCollectionLayoutGroup.horizontal(
-            layoutSize: groupSize,
-            subitems: [item]
-        )
-        group.interItemSpacing = .fixed(8)
-
-        let section = NSCollectionLayoutSection(group: group)
-        section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 20)
-
-        let config = UICollectionViewCompositionalLayoutConfiguration()
-        config.scrollDirection = .horizontal
-
-        let layout = UICollectionViewCompositionalLayout(section: section)
-        layout.configuration = config
-        return layout
+    private let collectionViewFlowLayout = UICollectionViewFlowLayout().then {
+        $0.scrollDirection = .horizontal
+        $0.sectionInset = Size.collectionInset
+        $0.minimumLineSpacing = 4
+        $0.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
     }
 
-    private lazy var listCollectionView = UICollectionView(frame: .zero, collectionViewLayout: createTagLayout()).then {
+    private lazy var listCollectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewFlowLayout).then {
         $0.backgroundColor = .clear
         $0.dataSource = self
         $0.delegate = self

@@ -13,6 +13,13 @@ import SnapKit
 import Then
 
 final class UserMapViewController: BaseViewController, MKMapViewDelegate {
+    private enum Size {
+        static let collectionInset = UIEdgeInsets(top: 0,
+                                                  left: 20,
+                                                  bottom: 0,
+                                                  right: 20)
+    }
+
     private let categories = Category.allCases
 
     private lazy var locationManager: CLLocationManager = {
@@ -62,7 +69,14 @@ final class UserMapViewController: BaseViewController, MKMapViewDelegate {
         return layout
     }
 
-    private lazy var listCollectionView = UICollectionView(frame: .zero, collectionViewLayout: createTagLayout()).then {
+    private let collectionViewFlowLayout = UICollectionViewFlowLayout().then {
+        $0.scrollDirection = .horizontal
+        $0.sectionInset = Size.collectionInset
+        $0.minimumLineSpacing = 4
+        $0.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
+    }
+
+    private lazy var listCollectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewFlowLayout).then {
         $0.backgroundColor = .clear
         $0.dataSource = self
         $0.delegate = self

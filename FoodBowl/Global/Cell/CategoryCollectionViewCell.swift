@@ -34,7 +34,7 @@ final class CategoryCollectionViewCell: BaseCollectionViewCell {
 
         categoryLabel.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview().inset(20)
-            $0.centerY.equalToSuperview()
+            $0.top.bottom.equalToSuperview().inset(10)
         }
     }
 
