@@ -45,7 +45,7 @@ final class MainViewController: BaseViewController {
         let action = UIAction { [weak self] _ in
             let addFeedViewController = AddFeedViewController()
             let navigationController = UINavigationController(rootViewController: addFeedViewController)
-            navigationController.modalPresentationStyle = .overFullScreen
+            navigationController.modalPresentationStyle = .fullScreen
             DispatchQueue.main.async {
                 self?.present(navigationController, animated: true)
             }

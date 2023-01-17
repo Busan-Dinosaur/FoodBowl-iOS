@@ -12,6 +12,7 @@ import Then
 
 final class SearchViewController: BaseViewController {
     private enum Size {
+        static let headerHeight: CGFloat = 240
         static let cellWidth: CGFloat = (UIScreen.main.bounds.size.width - 8) / 3
         static let cellHeight: CGFloat = cellWidth
         static let collectionInset = UIEdgeInsets(top: 0,
@@ -20,17 +21,22 @@ final class SearchViewController: BaseViewController {
                                                   right: 0)
     }
 
-    private var feeds: [String] = ["가나", "다라", "마바", "사아", "자차"]
-    private var filteredFeeds: [String] = []
-
-    private var isFiltering: Bool {
-        let searchController = navigationItem.searchController
-        let isActive = searchController?.isActive ?? false
-        let isSearchBarHasText = searchController?.searchBar.text?.isEmpty == false
-        return isActive && isSearchBarHasText
-    }
+    private var feeds: [String] = ["가나", "다라", "마바", "사아", "자차", "사아", "자차", "사아", "자차", "사아", "자차", "사아", "자차", "사아", "자차"]
 
     // MARK: - property
+
+    private lazy var searchBarButton = SearchBarButton().then {
+        $0.label.text = "새로운 가게와 유저를 찾아보세요."
+        let action = UIAction { [weak self] _ in
+            let searchResultViewController = SearchResultViewController()
+            let navigationController = UINavigationController(rootViewController: searchResultViewController)
+            navigationController.modalPresentationStyle = .fullScreen
+            DispatchQueue.main.async {
+                self?.present(navigationController, animated: true)
+            }
+        }
+        $0.addAction(action, for: .touchUpInside)
+    }
 
     private let collectionViewFlowLayout = UICollectionViewFlowLayout().then {
         $0.scrollDirection = .vertical
@@ -48,34 +54,31 @@ final class SearchViewController: BaseViewController {
         $0.register(FeedThumnailCollectionViewCell.self, forCellWithReuseIdentifier: FeedThumnailCollectionViewCell.className)
     }
 
-    private let emptyThumnailView = EmptyFeedView()
-
     // MARK: - life cycle
 
     override func render() {
-        view.addSubviews(listCollectionView)
+        view.addSubviews(searchBarButton, listCollectionView)
+
+        searchBarButton.snp.makeConstraints {
+            $0.top.equalTo(view.safeAreaLayoutGuide)
+            $0.leading.trailing.equalToSuperview().inset(20)
+            $0.height.equalTo(50)
+        }
 
         listCollectionView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
+            $0.top.equalTo(searchBarButton.snp.bottom).offset(10)
+            $0.leading.trailing.bottom.equalToSuperview()
         }
     }
 
     override func setupNavigationBar() {
-        super.setupNavigationBar()
-
-        let searchController = UISearchController(searchResultsController: nil)
-        searchController.searchBar.placeholder = "후기를 검색하세요."
-        searchController.searchResultsUpdater = self
-        navigationItem.leftBarButtonItem = nil
-        navigationItem.titleView = searchController.searchBar
+        navigationController?.isNavigationBarHidden = true
     }
 }
 
-// MARK: - UICollectionViewDataSource, UICollectionViewDelegate
-
 extension SearchViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_: UICollectionView, numberOfItemsInSection _: Int) -> Int {
-        return isFiltering ? filteredFeeds.count : feeds.count
+        return feeds.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -83,18 +86,8 @@ extension SearchViewController: UICollectionViewDataSource, UICollectionViewDele
             return UICollectionViewCell()
         }
 
-        let feed = isFiltering ? filteredFeeds[indexPath.item] : feeds[indexPath.item]
-
         return cell
     }
 
     func collectionView(_: UICollectionView, didSelectItemAt _: IndexPath) {}
-}
-
-extension SearchViewController: UISearchResultsUpdating {
-    func updateSearchResults(for searchController: UISearchController) {
-        guard let text = searchController.searchBar.text?.lowercased() else { return }
-        filteredFeeds = feeds.filter { $0.lowercased().contains(text) }
-        listCollectionView.reloadData()
-    }
 }
