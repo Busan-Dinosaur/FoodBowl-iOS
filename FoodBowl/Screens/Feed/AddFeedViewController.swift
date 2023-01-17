@@ -91,6 +91,7 @@ final class AddFeedViewController: BaseViewController {
         vc2.delegate = self
         vc3.delegate = self
         vc4.delegate = self
+        vc3.delegateForComment = vc4
     }
 
     override func setupNavigationBar() {
@@ -159,11 +160,10 @@ final class AddFeedViewController: BaseViewController {
     }
 
     private func completeAddFeed() {
+        print(newFeed)
         dismiss(animated: true, completion: nil)
     }
 }
-
-// MARK: - data transfer delegates
 
 extension AddFeedViewController: SetStoreViewControllerDelegate, SetCategoryViewControllerDelegate, SetPhotoViewControllerDelegate, SetCommentViewControllerDelegate {
     func setStore(store: Place?) {

@@ -22,9 +22,9 @@ final class SetCommentViewController: BaseViewController {
                                                   right: 20)
     }
 
-    private var selectedImages = [UIImage]()
+    var selectedImages = [UIImage]()
 
-    private let textViewPlaceHolder = "텍스트를 입력하세요."
+    private let textViewPlaceHolder = "ex. "
 
     // MARK: - property
 
@@ -43,12 +43,12 @@ final class SetCommentViewController: BaseViewController {
     private lazy var listCollectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewFlowLayout).then {
         $0.dataSource = self
         $0.delegate = self
-        $0.showsVerticalScrollIndicator = false
+        $0.showsHorizontalScrollIndicator = false
         $0.register(FeedThumnailCollectionViewCell.self, forCellWithReuseIdentifier: FeedThumnailCollectionViewCell.className)
     }
 
     lazy var commentTextView = UITextView().then {
-        $0.textContainerInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
+        $0.textContainerInset = UIEdgeInsets(top: 12, left: 10, bottom: 12, right: 10)
         $0.font = UIFont.preferredFont(forTextStyle: .subheadline, weight: .light)
         $0.textAlignment = NSTextAlignment.left
         $0.dataDetectorTypes = UIDataDetectorTypes.all
@@ -58,21 +58,28 @@ final class SetCommentViewController: BaseViewController {
         $0.delegate = self
         $0.isScrollEnabled = true
         $0.isUserInteractionEnabled = true
+        $0.makeBorderLayer(color: .grey002)
     }
 
     // MARK: - life cycle
 
     override func render() {
-        view.addSubviews(guideLabel, commentTextView)
+        view.addSubviews(guideLabel, listCollectionView, commentTextView)
 
         guideLabel.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).inset(20)
             $0.leading.equalToSuperview().inset(20)
         }
 
-        commentTextView.snp.makeConstraints {
+        listCollectionView.snp.makeConstraints {
             $0.top.equalTo(guideLabel.snp.bottom).offset(20)
             $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(100)
+        }
+
+        commentTextView.snp.makeConstraints {
+            $0.top.equalTo(listCollectionView.snp.bottom).offset(10)
+            $0.leading.trailing.equalToSuperview().inset(20)
             $0.bottom.equalTo(view.keyboardLayoutGuide.snp.top).offset(-40)
         }
     }
@@ -114,4 +121,13 @@ extension SetCommentViewController: UICollectionViewDataSource, UICollectionView
 
 protocol SetCommentViewControllerDelegate: AnyObject {
     func setComment(comment: String?)
+}
+
+extension SetCommentViewController: SetPhotoViewControllerDelegateForComment {
+    func setPhotoes(photoes: [UIImage]?) {
+        if let photoes = photoes {
+            selectedImages = photoes
+            listCollectionView.reloadData()
+        }
+    }
 }

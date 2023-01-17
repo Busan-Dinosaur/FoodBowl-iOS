@@ -13,6 +13,7 @@ import YPImagePicker
 
 final class SetPhotoViewController: BaseViewController {
     var delegate: SetPhotoViewControllerDelegate?
+    var delegateForComment: SetPhotoViewControllerDelegateForComment?
 
     private enum Size {
         static let cellWidth: CGFloat = (UIScreen.main.bounds.size.width - 48) / 3
@@ -98,6 +99,7 @@ final class SetPhotoViewController: BaseViewController {
                 self.listCollectionView.reloadData()
 
                 self.delegate?.setPhotoes(photoes: images)
+                self.delegateForComment?.setPhotoes(photoes: images)
             }
             picker.dismiss(animated: true, completion: nil)
         }
@@ -200,5 +202,9 @@ extension YPPhotoFiltersVC {
 }
 
 protocol SetPhotoViewControllerDelegate: AnyObject {
+    func setPhotoes(photoes: [UIImage]?)
+}
+
+protocol SetPhotoViewControllerDelegateForComment: AnyObject {
     func setPhotoes(photoes: [UIImage]?)
 }
