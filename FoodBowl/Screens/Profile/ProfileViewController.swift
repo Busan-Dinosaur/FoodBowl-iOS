@@ -11,14 +11,28 @@ import SnapKit
 import Then
 
 final class ProfileViewController: BaseViewController {
+    var isOwn: Bool
+
+    init(isOwn: Bool) {
+        self.isOwn = isOwn
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     // MARK: - property
 
-    private let userNicknameLabel = UILabel().then {
+    let userNicknameLabel = UILabel().then {
         $0.font = UIFont.preferredFont(forTextStyle: .title1, weight: .bold)
         $0.text = "coby5502"
     }
 
     private let settingButton = SettingButton()
+
+    private let optionButton = OptionButton()
 
     private let userProfileView = UserProfileView()
 
@@ -105,10 +119,16 @@ final class ProfileViewController: BaseViewController {
     override func setupNavigationBar() {
         super.setupNavigationBar()
 
-        let userNicknameLabel = makeBarButtonItem(with: userNicknameLabel)
-        let settingButton = makeBarButtonItem(with: settingButton)
-        navigationItem.leftBarButtonItem = userNicknameLabel
-        navigationItem.rightBarButtonItem = settingButton
+        if isOwn {
+            let userNicknameLabel = makeBarButtonItem(with: userNicknameLabel)
+            let settingButton = makeBarButtonItem(with: settingButton)
+            navigationItem.leftBarButtonItem = userNicknameLabel
+            navigationItem.rightBarButtonItem = settingButton
+        } else {
+            let optionButton = makeBarButtonItem(with: optionButton)
+            navigationItem.rightBarButtonItem = optionButton
+            title = "coby5502"
+        }
     }
 
     @objc private func changeValue(control: UISegmentedControl) {

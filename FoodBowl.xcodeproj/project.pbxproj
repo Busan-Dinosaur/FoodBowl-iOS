@@ -81,6 +81,11 @@
 		CBE61911296C6804005295AF /* OptionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBE61910296C6804005295AF /* OptionButton.swift */; };
 		CBE61913296C68D9005295AF /* PlusButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBE61912296C68D9005295AF /* PlusButton.swift */; };
 		CBE61917296C7C1F005295AF /* SetCategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBE61916296C7C1F005295AF /* SetCategoryViewController.swift */; };
+		CBFB52552977B9240049E8BA /* StoreFeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBFB52542977B9240049E8BA /* StoreFeedViewController.swift */; };
+		CBFB52572977B94A0049E8BA /* FeedCommentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBFB52562977B94A0049E8BA /* FeedCommentViewController.swift */; };
+		CBFB52592977B9890049E8BA /* StoreFeedCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBFB52582977B9890049E8BA /* StoreFeedCollectionViewCell.swift */; };
+		CBFB525B2977B99B0049E8BA /* FeedCommentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBFB525A2977B99B0049E8BA /* FeedCommentTableViewCell.swift */; };
+		CBFB525D2977B9C00049E8BA /* EmptyCommentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBFB525C2977B9C00049E8BA /* EmptyCommentView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -155,6 +160,11 @@
 		CBE61910296C6804005295AF /* OptionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionButton.swift; sourceTree = "<group>"; };
 		CBE61912296C68D9005295AF /* PlusButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlusButton.swift; sourceTree = "<group>"; };
 		CBE61916296C7C1F005295AF /* SetCategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetCategoryViewController.swift; sourceTree = "<group>"; };
+		CBFB52542977B9240049E8BA /* StoreFeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreFeedViewController.swift; sourceTree = "<group>"; };
+		CBFB52562977B94A0049E8BA /* FeedCommentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedCommentViewController.swift; sourceTree = "<group>"; };
+		CBFB52582977B9890049E8BA /* StoreFeedCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreFeedCollectionViewCell.swift; sourceTree = "<group>"; };
+		CBFB525A2977B99B0049E8BA /* FeedCommentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedCommentTableViewCell.swift; sourceTree = "<group>"; };
+		CBFB525C2977B9C00049E8BA /* EmptyCommentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyCommentView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -316,6 +326,8 @@
 				CBADC2D02955AB7300E56C93 /* UIComponent */,
 				CBADC2BE2955A24A00E56C93 /* Cell */,
 				CBC73107295550A100C7F198 /* MainViewController.swift */,
+				CBFB52542977B9240049E8BA /* StoreFeedViewController.swift */,
+				CBFB52562977B94A0049E8BA /* FeedCommentViewController.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -374,6 +386,8 @@
 			isa = PBXGroup;
 			children = (
 				CBADC2D72955AC5900E56C93 /* FeedCollectionViewCell.swift */,
+				CBFB52582977B9890049E8BA /* StoreFeedCollectionViewCell.swift */,
+				CBFB525A2977B99B0049E8BA /* FeedCommentTableViewCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -382,6 +396,7 @@
 			isa = PBXGroup;
 			children = (
 				CBADC2DD2955ACBB00E56C93 /* EmptyFeedView.swift */,
+				CBFB525C2977B9C00049E8BA /* EmptyCommentView.swift */,
 				CB1A7C5B29560C2300C6431D /* UserInfoView.swift */,
 				CB1BCAF62958B15B0021617D /* StoreInfoView.swift */,
 			);
@@ -572,6 +587,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CB2E4F83297702C900FD2566 /* SearchUserResultViewController.swift in Sources */,
+				CBFB52572977B94A0049E8BA /* FeedCommentViewController.swift in Sources */,
 				CB2E4F8529772FFE00FD2566 /* UserFeedViewController.swift in Sources */,
 				CB1BCAF72958B15B0021617D /* StoreInfoView.swift in Sources */,
 				CB2E4F7F297702A800FD2566 /* StoreResultTableViewCell.swift in Sources */,
@@ -581,6 +597,8 @@
 				CBADC2E22955C63300E56C93 /* FeedThumnailCollectionViewCell.swift in Sources */,
 				CBADC28A29559BC900E56C93 /* UIFont+Extension.swift in Sources */,
 				CB1A7C6A29576DCC00C6431D /* HorizontalScrollView.swift in Sources */,
+				CBFB52552977B9240049E8BA /* StoreFeedViewController.swift in Sources */,
+				CBFB525D2977B9C00049E8BA /* EmptyCommentView.swift in Sources */,
 				CB2E4F7C2977025C00FD2566 /* SearchStoreResultViewController.swift in Sources */,
 				CBDE38FB2970774800DDE49A /* CloseButton.swift in Sources */,
 				CB2E4F81297702B800FD2566 /* UserResultTableViewCell.swift in Sources */,
@@ -616,6 +634,7 @@
 				CBADC28629559BC900E56C93 /* Logger.swift in Sources */,
 				CBADC29E29559BC900E56C93 /* SendButton.swift in Sources */,
 				CBADC29429559BC900E56C93 /* Notification+Extension.swift in Sources */,
+				CBFB525B2977B99B0049E8BA /* FeedCommentTableViewCell.swift in Sources */,
 				CBADC2E02955B92D00E56C93 /* MainButton.swift in Sources */,
 				CBADC2B52955A18C00E56C93 /* SearchStoreViewController.swift in Sources */,
 				CBE61911296C6804005295AF /* OptionButton.swift in Sources */,
@@ -625,6 +644,7 @@
 				CB1A7C5C29560C2300C6431D /* UserInfoView.swift in Sources */,
 				CBDE38F92970745600DDE49A /* AddFeedViewController.swift in Sources */,
 				CBDE390729719CB400DDE49A /* SelectedStoreView.swift in Sources */,
+				CBFB52592977B9890049E8BA /* StoreFeedCollectionViewCell.swift in Sources */,
 				CBADC29129559BC900E56C93 /* UICollectionView+Extension.swift in Sources */,
 				CBADC2D82955AC5900E56C93 /* FeedCollectionViewCell.swift in Sources */,
 				CBADC2AD2955A0FF00E56C93 /* ProfileViewController.swift in Sources */,

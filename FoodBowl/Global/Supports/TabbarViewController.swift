@@ -11,7 +11,7 @@ final class TabbarViewController: UITabBarController {
     private let mainViewController = UINavigationController(rootViewController: MainViewController())
     private let mapViewController = UINavigationController(rootViewController: MapViewController())
     private let searchViewController = UINavigationController(rootViewController: SearchViewController())
-    private let profileViewController = UINavigationController(rootViewController: ProfileViewController())
+    private let profileViewController = UINavigationController(rootViewController: ProfileViewController(isOwn: true))
 
     override func viewDidLoad() {
         super.viewDidLoad()

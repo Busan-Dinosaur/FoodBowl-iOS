@@ -26,7 +26,7 @@ final class SetStoreViewController: BaseViewController {
         let action = UIAction { [weak self] _ in
             let searchStoreViewController = SearchStoreViewController()
             let navigationController = UINavigationController(rootViewController: searchStoreViewController)
-            navigationController.modalPresentationStyle = .pageSheet
+            navigationController.modalPresentationStyle = .fullScreen
             searchStoreViewController.delegate = self
             DispatchQueue.main.async {
                 self?.present(navigationController, animated: true)
@@ -78,7 +78,7 @@ extension SetStoreViewController: SearchStoreViewControllerDelegate {
             let showStoreInfoViewController = ShowStoreInfoViewController()
             showStoreInfoViewController.url = self?.selectedStore?.placeURL ?? ""
             let navigationController = UINavigationController(rootViewController: showStoreInfoViewController)
-            navigationController.modalPresentationStyle = .pageSheet
+            navigationController.modalPresentationStyle = .fullScreen
             DispatchQueue.main.async {
                 self?.present(navigationController, animated: true)
             }

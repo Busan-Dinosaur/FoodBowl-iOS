@@ -13,16 +13,16 @@ import Then
 final class UserInfoView: UIView {
     // MARK: - property
 
-    lazy var userImageView = UIImageView().then {
+    lazy var userImageButton = UIButton().then {
         $0.backgroundColor = .gray
         $0.layer.cornerRadius = 20
         $0.layer.masksToBounds = true
     }
 
-    let userNameLabel = UILabel().then {
-        $0.font = UIFont.preferredFont(forTextStyle: .subheadline, weight: .medium)
-        $0.textColor = .black
-        $0.text = "홍길동"
+    let userNameButton = UIButton().then {
+        $0.setTitle("홍길동", for: .normal)
+        $0.setTitleColor(.black, for: .normal)
+        $0.titleLabel?.font = .preferredFont(forTextStyle: .subheadline, weight: .medium)
     }
 
     let userFollowerLabel = UILabel().then {
@@ -46,22 +46,23 @@ final class UserInfoView: UIView {
     }
 
     private func render() {
-        addSubviews(userImageView, userNameLabel, userFollowerLabel, followButton)
+        addSubviews(userImageButton, userNameButton, userFollowerLabel, followButton)
 
-        userImageView.snp.makeConstraints {
+        userImageButton.snp.makeConstraints {
             $0.leading.equalToSuperview().inset(20)
             $0.centerY.equalToSuperview()
             $0.width.height.equalTo(40)
         }
 
-        userNameLabel.snp.makeConstraints {
-            $0.leading.equalTo(userImageView.snp.trailing).offset(16)
-            $0.top.equalToSuperview().inset(12)
+        userNameButton.snp.makeConstraints {
+            $0.leading.equalTo(userImageButton.snp.trailing).offset(16)
+            $0.top.equalToSuperview().inset(10)
+            $0.height.equalTo(20)
         }
 
         userFollowerLabel.snp.makeConstraints {
-            $0.leading.equalTo(userImageView.snp.trailing).offset(16)
-            $0.top.equalTo(userNameLabel.snp.bottom).offset(4)
+            $0.leading.equalTo(userImageButton.snp.trailing).offset(16)
+            $0.top.equalTo(userNameButton.snp.bottom).offset(4)
         }
 
         followButton.snp.makeConstraints {

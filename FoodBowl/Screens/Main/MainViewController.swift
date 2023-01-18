@@ -103,7 +103,38 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
             return UICollectionViewCell()
         }
 
-        cell.userInfoView.userImageView.image = ImageLiteral.food2
+        let userButtonAction = UIAction { [weak self] _ in
+            let profileViewController = ProfileViewController(isOwn: false)
+            self?.navigationController?.pushViewController(profileViewController, animated: true)
+        }
+
+        let mapButtonAction = UIAction { [weak self] _ in
+            let showStoreInfoViewController = ShowStoreInfoViewController()
+            showStoreInfoViewController.url = ""
+            let navigationController = UINavigationController(rootViewController: showStoreInfoViewController)
+            navigationController.modalPresentationStyle = .fullScreen
+            DispatchQueue.main.async {
+                self?.present(navigationController, animated: true)
+            }
+        }
+
+        let storeButtonAction = UIAction { [weak self] _ in
+            let storeFeedViewController = StoreFeedViewController()
+            self?.navigationController?.pushViewController(storeFeedViewController, animated: true)
+        }
+
+        let commentButtonAction = UIAction { [weak self] _ in
+            let feedCommentViewController = FeedCommentViewController()
+            self?.navigationController?.pushViewController(feedCommentViewController, animated: true)
+        }
+
+        cell.userInfoView.userImageButton.addAction(userButtonAction, for: .touchUpInside)
+        cell.userInfoView.userNameButton.addAction(userButtonAction, for: .touchUpInside)
+        cell.storeInfoView.mapButton.addAction(mapButtonAction, for: .touchUpInside)
+        cell.storeInfoView.storeNameButton.addAction(storeButtonAction, for: .touchUpInside)
+        cell.commentButton.addAction(commentButtonAction, for: .touchUpInside)
+
+        cell.userInfoView.userImageButton.setImage(ImageLiteral.food2, for: .normal)
         cell.commentLabel.text = """
         이번에 학교 앞에 새로 생겼길래 가봤는데 너무 맛있었어요.
         이번에 학교 앞에 새로 생겼길래 가봤는데 너무 맛있었어요.

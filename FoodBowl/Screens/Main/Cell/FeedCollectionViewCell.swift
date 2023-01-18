@@ -47,7 +47,7 @@ final class FeedCollectionViewCell: BaseCollectionViewCell {
         $0.semanticContentAttribute = .forceLeftToRight
     }
 
-    let chatButton = UIButton().then {
+    let commentButton = UIButton().then {
         $0.setImage(ImageLiteral.btnChat.resize(to: CGSize(width: 20, height: 20)), for: .normal)
         $0.setTitle("  51", for: .normal)
         $0.setTitleColor(.subText, for: .normal)
@@ -67,7 +67,7 @@ final class FeedCollectionViewCell: BaseCollectionViewCell {
     override func render() {
         contentView.addSubviews(userInfoView, feedImageView, storeInfoView, commentLabel, stackView, optionButton)
 
-        [bookmarkButton, chatButton].forEach {
+        [bookmarkButton, commentButton].forEach {
             stackView.addArrangedSubview($0)
         }
 
@@ -96,7 +96,7 @@ final class FeedCollectionViewCell: BaseCollectionViewCell {
             $0.top.equalTo(commentLabel.snp.bottom).offset(14)
             $0.bottom.equalToSuperview().inset(10)
             $0.leading.equalToSuperview().inset(20)
-            $0.width.equalTo(120)
+            $0.width.equalTo(100)
         }
 
         optionButton.snp.makeConstraints {
