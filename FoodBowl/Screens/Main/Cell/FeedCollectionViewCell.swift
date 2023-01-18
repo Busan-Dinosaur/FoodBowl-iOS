@@ -62,10 +62,16 @@ final class FeedCollectionViewCell: BaseCollectionViewCell {
         $0.distribution = .equalSpacing
     }
 
-    let optionButton = OptionButton()
+    let optionButton = MoreButton()
+
+    let dateLabel = UILabel().then {
+        $0.font = UIFont.preferredFont(forTextStyle: .caption1, weight: .regular)
+        $0.textColor = .subText
+        $0.text = "10일 전"
+    }
 
     override func render() {
-        contentView.addSubviews(userInfoView, feedImageView, storeInfoView, commentLabel, stackView, optionButton)
+        contentView.addSubviews(userInfoView, feedImageView, storeInfoView, commentLabel, stackView, optionButton, dateLabel)
 
         [bookmarkButton, commentButton].forEach {
             stackView.addArrangedSubview($0)
@@ -93,16 +99,19 @@ final class FeedCollectionViewCell: BaseCollectionViewCell {
         }
 
         stackView.snp.makeConstraints {
-            $0.top.equalTo(commentLabel.snp.bottom).offset(14)
-            $0.bottom.equalToSuperview().inset(10)
+            $0.top.equalTo(commentLabel.snp.bottom).offset(12)
             $0.leading.equalToSuperview().inset(20)
             $0.width.equalTo(100)
         }
 
         optionButton.snp.makeConstraints {
-            $0.top.equalTo(commentLabel.snp.bottom).offset(14)
-            $0.bottom.equalToSuperview().inset(10)
+            $0.top.equalTo(commentLabel.snp.bottom).offset(12)
             $0.trailing.equalToSuperview().inset(20)
+        }
+
+        dateLabel.snp.makeConstraints {
+            $0.top.equalTo(stackView.snp.bottom).offset(14)
+            $0.leading.bottom.equalToSuperview().inset(20)
         }
     }
 

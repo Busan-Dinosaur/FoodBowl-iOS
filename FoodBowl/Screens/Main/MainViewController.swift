@@ -24,7 +24,7 @@ final class MainViewController: BaseViewController {
 
     private let collectionViewFlowLayout = DynamicHeightCollectionViewFlowLayout().then {
         $0.sectionInset = Size.collectionInset
-        $0.minimumLineSpacing = 30
+        $0.minimumLineSpacing = 20
         $0.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
     }
 

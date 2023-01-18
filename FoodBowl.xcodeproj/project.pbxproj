@@ -83,9 +83,9 @@
 		CBE61917296C7C1F005295AF /* SetCategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBE61916296C7C1F005295AF /* SetCategoryViewController.swift */; };
 		CBFB52552977B9240049E8BA /* StoreFeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBFB52542977B9240049E8BA /* StoreFeedViewController.swift */; };
 		CBFB52572977B94A0049E8BA /* FeedCommentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBFB52562977B94A0049E8BA /* FeedCommentViewController.swift */; };
-		CBFB52592977B9890049E8BA /* StoreFeedCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBFB52582977B9890049E8BA /* StoreFeedCollectionViewCell.swift */; };
 		CBFB525B2977B99B0049E8BA /* FeedCommentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBFB525A2977B99B0049E8BA /* FeedCommentTableViewCell.swift */; };
 		CBFB525D2977B9C00049E8BA /* EmptyCommentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBFB525C2977B9C00049E8BA /* EmptyCommentView.swift */; };
+		CBFB525F2977C4800049E8BA /* MoreButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBFB525E2977C4800049E8BA /* MoreButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -162,9 +162,9 @@
 		CBE61916296C7C1F005295AF /* SetCategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetCategoryViewController.swift; sourceTree = "<group>"; };
 		CBFB52542977B9240049E8BA /* StoreFeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreFeedViewController.swift; sourceTree = "<group>"; };
 		CBFB52562977B94A0049E8BA /* FeedCommentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedCommentViewController.swift; sourceTree = "<group>"; };
-		CBFB52582977B9890049E8BA /* StoreFeedCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreFeedCollectionViewCell.swift; sourceTree = "<group>"; };
 		CBFB525A2977B99B0049E8BA /* FeedCommentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedCommentTableViewCell.swift; sourceTree = "<group>"; };
 		CBFB525C2977B9C00049E8BA /* EmptyCommentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyCommentView.swift; sourceTree = "<group>"; };
+		CBFB525E2977C4800049E8BA /* MoreButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -309,6 +309,7 @@
 				CBADC27D29559BC900E56C93 /* BackButton.swift */,
 				CBE61912296C68D9005295AF /* PlusButton.swift */,
 				CBE61910296C6804005295AF /* OptionButton.swift */,
+				CBFB525E2977C4800049E8BA /* MoreButton.swift */,
 				CB1A7C5D295618A900C6431D /* SettingButton.swift */,
 				CBB5828829745A8200808B0B /* GalleryButton.swift */,
 				CBADC2DF2955B92D00E56C93 /* MainButton.swift */,
@@ -386,7 +387,6 @@
 			isa = PBXGroup;
 			children = (
 				CBADC2D72955AC5900E56C93 /* FeedCollectionViewCell.swift */,
-				CBFB52582977B9890049E8BA /* StoreFeedCollectionViewCell.swift */,
 				CBFB525A2977B99B0049E8BA /* FeedCommentTableViewCell.swift */,
 			);
 			path = Cell;
@@ -600,6 +600,7 @@
 				CBFB52552977B9240049E8BA /* StoreFeedViewController.swift in Sources */,
 				CBFB525D2977B9C00049E8BA /* EmptyCommentView.swift in Sources */,
 				CB2E4F7C2977025C00FD2566 /* SearchStoreResultViewController.swift in Sources */,
+				CBFB525F2977C4800049E8BA /* MoreButton.swift in Sources */,
 				CBDE38FB2970774800DDE49A /* CloseButton.swift in Sources */,
 				CB2E4F81297702B800FD2566 /* UserResultTableViewCell.swift in Sources */,
 				CBC73108295550A100C7F198 /* MainViewController.swift in Sources */,
@@ -644,7 +645,6 @@
 				CB1A7C5C29560C2300C6431D /* UserInfoView.swift in Sources */,
 				CBDE38F92970745600DDE49A /* AddFeedViewController.swift in Sources */,
 				CBDE390729719CB400DDE49A /* SelectedStoreView.swift in Sources */,
-				CBFB52592977B9890049E8BA /* StoreFeedCollectionViewCell.swift in Sources */,
 				CBADC29129559BC900E56C93 /* UICollectionView+Extension.swift in Sources */,
 				CBADC2D82955AC5900E56C93 /* FeedCollectionViewCell.swift in Sources */,
 				CBADC2AD2955A0FF00E56C93 /* ProfileViewController.swift in Sources */,
