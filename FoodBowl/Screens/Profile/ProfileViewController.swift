@@ -34,7 +34,13 @@ final class ProfileViewController: BaseViewController {
 
     private let optionButton = OptionButton()
 
-    private let userProfileView = UserProfileView()
+    private lazy var userProfileView = UserProfileView().then {
+        let action = UIAction { [weak self] _ in
+            let userMapViewController = UserMapViewController()
+            self?.navigationController?.pushViewController(userMapViewController, animated: true)
+        }
+        $0.mapButton.addAction(action, for: .touchUpInside)
+    }
 
     private lazy var segmentedControl = UnderlineSegmentedControl(items: ["게시물 24", "북마크 53"]).then {
         $0.translatesAutoresizingMaskIntoConstraints = false

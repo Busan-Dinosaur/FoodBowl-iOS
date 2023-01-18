@@ -87,6 +87,7 @@
 		CBFB525D2977B9C00049E8BA /* EmptyCommentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBFB525C2977B9C00049E8BA /* EmptyCommentView.swift */; };
 		CBFB525F2977C4800049E8BA /* MoreButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBFB525E2977C4800049E8BA /* MoreButton.swift */; };
 		CBFB52612977C9AB0049E8BA /* FindStoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBFB52602977C9AB0049E8BA /* FindStoreViewController.swift */; };
+		CBFB52632977CB9F0049E8BA /* UserMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBFB52622977CB9F0049E8BA /* UserMapViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -167,6 +168,7 @@
 		CBFB525C2977B9C00049E8BA /* EmptyCommentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyCommentView.swift; sourceTree = "<group>"; };
 		CBFB525E2977C4800049E8BA /* MoreButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreButton.swift; sourceTree = "<group>"; };
 		CBFB52602977C9AB0049E8BA /* FindStoreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindStoreViewController.swift; sourceTree = "<group>"; };
+		CBFB52622977CB9F0049E8BA /* UserMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMapViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -353,6 +355,7 @@
 				CB1A7C5F29561B8400C6431D /* UIComponent */,
 				CBADC2AC2955A0FF00E56C93 /* ProfileViewController.swift */,
 				CB2E4F8429772FFE00FD2566 /* UserFeedViewController.swift */,
+				CBFB52622977CB9F0049E8BA /* UserMapViewController.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -655,6 +658,7 @@
 				CB2E4F7A2976F01700FD2566 /* UnderlineSegmentedControl.swift in Sources */,
 				CBDE38FD29715C5F00DDE49A /* SearchBarButton.swift in Sources */,
 				CBADC2DE2955ACBB00E56C93 /* EmptyFeedView.swift in Sources */,
+				CBFB52632977CB9F0049E8BA /* UserMapViewController.swift in Sources */,
 				CBADC28D29559BC900E56C93 /* NSObject+Extension.swift in Sources */,
 				CBDE390529719B9700DDE49A /* Place.swift in Sources */,
 				CBADC29629559BC900E56C93 /* UITableView+Extension.swift in Sources */,
