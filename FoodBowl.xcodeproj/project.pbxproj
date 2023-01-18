@@ -14,7 +14,7 @@
 		CB1A7C6329561CF300C6431D /* SubButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1A7C6229561CF300C6431D /* SubButton.swift */; };
 		CB1A7C6829576D7900C6431D /* BaseScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1A7C6729576D7900C6431D /* BaseScrollView.swift */; };
 		CB1A7C6A29576DCC00C6431D /* HorizontalScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1A7C6929576DCC00C6431D /* HorizontalScrollView.swift */; };
-		CB1BCAF52958AEE20021617D /* ScrapButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1BCAF42958AEE20021617D /* ScrapButton.swift */; };
+		CB1BCAF52958AEE20021617D /* BookmarkButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1BCAF42958AEE20021617D /* BookmarkButton.swift */; };
 		CB1BCAF72958B15B0021617D /* StoreInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1BCAF62958B15B0021617D /* StoreInfoView.swift */; };
 		CB2E4F7A2976F01700FD2566 /* UnderlineSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2E4F792976F01700FD2566 /* UnderlineSegmentedControl.swift */; };
 		CB2E4F7C2977025C00FD2566 /* SearchStoreResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2E4F7B2977025C00FD2566 /* SearchStoreResultViewController.swift */; };
@@ -95,7 +95,7 @@
 		CB1A7C6229561CF300C6431D /* SubButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubButton.swift; sourceTree = "<group>"; };
 		CB1A7C6729576D7900C6431D /* BaseScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseScrollView.swift; sourceTree = "<group>"; };
 		CB1A7C6929576DCC00C6431D /* HorizontalScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalScrollView.swift; sourceTree = "<group>"; };
-		CB1BCAF42958AEE20021617D /* ScrapButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrapButton.swift; sourceTree = "<group>"; };
+		CB1BCAF42958AEE20021617D /* BookmarkButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkButton.swift; sourceTree = "<group>"; };
 		CB1BCAF62958B15B0021617D /* StoreInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreInfoView.swift; sourceTree = "<group>"; };
 		CB2E4F792976F01700FD2566 /* UnderlineSegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnderlineSegmentedControl.swift; sourceTree = "<group>"; };
 		CB2E4F7B2977025C00FD2566 /* SearchStoreResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchStoreResultViewController.swift; sourceTree = "<group>"; };
@@ -307,7 +307,7 @@
 				CBADC27D29559BC900E56C93 /* BackButton.swift */,
 				CBE61912296C68D9005295AF /* PlusButton.swift */,
 				CBE61910296C6804005295AF /* OptionButton.swift */,
-				CB1BCAF42958AEE20021617D /* ScrapButton.swift */,
+				CB1BCAF42958AEE20021617D /* BookmarkButton.swift */,
 				CBE61914296C72AC005295AF /* ChatButton.swift */,
 				CB1A7C5D295618A900C6431D /* SettingButton.swift */,
 				CBB5828829745A8200808B0B /* GalleryButton.swift */,
@@ -614,7 +614,7 @@
 				CBADC29A29559BC900E56C93 /* BaseViewController.swift in Sources */,
 				CBADC2B92955A1CC00E56C93 /* SetCommentViewController.swift in Sources */,
 				CBC73106295550A100C7F198 /* SceneDelegate.swift in Sources */,
-				CB1BCAF52958AEE20021617D /* ScrapButton.swift in Sources */,
+				CB1BCAF52958AEE20021617D /* BookmarkButton.swift in Sources */,
 				CBE61917296C7C1F005295AF /* SetCategoryViewController.swift in Sources */,
 				CB2E4F872977300800FD2566 /* UserMapViewController.swift in Sources */,
 				CBDE39022971947B00DDE49A /* StoreInfoTableViewCell.swift in Sources */,

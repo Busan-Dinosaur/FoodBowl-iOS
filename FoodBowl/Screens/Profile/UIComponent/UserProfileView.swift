@@ -34,7 +34,7 @@ final class UserProfileView: UICollectionReusableView {
         $0.numberLabel.text = "100"
     }
 
-    private let stackTextView = UIStackView().then {
+    private let stackView = UIStackView().then {
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.axis = .horizontal
         $0.alignment = .center
@@ -58,10 +58,10 @@ final class UserProfileView: UICollectionReusableView {
     // MARK: - life cycle
 
     private func render() {
-        addSubviews(userImageView, stackTextView, followButton)
+        addSubviews(userImageView, stackView, followButton)
 
         [feedInfoButton, followerInfoButton, followingInfoButton].forEach {
-            stackTextView.addArrangedSubview($0)
+            stackView.addArrangedSubview($0)
         }
 
         userImageView.snp.makeConstraints {
@@ -70,7 +70,7 @@ final class UserProfileView: UICollectionReusableView {
             $0.width.height.equalTo(60)
         }
 
-        stackTextView.snp.makeConstraints {
+        stackView.snp.makeConstraints {
             $0.top.bottom.equalToSuperview()
             $0.leading.equalTo(userImageView.snp.trailing).offset(30)
             $0.width.equalTo(150)

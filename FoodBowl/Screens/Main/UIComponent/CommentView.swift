@@ -18,6 +18,17 @@ final class CommentView: UIView {
         $0.numberOfLines = 2
     }
 
+    let chatButton = ChatButton()
+
+    let bookmarkButton = BookmarkButton()
+
+    private let stackView = UIStackView().then {
+        $0.translatesAutoresizingMaskIntoConstraints = false
+        $0.axis = .horizontal
+        $0.alignment = .center
+        $0.distribution = .equalSpacing
+    }
+
     // MARK: - init
 
     override init(frame: CGRect) {
@@ -31,10 +42,21 @@ final class CommentView: UIView {
     }
 
     private func render() {
-        addSubviews(commentLabel)
+        addSubviews(stackView, commentLabel)
+
+        [chatButton, bookmarkButton].forEach {
+            stackView.addArrangedSubview($0)
+        }
+
+        stackView.snp.makeConstraints {
+            $0.top.equalToSuperview().inset(10)
+            $0.trailing.equalToSuperview().inset(20)
+            $0.width.equalTo(60)
+        }
 
         commentLabel.snp.makeConstraints {
-            $0.top.bottom.equalToSuperview().inset(10)
+            $0.top.equalTo(stackView.snp.bottom).offset(10)
+            $0.bottom.equalToSuperview().inset(10)
             $0.leading.trailing.equalToSuperview().inset(20)
         }
     }

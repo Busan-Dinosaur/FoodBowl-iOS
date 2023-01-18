@@ -37,24 +37,6 @@ final class StoreInfoView: UIView {
         $0.text = "10일 전"
     }
 
-    let chatButton = ChatButton()
-
-    let chatLabel = UILabel().then {
-        $0.font = UIFont.preferredFont(forTextStyle: .caption1, weight: .regular)
-        $0.textColor = .black
-        $0.textAlignment = .center
-        $0.text = "10"
-    }
-
-    let scrapButton = ScrapButton()
-
-    let scrapLabel = UILabel().then {
-        $0.font = UIFont.preferredFont(forTextStyle: .caption1, weight: .regular)
-        $0.textColor = .black
-        $0.textAlignment = .center
-        $0.text = "130"
-    }
-
     // MARK: - init
 
     override init(frame: CGRect) {
@@ -68,7 +50,7 @@ final class StoreInfoView: UIView {
     }
 
     private func render() {
-        addSubviews(storeNameLabel, categoryLabel, distanceLabel, dateLabel, scrapButton, chatButton, scrapLabel, chatLabel)
+        addSubviews(storeNameLabel, categoryLabel, distanceLabel, dateLabel)
 
         storeNameLabel.snp.makeConstraints {
             $0.leading.equalToSuperview().inset(20)
@@ -88,28 +70,6 @@ final class StoreInfoView: UIView {
         dateLabel.snp.makeConstraints {
             $0.leading.equalTo(distanceLabel.snp.trailing).offset(8)
             $0.top.equalTo(storeNameLabel.snp.bottom).offset(4)
-        }
-
-        scrapButton.snp.makeConstraints {
-            $0.trailing.equalToSuperview().inset(20)
-            $0.top.equalToSuperview().inset(10)
-        }
-
-        scrapLabel.snp.makeConstraints {
-            $0.leading.equalTo(scrapButton.snp.leading)
-            $0.trailing.equalTo(scrapButton.snp.trailing)
-            $0.top.equalTo(scrapButton.snp.bottom).offset(4)
-        }
-
-        chatButton.snp.makeConstraints {
-            $0.trailing.equalTo(scrapButton.snp.leading).offset(-20)
-            $0.top.equalToSuperview().inset(10)
-        }
-
-        chatLabel.snp.makeConstraints {
-            $0.leading.equalTo(chatButton.snp.leading)
-            $0.trailing.equalTo(chatButton.snp.trailing)
-            $0.top.equalTo(chatButton.snp.bottom).offset(4)
         }
     }
 }

@@ -1,5 +1,5 @@
 //
-//  ScrapButton.swift
+//  BookmarkButton.swift
 //  FoodBowl
 //
 //  Created by COBY_PRO on 2022/12/26.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class ScrapButton: UIButton {
+final class BookmarkButton: UIButton {
     // MARK: - init
 
     override init(frame _: CGRect) {
@@ -23,7 +23,7 @@ final class ScrapButton: UIButton {
     // MARK: - life cycle
 
     private func configUI() {
-        setImage(ImageLiteral.btnScrap.resize(to: CGSize(width: 22, height: 22)), for: .normal)
+        setImage(ImageLiteral.btnBookmark.resize(to: CGSize(width: 22, height: 22)), for: .normal)
         tintColor = .mainPink
     }
 }
