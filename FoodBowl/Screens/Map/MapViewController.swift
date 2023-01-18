@@ -44,8 +44,14 @@ final class MapViewController: BaseViewController, MKMapViewDelegate {
     }
 
     private lazy var searchBarButton = SearchBarButton().then {
-        $0.label.text = "가게 이름을 검색해주세요."
+        $0.label.text = "친구들의 후기를 찾아보세요."
         let action = UIAction { [weak self] _ in
+            let findStoreViewController = FindStoreViewController()
+            let navigationController = UINavigationController(rootViewController: findStoreViewController)
+            navigationController.modalPresentationStyle = .fullScreen
+            DispatchQueue.main.async {
+                self?.present(navigationController, animated: true)
+            }
         }
         $0.addAction(action, for: .touchUpInside)
     }

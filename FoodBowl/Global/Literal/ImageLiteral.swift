@@ -22,10 +22,11 @@ enum ImageLiteral {
     static var btnFoward: UIImage { .load(systemName: "chevron.forward") }
     static var btnCamera: UIImage { .load(systemName: "camera") }
     static var btnSend: UIImage { .load(systemName: "paperplane") }
-    static var btnScrap: UIImage { .load(name: "scrap_off") }
+    static var btnBookmark: UIImage { .load(name: "bookmark") }
     static var btnChat: UIImage { .load(name: "chat") }
     static var btnPlus: UIImage { .load(name: "plus.circle") }
     static var btnOption: UIImage { .load(name: "option") }
+    static var btnMore: UIImage { .load(name: "more") }
     static var btnKakaomap: UIImage { .load(name: "kakaomap") }
     static var btnGallery: UIImage { .load(name: "gallery") }
 

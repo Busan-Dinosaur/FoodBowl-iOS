@@ -39,36 +39,6 @@ final class UserMapViewController: BaseViewController, MKMapViewDelegate {
         $0.showsCompass = false
     }
 
-    private func createTagLayout() -> UICollectionViewLayout {
-        let itemSize = NSCollectionLayoutSize(
-            widthDimension: .estimated(80),
-            heightDimension: .absolute(40)
-        )
-
-        let item = NSCollectionLayoutItem(layoutSize: itemSize)
-
-        let groupSize = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(1.0),
-            heightDimension: .absolute(40)
-        )
-
-        let group = NSCollectionLayoutGroup.horizontal(
-            layoutSize: groupSize,
-            subitems: [item]
-        )
-        group.interItemSpacing = .fixed(8)
-
-        let section = NSCollectionLayoutSection(group: group)
-        section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 20)
-
-        let config = UICollectionViewCompositionalLayoutConfiguration()
-        config.scrollDirection = .horizontal
-
-        let layout = UICollectionViewCompositionalLayout(section: section)
-        layout.configuration = config
-        return layout
-    }
-
     private let collectionViewFlowLayout = UICollectionViewFlowLayout().then {
         $0.scrollDirection = .horizontal
         $0.sectionInset = Size.collectionInset
@@ -115,7 +85,8 @@ final class UserMapViewController: BaseViewController, MKMapViewDelegate {
     }
 
     override func setupNavigationBar() {
-        navigationController?.isNavigationBarHidden = true
+        super.setupNavigationBar()
+        title = "맛집지도"
     }
 
     private func getLocationUsagePermission() {

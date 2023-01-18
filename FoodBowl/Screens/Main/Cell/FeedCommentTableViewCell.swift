@@ -1,8 +1,8 @@
 //
-//  UserInfoView.swift
+//  FeedCommentTableViewCell.swift
 //  FoodBowl
 //
-//  Created by COBY_PRO on 2022/12/24.
+//  Created by COBY_PRO on 2023/01/18.
 //
 
 import UIKit
@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 import Then
 
-final class UserInfoView: UIView {
+final class FeedCommentTableViewCell: BaseTableViewCell {
     // MARK: - property
 
     lazy var userImageView = UIImageView().then {
@@ -25,30 +25,24 @@ final class UserInfoView: UIView {
         $0.text = "홍길동"
     }
 
-    let userFollowerLabel = UILabel().then {
+    let dateLabel = UILabel().then {
+        $0.font = UIFont.preferredFont(forTextStyle: .caption1, weight: .regular)
+        $0.textColor = .subText
+        $0.text = "10일 전"
+    }
+
+    let userCommentLabel = UILabel().then {
         $0.font = UIFont.preferredFont(forTextStyle: .footnote, weight: .light)
         $0.textColor = .subText
-        $0.text = "팔로워 100명"
+        $0.text = "난 별로던데"
     }
 
-    let followButton = MiniButton()
+    let optionButton = MoreButton()
 
-    let optionButton = OptionButton()
+    // MARK: - func
 
-    // MARK: - init
-
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        render()
-    }
-
-    @available(*, unavailable)
-    required init?(coder _: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    private func render() {
-        addSubviews(userImageView, userNameLabel, userFollowerLabel, optionButton, followButton)
+    override func render() {
+        contentView.addSubviews(userImageView, userNameLabel, dateLabel, userCommentLabel, optionButton)
 
         userImageView.snp.makeConstraints {
             $0.leading.equalToSuperview().inset(20)
@@ -61,7 +55,12 @@ final class UserInfoView: UIView {
             $0.top.equalToSuperview().inset(12)
         }
 
-        userFollowerLabel.snp.makeConstraints {
+        userCommentLabel.snp.makeConstraints {
+            $0.leading.equalTo(userNameLabel.snp.trailing).offset(8)
+            $0.top.equalToSuperview().inset(12)
+        }
+
+        userCommentLabel.snp.makeConstraints {
             $0.leading.equalTo(userImageView.snp.trailing).offset(16)
             $0.top.equalTo(userNameLabel.snp.bottom).offset(4)
         }
@@ -69,13 +68,6 @@ final class UserInfoView: UIView {
         optionButton.snp.makeConstraints {
             $0.trailing.equalToSuperview().inset(20)
             $0.centerY.equalToSuperview()
-        }
-
-        followButton.snp.makeConstraints {
-            $0.trailing.equalTo(optionButton.snp.leading).offset(-14)
-            $0.centerY.equalToSuperview()
-            $0.width.equalTo(60)
-            $0.height.equalTo(30)
         }
     }
 }

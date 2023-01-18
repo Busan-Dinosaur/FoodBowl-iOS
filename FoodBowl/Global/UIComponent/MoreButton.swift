@@ -1,17 +1,17 @@
 //
-//  ScrapButton.swift
+//  MoreButton.swift
 //  FoodBowl
 //
-//  Created by COBY_PRO on 2022/12/26.
+//  Created by COBY_PRO on 2023/01/18.
 //
 
 import UIKit
 
-final class ScrapButton: UIButton {
+final class MoreButton: UIButton {
     // MARK: - init
 
     override init(frame _: CGRect) {
-        super.init(frame: .init(origin: .zero, size: .init(width: 22, height: 22)))
+        super.init(frame: .init(origin: .zero, size: .init(width: 20, height: 20)))
         configUI()
     }
 
@@ -23,7 +23,7 @@ final class ScrapButton: UIButton {
     // MARK: - life cycle
 
     private func configUI() {
-        setImage(ImageLiteral.btnScrap.resize(to: CGSize(width: 22, height: 22)), for: .normal)
-        tintColor = .mainPink
+        setImage(ImageLiteral.btnMore.resize(to: CGSize(width: 20, height: 20)), for: .normal)
+        tintColor = .black
     }
 }

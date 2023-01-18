@@ -11,18 +11,38 @@ import SnapKit
 import Then
 
 final class ProfileViewController: BaseViewController {
+    var isOwn: Bool
+
+    init(isOwn: Bool) {
+        self.isOwn = isOwn
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     // MARK: - property
 
-    private let userNicknameLabel = UILabel().then {
+    let userNicknameLabel = UILabel().then {
         $0.font = UIFont.preferredFont(forTextStyle: .title1, weight: .bold)
         $0.text = "coby5502"
     }
 
     private let settingButton = SettingButton()
 
-    private let userProfileView = UserProfileView()
+    private let optionButton = OptionButton()
 
-    private lazy var segmentedControl = UnderlineSegmentedControl(items: ["게시물", "맛집지도"]).then {
+    private lazy var userProfileView = UserProfileView().then {
+        let action = UIAction { [weak self] _ in
+            let userMapViewController = UserMapViewController()
+            self?.navigationController?.pushViewController(userMapViewController, animated: true)
+        }
+        $0.mapButton.addAction(action, for: .touchUpInside)
+    }
+
+    private lazy var segmentedControl = UnderlineSegmentedControl(items: ["게시물 24", "북마크 53"]).then {
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.setTitleTextAttributes(
             [
@@ -49,7 +69,7 @@ final class ProfileViewController: BaseViewController {
     }()
 
     private let vc1 = UserFeedViewController()
-    private let vc2 = UserMapViewController()
+    private let vc2 = UserFeedViewController()
 
     private lazy var pageViewController: UIPageViewController = {
         let vc = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
@@ -105,10 +125,16 @@ final class ProfileViewController: BaseViewController {
     override func setupNavigationBar() {
         super.setupNavigationBar()
 
-        let userNicknameLabel = makeBarButtonItem(with: userNicknameLabel)
-        let settingButton = makeBarButtonItem(with: settingButton)
-        navigationItem.leftBarButtonItem = userNicknameLabel
-        navigationItem.rightBarButtonItem = settingButton
+        if isOwn {
+            let userNicknameLabel = makeBarButtonItem(with: userNicknameLabel)
+            let settingButton = makeBarButtonItem(with: settingButton)
+            navigationItem.leftBarButtonItem = userNicknameLabel
+            navigationItem.rightBarButtonItem = settingButton
+        } else {
+            let optionButton = makeBarButtonItem(with: optionButton)
+            navigationItem.rightBarButtonItem = optionButton
+            title = "coby5502"
+        }
     }
 
     @objc private func changeValue(control: UISegmentedControl) {
