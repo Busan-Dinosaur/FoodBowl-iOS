@@ -12,7 +12,7 @@ import MapKit
 import SnapKit
 import Then
 
-final class MapViewController: BaseViewController, MKMapViewDelegate {
+final class MapViewController: BaseViewController {
     private enum Size {
         static let collectionInset = UIEdgeInsets(top: 0,
                                                   left: 20,
@@ -74,6 +74,8 @@ final class MapViewController: BaseViewController, MKMapViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         findMyLocation()
+        setMarkers()
+        mapView.delegate = self
     }
 
     override func viewWillDisappear(_: Bool) {
@@ -123,6 +125,22 @@ final class MapViewController: BaseViewController, MKMapViewDelegate {
 
         mapView.setRegion(MKCoordinateRegion(center: currentLocation.coordinate, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)), animated: true)
     }
+
+    private func setMarkers() {
+        let mark = Marker(
+            title: "홍대입구역 편의점",
+            subtitle: "일식",
+            coordinate: CLLocationCoordinate2D(latitude: 37.55769, longitude: 126.92450)
+        )
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(showPopup(tapGesture:)))
+//        mark.addGestureRecognizer(tapGestureRecognizer)
+
+        mapView.addAnnotation(mark)
+    }
+
+    @objc private func showPopup(tapGesture _: UITapGestureRecognizer) {
+        print("dd")
+    }
 }
 
 extension MapViewController: CLLocationManagerDelegate {
@@ -143,6 +161,52 @@ extension MapViewController: CLLocationManagerDelegate {
         default:
             print("GPS: Default")
         }
+    }
+}
+
+extension MapViewController: MKMapViewDelegate {
+    // 1
+    func mapView(
+        _ mapView: MKMapView,
+        viewFor annotation: MKAnnotation
+    ) -> MKAnnotationView? {
+        // 2
+        guard let annotation = annotation as? Marker else {
+            return nil
+        }
+        // 3
+        let identifier = "marker"
+        var view: MKMarkerAnnotationView
+        // 4
+        if let dequeuedView = mapView.dequeueReusableAnnotationView(
+            withIdentifier: identifier) as? MKMarkerAnnotationView
+        {
+            dequeuedView.annotation = annotation
+            view = dequeuedView
+        } else {
+            // 5
+            view = MKMarkerAnnotationView(
+                annotation: annotation,
+                reuseIdentifier: identifier
+            )
+            view.canShowCallout = true
+            view.calloutOffset = CGPoint(x: 0, y: 5)
+
+            let mapsButton = UIButton(frame: CGRect(
+                origin: CGPoint.zero,
+                size: CGSize(width: 48, height: 48)
+            )).then {
+                $0.setImage(ImageLiteral.btnSearch, for: .normal)
+                $0.backgroundColor = .black
+                let action = UIAction { [weak self] _ in
+                    let storeFeedViewController = StoreFeedViewController()
+                    self?.navigationController?.pushViewController(storeFeedViewController, animated: true)
+                }
+                $0.addAction(action, for: .touchUpInside)
+            }
+            view.rightCalloutAccessoryView = mapsButton
+        }
+        return view
     }
 }
 
