@@ -26,7 +26,6 @@ final class SelectedStoreView: UIView {
     }
 
     let mapButton = UIButton().then {
-        $0.setTitle("완료", for: .normal)
         $0.setImage(ImageLiteral.btnKakaomap, for: .normal)
         $0.clipsToBounds = true
         $0.layer.cornerRadius = 10

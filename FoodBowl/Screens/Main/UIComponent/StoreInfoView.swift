@@ -31,10 +31,10 @@ final class StoreInfoView: UIView {
         $0.text = "10km"
     }
 
-    let dateLabel = UILabel().then {
-        $0.font = UIFont.preferredFont(forTextStyle: .caption1, weight: .regular)
-        $0.textColor = .subText
-        $0.text = "10일 전"
+    let mapButton = UIButton().then {
+        $0.setImage(ImageLiteral.btnKakaomap, for: .normal)
+        $0.clipsToBounds = true
+        $0.layer.cornerRadius = 10
     }
 
     // MARK: - init
@@ -50,7 +50,7 @@ final class StoreInfoView: UIView {
     }
 
     private func render() {
-        addSubviews(storeNameLabel, categoryLabel, distanceLabel, dateLabel)
+        addSubviews(storeNameLabel, categoryLabel, distanceLabel, mapButton)
 
         storeNameLabel.snp.makeConstraints {
             $0.leading.equalToSuperview().inset(20)
@@ -67,9 +67,10 @@ final class StoreInfoView: UIView {
             $0.top.equalTo(storeNameLabel.snp.bottom).offset(4)
         }
 
-        dateLabel.snp.makeConstraints {
-            $0.leading.equalTo(distanceLabel.snp.trailing).offset(8)
-            $0.top.equalTo(storeNameLabel.snp.bottom).offset(4)
+        mapButton.snp.makeConstraints {
+            $0.trailing.equalToSuperview().inset(20)
+            $0.centerY.equalToSuperview()
+            $0.width.height.equalTo(33)
         }
     }
 }
