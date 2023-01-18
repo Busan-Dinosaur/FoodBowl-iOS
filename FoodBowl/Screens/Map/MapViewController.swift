@@ -199,8 +199,12 @@ extension MapViewController: MKMapViewDelegate {
                 $0.setImage(ImageLiteral.btnSearch, for: .normal)
                 $0.backgroundColor = .black
                 let action = UIAction { [weak self] _ in
-                    let storeFeedViewController = StoreFeedViewController()
-                    self?.navigationController?.pushViewController(storeFeedViewController, animated: true)
+                    let storeFeedViewController = StoreFeedViewController(isMap: true)
+                    let navigationController = UINavigationController(rootViewController: storeFeedViewController)
+                    navigationController.modalPresentationStyle = .fullScreen
+                    DispatchQueue.main.async {
+                        self?.present(navigationController, animated: true)
+                    }
                 }
                 $0.addAction(action, for: .touchUpInside)
             }

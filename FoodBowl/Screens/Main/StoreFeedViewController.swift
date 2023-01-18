@@ -11,6 +11,18 @@ import SnapKit
 import Then
 
 final class StoreFeedViewController: BaseViewController {
+    var isMap: Bool
+
+    init(isMap: Bool) {
+        self.isMap = isMap
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     private enum Size {
         static let collectionInset = UIEdgeInsets(top: 0,
                                                   left: 0,
@@ -21,6 +33,13 @@ final class StoreFeedViewController: BaseViewController {
     private var refreshControl = UIRefreshControl()
 
     // MARK: - property
+
+    private lazy var closeButton = CloseButton().then {
+        let action = UIAction { [weak self] _ in
+            self?.dismiss(animated: true, completion: nil)
+        }
+        $0.addAction(action, for: .touchUpInside)
+    }
 
     private let collectionViewFlowLayout = DynamicHeightCollectionViewFlowLayout().then {
         $0.sectionInset = Size.collectionInset
@@ -55,7 +74,12 @@ final class StoreFeedViewController: BaseViewController {
 
     override func setupNavigationBar() {
         super.setupNavigationBar()
+
         title = "틈새라면"
+        if isMap {
+            let closeButton = makeBarButtonItem(with: closeButton)
+            navigationItem.leftBarButtonItem = closeButton
+        }
     }
 
     private func setupRefreshControl() {
@@ -98,7 +122,7 @@ extension StoreFeedViewController: UICollectionViewDataSource, UICollectionViewD
         }
 
         let storeButtonAction = UIAction { [weak self] _ in
-            let storeFeedViewController = StoreFeedViewController()
+            let storeFeedViewController = StoreFeedViewController(isMap: false)
             self?.navigationController?.pushViewController(storeFeedViewController, animated: true)
         }
 
