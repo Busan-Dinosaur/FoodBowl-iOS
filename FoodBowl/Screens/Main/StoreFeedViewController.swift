@@ -77,7 +77,8 @@ final class StoreFeedViewController: BaseViewController {
 
         title = "틈새라면"
         if isMap {
-            let closeButton = makeBarButtonItem(with: closeButton)
+            let leftOffsetCloseButton = removeBarButtonItemOffset(with: closeButton, offsetX: 10)
+            let closeButton = makeBarButtonItem(with: leftOffsetCloseButton)
             navigationItem.leftBarButtonItem = closeButton
         }
     }
