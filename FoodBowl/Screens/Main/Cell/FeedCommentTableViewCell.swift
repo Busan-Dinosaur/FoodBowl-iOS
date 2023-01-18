@@ -33,11 +33,15 @@ final class FeedCommentTableViewCell: BaseTableViewCell {
 
     let userCommentLabel = UILabel().then {
         $0.font = UIFont.preferredFont(forTextStyle: .footnote, weight: .light)
-        $0.textColor = .subText
+        $0.textColor = .black
+        $0.numberOfLines = 0
         $0.text = "난 별로던데"
     }
 
-    let optionButton = MoreButton()
+    let optionButton = UIImageView().then {
+        $0.image = ImageLiteral.btnMore.resize(to: CGSize(width: 14, height: 14))
+        $0.tintColor = .subText
+    }
 
     // MARK: - func
 
@@ -46,7 +50,7 @@ final class FeedCommentTableViewCell: BaseTableViewCell {
 
         userImageView.snp.makeConstraints {
             $0.leading.equalToSuperview().inset(20)
-            $0.centerY.equalToSuperview()
+            $0.top.equalToSuperview().inset(10)
             $0.width.height.equalTo(40)
         }
 
@@ -55,9 +59,9 @@ final class FeedCommentTableViewCell: BaseTableViewCell {
             $0.top.equalToSuperview().inset(12)
         }
 
-        userCommentLabel.snp.makeConstraints {
+        dateLabel.snp.makeConstraints {
             $0.leading.equalTo(userNameLabel.snp.trailing).offset(8)
-            $0.top.equalToSuperview().inset(12)
+            $0.centerY.equalTo(userNameLabel)
         }
 
         userCommentLabel.snp.makeConstraints {
@@ -67,7 +71,7 @@ final class FeedCommentTableViewCell: BaseTableViewCell {
 
         optionButton.snp.makeConstraints {
             $0.trailing.equalToSuperview().inset(20)
-            $0.centerY.equalToSuperview()
+            $0.top.equalToSuperview().inset(14)
         }
     }
 }
