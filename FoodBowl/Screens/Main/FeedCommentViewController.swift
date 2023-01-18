@@ -18,6 +18,8 @@ final class FeedCommentViewController: BaseViewController {
         $0.delegate = self
         $0.dataSource = self
         $0.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 20, right: 0)
+        $0.rowHeight = UITableView.automaticDimension
+        $0.estimatedRowHeight = 60
     }
 
     // MARK: - life cycle
@@ -49,7 +51,7 @@ extension FeedCommentViewController: UITableViewDataSource, UITableViewDelegate 
         return cell
     }
 
-    func tableView(_: UITableView, heightForRowAt _: IndexPath) -> CGFloat {
-        return 60
+    func tableView(_: UITableView, estimatedHeightForRowAt _: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
     }
 }
