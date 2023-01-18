@@ -24,13 +24,14 @@ final class MainViewController: BaseViewController {
 
     private let collectionViewFlowLayout = DynamicHeightCollectionViewFlowLayout().then {
         $0.sectionInset = Size.collectionInset
-        $0.minimumLineSpacing = 20
+        $0.minimumLineSpacing = 30
         $0.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
     }
 
     private lazy var listCollectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewFlowLayout).then {
         $0.dataSource = self
         $0.delegate = self
+        $0.showsVerticalScrollIndicator = false
         $0.register(FeedCollectionViewCell.self, forCellWithReuseIdentifier: FeedCollectionViewCell.className)
     }
 
@@ -103,7 +104,7 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
         }
 
         cell.userInfoView.userImageView.image = ImageLiteral.food2
-        cell.commentView.commentLabel.text = """
+        cell.commentLabel.text = """
         이번에 학교 앞에 새로 생겼길래 가봤는데 너무 맛있었어요.
         이번에 학교 앞에 새로 생겼길래 가봤는데 너무 맛있었어요.
         이번에 학교 앞에 새로 생겼길래 가봤는데 너무 맛있었어요.

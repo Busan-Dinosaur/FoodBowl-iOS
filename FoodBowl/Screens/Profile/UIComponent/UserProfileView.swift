@@ -19,11 +19,6 @@ final class UserProfileView: UICollectionReusableView {
         $0.layer.masksToBounds = true
     }
 
-    let feedInfoButton = UserInfoButton().then {
-        $0.infoLabel.text = "게시물"
-        $0.numberLabel.text = "24"
-    }
-
     let followerInfoButton = UserInfoButton().then {
         $0.infoLabel.text = "팔로워"
         $0.numberLabel.text = "100"
@@ -39,6 +34,10 @@ final class UserProfileView: UICollectionReusableView {
         $0.axis = .horizontal
         $0.alignment = .center
         $0.distribution = .equalSpacing
+    }
+
+    let mapButton = MiniButton().then {
+        $0.label.text = "맛집지도"
     }
 
     let followButton = MiniButton()
@@ -58,9 +57,9 @@ final class UserProfileView: UICollectionReusableView {
     // MARK: - life cycle
 
     private func render() {
-        addSubviews(userImageView, stackView, followButton)
+        addSubviews(userImageView, stackView, mapButton, followButton)
 
-        [feedInfoButton, followerInfoButton, followingInfoButton].forEach {
+        [followerInfoButton, followingInfoButton].forEach {
             stackView.addArrangedSubview($0)
         }
 
@@ -72,8 +71,15 @@ final class UserProfileView: UICollectionReusableView {
 
         stackView.snp.makeConstraints {
             $0.top.bottom.equalToSuperview()
-            $0.leading.equalTo(userImageView.snp.trailing).offset(30)
-            $0.width.equalTo(150)
+            $0.leading.equalTo(userImageView.snp.trailing).offset(40)
+            $0.width.equalTo(80)
+        }
+
+        mapButton.snp.makeConstraints {
+            $0.trailing.equalTo(followButton.snp.leading).offset(-10)
+            $0.centerY.equalToSuperview()
+            $0.width.equalTo(60)
+            $0.height.equalTo(30)
         }
 
         followButton.snp.makeConstraints {

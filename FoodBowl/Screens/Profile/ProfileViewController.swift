@@ -22,7 +22,7 @@ final class ProfileViewController: BaseViewController {
 
     private let userProfileView = UserProfileView()
 
-    private lazy var segmentedControl = UnderlineSegmentedControl(items: ["게시물", "맛집지도"]).then {
+    private lazy var segmentedControl = UnderlineSegmentedControl(items: ["게시물 24", "북마크 53"]).then {
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.setTitleTextAttributes(
             [
@@ -49,7 +49,7 @@ final class ProfileViewController: BaseViewController {
     }()
 
     private let vc1 = UserFeedViewController()
-    private let vc2 = UserMapViewController()
+    private let vc2 = UserFeedViewController()
 
     private lazy var pageViewController: UIPageViewController = {
         let vc = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
