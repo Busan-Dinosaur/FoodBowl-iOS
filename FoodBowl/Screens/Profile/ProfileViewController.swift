@@ -122,7 +122,7 @@ final class ProfileViewController: BaseViewController {
         userProfileView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide)
             $0.leading.trailing.equalToSuperview()
-            $0.height.equalTo(80)
+            $0.height.equalTo(100)
         }
 
         segmentedControl.snp.makeConstraints {

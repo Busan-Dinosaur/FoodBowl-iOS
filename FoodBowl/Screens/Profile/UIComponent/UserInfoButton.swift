@@ -13,18 +13,18 @@ import Then
 final class UserInfoButton: UIButton {
     // MARK: - property
 
-    let infoLabel = UILabel().then {
-        $0.font = UIFont.preferredFont(forTextStyle: .subheadline, weight: .regular)
-        $0.textColor = .black
-        $0.textAlignment = .center
-        $0.text = "팔로잉"
-    }
-
     let numberLabel = UILabel().then {
-        $0.font = UIFont.preferredFont(forTextStyle: .subheadline, weight: .regular)
+        $0.font = UIFont.preferredFont(forTextStyle: .headline, weight: .medium)
         $0.textColor = .black
         $0.textAlignment = .center
         $0.text = "100"
+    }
+
+    let infoLabel = UILabel().then {
+        $0.font = UIFont.preferredFont(forTextStyle: .headline, weight: .medium)
+        $0.textColor = .black
+        $0.textAlignment = .center
+        $0.text = "팔로잉"
     }
 
     // MARK: - init
@@ -42,14 +42,15 @@ final class UserInfoButton: UIButton {
     // MARK: - life cycle
 
     private func render() {
-        addSubviews(infoLabel, numberLabel)
+        addSubviews(numberLabel, infoLabel)
 
-        infoLabel.snp.makeConstraints {
+        numberLabel.snp.makeConstraints {
+            $0.top.equalToSuperview().inset(24)
             $0.centerX.equalToSuperview()
         }
 
-        numberLabel.snp.makeConstraints {
-            $0.top.equalTo(infoLabel.snp.bottom).offset(4)
+        infoLabel.snp.makeConstraints {
+            $0.top.equalTo(numberLabel.snp.bottom).offset(4)
             $0.centerX.equalToSuperview()
         }
     }
