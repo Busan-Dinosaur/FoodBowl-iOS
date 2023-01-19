@@ -36,12 +36,6 @@ final class UserProfileView: UICollectionReusableView {
         $0.distribution = .equalSpacing
     }
 
-    let mapButton = MiniButton().then {
-        $0.label.text = "맛집지도"
-    }
-
-    let followButton = MiniButton()
-
     // MARK: - init
 
     override init(frame: CGRect) {
@@ -57,7 +51,7 @@ final class UserProfileView: UICollectionReusableView {
     // MARK: - life cycle
 
     private func render() {
-        addSubviews(userImageView, stackView, mapButton, followButton)
+        addSubviews(userImageView, stackView)
 
         [followerInfoButton, followingInfoButton].forEach {
             stackView.addArrangedSubview($0)
@@ -73,20 +67,6 @@ final class UserProfileView: UICollectionReusableView {
             $0.top.bottom.equalToSuperview()
             $0.leading.equalTo(userImageView.snp.trailing).offset(40)
             $0.width.equalTo(80)
-        }
-
-        mapButton.snp.makeConstraints {
-            $0.trailing.equalTo(followButton.snp.leading).offset(-10)
-            $0.centerY.equalToSuperview()
-            $0.width.equalTo(60)
-            $0.height.equalTo(30)
-        }
-
-        followButton.snp.makeConstraints {
-            $0.trailing.equalToSuperview().inset(20)
-            $0.centerY.equalToSuperview()
-            $0.width.equalTo(60)
-            $0.height.equalTo(30)
         }
     }
 }

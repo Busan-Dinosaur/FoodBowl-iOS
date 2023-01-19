@@ -32,14 +32,17 @@ final class ProfileViewController: BaseViewController {
 
     private let settingButton = SettingButton()
 
-    private let optionButton = OptionButton()
-
-    private lazy var userProfileView = UserProfileView().then {
+    private lazy var mapButton = MapButton().then {
         let mapAction = UIAction { [weak self] _ in
             let userMapViewController = UserMapViewController()
             self?.navigationController?.pushViewController(userMapViewController, animated: true)
         }
+        $0.addAction(mapAction, for: .touchUpInside)
+    }
 
+    private let optionButton = OptionButton()
+
+    private lazy var userProfileView = UserProfileView().then {
         let followerAction = UIAction { [weak self] _ in
             let followerViewController = FollowerViewController()
             self?.navigationController?.pushViewController(followerViewController, animated: true)
@@ -50,7 +53,6 @@ final class ProfileViewController: BaseViewController {
             self?.navigationController?.pushViewController(followingViewController, animated: true)
         }
 
-        $0.mapButton.addAction(mapAction, for: .touchUpInside)
         $0.followerInfoButton.addAction(followerAction, for: .touchUpInside)
         $0.followingInfoButton.addAction(followingAction, for: .touchUpInside)
     }
@@ -144,8 +146,9 @@ final class ProfileViewController: BaseViewController {
             navigationItem.leftBarButtonItem = userNicknameLabel
             navigationItem.rightBarButtonItem = settingButton
         } else {
+            let mapButton = makeBarButtonItem(with: mapButton)
             let optionButton = makeBarButtonItem(with: optionButton)
-            navigationItem.rightBarButtonItem = optionButton
+            navigationItem.rightBarButtonItems = [optionButton, mapButton]
             title = "coby5502"
         }
     }
