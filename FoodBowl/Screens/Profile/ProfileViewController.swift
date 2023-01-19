@@ -35,11 +35,24 @@ final class ProfileViewController: BaseViewController {
     private let optionButton = OptionButton()
 
     private lazy var userProfileView = UserProfileView().then {
-        let action = UIAction { [weak self] _ in
+        let mapAction = UIAction { [weak self] _ in
             let userMapViewController = UserMapViewController()
             self?.navigationController?.pushViewController(userMapViewController, animated: true)
         }
-        $0.mapButton.addAction(action, for: .touchUpInside)
+
+        let followerAction = UIAction { [weak self] _ in
+            let followerViewController = FollowerViewController()
+            self?.navigationController?.pushViewController(followerViewController, animated: true)
+        }
+
+        let followingAction = UIAction { [weak self] _ in
+            let followingViewController = FollowingViewController()
+            self?.navigationController?.pushViewController(followingViewController, animated: true)
+        }
+
+        $0.mapButton.addAction(mapAction, for: .touchUpInside)
+        $0.followerInfoButton.addAction(followerAction, for: .touchUpInside)
+        $0.followingInfoButton.addAction(followingAction, for: .touchUpInside)
     }
 
     private lazy var segmentedControl = UnderlineSegmentedControl(items: ["게시물 24", "북마크 53"]).then {

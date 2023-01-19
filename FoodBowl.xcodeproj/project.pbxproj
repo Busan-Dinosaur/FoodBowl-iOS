@@ -22,6 +22,8 @@
 		CB2E4F83297702C900FD2566 /* SearchUserResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2E4F82297702C900FD2566 /* SearchUserResultViewController.swift */; };
 		CB2E4F8529772FFE00FD2566 /* UserFeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2E4F8429772FFE00FD2566 /* UserFeedViewController.swift */; };
 		CB2E4F892977393700FD2566 /* UserInfoButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2E4F882977393700FD2566 /* UserInfoButton.swift */; };
+		CB4FBBF22978CFA90052D371 /* FollowerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB4FBBF12978CFA90052D371 /* FollowerViewController.swift */; };
+		CB4FBBF42978CFE40052D371 /* FollowingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB4FBBF32978CFE40052D371 /* FollowingViewController.swift */; };
 		CB558E9A29746B5D00921943 /* PhotoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB558E9929746B5D00921943 /* PhotoCollectionViewCell.swift */; };
 		CB558E9C2975B80B00921943 /* Feed.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB558E9B2975B80B00921943 /* Feed.swift */; };
 		CB8A2D9B297844720018AC6E /* Marker.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB8A2D9A297844720018AC6E /* Marker.swift */; };
@@ -107,6 +109,8 @@
 		CB2E4F82297702C900FD2566 /* SearchUserResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchUserResultViewController.swift; sourceTree = "<group>"; };
 		CB2E4F8429772FFE00FD2566 /* UserFeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserFeedViewController.swift; sourceTree = "<group>"; };
 		CB2E4F882977393700FD2566 /* UserInfoButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoButton.swift; sourceTree = "<group>"; };
+		CB4FBBF12978CFA90052D371 /* FollowerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowerViewController.swift; sourceTree = "<group>"; };
+		CB4FBBF32978CFE40052D371 /* FollowingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowingViewController.swift; sourceTree = "<group>"; };
 		CB558E9929746B5D00921943 /* PhotoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCollectionViewCell.swift; sourceTree = "<group>"; };
 		CB558E9B2975B80B00921943 /* Feed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Feed.swift; sourceTree = "<group>"; };
 		CB8A2D9A297844720018AC6E /* Marker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Marker.swift; sourceTree = "<group>"; };
@@ -359,6 +363,8 @@
 				CBADC2AC2955A0FF00E56C93 /* ProfileViewController.swift */,
 				CB2E4F8429772FFE00FD2566 /* UserFeedViewController.swift */,
 				CBFB52622977CB9F0049E8BA /* UserMapViewController.swift */,
+				CB4FBBF12978CFA90052D371 /* FollowerViewController.swift */,
+				CB4FBBF32978CFE40052D371 /* FollowingViewController.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -626,6 +632,7 @@
 				CB1A7C5E295618A900C6431D /* SettingButton.swift in Sources */,
 				CBADC29B29559BC900E56C93 /* BaseTableViewCell.swift in Sources */,
 				CBE6190F296C6435005295AF /* MapViewController.swift in Sources */,
+				CB4FBBF42978CFE40052D371 /* FollowingViewController.swift in Sources */,
 				CBADC2A129559BC900E56C93 /* BackButton.swift in Sources */,
 				CBADC29A29559BC900E56C93 /* BaseViewController.swift in Sources */,
 				CBADC2B92955A1CC00E56C93 /* SetCommentViewController.swift in Sources */,
@@ -641,6 +648,7 @@
 				CBADC2B32955A16A00E56C93 /* SetStoreViewController.swift in Sources */,
 				CBADC28329559BC900E56C93 /* ImageLiteral.swift in Sources */,
 				CB558E9A29746B5D00921943 /* PhotoCollectionViewCell.swift in Sources */,
+				CB4FBBF22978CFA90052D371 /* FollowerViewController.swift in Sources */,
 				CBADC28B29559BC900E56C93 /* UIColor+Extension.swift in Sources */,
 				CBADC2A92955A0CB00E56C93 /* SearchViewController.swift in Sources */,
 				CBADC28629559BC900E56C93 /* Logger.swift in Sources */,

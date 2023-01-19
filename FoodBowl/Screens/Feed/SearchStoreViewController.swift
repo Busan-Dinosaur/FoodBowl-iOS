@@ -104,7 +104,7 @@ extension SearchStoreViewController: UITableViewDataSource, UITableViewDelegate 
         cell.storeNameLabel.text = stores[indexPath.item].placeName
         cell.storeAdressLabel.text = stores[indexPath.item].addressName
         cell.storeDistanceLabel.text = stores[indexPath.item].distance.prettyDistance
-
+        
         return cell
     }
 
