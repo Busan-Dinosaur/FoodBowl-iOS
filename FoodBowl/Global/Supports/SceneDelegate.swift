@@ -13,7 +13,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo _: UISceneSession, options _: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
-        window?.rootViewController = UINavigationController(rootViewController: SignInViewController())
+        window?.rootViewController = UINavigationController(rootViewController: OnboardingViewController())
 //        window?.rootViewController = UINavigationController(rootViewController: TabbarViewController())
         window?.makeKeyAndVisible()
     }

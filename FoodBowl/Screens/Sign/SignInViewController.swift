@@ -11,9 +11,6 @@ import SnapKit
 import Then
 
 final class SignInViewController: BaseViewController {
-    var delegate: SetCategoryViewControllerDelegate?
-    private let categories = Category.allCases
-
     // MARK: - property
 
     private let emailLabel = UILabel().then {
@@ -134,7 +131,7 @@ final class SignInViewController: BaseViewController {
         }
 
         signInButton.snp.makeConstraints {
-            $0.leading.trailing.bottom.equalToSuperview().inset(20)
+            $0.leading.trailing.equalToSuperview().inset(20)
             $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(20)
             $0.height.equalTo(60)
         }
