@@ -9,9 +9,21 @@ import UIKit
 
 import SnapKit
 import Then
+import YPImagePicker
 
 final class SetProfileViewController: BaseViewController {
+    private var profileImage: UIImage = ImageLiteral.defaultProfile
+
     // MARK: - property
+
+    private lazy var profileImageView = UIImageView().then {
+        $0.image = ImageLiteral.defaultProfile
+        $0.layer.cornerRadius = 50
+        $0.layer.masksToBounds = true
+        $0.clipsToBounds = true
+        $0.isUserInteractionEnabled = true
+        $0.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tappedProfileImageView)))
+    }
 
     private let nicknameLabel = UILabel().then {
         $0.text = "닉네임"
@@ -53,10 +65,16 @@ final class SetProfileViewController: BaseViewController {
     // MARK: - life cycle
 
     override func render() {
-        view.addSubviews(nicknameLabel, nicknameField, signUpButton)
+        view.addSubviews(profileImageView, nicknameLabel, nicknameField, signUpButton)
+
+        profileImageView.snp.makeConstraints {
+            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).inset(20)
+            $0.centerX.equalToSuperview()
+            $0.width.height.equalTo(100)
+        }
 
         nicknameLabel.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).inset(20)
+            $0.top.equalTo(profileImageView.snp.bottom).offset(20)
             $0.leading.equalToSuperview().inset(20)
         }
 
@@ -76,5 +94,43 @@ final class SetProfileViewController: BaseViewController {
     override func setupNavigationBar() {
         super.setupNavigationBar()
         title = "프로필 설정"
+    }
+
+    @objc private func tappedProfileImageView(_: UITapGestureRecognizer) {
+        var config = YPImagePickerConfiguration()
+        config.onlySquareImagesFromCamera = true
+        config.library.defaultMultipleSelection = false
+        config.library.mediaType = .photo
+        config.startOnScreen = YPPickerScreen.library
+        config.shouldSaveNewPicturesToAlbum = true
+        config.albumName = "FoodBowl"
+
+        let titleAttributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 17, weight: .regular)]
+        let barButtonAttributes = [NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .headline, weight: .regular)]
+        UINavigationBar.appearance().titleTextAttributes = titleAttributes // Title fonts
+        UIBarButtonItem.appearance().setTitleTextAttributes(barButtonAttributes, for: .normal) // Bar Button fonts
+        config.wordings.libraryTitle = "갤러리"
+        config.wordings.cameraTitle = "카메라"
+        config.wordings.next = "다음"
+        config.wordings.cancel = "취소"
+        config.colors.tintColor = .mainPink
+
+        let picker = YPImagePicker(configuration: config)
+
+        picker.didFinishPicking { [unowned picker] items, cancelled in
+            if !cancelled {
+                let images: [UIImage] = items.compactMap { item in
+                    if case let .photo(photo) = item {
+                        return photo.image
+                    } else {
+                        return nil
+                    }
+                }
+                self.profileImage = images[0]
+                self.profileImageView.image = images[0]
+            }
+            picker.dismiss(animated: true, completion: nil)
+        }
+        present(picker, animated: true, completion: nil)
     }
 }

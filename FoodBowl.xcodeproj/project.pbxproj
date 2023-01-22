@@ -29,6 +29,7 @@
 		CB8A2D9B297844720018AC6E /* Marker.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB8A2D9A297844720018AC6E /* Marker.swift */; };
 		CBA7F17F297DB2F6006088A0 /* SetProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA7F17E297DB2F6006088A0 /* SetProfileViewController.swift */; };
 		CBA7F182297DB319006088A0 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA7F181297DB319006088A0 /* OnboardingViewController.swift */; };
+		CBA7F184297DBB01006088A0 /* YPImagePicker+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA7F183297DBB01006088A0 /* YPImagePicker+Extension.swift */; };
 		CBADC2422955989400E56C93 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = CBADC2412955989400E56C93 /* SnapKit */; };
 		CBADC245295598A200E56C93 /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = CBADC244295598A200E56C93 /* Then */; };
 		CBADC2482955993A00E56C93 /* SkeletonUI in Frameworks */ = {isa = PBXBuildFile; productRef = CBADC2472955993A00E56C93 /* SkeletonUI */; };
@@ -118,6 +119,7 @@
 		CB8A2D9A297844720018AC6E /* Marker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Marker.swift; sourceTree = "<group>"; };
 		CBA7F17E297DB2F6006088A0 /* SetProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetProfileViewController.swift; sourceTree = "<group>"; };
 		CBA7F181297DB319006088A0 /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
+		CBA7F183297DBB01006088A0 /* YPImagePicker+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "YPImagePicker+Extension.swift"; sourceTree = "<group>"; };
 		CBADC24D29559AA900E56C93 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		CBADC24F29559AB700E56C93 /* .swiftformat */ = {isa = PBXFileReference; lastKnownFileType = text; path = .swiftformat; sourceTree = "<group>"; };
 		CBADC25929559BC900E56C93 /* ImageLiteral.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageLiteral.swift; sourceTree = "<group>"; };
@@ -299,6 +301,7 @@
 				CBADC26C29559BC900E56C93 /* Notification+Extension.swift */,
 				CBADC26D29559BC900E56C93 /* UITextView+Extension.swift */,
 				CBADC26E29559BC900E56C93 /* UITableView+Extension.swift */,
+				CBA7F183297DBB01006088A0 /* YPImagePicker+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -643,6 +646,7 @@
 				CBADC2B72955A1BD00E56C93 /* SetPhotoViewController.swift in Sources */,
 				CBE6190C296C635D005295AF /* MiniButton.swift in Sources */,
 				CB1790C8296DAB470083D3A4 /* DynamicHeightCollectionViewFlowLayout.swift in Sources */,
+				CBA7F184297DBB01006088A0 /* YPImagePicker+Extension.swift in Sources */,
 				CBE61913296C68D9005295AF /* PlusButton.swift in Sources */,
 				CB1A7C5E295618A900C6431D /* SettingButton.swift in Sources */,
 				CBADC29B29559BC900E56C93 /* BaseTableViewCell.swift in Sources */,
