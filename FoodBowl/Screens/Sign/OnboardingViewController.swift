@@ -13,6 +13,16 @@ import Then
 final class OnboardingViewController: BaseViewController {
     // MARK: - property
 
+    private let appLogoView = UILabel().then {
+        $0.font = UIFont.preferredFont(forTextStyle: .largeTitle, weight: .bold)
+        $0.text = "FoodBowl"
+    }
+
+    private let guideLabel = UILabel().then {
+        $0.text = "친구들과 함께 만들어가는 맛집지도"
+        $0.font = UIFont.preferredFont(forTextStyle: .title3, weight: .medium)
+    }
+
     private lazy var signUpButton = MainButton().then {
         $0.label.text = "이메일로 가입"
         $0.backgroundColor = .black
@@ -47,7 +57,17 @@ final class OnboardingViewController: BaseViewController {
     }
 
     override func render() {
-        view.addSubviews(signInButton, signUpButton)
+        view.addSubviews(appLogoView, guideLabel, signInButton, signUpButton)
+
+        appLogoView.snp.makeConstraints {
+            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).inset(100)
+            $0.centerX.equalToSuperview()
+        }
+
+        guideLabel.snp.makeConstraints {
+            $0.top.equalTo(appLogoView.snp.bottom).offset(40)
+            $0.centerX.equalToSuperview()
+        }
 
         signInButton.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview().inset(20)
