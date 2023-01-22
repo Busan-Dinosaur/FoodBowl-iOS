@@ -60,47 +60,44 @@ final class SignUpViewController: BaseViewController {
         $0.makeBorderLayer(color: .grey002)
     }
 
-    private lazy var signInButton = MainButton().then {
-        $0.label.text = "로그인"
+    private let passwordReLabel = UILabel().then {
+        $0.text = "비밀번호 확인"
+        $0.font = UIFont.preferredFont(forTextStyle: .body, weight: .medium)
+    }
+
+    private let passwordReField = UITextField().then {
+        let attributes = [
+            NSAttributedString.Key.foregroundColor: UIColor.grey001,
+            NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .body, weight: .regular)
+        ]
+
+        $0.backgroundColor = .white
+        $0.attributedPlaceholder = NSAttributedString(string: "비밀번호 재입력", attributes: attributes)
+        $0.autocapitalizationType = .none
+        $0.layer.cornerRadius = 12
+        $0.layer.masksToBounds = true
+        $0.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 0))
+        $0.leftViewMode = .always
+        $0.clipsToBounds = false
+        $0.isSecureTextEntry = true
+        $0.clearButtonMode = .always
+        $0.makeBorderLayer(color: .grey002)
+    }
+
+    private lazy var nextButton = MainButton().then {
+        $0.label.text = "다음"
 
         let action = UIAction { [weak self] _ in
-            let tabbarViewController = UINavigationController(rootViewController: TabbarViewController())
-            tabbarViewController.modalPresentationStyle = .fullScreen
-            tabbarViewController.modalTransitionStyle = .crossDissolve
-            DispatchQueue.main.async {
-                self?.present(tabbarViewController, animated: true)
-            }
+            let setProfileViewController = SetProfileViewController()
+            self?.navigationController?.pushViewController(setProfileViewController, animated: true)
         }
         $0.addAction(action, for: .touchUpInside)
-    }
-
-    private let findIDLabel = UILabel().then {
-        $0.text = "아이디 찾기"
-        $0.textColor = .grey001
-        $0.font = UIFont.preferredFont(forTextStyle: .callout, weight: .regular)
-    }
-
-    private let findPasswordLabel = UILabel().then {
-        $0.text = "비밀번호 찾기"
-        $0.textColor = .grey001
-        $0.font = UIFont.preferredFont(forTextStyle: .callout, weight: .regular)
-    }
-
-    private let stackView = UIStackView().then {
-        $0.translatesAutoresizingMaskIntoConstraints = false
-        $0.axis = .horizontal
-        $0.alignment = .center
-        $0.distribution = .equalSpacing
     }
 
     // MARK: - life cycle
 
     override func render() {
-        view.addSubviews(emailLabel, emailField, passwordLabel, passwordField, stackView, signInButton)
-
-        [findIDLabel, findPasswordLabel].forEach {
-            stackView.addArrangedSubview($0)
-        }
+        view.addSubviews(emailLabel, emailField, passwordLabel, passwordField, passwordReLabel, passwordReField, nextButton)
 
         emailLabel.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).inset(20)
@@ -124,13 +121,18 @@ final class SignUpViewController: BaseViewController {
             $0.height.equalTo(60)
         }
 
-        stackView.snp.makeConstraints {
-            $0.top.equalTo(passwordField.snp.bottom).offset(40)
-            $0.centerX.equalToSuperview()
-            $0.width.equalTo(200)
+        passwordReLabel.snp.makeConstraints {
+            $0.top.equalTo(passwordField.snp.bottom).offset(30)
+            $0.leading.equalToSuperview().inset(20)
         }
 
-        signInButton.snp.makeConstraints {
+        passwordReField.snp.makeConstraints {
+            $0.top.equalTo(passwordReLabel.snp.bottom).offset(10)
+            $0.leading.trailing.equalToSuperview().inset(20)
+            $0.height.equalTo(60)
+        }
+
+        nextButton.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview().inset(20)
             $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(20)
             $0.height.equalTo(60)
@@ -139,6 +141,6 @@ final class SignUpViewController: BaseViewController {
 
     override func setupNavigationBar() {
         super.setupNavigationBar()
-        title = "이메일로 로그인"
+        title = "회원가입"
     }
 }
