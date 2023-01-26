@@ -10,7 +10,19 @@ import UIKit
 import SnapKit
 import Then
 
-final class MiniButton: UIButton {
+final class FollowButton: UIButton {
+    override var isSelected: Bool {
+        didSet {
+            if isSelected {
+                backgroundColor = .grey002
+                label.text = "팔로잉"
+            } else {
+                backgroundColor = .mainPink
+                label.text = "팔로우"
+            }
+        }
+    }
+
     // MARK: - property
 
     let label = UILabel().then {

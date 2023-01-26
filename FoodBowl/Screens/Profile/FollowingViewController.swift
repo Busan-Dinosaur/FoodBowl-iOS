@@ -46,6 +46,11 @@ extension FollowingViewController: UITableViewDataSource, UITableViewDelegate {
 
         cell.selectionStyle = .none
 
+        let action = UIAction { _ in
+            cell.followButton.isSelected = !cell.followButton.isSelected
+        }
+        cell.followButton.addAction(action, for: .touchUpInside)
+
         return cell
     }
 

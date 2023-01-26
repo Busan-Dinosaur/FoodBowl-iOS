@@ -29,7 +29,7 @@ final class UserProfileView: UICollectionReusableView {
         $0.numberLabel.text = "100"
     }
 
-    let followButton = MiniButton()
+    let followButton = FollowButton()
 
     // MARK: - init
 

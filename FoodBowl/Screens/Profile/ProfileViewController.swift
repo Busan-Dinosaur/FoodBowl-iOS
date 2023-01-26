@@ -53,8 +53,13 @@ final class ProfileViewController: BaseViewController {
             self?.navigationController?.pushViewController(followingViewController, animated: true)
         }
 
+        let followButtonAction = UIAction { [weak self] _ in
+            self?.followUser()
+        }
+
         $0.followerInfoButton.addAction(followerAction, for: .touchUpInside)
         $0.followingInfoButton.addAction(followingAction, for: .touchUpInside)
+        $0.followButton.addAction(followButtonAction, for: .touchUpInside)
     }
 
     private lazy var segmentedControl = UnderlineSegmentedControl(items: ["게시물 24", "북마크 53"]).then {
@@ -155,6 +160,10 @@ final class ProfileViewController: BaseViewController {
 
     @objc private func changeValue(control: UISegmentedControl) {
         currentPage = control.selectedSegmentIndex
+    }
+
+    private func followUser() {
+        userProfileView.followButton.isSelected = !userProfileView.followButton.isSelected
     }
 }
 
