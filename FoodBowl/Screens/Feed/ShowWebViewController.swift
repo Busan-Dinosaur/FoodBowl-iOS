@@ -1,5 +1,5 @@
 //
-//  ShowStoreInfoViewController.swift
+//  ShowWebViewController.swift
 //  FoodBowl
 //
 //  Created by COBY_PRO on 2023/01/15.
@@ -11,7 +11,7 @@ import SnapKit
 import Then
 import WebKit
 
-final class ShowStoreInfoViewController: BaseViewController {
+final class ShowWebViewController: BaseViewController {
     var url = ""
 
     // MARK: - property
@@ -48,6 +48,5 @@ final class ShowStoreInfoViewController: BaseViewController {
         let leftOffsetCloseButton = removeBarButtonItemOffset(with: closeButton, offsetX: 10)
         let closeButton = makeBarButtonItem(with: leftOffsetCloseButton)
         navigationItem.leftBarButtonItem = closeButton
-        title = "가게 정보"
     }
 }

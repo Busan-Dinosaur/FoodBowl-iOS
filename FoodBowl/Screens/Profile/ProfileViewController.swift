@@ -30,7 +30,25 @@ final class ProfileViewController: BaseViewController {
         $0.text = "coby5502"
     }
 
-    private let settingButton = SettingButton()
+    private lazy var plusButton = PlusButton().then {
+        let action = UIAction { [weak self] _ in
+            let addFeedViewController = AddFeedViewController()
+            let navigationController = UINavigationController(rootViewController: addFeedViewController)
+            navigationController.modalPresentationStyle = .fullScreen
+            DispatchQueue.main.async {
+                self?.present(navigationController, animated: true)
+            }
+        }
+        $0.addAction(action, for: .touchUpInside)
+    }
+
+    private lazy var settingButton = SettingButton().then {
+        let settingAction = UIAction { [weak self] _ in
+            let settingViewController = SettingViewController()
+            self?.navigationController?.pushViewController(settingViewController, animated: true)
+        }
+        $0.addAction(settingAction, for: .touchUpInside)
+    }
 
     private lazy var mapButton = MapButton().then {
         let mapAction = UIAction { [weak self] _ in
@@ -59,7 +77,11 @@ final class ProfileViewController: BaseViewController {
 
         let editButtonAction = UIAction { [weak self] _ in
             let editProfileViewController = EditProfileViewController()
-            self?.navigationController?.pushViewController(editProfileViewController, animated: true)
+            let navigationController = UINavigationController(rootViewController: editProfileViewController)
+            navigationController.modalPresentationStyle = .fullScreen
+            DispatchQueue.main.async {
+                self?.present(navigationController, animated: true)
+            }
         }
 
         $0.followerInfoButton.addAction(followerAction, for: .touchUpInside)
@@ -158,9 +180,10 @@ final class ProfileViewController: BaseViewController {
 
         if isOwn {
             let userNicknameLabel = makeBarButtonItem(with: userNicknameLabel)
+            let plusButton = makeBarButtonItem(with: plusButton)
             let settingButton = makeBarButtonItem(with: settingButton)
             navigationItem.leftBarButtonItem = userNicknameLabel
-            navigationItem.rightBarButtonItem = settingButton
+            navigationItem.rightBarButtonItems = [settingButton, plusButton]
         } else {
             let mapButton = makeBarButtonItem(with: mapButton)
             let optionButton = makeBarButtonItem(with: optionButton)

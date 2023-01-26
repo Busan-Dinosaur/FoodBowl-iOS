@@ -16,6 +16,13 @@ final class EditProfileViewController: BaseViewController {
 
     // MARK: - property
 
+    private lazy var closeButton = CloseButton().then {
+        let action = UIAction { [weak self] _ in
+            self?.dismiss(animated: true, completion: nil)
+        }
+        $0.addAction(action, for: .touchUpInside)
+    }
+
     private lazy var profileImageView = UIImageView().then {
         $0.image = ImageLiteral.defaultProfile
         $0.layer.cornerRadius = 50
@@ -93,6 +100,9 @@ final class EditProfileViewController: BaseViewController {
 
     override func setupNavigationBar() {
         super.setupNavigationBar()
+        let leftOffsetCloseButton = removeBarButtonItemOffset(with: closeButton, offsetX: 10)
+        let closeButton = makeBarButtonItem(with: leftOffsetCloseButton)
+        navigationItem.leftBarButtonItem = closeButton
         title = "프로필 수정"
     }
 
