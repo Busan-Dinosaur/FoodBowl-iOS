@@ -5,6 +5,7 @@
 //  Created by COBY_PRO on 2023/01/23.
 //
 
+import AuthenticationServices
 import UIKit
 
 import SnapKit
@@ -23,25 +24,13 @@ final class OnboardingViewController: BaseViewController {
         $0.font = UIFont.preferredFont(forTextStyle: .title3, weight: .medium)
     }
 
-    private lazy var signUpButton = MainButton().then {
-        $0.label.text = "이메일로 가입"
-        $0.backgroundColor = .black
-
+    private lazy var appleLoginButton = ASAuthorizationAppleIDButton(type: .signIn, style: .black).then {
         let action = UIAction { [weak self] _ in
-            let signUpViewController = SignUpViewController()
-            self?.navigationController?.pushViewController(signUpViewController, animated: true)
+            let setProfileViewController = SetProfileViewController()
+            self?.navigationController?.pushViewController(setProfileViewController, animated: true)
         }
         $0.addAction(action, for: .touchUpInside)
-    }
-
-    private lazy var signInButton = MainButton().then {
-        $0.label.text = "이메일로 로그인"
-
-        let action = UIAction { [weak self] _ in
-            let signInViewController = SignInViewController()
-            self?.navigationController?.pushViewController(signInViewController, animated: true)
-        }
-        $0.addAction(action, for: .touchUpInside)
+        $0.cornerRadius = 30
     }
 
     // MARK: - life cycle
@@ -57,7 +46,7 @@ final class OnboardingViewController: BaseViewController {
     }
 
     override func render() {
-        view.addSubviews(appLogoView, guideLabel, signInButton, signUpButton)
+        view.addSubviews(appLogoView, guideLabel, appleLoginButton)
 
         appLogoView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).inset(100)
@@ -69,15 +58,9 @@ final class OnboardingViewController: BaseViewController {
             $0.centerX.equalToSuperview()
         }
 
-        signInButton.snp.makeConstraints {
+        appleLoginButton.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview().inset(20)
             $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(20)
-            $0.height.equalTo(60)
-        }
-
-        signUpButton.snp.makeConstraints {
-            $0.leading.trailing.equalToSuperview().inset(20)
-            $0.bottom.equalTo(signInButton.snp.top).offset(-10)
             $0.height.equalTo(60)
         }
     }

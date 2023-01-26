@@ -31,6 +31,7 @@ enum ImageLiteral {
     static var btnGallery: UIImage { .load(name: "gallery") }
 
     static var defaultProfile: UIImage { .load(name: "user") }
+    static var appleLogo: UIImage { .load(systemName: "apple.logo") }
 
     static var food1: UIImage { .load(name: "food1") }
     static var food2: UIImage { .load(name: "food2") }
