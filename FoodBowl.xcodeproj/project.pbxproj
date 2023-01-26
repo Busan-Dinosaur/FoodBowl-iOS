@@ -81,6 +81,9 @@
 		CBD1B5F12982B0A300B0AD51 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD1B5F02982B0A300B0AD51 /* SettingViewController.swift */; };
 		CBD1B5F42982D39B00B0AD51 /* SettingItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD1B5F32982D39B00B0AD51 /* SettingItemTableViewCell.swift */; };
 		CBD1B5F82982D9E100B0AD51 /* ForwordButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD1B5F72982D9E100B0AD51 /* ForwordButton.swift */; };
+		CBD1B5FA2982E55F00B0AD51 /* AgreementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD1B5F92982E55F00B0AD51 /* AgreementViewController.swift */; };
+		CBD1B5FC2982E83800B0AD51 /* CheckBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD1B5FB2982E83800B0AD51 /* CheckBox.swift */; };
+		CBD1B5FE2982F19300B0AD51 /* UIButton+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD1B5FD2982F19300B0AD51 /* UIButton+Extension.swift */; };
 		CBDE38F92970745600DDE49A /* AddFeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDE38F82970745600DDE49A /* AddFeedViewController.swift */; };
 		CBDE38FB2970774800DDE49A /* CloseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDE38FA2970774800DDE49A /* CloseButton.swift */; };
 		CBDE38FD29715C5F00DDE49A /* SearchBarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDE38FC29715C5F00DDE49A /* SearchBarButton.swift */; };
@@ -173,6 +176,9 @@
 		CBD1B5F02982B0A300B0AD51 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		CBD1B5F32982D39B00B0AD51 /* SettingItemTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingItemTableViewCell.swift; sourceTree = "<group>"; };
 		CBD1B5F72982D9E100B0AD51 /* ForwordButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForwordButton.swift; sourceTree = "<group>"; };
+		CBD1B5F92982E55F00B0AD51 /* AgreementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgreementViewController.swift; sourceTree = "<group>"; };
+		CBD1B5FB2982E83800B0AD51 /* CheckBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckBox.swift; sourceTree = "<group>"; };
+		CBD1B5FD2982F19300B0AD51 /* UIButton+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Extension.swift"; sourceTree = "<group>"; };
 		CBDE38F82970745600DDE49A /* AddFeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFeedViewController.swift; sourceTree = "<group>"; };
 		CBDE38FA2970774800DDE49A /* CloseButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloseButton.swift; sourceTree = "<group>"; };
 		CBDE38FC29715C5F00DDE49A /* SearchBarButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBarButton.swift; sourceTree = "<group>"; };
@@ -239,6 +245,7 @@
 			isa = PBXGroup;
 			children = (
 				CBA7F181297DB319006088A0 /* OnboardingViewController.swift */,
+				CBD1B5F92982E55F00B0AD51 /* AgreementViewController.swift */,
 				CBA7F17E297DB2F6006088A0 /* SetProfileViewController.swift */,
 			);
 			path = Sign;
@@ -309,6 +316,7 @@
 				CBADC26C29559BC900E56C93 /* Notification+Extension.swift */,
 				CBADC26D29559BC900E56C93 /* UITextView+Extension.swift */,
 				CBADC26E29559BC900E56C93 /* UITableView+Extension.swift */,
+				CBD1B5FD2982F19300B0AD51 /* UIButton+Extension.swift */,
 				CBA7F183297DBB01006088A0 /* YPImagePicker+Extension.swift */,
 			);
 			path = Extensions;
@@ -356,6 +364,7 @@
 				CBDE38FC29715C5F00DDE49A /* SearchBarButton.swift */,
 				CB2E4F792976F01700FD2566 /* UnderlineSegmentedControl.swift */,
 				CB8A2D9A297844720018AC6E /* Marker.swift */,
+				CBD1B5FB2982E83800B0AD51 /* CheckBox.swift */,
 			);
 			path = UIComponent;
 			sourceTree = "<group>";
@@ -644,6 +653,7 @@
 				CB2E4F83297702C900FD2566 /* SearchUserResultViewController.swift in Sources */,
 				CBFB52612977C9AB0049E8BA /* FindStoreViewController.swift in Sources */,
 				CBFB52572977B94A0049E8BA /* FeedCommentViewController.swift in Sources */,
+				CBD1B5FE2982F19300B0AD51 /* UIButton+Extension.swift in Sources */,
 				CBD1B5F42982D39B00B0AD51 /* SettingItemTableViewCell.swift in Sources */,
 				CB2E4F8529772FFE00FD2566 /* UserFeedViewController.swift in Sources */,
 				CB1BCAF72958B15B0021617D /* StoreInfoView.swift in Sources */,
@@ -685,6 +695,7 @@
 				CBC73106295550A100C7F198 /* SceneDelegate.swift in Sources */,
 				CBE61917296C7C1F005295AF /* SetCategoryViewController.swift in Sources */,
 				CBDE39022971947B00DDE49A /* StoreInfoTableViewCell.swift in Sources */,
+				CBD1B5FC2982E83800B0AD51 /* CheckBox.swift in Sources */,
 				CBADC29529559BC900E56C93 /* UITextView+Extension.swift in Sources */,
 				CBADC29229559BC900E56C93 /* Sequence+Extension.swift in Sources */,
 				CBB5828929745A8200808B0B /* GalleryButton.swift in Sources */,
@@ -716,6 +727,7 @@
 				CBADC2D82955AC5900E56C93 /* FeedCollectionViewCell.swift in Sources */,
 				CBADC2AD2955A0FF00E56C93 /* ProfileViewController.swift in Sources */,
 				CB2E4F7A2976F01700FD2566 /* UnderlineSegmentedControl.swift in Sources */,
+				CBD1B5FA2982E55F00B0AD51 /* AgreementViewController.swift in Sources */,
 				CBDE38FD29715C5F00DDE49A /* SearchBarButton.swift in Sources */,
 				CBADC2DE2955ACBB00E56C93 /* EmptyFeedView.swift in Sources */,
 				CBFB52632977CB9F0049E8BA /* UserMapViewController.swift in Sources */,
