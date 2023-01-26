@@ -119,6 +119,11 @@ final class ProfileViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         changeValue(control: segmentedControl)
+        if isOwn {
+            userProfileView.followButton.isHidden = true
+        } else {
+            userProfileView.editButton.isHidden = true
+        }
     }
 
     override func render() {

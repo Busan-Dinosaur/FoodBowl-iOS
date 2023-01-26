@@ -31,6 +31,14 @@ final class UserProfileView: UICollectionReusableView {
 
     let followButton = FollowButton()
 
+    let editButton = UIButton().then {
+        $0.setTitle("프로필 수정", for: .normal)
+        $0.setTitleColor(.white, for: .normal)
+        $0.titleLabel?.font = UIFont.preferredFont(forTextStyle: .footnote, weight: .medium)
+        $0.layer.cornerRadius = 15
+        $0.backgroundColor = .mainBlue
+    }
+
     // MARK: - init
 
     override init(frame: CGRect) {
@@ -46,7 +54,7 @@ final class UserProfileView: UICollectionReusableView {
     // MARK: - life cycle
 
     private func render() {
-        addSubviews(userImageView, followerInfoButton, followingInfoButton, followButton)
+        addSubviews(userImageView, followerInfoButton, followingInfoButton, followButton, editButton)
 
         userImageView.snp.makeConstraints {
             $0.leading.equalToSuperview().inset(20)
@@ -68,6 +76,13 @@ final class UserProfileView: UICollectionReusableView {
             $0.trailing.equalToSuperview().inset(20)
             $0.centerY.equalToSuperview()
             $0.width.equalTo(60)
+            $0.height.equalTo(30)
+        }
+
+        editButton.snp.makeConstraints {
+            $0.trailing.equalToSuperview().inset(20)
+            $0.centerY.equalToSuperview()
+            $0.width.equalTo(80)
             $0.height.equalTo(30)
         }
     }
