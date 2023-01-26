@@ -57,9 +57,15 @@ final class ProfileViewController: BaseViewController {
             self?.followUser()
         }
 
+        let editButtonAction = UIAction { [weak self] _ in
+            let editProfileViewController = EditProfileViewController()
+            self?.navigationController?.pushViewController(editProfileViewController, animated: true)
+        }
+
         $0.followerInfoButton.addAction(followerAction, for: .touchUpInside)
         $0.followingInfoButton.addAction(followingAction, for: .touchUpInside)
         $0.followButton.addAction(followButtonAction, for: .touchUpInside)
+        $0.editButton.addAction(editButtonAction, for: .touchUpInside)
     }
 
     private lazy var segmentedControl = UnderlineSegmentedControl(items: ["게시물 24", "북마크 53"]).then {
