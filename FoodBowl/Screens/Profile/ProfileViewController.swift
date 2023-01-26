@@ -30,7 +30,13 @@ final class ProfileViewController: BaseViewController {
         $0.text = "coby5502"
     }
 
-    private let settingButton = SettingButton()
+    private lazy var settingButton = SettingButton().then {
+        let settingAction = UIAction { [weak self] _ in
+            let settingViewController = SettingViewController()
+            self?.navigationController?.pushViewController(settingViewController, animated: true)
+        }
+        $0.addAction(settingAction, for: .touchUpInside)
+    }
 
     private lazy var mapButton = MapButton().then {
         let mapAction = UIAction { [weak self] _ in
