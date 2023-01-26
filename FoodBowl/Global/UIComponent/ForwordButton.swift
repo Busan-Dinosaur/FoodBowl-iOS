@@ -24,6 +24,6 @@ final class ForwordButton: UIButton {
 
     private func configUI() {
         setImage(ImageLiteral.btnForward, for: .normal)
-        tintColor = .black
+        tintColor = .mainBlue
     }
 }

@@ -67,7 +67,7 @@
 		CBADC2E02955B92D00E56C93 /* MainButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADC2DF2955B92D00E56C93 /* MainButton.swift */; };
 		CBADC2E22955C63300E56C93 /* FeedThumnailCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADC2E12955C63300E56C93 /* FeedThumnailCollectionViewCell.swift */; };
 		CBB582802972C9C400808B0B /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = CBB5827F2972C9C400808B0B /* Alamofire */; };
-		CBB582822973007D00808B0B /* ShowStoreInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBB582812973007D00808B0B /* ShowStoreInfoViewController.swift */; };
+		CBB582822973007D00808B0B /* ShowWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBB582812973007D00808B0B /* ShowWebViewController.swift */; };
 		CBB58284297440A600808B0B /* CategoryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBB58283297440A600808B0B /* CategoryCollectionViewCell.swift */; };
 		CBB582872974568500808B0B /* YPImagePicker in Frameworks */ = {isa = PBXBuildFile; productRef = CBB582862974568500808B0B /* YPImagePicker */; };
 		CBB5828929745A8200808B0B /* GalleryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBB5828829745A8200808B0B /* GalleryButton.swift */; };
@@ -158,7 +158,7 @@
 		CBADC2DD2955ACBB00E56C93 /* EmptyFeedView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptyFeedView.swift; sourceTree = "<group>"; };
 		CBADC2DF2955B92D00E56C93 /* MainButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainButton.swift; sourceTree = "<group>"; };
 		CBADC2E12955C63300E56C93 /* FeedThumnailCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedThumnailCollectionViewCell.swift; sourceTree = "<group>"; };
-		CBB582812973007D00808B0B /* ShowStoreInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowStoreInfoViewController.swift; sourceTree = "<group>"; };
+		CBB582812973007D00808B0B /* ShowWebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowWebViewController.swift; sourceTree = "<group>"; };
 		CBB58283297440A600808B0B /* CategoryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCollectionViewCell.swift; sourceTree = "<group>"; };
 		CBB5828829745A8200808B0B /* GalleryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryButton.swift; sourceTree = "<group>"; };
 		CBB778D82979B17200B9994A /* MapButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapButton.swift; sourceTree = "<group>"; };
@@ -407,7 +407,7 @@
 				CBDE39002971945300DDE49A /* Cell */,
 				CBDE38F82970745600DDE49A /* AddFeedViewController.swift */,
 				CBADC2B42955A18C00E56C93 /* SearchStoreViewController.swift */,
-				CBB582812973007D00808B0B /* ShowStoreInfoViewController.swift */,
+				CBB582812973007D00808B0B /* ShowWebViewController.swift */,
 				CBADC2B22955A16A00E56C93 /* SetStoreViewController.swift */,
 				CBE61916296C7C1F005295AF /* SetCategoryViewController.swift */,
 				CBADC2B62955A1BD00E56C93 /* SetPhotoViewController.swift */,
@@ -723,7 +723,7 @@
 				CBDE390529719B9700DDE49A /* Place.swift in Sources */,
 				CBADC29629559BC900E56C93 /* UITableView+Extension.swift in Sources */,
 				CBADC2BD2955A22D00E56C93 /* SearchResultViewController.swift in Sources */,
-				CBB582822973007D00808B0B /* ShowStoreInfoViewController.swift in Sources */,
+				CBB582822973007D00808B0B /* ShowWebViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

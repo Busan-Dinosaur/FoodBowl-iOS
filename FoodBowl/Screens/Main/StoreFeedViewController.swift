@@ -113,9 +113,10 @@ extension StoreFeedViewController: UICollectionViewDataSource, UICollectionViewD
         }
 
         let mapButtonAction = UIAction { [weak self] _ in
-            let showStoreInfoViewController = ShowStoreInfoViewController()
-            showStoreInfoViewController.url = ""
-            let navigationController = UINavigationController(rootViewController: showStoreInfoViewController)
+            let showWebViewController = ShowWebViewController()
+            showWebViewController.title = "가게 정보"
+            showWebViewController.url = ""
+            let navigationController = UINavigationController(rootViewController: showWebViewController)
             navigationController.modalPresentationStyle = .fullScreen
             DispatchQueue.main.async {
                 self?.present(navigationController, animated: true)

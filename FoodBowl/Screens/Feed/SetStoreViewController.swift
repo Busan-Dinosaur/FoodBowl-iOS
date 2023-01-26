@@ -74,16 +74,17 @@ extension SetStoreViewController: SearchStoreViewControllerDelegate {
         selectedStoreView.storeNameLabel.text = selectedStore?.placeName
         selectedStoreView.storeAdressLabel.text = selectedStore?.addressName
         selectedStoreView.isHidden = false
-        let buttonAction = UIAction { [weak self] _ in
-            let showStoreInfoViewController = ShowStoreInfoViewController()
-            showStoreInfoViewController.url = self?.selectedStore?.placeURL ?? ""
-            let navigationController = UINavigationController(rootViewController: showStoreInfoViewController)
+        let action = UIAction { [weak self] _ in
+            let showWebViewController = ShowWebViewController()
+            showWebViewController.title = "가게 정보"
+            showWebViewController.url = self?.selectedStore?.placeURL ?? ""
+            let navigationController = UINavigationController(rootViewController: showWebViewController)
             navigationController.modalPresentationStyle = .fullScreen
             DispatchQueue.main.async {
                 self?.present(navigationController, animated: true)
             }
         }
-        selectedStoreView.mapButton.addAction(buttonAction, for: .touchUpInside)
+        selectedStoreView.mapButton.addAction(action, for: .touchUpInside)
 
         delegate?.setStore(store: selectedStore)
     }

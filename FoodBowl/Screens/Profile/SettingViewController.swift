@@ -5,6 +5,7 @@
 //  Created by COBY_PRO on 2023/01/26.
 //
 
+import MessageUI
 import UIKit
 
 import SnapKit
@@ -46,16 +47,41 @@ final class SettingViewController: BaseViewController {
         options.append(Option(title: "친구초대", handler: { [weak self] in
         }))
 
-        options.append(Option(title: "공지사항", handler: { [weak self] in
+        options.append(Option(title: "문의하기", handler: { [weak self] in
+            self?.sendReportMail()
         }))
 
-        options.append(Option(title: "고객센터", handler: { [weak self] in
+        options.append(Option(title: "공지사항", handler: { [weak self] in
+            let showWebViewController = ShowWebViewController()
+            showWebViewController.title = "공지사항"
+            showWebViewController.url = ""
+            let navigationController = UINavigationController(rootViewController: showWebViewController)
+            navigationController.modalPresentationStyle = .fullScreen
+            DispatchQueue.main.async {
+                self?.present(navigationController, animated: true)
+            }
         }))
 
         options.append(Option(title: "개인정보처리방침", handler: { [weak self] in
+            let showWebViewController = ShowWebViewController()
+            showWebViewController.title = "개인정보처리방침"
+            showWebViewController.url = ""
+            let navigationController = UINavigationController(rootViewController: showWebViewController)
+            navigationController.modalPresentationStyle = .fullScreen
+            DispatchQueue.main.async {
+                self?.present(navigationController, animated: true)
+            }
         }))
 
         options.append(Option(title: "이용약관", handler: { [weak self] in
+            let showWebViewController = ShowWebViewController()
+            showWebViewController.title = "이용약관"
+            showWebViewController.url = ""
+            let navigationController = UINavigationController(rootViewController: showWebViewController)
+            navigationController.modalPresentationStyle = .fullScreen
+            DispatchQueue.main.async {
+                self?.present(navigationController, animated: true)
+            }
         }))
 
         options.append(Option(title: "로그아웃", handler: { [weak self] in
@@ -90,4 +116,41 @@ extension SettingViewController: UITableViewDataSource, UITableViewDelegate {
 struct Option {
     let title: String
     let handler: () -> Void
+}
+
+// MARK: - MFMailComposeViewControllerDelegate
+
+extension SettingViewController: MFMailComposeViewControllerDelegate {
+    func sendReportMail() {
+        if MFMailComposeViewController.canSendMail() {
+            let composeVC = MFMailComposeViewController()
+            let emailAdress = "coby5502@gmail.com"
+            let messageBody = """
+            문의 내용을 작성해주세요.
+            """
+
+            composeVC.mailComposeDelegate = self
+            composeVC.setToRecipients([emailAdress])
+            composeVC.setSubject("[문의] 닉네임")
+            composeVC.setMessageBody(messageBody, isHTML: false)
+            composeVC.modalPresentationStyle = .fullScreen
+
+            present(composeVC, animated: true, completion: nil)
+        } else {
+            showSendMailErrorAlert()
+        }
+    }
+
+    private func showSendMailErrorAlert() {
+        let sendMailErrorAlert = UIAlertController(title: "메일 전송 실패", message: "이메일 설정을 확인하고 다시 시도해주세요.", preferredStyle: .alert)
+        let confirmAction = UIAlertAction(title: "확인", style: .default) { _ in
+            print("확인")
+        }
+        sendMailErrorAlert.addAction(confirmAction)
+        present(sendMailErrorAlert, animated: true, completion: nil)
+    }
+
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith _: MFMailComposeResult, error _: Error?) {
+        controller.dismiss(animated: true, completion: nil)
+    }
 }
