@@ -32,14 +32,34 @@ final class ProfileViewController: BaseViewController {
 
     private let settingButton = SettingButton()
 
-    private let optionButton = OptionButton()
-
-    private lazy var userProfileView = UserProfileView().then {
-        let action = UIAction { [weak self] _ in
+    private lazy var mapButton = MapButton().then {
+        let mapAction = UIAction { [weak self] _ in
             let userMapViewController = UserMapViewController()
             self?.navigationController?.pushViewController(userMapViewController, animated: true)
         }
-        $0.mapButton.addAction(action, for: .touchUpInside)
+        $0.addAction(mapAction, for: .touchUpInside)
+    }
+
+    private let optionButton = OptionButton()
+
+    private lazy var userProfileView = UserProfileView().then {
+        let followerAction = UIAction { [weak self] _ in
+            let followerViewController = FollowerViewController()
+            self?.navigationController?.pushViewController(followerViewController, animated: true)
+        }
+
+        let followingAction = UIAction { [weak self] _ in
+            let followingViewController = FollowingViewController()
+            self?.navigationController?.pushViewController(followingViewController, animated: true)
+        }
+
+        let followButtonAction = UIAction { [weak self] _ in
+            self?.followUser()
+        }
+
+        $0.followerInfoButton.addAction(followerAction, for: .touchUpInside)
+        $0.followingInfoButton.addAction(followingAction, for: .touchUpInside)
+        $0.followButton.addAction(followButtonAction, for: .touchUpInside)
     }
 
     private lazy var segmentedControl = UnderlineSegmentedControl(items: ["게시물 24", "북마크 53"]).then {
@@ -99,6 +119,11 @@ final class ProfileViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         changeValue(control: segmentedControl)
+        if isOwn {
+            userProfileView.followButton.isHidden = true
+        } else {
+            userProfileView.editButton.isHidden = true
+        }
     }
 
     override func render() {
@@ -107,7 +132,7 @@ final class ProfileViewController: BaseViewController {
         userProfileView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide)
             $0.leading.trailing.equalToSuperview()
-            $0.height.equalTo(80)
+            $0.height.equalTo(100)
         }
 
         segmentedControl.snp.makeConstraints {
@@ -131,14 +156,19 @@ final class ProfileViewController: BaseViewController {
             navigationItem.leftBarButtonItem = userNicknameLabel
             navigationItem.rightBarButtonItem = settingButton
         } else {
+            let mapButton = makeBarButtonItem(with: mapButton)
             let optionButton = makeBarButtonItem(with: optionButton)
-            navigationItem.rightBarButtonItem = optionButton
+            navigationItem.rightBarButtonItems = [optionButton, mapButton]
             title = "coby5502"
         }
     }
 
     @objc private func changeValue(control: UISegmentedControl) {
         currentPage = control.selectedSegmentIndex
+    }
+
+    private func followUser() {
+        userProfileView.followButton.isSelected = !userProfileView.followButton.isSelected
     }
 }
 

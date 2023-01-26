@@ -128,11 +128,16 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
             self?.navigationController?.pushViewController(feedCommentViewController, animated: true)
         }
 
+        let followButtonAction = UIAction { _ in
+            cell.userInfoView.followButton.isSelected = !cell.userInfoView.followButton.isSelected
+        }
+
         cell.userInfoView.userImageButton.addAction(userButtonAction, for: .touchUpInside)
         cell.userInfoView.userNameButton.addAction(userButtonAction, for: .touchUpInside)
         cell.storeInfoView.mapButton.addAction(mapButtonAction, for: .touchUpInside)
         cell.storeInfoView.storeNameButton.addAction(storeButtonAction, for: .touchUpInside)
         cell.commentButton.addAction(commentButtonAction, for: .touchUpInside)
+        cell.userInfoView.followButton.addAction(followButtonAction, for: .touchUpInside)
 
         cell.userInfoView.userImageButton.setImage(ImageLiteral.food2, for: .normal)
         cell.commentLabel.text = """

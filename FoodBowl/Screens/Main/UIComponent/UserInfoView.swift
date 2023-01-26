@@ -31,7 +31,7 @@ final class UserInfoView: UIView {
         $0.text = "팔로워 100명"
     }
 
-    let followButton = MiniButton()
+    let followButton = FollowButton()
 
     // MARK: - init
 

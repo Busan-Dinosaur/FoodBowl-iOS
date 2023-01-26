@@ -15,7 +15,7 @@ final class UserProfileView: UICollectionReusableView {
 
     lazy var userImageView = UIImageView().then {
         $0.backgroundColor = .grey001
-        $0.layer.cornerRadius = 30
+        $0.layer.cornerRadius = 40
         $0.layer.masksToBounds = true
     }
 
@@ -29,18 +29,15 @@ final class UserProfileView: UICollectionReusableView {
         $0.numberLabel.text = "100"
     }
 
-    private let stackView = UIStackView().then {
-        $0.translatesAutoresizingMaskIntoConstraints = false
-        $0.axis = .horizontal
-        $0.alignment = .center
-        $0.distribution = .equalSpacing
-    }
+    let followButton = FollowButton()
 
-    let mapButton = MiniButton().then {
-        $0.label.text = "맛집지도"
+    let editButton = UIButton().then {
+        $0.setTitle("프로필 수정", for: .normal)
+        $0.setTitleColor(.white, for: .normal)
+        $0.titleLabel?.font = UIFont.preferredFont(forTextStyle: .footnote, weight: .medium)
+        $0.layer.cornerRadius = 15
+        $0.backgroundColor = .mainBlue
     }
-
-    let followButton = MiniButton()
 
     // MARK: - init
 
@@ -57,35 +54,35 @@ final class UserProfileView: UICollectionReusableView {
     // MARK: - life cycle
 
     private func render() {
-        addSubviews(userImageView, stackView, mapButton, followButton)
-
-        [followerInfoButton, followingInfoButton].forEach {
-            stackView.addArrangedSubview($0)
-        }
+        addSubviews(userImageView, followerInfoButton, followingInfoButton, followButton, editButton)
 
         userImageView.snp.makeConstraints {
             $0.leading.equalToSuperview().inset(20)
             $0.centerY.equalToSuperview()
-            $0.width.height.equalTo(60)
+            $0.width.height.equalTo(80)
         }
 
-        stackView.snp.makeConstraints {
-            $0.top.bottom.equalToSuperview()
+        followerInfoButton.snp.makeConstraints {
             $0.leading.equalTo(userImageView.snp.trailing).offset(40)
-            $0.width.equalTo(80)
+            $0.top.bottom.equalToSuperview()
         }
 
-        mapButton.snp.makeConstraints {
-            $0.trailing.equalTo(followButton.snp.leading).offset(-10)
-            $0.centerY.equalToSuperview()
-            $0.width.equalTo(60)
-            $0.height.equalTo(30)
+        followingInfoButton.snp.makeConstraints {
+            $0.leading.equalTo(followerInfoButton.snp.trailing).offset(40)
+            $0.top.bottom.equalToSuperview()
         }
 
         followButton.snp.makeConstraints {
             $0.trailing.equalToSuperview().inset(20)
             $0.centerY.equalToSuperview()
             $0.width.equalTo(60)
+            $0.height.equalTo(30)
+        }
+
+        editButton.snp.makeConstraints {
+            $0.trailing.equalToSuperview().inset(20)
+            $0.centerY.equalToSuperview()
+            $0.width.equalTo(80)
             $0.height.equalTo(30)
         }
     }
