@@ -26,8 +26,8 @@ final class OnboardingViewController: BaseViewController {
 
     private lazy var appleLoginButton = ASAuthorizationAppleIDButton(type: .signIn, style: .black).then {
         let action = UIAction { [weak self] _ in
-            let setProfileViewController = SetProfileViewController()
-            self?.navigationController?.pushViewController(setProfileViewController, animated: true)
+            let agreementViewController = AgreementViewController()
+            self?.navigationController?.pushViewController(agreementViewController, animated: true)
         }
         $0.addAction(action, for: .touchUpInside)
         $0.cornerRadius = 30
