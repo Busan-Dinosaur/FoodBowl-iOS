@@ -19,7 +19,7 @@ enum ImageLiteral {
     static var btnSetting: UIImage { .load(name: "settings") }
     static var btnBack: UIImage { .load(systemName: "chevron.backward") }
     static var btnDown: UIImage { .load(systemName: "chevron.down") }
-    static var btnFoward: UIImage { .load(systemName: "chevron.forward") }
+    static var btnForward: UIImage { .load(systemName: "chevron.forward") }
     static var btnCamera: UIImage { .load(systemName: "camera") }
     static var btnSend: UIImage { .load(systemName: "paperplane") }
     static var btnBookmark: UIImage { .load(name: "bookmark") }
