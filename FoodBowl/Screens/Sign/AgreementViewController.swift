@@ -23,11 +23,22 @@ final class AgreementViewController: BaseViewController {
         $0.addTarget(self, action: #selector(onMainCheckBoxValueChange(_:)), for: .valueChanged)
     }
 
-    let subAgreeLabel1 = UIButton().then {
+    private lazy var subAgreeLabel1 = UIButton().then {
         $0.setTitle("개인정보처리방침 (필수)", for: .normal)
         $0.setTitleColor(.subText, for: .normal)
         $0.titleLabel?.font = .preferredFont(forTextStyle: .body, weight: .regular)
         $0.setUnderline()
+        let action = UIAction { [weak self] _ in
+            let showWebViewController = ShowWebViewController()
+            showWebViewController.title = "개인정보처리방침"
+            showWebViewController.url = ""
+            let navigationController = UINavigationController(rootViewController: showWebViewController)
+            navigationController.modalPresentationStyle = .fullScreen
+            DispatchQueue.main.async {
+                self?.present(navigationController, animated: true)
+            }
+        }
+        $0.addAction(action, for: .touchUpInside)
     }
 
     private lazy var subCheckBox1 = CheckBox().then {
@@ -35,11 +46,22 @@ final class AgreementViewController: BaseViewController {
         $0.addTarget(self, action: #selector(onSubCheckBox1ValueChange(_:)), for: .valueChanged)
     }
 
-    let subAgreeLabel2 = UIButton().then {
+    private lazy var subAgreeLabel2 = UIButton().then {
         $0.setTitle("이용약관 (필수)", for: .normal)
         $0.setTitleColor(.subText, for: .normal)
         $0.titleLabel?.font = .preferredFont(forTextStyle: .body, weight: .regular)
         $0.setUnderline()
+        let action = UIAction { [weak self] _ in
+            let showWebViewController = ShowWebViewController()
+            showWebViewController.title = "이용약관"
+            showWebViewController.url = ""
+            let navigationController = UINavigationController(rootViewController: showWebViewController)
+            navigationController.modalPresentationStyle = .fullScreen
+            DispatchQueue.main.async {
+                self?.present(navigationController, animated: true)
+            }
+        }
+        $0.addAction(action, for: .touchUpInside)
     }
 
     private lazy var subCheckBox2 = CheckBox().then {
