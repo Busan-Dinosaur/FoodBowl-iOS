@@ -59,7 +59,11 @@ final class ProfileViewController: BaseViewController {
 
         let editButtonAction = UIAction { [weak self] _ in
             let editProfileViewController = EditProfileViewController()
-            self?.navigationController?.pushViewController(editProfileViewController, animated: true)
+            let navigationController = UINavigationController(rootViewController: editProfileViewController)
+            navigationController.modalPresentationStyle = .fullScreen
+            DispatchQueue.main.async {
+                self?.present(navigationController, animated: true)
+            }
         }
 
         $0.followerInfoButton.addAction(followerAction, for: .touchUpInside)
