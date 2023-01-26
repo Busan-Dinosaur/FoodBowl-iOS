@@ -44,9 +44,6 @@ final class SettingViewController: BaseViewController {
     }
 
     private func setupSettingItems() {
-        options.append(Option(title: "친구초대", handler: { [weak self] in
-        }))
-
         options.append(Option(title: "문의하기", handler: { [weak self] in
             self?.sendReportMail()
         }))
@@ -86,6 +83,9 @@ final class SettingViewController: BaseViewController {
 
         options.append(Option(title: "로그아웃", handler: { [weak self] in
         }))
+
+        options.append(Option(title: "회원탈퇴", handler: { [weak self] in
+        }))
     }
 }
 
@@ -108,8 +108,7 @@ extension SettingViewController: UITableViewDataSource, UITableViewDelegate {
     }
 
     func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let model = options[indexPath.row]
-        model.handler()
+        options[indexPath.item].handler()
     }
 }
 
