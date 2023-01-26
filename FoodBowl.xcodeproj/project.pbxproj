@@ -79,6 +79,7 @@
 		CBC73108295550A100C7F198 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBC73107295550A100C7F198 /* MainViewController.swift */; };
 		CBC7310D295550A200C7F198 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CBC7310C295550A200C7F198 /* Assets.xcassets */; };
 		CBC73110295550A200C7F198 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CBC7310E295550A200C7F198 /* LaunchScreen.storyboard */; };
+		CBD1B5EF2982A5AD00B0AD51 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD1B5EE2982A5AD00B0AD51 /* EditProfileViewController.swift */; };
 		CBDE38F92970745600DDE49A /* AddFeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDE38F82970745600DDE49A /* AddFeedViewController.swift */; };
 		CBDE38FB2970774800DDE49A /* CloseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDE38FA2970774800DDE49A /* CloseButton.swift */; };
 		CBDE38FD29715C5F00DDE49A /* SearchBarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDE38FC29715C5F00DDE49A /* SearchBarButton.swift */; };
@@ -169,6 +170,7 @@
 		CBC7310C295550A200C7F198 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CBC7310F295550A200C7F198 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CBC73111295550A200C7F198 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CBD1B5EE2982A5AD00B0AD51 /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
 		CBDE38F82970745600DDE49A /* AddFeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFeedViewController.swift; sourceTree = "<group>"; };
 		CBDE38FA2970774800DDE49A /* CloseButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloseButton.swift; sourceTree = "<group>"; };
 		CBDE38FC29715C5F00DDE49A /* SearchBarButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBarButton.swift; sourceTree = "<group>"; };
@@ -390,6 +392,7 @@
 				CBFB52622977CB9F0049E8BA /* UserMapViewController.swift */,
 				CB4FBBF12978CFA90052D371 /* FollowerViewController.swift */,
 				CB4FBBF32978CFE40052D371 /* FollowingViewController.swift */,
+				CBD1B5EE2982A5AD00B0AD51 /* EditProfileViewController.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -637,6 +640,7 @@
 				CB1A7C6829576D7900C6431D /* BaseScrollView.swift in Sources */,
 				CB1A7C6129561BCF00C6431D /* UserProfileView.swift in Sources */,
 				CBADC2E22955C63300E56C93 /* FeedThumnailCollectionViewCell.swift in Sources */,
+				CBD1B5EF2982A5AD00B0AD51 /* EditProfileViewController.swift in Sources */,
 				CBADC28A29559BC900E56C93 /* UIFont+Extension.swift in Sources */,
 				CB1A7C6A29576DCC00C6431D /* HorizontalScrollView.swift in Sources */,
 				CBFB52552977B9240049E8BA /* StoreFeedViewController.swift in Sources */,
