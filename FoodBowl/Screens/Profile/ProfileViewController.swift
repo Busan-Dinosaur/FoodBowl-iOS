@@ -30,6 +30,18 @@ final class ProfileViewController: BaseViewController {
         $0.text = "coby5502"
     }
 
+    private lazy var plusButton = PlusButton().then {
+        let action = UIAction { [weak self] _ in
+            let addFeedViewController = AddFeedViewController()
+            let navigationController = UINavigationController(rootViewController: addFeedViewController)
+            navigationController.modalPresentationStyle = .fullScreen
+            DispatchQueue.main.async {
+                self?.present(navigationController, animated: true)
+            }
+        }
+        $0.addAction(action, for: .touchUpInside)
+    }
+
     private lazy var settingButton = SettingButton().then {
         let settingAction = UIAction { [weak self] _ in
             let settingViewController = SettingViewController()
@@ -168,9 +180,10 @@ final class ProfileViewController: BaseViewController {
 
         if isOwn {
             let userNicknameLabel = makeBarButtonItem(with: userNicknameLabel)
+            let plusButton = makeBarButtonItem(with: plusButton)
             let settingButton = makeBarButtonItem(with: settingButton)
             navigationItem.leftBarButtonItem = userNicknameLabel
-            navigationItem.rightBarButtonItem = settingButton
+            navigationItem.rightBarButtonItems = [settingButton, plusButton]
         } else {
             let mapButton = makeBarButtonItem(with: mapButton)
             let optionButton = makeBarButtonItem(with: optionButton)

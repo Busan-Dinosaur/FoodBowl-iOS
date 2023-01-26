@@ -11,7 +11,7 @@ final class OptionButton: UIButton {
     // MARK: - init
 
     override init(frame _: CGRect) {
-        super.init(frame: .init(origin: .zero, size: .init(width: 20, height: 20)))
+        super.init(frame: .init(origin: .zero, size: .init(width: 30, height: 30)))
         configUI()
     }
 
@@ -23,7 +23,7 @@ final class OptionButton: UIButton {
     // MARK: - life cycle
 
     private func configUI() {
-        setImage(ImageLiteral.btnOption.resize(to: CGSize(width: 20, height: 20)), for: .normal)
+        setImage(ImageLiteral.btnOption.resize(to: CGSize(width: 24, height: 24)), for: .normal)
         tintColor = .black
     }
 }

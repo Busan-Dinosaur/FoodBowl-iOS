@@ -11,7 +11,7 @@ final class MapButton: UIButton {
     // MARK: - init
 
     override init(frame _: CGRect) {
-        super.init(frame: .init(origin: .zero, size: .init(width: 44, height: 44)))
+        super.init(frame: .init(origin: .zero, size: .init(width: 30, height: 30)))
         configUI()
     }
 
@@ -23,7 +23,7 @@ final class MapButton: UIButton {
     // MARK: - life cycle
 
     private func configUI() {
-        setImage(ImageLiteral.btnMap, for: .normal)
+        setImage(ImageLiteral.btnMaps.resize(to: CGSize(width: 30, height: 30)), for: .normal)
         tintColor = .black
     }
 }
