@@ -129,14 +129,28 @@ final class AgreementViewController: BaseViewController {
     }
 
     @objc func onMainCheckBoxValueChange(_ sender: CheckBox) {
-        print(sender.isChecked)
+        if sender.isChecked {
+            subCheckBox1.isChecked = true
+            subCheckBox2.isChecked = true
+        } else {
+            subCheckBox1.isChecked = false
+            subCheckBox2.isChecked = false
+        }
     }
 
     @objc func onSubCheckBox1ValueChange(_ sender: CheckBox) {
-        print(sender.isChecked)
+        if sender.isChecked && subCheckBox2.isChecked {
+            mainCheckBox.isChecked = true
+        } else {
+            mainCheckBox.isChecked = false
+        }
     }
 
     @objc func onSubCheckBox2ValueChange(_ sender: CheckBox) {
-        print(sender.isChecked)
+        if sender.isChecked && subCheckBox1.isChecked {
+            mainCheckBox.isChecked = true
+        } else {
+            mainCheckBox.isChecked = false
+        }
     }
 }
