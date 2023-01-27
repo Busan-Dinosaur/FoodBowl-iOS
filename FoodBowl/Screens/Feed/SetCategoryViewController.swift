@@ -26,6 +26,7 @@ final class SetCategoryViewController: BaseViewController {
         $0.delegate = self
         $0.showsHorizontalScrollIndicator = false
         $0.showsVerticalScrollIndicator = false
+        $0.allowsMultipleSelection = true
         $0.register(CategoryCollectionViewCell.self, forCellWithReuseIdentifier: CategoryCollectionViewCell.className)
     }
 
