@@ -83,13 +83,6 @@ final class MapViewController: BaseViewController {
         locationManager.stopUpdatingLocation()
     }
 
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        let indexPath = IndexPath(item: 0, section: 0)
-        listCollectionView.selectItem(at: indexPath, animated: false, scrollPosition: UICollectionView.ScrollPosition(rawValue: 0))
-        collectionView(listCollectionView, didSelectItemAt: indexPath)
-    }
-
     override func render() {
         view.addSubviews(mapView, searchBarButton, listCollectionView)
 
