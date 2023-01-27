@@ -163,42 +163,42 @@ final class MapViewController: BaseViewController {
             ),
             Marker(
                 title: "홍대입구역 편의점",
-                subtitle: "일식",
+                subtitle: "3개의 후기",
                 coordinate: CLLocationCoordinate2D(latitude: currentLocation.coordinate.latitude + 0.001, longitude: currentLocation.coordinate.longitude + 0.002)
             ),
             Marker(
                 title: "홍대입구역 편의점",
-                subtitle: "일식",
+                subtitle: "3개의 후기",
                 coordinate: CLLocationCoordinate2D(latitude: currentLocation.coordinate.latitude + 0.001, longitude: currentLocation.coordinate.longitude + 0.003)
             ),
             Marker(
                 title: "홍대입구역 편의점",
-                subtitle: "일식",
+                subtitle: "3개의 후기",
                 coordinate: CLLocationCoordinate2D(latitude: currentLocation.coordinate.latitude + 0.001, longitude: currentLocation.coordinate.longitude + 0.004)
             ),
             Marker(
                 title: "홍대입구역 편의점",
-                subtitle: "일식",
+                subtitle: "3개의 후기",
                 coordinate: CLLocationCoordinate2D(latitude: currentLocation.coordinate.latitude + 0.001, longitude: currentLocation.coordinate.longitude + 0.005)
             ),
             Marker(
                 title: "홍대입구역 편의점",
-                subtitle: "일식",
+                subtitle: "3개의 후기",
                 coordinate: CLLocationCoordinate2D(latitude: currentLocation.coordinate.latitude + 0.002, longitude: currentLocation.coordinate.longitude + 0.001)
             ),
             Marker(
                 title: "홍대입구역 편의점",
-                subtitle: "일식",
+                subtitle: "3개의 후기",
                 coordinate: CLLocationCoordinate2D(latitude: currentLocation.coordinate.latitude + 0.001, longitude: currentLocation.coordinate.longitude + 0.002)
             ),
             Marker(
                 title: "홍대입구역 편의점",
-                subtitle: "일식",
+                subtitle: "3개의 후기",
                 coordinate: CLLocationCoordinate2D(latitude: currentLocation.coordinate.latitude + 0.001, longitude: currentLocation.coordinate.longitude + 0.003)
             ),
             Marker(
                 title: "홍대입구역 편의점",
-                subtitle: "일식",
+                subtitle: "3개의 후기",
                 coordinate: CLLocationCoordinate2D(latitude: currentLocation.coordinate.latitude + 0.001, longitude: currentLocation.coordinate.longitude + 0.004)
             )
         ]
@@ -258,12 +258,7 @@ extension MapViewController: MKMapViewDelegate {
             view.canShowCallout = true
             view.calloutOffset = CGPoint(x: 0, y: 5)
 
-            let mapsButton = UIButton(frame: CGRect(
-                origin: CGPoint.zero,
-                size: CGSize(width: 48, height: 48)
-            )).then {
-                $0.setImage(ImageLiteral.btnSearch, for: .normal)
-                $0.backgroundColor = .black
+            let feedButton = FeedButton().then {
                 let action = UIAction { [weak self] _ in
                     let storeFeedViewController = StoreFeedViewController(isMap: true)
                     let navigationController = UINavigationController(rootViewController: storeFeedViewController)
@@ -274,7 +269,7 @@ extension MapViewController: MKMapViewDelegate {
                 }
                 $0.addAction(action, for: .touchUpInside)
             }
-            view.rightCalloutAccessoryView = mapsButton
+            view.rightCalloutAccessoryView = feedButton
         }
         return view
     }

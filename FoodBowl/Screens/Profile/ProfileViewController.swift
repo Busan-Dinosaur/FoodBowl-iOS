@@ -50,7 +50,7 @@ final class ProfileViewController: BaseViewController {
         $0.addAction(settingAction, for: .touchUpInside)
     }
 
-    private lazy var mapButton = MapButton().then {
+    private lazy var pinButton = PinButton().then {
         let mapAction = UIAction { [weak self] _ in
             let userMapViewController = UserMapViewController()
             self?.navigationController?.pushViewController(userMapViewController, animated: true)
@@ -185,9 +185,9 @@ final class ProfileViewController: BaseViewController {
             navigationItem.leftBarButtonItem = userNicknameLabel
             navigationItem.rightBarButtonItems = [settingButton, plusButton]
         } else {
-            let mapButton = makeBarButtonItem(with: mapButton)
+            let pinButton = makeBarButtonItem(with: pinButton)
             let optionButton = makeBarButtonItem(with: optionButton)
-            navigationItem.rightBarButtonItems = [optionButton, mapButton]
+            navigationItem.rightBarButtonItems = [optionButton, pinButton]
             title = "coby5502"
         }
     }

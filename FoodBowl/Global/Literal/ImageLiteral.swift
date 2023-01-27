@@ -30,7 +30,8 @@ enum ImageLiteral {
     static var btnMore: UIImage { .load(name: "more") }
     static var btnKakaomap: UIImage { .load(name: "kakaomap") }
     static var btnGallery: UIImage { .load(name: "gallery") }
-    static var btnMaps: UIImage { .load(name: "pin") }
+    static var btnPin: UIImage { .load(name: "pin") }
+    static var btnFeed: UIImage { .load(name: "feed") }
 
     static var defaultProfile: UIImage { .load(name: "user") }
     static var appleLogo: UIImage { .load(systemName: "apple.logo") }

@@ -71,7 +71,7 @@
 		CBB58284297440A600808B0B /* CategoryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBB58283297440A600808B0B /* CategoryCollectionViewCell.swift */; };
 		CBB582872974568500808B0B /* YPImagePicker in Frameworks */ = {isa = PBXBuildFile; productRef = CBB582862974568500808B0B /* YPImagePicker */; };
 		CBB5828929745A8200808B0B /* GalleryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBB5828829745A8200808B0B /* GalleryButton.swift */; };
-		CBB778D92979B17200B9994A /* MapButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBB778D82979B17200B9994A /* MapButton.swift */; };
+		CBB778D92979B17200B9994A /* PinButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBB778D82979B17200B9994A /* PinButton.swift */; };
 		CBC73104295550A100C7F198 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBC73103295550A100C7F198 /* AppDelegate.swift */; };
 		CBC73106295550A100C7F198 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBC73105295550A100C7F198 /* SceneDelegate.swift */; };
 		CBC73108295550A100C7F198 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBC73107295550A100C7F198 /* MainViewController.swift */; };
@@ -85,6 +85,7 @@
 		CBD1B5FC2982E83800B0AD51 /* CheckBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD1B5FB2982E83800B0AD51 /* CheckBox.swift */; };
 		CBD1B5FE2982F19300B0AD51 /* UIButton+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD1B5FD2982F19300B0AD51 /* UIButton+Extension.swift */; };
 		CBD1B6002984297100B0AD51 /* ChatSendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD1B5FF2984297100B0AD51 /* ChatSendView.swift */; };
+		CBD1B6022984394A00B0AD51 /* FeedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD1B6012984394A00B0AD51 /* FeedButton.swift */; };
 		CBDE38F92970745600DDE49A /* AddFeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDE38F82970745600DDE49A /* AddFeedViewController.swift */; };
 		CBDE38FB2970774800DDE49A /* CloseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDE38FA2970774800DDE49A /* CloseButton.swift */; };
 		CBDE38FD29715C5F00DDE49A /* SearchBarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDE38FC29715C5F00DDE49A /* SearchBarButton.swift */; };
@@ -165,7 +166,7 @@
 		CBB582812973007D00808B0B /* ShowWebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowWebViewController.swift; sourceTree = "<group>"; };
 		CBB58283297440A600808B0B /* CategoryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCollectionViewCell.swift; sourceTree = "<group>"; };
 		CBB5828829745A8200808B0B /* GalleryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryButton.swift; sourceTree = "<group>"; };
-		CBB778D82979B17200B9994A /* MapButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapButton.swift; sourceTree = "<group>"; };
+		CBB778D82979B17200B9994A /* PinButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinButton.swift; sourceTree = "<group>"; };
 		CBC73100295550A100C7F198 /* FoodBowl.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FoodBowl.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CBC73103295550A100C7F198 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CBC73105295550A100C7F198 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -181,6 +182,7 @@
 		CBD1B5FB2982E83800B0AD51 /* CheckBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckBox.swift; sourceTree = "<group>"; };
 		CBD1B5FD2982F19300B0AD51 /* UIButton+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Extension.swift"; sourceTree = "<group>"; };
 		CBD1B5FF2984297100B0AD51 /* ChatSendView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatSendView.swift; sourceTree = "<group>"; };
+		CBD1B6012984394A00B0AD51 /* FeedButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedButton.swift; sourceTree = "<group>"; };
 		CBDE38F82970745600DDE49A /* AddFeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFeedViewController.swift; sourceTree = "<group>"; };
 		CBDE38FA2970774800DDE49A /* CloseButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloseButton.swift; sourceTree = "<group>"; };
 		CBDE38FC29715C5F00DDE49A /* SearchBarButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBarButton.swift; sourceTree = "<group>"; };
@@ -359,7 +361,8 @@
 				CBFB525E2977C4800049E8BA /* MoreButton.swift */,
 				CB1A7C5D295618A900C6431D /* SettingButton.swift */,
 				CBB5828829745A8200808B0B /* GalleryButton.swift */,
-				CBB778D82979B17200B9994A /* MapButton.swift */,
+				CBD1B6012984394A00B0AD51 /* FeedButton.swift */,
+				CBB778D82979B17200B9994A /* PinButton.swift */,
 				CBADC2DF2955B92D00E56C93 /* MainButton.swift */,
 				CB1A7C6229561CF300C6431D /* SubButton.swift */,
 				CBE6190B296C635D005295AF /* FollowButton.swift */,
@@ -656,6 +659,7 @@
 				CB2E4F83297702C900FD2566 /* SearchUserResultViewController.swift in Sources */,
 				CBFB52612977C9AB0049E8BA /* FindStoreViewController.swift in Sources */,
 				CBFB52572977B94A0049E8BA /* ChatViewController.swift in Sources */,
+				CBD1B6022984394A00B0AD51 /* FeedButton.swift in Sources */,
 				CBD1B5FE2982F19300B0AD51 /* UIButton+Extension.swift in Sources */,
 				CBD1B5F42982D39B00B0AD51 /* SettingItemTableViewCell.swift in Sources */,
 				CB2E4F8529772FFE00FD2566 /* UserFeedViewController.swift in Sources */,
@@ -687,7 +691,7 @@
 				CB1790C8296DAB470083D3A4 /* DynamicHeightCollectionViewFlowLayout.swift in Sources */,
 				CBA7F184297DBB01006088A0 /* YPImagePicker+Extension.swift in Sources */,
 				CBE61913296C68D9005295AF /* PlusButton.swift in Sources */,
-				CBB778D92979B17200B9994A /* MapButton.swift in Sources */,
+				CBB778D92979B17200B9994A /* PinButton.swift in Sources */,
 				CB1A7C5E295618A900C6431D /* SettingButton.swift in Sources */,
 				CBADC29B29559BC900E56C93 /* BaseTableViewCell.swift in Sources */,
 				CBE6190F296C6435005295AF /* MapViewController.swift in Sources */,
