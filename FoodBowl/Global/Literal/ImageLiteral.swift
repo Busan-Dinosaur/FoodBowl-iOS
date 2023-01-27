@@ -39,6 +39,17 @@ enum ImageLiteral {
     static var food1: UIImage { .load(name: "food1") }
     static var food2: UIImage { .load(name: "food2") }
     static var food3: UIImage { .load(name: "food3") }
+
+    static var vegan: UIImage { .load(name: "vegan") }
+    static var cafe: UIImage { .load(name: "cafe") }
+    static var korean: UIImage { .load(name: "korean") }
+    static var western: UIImage { .load(name: "western") }
+    static var japanese: UIImage { .load(name: "japanese") }
+    static var chinese: UIImage { .load(name: "chinese") }
+    static var chicken: UIImage { .load(name: "chicken") }
+    static var snack: UIImage { .load(name: "snack") }
+    static var seafood: UIImage { .load(name: "seafood") }
+    static var salad: UIImage { .load(name: "salad") }
 }
 
 extension UIImage {

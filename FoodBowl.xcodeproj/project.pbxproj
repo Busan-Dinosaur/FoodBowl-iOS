@@ -368,7 +368,6 @@
 				CBE6190B296C635D005295AF /* FollowButton.swift */,
 				CBDE38FC29715C5F00DDE49A /* SearchBarButton.swift */,
 				CB2E4F792976F01700FD2566 /* UnderlineSegmentedControl.swift */,
-				CB8A2D9A297844720018AC6E /* Marker.swift */,
 				CBD1B5FB2982E83800B0AD51 /* CheckBox.swift */,
 			);
 			path = UIComponent;
@@ -514,6 +513,7 @@
 			children = (
 				CBDE390429719B9700DDE49A /* Place.swift */,
 				CB558E9B2975B80B00921943 /* Feed.swift */,
+				CB8A2D9A297844720018AC6E /* Marker.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";

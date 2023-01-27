@@ -30,7 +30,7 @@ final class MapViewController: BaseViewController {
         return manager
     }()
 
-    private lazy var mapView = MKMapView().then {
+    private lazy var map = MKMapView().then {
         $0.delegate = self
         $0.mapType = MKMapType.standard
         $0.showsUserLocation = true
@@ -93,7 +93,7 @@ final class MapViewController: BaseViewController {
         super.viewDidLoad()
         findMyLocation()
         setMarkers()
-        mapView.delegate = self
+        map.delegate = self
     }
 
     override func viewWillDisappear(_: Bool) {
@@ -101,9 +101,9 @@ final class MapViewController: BaseViewController {
     }
 
     override func render() {
-        view.addSubviews(mapView, searchBarButton, listCollectionView, gpsButton, bookMarkButton)
+        view.addSubviews(map, searchBarButton, listCollectionView, gpsButton, bookMarkButton)
 
-        mapView.snp.makeConstraints {
+        map.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
 
@@ -146,7 +146,7 @@ final class MapViewController: BaseViewController {
             return
         }
 
-        mapView.setRegion(MKCoordinateRegion(center: currentLocation.coordinate, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)), animated: true)
+        map.setRegion(MKCoordinateRegion(center: currentLocation.coordinate, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)), animated: true)
     }
 
     private func setMarkers() {
@@ -158,53 +158,50 @@ final class MapViewController: BaseViewController {
         let marks: [Marker] = [
             Marker(
                 title: "홍대입구역 편의점",
-                subtitle: "일식",
-                coordinate: CLLocationCoordinate2D(latitude: currentLocation.coordinate.latitude + 0.001, longitude: currentLocation.coordinate.longitude + 0.001)
+                subtitle: "3개의 후기",
+                coordinate: CLLocationCoordinate2D(latitude: currentLocation.coordinate.latitude + 0.001, longitude: currentLocation.coordinate.longitude + 0.001),
+                category: "salad"
             ),
             Marker(
                 title: "홍대입구역 편의점",
                 subtitle: "3개의 후기",
-                coordinate: CLLocationCoordinate2D(latitude: currentLocation.coordinate.latitude + 0.001, longitude: currentLocation.coordinate.longitude + 0.002)
+                coordinate: CLLocationCoordinate2D(latitude: currentLocation.coordinate.latitude + 0.001, longitude: currentLocation.coordinate.longitude + 0.002),
+                category: "korean"
             ),
             Marker(
                 title: "홍대입구역 편의점",
                 subtitle: "3개의 후기",
-                coordinate: CLLocationCoordinate2D(latitude: currentLocation.coordinate.latitude + 0.001, longitude: currentLocation.coordinate.longitude + 0.003)
+                coordinate: CLLocationCoordinate2D(latitude: currentLocation.coordinate.latitude + 0.001, longitude: currentLocation.coordinate.longitude + 0.003),
+                category: "chicken"
             ),
             Marker(
                 title: "홍대입구역 편의점",
                 subtitle: "3개의 후기",
-                coordinate: CLLocationCoordinate2D(latitude: currentLocation.coordinate.latitude + 0.001, longitude: currentLocation.coordinate.longitude + 0.004)
+                coordinate: CLLocationCoordinate2D(latitude: currentLocation.coordinate.latitude + 0.001, longitude: currentLocation.coordinate.longitude + 0.004),
+                category: "korean"
             ),
             Marker(
                 title: "홍대입구역 편의점",
                 subtitle: "3개의 후기",
-                coordinate: CLLocationCoordinate2D(latitude: currentLocation.coordinate.latitude + 0.001, longitude: currentLocation.coordinate.longitude + 0.005)
+                coordinate: CLLocationCoordinate2D(latitude: currentLocation.coordinate.latitude + 0.001, longitude: currentLocation.coordinate.longitude + 0.005),
+                category: "snack"
             ),
             Marker(
                 title: "홍대입구역 편의점",
                 subtitle: "3개의 후기",
-                coordinate: CLLocationCoordinate2D(latitude: currentLocation.coordinate.latitude + 0.002, longitude: currentLocation.coordinate.longitude + 0.001)
+                coordinate: CLLocationCoordinate2D(latitude: currentLocation.coordinate.latitude + 0.002, longitude: currentLocation.coordinate.longitude + 0.001),
+                category: "salad"
             ),
             Marker(
                 title: "홍대입구역 편의점",
                 subtitle: "3개의 후기",
-                coordinate: CLLocationCoordinate2D(latitude: currentLocation.coordinate.latitude + 0.001, longitude: currentLocation.coordinate.longitude + 0.002)
-            ),
-            Marker(
-                title: "홍대입구역 편의점",
-                subtitle: "3개의 후기",
-                coordinate: CLLocationCoordinate2D(latitude: currentLocation.coordinate.latitude + 0.001, longitude: currentLocation.coordinate.longitude + 0.003)
-            ),
-            Marker(
-                title: "홍대입구역 편의점",
-                subtitle: "3개의 후기",
-                coordinate: CLLocationCoordinate2D(latitude: currentLocation.coordinate.latitude + 0.001, longitude: currentLocation.coordinate.longitude + 0.004)
+                coordinate: CLLocationCoordinate2D(latitude: currentLocation.coordinate.latitude + 0.001, longitude: currentLocation.coordinate.longitude + 0.002),
+                category: "vegan"
             )
         ]
 
         marks.forEach { mark in
-            mapView.addAnnotation(mark)
+            map.addAnnotation(mark)
         }
     }
 }
@@ -231,33 +228,14 @@ extension MapViewController: CLLocationManagerDelegate {
 }
 
 extension MapViewController: MKMapViewDelegate {
-    // 1
-    func mapView(
-        _ mapView: MKMapView,
-        viewFor annotation: MKAnnotation
-    ) -> MKAnnotationView? {
-        // 2
-        guard let annotation = annotation as? Marker else {
-            return nil
-        }
-        // 3
-        let identifier = "marker"
-        var view: MKMarkerAnnotationView
-        // 4
-        if let dequeuedView = mapView.dequeueReusableAnnotationView(
-            withIdentifier: identifier) as? MKMarkerAnnotationView
-        {
-            dequeuedView.annotation = annotation
-            view = dequeuedView
-        } else {
-            // 5
-            view = MKMarkerAnnotationView(
-                annotation: annotation,
-                reuseIdentifier: identifier
-            )
-            view.canShowCallout = true
-            view.calloutOffset = CGPoint(x: 0, y: 5)
+    func mapView(_: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        guard !(annotation is MKUserLocation) else { return nil }
 
+        var annotationView = map.dequeueReusableAnnotationView(withIdentifier: "custom")
+
+        if annotationView == nil {
+            annotationView = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: "custom")
+            annotationView?.canShowCallout = true
             let feedButton = FeedButton().then {
                 let action = UIAction { [weak self] _ in
                     let storeFeedViewController = StoreFeedViewController(isMap: true)
@@ -269,9 +247,12 @@ extension MapViewController: MKMapViewDelegate {
                 }
                 $0.addAction(action, for: .touchUpInside)
             }
-            view.rightCalloutAccessoryView = feedButton
+            annotationView?.rightCalloutAccessoryView = feedButton
+        } else {
+            annotationView?.annotation = annotation
         }
-        return view
+
+        return annotationView
     }
 }
 
