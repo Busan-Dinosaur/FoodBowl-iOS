@@ -11,7 +11,7 @@ import SnapKit
 import Then
 
 final class AddFeedViewController: BaseViewController {
-    var newFeed = Feed(id: nil, store: nil, category: nil, photoes: nil, comment: nil)
+    var newFeed = Feed(id: nil, store: nil, categories: nil, photoes: nil, comment: nil)
 
     private lazy var pageViewController: UIPageViewController = {
         let vc = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
@@ -155,7 +155,7 @@ final class AddFeedViewController: BaseViewController {
         case 0:
             if newFeed.store == nil { return }
         case 1:
-            if newFeed.category == nil { return }
+            if newFeed.categories == nil { return }
         case 2:
             if newFeed.photoes == nil { return }
         default: ()
@@ -180,8 +180,8 @@ extension AddFeedViewController: SetStoreViewControllerDelegate, SetCategoryView
         newFeed.store = store
     }
 
-    func setCategory(category: Category?) {
-        newFeed.category = category
+    func setCategories(categories: [Category]?) {
+        newFeed.categories = categories
     }
 
     func setPhotoes(photoes: [UIImage]?) {

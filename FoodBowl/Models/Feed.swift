@@ -12,7 +12,7 @@ import UIKit
 struct Feed {
     var id: String?
     var store: Place?
-    var category: Category?
+    var categories: [Category]?
     var photoes: [UIImage]?
     var comment: String?
 }
