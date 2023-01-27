@@ -13,18 +13,18 @@ class Marker: NSObject, MKAnnotation {
     let title: String?
     let subtitle: String?
     let coordinate: CLLocationCoordinate2D
-    let category: String?
+    let markerImage: UIImage?
 
     init(
         title: String?,
         subtitle: String?,
         coordinate: CLLocationCoordinate2D,
-        category: String?
+        markerImage: UIImage?
     ) {
         self.title = title
         self.subtitle = subtitle
         self.coordinate = coordinate
-        self.category = category
+        self.markerImage = markerImage
 
         super.init()
     }

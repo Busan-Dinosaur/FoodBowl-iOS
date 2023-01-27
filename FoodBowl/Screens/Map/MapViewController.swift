@@ -22,6 +22,8 @@ final class MapViewController: BaseViewController {
 
     private let categories = Category.allCases
 
+    private var marks: [Marker]?
+
     private lazy var locationManager: CLLocationManager = {
         let manager = CLLocationManager()
         manager.desiredAccuracy = kCLLocationAccuracyBest
@@ -155,52 +157,52 @@ final class MapViewController: BaseViewController {
             return
         }
 
-        let marks: [Marker] = [
+        marks = [
             Marker(
                 title: "홍대입구역 편의점",
                 subtitle: "3개의 후기",
                 coordinate: CLLocationCoordinate2D(latitude: currentLocation.coordinate.latitude + 0.001, longitude: currentLocation.coordinate.longitude + 0.001),
-                category: "salad"
+                markerImage: ImageLiteral.salad
             ),
             Marker(
                 title: "홍대입구역 편의점",
                 subtitle: "3개의 후기",
                 coordinate: CLLocationCoordinate2D(latitude: currentLocation.coordinate.latitude + 0.001, longitude: currentLocation.coordinate.longitude + 0.002),
-                category: "korean"
+                markerImage: ImageLiteral.salad
             ),
             Marker(
                 title: "홍대입구역 편의점",
                 subtitle: "3개의 후기",
                 coordinate: CLLocationCoordinate2D(latitude: currentLocation.coordinate.latitude + 0.001, longitude: currentLocation.coordinate.longitude + 0.003),
-                category: "chicken"
+                markerImage: ImageLiteral.salad
             ),
             Marker(
                 title: "홍대입구역 편의점",
                 subtitle: "3개의 후기",
                 coordinate: CLLocationCoordinate2D(latitude: currentLocation.coordinate.latitude + 0.001, longitude: currentLocation.coordinate.longitude + 0.004),
-                category: "korean"
+                markerImage: ImageLiteral.salad
             ),
             Marker(
                 title: "홍대입구역 편의점",
                 subtitle: "3개의 후기",
                 coordinate: CLLocationCoordinate2D(latitude: currentLocation.coordinate.latitude + 0.001, longitude: currentLocation.coordinate.longitude + 0.005),
-                category: "snack"
+                markerImage: ImageLiteral.salad
             ),
             Marker(
                 title: "홍대입구역 편의점",
                 subtitle: "3개의 후기",
                 coordinate: CLLocationCoordinate2D(latitude: currentLocation.coordinate.latitude + 0.002, longitude: currentLocation.coordinate.longitude + 0.001),
-                category: "salad"
+                markerImage: ImageLiteral.salad
             ),
             Marker(
                 title: "홍대입구역 편의점",
                 subtitle: "3개의 후기",
                 coordinate: CLLocationCoordinate2D(latitude: currentLocation.coordinate.latitude + 0.001, longitude: currentLocation.coordinate.longitude + 0.002),
-                category: "vegan"
+                markerImage: ImageLiteral.salad
             )
         ]
 
-        marks.forEach { mark in
+        marks?.forEach { mark in
             map.addAnnotation(mark)
         }
     }
@@ -232,10 +234,10 @@ extension MapViewController: MKMapViewDelegate {
         guard !(annotation is MKUserLocation) else { return nil }
 
         var annotationView = map.dequeueReusableAnnotationView(withIdentifier: "custom")
+        let index = (map.annotations as NSArray).index(of: annotation)
 
         if annotationView == nil {
             annotationView = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: "custom")
-            annotationView?.canShowCallout = true
             let feedButton = FeedButton().then {
                 let action = UIAction { [weak self] _ in
                     let storeFeedViewController = StoreFeedViewController(isMap: true)
@@ -247,7 +249,9 @@ extension MapViewController: MKMapViewDelegate {
                 }
                 $0.addAction(action, for: .touchUpInside)
             }
+            annotationView?.canShowCallout = true
             annotationView?.rightCalloutAccessoryView = feedButton
+            annotationView?.image = marks?[index].markerImage?.resize(to: CGSize(width: 30, height: 30))
         } else {
             annotationView?.annotation = annotation
         }
