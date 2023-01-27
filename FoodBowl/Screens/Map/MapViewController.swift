@@ -162,43 +162,43 @@ final class MapViewController: BaseViewController {
                 title: "홍대입구역 편의점",
                 subtitle: "3개의 후기",
                 coordinate: CLLocationCoordinate2D(latitude: currentLocation.coordinate.latitude + 0.001, longitude: currentLocation.coordinate.longitude + 0.001),
-                markerImage: ImageLiteral.salad
+                glyphImage: ImageLiteral.korean
             ),
             Marker(
                 title: "홍대입구역 편의점",
                 subtitle: "3개의 후기",
                 coordinate: CLLocationCoordinate2D(latitude: currentLocation.coordinate.latitude + 0.001, longitude: currentLocation.coordinate.longitude + 0.002),
-                markerImage: ImageLiteral.salad
+                glyphImage: ImageLiteral.salad
             ),
             Marker(
                 title: "홍대입구역 편의점",
                 subtitle: "3개의 후기",
                 coordinate: CLLocationCoordinate2D(latitude: currentLocation.coordinate.latitude + 0.001, longitude: currentLocation.coordinate.longitude + 0.003),
-                markerImage: ImageLiteral.salad
+                glyphImage: ImageLiteral.chinese
             ),
             Marker(
                 title: "홍대입구역 편의점",
                 subtitle: "3개의 후기",
                 coordinate: CLLocationCoordinate2D(latitude: currentLocation.coordinate.latitude + 0.001, longitude: currentLocation.coordinate.longitude + 0.004),
-                markerImage: ImageLiteral.salad
+                glyphImage: ImageLiteral.japanese
             ),
             Marker(
                 title: "홍대입구역 편의점",
                 subtitle: "3개의 후기",
                 coordinate: CLLocationCoordinate2D(latitude: currentLocation.coordinate.latitude + 0.001, longitude: currentLocation.coordinate.longitude + 0.005),
-                markerImage: ImageLiteral.salad
+                glyphImage: ImageLiteral.snack
             ),
             Marker(
                 title: "홍대입구역 편의점",
                 subtitle: "3개의 후기",
                 coordinate: CLLocationCoordinate2D(latitude: currentLocation.coordinate.latitude + 0.002, longitude: currentLocation.coordinate.longitude + 0.001),
-                markerImage: ImageLiteral.salad
+                glyphImage: ImageLiteral.vegan
             ),
             Marker(
                 title: "홍대입구역 편의점",
                 subtitle: "3개의 후기",
                 coordinate: CLLocationCoordinate2D(latitude: currentLocation.coordinate.latitude + 0.001, longitude: currentLocation.coordinate.longitude + 0.002),
-                markerImage: ImageLiteral.salad
+                glyphImage: ImageLiteral.seafood
             )
         ]
 
@@ -232,12 +232,11 @@ extension MapViewController: CLLocationManagerDelegate {
 extension MapViewController: MKMapViewDelegate {
     func mapView(_: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         guard !(annotation is MKUserLocation) else { return nil }
-
-        var annotationView = map.dequeueReusableAnnotationView(withIdentifier: "custom")
+        let annotationView = map.dequeueReusableAnnotationView(withIdentifier: "custom")
         let index = (map.annotations as NSArray).index(of: annotation)
 
         if annotationView == nil {
-            annotationView = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: "custom")
+            let newAnnotationView = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: "custom")
             let feedButton = FeedButton().then {
                 let action = UIAction { [weak self] _ in
                     let storeFeedViewController = StoreFeedViewController(isMap: true)
@@ -249,14 +248,16 @@ extension MapViewController: MKMapViewDelegate {
                 }
                 $0.addAction(action, for: .touchUpInside)
             }
-            annotationView?.canShowCallout = true
-            annotationView?.rightCalloutAccessoryView = feedButton
-            annotationView?.image = marks?[index].markerImage?.resize(to: CGSize(width: 30, height: 30))
+            newAnnotationView.canShowCallout = true
+            newAnnotationView.rightCalloutAccessoryView = feedButton
+            newAnnotationView.markerTintColor = UIColor.mainBlue
+            newAnnotationView.glyphImage = marks?[index].glyphImage
+
+            return newAnnotationView
         } else {
             annotationView?.annotation = annotation
+            return annotationView
         }
-
-        return annotationView
     }
 }
 
