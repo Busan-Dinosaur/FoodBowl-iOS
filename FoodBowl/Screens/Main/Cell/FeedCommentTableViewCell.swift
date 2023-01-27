@@ -13,7 +13,7 @@ import Then
 final class FeedCommentTableViewCell: BaseTableViewCell {
     // MARK: - property
 
-    lazy var userImageView = UIImageView().then {
+    lazy var userImageButton = UIButton().then {
         $0.backgroundColor = .gray
         $0.layer.cornerRadius = 20
         $0.layer.masksToBounds = true
@@ -46,16 +46,16 @@ final class FeedCommentTableViewCell: BaseTableViewCell {
     // MARK: - func
 
     override func render() {
-        contentView.addSubviews(userImageView, userNameLabel, dateLabel, optionButton, userCommentLabel)
+        contentView.addSubviews(userImageButton, userNameLabel, dateLabel, optionButton, userCommentLabel)
 
-        userImageView.snp.makeConstraints {
+        userImageButton.snp.makeConstraints {
             $0.leading.equalToSuperview().inset(20)
             $0.top.equalToSuperview().inset(10)
             $0.width.height.equalTo(40)
         }
 
         userNameLabel.snp.makeConstraints {
-            $0.leading.equalTo(userImageView.snp.trailing).offset(16)
+            $0.leading.equalTo(userImageButton.snp.trailing).offset(16)
             $0.top.equalToSuperview().inset(12)
         }
 
@@ -70,7 +70,7 @@ final class FeedCommentTableViewCell: BaseTableViewCell {
         }
 
         userCommentLabel.snp.makeConstraints {
-            $0.leading.equalTo(userImageView.snp.trailing).offset(16)
+            $0.leading.equalTo(userImageButton.snp.trailing).offset(16)
             $0.trailing.equalToSuperview().inset(20)
             $0.top.equalTo(userNameLabel.snp.bottom).offset(4)
             $0.bottom.equalToSuperview().inset(12)

@@ -24,6 +24,16 @@ final class FeedCommentViewController: BaseViewController {
 
     // MARK: - life cycle
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tabBarController?.tabBar.isHidden = true
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        tabBarController?.tabBar.isHidden = false
+    }
+
     override func render() {
         view.addSubviews(commentTableView)
 
@@ -47,6 +57,13 @@ extension FeedCommentViewController: UITableViewDataSource, UITableViewDelegate 
         guard let cell = tableView.dequeueReusableCell(withIdentifier: FeedCommentTableViewCell.className, for: indexPath) as? FeedCommentTableViewCell else { return UITableViewCell() }
 
         cell.selectionStyle = .none
+
+        let userButtonAction = UIAction { [weak self] _ in
+            let profileViewController = ProfileViewController(isOwn: false)
+            self?.navigationController?.pushViewController(profileViewController, animated: true)
+        }
+
+        cell.userImageButton.addAction(userButtonAction, for: .touchUpInside)
 
         return cell
     }

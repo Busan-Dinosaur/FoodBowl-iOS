@@ -121,7 +121,7 @@ final class MapViewController: BaseViewController {
 
         gpsButton.snp.makeConstraints {
             $0.trailing.equalToSuperview().inset(20)
-            $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(20)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(40)
             $0.height.width.equalTo(50)
         }
 
@@ -150,19 +150,62 @@ final class MapViewController: BaseViewController {
     }
 
     private func setMarkers() {
-        let mark = Marker(
-            title: "홍대입구역 편의점",
-            subtitle: "일식",
-            coordinate: CLLocationCoordinate2D(latitude: 37.55769, longitude: 126.92450)
-        )
-        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(showPopup(tapGesture:)))
-//        mark.addGestureRecognizer(tapGestureRecognizer)
+        guard let currentLocation = locationManager.location else {
+            getLocationUsagePermission()
+            return
+        }
 
-        mapView.addAnnotation(mark)
-    }
+        let marks: [Marker] = [
+            Marker(
+                title: "홍대입구역 편의점",
+                subtitle: "일식",
+                coordinate: CLLocationCoordinate2D(latitude: currentLocation.coordinate.latitude + 0.001, longitude: currentLocation.coordinate.longitude + 0.001)
+            ),
+            Marker(
+                title: "홍대입구역 편의점",
+                subtitle: "일식",
+                coordinate: CLLocationCoordinate2D(latitude: currentLocation.coordinate.latitude + 0.001, longitude: currentLocation.coordinate.longitude + 0.002)
+            ),
+            Marker(
+                title: "홍대입구역 편의점",
+                subtitle: "일식",
+                coordinate: CLLocationCoordinate2D(latitude: currentLocation.coordinate.latitude + 0.001, longitude: currentLocation.coordinate.longitude + 0.003)
+            ),
+            Marker(
+                title: "홍대입구역 편의점",
+                subtitle: "일식",
+                coordinate: CLLocationCoordinate2D(latitude: currentLocation.coordinate.latitude + 0.001, longitude: currentLocation.coordinate.longitude + 0.004)
+            ),
+            Marker(
+                title: "홍대입구역 편의점",
+                subtitle: "일식",
+                coordinate: CLLocationCoordinate2D(latitude: currentLocation.coordinate.latitude + 0.001, longitude: currentLocation.coordinate.longitude + 0.005)
+            ),
+            Marker(
+                title: "홍대입구역 편의점",
+                subtitle: "일식",
+                coordinate: CLLocationCoordinate2D(latitude: currentLocation.coordinate.latitude + 0.002, longitude: currentLocation.coordinate.longitude + 0.001)
+            ),
+            Marker(
+                title: "홍대입구역 편의점",
+                subtitle: "일식",
+                coordinate: CLLocationCoordinate2D(latitude: currentLocation.coordinate.latitude + 0.001, longitude: currentLocation.coordinate.longitude + 0.002)
+            ),
+            Marker(
+                title: "홍대입구역 편의점",
+                subtitle: "일식",
+                coordinate: CLLocationCoordinate2D(latitude: currentLocation.coordinate.latitude + 0.001, longitude: currentLocation.coordinate.longitude + 0.003)
+            ),
+            Marker(
+                title: "홍대입구역 편의점",
+                subtitle: "일식",
+                coordinate: CLLocationCoordinate2D(latitude: currentLocation.coordinate.latitude + 0.001, longitude: currentLocation.coordinate.longitude + 0.004)
+            )
+        ]
 
-    @objc private func showPopup(tapGesture _: UITapGestureRecognizer) {
-        print("dd")
+        marks.forEach { mark in
+            mapView.addAnnotation(mark)
+        }
     }
 }
 
