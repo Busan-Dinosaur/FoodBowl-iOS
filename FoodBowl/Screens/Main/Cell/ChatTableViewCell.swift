@@ -1,5 +1,5 @@
 //
-//  FeedCommentTableViewCell.swift
+//  ChatTableViewCell.swift
 //  FoodBowl
 //
 //  Created by COBY_PRO on 2023/01/18.
@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 import Then
 
-final class FeedCommentTableViewCell: BaseTableViewCell {
+final class ChatTableViewCell: BaseTableViewCell {
     // MARK: - property
 
     lazy var userImageButton = UIButton().then {
