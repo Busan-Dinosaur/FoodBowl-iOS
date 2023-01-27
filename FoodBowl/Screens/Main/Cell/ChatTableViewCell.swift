@@ -31,11 +31,10 @@ final class ChatTableViewCell: BaseTableViewCell {
         $0.text = "10일 전"
     }
 
-    let userCommentLabel = UILabel().then {
+    let userChatLabel = UILabel().then {
         $0.font = UIFont.preferredFont(forTextStyle: .footnote, weight: .light)
         $0.textColor = .black
         $0.numberOfLines = 0
-        $0.text = "난 별로던데난 별로던데난 별로던데난 별로던데난 별로던데난 별로던데난 별로던데난 별로던데난 별로던데난 별로던데난 별로던데난 별로던데난 별로던데난 별로던데난 별로던데난 별로던데난 별로던데난 별로던데난 별로던데난 별로던데"
     }
 
     let optionButton = UIImageView().then {
@@ -46,7 +45,7 @@ final class ChatTableViewCell: BaseTableViewCell {
     // MARK: - func
 
     override func render() {
-        contentView.addSubviews(userImageButton, userNameButton, dateLabel, optionButton, userCommentLabel)
+        contentView.addSubviews(userImageButton, userNameButton, dateLabel, optionButton, userChatLabel)
 
         userImageButton.snp.makeConstraints {
             $0.leading.equalToSuperview().inset(20)
@@ -56,7 +55,7 @@ final class ChatTableViewCell: BaseTableViewCell {
 
         userNameButton.snp.makeConstraints {
             $0.leading.equalTo(userImageButton.snp.trailing).offset(16)
-            $0.top.equalToSuperview().inset(12)
+            $0.top.equalToSuperview().inset(4)
         }
 
         dateLabel.snp.makeConstraints {
@@ -66,14 +65,14 @@ final class ChatTableViewCell: BaseTableViewCell {
 
         optionButton.snp.makeConstraints {
             $0.trailing.equalToSuperview().inset(20)
-            $0.top.equalToSuperview().inset(14)
+            $0.top.equalToSuperview().inset(12)
         }
 
-        userCommentLabel.snp.makeConstraints {
+        userChatLabel.snp.makeConstraints {
             $0.leading.equalTo(userImageButton.snp.trailing).offset(16)
             $0.trailing.equalToSuperview().inset(20)
-            $0.top.equalTo(userNameButton.snp.bottom).offset(4)
-            $0.bottom.equalToSuperview().inset(12)
+            $0.top.equalTo(userNameButton.snp.bottom)
+            $0.bottom.equalToSuperview().inset(10)
         }
     }
 }

@@ -106,6 +106,9 @@ extension ChatViewController: UITableViewDataSource, UITableViewDelegate {
         cell.userImageButton.addAction(userButtonAction, for: .touchUpInside)
         cell.userNameButton.addAction(userButtonAction, for: .touchUpInside)
 
+        cell.userImageButton.setImage(ImageLiteral.food2, for: .normal)
+        cell.userChatLabel.text = "맛있었어요"
+
         return cell
     }
 
