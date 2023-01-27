@@ -104,6 +104,7 @@ extension ChatViewController: UITableViewDataSource, UITableViewDelegate {
         }
 
         cell.userImageButton.addAction(userButtonAction, for: .touchUpInside)
+        cell.userNameButton.addAction(userButtonAction, for: .touchUpInside)
 
         return cell
     }

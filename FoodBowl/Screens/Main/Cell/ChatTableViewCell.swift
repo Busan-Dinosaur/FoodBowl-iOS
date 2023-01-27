@@ -19,10 +19,10 @@ final class ChatTableViewCell: BaseTableViewCell {
         $0.layer.masksToBounds = true
     }
 
-    let userNameLabel = UILabel().then {
-        $0.font = UIFont.preferredFont(forTextStyle: .subheadline, weight: .medium)
-        $0.textColor = .black
-        $0.text = "홍길동"
+    let userNameButton = UIButton().then {
+        $0.setTitle("홍길동", for: .normal)
+        $0.setTitleColor(.black, for: .normal)
+        $0.titleLabel?.font = .preferredFont(forTextStyle: .subheadline, weight: .medium)
     }
 
     let dateLabel = UILabel().then {
@@ -46,7 +46,7 @@ final class ChatTableViewCell: BaseTableViewCell {
     // MARK: - func
 
     override func render() {
-        contentView.addSubviews(userImageButton, userNameLabel, dateLabel, optionButton, userCommentLabel)
+        contentView.addSubviews(userImageButton, userNameButton, dateLabel, optionButton, userCommentLabel)
 
         userImageButton.snp.makeConstraints {
             $0.leading.equalToSuperview().inset(20)
@@ -54,14 +54,14 @@ final class ChatTableViewCell: BaseTableViewCell {
             $0.width.height.equalTo(40)
         }
 
-        userNameLabel.snp.makeConstraints {
+        userNameButton.snp.makeConstraints {
             $0.leading.equalTo(userImageButton.snp.trailing).offset(16)
             $0.top.equalToSuperview().inset(12)
         }
 
         dateLabel.snp.makeConstraints {
-            $0.leading.equalTo(userNameLabel.snp.trailing).offset(8)
-            $0.centerY.equalTo(userNameLabel)
+            $0.leading.equalTo(userNameButton.snp.trailing).offset(8)
+            $0.centerY.equalTo(userNameButton)
         }
 
         optionButton.snp.makeConstraints {
@@ -72,7 +72,7 @@ final class ChatTableViewCell: BaseTableViewCell {
         userCommentLabel.snp.makeConstraints {
             $0.leading.equalTo(userImageButton.snp.trailing).offset(16)
             $0.trailing.equalToSuperview().inset(20)
-            $0.top.equalTo(userNameLabel.snp.bottom).offset(4)
+            $0.top.equalTo(userNameButton.snp.bottom).offset(4)
             $0.bottom.equalToSuperview().inset(12)
         }
     }

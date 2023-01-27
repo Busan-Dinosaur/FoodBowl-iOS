@@ -14,7 +14,7 @@ final class ChatSendView: UIView {
     // MARK: - Property
 
     let chatTextField = UITextView().then {
-        $0.font = UIFont.systemFont(ofSize: 17.0)
+        $0.font = UIFont.preferredFont(forTextStyle: .body, weight: .light)
         $0.textColor = .subText
         $0.textAlignment = NSTextAlignment.left
         $0.dataDetectorTypes = UIDataDetectorTypes.all
