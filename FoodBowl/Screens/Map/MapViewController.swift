@@ -37,10 +37,6 @@ final class MapViewController: BaseViewController {
         $0.setUserTrackingMode(.follow, animated: true)
         $0.isZoomEnabled = true
         $0.showsCompass = false
-
-        let userTrackingButton = MKUserTrackingButton(mapView: $0)
-        userTrackingButton.frame.origin = CGPoint(x: self.view.frame.maxX - 60, y: self.view.frame.maxY - 180)
-        $0.addSubview(userTrackingButton)
     }
 
     private lazy var searchBarButton = SearchBarButton().then {
@@ -72,6 +68,27 @@ final class MapViewController: BaseViewController {
         $0.register(CategoryCollectionViewCell.self, forCellWithReuseIdentifier: CategoryCollectionViewCell.className)
     }
 
+    private lazy var gpsButton = UIButton().then {
+        $0.backgroundColor = .white
+        $0.makeBorderLayer(color: .grey002)
+        $0.setImage(ImageLiteral.btnGps, for: .normal)
+        $0.imageEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        let action = UIAction { [weak self] _ in
+            self?.findMyLocation()
+        }
+        $0.addAction(action, for: .touchUpInside)
+    }
+
+    private lazy var bookMarkButton = UIButton().then {
+        $0.backgroundColor = .white
+        $0.makeBorderLayer(color: .grey002)
+        $0.setImage(ImageLiteral.btnBookmark, for: .normal)
+        $0.imageEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        let action = UIAction { [weak self] _ in
+        }
+        $0.addAction(action, for: .touchUpInside)
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         findMyLocation()
@@ -84,7 +101,7 @@ final class MapViewController: BaseViewController {
     }
 
     override func render() {
-        view.addSubviews(mapView, searchBarButton, listCollectionView)
+        view.addSubviews(mapView, searchBarButton, listCollectionView, gpsButton, bookMarkButton)
 
         mapView.snp.makeConstraints {
             $0.edges.equalToSuperview()
@@ -100,6 +117,18 @@ final class MapViewController: BaseViewController {
             $0.top.equalTo(searchBarButton.snp.bottom).offset(10)
             $0.leading.trailing.equalToSuperview()
             $0.height.equalTo(40)
+        }
+
+        gpsButton.snp.makeConstraints {
+            $0.trailing.equalToSuperview().inset(20)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(20)
+            $0.height.width.equalTo(50)
+        }
+
+        bookMarkButton.snp.makeConstraints {
+            $0.trailing.equalToSuperview().inset(20)
+            $0.bottom.equalTo(gpsButton.snp.top).offset(-10)
+            $0.height.width.equalTo(50)
         }
     }
 
