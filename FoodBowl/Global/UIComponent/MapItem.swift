@@ -18,27 +18,27 @@ class MapItemAnnotationView: MKMarkerAnnotationView {
                 let action = UIAction { _ in marker.handler() }
                 $0.addAction(action, for: .touchUpInside)
             }
-
+            clusteringIdentifier = "MapItem"
+            rightCalloutAccessoryView = feedButton
             canShowCallout = true
             calloutOffset = CGPoint(x: -5, y: 5)
-            rightCalloutAccessoryView = feedButton
             markerTintColor = UIColor.mainPink
             glyphImage = marker.glyphImage
+            canShowCallout = true
         }
     }
 }
 
-final class ClusterAnnotationView: MKAnnotationView {
+final class ClusterAnnotationView: MKMarkerAnnotationView {
     // MARK: Initialization
 
     private let countLabel = UILabel()
 
     override var annotation: MKAnnotation? {
         didSet {
-            guard let annotation = annotation as? MKClusterAnnotation else {
-                assertionFailure("Using LocationDataMapClusterView with wrong annotation type")
-                return
-            }
+            guard let annotation = annotation as? MKClusterAnnotation else { return }
+
+            markerTintColor = .mainPink
 
             countLabel.text = annotation.memberAnnotations.count < 100 ? "\(annotation.memberAnnotations.count)" : "99+"
         }

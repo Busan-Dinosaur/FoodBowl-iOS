@@ -170,7 +170,6 @@ final class MapViewController: BaseViewController {
             bookMarkButton.backgroundColor = .mainBlue
             bookMarkButton.setImage(ImageLiteral.btnBookmarkOn, for: .normal)
         }
-
         isBookMark = !isBookMark
     }
 
@@ -267,40 +266,16 @@ extension MapViewController: CLLocationManagerDelegate {
 }
 
 extension MapViewController: MKMapViewDelegate {
-//    func mapView(_: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-//        guard !(annotation is MKUserLocation) else { return nil }
-//        let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "custom")
-//
-//        if annotationView == nil {
-//            let newAnnotationView = MapItemAnnotationView(annotation: annotation, reuseIdentifier: "custom")
-//
-//            let action = UIAction { [weak self] _ in
-//                let storeFeedViewController = StoreFeedViewController(isMap: true)
-//                let navigationController = UINavigationController(rootViewController: storeFeedViewController)
-//                navigationController.modalPresentationStyle = .fullScreen
-//                DispatchQueue.main.async {
-//                    self?.present(navigationController, animated: true)
-//                }
-//            }
-//            newAnnotationView.feedButton.addAction(action, for: .touchUpInside)
-//
-//            return newAnnotationView
-//        } else {
-//            annotationView?.annotation = annotation
-//            return annotationView
-//        }
-//    }
-//
-//    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-//        guard view is ClusterAnnotationView else { return }
-//
-//        // if the user taps a cluster, zoom in
-//        let currentSpan = mapView.region.span
-//        let zoomSpan = MKCoordinateSpan(latitudeDelta: currentSpan.latitudeDelta / 2.0, longitudeDelta: currentSpan.longitudeDelta / 2.0)
-//        let zoomCoordinate = view.annotation?.coordinate ?? mapView.region.center
-//        let zoomed = MKCoordinateRegion(center: zoomCoordinate, span: zoomSpan)
-//        mapView.setRegion(zoomed, animated: true)
-//    }
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        guard view is ClusterAnnotationView else { return }
+
+        // if the user taps a cluster, zoom in
+        let currentSpan = mapView.region.span
+        let zoomSpan = MKCoordinateSpan(latitudeDelta: currentSpan.latitudeDelta / 2.0, longitudeDelta: currentSpan.longitudeDelta / 2.0)
+        let zoomCoordinate = view.annotation?.coordinate ?? mapView.region.center
+        let zoomed = MKCoordinateRegion(center: zoomCoordinate, span: zoomSpan)
+        mapView.setRegion(zoomed, animated: true)
+    }
 }
 
 // MARK: - UICollectionViewDataSource, UICollectionViewDelegate
