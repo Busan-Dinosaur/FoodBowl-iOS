@@ -34,13 +34,21 @@ final class MapViewController: BaseViewController {
         return manager
     }()
 
-    private lazy var map = MKMapView().then {
+    private lazy var mapView = MKMapView().then {
         $0.delegate = self
         $0.mapType = MKMapType.standard
         $0.showsUserLocation = true
         $0.setUserTrackingMode(.follow, animated: true)
         $0.isZoomEnabled = true
         $0.showsCompass = false
+        $0.register(
+            MapItemAnnotationView.self,
+            forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier
+        )
+        $0.register(
+            ClusterAnnotationView.self,
+            forAnnotationViewWithReuseIdentifier: MKMapViewDefaultClusterAnnotationViewReuseIdentifier
+        )
     }
 
     private lazy var searchBarButton = SearchBarButton().then {
@@ -98,7 +106,7 @@ final class MapViewController: BaseViewController {
         super.viewDidLoad()
         findMyLocation()
         setMarkers()
-        map.delegate = self
+        mapView.delegate = self
     }
 
     override func viewWillDisappear(_: Bool) {
@@ -106,9 +114,9 @@ final class MapViewController: BaseViewController {
     }
 
     override func render() {
-        view.addSubviews(map, searchBarButton, listCollectionView, gpsButton, bookMarkButton)
+        view.addSubviews(mapView, searchBarButton, listCollectionView, gpsButton, bookMarkButton)
 
-        map.snp.makeConstraints {
+        mapView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
 
@@ -151,7 +159,7 @@ final class MapViewController: BaseViewController {
             return
         }
 
-        map.setRegion(MKCoordinateRegion(center: currentLocation.coordinate, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)), animated: true)
+        mapView.setRegion(MKCoordinateRegion(center: currentLocation.coordinate, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)), animated: true)
     }
 
     private func findMyBookmarks() {
@@ -218,7 +226,7 @@ final class MapViewController: BaseViewController {
         ]
 
         marks?.forEach { mark in
-            map.addAnnotation(mark)
+            mapView.addAnnotation(mark)
         }
     }
 }
@@ -245,29 +253,40 @@ extension MapViewController: CLLocationManagerDelegate {
 }
 
 extension MapViewController: MKMapViewDelegate {
-    func mapView(_: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        guard !(annotation is MKUserLocation) else { return nil }
-        let annotationView = map.dequeueReusableAnnotationView(withIdentifier: "custom")
-
-        if annotationView == nil {
-            let newAnnotationView = StoreMarkerView(annotation: annotation, reuseIdentifier: "custom")
-
-            let action = UIAction { [weak self] _ in
-                let storeFeedViewController = StoreFeedViewController(isMap: true)
-                let navigationController = UINavigationController(rootViewController: storeFeedViewController)
-                navigationController.modalPresentationStyle = .fullScreen
-                DispatchQueue.main.async {
-                    self?.present(navigationController, animated: true)
-                }
-            }
-            newAnnotationView.feedButton.addAction(action, for: .touchUpInside)
-
-            return newAnnotationView
-        } else {
-            annotationView?.annotation = annotation
-            return annotationView
-        }
-    }
+//    func mapView(_: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+//        guard !(annotation is MKUserLocation) else { return nil }
+//        let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "custom")
+//
+//        if annotationView == nil {
+//            let newAnnotationView = MapItemAnnotationView(annotation: annotation, reuseIdentifier: "custom")
+//
+//            let action = UIAction { [weak self] _ in
+//                let storeFeedViewController = StoreFeedViewController(isMap: true)
+//                let navigationController = UINavigationController(rootViewController: storeFeedViewController)
+//                navigationController.modalPresentationStyle = .fullScreen
+//                DispatchQueue.main.async {
+//                    self?.present(navigationController, animated: true)
+//                }
+//            }
+//            newAnnotationView.feedButton.addAction(action, for: .touchUpInside)
+//
+//            return newAnnotationView
+//        } else {
+//            annotationView?.annotation = annotation
+//            return annotationView
+//        }
+//    }
+//
+//    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+//        guard view is ClusterAnnotationView else { return }
+//
+//        // if the user taps a cluster, zoom in
+//        let currentSpan = mapView.region.span
+//        let zoomSpan = MKCoordinateSpan(latitudeDelta: currentSpan.latitudeDelta / 2.0, longitudeDelta: currentSpan.longitudeDelta / 2.0)
+//        let zoomCoordinate = view.annotation?.coordinate ?? mapView.region.center
+//        let zoomed = MKCoordinateRegion(center: zoomCoordinate, span: zoomSpan)
+//        mapView.setRegion(zoomed, animated: true)
+//    }
 }
 
 // MARK: - UICollectionViewDataSource, UICollectionViewDelegate
