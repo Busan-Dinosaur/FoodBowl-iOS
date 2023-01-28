@@ -20,6 +20,8 @@ final class MapViewController: BaseViewController {
                                                   right: 20)
     }
 
+    private var isBookMark: Bool = false
+
     private let categories = Category.allCases
 
     private var marks: [Marker]?
@@ -84,9 +86,10 @@ final class MapViewController: BaseViewController {
     private lazy var bookMarkButton = UIButton().then {
         $0.backgroundColor = .white
         $0.makeBorderLayer(color: .grey002)
-        $0.setImage(ImageLiteral.btnBookmark, for: .normal)
+        $0.setImage(ImageLiteral.btnBookmarkOff, for: .normal)
         $0.imageEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         let action = UIAction { [weak self] _ in
+            self?.findMyBookmarks()
         }
         $0.addAction(action, for: .touchUpInside)
     }
@@ -149,6 +152,18 @@ final class MapViewController: BaseViewController {
         }
 
         map.setRegion(MKCoordinateRegion(center: currentLocation.coordinate, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)), animated: true)
+    }
+
+    private func findMyBookmarks() {
+        if isBookMark {
+            bookMarkButton.backgroundColor = .white
+            bookMarkButton.setImage(ImageLiteral.btnBookmarkOff, for: .normal)
+        } else {
+            bookMarkButton.backgroundColor = .mainBlue
+            bookMarkButton.setImage(ImageLiteral.btnBookmarkOn, for: .normal)
+        }
+
+        isBookMark = !isBookMark
     }
 
     private func setMarkers() {
@@ -250,7 +265,7 @@ extension MapViewController: MKMapViewDelegate {
             }
             newAnnotationView.canShowCallout = true
             newAnnotationView.rightCalloutAccessoryView = feedButton
-            newAnnotationView.markerTintColor = UIColor.mainBlue
+            newAnnotationView.markerTintColor = UIColor.mainPink
             newAnnotationView.glyphImage = marks?[index].glyphImage
 
             return newAnnotationView
