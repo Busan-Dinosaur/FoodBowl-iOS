@@ -29,39 +29,33 @@ class MapItemAnnotationView: MKMarkerAnnotationView {
     }
 }
 
-final class ClusterAnnotationView: MKMarkerAnnotationView {
-    // MARK: Initialization
-
-    private let countLabel = UILabel()
-
+final class ClusterAnnotationView: MKAnnotationView {
     override var annotation: MKAnnotation? {
         didSet {
-            guard let annotation = annotation as? MKClusterAnnotation else { return }
+            guard let cluster = annotation as? MKClusterAnnotation else { return }
+            displayPriority = .defaultHigh
 
-            markerTintColor = .mainPink
-
-            countLabel.text = annotation.memberAnnotations.count < 100 ? "\(annotation.memberAnnotations.count)" : "99+"
+            let rect = CGRect(x: 0, y: 0, width: 40, height: 40)
+            image = UIGraphicsImageRenderer.image(for: cluster.memberAnnotations, in: rect)
         }
     }
+}
 
-    override init(annotation: MKAnnotation?, reuseIdentifier: String?) {
-        super.init(annotation: annotation, reuseIdentifier: reuseIdentifier)
+extension UIGraphicsImageRenderer {
+    static func image(for annotations: [MKAnnotation], in rect: CGRect) -> UIImage {
+        let renderer = UIGraphicsImageRenderer(size: rect.size)
 
-        displayPriority = .defaultHigh
-        collisionMode = .circle
+        let totalCount = annotations.count
+        let countText = "\(totalCount)"
 
-        frame = CGRect(x: 0, y: 0, width: 40, height: 50)
-        centerOffset = CGPoint(x: 0, y: -frame.size.height / 2)
+        return renderer.image { _ in
+            UIColor.mainPink.setFill()
+            UIBezierPath(ovalIn: rect).fill()
 
-        setupUI()
+            UIColor.white.setFill()
+            UIBezierPath(ovalIn: CGRect(x: 8, y: 8, width: 24, height: 24)).fill()
+
+            countText.drawForCluster(in: rect)
+        }
     }
-
-    @available(*, unavailable)
-    required init?(coder _: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    // MARK: Setup
-
-    private func setupUI() {}
 }
