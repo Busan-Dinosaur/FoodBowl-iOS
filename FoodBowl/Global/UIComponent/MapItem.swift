@@ -8,13 +8,16 @@
 import UIKit
 
 import MapKit
+import Then
 
 class MapItemAnnotationView: MKMarkerAnnotationView {
-    let feedButton = FeedButton()
-
     override var annotation: MKAnnotation? {
         willSet {
             guard let marker = newValue as? Marker else { return }
+            let feedButton = FeedButton().then {
+                let action = UIAction { _ in marker.handler() }
+                $0.addAction(action, for: .touchUpInside)
+            }
 
             canShowCallout = true
             calloutOffset = CGPoint(x: -5, y: 5)

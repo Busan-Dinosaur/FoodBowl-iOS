@@ -185,43 +185,57 @@ final class MapViewController: BaseViewController {
                 title: "홍대입구역 편의점",
                 subtitle: "3개의 후기",
                 coordinate: CLLocationCoordinate2D(latitude: currentLocation.coordinate.latitude + 0.001, longitude: currentLocation.coordinate.longitude + 0.001),
-                glyphImage: ImageLiteral.korean
+                glyphImage: ImageLiteral.korean,
+                handler: { [weak self] in
+                    let storeFeedViewController = StoreFeedViewController(isMap: true)
+                    let navigationController = UINavigationController(rootViewController: storeFeedViewController)
+                    navigationController.modalPresentationStyle = .fullScreen
+                    DispatchQueue.main.async {
+                        self?.present(navigationController, animated: true)
+                    }
+                }
             ),
             Marker(
                 title: "홍대입구역 편의점",
                 subtitle: "3개의 후기",
                 coordinate: CLLocationCoordinate2D(latitude: currentLocation.coordinate.latitude + 0.001, longitude: currentLocation.coordinate.longitude + 0.002),
-                glyphImage: ImageLiteral.salad
+                glyphImage: ImageLiteral.salad,
+                handler: { [weak self] in
+                    let storeFeedViewController = StoreFeedViewController(isMap: true)
+                    let navigationController = UINavigationController(rootViewController: storeFeedViewController)
+                    navigationController.modalPresentationStyle = .fullScreen
+                    DispatchQueue.main.async {
+                        self?.present(navigationController, animated: true)
+                    }
+                }
             ),
             Marker(
                 title: "홍대입구역 편의점",
                 subtitle: "3개의 후기",
                 coordinate: CLLocationCoordinate2D(latitude: currentLocation.coordinate.latitude + 0.001, longitude: currentLocation.coordinate.longitude + 0.003),
-                glyphImage: ImageLiteral.chinese
+                glyphImage: ImageLiteral.chinese,
+                handler: { [weak self] in
+                    let storeFeedViewController = StoreFeedViewController(isMap: true)
+                    let navigationController = UINavigationController(rootViewController: storeFeedViewController)
+                    navigationController.modalPresentationStyle = .fullScreen
+                    DispatchQueue.main.async {
+                        self?.present(navigationController, animated: true)
+                    }
+                }
             ),
             Marker(
                 title: "홍대입구역 편의점",
                 subtitle: "3개의 후기",
                 coordinate: CLLocationCoordinate2D(latitude: currentLocation.coordinate.latitude + 0.001, longitude: currentLocation.coordinate.longitude + 0.004),
-                glyphImage: ImageLiteral.japanese
-            ),
-            Marker(
-                title: "홍대입구역 편의점",
-                subtitle: "3개의 후기",
-                coordinate: CLLocationCoordinate2D(latitude: currentLocation.coordinate.latitude + 0.001, longitude: currentLocation.coordinate.longitude + 0.005),
-                glyphImage: ImageLiteral.snack
-            ),
-            Marker(
-                title: "홍대입구역 편의점",
-                subtitle: "3개의 후기",
-                coordinate: CLLocationCoordinate2D(latitude: currentLocation.coordinate.latitude + 0.002, longitude: currentLocation.coordinate.longitude + 0.001),
-                glyphImage: ImageLiteral.vegan
-            ),
-            Marker(
-                title: "홍대입구역 편의점",
-                subtitle: "3개의 후기",
-                coordinate: CLLocationCoordinate2D(latitude: currentLocation.coordinate.latitude + 0.001, longitude: currentLocation.coordinate.longitude + 0.002),
-                glyphImage: ImageLiteral.seafood
+                glyphImage: ImageLiteral.japanese,
+                handler: { [weak self] in
+                    let storeFeedViewController = StoreFeedViewController(isMap: true)
+                    let navigationController = UINavigationController(rootViewController: storeFeedViewController)
+                    navigationController.modalPresentationStyle = .fullScreen
+                    DispatchQueue.main.async {
+                        self?.present(navigationController, animated: true)
+                    }
+                }
             )
         ]
 
