@@ -8,6 +8,6 @@
 --hexliteralcase lowercase
 
 # file options
---exclude Pods, FoodBowl/Glboal/Supports/AppDelegate.swift, FoodBowl/Glboal/Supports/SceneDelegate.swift, FoodBowl/Glboal/Extensions/String+Extension
+--exclude Pods, FoodBowl/Global/Supports/AppDelegate.swift, FoodBowl/Global/Supports/SceneDelegate.swift, FoodBowl/Global/Extensions/String+Extension.swift
 
 # rules
