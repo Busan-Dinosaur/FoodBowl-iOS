@@ -26,6 +26,7 @@
 		CB4FBBF42978CFE40052D371 /* FollowingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB4FBBF32978CFE40052D371 /* FollowingViewController.swift */; };
 		CB558E9A29746B5D00921943 /* PhotoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB558E9929746B5D00921943 /* PhotoCollectionViewCell.swift */; };
 		CB558E9C2975B80B00921943 /* Feed.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB558E9B2975B80B00921943 /* Feed.swift */; };
+		CB5AF8A929854AA0003D16D4 /* StoreMarkerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5AF8A829854AA0003D16D4 /* StoreMarkerView.swift */; };
 		CB8A2D9B297844720018AC6E /* Marker.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB8A2D9A297844720018AC6E /* Marker.swift */; };
 		CBA7F17F297DB2F6006088A0 /* SetProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA7F17E297DB2F6006088A0 /* SetProfileViewController.swift */; };
 		CBA7F182297DB319006088A0 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA7F181297DB319006088A0 /* OnboardingViewController.swift */; };
@@ -126,6 +127,7 @@
 		CB4FBBF32978CFE40052D371 /* FollowingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowingViewController.swift; sourceTree = "<group>"; };
 		CB558E9929746B5D00921943 /* PhotoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCollectionViewCell.swift; sourceTree = "<group>"; };
 		CB558E9B2975B80B00921943 /* Feed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Feed.swift; sourceTree = "<group>"; };
+		CB5AF8A829854AA0003D16D4 /* StoreMarkerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreMarkerView.swift; sourceTree = "<group>"; };
 		CB8A2D9A297844720018AC6E /* Marker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Marker.swift; sourceTree = "<group>"; };
 		CBA7F17E297DB2F6006088A0 /* SetProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetProfileViewController.swift; sourceTree = "<group>"; };
 		CBA7F181297DB319006088A0 /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
@@ -369,6 +371,7 @@
 				CBDE38FC29715C5F00DDE49A /* SearchBarButton.swift */,
 				CB2E4F792976F01700FD2566 /* UnderlineSegmentedControl.swift */,
 				CBD1B5FB2982E83800B0AD51 /* CheckBox.swift */,
+				CB5AF8A829854AA0003D16D4 /* StoreMarkerView.swift */,
 			);
 			path = UIComponent;
 			sourceTree = "<group>";
@@ -688,6 +691,7 @@
 				CBC73104295550A100C7F198 /* AppDelegate.swift in Sources */,
 				CBADC2B72955A1BD00E56C93 /* SetPhotoViewController.swift in Sources */,
 				CBE6190C296C635D005295AF /* FollowButton.swift in Sources */,
+				CB5AF8A929854AA0003D16D4 /* StoreMarkerView.swift in Sources */,
 				CB1790C8296DAB470083D3A4 /* DynamicHeightCollectionViewFlowLayout.swift in Sources */,
 				CBA7F184297DBB01006088A0 /* YPImagePicker+Extension.swift in Sources */,
 				CBE61913296C68D9005295AF /* PlusButton.swift in Sources */,

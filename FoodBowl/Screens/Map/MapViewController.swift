@@ -248,25 +248,19 @@ extension MapViewController: MKMapViewDelegate {
     func mapView(_: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         guard !(annotation is MKUserLocation) else { return nil }
         let annotationView = map.dequeueReusableAnnotationView(withIdentifier: "custom")
-        let index = (map.annotations as NSArray).index(of: annotation)
 
         if annotationView == nil {
-            let newAnnotationView = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: "custom")
-            let feedButton = FeedButton().then {
-                let action = UIAction { [weak self] _ in
-                    let storeFeedViewController = StoreFeedViewController(isMap: true)
-                    let navigationController = UINavigationController(rootViewController: storeFeedViewController)
-                    navigationController.modalPresentationStyle = .fullScreen
-                    DispatchQueue.main.async {
-                        self?.present(navigationController, animated: true)
-                    }
+            let newAnnotationView = StoreMarkerView(annotation: annotation, reuseIdentifier: "custom")
+
+            let action = UIAction { [weak self] _ in
+                let storeFeedViewController = StoreFeedViewController(isMap: true)
+                let navigationController = UINavigationController(rootViewController: storeFeedViewController)
+                navigationController.modalPresentationStyle = .fullScreen
+                DispatchQueue.main.async {
+                    self?.present(navigationController, animated: true)
                 }
-                $0.addAction(action, for: .touchUpInside)
             }
-            newAnnotationView.canShowCallout = true
-            newAnnotationView.rightCalloutAccessoryView = feedButton
-            newAnnotationView.markerTintColor = UIColor.mainPink
-            newAnnotationView.glyphImage = marks?[index].glyphImage
+            newAnnotationView.feedButton.addAction(action, for: .touchUpInside)
 
             return newAnnotationView
         } else {
