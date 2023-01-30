@@ -74,8 +74,6 @@ final class StoreFeedViewController: BaseViewController {
 
     override func setupNavigationBar() {
         super.setupNavigationBar()
-
-        title = "틈새라면"
         if isMap {
             let leftOffsetCloseButton = removeBarButtonItemOffset(with: closeButton, offsetX: 10)
             let closeButton = makeBarButtonItem(with: leftOffsetCloseButton)
