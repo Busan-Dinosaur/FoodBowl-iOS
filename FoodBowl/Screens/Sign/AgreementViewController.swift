@@ -16,6 +16,7 @@ final class AgreementViewController: BaseViewController {
     private let mainAgreeLabel = UILabel().then {
         $0.text = "전체 동의"
         $0.font = UIFont.preferredFont(forTextStyle: .title3, weight: .medium)
+        $0.textColor = .mainText
     }
 
     private lazy var mainCheckBox = CheckBox().then {
@@ -72,8 +73,7 @@ final class AgreementViewController: BaseViewController {
     private lazy var nextButton = MainButton().then {
         $0.label.text = "다음"
         let action = UIAction { [weak self] _ in
-            let setProfileViewController = SetProfileViewController()
-            self?.navigationController?.pushViewController(setProfileViewController, animated: true)
+            self?.tappedNextButton()
         }
         $0.addAction(action, for: .touchUpInside)
     }
@@ -151,6 +151,20 @@ final class AgreementViewController: BaseViewController {
             mainCheckBox.isChecked = true
         } else {
             mainCheckBox.isChecked = false
+        }
+    }
+    
+    private func tappedNextButton() {
+        if mainCheckBox.isChecked {
+            let setProfileViewController = SetProfileViewController()
+            navigationController?.pushViewController(setProfileViewController, animated: true)
+        } else {
+            let alert = UIAlertController(title: nil, message: "모든 약관에 동의를 해주세요", preferredStyle: .alert)
+            let cancel = UIAlertAction(title: "닫기", style: .cancel, handler: nil)
+            
+            alert.addAction(cancel)
+            
+            present(alert, animated: true, completion: nil)
         }
     }
 }

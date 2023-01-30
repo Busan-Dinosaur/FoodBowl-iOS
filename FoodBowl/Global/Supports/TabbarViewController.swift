@@ -29,7 +29,7 @@ final class TabbarViewController: UITabBarController {
         profileViewController.tabBarItem.title = "프로필"
 
         tabBar.tintColor = .mainPink
-        tabBar.backgroundColor = .white
+        tabBar.backgroundColor = .mainBackground
         setViewControllers([
             mainViewController,
             mapViewController,
