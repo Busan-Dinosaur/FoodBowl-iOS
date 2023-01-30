@@ -34,13 +34,8 @@ final class ShowWebViewController: BaseViewController {
             $0.top.equalTo(view.safeAreaLayoutGuide)
             $0.leading.trailing.bottom.equalToSuperview()
         }
-    }
-
-    override func configUI() {
-        if let url = URL(string: url) {
-            let request = URLRequest(url: url)
-            webView.load(request)
-        }
+        
+        if let url = URL(string: url) { webView.load(URLRequest(url: url)) }
     }
 
     override func setupNavigationBar() {

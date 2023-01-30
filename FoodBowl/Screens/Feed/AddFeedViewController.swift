@@ -15,7 +15,6 @@ final class AddFeedViewController: BaseViewController {
 
     private lazy var pageViewController: UIPageViewController = {
         let vc = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
-
         return vc
     }()
 

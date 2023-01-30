@@ -8,16 +8,36 @@
 import UIKit
 
 extension UIColor {
+    static var mainBackground: UIColor {
+        return UIColor { traits -> UIColor in
+            traits.userInterfaceStyle == .dark ?
+                UIColor(hex: "#000000") :
+                UIColor(hex: "#ffffff")
+        }
+    }
+    
+    static var mainText: UIColor {
+        return UIColor { traits -> UIColor in
+            traits.userInterfaceStyle == .dark ?
+                UIColor(hex: "#ffffff") :
+                UIColor(hex: "#000000")
+        }
+    }
+
+    static var subText: UIColor {
+        return UIColor { traits -> UIColor in
+            traits.userInterfaceStyle == .dark ?
+                UIColor(hex: "#E2E2E2") :
+                UIColor(hex: "#494949")
+        }
+    }
+    
     static var mainPink: UIColor {
         return UIColor(hex: "#FF689F")
     }
 
     static var mainBlue: UIColor {
         return UIColor(hex: "#9999CC")
-    }
-
-    static var subText: UIColor {
-        return UIColor(hex: "#494949")
     }
 
     static var grey001: UIColor {
