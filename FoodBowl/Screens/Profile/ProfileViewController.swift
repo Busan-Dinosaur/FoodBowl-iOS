@@ -29,6 +29,7 @@ final class ProfileViewController: BaseViewController {
     let userNicknameLabel = UILabel().then {
         $0.font = UIFont.preferredFont(forTextStyle: .title1, weight: .bold)
         $0.text = "coby5502"
+        $0.textColor = .mainText
     }
 
     private lazy var plusButton = PlusButton().then {

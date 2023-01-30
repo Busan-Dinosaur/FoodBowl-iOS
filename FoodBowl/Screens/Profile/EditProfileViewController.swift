@@ -44,7 +44,7 @@ final class EditProfileViewController: BaseViewController {
             NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .body, weight: .regular)
         ]
 
-        $0.backgroundColor = .white
+        $0.backgroundColor = .clear
         $0.attributedPlaceholder = NSAttributedString(string: "8자 이내 한글 또는 영문", attributes: attributes)
         $0.autocapitalizationType = .none
         $0.layer.cornerRadius = 12

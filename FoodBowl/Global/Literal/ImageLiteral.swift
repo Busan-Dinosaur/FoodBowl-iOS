@@ -17,18 +17,13 @@ enum ImageLiteral {
 
     static var btnClose: UIImage { .load(systemName: "xmark") }
     static var btnSetting: UIImage { .load(name: "settings") }
-    static var btnSettingWhite: UIImage { .load(name: "settings_white") }
     static var btnBack: UIImage { .load(systemName: "chevron.backward") }
     static var btnDown: UIImage { .load(systemName: "chevron.down") }
     static var btnForward: UIImage { .load(systemName: "chevron.forward") }
     static var btnCamera: UIImage { .load(systemName: "camera") }
     static var btnSend: UIImage { .load(systemName: "paperplane") }
     static var btnBookmark: UIImage { .load(name: "bookmark") }
-    static var btnBookmarkWhite: UIImage { .load(name: "bookmark_line_white") }
-    static var btnBookmarkFill: UIImage { .load(name: "bookmark_black") }
-    static var btnBookmarkFillWhite: UIImage { .load(name: "bookmark_white") }
-    static var btnBookmarkOn: UIImage { .load(name: "bookmark_on") }
-    static var btnBookmarkOff: UIImage { .load(name: "bookmark_white") }
+    static var btnBookmarkFill: UIImage { .load(name: "bookmark_fill") }
     static var btnGps: UIImage { .load(name: "gps") }
     static var btnChat: UIImage { .load(name: "chat") }
     static var btnPlus: UIImage { .load(name: "plus.circle") }
@@ -93,14 +88,6 @@ extension UIImageView {
                     }
                 }
             }
-        }
-    }
-}
-
-extension UIImage {
-    func registerDarkImage(_ image: UIImage) {
-        if #available(iOS 12.0, *) {
-            imageAsset?.register(image, with: .init(userInterfaceStyle: .dark))
         }
     }
 }
