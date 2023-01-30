@@ -32,6 +32,7 @@ final class FindStoreViewController: BaseViewController {
         $0.delegate = self
         $0.dataSource = self
         $0.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 20, right: 0)
+        $0.backgroundColor = .clear
     }
 
     override func render() {

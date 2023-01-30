@@ -13,6 +13,7 @@ import YPImagePicker
 
 final class EditProfileViewController: BaseViewController {
     private var profileImage: UIImage = ImageLiteral.defaultProfile
+    private var maxLength = 10
 
     // MARK: - property
 
@@ -59,17 +60,21 @@ final class EditProfileViewController: BaseViewController {
         $0.label.text = "완료"
 
         let action = UIAction { [weak self] _ in
-            let tabbarViewController = UINavigationController(rootViewController: TabbarViewController())
-            tabbarViewController.modalPresentationStyle = .fullScreen
-            tabbarViewController.modalTransitionStyle = .crossDissolve
-            DispatchQueue.main.async {
-                self?.present(tabbarViewController, animated: true)
-            }
+            self?.tappedCompleteButton()
         }
         $0.addAction(action, for: .touchUpInside)
     }
 
     // MARK: - life cycle
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(textDidChange(_:)),
+                                               name: UITextField.textDidChangeNotification,
+                                               object: nicknameField)
+    }
 
     override func render() {
         view.addSubviews(profileImageView, nicknameLabel, nicknameField, signUpButton)
@@ -142,5 +147,34 @@ final class EditProfileViewController: BaseViewController {
             picker.dismiss(animated: true, completion: nil)
         }
         present(picker, animated: true, completion: nil)
+    }
+    
+    @objc private func textDidChange(_ notification: Notification) {
+        if let textField = notification.object as? UITextField {
+            if let text = textField.text {
+                if text.count > maxLength {
+                    textField.resignFirstResponder()
+                }
+                
+                if text.count >= maxLength {
+                    let index = text.index(text.startIndex, offsetBy: maxLength)
+                    let newString = text[text.startIndex ..< index]
+                    textField.text = String(newString)
+                }
+            }
+        }
+    }
+    
+    private func tappedCompleteButton() {
+        if nicknameField.text?.count != 0 {
+            navigationController?.popViewController(animated: true)
+        } else {
+            let alert = UIAlertController(title: nil, message: "사용할 닉네임을 입력해주세요", preferredStyle: .alert)
+            let cancel = UIAlertAction(title: "닫기", style: .cancel, handler: nil)
+            
+            alert.addAction(cancel)
+            
+            present(alert, animated: true, completion: nil)
+        }
     }
 }

@@ -23,7 +23,7 @@ final class FeedButton: UIButton {
     // MARK: - life cycle
 
     private func configUI() {
-        setImage(ImageLiteral.btnFeed.resize(to: CGSize(width: 24, height: 24)), for: .normal)
-        tintColor = .black
+        setImage(ImageLiteral.btnFeed.resize(to: CGSize(width: 24, height: 24)).withRenderingMode(.alwaysTemplate), for: .normal)
+        tintColor = .mainText
     }
 }
