@@ -154,7 +154,7 @@ final class ProfileViewController: BaseViewController {
         }
         
         let storeHandler = { [weak self] in
-            let storeFeedViewController = StoreFeedViewController(isMap: false)
+            let storeFeedViewController = StoreFeedViewController()
             storeFeedViewController.title = "coby5502"
             self?.navigationController?.pushViewController(storeFeedViewController, animated: true)
         }

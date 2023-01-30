@@ -95,7 +95,7 @@ extension SearchViewController: UICollectionViewDataSource, UICollectionViewDele
     }
 
     func collectionView(_: UICollectionView, didSelectItemAt _: IndexPath) {
-        let storeFeedViewController = StoreFeedViewController(isMap: false)
+        let storeFeedViewController = StoreFeedViewController()
         storeFeedViewController.title = "추천 게시물"
         navigationController?.pushViewController(storeFeedViewController, animated: true)
     }

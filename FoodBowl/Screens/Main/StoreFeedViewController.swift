@@ -11,18 +11,6 @@ import SnapKit
 import Then
 
 final class StoreFeedViewController: BaseViewController {
-    var isMap: Bool
-
-    init(isMap: Bool) {
-        self.isMap = isMap
-        super.init(nibName: nil, bundle: nil)
-    }
-
-    @available(*, unavailable)
-    required init?(coder _: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
     private enum Size {
         static let collectionInset = UIEdgeInsets(top: 0,
                                                   left: 0,
@@ -72,15 +60,6 @@ final class StoreFeedViewController: BaseViewController {
         }
     }
 
-    override func setupNavigationBar() {
-        super.setupNavigationBar()
-        if isMap {
-            let leftOffsetCloseButton = removeBarButtonItemOffset(with: closeButton, offsetX: 10)
-            let closeButton = makeBarButtonItem(with: leftOffsetCloseButton)
-            navigationItem.leftBarButtonItem = closeButton
-        }
-    }
-
     private func setupRefreshControl() {
         let action = UIAction { [weak self] _ in
             self?.loadData()
@@ -122,7 +101,7 @@ extension StoreFeedViewController: UICollectionViewDataSource, UICollectionViewD
         }
 
         let storeButtonAction = UIAction { [weak self] _ in
-            let storeFeedViewController = StoreFeedViewController(isMap: false)
+            let storeFeedViewController = StoreFeedViewController()
             self?.navigationController?.pushViewController(storeFeedViewController, animated: true)
         }
 

@@ -120,7 +120,7 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
         }
 
         let storeButtonAction = UIAction { [weak self] _ in
-            let storeFeedViewController = StoreFeedViewController(isMap: false)
+            let storeFeedViewController = StoreFeedViewController()
             storeFeedViewController.title = "틈새라면"
             self?.navigationController?.pushViewController(storeFeedViewController, animated: true)
         }
