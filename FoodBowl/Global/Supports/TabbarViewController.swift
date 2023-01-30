@@ -40,7 +40,7 @@ final class TabbarViewController: UITabBarController {
         if #available(iOS 13.0, *) {
             let tabBarAppearance: UITabBarAppearance = .init()
             tabBarAppearance.configureWithDefaultBackground()
-            tabBarAppearance.backgroundColor = .white
+            tabBarAppearance.backgroundColor = .mainBackground
             UITabBar.appearance().standardAppearance = tabBarAppearance
 
             if #available(iOS 15.0, *) {

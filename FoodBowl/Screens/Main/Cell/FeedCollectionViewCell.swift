@@ -33,9 +33,10 @@ final class FeedCollectionViewCell: BaseCollectionViewCell {
 
     lazy var commentLabel = UILabel().then {
         $0.font = UIFont.preferredFont(forTextStyle: .subheadline, weight: .light)
+        $0.textColor = .mainText
         $0.numberOfLines = 2
-        let tap = UITapGestureRecognizer(target: self, action: #selector(invalidate))
         $0.isUserInteractionEnabled = true
+        let tap = UITapGestureRecognizer(target: self, action: #selector(invalidate))
         $0.addGestureRecognizer(tap)
     }
 
@@ -116,7 +117,7 @@ final class FeedCollectionViewCell: BaseCollectionViewCell {
     }
 
     override func configUI() {
-        super.configUI()
+        backgroundColor = .mainBackground
         feedImageView.model = [ImageLiteral.food1, ImageLiteral.food2, ImageLiteral.food3]
     }
 

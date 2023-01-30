@@ -34,12 +34,14 @@ final class MainViewController: BaseViewController {
         $0.delegate = self
         $0.showsVerticalScrollIndicator = false
         $0.register(FeedCollectionViewCell.self, forCellWithReuseIdentifier: FeedCollectionViewCell.className)
+        $0.backgroundColor = .mainBackground
     }
 
     private let emptyFeedView = EmptyFeedView()
 
     private let appLogoView = UILabel().then {
         $0.font = UIFont.preferredFont(forTextStyle: .title1, weight: .bold)
+        $0.textColor = .mainText
         $0.text = "FoodBowl"
     }
 
@@ -85,7 +87,7 @@ final class MainViewController: BaseViewController {
             self?.loadData()
         }
         refreshControl.addAction(action, for: .valueChanged)
-        refreshControl.tintColor = .lightGray
+        refreshControl.tintColor = .grey002
         listCollectionView.refreshControl = refreshControl
     }
 
