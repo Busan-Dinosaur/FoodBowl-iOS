@@ -61,4 +61,8 @@ final class UserResultTableViewCell: BaseTableViewCell {
             $0.height.equalTo(30)
         }
     }
+    
+    override func configUI() {
+        backgroundColor = .mainBackground
+    }
 }

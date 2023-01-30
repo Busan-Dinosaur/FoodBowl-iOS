@@ -19,6 +19,7 @@ final class SetStoreViewController: BaseViewController {
     private let guideLabel = UILabel().then {
         $0.text = "게시물을 작성할 가게를 찾아보세요."
         $0.font = UIFont.preferredFont(forTextStyle: .title3, weight: .medium)
+        $0.textColor = .mainText
     }
 
     lazy var searchBarButton = SearchBarButton().then {

@@ -27,6 +27,7 @@ final class CategoryCollectionViewCell: BaseCollectionViewCell {
 
     let categoryLabel = UILabel().then {
         $0.font = UIFont.preferredFont(forTextStyle: .headline, weight: .light)
+        $0.textColor = .black
     }
 
     override func render() {
