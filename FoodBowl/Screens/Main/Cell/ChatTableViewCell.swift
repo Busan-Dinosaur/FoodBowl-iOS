@@ -37,9 +37,8 @@ final class ChatTableViewCell: BaseTableViewCell {
         $0.numberOfLines = 0
     }
 
-    let optionButton = UIImageView().then {
-        $0.image = ImageLiteral.btnMore.resize(to: CGSize(width: 12, height: 12))
-        $0.tintColor = .subText
+    let optionButton = UIButton().then {
+        $0.setImage(ImageLiteral.btnMore.resize(to: CGSize(width: 12, height: 12)), for: .normal)
     }
 
     // MARK: - func
