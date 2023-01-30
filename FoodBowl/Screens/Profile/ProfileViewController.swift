@@ -152,6 +152,15 @@ final class ProfileViewController: BaseViewController {
         } else {
             userProfileView.editButton.isHidden = true
         }
+        
+        let storeHandler = { [weak self] in
+            let storeFeedViewController = StoreFeedViewController(isMap: false)
+            storeFeedViewController.title = "coby5502"
+            self?.navigationController?.pushViewController(storeFeedViewController, animated: true)
+        }
+        
+        vc1.handler = storeHandler
+        vc2.handler = storeHandler
     }
 
     override func render() {

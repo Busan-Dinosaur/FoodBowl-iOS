@@ -187,6 +187,7 @@ final class MapViewController: BaseViewController {
                 glyphImage: ImageLiteral.korean,
                 handler: { [weak self] in
                     let storeFeedViewController = StoreFeedViewController(isMap: true)
+                    storeFeedViewController.title = "틈새라면"
                     let navigationController = UINavigationController(rootViewController: storeFeedViewController)
                     navigationController.modalPresentationStyle = .fullScreen
                     DispatchQueue.main.async {
@@ -201,6 +202,7 @@ final class MapViewController: BaseViewController {
                 glyphImage: ImageLiteral.salad,
                 handler: { [weak self] in
                     let storeFeedViewController = StoreFeedViewController(isMap: true)
+                    storeFeedViewController.title = "틈새라면"
                     let navigationController = UINavigationController(rootViewController: storeFeedViewController)
                     navigationController.modalPresentationStyle = .fullScreen
                     DispatchQueue.main.async {
@@ -215,6 +217,7 @@ final class MapViewController: BaseViewController {
                 glyphImage: ImageLiteral.chinese,
                 handler: { [weak self] in
                     let storeFeedViewController = StoreFeedViewController(isMap: true)
+                    storeFeedViewController.title = "틈새라면"
                     let navigationController = UINavigationController(rootViewController: storeFeedViewController)
                     navigationController.modalPresentationStyle = .fullScreen
                     DispatchQueue.main.async {
@@ -229,6 +232,7 @@ final class MapViewController: BaseViewController {
                 glyphImage: ImageLiteral.japanese,
                 handler: { [weak self] in
                     let storeFeedViewController = StoreFeedViewController(isMap: true)
+                    storeFeedViewController.title = "틈새라면"
                     let navigationController = UINavigationController(rootViewController: storeFeedViewController)
                     navigationController.modalPresentationStyle = .fullScreen
                     DispatchQueue.main.async {

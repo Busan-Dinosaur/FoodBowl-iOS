@@ -11,6 +11,8 @@ import SnapKit
 import Then
 
 final class UserFeedViewController: BaseViewController {
+    var handler: (() -> Void)?
+    
     private enum Size {
         static let cellWidth: CGFloat = (UIScreen.main.bounds.size.width - 8) / 3
         static let cellHeight: CGFloat = cellWidth
@@ -68,5 +70,7 @@ extension UserFeedViewController: UICollectionViewDataSource, UICollectionViewDe
         return cell
     }
 
-    func collectionView(_: UICollectionView, didSelectItemAt _: IndexPath) {}
+    func collectionView(_: UICollectionView, didSelectItemAt _: IndexPath) {
+        handler!()
+    }
 }
