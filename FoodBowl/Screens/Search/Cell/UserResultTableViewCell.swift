@@ -21,7 +21,7 @@ final class UserResultTableViewCell: BaseTableViewCell {
 
     let userNameLabel = UILabel().then {
         $0.font = UIFont.preferredFont(forTextStyle: .subheadline, weight: .medium)
-        $0.textColor = .black
+        $0.textColor = .mainText
         $0.text = "홍길동"
     }
 
@@ -60,5 +60,9 @@ final class UserResultTableViewCell: BaseTableViewCell {
             $0.width.equalTo(60)
             $0.height.equalTo(30)
         }
+    }
+    
+    override func configUI() {
+        backgroundColor = .clear
     }
 }

@@ -14,17 +14,19 @@ final class UserInfoButton: UIButton {
     // MARK: - property
 
     let numberLabel = UILabel().then {
-        $0.font = UIFont.preferredFont(forTextStyle: .headline, weight: .medium)
+        $0.font = UIFont.preferredFont(forTextStyle: .headline, weight: .regular)
         $0.textColor = .black
         $0.textAlignment = .center
         $0.text = "100"
+        $0.textColor = .mainText
     }
 
     let infoLabel = UILabel().then {
-        $0.font = UIFont.preferredFont(forTextStyle: .headline, weight: .medium)
+        $0.font = UIFont.preferredFont(forTextStyle: .headline, weight: .regular)
         $0.textColor = .black
         $0.textAlignment = .center
         $0.text = "팔로잉"
+        $0.textColor = .mainText
     }
 
     // MARK: - init

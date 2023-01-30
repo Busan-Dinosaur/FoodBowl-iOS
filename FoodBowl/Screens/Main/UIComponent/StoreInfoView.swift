@@ -15,7 +15,7 @@ final class StoreInfoView: UIView {
 
     let storeNameButton = UIButton().then {
         $0.setTitle("틈새라면 홍대점", for: .normal)
-        $0.setTitleColor(.black, for: .normal)
+        $0.setTitleColor(.mainText, for: .normal)
         $0.titleLabel?.font = .preferredFont(forTextStyle: .subheadline, weight: .medium)
     }
 

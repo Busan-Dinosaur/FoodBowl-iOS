@@ -14,7 +14,7 @@ final class FollowButton: UIButton {
     override var isSelected: Bool {
         didSet {
             if isSelected {
-                backgroundColor = .grey002
+                backgroundColor = .grey001
                 label.text = "팔로잉"
             } else {
                 backgroundColor = .mainPink

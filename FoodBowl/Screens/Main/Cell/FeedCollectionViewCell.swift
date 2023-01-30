@@ -33,14 +33,16 @@ final class FeedCollectionViewCell: BaseCollectionViewCell {
 
     lazy var commentLabel = UILabel().then {
         $0.font = UIFont.preferredFont(forTextStyle: .subheadline, weight: .light)
+        $0.textColor = .mainText
         $0.numberOfLines = 2
-        let tap = UITapGestureRecognizer(target: self, action: #selector(invalidate))
         $0.isUserInteractionEnabled = true
+        let tap = UITapGestureRecognizer(target: self, action: #selector(invalidate))
         $0.addGestureRecognizer(tap)
     }
 
     let bookmarkButton = UIButton().then {
-        $0.setImage(ImageLiteral.btnBookmark.resize(to: CGSize(width: 20, height: 20)), for: .normal)
+        $0.setImage(ImageLiteral.btnBookmark.resize(to: CGSize(width: 20, height: 20)).withRenderingMode(.alwaysTemplate), for: .normal)
+        $0.tintColor = .mainText
         $0.setTitle("  4", for: .normal)
         $0.setTitleColor(.subText, for: .normal)
         $0.titleLabel?.font = .preferredFont(forTextStyle: .footnote, weight: .regular)
@@ -48,7 +50,8 @@ final class FeedCollectionViewCell: BaseCollectionViewCell {
     }
 
     let commentButton = UIButton().then {
-        $0.setImage(ImageLiteral.btnChat.resize(to: CGSize(width: 20, height: 20)), for: .normal)
+        $0.setImage(ImageLiteral.btnChat.resize(to: CGSize(width: 20, height: 20)).withRenderingMode(.alwaysTemplate), for: .normal)
+        $0.tintColor = .mainText
         $0.setTitle("  51", for: .normal)
         $0.setTitleColor(.subText, for: .normal)
         $0.titleLabel?.font = .preferredFont(forTextStyle: .footnote, weight: .regular)
@@ -116,7 +119,6 @@ final class FeedCollectionViewCell: BaseCollectionViewCell {
     }
 
     override func configUI() {
-        super.configUI()
         feedImageView.model = [ImageLiteral.food1, ImageLiteral.food2, ImageLiteral.food3]
     }
 

@@ -23,7 +23,7 @@ final class MoreButton: UIButton {
     // MARK: - life cycle
 
     private func configUI() {
-        setImage(ImageLiteral.btnMore.resize(to: CGSize(width: 20, height: 20)), for: .normal)
-        tintColor = .black
+        setImage(ImageLiteral.btnMore.resize(to: CGSize(width: 20, height: 20)).withRenderingMode(.alwaysTemplate), for: .normal)
+        tintColor = .mainText
     }
 }

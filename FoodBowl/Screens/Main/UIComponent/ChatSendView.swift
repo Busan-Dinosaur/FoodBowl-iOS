@@ -70,6 +70,6 @@ final class ChatSendView: UIView {
         layer.borderWidth = 0.3
         layer.borderColor = UIColor.subText.cgColor
         layer.cornerRadius = 20
-        backgroundColor = .white
+        backgroundColor = .mainBackground
     }
 }

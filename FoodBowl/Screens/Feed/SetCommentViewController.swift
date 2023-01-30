@@ -31,6 +31,7 @@ final class SetCommentViewController: BaseViewController {
     private let guideLabel = UILabel().then {
         $0.text = "후기를 작성해주세요."
         $0.font = UIFont.preferredFont(forTextStyle: .title3, weight: .medium)
+        $0.textColor = .mainText
     }
 
     private let collectionViewFlowLayout = UICollectionViewFlowLayout().then {
@@ -45,6 +46,7 @@ final class SetCommentViewController: BaseViewController {
         $0.delegate = self
         $0.showsHorizontalScrollIndicator = false
         $0.register(FeedThumnailCollectionViewCell.self, forCellWithReuseIdentifier: FeedThumnailCollectionViewCell.className)
+        $0.backgroundColor = .clear
     }
 
     lazy var commentTextView = UITextView().then {
@@ -59,6 +61,7 @@ final class SetCommentViewController: BaseViewController {
         $0.isScrollEnabled = true
         $0.isUserInteractionEnabled = true
         $0.makeBorderLayer(color: .grey002)
+        $0.backgroundColor = .clear
     }
 
     // MARK: - life cycle

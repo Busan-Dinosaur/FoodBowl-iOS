@@ -54,7 +54,7 @@ final class SearchBarButton: UIButton {
     }
 
     private func configUI() {
-        backgroundColor = .white
+        backgroundColor = .mainBackground
         makeBorderLayer(color: .grey002)
     }
 }

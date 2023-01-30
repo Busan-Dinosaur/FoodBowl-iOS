@@ -29,6 +29,7 @@ final class ProfileViewController: BaseViewController {
     let userNicknameLabel = UILabel().then {
         $0.font = UIFont.preferredFont(forTextStyle: .title1, weight: .bold)
         $0.text = "coby5502"
+        $0.textColor = .mainText
     }
 
     private lazy var plusButton = PlusButton().then {
@@ -110,14 +111,14 @@ final class ProfileViewController: BaseViewController {
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.setTitleTextAttributes(
             [
-                NSAttributedString.Key.foregroundColor: UIColor.grey001,
+                NSAttributedString.Key.foregroundColor: UIColor.subText,
                 .font: UIFont.preferredFont(forTextStyle: .headline, weight: .medium)
             ],
             for: .normal
         )
         $0.setTitleTextAttributes(
             [
-                NSAttributedString.Key.foregroundColor: UIColor.black,
+                NSAttributedString.Key.foregroundColor: UIColor.mainText,
                 .font: UIFont.preferredFont(forTextStyle: .headline, weight: .semibold)
             ],
             for: .selected
@@ -195,7 +196,7 @@ final class ProfileViewController: BaseViewController {
         }
 
         pageViewController.view.snp.makeConstraints {
-            $0.top.equalTo(segmentedControl.snp.bottom)
+            $0.top.equalTo(segmentedControl.snp.bottom).offset(4)
             $0.leading.trailing.bottom.equalToSuperview()
         }
     }

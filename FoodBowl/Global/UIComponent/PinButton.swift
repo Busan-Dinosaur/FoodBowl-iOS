@@ -23,7 +23,7 @@ final class PinButton: UIButton {
     // MARK: - life cycle
 
     private func configUI() {
-        setImage(ImageLiteral.btnPin.resize(to: CGSize(width: 30, height: 30)), for: .normal)
-        tintColor = .black
+        setImage(ImageLiteral.btnPin.resize(to: CGSize(width: 30, height: 30)).withRenderingMode(.alwaysTemplate), for: .normal)
+        tintColor = .mainText
     }
 }

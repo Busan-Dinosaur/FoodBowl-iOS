@@ -15,7 +15,7 @@ final class SelectedStoreView: UIView {
 
     let storeNameLabel = UILabel().then {
         $0.font = UIFont.preferredFont(forTextStyle: .subheadline, weight: .medium)
-        $0.textColor = .black
+        $0.textColor = .mainText
         $0.text = "틈새라면 홍대점"
     }
 
@@ -65,7 +65,7 @@ final class SelectedStoreView: UIView {
     }
 
     private func configUI() {
-        backgroundColor = .white
+        backgroundColor = .clear
         makeBorderLayer(color: .grey002)
     }
 }

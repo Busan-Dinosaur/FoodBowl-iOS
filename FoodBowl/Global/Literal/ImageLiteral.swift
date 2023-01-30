@@ -23,9 +23,7 @@ enum ImageLiteral {
     static var btnCamera: UIImage { .load(systemName: "camera") }
     static var btnSend: UIImage { .load(systemName: "paperplane") }
     static var btnBookmark: UIImage { .load(name: "bookmark") }
-    static var btnBookmarkBlack: UIImage { .load(name: "bookmark_black") }
-    static var btnBookmarkOn: UIImage { .load(name: "bookmark_on") }
-    static var btnBookmarkOff: UIImage { .load(name: "bookmark_off") }
+    static var btnBookmarkFill: UIImage { .load(name: "bookmark_fill") }
     static var btnGps: UIImage { .load(name: "gps") }
     static var btnChat: UIImage { .load(name: "chat") }
     static var btnPlus: UIImage { .load(name: "plus.circle") }

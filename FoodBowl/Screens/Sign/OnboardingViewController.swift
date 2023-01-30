@@ -16,15 +16,20 @@ final class OnboardingViewController: BaseViewController {
 
     private let appLogoView = UILabel().then {
         $0.font = UIFont.preferredFont(forTextStyle: .largeTitle, weight: .bold)
+        $0.textColor = .mainText
         $0.text = "FoodBowl"
     }
 
     private let guideLabel = UILabel().then {
-        $0.text = "친구들과 함께 만들어가는 맛집지도"
         $0.font = UIFont.preferredFont(forTextStyle: .title3, weight: .medium)
+        $0.textColor = .mainText
+        $0.text = "친구들과 함께 만들어가는 맛집지도"
     }
 
-    private lazy var appleLoginButton = ASAuthorizationAppleIDButton(type: .signIn, style: .black).then {
+    private lazy var appleLoginButton = ASAuthorizationAppleIDButton(
+        type: .signIn,
+        style: traitCollection.userInterfaceStyle == .dark ? .white : .black
+    ).then {
         let action = UIAction { [weak self] _ in
             let agreementViewController = AgreementViewController()
             self?.navigationController?.pushViewController(agreementViewController, animated: true)

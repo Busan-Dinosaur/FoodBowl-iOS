@@ -46,11 +46,11 @@ final class SearchViewController: BaseViewController {
     }
 
     private lazy var listCollectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewFlowLayout).then {
-        $0.backgroundColor = .clear
         $0.dataSource = self
         $0.delegate = self
         $0.showsVerticalScrollIndicator = false
         $0.register(FeedThumnailCollectionViewCell.self, forCellWithReuseIdentifier: FeedThumnailCollectionViewCell.className)
+        $0.backgroundColor = .clear
     }
 
     // MARK: - life cycle

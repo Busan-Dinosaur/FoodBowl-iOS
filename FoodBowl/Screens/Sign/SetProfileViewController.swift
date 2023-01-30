@@ -29,6 +29,7 @@ final class SetProfileViewController: BaseViewController {
     private let nicknameLabel = UILabel().then {
         $0.text = "닉네임"
         $0.font = UIFont.preferredFont(forTextStyle: .body, weight: .medium)
+        $0.textColor = .mainText
     }
 
     private lazy var nicknameField = UITextField().then {
@@ -37,7 +38,7 @@ final class SetProfileViewController: BaseViewController {
             NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .body, weight: .regular)
         ]
 
-        $0.backgroundColor = .white
+        $0.backgroundColor = .clear
         $0.attributedPlaceholder = NSAttributedString(string: "10자 이내 한글 또는 영문", attributes: attributes)
         $0.autocapitalizationType = .none
         $0.layer.cornerRadius = 12
@@ -54,12 +55,7 @@ final class SetProfileViewController: BaseViewController {
         $0.label.text = "완료"
 
         let action = UIAction { [weak self] _ in
-            let tabbarViewController = UINavigationController(rootViewController: TabbarViewController())
-            tabbarViewController.modalPresentationStyle = .fullScreen
-            tabbarViewController.modalTransitionStyle = .crossDissolve
-            DispatchQueue.main.async {
-                self?.present(tabbarViewController, animated: true)
-            }
+            self?.tappedCompleteButton()
         }
         $0.addAction(action, for: .touchUpInside)
     }
@@ -158,6 +154,24 @@ final class SetProfileViewController: BaseViewController {
                     textField.text = String(newString)
                 }
             }
+        }
+    }
+    
+    private func tappedCompleteButton() {
+        if nicknameField.text?.count != 0 {
+            let tabbarViewController = UINavigationController(rootViewController: TabbarViewController())
+            tabbarViewController.modalPresentationStyle = .fullScreen
+            tabbarViewController.modalTransitionStyle = .crossDissolve
+            DispatchQueue.main.async {
+                self.present(tabbarViewController, animated: true)
+            }
+        } else {
+            let alert = UIAlertController(title: nil, message: "사용할 닉네임을 입력해주세요", preferredStyle: .alert)
+            let cancel = UIAlertAction(title: "닫기", style: .cancel, handler: nil)
+            
+            alert.addAction(cancel)
+            
+            present(alert, animated: true, completion: nil)
         }
     }
 }

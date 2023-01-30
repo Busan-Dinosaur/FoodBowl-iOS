@@ -31,6 +31,7 @@ final class SetPhotoViewController: BaseViewController {
     private let guideLabel = UILabel().then {
         $0.text = "음식 사진을 등록해주세요."
         $0.font = UIFont.preferredFont(forTextStyle: .title3, weight: .medium)
+        $0.textColor = .mainText
     }
 
     private let collectionViewFlowLayout = UICollectionViewFlowLayout().then {
@@ -47,6 +48,7 @@ final class SetPhotoViewController: BaseViewController {
         $0.showsVerticalScrollIndicator = false
         $0.register(PhotoCollectionViewCell.self, forCellWithReuseIdentifier: PhotoCollectionViewCell.className)
         $0.register(FeedThumnailCollectionViewCell.self, forCellWithReuseIdentifier: FeedThumnailCollectionViewCell.className)
+        $0.backgroundColor = .clear
     }
 
     // MARK: - life cycle

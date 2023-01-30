@@ -94,7 +94,8 @@ final class MapViewController: BaseViewController {
     private lazy var bookMarkButton = UIButton().then {
         $0.backgroundColor = .white
         $0.makeBorderLayer(color: .grey002)
-        $0.setImage(ImageLiteral.btnBookmarkOff, for: .normal)
+        $0.setImage(ImageLiteral.btnBookmarkFill.withRenderingMode(.alwaysTemplate), for: .normal)
+        $0.tintColor = .black
         $0.imageEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         let action = UIAction { [weak self] _ in
             self?.findMyBookmarks()
@@ -171,11 +172,11 @@ final class MapViewController: BaseViewController {
 
     private func findMyBookmarks() {
         if isBookMark {
-            bookMarkButton.backgroundColor = .white
-            bookMarkButton.setImage(ImageLiteral.btnBookmarkOff, for: .normal)
+            bookMarkButton.backgroundColor = .black
+            bookMarkButton.tintColor = .white
         } else {
-            bookMarkButton.backgroundColor = .mainBlue
-            bookMarkButton.setImage(ImageLiteral.btnBookmarkOn, for: .normal)
+            bookMarkButton.backgroundColor = .white
+            bookMarkButton.tintColor = .black
         }
         isBookMark = !isBookMark
     }

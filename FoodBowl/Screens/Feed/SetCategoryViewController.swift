@@ -19,6 +19,7 @@ final class SetCategoryViewController: BaseViewController {
     private let guideLabel = UILabel().then {
         $0.text = "음식의 카테고리를 선택해주세요."
         $0.font = UIFont.preferredFont(forTextStyle: .title3, weight: .medium)
+        $0.textColor = .mainText
     }
 
     private lazy var listCollectionView = UICollectionView(frame: .zero, collectionViewLayout: createTagLayout()).then {
@@ -28,6 +29,7 @@ final class SetCategoryViewController: BaseViewController {
         $0.showsVerticalScrollIndicator = false
         $0.allowsMultipleSelection = true
         $0.register(CategoryCollectionViewCell.self, forCellWithReuseIdentifier: CategoryCollectionViewCell.className)
+        $0.backgroundColor = .clear
     }
 
     // MARK: - life cycle

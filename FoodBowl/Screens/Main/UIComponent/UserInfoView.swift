@@ -21,7 +21,7 @@ final class UserInfoView: UIView {
 
     let userNameButton = UIButton().then {
         $0.setTitle("홍길동", for: .normal)
-        $0.setTitleColor(.black, for: .normal)
+        $0.setTitleColor(.mainText, for: .normal)
         $0.titleLabel?.font = .preferredFont(forTextStyle: .subheadline, weight: .medium)
     }
 

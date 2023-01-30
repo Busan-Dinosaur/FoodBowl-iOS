@@ -34,12 +34,14 @@ final class MainViewController: BaseViewController {
         $0.delegate = self
         $0.showsVerticalScrollIndicator = false
         $0.register(FeedCollectionViewCell.self, forCellWithReuseIdentifier: FeedCollectionViewCell.className)
+        $0.backgroundColor = .clear
     }
 
     private let emptyFeedView = EmptyFeedView()
 
     private let appLogoView = UILabel().then {
         $0.font = UIFont.preferredFont(forTextStyle: .title1, weight: .bold)
+        $0.textColor = .mainText
         $0.text = "FoodBowl"
     }
 
@@ -85,7 +87,7 @@ final class MainViewController: BaseViewController {
             self?.loadData()
         }
         refreshControl.addAction(action, for: .valueChanged)
-        refreshControl.tintColor = .lightGray
+        refreshControl.tintColor = .grey002
         listCollectionView.refreshControl = refreshControl
     }
 
@@ -125,6 +127,17 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
             storeFeedViewController.title = "틈새라면"
             self?.navigationController?.pushViewController(storeFeedViewController, animated: true)
         }
+        
+        let bookmarkButtonAction = UIAction { [weak self] _ in
+            if cell.bookmarkButton.isSelected {
+                cell.bookmarkButton.setImage(ImageLiteral.btnBookmark.resize(to: CGSize(width: 20, height: 20)).withRenderingMode(.alwaysTemplate), for: .normal)
+                cell.bookmarkButton.setTitle("  4", for: .normal)
+            } else {
+                cell.bookmarkButton.setImage(ImageLiteral.btnBookmarkFill.resize(to: CGSize(width: 20, height: 20)).withRenderingMode(.alwaysTemplate), for: .normal)
+                cell.bookmarkButton.setTitle("  5", for: .normal)
+            }
+            cell.bookmarkButton.isSelected = !cell.bookmarkButton.isSelected
+        }
 
         let commentButtonAction = UIAction { [weak self] _ in
             let feedCommentViewController = ChatViewController()
@@ -153,6 +166,7 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
         cell.userInfoView.userNameButton.addAction(userButtonAction, for: .touchUpInside)
         cell.storeInfoView.mapButton.addAction(mapButtonAction, for: .touchUpInside)
         cell.storeInfoView.storeNameButton.addAction(storeButtonAction, for: .touchUpInside)
+        cell.bookmarkButton.addAction(bookmarkButtonAction, for: .touchUpInside)
         cell.commentButton.addAction(commentButtonAction, for: .touchUpInside)
         cell.userInfoView.followButton.addAction(followButtonAction, for: .touchUpInside)
         cell.optionButton.addAction(optionButtonAction, for: .touchUpInside)
