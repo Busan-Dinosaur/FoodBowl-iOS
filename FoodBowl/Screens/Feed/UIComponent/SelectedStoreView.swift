@@ -65,7 +65,7 @@ final class SelectedStoreView: UIView {
     }
 
     private func configUI() {
-        backgroundColor = .mainBackground
+        backgroundColor = .clear
         makeBorderLayer(color: .grey002)
     }
 }

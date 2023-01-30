@@ -50,6 +50,6 @@ final class StoreInfoTableViewCell: BaseTableViewCell {
     }
     
     override func configUI() {
-        backgroundColor = .mainBackground
+        backgroundColor = .clear
     }
 }

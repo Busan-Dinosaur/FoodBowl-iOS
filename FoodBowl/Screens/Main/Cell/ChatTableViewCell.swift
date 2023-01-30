@@ -76,6 +76,6 @@ final class ChatTableViewCell: BaseTableViewCell {
     }
     
     override func configUI() {
-        backgroundColor = .mainBackground
+        backgroundColor = .clear
     }
 }

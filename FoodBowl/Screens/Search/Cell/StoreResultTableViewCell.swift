@@ -15,7 +15,7 @@ final class StoreResultTableViewCell: BaseTableViewCell {
 
     let storeNameLabel = UILabel().then {
         $0.font = UIFont.preferredFont(forTextStyle: .subheadline, weight: .medium)
-        $0.textColor = .black
+        $0.textColor = .mainText
     }
 
     let storeFeedLabel = UILabel().then {
@@ -25,7 +25,7 @@ final class StoreResultTableViewCell: BaseTableViewCell {
 
     let storeDistanceLabel = UILabel().then {
         $0.font = UIFont.preferredFont(forTextStyle: .caption1, weight: .light)
-        $0.textColor = .black
+        $0.textColor = .mainText
     }
 
     // MARK: - func
@@ -50,6 +50,6 @@ final class StoreResultTableViewCell: BaseTableViewCell {
     }
     
     override func configUI() {
-        backgroundColor = .mainBackground
+        backgroundColor = .clear
     }
 }

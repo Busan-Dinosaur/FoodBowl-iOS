@@ -38,7 +38,7 @@ final class SetProfileViewController: BaseViewController {
             NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .body, weight: .regular)
         ]
 
-        $0.backgroundColor = .mainBackground
+        $0.backgroundColor = .clear
         $0.attributedPlaceholder = NSAttributedString(string: "10자 이내 한글 또는 영문", attributes: attributes)
         $0.autocapitalizationType = .none
         $0.layer.cornerRadius = 12

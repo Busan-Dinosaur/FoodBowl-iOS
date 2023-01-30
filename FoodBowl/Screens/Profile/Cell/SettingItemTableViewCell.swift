@@ -37,6 +37,6 @@ final class SettingItemTableViewCell: BaseTableViewCell {
     }
     
     override func configUI() {
-        backgroundColor = .mainBackground
+        backgroundColor = .clear
     }
 }
