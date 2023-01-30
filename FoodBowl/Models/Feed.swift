@@ -12,7 +12,7 @@ import UIKit
 struct Feed {
     var id: String?
     var store: Place?
-    var category: Category?
+    var categories: [Category]?
     var photoes: [UIImage]?
     var comment: String?
 }
@@ -20,7 +20,6 @@ struct Feed {
 // MARK: - Category
 
 enum Category: String, CaseIterable {
-    case all = "전체"
     case vegan = "비건"
     case cafe = "카페"
     case korean = "한식"

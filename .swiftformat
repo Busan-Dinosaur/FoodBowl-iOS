@@ -1,4 +1,13 @@
 --swiftversion 5.0
---commas inline
+
+# format options
+--indent 4
 --self init-only
---exclude Pods
+--commas inline
+--trimwhitespace nonblank-lines
+--hexliteralcase lowercase
+
+# file options
+--exclude Pods, FoodBowl/Global/Supports/AppDelegate.swift, FoodBowl/Global/Supports/SceneDelegate.swift, FoodBowl/Global/Extensions/String+Extension.swift
+
+# rules

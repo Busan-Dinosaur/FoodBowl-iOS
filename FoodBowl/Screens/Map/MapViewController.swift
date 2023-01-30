@@ -20,7 +20,11 @@ final class MapViewController: BaseViewController {
                                                   right: 20)
     }
 
+    private var isBookMark: Bool = false
+
     private let categories = Category.allCases
+
+    private var marks: [Marker]?
 
     private lazy var locationManager: CLLocationManager = {
         let manager = CLLocationManager()
@@ -37,10 +41,14 @@ final class MapViewController: BaseViewController {
         $0.setUserTrackingMode(.follow, animated: true)
         $0.isZoomEnabled = true
         $0.showsCompass = false
-
-        let userTrackingButton = MKUserTrackingButton(mapView: $0)
-        userTrackingButton.frame.origin = CGPoint(x: self.view.frame.maxX - 60, y: self.view.frame.maxY - 180)
-        $0.addSubview(userTrackingButton)
+        $0.register(
+            MapItemAnnotationView.self,
+            forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier
+        )
+        $0.register(
+            ClusterAnnotationView.self,
+            forAnnotationViewWithReuseIdentifier: MKMapViewDefaultClusterAnnotationViewReuseIdentifier
+        )
     }
 
     private lazy var searchBarButton = SearchBarButton().then {
@@ -68,7 +76,30 @@ final class MapViewController: BaseViewController {
         $0.dataSource = self
         $0.delegate = self
         $0.showsHorizontalScrollIndicator = false
+        $0.allowsMultipleSelection = true
         $0.register(CategoryCollectionViewCell.self, forCellWithReuseIdentifier: CategoryCollectionViewCell.className)
+    }
+
+    private lazy var gpsButton = UIButton().then {
+        $0.backgroundColor = .white
+        $0.makeBorderLayer(color: .grey002)
+        $0.setImage(ImageLiteral.btnGps, for: .normal)
+        $0.imageEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        let action = UIAction { [weak self] _ in
+            self?.findMyLocation()
+        }
+        $0.addAction(action, for: .touchUpInside)
+    }
+
+    private lazy var bookMarkButton = UIButton().then {
+        $0.backgroundColor = .white
+        $0.makeBorderLayer(color: .grey002)
+        $0.setImage(ImageLiteral.btnBookmarkOff, for: .normal)
+        $0.imageEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        let action = UIAction { [weak self] _ in
+            self?.findMyBookmarks()
+        }
+        $0.addAction(action, for: .touchUpInside)
     }
 
     override func viewDidLoad() {
@@ -82,15 +113,8 @@ final class MapViewController: BaseViewController {
         locationManager.stopUpdatingLocation()
     }
 
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        let indexPath = IndexPath(item: 0, section: 0)
-        listCollectionView.selectItem(at: indexPath, animated: false, scrollPosition: UICollectionView.ScrollPosition(rawValue: 0))
-        collectionView(listCollectionView, didSelectItemAt: indexPath)
-    }
-
     override func render() {
-        view.addSubviews(mapView, searchBarButton, listCollectionView)
+        view.addSubviews(mapView, searchBarButton, listCollectionView, gpsButton, bookMarkButton)
 
         mapView.snp.makeConstraints {
             $0.edges.equalToSuperview()
@@ -106,6 +130,18 @@ final class MapViewController: BaseViewController {
             $0.top.equalTo(searchBarButton.snp.bottom).offset(10)
             $0.leading.trailing.equalToSuperview()
             $0.height.equalTo(40)
+        }
+
+        gpsButton.snp.makeConstraints {
+            $0.trailing.equalToSuperview().inset(20)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(40)
+            $0.height.width.equalTo(50)
+        }
+
+        bookMarkButton.snp.makeConstraints {
+            $0.trailing.equalToSuperview().inset(20)
+            $0.bottom.equalTo(gpsButton.snp.top).offset(-10)
+            $0.height.width.equalTo(50)
         }
     }
 
@@ -126,20 +162,85 @@ final class MapViewController: BaseViewController {
         mapView.setRegion(MKCoordinateRegion(center: currentLocation.coordinate, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)), animated: true)
     }
 
-    private func setMarkers() {
-        let mark = Marker(
-            title: "홍대입구역 편의점",
-            subtitle: "일식",
-            coordinate: CLLocationCoordinate2D(latitude: 37.55769, longitude: 126.92450)
-        )
-        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(showPopup(tapGesture:)))
-//        mark.addGestureRecognizer(tapGestureRecognizer)
-
-        mapView.addAnnotation(mark)
+    private func findMyBookmarks() {
+        if isBookMark {
+            bookMarkButton.backgroundColor = .white
+            bookMarkButton.setImage(ImageLiteral.btnBookmarkOff, for: .normal)
+        } else {
+            bookMarkButton.backgroundColor = .mainBlue
+            bookMarkButton.setImage(ImageLiteral.btnBookmarkOn, for: .normal)
+        }
+        isBookMark = !isBookMark
     }
 
-    @objc private func showPopup(tapGesture _: UITapGestureRecognizer) {
-        print("dd")
+    private func setMarkers() {
+        guard let currentLocation = locationManager.location else {
+            getLocationUsagePermission()
+            return
+        }
+
+        marks = [
+            Marker(
+                title: "홍대입구역 편의점",
+                subtitle: "3개의 후기",
+                coordinate: CLLocationCoordinate2D(latitude: currentLocation.coordinate.latitude + 0.001, longitude: currentLocation.coordinate.longitude + 0.001),
+                glyphImage: ImageLiteral.korean,
+                handler: { [weak self] in
+                    let storeFeedViewController = StoreFeedViewController(isMap: true)
+                    let navigationController = UINavigationController(rootViewController: storeFeedViewController)
+                    navigationController.modalPresentationStyle = .fullScreen
+                    DispatchQueue.main.async {
+                        self?.present(navigationController, animated: true)
+                    }
+                }
+            ),
+            Marker(
+                title: "홍대입구역 편의점",
+                subtitle: "3개의 후기",
+                coordinate: CLLocationCoordinate2D(latitude: currentLocation.coordinate.latitude + 0.001, longitude: currentLocation.coordinate.longitude + 0.002),
+                glyphImage: ImageLiteral.salad,
+                handler: { [weak self] in
+                    let storeFeedViewController = StoreFeedViewController(isMap: true)
+                    let navigationController = UINavigationController(rootViewController: storeFeedViewController)
+                    navigationController.modalPresentationStyle = .fullScreen
+                    DispatchQueue.main.async {
+                        self?.present(navigationController, animated: true)
+                    }
+                }
+            ),
+            Marker(
+                title: "홍대입구역 편의점",
+                subtitle: "3개의 후기",
+                coordinate: CLLocationCoordinate2D(latitude: currentLocation.coordinate.latitude + 0.001, longitude: currentLocation.coordinate.longitude + 0.003),
+                glyphImage: ImageLiteral.chinese,
+                handler: { [weak self] in
+                    let storeFeedViewController = StoreFeedViewController(isMap: true)
+                    let navigationController = UINavigationController(rootViewController: storeFeedViewController)
+                    navigationController.modalPresentationStyle = .fullScreen
+                    DispatchQueue.main.async {
+                        self?.present(navigationController, animated: true)
+                    }
+                }
+            ),
+            Marker(
+                title: "홍대입구역 편의점",
+                subtitle: "3개의 후기",
+                coordinate: CLLocationCoordinate2D(latitude: currentLocation.coordinate.latitude + 0.001, longitude: currentLocation.coordinate.longitude + 0.004),
+                glyphImage: ImageLiteral.japanese,
+                handler: { [weak self] in
+                    let storeFeedViewController = StoreFeedViewController(isMap: true)
+                    let navigationController = UINavigationController(rootViewController: storeFeedViewController)
+                    navigationController.modalPresentationStyle = .fullScreen
+                    DispatchQueue.main.async {
+                        self?.present(navigationController, animated: true)
+                    }
+                }
+            )
+        ]
+
+        marks?.forEach { mark in
+            mapView.addAnnotation(mark)
+        }
     }
 }
 
@@ -165,52 +266,14 @@ extension MapViewController: CLLocationManagerDelegate {
 }
 
 extension MapViewController: MKMapViewDelegate {
-    // 1
-    func mapView(
-        _ mapView: MKMapView,
-        viewFor annotation: MKAnnotation
-    ) -> MKAnnotationView? {
-        // 2
-        guard let annotation = annotation as? Marker else {
-            return nil
-        }
-        // 3
-        let identifier = "marker"
-        var view: MKMarkerAnnotationView
-        // 4
-        if let dequeuedView = mapView.dequeueReusableAnnotationView(
-            withIdentifier: identifier) as? MKMarkerAnnotationView
-        {
-            dequeuedView.annotation = annotation
-            view = dequeuedView
-        } else {
-            // 5
-            view = MKMarkerAnnotationView(
-                annotation: annotation,
-                reuseIdentifier: identifier
-            )
-            view.canShowCallout = true
-            view.calloutOffset = CGPoint(x: 0, y: 5)
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        guard view is ClusterAnnotationView else { return }
 
-            let mapsButton = UIButton(frame: CGRect(
-                origin: CGPoint.zero,
-                size: CGSize(width: 48, height: 48)
-            )).then {
-                $0.setImage(ImageLiteral.btnSearch, for: .normal)
-                $0.backgroundColor = .black
-                let action = UIAction { [weak self] _ in
-                    let storeFeedViewController = StoreFeedViewController(isMap: true)
-                    let navigationController = UINavigationController(rootViewController: storeFeedViewController)
-                    navigationController.modalPresentationStyle = .fullScreen
-                    DispatchQueue.main.async {
-                        self?.present(navigationController, animated: true)
-                    }
-                }
-                $0.addAction(action, for: .touchUpInside)
-            }
-            view.rightCalloutAccessoryView = mapsButton
-        }
-        return view
+        let currentSpan = mapView.region.span
+        let zoomSpan = MKCoordinateSpan(latitudeDelta: currentSpan.latitudeDelta / 3.0, longitudeDelta: currentSpan.longitudeDelta / 3.0)
+        let zoomCoordinate = view.annotation?.coordinate ?? mapView.region.center
+        let zoomed = MKCoordinateRegion(center: zoomCoordinate, span: zoomSpan)
+        mapView.setRegion(zoomed, animated: true)
     }
 }
 

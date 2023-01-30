@@ -101,7 +101,7 @@ final class FeedCollectionViewCell: BaseCollectionViewCell {
         stackView.snp.makeConstraints {
             $0.top.equalTo(commentLabel.snp.bottom).offset(12)
             $0.leading.equalToSuperview().inset(20)
-            $0.width.equalTo(100)
+            $0.width.equalTo(120)
         }
 
         optionButton.snp.makeConstraints {

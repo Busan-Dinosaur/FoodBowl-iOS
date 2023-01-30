@@ -125,7 +125,7 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
         }
 
         let commentButtonAction = UIAction { [weak self] _ in
-            let feedCommentViewController = FeedCommentViewController()
+            let feedCommentViewController = ChatViewController()
             self?.navigationController?.pushViewController(feedCommentViewController, animated: true)
         }
 

@@ -26,6 +26,7 @@ final class SetCategoryViewController: BaseViewController {
         $0.delegate = self
         $0.showsHorizontalScrollIndicator = false
         $0.showsVerticalScrollIndicator = false
+        $0.allowsMultipleSelection = true
         $0.register(CategoryCollectionViewCell.self, forCellWithReuseIdentifier: CategoryCollectionViewCell.className)
     }
 
@@ -95,11 +96,25 @@ extension SetCategoryViewController: UICollectionViewDataSource, UICollectionVie
         return cell
     }
 
-    func collectionView(_: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        delegate?.setCategory(category: categories[indexPath.item])
+    func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt _: IndexPath) -> Bool {
+        return collectionView.indexPathsForSelectedItems?.count ?? 0 <= 2
+    }
+
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt _: IndexPath) {
+        guard let selectedItems = collectionView.indexPathsForSelectedItems else { return }
+        let selectedCategories: [Category]? = selectedItems.map { categories[$0.item] }
+        print(selectedCategories)
+        delegate?.setCategories(categories: selectedCategories)
+    }
+
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt _: IndexPath) {
+        guard let selectedItems = collectionView.indexPathsForSelectedItems else { return }
+        let selectedCategories: [Category]? = selectedItems.map { categories[$0.item] }
+        print(selectedCategories)
+        delegate?.setCategories(categories: selectedCategories)
     }
 }
 
 protocol SetCategoryViewControllerDelegate: AnyObject {
-    func setCategory(category: Category?)
+    func setCategories(categories: [Category]?)
 }
