@@ -133,6 +133,18 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
         let followButtonAction = UIAction { _ in
             cell.userInfoView.followButton.isSelected = !cell.userInfoView.followButton.isSelected
         }
+        
+        let optionButtonAction = UIAction { [weak self] _ in
+            let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+    
+            let report = UIAlertAction(title: "신고하기", style: .destructive, handler: nil)
+            let cancel = UIAlertAction(title: "취소", style: .cancel, handler: nil)
+            
+            alert.addAction(cancel)
+            alert.addAction(report)
+            
+            self?.present(alert, animated: true, completion: nil)
+        }
 
         cell.userInfoView.userImageButton.addAction(userButtonAction, for: .touchUpInside)
         cell.userInfoView.userNameButton.addAction(userButtonAction, for: .touchUpInside)
@@ -140,6 +152,7 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
         cell.storeInfoView.storeNameButton.addAction(storeButtonAction, for: .touchUpInside)
         cell.commentButton.addAction(commentButtonAction, for: .touchUpInside)
         cell.userInfoView.followButton.addAction(followButtonAction, for: .touchUpInside)
+        cell.optionButton.addAction(optionButtonAction, for: .touchUpInside)
 
         cell.userInfoView.userImageButton.setImage(ImageLiteral.food2, for: .normal)
         cell.commentLabel.text = """
