@@ -153,11 +153,20 @@ final class AddFeedViewController: BaseViewController {
 
         switch currentPage {
         case 0:
-            if newFeed.store == nil { return }
+            if newFeed.store == nil {
+                showAlert(message: "가게를 선택해주세요")
+                return
+            }
         case 1:
-            if newFeed.categories == nil { return }
+            if newFeed.categories?.count == 0 {
+                showAlert(message: "카테고리를 선택해주세요")
+                return
+            }
         case 2:
-            if newFeed.photoes == nil { return }
+            if newFeed.photoes == nil {
+                showAlert(message: "사진을 등록해주세요")
+                return
+            }
         default: ()
         }
 
@@ -172,6 +181,15 @@ final class AddFeedViewController: BaseViewController {
     private func completeAddFeed() {
         print(newFeed)
         dismiss(animated: true, completion: nil)
+    }
+    
+    private func showAlert(message: String) {
+        let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
+        let cancel = UIAlertAction(title: "닫기", style: .cancel, handler: nil)
+        
+        alert.addAction(cancel)
+        
+        present(alert, animated: true, completion: nil)
     }
 }
 
