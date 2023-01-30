@@ -5,6 +5,7 @@
 //  Created by COBY_PRO on 2022/12/23.
 //
 
+import MessageUI
 import UIKit
 
 import SnapKit
@@ -58,7 +59,22 @@ final class ProfileViewController: BaseViewController {
         $0.addAction(mapAction, for: .touchUpInside)
     }
 
-    private let optionButton = OptionButton()
+    private lazy var optionButton = OptionButton().then {
+        let optionButtonAction = UIAction { [weak self] _ in
+            let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+    
+            let report = UIAlertAction(title: "신고하기", style: .destructive, handler: { _ in
+                self?.sendReportMail()
+            })
+            let cancel = UIAlertAction(title: "취소", style: .cancel, handler: nil)
+            
+            alert.addAction(cancel)
+            alert.addAction(report)
+            
+            self?.present(alert, animated: true, completion: nil)
+        }
+        $0.addAction(optionButtonAction, for: .touchUpInside)
+    }
 
     private lazy var userProfileView = UserProfileView().then {
         let followerAction = UIAction { [weak self] _ in
@@ -152,6 +168,15 @@ final class ProfileViewController: BaseViewController {
         } else {
             userProfileView.editButton.isHidden = true
         }
+        
+        let storeHandler = { [weak self] in
+            let storeFeedViewController = StoreFeedViewController()
+            storeFeedViewController.title = "coby5502"
+            self?.navigationController?.pushViewController(storeFeedViewController, animated: true)
+        }
+        
+        vc1.handler = storeHandler
+        vc2.handler = storeHandler
     }
 
     override func render() {
@@ -236,5 +261,40 @@ extension ProfileViewController: UIPageViewControllerDataSource, UIPageViewContr
         else { return }
         currentPage = index
         segmentedControl.selectedSegmentIndex = index
+    }
+}
+
+extension ProfileViewController: MFMailComposeViewControllerDelegate {
+    func sendReportMail() {
+        if MFMailComposeViewController.canSendMail() {
+            let composeVC = MFMailComposeViewController()
+            let emailAdress = "coby5502@gmail.com"
+            let messageBody = """
+            신고 사유를 작성해주세요.
+            """
+
+            composeVC.mailComposeDelegate = self
+            composeVC.setToRecipients([emailAdress])
+            composeVC.setSubject("[신고] 닉네임")
+            composeVC.setMessageBody(messageBody, isHTML: false)
+            composeVC.modalPresentationStyle = .fullScreen
+
+            present(composeVC, animated: true, completion: nil)
+        } else {
+            showSendMailErrorAlert()
+        }
+    }
+
+    private func showSendMailErrorAlert() {
+        let sendMailErrorAlert = UIAlertController(title: "메일 전송 실패", message: "이메일 설정을 확인하고 다시 시도해주세요.", preferredStyle: .alert)
+        let confirmAction = UIAlertAction(title: "확인", style: .default) { _ in
+            print("확인")
+        }
+        sendMailErrorAlert.addAction(confirmAction)
+        present(sendMailErrorAlert, animated: true, completion: nil)
+    }
+
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith _: MFMailComposeResult, error _: Error?) {
+        controller.dismiss(animated: true, completion: nil)
     }
 }

@@ -108,8 +108,15 @@ final class MapViewController: BaseViewController {
         setMarkers()
         mapView.delegate = self
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.isNavigationBarHidden = true
+    }
 
-    override func viewWillDisappear(_: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.isNavigationBarHidden = false
         locationManager.stopUpdatingLocation()
     }
 
@@ -186,12 +193,9 @@ final class MapViewController: BaseViewController {
                 coordinate: CLLocationCoordinate2D(latitude: currentLocation.coordinate.latitude + 0.001, longitude: currentLocation.coordinate.longitude + 0.001),
                 glyphImage: ImageLiteral.korean,
                 handler: { [weak self] in
-                    let storeFeedViewController = StoreFeedViewController(isMap: true)
-                    let navigationController = UINavigationController(rootViewController: storeFeedViewController)
-                    navigationController.modalPresentationStyle = .fullScreen
-                    DispatchQueue.main.async {
-                        self?.present(navigationController, animated: true)
-                    }
+                    let storeFeedViewController = StoreFeedViewController()
+                    storeFeedViewController.title = "틈새라면"
+                    self?.navigationController?.pushViewController(storeFeedViewController, animated: true)
                 }
             ),
             Marker(
@@ -200,12 +204,9 @@ final class MapViewController: BaseViewController {
                 coordinate: CLLocationCoordinate2D(latitude: currentLocation.coordinate.latitude + 0.001, longitude: currentLocation.coordinate.longitude + 0.002),
                 glyphImage: ImageLiteral.salad,
                 handler: { [weak self] in
-                    let storeFeedViewController = StoreFeedViewController(isMap: true)
-                    let navigationController = UINavigationController(rootViewController: storeFeedViewController)
-                    navigationController.modalPresentationStyle = .fullScreen
-                    DispatchQueue.main.async {
-                        self?.present(navigationController, animated: true)
-                    }
+                    let storeFeedViewController = StoreFeedViewController()
+                    storeFeedViewController.title = "틈새라면"
+                    self?.navigationController?.pushViewController(storeFeedViewController, animated: true)
                 }
             ),
             Marker(
@@ -214,12 +215,9 @@ final class MapViewController: BaseViewController {
                 coordinate: CLLocationCoordinate2D(latitude: currentLocation.coordinate.latitude + 0.001, longitude: currentLocation.coordinate.longitude + 0.003),
                 glyphImage: ImageLiteral.chinese,
                 handler: { [weak self] in
-                    let storeFeedViewController = StoreFeedViewController(isMap: true)
-                    let navigationController = UINavigationController(rootViewController: storeFeedViewController)
-                    navigationController.modalPresentationStyle = .fullScreen
-                    DispatchQueue.main.async {
-                        self?.present(navigationController, animated: true)
-                    }
+                    let storeFeedViewController = StoreFeedViewController()
+                    storeFeedViewController.title = "틈새라면"
+                    self?.navigationController?.pushViewController(storeFeedViewController, animated: true)
                 }
             ),
             Marker(
@@ -228,12 +226,9 @@ final class MapViewController: BaseViewController {
                 coordinate: CLLocationCoordinate2D(latitude: currentLocation.coordinate.latitude + 0.001, longitude: currentLocation.coordinate.longitude + 0.004),
                 glyphImage: ImageLiteral.japanese,
                 handler: { [weak self] in
-                    let storeFeedViewController = StoreFeedViewController(isMap: true)
-                    let navigationController = UINavigationController(rootViewController: storeFeedViewController)
-                    navigationController.modalPresentationStyle = .fullScreen
-                    DispatchQueue.main.async {
-                        self?.present(navigationController, animated: true)
-                    }
+                    let storeFeedViewController = StoreFeedViewController()
+                    storeFeedViewController.title = "틈새라면"
+                    self?.navigationController?.pushViewController(storeFeedViewController, animated: true)
                 }
             )
         ]

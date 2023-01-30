@@ -20,7 +20,7 @@ final class SearchViewController: BaseViewController {
                                                   right: 0)
     }
 
-    private var feeds: [String] = ["가나", "다라", "마바", "사아", "자차", "사아", "자차", "사아", "자차", "사아", "자차", "사아", "자차", "사아", "자차"]
+    private var feeds: [String] = ["가나", "다라", "마바", "사아", "자차", "사아", "자차", "사아", "자차", "사아", "자차", "사아", "자차", "사아", "자차", "자차", "자차"]
 
     // MARK: - property
 
@@ -54,6 +54,16 @@ final class SearchViewController: BaseViewController {
     }
 
     // MARK: - life cycle
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.isNavigationBarHidden = true
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.isNavigationBarHidden = false
+    }
 
     override func render() {
         view.addSubviews(searchBarButton, listCollectionView)
@@ -68,10 +78,6 @@ final class SearchViewController: BaseViewController {
             $0.top.equalTo(searchBarButton.snp.bottom).offset(10)
             $0.leading.trailing.bottom.equalToSuperview()
         }
-    }
-
-    override func setupNavigationBar() {
-        navigationController?.isNavigationBarHidden = true
     }
 }
 
@@ -88,5 +94,9 @@ extension SearchViewController: UICollectionViewDataSource, UICollectionViewDele
         return cell
     }
 
-    func collectionView(_: UICollectionView, didSelectItemAt _: IndexPath) {}
+    func collectionView(_: UICollectionView, didSelectItemAt _: IndexPath) {
+        let storeFeedViewController = StoreFeedViewController()
+        storeFeedViewController.title = "추천 게시물"
+        navigationController?.pushViewController(storeFeedViewController, animated: true)
+    }
 }

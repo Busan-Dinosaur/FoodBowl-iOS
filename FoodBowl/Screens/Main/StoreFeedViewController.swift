@@ -5,24 +5,13 @@
 //  Created by COBY_PRO on 2023/01/18.
 //
 
+import MessageUI
 import UIKit
 
 import SnapKit
 import Then
 
 final class StoreFeedViewController: BaseViewController {
-    var isMap: Bool
-
-    init(isMap: Bool) {
-        self.isMap = isMap
-        super.init(nibName: nil, bundle: nil)
-    }
-
-    @available(*, unavailable)
-    required init?(coder _: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
     private enum Size {
         static let collectionInset = UIEdgeInsets(top: 0,
                                                   left: 0,
@@ -72,17 +61,6 @@ final class StoreFeedViewController: BaseViewController {
         }
     }
 
-    override func setupNavigationBar() {
-        super.setupNavigationBar()
-
-        title = "틈새라면"
-        if isMap {
-            let leftOffsetCloseButton = removeBarButtonItemOffset(with: closeButton, offsetX: 10)
-            let closeButton = makeBarButtonItem(with: leftOffsetCloseButton)
-            navigationItem.leftBarButtonItem = closeButton
-        }
-    }
-
     private func setupRefreshControl() {
         let action = UIAction { [weak self] _ in
             self?.loadData()
@@ -124,7 +102,7 @@ extension StoreFeedViewController: UICollectionViewDataSource, UICollectionViewD
         }
 
         let storeButtonAction = UIAction { [weak self] _ in
-            let storeFeedViewController = StoreFeedViewController(isMap: false)
+            let storeFeedViewController = StoreFeedViewController()
             self?.navigationController?.pushViewController(storeFeedViewController, animated: true)
         }
 
@@ -132,12 +110,32 @@ extension StoreFeedViewController: UICollectionViewDataSource, UICollectionViewD
             let feedCommentViewController = ChatViewController()
             self?.navigationController?.pushViewController(feedCommentViewController, animated: true)
         }
+        
+        let followButtonAction = UIAction { _ in
+            cell.userInfoView.followButton.isSelected = !cell.userInfoView.followButton.isSelected
+        }
+        
+        let optionButtonAction = UIAction { [weak self] _ in
+            let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+    
+            let report = UIAlertAction(title: "신고하기", style: .destructive, handler: { _ in
+                self?.sendReportMail()
+            })
+            let cancel = UIAlertAction(title: "취소", style: .cancel, handler: nil)
+            
+            alert.addAction(cancel)
+            alert.addAction(report)
+            
+            self?.present(alert, animated: true, completion: nil)
+        }
 
         cell.userInfoView.userImageButton.addAction(userButtonAction, for: .touchUpInside)
         cell.userInfoView.userNameButton.addAction(userButtonAction, for: .touchUpInside)
         cell.storeInfoView.mapButton.addAction(mapButtonAction, for: .touchUpInside)
         cell.storeInfoView.storeNameButton.addAction(storeButtonAction, for: .touchUpInside)
         cell.commentButton.addAction(commentButtonAction, for: .touchUpInside)
+        cell.userInfoView.followButton.addAction(followButtonAction, for: .touchUpInside)
+        cell.optionButton.addAction(optionButtonAction, for: .touchUpInside)
 
         cell.userInfoView.userImageButton.setImage(ImageLiteral.food2, for: .normal)
         cell.commentLabel.text = """
@@ -161,4 +159,39 @@ extension StoreFeedViewController {
     }
 
     private func didScrollToBottom() {}
+}
+
+extension StoreFeedViewController: MFMailComposeViewControllerDelegate {
+    func sendReportMail() {
+        if MFMailComposeViewController.canSendMail() {
+            let composeVC = MFMailComposeViewController()
+            let emailAdress = "coby5502@gmail.com"
+            let messageBody = """
+            신고 사유를 작성해주세요.
+            """
+
+            composeVC.mailComposeDelegate = self
+            composeVC.setToRecipients([emailAdress])
+            composeVC.setSubject("[신고] 닉네임")
+            composeVC.setMessageBody(messageBody, isHTML: false)
+            composeVC.modalPresentationStyle = .fullScreen
+
+            present(composeVC, animated: true, completion: nil)
+        } else {
+            showSendMailErrorAlert()
+        }
+    }
+
+    private func showSendMailErrorAlert() {
+        let sendMailErrorAlert = UIAlertController(title: "메일 전송 실패", message: "이메일 설정을 확인하고 다시 시도해주세요.", preferredStyle: .alert)
+        let confirmAction = UIAlertAction(title: "확인", style: .default) { _ in
+            print("확인")
+        }
+        sendMailErrorAlert.addAction(confirmAction)
+        present(sendMailErrorAlert, animated: true, completion: nil)
+    }
+
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith _: MFMailComposeResult, error _: Error?) {
+        controller.dismiss(animated: true, completion: nil)
+    }
 }

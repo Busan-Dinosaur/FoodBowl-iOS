@@ -21,7 +21,7 @@ class MapItemAnnotationView: MKMarkerAnnotationView {
             clusteringIdentifier = "MapItem"
             rightCalloutAccessoryView = feedButton
             canShowCallout = true
-            calloutOffset = CGPoint(x: -5, y: 5)
+            calloutOffset = CGPoint(x: 0, y: 5)
             markerTintColor = UIColor.mainPink
             glyphImage = marker.glyphImage
             canShowCallout = true

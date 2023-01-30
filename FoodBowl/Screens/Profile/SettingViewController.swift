@@ -51,7 +51,7 @@ final class SettingViewController: BaseViewController {
         options.append(Option(title: "공지사항", handler: { [weak self] in
             let showWebViewController = ShowWebViewController()
             showWebViewController.title = "공지사항"
-            showWebViewController.url = ""
+            showWebViewController.url = "https://coby5502.notion.site/a25fe63009d24b958fe77ab87e53994e"
             let navigationController = UINavigationController(rootViewController: showWebViewController)
             navigationController.modalPresentationStyle = .fullScreen
             DispatchQueue.main.async {
@@ -62,7 +62,7 @@ final class SettingViewController: BaseViewController {
         options.append(Option(title: "개인정보처리방침", handler: { [weak self] in
             let showWebViewController = ShowWebViewController()
             showWebViewController.title = "개인정보처리방침"
-            showWebViewController.url = ""
+            showWebViewController.url = "https://coby5502.notion.site/2ca079dd7b354cd790b3280728ebb0d5"
             let navigationController = UINavigationController(rootViewController: showWebViewController)
             navigationController.modalPresentationStyle = .fullScreen
             DispatchQueue.main.async {
@@ -73,9 +73,8 @@ final class SettingViewController: BaseViewController {
         options.append(Option(title: "이용약관", handler: { [weak self] in
             let showWebViewController = ShowWebViewController()
             showWebViewController.title = "이용약관"
-            showWebViewController.url = ""
+            showWebViewController.url = "https://coby5502.notion.site/32da9811cd284eaab7c3d8390c0ddccc"
             let navigationController = UINavigationController(rootViewController: showWebViewController)
-            navigationController.modalPresentationStyle = .fullScreen
             DispatchQueue.main.async {
                 self?.present(navigationController, animated: true)
             }

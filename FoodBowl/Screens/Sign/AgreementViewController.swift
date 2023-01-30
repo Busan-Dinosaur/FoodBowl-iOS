@@ -31,7 +31,7 @@ final class AgreementViewController: BaseViewController {
         let action = UIAction { [weak self] _ in
             let showWebViewController = ShowWebViewController()
             showWebViewController.title = "개인정보처리방침"
-            showWebViewController.url = ""
+            showWebViewController.url = "https://coby5502.notion.site/2ca079dd7b354cd790b3280728ebb0d5"
             let navigationController = UINavigationController(rootViewController: showWebViewController)
             navigationController.modalPresentationStyle = .fullScreen
             DispatchQueue.main.async {
@@ -54,7 +54,7 @@ final class AgreementViewController: BaseViewController {
         let action = UIAction { [weak self] _ in
             let showWebViewController = ShowWebViewController()
             showWebViewController.title = "이용약관"
-            showWebViewController.url = ""
+            showWebViewController.url = "https://coby5502.notion.site/32da9811cd284eaab7c3d8390c0ddccc"
             let navigationController = UINavigationController(rootViewController: showWebViewController)
             navigationController.modalPresentationStyle = .fullScreen
             DispatchQueue.main.async {

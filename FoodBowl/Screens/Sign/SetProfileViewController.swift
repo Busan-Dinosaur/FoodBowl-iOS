@@ -13,6 +13,7 @@ import YPImagePicker
 
 final class SetProfileViewController: BaseViewController {
     private var profileImage: UIImage = ImageLiteral.defaultProfile
+    private var maxLength = 10
 
     // MARK: - property
 
@@ -30,14 +31,14 @@ final class SetProfileViewController: BaseViewController {
         $0.font = UIFont.preferredFont(forTextStyle: .body, weight: .medium)
     }
 
-    private let nicknameField = UITextField().then {
+    private lazy var nicknameField = UITextField().then {
         let attributes = [
             NSAttributedString.Key.foregroundColor: UIColor.grey001,
             NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .body, weight: .regular)
         ]
 
         $0.backgroundColor = .white
-        $0.attributedPlaceholder = NSAttributedString(string: "8자 이내 한글 또는 영문", attributes: attributes)
+        $0.attributedPlaceholder = NSAttributedString(string: "10자 이내 한글 또는 영문", attributes: attributes)
         $0.autocapitalizationType = .none
         $0.layer.cornerRadius = 12
         $0.layer.masksToBounds = true
@@ -46,6 +47,7 @@ final class SetProfileViewController: BaseViewController {
         $0.clipsToBounds = false
         $0.clearButtonMode = .always
         $0.makeBorderLayer(color: .grey002)
+        $0.delegate = self
     }
 
     private lazy var signUpButton = MainButton().then {
@@ -63,6 +65,15 @@ final class SetProfileViewController: BaseViewController {
     }
 
     // MARK: - life cycle
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(textDidChange(_:)),
+                                               name: UITextField.textDidChangeNotification,
+                                               object: nicknameField)
+    }
 
     override func render() {
         view.addSubviews(profileImageView, nicknameLabel, nicknameField, signUpButton)
@@ -132,5 +143,21 @@ final class SetProfileViewController: BaseViewController {
             picker.dismiss(animated: true, completion: nil)
         }
         present(picker, animated: true, completion: nil)
+    }
+    
+    @objc private func textDidChange(_ notification: Notification) {
+        if let textField = notification.object as? UITextField {
+            if let text = textField.text {
+                if text.count > maxLength {
+                    textField.resignFirstResponder()
+                }
+                
+                if text.count >= maxLength {
+                    let index = text.index(text.startIndex, offsetBy: maxLength)
+                    let newString = text[text.startIndex ..< index]
+                    textField.text = String(newString)
+                }
+            }
+        }
     }
 }

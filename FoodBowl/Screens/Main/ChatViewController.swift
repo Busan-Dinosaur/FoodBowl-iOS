@@ -5,6 +5,7 @@
 //  Created by COBY_PRO on 2023/01/18.
 //
 
+import MessageUI
 import UIKit
 
 import SnapKit
@@ -102,9 +103,24 @@ extension ChatViewController: UITableViewDataSource, UITableViewDelegate {
             let profileViewController = ProfileViewController(isOwn: false)
             self?.navigationController?.pushViewController(profileViewController, animated: true)
         }
+        
+        let optionButtonAction = UIAction { [weak self] _ in
+            let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+    
+            let report = UIAlertAction(title: "신고하기", style: .destructive, handler: { _ in
+                self?.sendReportMail()
+            })
+            let cancel = UIAlertAction(title: "취소", style: .cancel, handler: nil)
+            
+            alert.addAction(cancel)
+            alert.addAction(report)
+            
+            self?.present(alert, animated: true, completion: nil)
+        }
 
         cell.userImageButton.addAction(userButtonAction, for: .touchUpInside)
         cell.userNameButton.addAction(userButtonAction, for: .touchUpInside)
+        cell.optionButton.addAction(optionButtonAction, for: .touchUpInside)
 
         cell.userImageButton.setImage(ImageLiteral.food2, for: .normal)
         cell.userChatLabel.text = "맛있었어요"
@@ -114,5 +130,40 @@ extension ChatViewController: UITableViewDataSource, UITableViewDelegate {
 
     func tableView(_: UITableView, estimatedHeightForRowAt _: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
+    }
+}
+
+extension ChatViewController: MFMailComposeViewControllerDelegate {
+    func sendReportMail() {
+        if MFMailComposeViewController.canSendMail() {
+            let composeVC = MFMailComposeViewController()
+            let emailAdress = "coby5502@gmail.com"
+            let messageBody = """
+            신고 사유를 작성해주세요.
+            """
+
+            composeVC.mailComposeDelegate = self
+            composeVC.setToRecipients([emailAdress])
+            composeVC.setSubject("[신고] 닉네임")
+            composeVC.setMessageBody(messageBody, isHTML: false)
+            composeVC.modalPresentationStyle = .fullScreen
+
+            present(composeVC, animated: true, completion: nil)
+        } else {
+            showSendMailErrorAlert()
+        }
+    }
+
+    private func showSendMailErrorAlert() {
+        let sendMailErrorAlert = UIAlertController(title: "메일 전송 실패", message: "이메일 설정을 확인하고 다시 시도해주세요.", preferredStyle: .alert)
+        let confirmAction = UIAlertAction(title: "확인", style: .default) { _ in
+            print("확인")
+        }
+        sendMailErrorAlert.addAction(confirmAction)
+        present(sendMailErrorAlert, animated: true, completion: nil)
+    }
+
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith _: MFMailComposeResult, error _: Error?) {
+        controller.dismiss(animated: true, completion: nil)
     }
 }
