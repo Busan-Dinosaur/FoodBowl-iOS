@@ -31,7 +31,8 @@ final class ShowWebViewController: BaseViewController {
         view.addSubviews(webView)
 
         webView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
+            $0.top.equalTo(view.safeAreaLayoutGuide)
+            $0.leading.trailing.bottom.equalToSuperview()
         }
     }
 

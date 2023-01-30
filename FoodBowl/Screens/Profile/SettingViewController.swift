@@ -53,6 +53,7 @@ final class SettingViewController: BaseViewController {
             showWebViewController.title = "공지사항"
             showWebViewController.url = "https://coby5502.notion.site/a25fe63009d24b958fe77ab87e53994e"
             let navigationController = UINavigationController(rootViewController: showWebViewController)
+            navigationController.modalPresentationStyle = .fullScreen
             DispatchQueue.main.async {
                 self?.present(navigationController, animated: true)
             }
@@ -63,6 +64,7 @@ final class SettingViewController: BaseViewController {
             showWebViewController.title = "개인정보처리방침"
             showWebViewController.url = "https://coby5502.notion.site/2ca079dd7b354cd790b3280728ebb0d5"
             let navigationController = UINavigationController(rootViewController: showWebViewController)
+            navigationController.modalPresentationStyle = .fullScreen
             DispatchQueue.main.async {
                 self?.present(navigationController, animated: true)
             }
