@@ -22,6 +22,7 @@ final class ChatSendView: UIView {
         $0.autocapitalizationType = .none
         $0.isScrollEnabled = false
         $0.textContainerInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 5)
+        $0.backgroundColor = .clear
     }
 
     let chatSendbutton = SendButton().then {
@@ -70,6 +71,6 @@ final class ChatSendView: UIView {
         layer.borderWidth = 0.3
         layer.borderColor = UIColor.subText.cgColor
         layer.cornerRadius = 20
-        backgroundColor = .mainBackground
+        backgroundColor = .clear
     }
 }
