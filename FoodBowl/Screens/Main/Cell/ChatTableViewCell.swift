@@ -21,7 +21,7 @@ final class ChatTableViewCell: BaseTableViewCell {
 
     let userNameButton = UIButton().then {
         $0.setTitle("홍길동", for: .normal)
-        $0.setTitleColor(.black, for: .normal)
+        $0.setTitleColor(.mainText, for: .normal)
         $0.titleLabel?.font = .preferredFont(forTextStyle: .subheadline, weight: .medium)
     }
 
@@ -33,12 +33,13 @@ final class ChatTableViewCell: BaseTableViewCell {
 
     let userChatLabel = UILabel().then {
         $0.font = UIFont.preferredFont(forTextStyle: .footnote, weight: .light)
-        $0.textColor = .black
+        $0.textColor = .mainText
         $0.numberOfLines = 0
     }
 
     let optionButton = UIButton().then {
-        $0.setImage(ImageLiteral.btnMore.resize(to: CGSize(width: 12, height: 12)), for: .normal)
+        $0.setImage(ImageLiteral.btnMore.resize(to: CGSize(width: 12, height: 12)).withRenderingMode(.alwaysTemplate), for: .normal)
+        $0.tintColor = .mainText
     }
 
     // MARK: - func

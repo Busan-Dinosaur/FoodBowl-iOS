@@ -11,6 +11,15 @@ import SnapKit
 import Then
 
 final class FeedCollectionViewCell: BaseCollectionViewCell {
+    var userButtonTapAction: ((FeedCollectionViewCell) -> Void)?
+    var followButtonTapAction: ((FeedCollectionViewCell) -> Void)?
+    var mapButtonTapAction: ((FeedCollectionViewCell) -> Void)?
+    var storeButtonTapAction: ((FeedCollectionViewCell) -> Void)?
+    var bookmarkButtonTapAction: ((FeedCollectionViewCell) -> Void)?
+    var commentButtonTapAction: ((FeedCollectionViewCell) -> Void)?
+    var optionButtonTapAction: ((FeedCollectionViewCell) -> Void)?
+    var commentLabelTapAction: ((FeedCollectionViewCell) -> Void)?
+    
     var collapsed = true {
         didSet {
             commentLabel.numberOfLines = collapsed ? 2 : 0
@@ -36,8 +45,6 @@ final class FeedCollectionViewCell: BaseCollectionViewCell {
         $0.textColor = .mainText
         $0.numberOfLines = 2
         $0.isUserInteractionEnabled = true
-        let tap = UITapGestureRecognizer(target: self, action: #selector(invalidate))
-        $0.addGestureRecognizer(tap)
     }
 
     let bookmarkButton = UIButton().then {
@@ -120,6 +127,18 @@ final class FeedCollectionViewCell: BaseCollectionViewCell {
 
     override func configUI() {
         feedImageView.model = [ImageLiteral.food1, ImageLiteral.food2, ImageLiteral.food3]
+        
+        userInfoView.userImageButton.addAction(UIAction { _ in self.userButtonTapAction?(self) }, for: .touchUpInside)
+        userInfoView.userNameButton.addAction(UIAction { _ in self.userButtonTapAction?(self) }, for: .touchUpInside)
+        userInfoView.followButton.addAction(UIAction { _ in self.followButtonTapAction?(self) }, for: .touchUpInside)
+        storeInfoView.mapButton.addAction(UIAction { _ in self.mapButtonTapAction?(self) }, for: .touchUpInside)
+        storeInfoView.storeNameButton.addAction(UIAction { _ in self.storeButtonTapAction?(self) }, for: .touchUpInside)
+        bookmarkButton.addAction(UIAction { _ in self.bookmarkButtonTapAction?(self) }, for: .touchUpInside)
+        commentButton.addAction(UIAction { _ in self.commentButtonTapAction?(self) }, for: .touchUpInside)
+        optionButton.addAction(UIAction { _ in self.optionButtonTapAction?(self) }, for: .touchUpInside)
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(invalidate))
+        commentLabel.addGestureRecognizer(tap)
     }
 
     override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
@@ -132,9 +151,7 @@ final class FeedCollectionViewCell: BaseCollectionViewCell {
         return layoutAttributes
     }
 
-    @objc private func invalidate() {
-        collapsed = !collapsed
-        guard let collection = superview as? UICollectionView else { return }
-        collection.collectionViewLayout.invalidateLayout()
+    @objc private func invalidate(_: Any) {
+        commentLabelTapAction?(self)
     }
 }

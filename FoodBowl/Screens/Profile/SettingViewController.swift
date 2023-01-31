@@ -45,10 +45,6 @@ final class SettingViewController: BaseViewController {
     }
 
     private func setupSettingItems() {
-        options.append(Option(title: "문의하기", handler: { [weak self] in
-            self?.sendReportMail()
-        }))
-
         options.append(Option(title: "공지사항", handler: { [weak self] in
             let showWebViewController = ShowWebViewController()
             showWebViewController.title = "공지사항"
@@ -79,6 +75,10 @@ final class SettingViewController: BaseViewController {
             DispatchQueue.main.async {
                 self?.present(navigationController, animated: true)
             }
+        }))
+        
+        options.append(Option(title: "문의하기", handler: { [weak self] in
+            self?.sendReportMail()
         }))
 
         options.append(Option(title: "로그아웃", handler: { [weak self] in

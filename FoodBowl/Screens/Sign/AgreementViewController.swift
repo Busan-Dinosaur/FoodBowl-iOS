@@ -13,10 +13,14 @@ import Then
 final class AgreementViewController: BaseViewController {
     // MARK: - property
 
-    private let mainAgreeLabel = UILabel().then {
-        $0.text = "전체 동의"
-        $0.font = UIFont.preferredFont(forTextStyle: .title3, weight: .medium)
-        $0.textColor = .mainText
+    private lazy var mainAgreeButton = UIButton().then {
+        $0.setTitle("전체 동의", for: .normal)
+        $0.setTitleColor(.mainText, for: .normal)
+        $0.titleLabel?.font = .preferredFont(forTextStyle: .title3, weight: .medium)
+        let action = UIAction { [weak self] _ in
+            self?.tappedMainAgreeButton()
+        }
+        $0.addAction(action, for: .touchUpInside)
     }
 
     private lazy var mainCheckBox = CheckBox().then {
@@ -81,21 +85,21 @@ final class AgreementViewController: BaseViewController {
     // MARK: - life cycle
 
     override func render() {
-        view.addSubviews(mainAgreeLabel, mainCheckBox, subAgreeLabel1, subCheckBox1, subAgreeLabel2, subCheckBox2, nextButton)
+        view.addSubviews(mainAgreeButton, mainCheckBox, subAgreeLabel1, subCheckBox1, subAgreeLabel2, subCheckBox2, nextButton)
 
-        mainAgreeLabel.snp.makeConstraints {
+        mainAgreeButton.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).inset(20)
             $0.leading.equalToSuperview().inset(20)
         }
 
         mainCheckBox.snp.makeConstraints {
-            $0.centerY.equalTo(mainAgreeLabel)
+            $0.centerY.equalTo(mainAgreeButton)
             $0.trailing.equalToSuperview().inset(20)
             $0.width.height.equalTo(24)
         }
 
         subAgreeLabel1.snp.makeConstraints {
-            $0.top.equalTo(mainAgreeLabel.snp.bottom).offset(40)
+            $0.top.equalTo(mainAgreeButton.snp.bottom).offset(40)
             $0.leading.equalToSuperview().inset(20)
         }
 
@@ -127,8 +131,19 @@ final class AgreementViewController: BaseViewController {
         super.setupNavigationBar()
         title = "약관 동의"
     }
+    
+    private func tappedMainAgreeButton() {
+        mainCheckBox.isChecked = !mainCheckBox.isChecked
+        if mainCheckBox.isChecked {
+            subCheckBox1.isChecked = true
+            subCheckBox2.isChecked = true
+        } else {
+            subCheckBox1.isChecked = false
+            subCheckBox2.isChecked = false
+        }
+    }
 
-    @objc func onMainCheckBoxValueChange(_ sender: CheckBox) {
+    @objc private func onMainCheckBoxValueChange(_ sender: CheckBox) {
         if sender.isChecked {
             subCheckBox1.isChecked = true
             subCheckBox2.isChecked = true
@@ -138,7 +153,7 @@ final class AgreementViewController: BaseViewController {
         }
     }
 
-    @objc func onSubCheckBox1ValueChange(_ sender: CheckBox) {
+    @objc private func onSubCheckBox1ValueChange(_ sender: CheckBox) {
         if sender.isChecked && subCheckBox2.isChecked {
             mainCheckBox.isChecked = true
         } else {
@@ -146,7 +161,7 @@ final class AgreementViewController: BaseViewController {
         }
     }
 
-    @objc func onSubCheckBox2ValueChange(_ sender: CheckBox) {
+    @objc private func onSubCheckBox2ValueChange(_ sender: CheckBox) {
         if sender.isChecked && subCheckBox1.isChecked {
             mainCheckBox.isChecked = true
         } else {
