@@ -14,7 +14,7 @@ final class FollowingViewController: BaseViewController {
     // MARK: - property
 
     private lazy var userResultTableView = UITableView().then {
-        $0.register(UserResultTableViewCell.self, forCellReuseIdentifier: UserResultTableViewCell.className)
+        $0.register(UserInfoTableViewCell.self, forCellReuseIdentifier: UserInfoTableViewCell.className)
         $0.delegate = self
         $0.dataSource = self
         $0.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 20, right: 0)
@@ -43,23 +43,23 @@ extension FollowingViewController: UITableViewDataSource, UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: UserResultTableViewCell.className, for: indexPath) as? UserResultTableViewCell else { return UITableViewCell() }
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: UserInfoTableViewCell.className, for: indexPath) as? UserInfoTableViewCell else { return UITableViewCell() }
 
         cell.selectionStyle = .none
 
-        let action = UIAction { _ in
+        cell.userButtonTapAction = { [weak self] _ in
+            let profileViewController = ProfileViewController(isOwn: false)
+            self?.navigationController?.pushViewController(profileViewController, animated: true)
+        }
+        
+        cell.followButtonTapAction = { [weak self] _ in
             cell.followButton.isSelected = !cell.followButton.isSelected
         }
-        cell.followButton.addAction(action, for: .touchUpInside)
 
         return cell
     }
 
     func tableView(_: UITableView, heightForRowAt _: IndexPath) -> CGFloat {
         return 60
-    }
-
-    func tableView(_: UITableView, didSelectRowAt _: IndexPath) {
-        print("가게 선택")
     }
 }

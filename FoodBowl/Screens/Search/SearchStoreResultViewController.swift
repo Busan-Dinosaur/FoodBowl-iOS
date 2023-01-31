@@ -16,7 +16,7 @@ final class SearchStoreResultViewController: BaseViewController {
     // MARK: - property
 
     private lazy var storeResultTableView = UITableView().then {
-        $0.register(StoreResultTableViewCell.self, forCellReuseIdentifier: StoreResultTableViewCell.className)
+        $0.register(StoreInfoTableViewCell.self, forCellReuseIdentifier: StoreInfoTableViewCell.className)
         $0.delegate = self
         $0.dataSource = self
         $0.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 20, right: 0)
@@ -44,7 +44,7 @@ extension SearchStoreResultViewController: UITableViewDataSource, UITableViewDel
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: StoreResultTableViewCell.className, for: indexPath) as? StoreResultTableViewCell else { return UITableViewCell() }
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: StoreInfoTableViewCell.className, for: indexPath) as? StoreInfoTableViewCell else { return UITableViewCell() }
 
         cell.selectionStyle = .none
         cell.storeNameLabel.text = "가게이름"
