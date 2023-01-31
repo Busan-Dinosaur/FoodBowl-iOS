@@ -11,25 +11,29 @@ import SnapKit
 import Then
 import WebKit
 
-final class ShowWebViewController: BaseViewController {
+final class ShowWebViewController: BaseViewController, WKNavigationDelegate, WKUIDelegate {
     var url = ""
-
+    
     // MARK: - property
-
+    
     private lazy var closeButton = CloseButton().then {
         let action = UIAction { [weak self] _ in
             self?.dismiss(animated: true, completion: nil)
         }
         $0.addAction(action, for: .touchUpInside)
     }
-
-    let webView = WKWebView()
-
+    
+    lazy var webView = WKWebView(frame: .zero, configuration: WKWebViewConfiguration()).then {
+        $0.navigationDelegate = self
+        $0.uiDelegate = self
+        $0.translatesAutoresizingMaskIntoConstraints = false
+    }
+    
     // MARK: - life cycle
-
+    
     override func render() {
         view.addSubviews(webView)
-
+        
         webView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide)
             $0.leading.trailing.bottom.equalToSuperview()
@@ -37,12 +41,21 @@ final class ShowWebViewController: BaseViewController {
         
         if let url = URL(string: url) { webView.load(URLRequest(url: url)) }
     }
-
+    
     override func setupNavigationBar() {
         super.setupNavigationBar()
-
+        
         let leftOffsetCloseButton = removeBarButtonItemOffset(with: closeButton, offsetX: 10)
         let closeButton = makeBarButtonItem(with: leftOffsetCloseButton)
         navigationItem.leftBarButtonItem = closeButton
+    }
+    
+    func webView(_: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+        if let url = navigationAction.request.url, url.scheme != "http" && url.scheme != "https" {
+            UIApplication.shared.openURL(url)
+            decisionHandler(.cancel)
+        } else {
+            decisionHandler(.allow)
+        }
     }
 }
