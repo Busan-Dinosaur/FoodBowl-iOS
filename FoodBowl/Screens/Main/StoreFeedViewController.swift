@@ -85,58 +85,67 @@ extension StoreFeedViewController: UICollectionViewDataSource, UICollectionViewD
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FeedCollectionViewCell.className, for: indexPath) as? FeedCollectionViewCell else {
             return UICollectionViewCell()
         }
-
-        let userButtonAction = UIAction { [weak self] _ in
+        
+        cell.userButtonTapAction = { _ in
             let profileViewController = ProfileViewController(isOwn: false)
-            self?.navigationController?.pushViewController(profileViewController, animated: true)
+            self.navigationController?.pushViewController(profileViewController, animated: true)
         }
-
-        let mapButtonAction = UIAction { [weak self] _ in
+        
+        cell.followButtonTapAction = { _ in
+            cell.userInfoView.followButton.isSelected = !cell.userInfoView.followButton.isSelected
+        }
+        
+        cell.mapButtonTapAction = { _ in
             let showWebViewController = ShowWebViewController()
             showWebViewController.title = "가게 정보"
             showWebViewController.url = ""
             let navigationController = UINavigationController(rootViewController: showWebViewController)
             navigationController.modalPresentationStyle = .fullScreen
             DispatchQueue.main.async {
-                self?.present(navigationController, animated: true)
+                self.present(navigationController, animated: true)
             }
         }
-
-        let storeButtonAction = UIAction { [weak self] _ in
+        
+        cell.storeButtonTapAction = { _ in
             let storeFeedViewController = StoreFeedViewController()
-            self?.navigationController?.pushViewController(storeFeedViewController, animated: true)
+            storeFeedViewController.title = "틈새라면"
+            self.navigationController?.pushViewController(storeFeedViewController, animated: true)
         }
-
-        let commentButtonAction = UIAction { [weak self] _ in
+        
+        cell.bookmarkButtonTapAction = { _ in
+            if cell.bookmarkButton.isSelected {
+                cell.bookmarkButton.setImage(ImageLiteral.btnBookmark.resize(to: CGSize(width: 20, height: 20)).withRenderingMode(.alwaysTemplate), for: .normal)
+                cell.bookmarkButton.setTitle("  4", for: .normal)
+            } else {
+                cell.bookmarkButton.setImage(ImageLiteral.btnBookmarkFill.resize(to: CGSize(width: 20, height: 20)).withRenderingMode(.alwaysTemplate), for: .normal)
+                cell.bookmarkButton.setTitle("  5", for: .normal)
+            }
+            cell.bookmarkButton.isSelected = !cell.bookmarkButton.isSelected
+        }
+        
+        cell.commentButtonTapAction = { _ in
             let feedCommentViewController = ChatViewController()
-            self?.navigationController?.pushViewController(feedCommentViewController, animated: true)
+            self.navigationController?.pushViewController(feedCommentViewController, animated: true)
         }
         
-        let followButtonAction = UIAction { _ in
-            cell.userInfoView.followButton.isSelected = !cell.userInfoView.followButton.isSelected
-        }
-        
-        let optionButtonAction = UIAction { [weak self] _ in
+        cell.optionButtonTapAction = { _ in
             let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
     
             let report = UIAlertAction(title: "신고하기", style: .destructive, handler: { _ in
-                self?.sendReportMail()
+                self.sendReportMail()
             })
             let cancel = UIAlertAction(title: "취소", style: .cancel, handler: nil)
             
             alert.addAction(cancel)
             alert.addAction(report)
             
-            self?.present(alert, animated: true, completion: nil)
+            self.present(alert, animated: true, completion: nil)
         }
-
-        cell.userInfoView.userImageButton.addAction(userButtonAction, for: .touchUpInside)
-        cell.userInfoView.userNameButton.addAction(userButtonAction, for: .touchUpInside)
-        cell.storeInfoView.mapButton.addAction(mapButtonAction, for: .touchUpInside)
-        cell.storeInfoView.storeNameButton.addAction(storeButtonAction, for: .touchUpInside)
-        cell.commentButton.addAction(commentButtonAction, for: .touchUpInside)
-        cell.userInfoView.followButton.addAction(followButtonAction, for: .touchUpInside)
-        cell.optionButton.addAction(optionButtonAction, for: .touchUpInside)
+        
+        cell.commentLabelTapAction = { _ in
+            cell.collapsed = !cell.collapsed
+            self.collectionViewFlowLayout.invalidateLayout()
+        }
 
         cell.userInfoView.userImageButton.setImage(ImageLiteral.food2, for: .normal)
         cell.commentLabel.text = """
