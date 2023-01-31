@@ -100,12 +100,12 @@ extension ChatViewController: UITableViewDataSource, UITableViewDelegate {
 
         cell.selectionStyle = .none
 
-        let userButtonAction = UIAction { [weak self] _ in
+        cell.userButtonTapAction = { [weak self] _ in
             let profileViewController = ProfileViewController(isOwn: false)
             self?.navigationController?.pushViewController(profileViewController, animated: true)
         }
         
-        let optionButtonAction = UIAction { [weak self] _ in
+        cell.optionButtonTapAction = { [weak self] _ in
             let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
     
             let report = UIAlertAction(title: "신고하기", style: .destructive, handler: { _ in
@@ -118,10 +118,6 @@ extension ChatViewController: UITableViewDataSource, UITableViewDelegate {
             
             self?.present(alert, animated: true, completion: nil)
         }
-
-        cell.userImageButton.addAction(userButtonAction, for: .touchUpInside)
-        cell.userNameButton.addAction(userButtonAction, for: .touchUpInside)
-        cell.optionButton.addAction(optionButtonAction, for: .touchUpInside)
 
         cell.userImageButton.setImage(ImageLiteral.food2, for: .normal)
         cell.userChatLabel.text = "맛있었어요"

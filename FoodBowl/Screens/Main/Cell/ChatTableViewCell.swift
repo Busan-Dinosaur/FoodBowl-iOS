@@ -11,6 +11,9 @@ import SnapKit
 import Then
 
 final class ChatTableViewCell: BaseTableViewCell {
+    var userButtonTapAction: ((ChatTableViewCell) -> Void)?
+    var optionButtonTapAction: ((ChatTableViewCell) -> Void)?
+
     // MARK: - property
 
     lazy var userImageButton = UIButton().then {
@@ -78,5 +81,9 @@ final class ChatTableViewCell: BaseTableViewCell {
     
     override func configUI() {
         backgroundColor = .clear
+        
+        userImageButton.addAction(UIAction { _ in self.userButtonTapAction?(self) }, for: .touchUpInside)
+        userNameButton.addAction(UIAction { _ in self.userButtonTapAction?(self) }, for: .touchUpInside)
+        optionButton.addAction(UIAction { _ in self.optionButtonTapAction?(self) }, for: .touchUpInside)
     }
 }

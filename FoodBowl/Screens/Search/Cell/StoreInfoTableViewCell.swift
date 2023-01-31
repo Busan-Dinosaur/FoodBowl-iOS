@@ -2,7 +2,7 @@
 //  StoreInfoTableViewCell.swift
 //  FoodBowl
 //
-//  Created by Coby Kim on 2023/01/13.
+//  Created by COBY_PRO on 2023/01/18.
 //
 
 import UIKit
@@ -18,7 +18,7 @@ final class StoreInfoTableViewCell: BaseTableViewCell {
         $0.textColor = .mainText
     }
 
-    let storeAdressLabel = UILabel().then {
+    let storeFeedLabel = UILabel().then {
         $0.font = UIFont.preferredFont(forTextStyle: .caption1, weight: .light)
         $0.textColor = .subText
     }
@@ -31,14 +31,14 @@ final class StoreInfoTableViewCell: BaseTableViewCell {
     // MARK: - func
 
     override func render() {
-        contentView.addSubviews(storeNameLabel, storeAdressLabel, storeDistanceLabel)
+        contentView.addSubviews(storeNameLabel, storeFeedLabel, storeDistanceLabel)
 
         storeNameLabel.snp.makeConstraints {
             $0.leading.equalToSuperview().inset(20)
             $0.top.equalToSuperview().inset(12)
         }
 
-        storeAdressLabel.snp.makeConstraints {
+        storeFeedLabel.snp.makeConstraints {
             $0.leading.equalToSuperview().inset(20)
             $0.bottom.equalToSuperview().inset(12)
         }
