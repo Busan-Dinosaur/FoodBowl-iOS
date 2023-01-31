@@ -81,9 +81,10 @@ final class MapViewController: BaseViewController {
     }
 
     private lazy var gpsButton = UIButton().then {
-        $0.backgroundColor = .white
+        $0.backgroundColor = .mainBackground
+        $0.tintColor = .mainText
         $0.makeBorderLayer(color: .grey002)
-        $0.setImage(ImageLiteral.btnGps, for: .normal)
+        $0.setImage(ImageLiteral.btnGps.withRenderingMode(.alwaysTemplate), for: .normal)
         $0.imageEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         let action = UIAction { [weak self] _ in
             self?.findMyLocation()
@@ -92,10 +93,10 @@ final class MapViewController: BaseViewController {
     }
 
     private lazy var bookMarkButton = UIButton().then {
-        $0.backgroundColor = .white
+        $0.backgroundColor = .mainBackground
         $0.makeBorderLayer(color: .grey002)
         $0.setImage(ImageLiteral.btnBookmarkFill.withRenderingMode(.alwaysTemplate), for: .normal)
-        $0.tintColor = .black
+        $0.tintColor = .mainText
         $0.imageEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         let action = UIAction { [weak self] _ in
             self?.findMyBookmarks()
@@ -172,11 +173,9 @@ final class MapViewController: BaseViewController {
 
     private func findMyBookmarks() {
         if isBookMark {
-            bookMarkButton.backgroundColor = .black
-            bookMarkButton.tintColor = .white
+            bookMarkButton.tintColor = .mainPink
         } else {
-            bookMarkButton.backgroundColor = .white
-            bookMarkButton.tintColor = .black
+            bookMarkButton.tintColor = .mainText
         }
         isBookMark = !isBookMark
     }
