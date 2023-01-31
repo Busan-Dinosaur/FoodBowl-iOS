@@ -45,7 +45,7 @@ final class EditProfileViewController: BaseViewController {
         ]
 
         $0.backgroundColor = .clear
-        $0.attributedPlaceholder = NSAttributedString(string: "8자 이내 한글 또는 영문", attributes: attributes)
+        $0.attributedPlaceholder = NSAttributedString(string: "10자 이내 한글 또는 영문", attributes: attributes)
         $0.autocapitalizationType = .none
         $0.layer.cornerRadius = 12
         $0.layer.masksToBounds = true
