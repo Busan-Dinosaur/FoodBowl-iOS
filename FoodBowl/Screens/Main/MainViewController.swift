@@ -106,10 +106,6 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
             return UICollectionViewCell()
         }
         
-        [cell.userInfoView.userImageButton, cell.userInfoView.userImageButton, cell.userInfoView.followButton,
-         cell.storeInfoView.mapButton, cell.storeInfoView.storeNameButton,
-         cell.bookmarkButton, cell.commentButton, cell.optionButton].forEach { $0.tag = indexPath.item }
-        
         cell.userButtonTapAction = { _ in
             let profileViewController = ProfileViewController(isOwn: false)
             self.navigationController?.pushViewController(profileViewController, animated: true)
@@ -164,6 +160,11 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
             alert.addAction(report)
             
             self.present(alert, animated: true, completion: nil)
+        }
+        
+        cell.commentLabelTapAction = { _ in
+            cell.collapsed = !cell.collapsed
+            self.collectionViewFlowLayout.invalidateLayout()
         }
 
         cell.userInfoView.userImageButton.setImage(ImageLiteral.food2, for: .normal)
