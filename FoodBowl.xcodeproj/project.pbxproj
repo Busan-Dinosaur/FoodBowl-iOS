@@ -88,6 +88,7 @@
 		CBD1B5FE2982F19300B0AD51 /* UIButton+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD1B5FD2982F19300B0AD51 /* UIButton+Extension.swift */; };
 		CBD1B6002984297100B0AD51 /* ChatSendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD1B5FF2984297100B0AD51 /* ChatSendView.swift */; };
 		CBD1B6022984394A00B0AD51 /* FeedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD1B6012984394A00B0AD51 /* FeedButton.swift */; };
+		CBDB8F8129897E0200DA2B1E /* Baumans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CBDB8F7F298979DD00DA2B1E /* Baumans-Regular.ttf */; };
 		CBDE38F92970745600DDE49A /* AddFeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDE38F82970745600DDE49A /* AddFeedViewController.swift */; };
 		CBDE38FB2970774800DDE49A /* CloseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDE38FA2970774800DDE49A /* CloseButton.swift */; };
 		CBDE38FD29715C5F00DDE49A /* SearchBarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDE38FC29715C5F00DDE49A /* SearchBarButton.swift */; };
@@ -187,6 +188,7 @@
 		CBD1B5FD2982F19300B0AD51 /* UIButton+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Extension.swift"; sourceTree = "<group>"; };
 		CBD1B5FF2984297100B0AD51 /* ChatSendView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatSendView.swift; sourceTree = "<group>"; };
 		CBD1B6012984394A00B0AD51 /* FeedButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedButton.swift; sourceTree = "<group>"; };
+		CBDB8F7F298979DD00DA2B1E /* Baumans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Baumans-Regular.ttf"; sourceTree = "<group>"; };
 		CBDE38F82970745600DDE49A /* AddFeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFeedViewController.swift; sourceTree = "<group>"; };
 		CBDE38FA2970774800DDE49A /* CloseButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloseButton.swift; sourceTree = "<group>"; };
 		CBDE38FC29715C5F00DDE49A /* SearchBarButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBarButton.swift; sourceTree = "<group>"; };
@@ -334,6 +336,7 @@
 		CBADC26F29559BC900E56C93 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				CBDB8F8029897CCC00DA2B1E /* Fonts */,
 				CBC7310C295550A200C7F198 /* Assets.xcassets */,
 				CBC7310E295550A200C7F198 /* LaunchScreen.storyboard */,
 			);
@@ -505,6 +508,14 @@
 			path = Cell;
 			sourceTree = "<group>";
 		};
+		CBDB8F8029897CCC00DA2B1E /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				CBDB8F7F298979DD00DA2B1E /* Baumans-Regular.ttf */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
 		CBDE39002971945300DDE49A /* Cell */ = {
 			isa = PBXGroup;
 			children = (
@@ -607,6 +618,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CBDB8F8129897E0200DA2B1E /* Baumans-Regular.ttf in Resources */,
 				CBADC25029559AB700E56C93 /* .swiftformat in Resources */,
 				CBADC24E29559AA900E56C93 /* .swiftlint.yml in Resources */,
 				CBC73110295550A200C7F198 /* LaunchScreen.storyboard in Resources */,
