@@ -15,7 +15,7 @@ final class OnboardingViewController: BaseViewController {
     // MARK: - property
 
     private let appLogoView = UILabel().then {
-        $0.font = UIFont.preferredFont(forTextStyle: .largeTitle, weight: .bold)
+        $0.font = .font(.regular, ofSize: 30)
         $0.textColor = .mainText
         $0.text = "FoodBowl"
     }
@@ -43,6 +43,14 @@ final class OnboardingViewController: BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.isNavigationBarHidden = true
+        
+        UIFont.familyNames.sorted().forEach { familyName in
+            print("*** \(familyName) ***")
+            UIFont.fontNames(forFamilyName: familyName).forEach { fontName in
+                print("\(fontName)")
+            }
+            print("---------------------")
+        }
     }
 
     override func viewWillDisappear(_ animated: Bool) {

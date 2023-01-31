@@ -40,7 +40,7 @@ final class MainViewController: BaseViewController {
     private let emptyFeedView = EmptyFeedView()
 
     private let appLogoView = UILabel().then {
-        $0.font = UIFont.preferredFont(forTextStyle: .title1, weight: .bold)
+        $0.font = .font(.regular, ofSize: 24)
         $0.textColor = .mainText
         $0.text = "FoodBowl"
     }
