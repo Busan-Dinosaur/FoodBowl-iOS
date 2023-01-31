@@ -15,7 +15,7 @@ final class CategoryCollectionViewCell: BaseCollectionViewCell {
         didSet {
             if isSelected {
                 backgroundColor = .mainBlue
-                categoryLabel.textColor = .mainBackground
+                categoryLabel.textColor = .white
             } else {
                 backgroundColor = .mainBackground
                 categoryLabel.textColor = .mainText
