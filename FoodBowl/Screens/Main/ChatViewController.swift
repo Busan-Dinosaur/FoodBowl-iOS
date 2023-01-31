@@ -22,6 +22,7 @@ final class ChatViewController: BaseViewController {
         $0.rowHeight = UITableView.automaticDimension
         $0.estimatedRowHeight = 60
         $0.showsVerticalScrollIndicator = false
+        $0.backgroundColor = .clear
     }
 
     private lazy var chatSendView = ChatSendView().then {
