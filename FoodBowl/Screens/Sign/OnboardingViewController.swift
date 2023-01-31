@@ -15,7 +15,7 @@ final class OnboardingViewController: BaseViewController {
     // MARK: - property
 
     private let appLogoView = UILabel().then {
-        $0.font = .font(.regular, ofSize: 30)
+        $0.font = .font(.regular, ofSize: 50)
         $0.textColor = .mainText
         $0.text = "FoodBowl"
     }
