@@ -106,33 +106,33 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
             return UICollectionViewCell()
         }
         
-        cell.userButtonTapAction = { _ in
+        cell.userButtonTapAction = { [weak self] _ in
             let profileViewController = ProfileViewController(isOwn: false)
-            self.navigationController?.pushViewController(profileViewController, animated: true)
+            self?.navigationController?.pushViewController(profileViewController, animated: true)
         }
         
-        cell.followButtonTapAction = { _ in
+        cell.followButtonTapAction = { [weak self] _ in
             cell.userInfoView.followButton.isSelected = !cell.userInfoView.followButton.isSelected
         }
         
-        cell.mapButtonTapAction = { _ in
+        cell.mapButtonTapAction = { [weak self] _ in
             let showWebViewController = ShowWebViewController()
             showWebViewController.title = "가게 정보"
             showWebViewController.url = ""
             let navigationController = UINavigationController(rootViewController: showWebViewController)
             navigationController.modalPresentationStyle = .fullScreen
             DispatchQueue.main.async {
-                self.present(navigationController, animated: true)
+                self?.present(navigationController, animated: true)
             }
         }
         
-        cell.storeButtonTapAction = { _ in
+        cell.storeButtonTapAction = { [weak self] _ in
             let storeFeedViewController = StoreFeedViewController()
             storeFeedViewController.title = "틈새라면"
-            self.navigationController?.pushViewController(storeFeedViewController, animated: true)
+            self?.navigationController?.pushViewController(storeFeedViewController, animated: true)
         }
         
-        cell.bookmarkButtonTapAction = { _ in
+        cell.bookmarkButtonTapAction = { [weak self] _ in
             if cell.bookmarkButton.isSelected {
                 cell.bookmarkButton.setImage(ImageLiteral.btnBookmark.resize(to: CGSize(width: 20, height: 20)).withRenderingMode(.alwaysTemplate), for: .normal)
                 cell.bookmarkButton.setTitle("  4", for: .normal)
@@ -143,23 +143,23 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
             cell.bookmarkButton.isSelected = !cell.bookmarkButton.isSelected
         }
         
-        cell.commentButtonTapAction = { _ in
+        cell.commentButtonTapAction = { [weak self] _ in
             let feedCommentViewController = ChatViewController()
-            self.navigationController?.pushViewController(feedCommentViewController, animated: true)
+            self?.navigationController?.pushViewController(feedCommentViewController, animated: true)
         }
         
-        cell.optionButtonTapAction = { _ in
+        cell.optionButtonTapAction = { [weak self] _ in
             let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
     
             let report = UIAlertAction(title: "신고하기", style: .destructive, handler: { _ in
-                self.sendReportMail()
+                self?.sendReportMail()
             })
             let cancel = UIAlertAction(title: "취소", style: .cancel, handler: nil)
             
             alert.addAction(cancel)
             alert.addAction(report)
             
-            self.present(alert, animated: true, completion: nil)
+            self?.present(alert, animated: true, completion: nil)
         }
         
         cell.commentLabelTapAction = { _ in
