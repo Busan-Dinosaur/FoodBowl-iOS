@@ -97,8 +97,10 @@ extension OnboardingViewController: ASAuthorizationControllerDelegate {
                     // The Apple ID credential is valid. Show Home UI Here
                     guard let token = appleIDCredential.identityToken else { return }
                     guard let tokenToString = String(data: token, encoding: .utf8) else { return }
-                    let agreementViewController = AgreementViewController()
-                    self.navigationController?.pushViewController(agreementViewController, animated: true)
+                    DispatchQueue.main.async {
+                        let agreementViewController = AgreementViewController()
+                        self.navigationController?.pushViewController(agreementViewController, animated: true)
+                    }
                 case .revoked:
                     // The Apple ID credential is revoked. Show SignIn UI Here.
                     break
