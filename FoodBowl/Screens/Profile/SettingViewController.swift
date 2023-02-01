@@ -82,6 +82,12 @@ final class SettingViewController: BaseViewController {
         }))
 
         options.append(Option(title: "로그아웃", handler: { [weak self] in
+            DispatchQueue.main.async {
+                self?.makeRequestAlert(title: "로그아웃 하시겠습니까?", message: "", okTitle: "확인", cancelTitle: "취소", okAction: { _ in
+                    guard let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate else { return }
+                    sceneDelegate.logout()
+                })
+            }
         }))
 
         options.append(Option(title: "회원탈퇴", handler: { [weak self] in

@@ -39,7 +39,9 @@ final class ShowWebViewController: BaseViewController, WKNavigationDelegate, WKU
             $0.leading.trailing.bottom.equalToSuperview()
         }
         
-        if let url = URL(string: url) { webView.load(URLRequest(url: url)) }
+        DispatchQueue.main.async {
+            if let url = URL(string: self.url) { self.webView.load(URLRequest(url: url)) }
+        }
     }
     
     override func setupNavigationBar() {

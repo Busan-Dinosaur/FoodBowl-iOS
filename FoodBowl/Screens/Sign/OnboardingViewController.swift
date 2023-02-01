@@ -31,8 +31,7 @@ final class OnboardingViewController: BaseViewController {
         style: traitCollection.userInterfaceStyle == .dark ? .white : .black
     ).then {
         let action = UIAction { [weak self] _ in
-            let agreementViewController = AgreementViewController()
-            self?.navigationController?.pushViewController(agreementViewController, animated: true)
+            self?.appleSignIn()
         }
         $0.addAction(action, for: .touchUpInside)
         $0.cornerRadius = 30
@@ -43,14 +42,6 @@ final class OnboardingViewController: BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.isNavigationBarHidden = true
-        
-        UIFont.familyNames.sorted().forEach { familyName in
-            print("*** \(familyName) ***")
-            UIFont.fontNames(forFamilyName: familyName).forEach { fontName in
-                print("\(fontName)")
-            }
-            print("---------------------")
-        }
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -76,5 +67,59 @@ final class OnboardingViewController: BaseViewController {
             $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(20)
             $0.height.equalTo(60)
         }
+    }
+    
+    private func appleSignIn() {
+        let provider = ASAuthorizationAppleIDProvider()
+        let request = provider.createRequest()
+        request.requestedScopes = [.fullName, .email]
+        let controller = ASAuthorizationController(authorizationRequests: [request])
+        controller.delegate = self
+        controller.presentationContextProvider = self
+        controller.performRequests()
+    }
+}
+
+extension OnboardingViewController: ASAuthorizationControllerDelegate {
+    func authorizationController(controller _: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
+        if let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential {
+            let userIdentifier = appleIDCredential.user
+            let userFirstName = appleIDCredential.fullName?.givenName
+            let userLastName = appleIDCredential.fullName?.familyName
+            let userEmail = appleIDCredential.email
+            
+            print(userEmail)
+            
+            let appleIDProvider = ASAuthorizationAppleIDProvider()
+            appleIDProvider.getCredentialState(forUserID: userIdentifier) { credentialState, _ in
+                switch credentialState {
+                case .authorized:
+                    // The Apple ID credential is valid. Show Home UI Here
+                    guard let token = appleIDCredential.identityToken else { return }
+                    guard let tokenToString = String(data: token, encoding: .utf8) else { return }
+                    UserDefaultHandler.setIsLogin(isLogin: true)
+                    DispatchQueue.main.async {
+                        let agreementViewController = AgreementViewController()
+                        self.navigationController?.pushViewController(agreementViewController, animated: true)
+                    }
+                case .revoked:
+                    // The Apple ID credential is revoked. Show SignIn UI Here.
+                    break
+                case .notFound:
+                    // No credential was found. Show SignIn UI Here.
+                    break
+                default:
+                    break
+                }
+            }
+        }
+    }
+
+    func authorizationController(controller _: ASAuthorizationController, didCompleteWithError _: Error) {}
+}
+
+extension OnboardingViewController: ASAuthorizationControllerPresentationContextProviding {
+    func presentationAnchor(for _: ASAuthorizationController) -> ASPresentationAnchor {
+        return view.window!
     }
 }
