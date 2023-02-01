@@ -13,8 +13,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo _: UISceneSession, options _: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
-        window?.rootViewController = UINavigationController(rootViewController: OnboardingViewController())
-//        window?.rootViewController = UINavigationController(rootViewController: TabbarViewController())
+        
+        let isLogin = UserDefaultStorage.isLogin
+        if !isLogin {
+            window?.rootViewController = UINavigationController(rootViewController: OnboardingViewController())
+        } else {
+            window?.rootViewController = UINavigationController(rootViewController: TabbarViewController())
+        }
         window?.makeKeyAndVisible()
     }
 
@@ -44,5 +49,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Called as the scene transitions from the foreground to the background.
         // Use this method to save data, release shared resources, and store enough scene-specific state information
         // to restore the scene back to its current state.
+    }
+}
+
+extension SceneDelegate {
+    func logout() {
+        UserDefaultHandler.clearAllData()
+        window?.rootViewController = OnboardingViewController()
     }
 }

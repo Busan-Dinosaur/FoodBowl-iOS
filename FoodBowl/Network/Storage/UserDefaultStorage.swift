@@ -52,7 +52,6 @@ enum UserData<T> {
     
     static func clearAll() {
         DataKeys.allCases.forEach { key in
-            print(key.rawValue)
             UserDefaults.standard.removeObject(forKey: key.rawValue)
         }
     }

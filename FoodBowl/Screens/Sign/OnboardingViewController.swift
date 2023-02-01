@@ -97,6 +97,7 @@ extension OnboardingViewController: ASAuthorizationControllerDelegate {
                     // The Apple ID credential is valid. Show Home UI Here
                     guard let token = appleIDCredential.identityToken else { return }
                     guard let tokenToString = String(data: token, encoding: .utf8) else { return }
+                    UserDefaultHandler.setIsLogin(isLogin: true)
                     DispatchQueue.main.async {
                         let agreementViewController = AgreementViewController()
                         self.navigationController?.pushViewController(agreementViewController, animated: true)
