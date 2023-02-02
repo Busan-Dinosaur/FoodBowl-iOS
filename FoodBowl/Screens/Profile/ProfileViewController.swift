@@ -127,23 +127,23 @@ final class ProfileViewController: BaseViewController {
         $0.addTarget(self, action: #selector(changeValue(control:)), for: .valueChanged)
     }
 
-    private let childView: UIView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
+    private let childView = UIView().then {
+        $0.translatesAutoresizingMaskIntoConstraints = false
+    }
 
     private let vc1 = UserFeedViewController()
     private let vc2 = UserFeedViewController()
 
-    private lazy var pageViewController: UIPageViewController = {
-        let vc = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
-        vc.setViewControllers([self.dataViewControllers[0]], direction: .forward, animated: true)
-        vc.delegate = self
-        vc.dataSource = self
-        vc.view.translatesAutoresizingMaskIntoConstraints = false
-        return vc
-    }()
+    private lazy var pageViewController = UIPageViewController(
+        transitionStyle: .scroll,
+        navigationOrientation: .horizontal,
+        options: nil
+    ).then {
+        $0.setViewControllers([self.dataViewControllers[0]], direction: .forward, animated: true)
+        $0.delegate = self
+        $0.dataSource = self
+        $0.view.translatesAutoresizingMaskIntoConstraints = false
+    }
 
     var dataViewControllers: [UIViewController] {
         [vc1, vc2]

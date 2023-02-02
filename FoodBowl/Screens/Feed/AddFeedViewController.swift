@@ -13,10 +13,11 @@ import Then
 final class AddFeedViewController: BaseViewController {
     var newFeed = Feed(id: nil, store: nil, categories: nil, photoes: nil, comment: nil)
 
-    private lazy var pageViewController: UIPageViewController = {
-        let vc = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
-        return vc
-    }()
+    private lazy var pageViewController = UIPageViewController(
+        transitionStyle: .scroll,
+        navigationOrientation: .horizontal,
+        options: nil
+    )
 
     private let vc1 = SetStoreViewController()
     private let vc2 = SetCategoryViewController()
