@@ -68,7 +68,7 @@ final class OnboardingViewController: BaseViewController {
             $0.height.equalTo(60)
         }
     }
-    
+
     private func appleSignIn() {
         let provider = ASAuthorizationAppleIDProvider()
         let request = provider.createRequest()
@@ -81,22 +81,23 @@ final class OnboardingViewController: BaseViewController {
 }
 
 extension OnboardingViewController: ASAuthorizationControllerDelegate {
-    func authorizationController(controller _: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
+    func authorizationController(
+        controller _: ASAuthorizationController,
+        didCompleteWithAuthorization authorization: ASAuthorization
+    ) {
         if let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential {
             let userIdentifier = appleIDCredential.user
-            let userFirstName = appleIDCredential.fullName?.givenName
-            let userLastName = appleIDCredential.fullName?.familyName
-            let userEmail = appleIDCredential.email
-            
-            print(userEmail)
-            
+//            let userFirstName = appleIDCredential.fullName?.givenName
+//            let userLastName = appleIDCredential.fullName?.familyName
+//            let userEmail = appleIDCredential.email
+
             let appleIDProvider = ASAuthorizationAppleIDProvider()
             appleIDProvider.getCredentialState(forUserID: userIdentifier) { credentialState, _ in
                 switch credentialState {
                 case .authorized:
                     // The Apple ID credential is valid. Show Home UI Here
-                    guard let token = appleIDCredential.identityToken else { return }
-                    guard let tokenToString = String(data: token, encoding: .utf8) else { return }
+//                    guard let token = appleIDCredential.identityToken else { return }
+//                    guard let tokenToString = String(data: token, encoding: .utf8) else { return }
                     UserDefaultHandler.setIsLogin(isLogin: true)
                     DispatchQueue.main.async {
                         let agreementViewController = AgreementViewController()

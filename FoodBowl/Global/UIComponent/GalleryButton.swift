@@ -23,7 +23,10 @@ final class GalleryButton: UIButton {
     // MARK: - life cycle
 
     private func configUI() {
-        setImage(ImageLiteral.btnGallery.resize(to: CGSize(width: 22, height: 22)).withRenderingMode(.alwaysTemplate), for: .normal)
+        setImage(
+            ImageLiteral.btnGallery.resize(to: CGSize(width: 22, height: 22)).withRenderingMode(.alwaysTemplate),
+            for: .normal
+        )
         tintColor = .mainText
     }
 }

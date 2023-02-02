@@ -48,7 +48,7 @@ final class StoreSearchTableViewCell: BaseTableViewCell {
             $0.bottom.equalToSuperview().inset(12)
         }
     }
-    
+
     override func configUI() {
         backgroundColor = .clear
     }

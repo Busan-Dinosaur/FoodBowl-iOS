@@ -34,7 +34,7 @@ final class TabbarViewController: UITabBarController {
             mainViewController,
             mapViewController,
             searchViewController,
-            profileViewController
+            profileViewController,
         ], animated: true)
 
         if #available(iOS 13.0, *) {

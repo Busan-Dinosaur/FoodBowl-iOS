@@ -13,10 +13,12 @@ import Then
 
 final class StoreFeedViewController: BaseViewController {
     private enum Size {
-        static let collectionInset = UIEdgeInsets(top: 0,
-                                                  left: 0,
-                                                  bottom: 20,
-                                                  right: 0)
+        static let collectionInset = UIEdgeInsets(
+            top: 0,
+            left: 0,
+            bottom: 20,
+            right: 0
+        )
     }
 
     private var refreshControl = UIRefreshControl()
@@ -82,19 +84,22 @@ extension StoreFeedViewController: UICollectionViewDataSource, UICollectionViewD
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FeedCollectionViewCell.className, for: indexPath) as? FeedCollectionViewCell else {
+        guard let cell = collectionView.dequeueReusableCell(
+            withReuseIdentifier: FeedCollectionViewCell.className,
+            for: indexPath
+        ) as? FeedCollectionViewCell else {
             return UICollectionViewCell()
         }
-        
+
         cell.userButtonTapAction = { _ in
             let profileViewController = ProfileViewController(isOwn: false)
             self.navigationController?.pushViewController(profileViewController, animated: true)
         }
-        
+
         cell.followButtonTapAction = { _ in
             cell.userInfoView.followButton.isSelected = !cell.userInfoView.followButton.isSelected
         }
-        
+
         cell.mapButtonTapAction = { _ in
             let showWebViewController = ShowWebViewController()
             showWebViewController.title = "가게 정보"
@@ -105,43 +110,49 @@ extension StoreFeedViewController: UICollectionViewDataSource, UICollectionViewD
                 self.present(navigationController, animated: true)
             }
         }
-        
+
         cell.storeButtonTapAction = { _ in
             let storeFeedViewController = StoreFeedViewController()
             storeFeedViewController.title = "틈새라면"
             self.navigationController?.pushViewController(storeFeedViewController, animated: true)
         }
-        
+
         cell.bookmarkButtonTapAction = { _ in
             if cell.bookmarkButton.isSelected {
-                cell.bookmarkButton.setImage(ImageLiteral.btnBookmark.resize(to: CGSize(width: 20, height: 20)).withRenderingMode(.alwaysTemplate), for: .normal)
+                cell.bookmarkButton.setImage(
+                    ImageLiteral.btnBookmark.resize(to: CGSize(width: 20, height: 20)).withRenderingMode(.alwaysTemplate),
+                    for: .normal
+                )
                 cell.bookmarkButton.setTitle("  4", for: .normal)
             } else {
-                cell.bookmarkButton.setImage(ImageLiteral.btnBookmarkFill.resize(to: CGSize(width: 20, height: 20)).withRenderingMode(.alwaysTemplate), for: .normal)
+                cell.bookmarkButton.setImage(
+                    ImageLiteral.btnBookmarkFill.resize(to: CGSize(width: 20, height: 20)).withRenderingMode(.alwaysTemplate),
+                    for: .normal
+                )
                 cell.bookmarkButton.setTitle("  5", for: .normal)
             }
             cell.bookmarkButton.isSelected = !cell.bookmarkButton.isSelected
         }
-        
+
         cell.commentButtonTapAction = { _ in
             let feedCommentViewController = ChatViewController()
             self.navigationController?.pushViewController(feedCommentViewController, animated: true)
         }
-        
+
         cell.optionButtonTapAction = { _ in
             let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-    
+
             let report = UIAlertAction(title: "신고하기", style: .destructive, handler: { _ in
                 self.sendReportMail()
             })
             let cancel = UIAlertAction(title: "취소", style: .cancel, handler: nil)
-            
+
             alert.addAction(cancel)
             alert.addAction(report)
-            
+
             self.present(alert, animated: true, completion: nil)
         }
-        
+
         cell.commentLabelTapAction = { _ in
             cell.collapsed = !cell.collapsed
             self.collectionViewFlowLayout.invalidateLayout()
@@ -149,17 +160,17 @@ extension StoreFeedViewController: UICollectionViewDataSource, UICollectionViewD
 
         cell.userInfoView.userImageButton.setImage(ImageLiteral.food2, for: .normal)
         cell.commentLabel.text = """
-        이번에 학교 앞에 새로 생겼길래 가봤는데 너무 맛있었어요.
-        이번에 학교 앞에 새로 생겼길래 가봤는데 너무 맛있었어요.
-        이번에 학교 앞에 새로 생겼길래 가봤는데 너무 맛있었어요.
-        """
+            이번에 학교 앞에 새로 생겼길래 가봤는데 너무 맛있었어요.
+            이번에 학교 앞에 새로 생겼길래 가봤는데 너무 맛있었어요.
+            이번에 학교 앞에 새로 생겼길래 가봤는데 너무 맛있었어요.
+            """
 
         return cell
     }
 }
 
 extension StoreFeedViewController {
-    /* Standard scroll-view delegate */
+    // Standard scroll-view delegate
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let contentSize = scrollView.contentSize.height
 
@@ -177,8 +188,8 @@ extension StoreFeedViewController: MFMailComposeViewControllerDelegate {
             let composeVC = MFMailComposeViewController()
             let emailAdress = "foodbowl5502@gmail.com"
             let messageBody = """
-            신고 사유를 작성해주세요.
-            """
+                신고 사유를 작성해주세요.
+                """
 
             composeVC.mailComposeDelegate = self
             composeVC.setToRecipients([emailAdress])

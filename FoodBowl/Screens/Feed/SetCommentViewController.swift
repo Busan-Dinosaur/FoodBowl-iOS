@@ -16,10 +16,12 @@ final class SetCommentViewController: BaseViewController {
     private enum Size {
         static let cellWidth: CGFloat = 100
         static let cellHeight: CGFloat = cellWidth
-        static let collectionInset = UIEdgeInsets(top: 0,
-                                                  left: 20,
-                                                  bottom: 0,
-                                                  right: 20)
+        static let collectionInset = UIEdgeInsets(
+            top: 0,
+            left: 20,
+            bottom: 0,
+            right: 20
+        )
     }
 
     var selectedImages = [UIImage]()
@@ -112,7 +114,10 @@ extension SetCommentViewController: UICollectionViewDataSource, UICollectionView
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FeedThumnailCollectionViewCell.className, for: indexPath) as? FeedThumnailCollectionViewCell else {
+        guard let cell = collectionView.dequeueReusableCell(
+            withReuseIdentifier: FeedThumnailCollectionViewCell.className,
+            for: indexPath
+        ) as? FeedThumnailCollectionViewCell else {
             return UICollectionViewCell()
         }
 

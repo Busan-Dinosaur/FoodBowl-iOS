@@ -63,15 +63,15 @@ final class ProfileViewController: BaseViewController {
     private lazy var optionButton = OptionButton().then {
         let optionButtonAction = UIAction { [weak self] _ in
             let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-    
+
             let report = UIAlertAction(title: "신고하기", style: .destructive, handler: { _ in
                 self?.sendReportMail()
             })
             let cancel = UIAlertAction(title: "취소", style: .cancel, handler: nil)
-            
+
             alert.addAction(cancel)
             alert.addAction(report)
-            
+
             self?.present(alert, animated: true, completion: nil)
         }
         $0.addAction(optionButtonAction, for: .touchUpInside)
@@ -112,14 +112,14 @@ final class ProfileViewController: BaseViewController {
         $0.setTitleTextAttributes(
             [
                 NSAttributedString.Key.foregroundColor: UIColor.subText,
-                .font: UIFont.preferredFont(forTextStyle: .headline, weight: .medium)
+                .font: UIFont.preferredFont(forTextStyle: .headline, weight: .medium),
             ],
             for: .normal
         )
         $0.setTitleTextAttributes(
             [
                 NSAttributedString.Key.foregroundColor: UIColor.mainText,
-                .font: UIFont.preferredFont(forTextStyle: .headline, weight: .semibold)
+                .font: UIFont.preferredFont(forTextStyle: .headline, weight: .semibold),
             ],
             for: .selected
         )
@@ -149,7 +149,7 @@ final class ProfileViewController: BaseViewController {
         [vc1, vc2]
     }
 
-    var currentPage: Int = 0 {
+    var currentPage = 0 {
         didSet {
             let direction: UIPageViewController.NavigationDirection = oldValue <= self.currentPage ? .forward : .reverse
             self.pageViewController.setViewControllers(
@@ -169,13 +169,13 @@ final class ProfileViewController: BaseViewController {
         } else {
             userProfileView.editButton.isHidden = true
         }
-        
+
         let storeHandler = { [weak self] in
             let storeFeedViewController = StoreFeedViewController()
             storeFeedViewController.title = "coby5502"
             self?.navigationController?.pushViewController(storeFeedViewController, animated: true)
         }
-        
+
         vc1.handler = storeHandler
         vc2.handler = storeHandler
     }
@@ -218,7 +218,8 @@ final class ProfileViewController: BaseViewController {
         }
     }
 
-    @objc private func changeValue(control: UISegmentedControl) {
+    @objc
+    private func changeValue(control: UISegmentedControl) {
         currentPage = control.selectedSegmentIndex
     }
 
@@ -232,9 +233,8 @@ extension ProfileViewController: UIPageViewControllerDataSource, UIPageViewContr
         _: UIPageViewController,
         viewControllerBefore viewController: UIViewController
     ) -> UIViewController? {
-        guard
-            let index = dataViewControllers.firstIndex(of: viewController),
-            index - 1 >= 0
+        guard let index = dataViewControllers.firstIndex(of: viewController),
+              index - 1 >= 0
         else { return nil }
         return dataViewControllers[index - 1]
     }
@@ -243,9 +243,8 @@ extension ProfileViewController: UIPageViewControllerDataSource, UIPageViewContr
         _: UIPageViewController,
         viewControllerAfter viewController: UIViewController
     ) -> UIViewController? {
-        guard
-            let index = dataViewControllers.firstIndex(of: viewController),
-            index + 1 < dataViewControllers.count
+        guard let index = dataViewControllers.firstIndex(of: viewController),
+              index + 1 < dataViewControllers.count
         else { return nil }
         return dataViewControllers[index + 1]
     }
@@ -256,9 +255,8 @@ extension ProfileViewController: UIPageViewControllerDataSource, UIPageViewContr
         previousViewControllers _: [UIViewController],
         transitionCompleted _: Bool
     ) {
-        guard
-            let viewController = pageViewController.viewControllers?[0],
-            let index = dataViewControllers.firstIndex(of: viewController)
+        guard let viewController = pageViewController.viewControllers?[0],
+              let index = dataViewControllers.firstIndex(of: viewController)
         else { return }
         currentPage = index
         segmentedControl.selectedSegmentIndex = index
@@ -271,8 +269,8 @@ extension ProfileViewController: MFMailComposeViewControllerDelegate {
             let composeVC = MFMailComposeViewController()
             let emailAdress = "foodbowl5502@gmail.com"
             let messageBody = """
-            신고 사유를 작성해주세요.
-            """
+                신고 사유를 작성해주세요.
+                """
 
             composeVC.mailComposeDelegate = self
             composeVC.setToRecipients([emailAdress])

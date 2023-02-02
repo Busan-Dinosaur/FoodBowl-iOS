@@ -32,14 +32,14 @@ final class SearchResultViewController: BaseViewController {
         $0.setTitleTextAttributes(
             [
                 NSAttributedString.Key.foregroundColor: UIColor.subText,
-                .font: UIFont.preferredFont(forTextStyle: .headline, weight: .medium)
+                .font: UIFont.preferredFont(forTextStyle: .headline, weight: .medium),
             ],
             for: .normal
         )
         $0.setTitleTextAttributes(
             [
                 NSAttributedString.Key.foregroundColor: UIColor.mainText,
-                .font: UIFont.preferredFont(forTextStyle: .headline, weight: .semibold)
+                .font: UIFont.preferredFont(forTextStyle: .headline, weight: .semibold),
             ],
             for: .selected
         )
@@ -69,7 +69,7 @@ final class SearchResultViewController: BaseViewController {
         [vc1, vc2]
     }
 
-    var currentPage: Int = 0 {
+    var currentPage = 0 {
         didSet {
             let direction: UIPageViewController.NavigationDirection = oldValue <= self.currentPage ? .forward : .reverse
             self.pageViewController.setViewControllers(
@@ -107,7 +107,8 @@ final class SearchResultViewController: BaseViewController {
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: searchBar)
     }
 
-    @objc private func changeValue(control: UISegmentedControl) {
+    @objc
+    private func changeValue(control: UISegmentedControl) {
         currentPage = control.selectedSegmentIndex
     }
 }
@@ -117,9 +118,8 @@ extension SearchResultViewController: UIPageViewControllerDataSource, UIPageView
         _: UIPageViewController,
         viewControllerBefore viewController: UIViewController
     ) -> UIViewController? {
-        guard
-            let index = dataViewControllers.firstIndex(of: viewController),
-            index - 1 >= 0
+        guard let index = dataViewControllers.firstIndex(of: viewController),
+              index - 1 >= 0
         else { return nil }
         return dataViewControllers[index - 1]
     }
@@ -128,9 +128,8 @@ extension SearchResultViewController: UIPageViewControllerDataSource, UIPageView
         _: UIPageViewController,
         viewControllerAfter viewController: UIViewController
     ) -> UIViewController? {
-        guard
-            let index = dataViewControllers.firstIndex(of: viewController),
-            index + 1 < dataViewControllers.count
+        guard let index = dataViewControllers.firstIndex(of: viewController),
+              index + 1 < dataViewControllers.count
         else { return nil }
         return dataViewControllers[index + 1]
     }
@@ -141,9 +140,8 @@ extension SearchResultViewController: UIPageViewControllerDataSource, UIPageView
         previousViewControllers _: [UIViewController],
         transitionCompleted _: Bool
     ) {
-        guard
-            let viewController = pageViewController.viewControllers?[0],
-            let index = dataViewControllers.firstIndex(of: viewController)
+        guard let viewController = pageViewController.viewControllers?[0],
+              let index = dataViewControllers.firstIndex(of: viewController)
         else { return }
         currentPage = index
         segmentedControl.selectedSegmentIndex = index

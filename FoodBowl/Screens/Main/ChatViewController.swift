@@ -96,7 +96,9 @@ extension ChatViewController: UITableViewDataSource, UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: ChatTableViewCell.className, for: indexPath) as? ChatTableViewCell else { return UITableViewCell() }
+        guard let cell = tableView
+            .dequeueReusableCell(withIdentifier: ChatTableViewCell.className, for: indexPath) as? ChatTableViewCell
+        else { return UITableViewCell() }
 
         cell.selectionStyle = .none
 
@@ -104,18 +106,18 @@ extension ChatViewController: UITableViewDataSource, UITableViewDelegate {
             let profileViewController = ProfileViewController(isOwn: false)
             self?.navigationController?.pushViewController(profileViewController, animated: true)
         }
-        
+
         cell.optionButtonTapAction = { [weak self] _ in
             let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-    
+
             let report = UIAlertAction(title: "신고하기", style: .destructive, handler: { _ in
                 self?.sendReportMail()
             })
             let cancel = UIAlertAction(title: "취소", style: .cancel, handler: nil)
-            
+
             alert.addAction(cancel)
             alert.addAction(report)
-            
+
             self?.present(alert, animated: true, completion: nil)
         }
 
@@ -136,8 +138,8 @@ extension ChatViewController: MFMailComposeViewControllerDelegate {
             let composeVC = MFMailComposeViewController()
             let emailAdress = "foodbowl5502@gmail.com"
             let messageBody = """
-            신고 사유를 작성해주세요.
-            """
+                신고 사유를 작성해주세요.
+                """
 
             composeVC.mailComposeDelegate = self
             composeVC.setToRecipients([emailAdress])

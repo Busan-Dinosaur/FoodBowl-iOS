@@ -19,7 +19,7 @@ final class FeedCollectionViewCell: BaseCollectionViewCell {
     var commentButtonTapAction: ((FeedCollectionViewCell) -> Void)?
     var optionButtonTapAction: ((FeedCollectionViewCell) -> Void)?
     var commentLabelTapAction: ((FeedCollectionViewCell) -> Void)?
-    
+
     var collapsed = true {
         didSet {
             commentLabel.numberOfLines = collapsed ? 2 : 0
@@ -38,7 +38,10 @@ final class FeedCollectionViewCell: BaseCollectionViewCell {
 
     let storeInfoView = StoreInfoView()
 
-    lazy var feedImageView = HorizontalScrollView(horizontalWidth: UIScreen.main.bounds.size.width, horizontalHeight: UIScreen.main.bounds.size.width)
+    lazy var feedImageView = HorizontalScrollView(
+        horizontalWidth: UIScreen.main.bounds.size.width,
+        horizontalHeight: UIScreen.main.bounds.size.width
+    )
 
     lazy var commentLabel = UILabel().then {
         $0.font = UIFont.preferredFont(forTextStyle: .subheadline, weight: .light)
@@ -48,7 +51,10 @@ final class FeedCollectionViewCell: BaseCollectionViewCell {
     }
 
     let bookmarkButton = UIButton().then {
-        $0.setImage(ImageLiteral.btnBookmark.resize(to: CGSize(width: 20, height: 20)).withRenderingMode(.alwaysTemplate), for: .normal)
+        $0.setImage(
+            ImageLiteral.btnBookmark.resize(to: CGSize(width: 20, height: 20)).withRenderingMode(.alwaysTemplate),
+            for: .normal
+        )
         $0.tintColor = .mainText
         $0.setTitle("  4", for: .normal)
         $0.setTitleColor(.subText, for: .normal)
@@ -57,7 +63,10 @@ final class FeedCollectionViewCell: BaseCollectionViewCell {
     }
 
     let commentButton = UIButton().then {
-        $0.setImage(ImageLiteral.btnChat.resize(to: CGSize(width: 20, height: 20)).withRenderingMode(.alwaysTemplate), for: .normal)
+        $0.setImage(
+            ImageLiteral.btnChat.resize(to: CGSize(width: 20, height: 20)).withRenderingMode(.alwaysTemplate),
+            for: .normal
+        )
         $0.tintColor = .mainText
         $0.setTitle("  51", for: .normal)
         $0.setTitleColor(.subText, for: .normal)
@@ -127,7 +136,7 @@ final class FeedCollectionViewCell: BaseCollectionViewCell {
 
     override func configUI() {
         feedImageView.model = [ImageLiteral.food1, ImageLiteral.food2, ImageLiteral.food3]
-        
+
         userInfoView.userImageButton.addAction(UIAction { _ in self.userButtonTapAction?(self) }, for: .touchUpInside)
         userInfoView.userNameButton.addAction(UIAction { _ in self.userButtonTapAction?(self) }, for: .touchUpInside)
         userInfoView.followButton.addAction(UIAction { _ in self.followButtonTapAction?(self) }, for: .touchUpInside)
@@ -136,22 +145,28 @@ final class FeedCollectionViewCell: BaseCollectionViewCell {
         bookmarkButton.addAction(UIAction { _ in self.bookmarkButtonTapAction?(self) }, for: .touchUpInside)
         commentButton.addAction(UIAction { _ in self.commentButtonTapAction?(self) }, for: .touchUpInside)
         optionButton.addAction(UIAction { _ in self.optionButtonTapAction?(self) }, for: .touchUpInside)
-        
+
         let tap = UITapGestureRecognizer(target: self, action: #selector(invalidate))
         commentLabel.addGestureRecognizer(tap)
     }
 
-    override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
+    override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes)
+        -> UICollectionViewLayoutAttributes {
         super.preferredLayoutAttributesFitting(layoutAttributes)
 
         let targetSize = CGSize(width: layoutAttributes.frame.width, height: 0)
 
-        layoutAttributes.frame.size = contentView.systemLayoutSizeFitting(targetSize, withHorizontalFittingPriority: .required, verticalFittingPriority: .fittingSizeLevel)
+        layoutAttributes.frame.size = contentView.systemLayoutSizeFitting(
+            targetSize,
+            withHorizontalFittingPriority: .required,
+            verticalFittingPriority: .fittingSizeLevel
+        )
         print(layoutAttributes)
         return layoutAttributes
     }
 
-    @objc private func invalidate(_: Any) {
+    @objc
+    private func invalidate(_: Any) {
         commentLabelTapAction?(self)
     }
 }

@@ -10,28 +10,28 @@ import UIKit
 extension UIColor {
     static var mainBackground: UIColor {
         return UIColor { traits -> UIColor in
-            traits.userInterfaceStyle == .dark ?
-                UIColor(hex: "#222222") :
-                UIColor(hex: "#ffffff")
+            traits.userInterfaceStyle == .dark
+                ? UIColor(hex: "#222222")
+                : UIColor(hex: "#ffffff")
         }
     }
-    
+
     static var mainText: UIColor {
         return UIColor { traits -> UIColor in
-            traits.userInterfaceStyle == .dark ?
-                UIColor(hex: "#ffffff") :
-                UIColor(hex: "#000000")
+            traits.userInterfaceStyle == .dark
+                ? UIColor(hex: "#ffffff")
+                : UIColor(hex: "#000000")
         }
     }
 
     static var subText: UIColor {
         return UIColor { traits -> UIColor in
-            traits.userInterfaceStyle == .dark ?
-                UIColor(hex: "#E2E2E2") :
-                UIColor(hex: "#494949")
+            traits.userInterfaceStyle == .dark
+                ? UIColor(hex: "#E2E2E2")
+                : UIColor(hex: "#494949")
         }
     }
-    
+
     static var mainPink: UIColor {
         return UIColor(hex: "#FF689F")
     }
@@ -65,8 +65,11 @@ extension UIColor {
         var rgbValue: UInt64 = 0
         Scanner(string: hexFormatted).scanHexInt64(&rgbValue)
 
-        self.init(red: CGFloat((rgbValue & 0xff0000) >> 16) / 255.0,
-                  green: CGFloat((rgbValue & 0x00ff00) >> 8) / 255.0,
-                  blue: CGFloat(rgbValue & 0x0000ff) / 255.0, alpha: alpha)
+        self.init(
+            red: CGFloat((rgbValue & 0xff0000) >> 16) / 255.0,
+            green: CGFloat((rgbValue & 0x00ff00) >> 8) / 255.0,
+            blue: CGFloat(rgbValue & 0x0000ff) / 255.0,
+            alpha: alpha
+        )
     }
 }

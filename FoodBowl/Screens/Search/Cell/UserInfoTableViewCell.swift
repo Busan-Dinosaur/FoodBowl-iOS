@@ -65,10 +65,10 @@ final class UserInfoTableViewCell: BaseTableViewCell {
             $0.height.equalTo(30)
         }
     }
-    
+
     override func configUI() {
         backgroundColor = .clear
-        
+
         userImageButton.addAction(UIAction { _ in self.userButtonTapAction?(self) }, for: .touchUpInside)
         userNameButton.addAction(UIAction { _ in self.userButtonTapAction?(self) }, for: .touchUpInside)
         followButton.addAction(UIAction { _ in self.followButtonTapAction?(self) }, for: .touchUpInside)

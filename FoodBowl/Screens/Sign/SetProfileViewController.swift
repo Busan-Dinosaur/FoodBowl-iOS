@@ -35,7 +35,7 @@ final class SetProfileViewController: BaseViewController {
     private lazy var nicknameField = UITextField().then {
         let attributes = [
             NSAttributedString.Key.foregroundColor: UIColor.grey001,
-            NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .body, weight: .regular)
+            NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .body, weight: .regular),
         ]
 
         $0.backgroundColor = .clear
@@ -61,14 +61,16 @@ final class SetProfileViewController: BaseViewController {
     }
 
     // MARK: - life cycle
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(textDidChange(_:)),
-                                               name: UITextField.textDidChangeNotification,
-                                               object: nicknameField)
+
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(textDidChange(_:)),
+            name: UITextField.textDidChangeNotification,
+            object: nicknameField
+        )
     }
 
     override func render() {
@@ -103,7 +105,8 @@ final class SetProfileViewController: BaseViewController {
         title = "프로필 설정"
     }
 
-    @objc private func tappedProfileImageView(_: UITapGestureRecognizer) {
+    @objc
+    private func tappedProfileImageView(_: UITapGestureRecognizer) {
         var config = YPImagePickerConfiguration()
         config.onlySquareImagesFromCamera = true
         config.library.defaultMultipleSelection = false
@@ -127,7 +130,7 @@ final class SetProfileViewController: BaseViewController {
         picker.didFinishPicking { [unowned picker] items, cancelled in
             if !cancelled {
                 let images: [UIImage] = items.compactMap { item in
-                    if case let .photo(photo) = item {
+                    if case .photo(let photo) = item {
                         return photo.image
                     } else {
                         return nil
@@ -140,14 +143,15 @@ final class SetProfileViewController: BaseViewController {
         }
         present(picker, animated: true, completion: nil)
     }
-    
-    @objc private func textDidChange(_ notification: Notification) {
+
+    @objc
+    private func textDidChange(_ notification: Notification) {
         if let textField = notification.object as? UITextField {
             if let text = textField.text {
                 if text.count > maxLength {
                     textField.resignFirstResponder()
                 }
-                
+
                 if text.count >= maxLength {
                     let index = text.index(text.startIndex, offsetBy: maxLength)
                     let newString = text[text.startIndex ..< index]
@@ -156,7 +160,7 @@ final class SetProfileViewController: BaseViewController {
             }
         }
     }
-    
+
     private func tappedCompleteButton() {
         if nicknameField.text?.count != 0 {
             let tabbarViewController = UINavigationController(rootViewController: TabbarViewController())
@@ -168,9 +172,9 @@ final class SetProfileViewController: BaseViewController {
         } else {
             let alert = UIAlertController(title: nil, message: "사용할 닉네임을 입력해주세요", preferredStyle: .alert)
             let cancel = UIAlertAction(title: "닫기", style: .cancel, handler: nil)
-            
+
             alert.addAction(cancel)
-            
+
             present(alert, animated: true, completion: nil)
         }
     }

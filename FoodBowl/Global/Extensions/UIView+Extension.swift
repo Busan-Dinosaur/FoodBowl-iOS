@@ -19,11 +19,12 @@ extension UIView {
     }
 
     @discardableResult
-    func makeShadow(color: UIColor,
-                    opacity: Float,
-                    offset: CGSize,
-                    radius: CGFloat) -> Self
-    {
+    func makeShadow(
+        color: UIColor,
+        opacity: Float,
+        offset: CGSize,
+        radius: CGFloat
+    ) -> Self {
         layer.shadowColor = color.cgColor
         layer.shadowOpacity = opacity
         layer.shadowOffset = offset
@@ -39,32 +40,40 @@ extension UIView {
         return self
     }
 
-    func fadeIn(duration: TimeInterval = 0.4,
-                delay: TimeInterval = 0.0,
-                completion: @escaping ((Bool) -> Void) = { (_: Bool) in })
-    {
-        UIView.animate(withDuration: duration,
-                       delay: delay,
-                       options: .curveEaseIn,
-                       animations: {
-                           self.alpha = 1.0
-                       }, completion: completion)
+    func fadeIn(
+        duration: TimeInterval = 0.4,
+        delay: TimeInterval = 0.0,
+        completion: @escaping ((Bool) -> Void) = { (_: Bool) in }
+    ) {
+        UIView.animate(
+            withDuration: duration,
+            delay: delay,
+            options: .curveEaseIn,
+            animations: {
+                self.alpha = 1.0
+            },
+            completion: completion
+        )
     }
 
     func showAnimation(_ completionBlock: @escaping () -> Void) {
         isUserInteractionEnabled = false
-        UIView.animate(withDuration: 0.1,
-                       delay: 0,
-                       options: .curveLinear,
-                       animations: { [weak self] in
-                           self?.transform = CGAffineTransform(scaleX: 0.95, y: 0.95)
-                       }) { _ in
-            UIView.animate(withDuration: 0.1,
-                           delay: 0,
-                           options: .curveLinear,
-                           animations: { [weak self] in
-                               self?.transform = CGAffineTransform(scaleX: 1, y: 1)
-                           }) { [weak self] _ in
+        UIView.animate(
+            withDuration: 0.1,
+            delay: 0,
+            options: .curveLinear,
+            animations: { [weak self] in
+                self?.transform = CGAffineTransform(scaleX: 0.95, y: 0.95)
+            }
+        ) { _ in
+            UIView.animate(
+                withDuration: 0.1,
+                delay: 0,
+                options: .curveLinear,
+                animations: { [weak self] in
+                    self?.transform = CGAffineTransform(scaleX: 1, y: 1)
+                }
+            ) { [weak self] _ in
                 self?.isUserInteractionEnabled = true
                 completionBlock()
             }

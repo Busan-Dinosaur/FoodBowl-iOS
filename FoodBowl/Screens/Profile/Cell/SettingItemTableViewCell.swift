@@ -35,7 +35,7 @@ final class SettingItemTableViewCell: BaseTableViewCell {
             $0.centerY.equalToSuperview()
         }
     }
-    
+
     override func configUI() {
         backgroundColor = .clear
     }

@@ -65,7 +65,7 @@ final class SearchStoreViewController: BaseViewController {
 
         let headers: HTTPHeaders = [
             "Content-Type": "application/x-www-form-urlencoded;charset=utf-8",
-            "Authorization": "KakaoAK 855a5bf7cbbe725de0f5b6474fe8d6db"
+            "Authorization": "KakaoAK 855a5bf7cbbe725de0f5b6474fe8d6db",
         ]
 
         let parameters: [String: Any] = [
@@ -73,23 +73,25 @@ final class SearchStoreViewController: BaseViewController {
             "x": String(appDelegate.currentLoc.coordinate.longitude),
             "y": String(appDelegate.currentLoc.coordinate.latitude),
             "page": 1,
-            "size": 15
+            "size": 15,
         ]
 
-        AF.request(url,
-                   method: .get,
-                   parameters: parameters,
-                   encoding: URLEncoding.default,
-                   headers: headers)
-            .responseDecodable(of: Response.self) { response in
-                switch response.result {
-                case let .success(data):
-                    self.stores = data.documents
-                    self.storeInfoTableView.reloadData()
-                case let .failure(error):
-                    print("Request failed with error: \(error)")
-                }
+        AF.request(
+            url,
+            method: .get,
+            parameters: parameters,
+            encoding: URLEncoding.default,
+            headers: headers
+        )
+        .responseDecodable(of: Response.self) { response in
+            switch response.result {
+            case .success(let data):
+                self.stores = data.documents
+                self.storeInfoTableView.reloadData()
+            case .failure(let error):
+                print("Request failed with error: \(error)")
             }
+        }
     }
 }
 
@@ -99,7 +101,9 @@ extension SearchStoreViewController: UITableViewDataSource, UITableViewDelegate 
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: StoreSearchTableViewCell.className, for: indexPath) as? StoreSearchTableViewCell else { return UITableViewCell() }
+        guard let cell = tableView
+            .dequeueReusableCell(withIdentifier: StoreSearchTableViewCell.className, for: indexPath) as? StoreSearchTableViewCell
+        else { return UITableViewCell() }
 
         cell.selectionStyle = .none
         cell.storeNameLabel.text = stores[indexPath.item].placeName

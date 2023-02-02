@@ -23,7 +23,10 @@ final class SettingButton: UIButton {
     // MARK: - life cycle
 
     private func configUI() {
-        setImage(ImageLiteral.btnSetting.resize(to: CGSize(width: 24, height: 24)).withRenderingMode(.alwaysTemplate), for: .normal)
+        setImage(
+            ImageLiteral.btnSetting.resize(to: CGSize(width: 24, height: 24)).withRenderingMode(.alwaysTemplate),
+            for: .normal
+        )
         tintColor = .mainText
     }
 }

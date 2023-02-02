@@ -131,7 +131,7 @@ final class AgreementViewController: BaseViewController {
         super.setupNavigationBar()
         title = "약관 동의"
     }
-    
+
     private func tappedMainAgreeButton() {
         mainCheckBox.isChecked = !mainCheckBox.isChecked
         if mainCheckBox.isChecked {
@@ -143,7 +143,8 @@ final class AgreementViewController: BaseViewController {
         }
     }
 
-    @objc private func onMainCheckBoxValueChange(_ sender: CheckBox) {
+    @objc
+    private func onMainCheckBoxValueChange(_ sender: CheckBox) {
         if sender.isChecked {
             subCheckBox1.isChecked = true
             subCheckBox2.isChecked = true
@@ -153,7 +154,8 @@ final class AgreementViewController: BaseViewController {
         }
     }
 
-    @objc private func onSubCheckBox1ValueChange(_ sender: CheckBox) {
+    @objc
+    private func onSubCheckBox1ValueChange(_ sender: CheckBox) {
         if sender.isChecked && subCheckBox2.isChecked {
             mainCheckBox.isChecked = true
         } else {
@@ -161,14 +163,15 @@ final class AgreementViewController: BaseViewController {
         }
     }
 
-    @objc private func onSubCheckBox2ValueChange(_ sender: CheckBox) {
+    @objc
+    private func onSubCheckBox2ValueChange(_ sender: CheckBox) {
         if sender.isChecked && subCheckBox1.isChecked {
             mainCheckBox.isChecked = true
         } else {
             mainCheckBox.isChecked = false
         }
     }
-    
+
     private func tappedNextButton() {
         if mainCheckBox.isChecked {
             let setProfileViewController = SetProfileViewController()
@@ -176,9 +179,9 @@ final class AgreementViewController: BaseViewController {
         } else {
             let alert = UIAlertController(title: nil, message: "모든 약관에 동의를 해주세요", preferredStyle: .alert)
             let cancel = UIAlertAction(title: "닫기", style: .cancel, handler: nil)
-            
+
             alert.addAction(cancel)
-            
+
             present(alert, animated: true, completion: nil)
         }
     }

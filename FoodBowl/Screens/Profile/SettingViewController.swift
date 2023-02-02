@@ -76,7 +76,7 @@ final class SettingViewController: BaseViewController {
                 self?.present(navigationController, animated: true)
             }
         }))
-        
+
         options.append(Option(title: "문의하기", handler: { [weak self] in
             self?.sendReportMail()
         }))
@@ -84,7 +84,8 @@ final class SettingViewController: BaseViewController {
         options.append(Option(title: "로그아웃", handler: { [weak self] in
             DispatchQueue.main.async {
                 self?.makeRequestAlert(title: "로그아웃 하시겠습니까?", message: "", okTitle: "확인", cancelTitle: "취소", okAction: { _ in
-                    guard let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate else { return }
+                    guard let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate
+                    else { return }
                     sceneDelegate.logout()
                 })
             }
@@ -101,7 +102,9 @@ extension SettingViewController: UITableViewDataSource, UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: SettingItemTableViewCell.className, for: indexPath) as? SettingItemTableViewCell else { return UITableViewCell() }
+        guard let cell = tableView
+            .dequeueReusableCell(withIdentifier: SettingItemTableViewCell.className, for: indexPath) as? SettingItemTableViewCell
+        else { return UITableViewCell() }
 
         cell.selectionStyle = .none
         cell.menuLabel.text = options[indexPath.item].title
@@ -131,8 +134,8 @@ extension SettingViewController: MFMailComposeViewControllerDelegate {
             let composeVC = MFMailComposeViewController()
             let emailAdress = "foodbowl5502@gmail.com"
             let messageBody = """
-            문의 내용을 작성해주세요.
-            """
+                문의 내용을 작성해주세요.
+                """
 
             composeVC.mailComposeDelegate = self
             composeVC.setToRecipients([emailAdress])

@@ -88,7 +88,10 @@ extension SetCategoryViewController: UICollectionViewDataSource, UICollectionVie
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CategoryCollectionViewCell.className, for: indexPath) as? CategoryCollectionViewCell else {
+        guard let cell = collectionView.dequeueReusableCell(
+            withReuseIdentifier: CategoryCollectionViewCell.className,
+            for: indexPath
+        ) as? CategoryCollectionViewCell else {
             return UICollectionViewCell()
         }
 
@@ -105,14 +108,12 @@ extension SetCategoryViewController: UICollectionViewDataSource, UICollectionVie
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt _: IndexPath) {
         guard let selectedItems = collectionView.indexPathsForSelectedItems else { return }
         let selectedCategories: [Category]? = selectedItems.map { categories[$0.item] }
-        print(selectedCategories)
         delegate?.setCategories(categories: selectedCategories)
     }
 
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt _: IndexPath) {
         guard let selectedItems = collectionView.indexPathsForSelectedItems else { return }
         let selectedCategories: [Category]? = selectedItems.map { categories[$0.item] }
-        print(selectedCategories)
         delegate?.setCategories(categories: selectedCategories)
     }
 }

@@ -18,10 +18,12 @@ final class SetPhotoViewController: BaseViewController {
     private enum Size {
         static let cellWidth: CGFloat = (UIScreen.main.bounds.size.width - 48) / 3
         static let cellHeight: CGFloat = cellWidth
-        static let collectionInset = UIEdgeInsets(top: 0,
-                                                  left: 20,
-                                                  bottom: 20,
-                                                  right: 20)
+        static let collectionInset = UIEdgeInsets(
+            top: 0,
+            left: 20,
+            bottom: 20,
+            right: 20
+        )
     }
 
     private var selectedImages = [UIImage]()
@@ -92,7 +94,7 @@ final class SetPhotoViewController: BaseViewController {
         picker.didFinishPicking { [unowned picker] items, cancelled in
             if !cancelled {
                 let images: [UIImage] = items.compactMap { item in
-                    if case let .photo(photo) = item {
+                    if case .photo(let photo) = item {
                         return photo.image
                     } else {
                         return nil
@@ -117,13 +119,19 @@ extension SetPhotoViewController: UICollectionViewDataSource, UICollectionViewDe
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if indexPath.item == 0 {
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PhotoCollectionViewCell.className, for: indexPath) as? PhotoCollectionViewCell else {
+            guard let cell = collectionView.dequeueReusableCell(
+                withReuseIdentifier: PhotoCollectionViewCell.className,
+                for: indexPath
+            ) as? PhotoCollectionViewCell else {
                 return UICollectionViewCell()
             }
 
             return cell
         } else {
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FeedThumnailCollectionViewCell.className, for: indexPath) as? FeedThumnailCollectionViewCell else {
+            guard let cell = collectionView.dequeueReusableCell(
+                withReuseIdentifier: FeedThumnailCollectionViewCell.className,
+                for: indexPath
+            ) as? FeedThumnailCollectionViewCell else {
                 return UICollectionViewCell()
             }
 

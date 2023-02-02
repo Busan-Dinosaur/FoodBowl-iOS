@@ -181,18 +181,20 @@ final class AddFeedViewController: BaseViewController {
         print(newFeed)
         dismiss(animated: true, completion: nil)
     }
-    
+
     private func showAlert(message: String) {
         let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
         let cancel = UIAlertAction(title: "닫기", style: .cancel, handler: nil)
-        
+
         alert.addAction(cancel)
-        
+
         present(alert, animated: true, completion: nil)
     }
 }
 
-extension AddFeedViewController: SetStoreViewControllerDelegate, SetCategoryViewControllerDelegate, SetPhotoViewControllerDelegate, SetCommentViewControllerDelegate {
+extension AddFeedViewController: SetStoreViewControllerDelegate, SetCategoryViewControllerDelegate,
+    SetPhotoViewControllerDelegate,
+    SetCommentViewControllerDelegate {
     func setStore(store: Place?) {
         newFeed.store = store
     }

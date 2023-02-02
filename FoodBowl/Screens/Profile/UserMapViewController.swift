@@ -14,10 +14,12 @@ import Then
 
 final class UserMapViewController: BaseViewController, MKMapViewDelegate {
     private enum Size {
-        static let collectionInset = UIEdgeInsets(top: 0,
-                                                  left: 20,
-                                                  bottom: 0,
-                                                  right: 20)
+        static let collectionInset = UIEdgeInsets(
+            top: 0,
+            left: 20,
+            bottom: 0,
+            right: 20
+        )
     }
 
     private let categories = Category.allCases
@@ -66,7 +68,11 @@ final class UserMapViewController: BaseViewController, MKMapViewDelegate {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         let indexPath = IndexPath(item: 0, section: 0)
-        listCollectionView.selectItem(at: indexPath, animated: false, scrollPosition: UICollectionView.ScrollPosition(rawValue: 0))
+        listCollectionView.selectItem(
+            at: indexPath,
+            animated: false,
+            scrollPosition: UICollectionView.ScrollPosition(rawValue: 0)
+        )
         collectionView(listCollectionView, didSelectItemAt: indexPath)
     }
 
@@ -99,7 +105,13 @@ final class UserMapViewController: BaseViewController, MKMapViewDelegate {
             return
         }
 
-        mapView.setRegion(MKCoordinateRegion(center: currentLocation.coordinate, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)), animated: true)
+        mapView.setRegion(
+            MKCoordinateRegion(
+                center: currentLocation.coordinate,
+                span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
+            ),
+            animated: true
+        )
     }
 }
 
@@ -132,7 +144,10 @@ extension UserMapViewController: UICollectionViewDataSource, UICollectionViewDel
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CategoryCollectionViewCell.className, for: indexPath) as? CategoryCollectionViewCell else {
+        guard let cell = collectionView.dequeueReusableCell(
+            withReuseIdentifier: CategoryCollectionViewCell.className,
+            for: indexPath
+        ) as? CategoryCollectionViewCell else {
             return UICollectionViewCell()
         }
 
