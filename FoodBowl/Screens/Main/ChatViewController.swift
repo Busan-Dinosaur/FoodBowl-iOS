@@ -134,7 +134,7 @@ extension ChatViewController: MFMailComposeViewControllerDelegate {
     func sendReportMail() {
         if MFMailComposeViewController.canSendMail() {
             let composeVC = MFMailComposeViewController()
-            let emailAdress = "coby5502@gmail.com"
+            let emailAdress = "foodbowl5502@gmail.com"
             let messageBody = """
             신고 사유를 작성해주세요.
             """

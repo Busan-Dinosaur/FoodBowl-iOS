@@ -129,7 +129,7 @@ extension SettingViewController: MFMailComposeViewControllerDelegate {
     func sendReportMail() {
         if MFMailComposeViewController.canSendMail() {
             let composeVC = MFMailComposeViewController()
-            let emailAdress = "coby5502@gmail.com"
+            let emailAdress = "foodbowl5502@gmail.com"
             let messageBody = """
             문의 내용을 작성해주세요.
             """
