@@ -30,7 +30,7 @@ extension UILabel {
                 string: labelText,
                 attributes: [
                     .kern: kernValue,
-                    .paragraphStyle: paragraphStyle,
+                    .paragraphStyle: paragraphStyle
                 ]
             )
             lineBreakStrategy = .hangulWordPriority

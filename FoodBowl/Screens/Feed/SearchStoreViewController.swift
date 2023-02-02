@@ -65,7 +65,7 @@ final class SearchStoreViewController: BaseViewController {
 
         let headers: HTTPHeaders = [
             "Content-Type": "application/x-www-form-urlencoded;charset=utf-8",
-            "Authorization": "KakaoAK 855a5bf7cbbe725de0f5b6474fe8d6db",
+            "Authorization": "KakaoAK 855a5bf7cbbe725de0f5b6474fe8d6db"
         ]
 
         let parameters: [String: Any] = [
@@ -73,7 +73,7 @@ final class SearchStoreViewController: BaseViewController {
             "x": String(appDelegate.currentLoc.coordinate.longitude),
             "y": String(appDelegate.currentLoc.coordinate.latitude),
             "page": 1,
-            "size": 15,
+            "size": 15
         ]
 
         AF.request(

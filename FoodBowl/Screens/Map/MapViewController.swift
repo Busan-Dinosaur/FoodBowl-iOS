@@ -250,7 +250,7 @@ final class MapViewController: BaseViewController {
                     storeFeedViewController.title = "틈새라면"
                     self?.navigationController?.pushViewController(storeFeedViewController, animated: true)
                 }
-            ),
+            )
         ]
 
         marks?.forEach { mark in

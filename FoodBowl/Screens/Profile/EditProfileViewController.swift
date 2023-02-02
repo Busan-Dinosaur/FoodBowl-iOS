@@ -41,7 +41,7 @@ final class EditProfileViewController: BaseViewController {
     private let nicknameField = UITextField().then {
         let attributes = [
             NSAttributedString.Key.foregroundColor: UIColor.grey001,
-            NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .body, weight: .regular),
+            NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .body, weight: .regular)
         ]
 
         $0.backgroundColor = .clear

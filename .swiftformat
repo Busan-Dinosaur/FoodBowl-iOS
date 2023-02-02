@@ -2,7 +2,7 @@
 --swiftversion 5.0
 --self init-only # redundantSelf
 --importgrouping testable-bottom # sortedImports
---commas always # trailingCommas
+--commas inline
 --trimwhitespace always # trailingSpace
 --indent 4 #indent
 --ifdef no-indent #indent
@@ -21,9 +21,6 @@
 --typeblanklines preserve # blankLinesAtStartOfScope, blankLinesAtEndOfScope
 --someAny disabled # opaqueGenericParameters
 --maxwidth 130 # wrap
-
-# file options
---exclude Pods, FoodBowl/Global/Supports/AppDelegate.swift, FoodBowl/Global/Supports/SceneDelegate.swift, FoodBowl/Global/Extensions/String+Extension.swift
 
 # rules
 --rules anyObjectProtocol
@@ -72,3 +69,6 @@
 --rules opaqueGenericParameters
 --rules genericExtensions
 --rules trailingClosures
+
+# file options
+--exclude Pods, FoodBowl/Global/Supports/AppDelegate.swift, FoodBowl/Global/Supports/SceneDelegate.swift, FoodBowl/Global/Extensions/String+Extension.swift

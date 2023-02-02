@@ -112,14 +112,14 @@ final class ProfileViewController: BaseViewController {
         $0.setTitleTextAttributes(
             [
                 NSAttributedString.Key.foregroundColor: UIColor.subText,
-                .font: UIFont.preferredFont(forTextStyle: .headline, weight: .medium),
+                .font: UIFont.preferredFont(forTextStyle: .headline, weight: .medium)
             ],
             for: .normal
         )
         $0.setTitleTextAttributes(
             [
                 NSAttributedString.Key.foregroundColor: UIColor.mainText,
-                .font: UIFont.preferredFont(forTextStyle: .headline, weight: .semibold),
+                .font: UIFont.preferredFont(forTextStyle: .headline, weight: .semibold)
             ],
             for: .selected
         )

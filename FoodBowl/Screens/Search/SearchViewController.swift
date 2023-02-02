@@ -39,7 +39,7 @@ final class SearchViewController: BaseViewController {
         "사아",
         "자차",
         "자차",
-        "자차",
+        "자차"
     ]
 
     // MARK: - property
