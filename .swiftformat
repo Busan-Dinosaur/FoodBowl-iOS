@@ -17,7 +17,6 @@
 --wrapternary before-operators # wrap
 --extensionacl on-declarations # extensionAccessControl
 --patternlet inline # hoistPatternLet
---redundanttype inferred # redundantType
 --typeblanklines preserve # blankLinesAtStartOfScope, blankLinesAtEndOfScope
 --someAny disabled # opaqueGenericParameters
 --maxwidth 130 # wrap

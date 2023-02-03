@@ -58,7 +58,7 @@ open class CheckBox: UIControl {
     var useHapticFeedback = true
 
     @IBInspectable
-    var isChecked = false {
+    var isChecked: Bool = false {
         didSet {
             setNeedsDisplay()
         }
