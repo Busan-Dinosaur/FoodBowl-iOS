@@ -11,15 +11,17 @@ import CoreLocation
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
-    let locationManager = CLLocationManager()
-    var currentLoc: CLLocation!
+    var currentLoc: CLLocation?
 
     func application(_: UIApplication, didFinishLaunchingWithOptions _: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        locationManager.requestWhenInUseAuthorization()
-
-        if CLLocationManager.authorizationStatus() == .authorizedWhenInUse ||
-            CLLocationManager.authorizationStatus() == .authorizedAlways
-        {
+        let locationManager = CLLocationManager()
+        let locationAuthorizationStatus: CLAuthorizationStatus
+        locationAuthorizationStatus = locationManager.authorizationStatus
+        
+        switch locationAuthorizationStatus {
+        case .restricted, .denied:
+            locationManager.requestWhenInUseAuthorization()
+        default:
             currentLoc = locationManager.location
         }
         return true

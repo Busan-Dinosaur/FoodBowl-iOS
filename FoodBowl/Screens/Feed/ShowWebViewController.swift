@@ -58,7 +58,7 @@ final class ShowWebViewController: BaseViewController, WKNavigationDelegate, WKU
         decisionHandler: @escaping (WKNavigationActionPolicy) -> Void
     ) {
         if let url = navigationAction.request.url, url.scheme != "http" && url.scheme != "https" {
-            UIApplication.shared.openURL(url)
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
             decisionHandler(.cancel)
         } else {
             decisionHandler(.allow)

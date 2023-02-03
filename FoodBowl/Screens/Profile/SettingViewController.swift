@@ -72,6 +72,7 @@ final class SettingViewController: BaseViewController {
             showWebViewController.title = "이용약관"
             showWebViewController.url = "https://coby5502.notion.site/32da9811cd284eaab7c3d8390c0ddccc"
             let navigationController = UINavigationController(rootViewController: showWebViewController)
+            navigationController.modalPresentationStyle = .fullScreen
             DispatchQueue.main.async {
                 self?.present(navigationController, animated: true)
             }
