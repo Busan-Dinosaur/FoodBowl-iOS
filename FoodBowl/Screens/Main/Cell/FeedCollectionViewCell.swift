@@ -56,10 +56,11 @@ final class FeedCollectionViewCell: BaseCollectionViewCell {
             for: .normal
         )
         $0.tintColor = .mainText
-        $0.setTitle("  4", for: .normal)
+        $0.setTitle("4", for: .normal)
         $0.setTitleColor(.subText, for: .normal)
         $0.titleLabel?.font = .preferredFont(forTextStyle: .footnote, weight: .regular)
         $0.semanticContentAttribute = .forceLeftToRight
+        $0.marginImagewithText(margin: 10.0)
     }
 
     let commentButton = UIButton().then {
@@ -68,10 +69,11 @@ final class FeedCollectionViewCell: BaseCollectionViewCell {
             for: .normal
         )
         $0.tintColor = .mainText
-        $0.setTitle("  51", for: .normal)
+        $0.setTitle("51", for: .normal)
         $0.setTitleColor(.subText, for: .normal)
         $0.titleLabel?.font = .preferredFont(forTextStyle: .footnote, weight: .regular)
         $0.semanticContentAttribute = .forceLeftToRight
+        $0.marginImagewithText(margin: 10.0)
     }
 
     private let stackView = UIStackView().then {
