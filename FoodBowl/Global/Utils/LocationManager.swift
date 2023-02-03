@@ -12,7 +12,6 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
     static let shared = LocationManager()
 
     let manager = CLLocationManager()
-    private let notificationCenter = NotificationCenter.default
 
     private override init() {}
 
@@ -82,6 +81,6 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
     }
 
     func setupNotificationCenter(object: Any? = nil) {
-        notificationCenter.post(name: .sharedLocation, object: object)
+        NotificationCenter.default.post(name: .sharedLocation, object: object)
     }
 }
