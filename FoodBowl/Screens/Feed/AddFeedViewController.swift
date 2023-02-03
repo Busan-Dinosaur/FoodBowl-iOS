@@ -13,10 +13,11 @@ import Then
 final class AddFeedViewController: BaseViewController {
     var newFeed = Feed(id: nil, store: nil, categories: nil, photoes: nil, comment: nil)
 
-    private lazy var pageViewController: UIPageViewController = {
-        let vc = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
-        return vc
-    }()
+    private lazy var pageViewController = UIPageViewController(
+        transitionStyle: .scroll,
+        navigationOrientation: .horizontal,
+        options: nil
+    )
 
     private let vc1 = SetStoreViewController()
     private let vc2 = SetCategoryViewController()
@@ -70,7 +71,7 @@ final class AddFeedViewController: BaseViewController {
         pageControl.currentPage = 0
     }
 
-    override func render() {
+    override func setupLayout() {
         addChild(pageViewController)
         view.addSubviews(pageViewController.view)
 
@@ -81,7 +82,7 @@ final class AddFeedViewController: BaseViewController {
         }
     }
 
-    override func configUI() {
+    override func configureUI() {
         if let firstVC = dataViewControllers.first {
             pageViewController.setViewControllers([firstVC], direction: .forward, animated: true, completion: nil)
         }
@@ -181,18 +182,20 @@ final class AddFeedViewController: BaseViewController {
         print(newFeed)
         dismiss(animated: true, completion: nil)
     }
-    
+
     private func showAlert(message: String) {
         let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
         let cancel = UIAlertAction(title: "닫기", style: .cancel, handler: nil)
-        
+
         alert.addAction(cancel)
-        
+
         present(alert, animated: true, completion: nil)
     }
 }
 
-extension AddFeedViewController: SetStoreViewControllerDelegate, SetCategoryViewControllerDelegate, SetPhotoViewControllerDelegate, SetCommentViewControllerDelegate {
+extension AddFeedViewController: SetStoreViewControllerDelegate, SetCategoryViewControllerDelegate,
+    SetPhotoViewControllerDelegate,
+    SetCommentViewControllerDelegate {
     func setStore(store: Place?) {
         newFeed.store = store
     }

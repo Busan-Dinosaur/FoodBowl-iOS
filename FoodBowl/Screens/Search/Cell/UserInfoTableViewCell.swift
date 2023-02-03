@@ -38,7 +38,7 @@ final class UserInfoTableViewCell: BaseTableViewCell {
 
     // MARK: - func
 
-    override func render() {
+    override func setupLayout() {
         contentView.addSubviews(userImageButton, userNameButton, userFollowerLabel, followButton)
 
         userImageButton.snp.makeConstraints {
@@ -65,10 +65,10 @@ final class UserInfoTableViewCell: BaseTableViewCell {
             $0.height.equalTo(30)
         }
     }
-    
-    override func configUI() {
+
+    override func configureUI() {
         backgroundColor = .clear
-        
+
         userImageButton.addAction(UIAction { _ in self.userButtonTapAction?(self) }, for: .touchUpInside)
         userNameButton.addAction(UIAction { _ in self.userButtonTapAction?(self) }, for: .touchUpInside)
         followButton.addAction(UIAction { _ in self.followButtonTapAction?(self) }, for: .touchUpInside)

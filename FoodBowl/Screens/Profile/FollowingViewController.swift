@@ -23,7 +23,7 @@ final class FollowingViewController: BaseViewController {
 
     // MARK: - life cycle
 
-    override func render() {
+    override func setupLayout() {
         view.addSubviews(userResultTableView)
 
         userResultTableView.snp.makeConstraints {
@@ -43,7 +43,9 @@ extension FollowingViewController: UITableViewDataSource, UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: UserInfoTableViewCell.className, for: indexPath) as? UserInfoTableViewCell else { return UITableViewCell() }
+        guard let cell = tableView
+            .dequeueReusableCell(withIdentifier: UserInfoTableViewCell.className, for: indexPath) as? UserInfoTableViewCell
+        else { return UITableViewCell() }
 
         cell.selectionStyle = .none
 
@@ -51,7 +53,7 @@ extension FollowingViewController: UITableViewDataSource, UITableViewDelegate {
             let profileViewController = ProfileViewController(isOwn: false)
             self?.navigationController?.pushViewController(profileViewController, animated: true)
         }
-        
+
         cell.followButtonTapAction = { [weak self] _ in
             cell.followButton.isSelected = !cell.followButton.isSelected
         }

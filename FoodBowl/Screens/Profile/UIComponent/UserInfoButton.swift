@@ -33,7 +33,7 @@ final class UserInfoButton: UIButton {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        render()
+        setupLayout()
     }
 
     @available(*, unavailable)
@@ -43,7 +43,7 @@ final class UserInfoButton: UIButton {
 
     // MARK: - life cycle
 
-    private func render() {
+    private func setupLayout() {
         addSubviews(numberLabel, infoLabel)
 
         numberLabel.snp.makeConstraints {

@@ -12,7 +12,7 @@ final class PinButton: UIButton {
 
     override init(frame _: CGRect) {
         super.init(frame: .init(origin: .zero, size: .init(width: 30, height: 30)))
-        configUI()
+        configureUI()
     }
 
     @available(*, unavailable)
@@ -22,7 +22,7 @@ final class PinButton: UIButton {
 
     // MARK: - life cycle
 
-    private func configUI() {
+    private func configureUI() {
         setImage(ImageLiteral.btnPin.resize(to: CGSize(width: 30, height: 30)).withRenderingMode(.alwaysTemplate), for: .normal)
         tintColor = .mainText
     }

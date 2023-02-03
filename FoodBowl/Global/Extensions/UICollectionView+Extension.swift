@@ -9,8 +9,10 @@ import UIKit
 
 extension UICollectionView {
     func dequeueReusableCell<T: UICollectionViewCell>(forIndexPath indexPath: IndexPath) -> T {
-        guard let cell = dequeueReusableCell(withReuseIdentifier: T.className,
-                                             for: indexPath) as? T
+        guard let cell = dequeueReusableCell(
+            withReuseIdentifier: T.className,
+            for: indexPath
+        ) as? T
         else {
             fatalError("Could not find cell with reuseID \(T.className)")
         }
@@ -39,9 +41,10 @@ extension UICollectionView {
         return view
     }
 
-    func register<T: UICollectionViewCell>(cell: T.Type,
-                                           forCellWithReuseIdentifier reuseIdentifier: String = T.className)
-    {
+    func register<T: UICollectionViewCell>(
+        cell: T.Type,
+        forCellWithReuseIdentifier reuseIdentifier: String = T.className
+    ) {
         register(cell, forCellWithReuseIdentifier: reuseIdentifier)
     }
 }

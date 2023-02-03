@@ -44,7 +44,7 @@ final class SearchStoreViewController: BaseViewController {
 
     // MARK: - life cycle
 
-    override func render() {
+    override func setupLayout() {
         view.addSubviews(storeInfoTableView)
 
         storeInfoTableView.snp.makeConstraints {
@@ -60,6 +60,7 @@ final class SearchStoreViewController: BaseViewController {
 
     private func searchStores(keyword: String) {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        guard let currentLoc = appDelegate.currentLoc else { return }
 
         let url = "https://dapi.kakao.com/v2/local/search/keyword"
 
@@ -70,26 +71,28 @@ final class SearchStoreViewController: BaseViewController {
 
         let parameters: [String: Any] = [
             "query": keyword,
-            "x": String(appDelegate.currentLoc.coordinate.longitude),
-            "y": String(appDelegate.currentLoc.coordinate.latitude),
+            "x": String(currentLoc.coordinate.longitude),
+            "y": String(currentLoc.coordinate.latitude),
             "page": 1,
             "size": 15
         ]
 
-        AF.request(url,
-                   method: .get,
-                   parameters: parameters,
-                   encoding: URLEncoding.default,
-                   headers: headers)
-            .responseDecodable(of: Response.self) { response in
-                switch response.result {
-                case let .success(data):
-                    self.stores = data.documents
-                    self.storeInfoTableView.reloadData()
-                case let .failure(error):
-                    print("Request failed with error: \(error)")
-                }
+        AF.request(
+            url,
+            method: .get,
+            parameters: parameters,
+            encoding: URLEncoding.default,
+            headers: headers
+        )
+        .responseDecodable(of: Response.self) { response in
+            switch response.result {
+            case .success(let data):
+                self.stores = data.documents
+                self.storeInfoTableView.reloadData()
+            case .failure(let error):
+                print("Request failed with error: \(error)")
             }
+        }
     }
 }
 
@@ -99,7 +102,9 @@ extension SearchStoreViewController: UITableViewDataSource, UITableViewDelegate 
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: StoreSearchTableViewCell.className, for: indexPath) as? StoreSearchTableViewCell else { return UITableViewCell() }
+        guard let cell = tableView
+            .dequeueReusableCell(withIdentifier: StoreSearchTableViewCell.className, for: indexPath) as? StoreSearchTableViewCell
+        else { return UITableViewCell() }
 
         cell.selectionStyle = .none
         cell.storeNameLabel.text = stores[indexPath.item].placeName

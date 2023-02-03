@@ -12,8 +12,8 @@ class BaseTableViewCell: UITableViewCell {
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        render()
-        configUI()
+        setupLayout()
+        configureUI()
     }
 
     @available(*, unavailable)
@@ -23,11 +23,11 @@ class BaseTableViewCell: UITableViewCell {
 
     // MARK: - func
 
-    func render() {
+    func setupLayout() {
         // Override Layout
     }
 
-    func configUI() {
+    func configureUI() {
         // Override ConfigUI
     }
 }

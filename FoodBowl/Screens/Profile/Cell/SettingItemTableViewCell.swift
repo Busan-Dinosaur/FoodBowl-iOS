@@ -22,7 +22,7 @@ final class SettingItemTableViewCell: BaseTableViewCell {
 
     // MARK: - func
 
-    override func render() {
+    override func setupLayout() {
         contentView.addSubviews(menuLabel, forwordButton)
 
         menuLabel.snp.makeConstraints {
@@ -35,8 +35,8 @@ final class SettingItemTableViewCell: BaseTableViewCell {
             $0.centerY.equalToSuperview()
         }
     }
-    
-    override func configUI() {
+
+    override func configureUI() {
         backgroundColor = .clear
     }
 }

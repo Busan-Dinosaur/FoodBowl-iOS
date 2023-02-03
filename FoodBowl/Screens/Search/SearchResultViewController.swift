@@ -47,29 +47,29 @@ final class SearchResultViewController: BaseViewController {
         $0.addTarget(self, action: #selector(changeValue(control:)), for: .valueChanged)
     }
 
-    private let childView: UIView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
+    private let childView = UIView().then {
+        $0.translatesAutoresizingMaskIntoConstraints = false
+    }
 
     private let vc1 = SearchStoreResultViewController()
     private let vc2 = SearchUserResultViewController()
 
-    private lazy var pageViewController: UIPageViewController = {
-        let vc = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
-        vc.setViewControllers([self.dataViewControllers[0]], direction: .forward, animated: true)
-        vc.delegate = self
-        vc.dataSource = self
-        vc.view.translatesAutoresizingMaskIntoConstraints = false
-        return vc
-    }()
+    private lazy var pageViewController = UIPageViewController(
+        transitionStyle: .scroll,
+        navigationOrientation: .horizontal,
+        options: nil
+    ).then {
+        $0.setViewControllers([self.dataViewControllers[0]], direction: .forward, animated: true)
+        $0.delegate = self
+        $0.dataSource = self
+        $0.view.translatesAutoresizingMaskIntoConstraints = false
+    }
 
     var dataViewControllers: [UIViewController] {
         [vc1, vc2]
     }
 
-    var currentPage: Int = 0 {
+    var currentPage = 0 {
         didSet {
             let direction: UIPageViewController.NavigationDirection = oldValue <= self.currentPage ? .forward : .reverse
             self.pageViewController.setViewControllers(
@@ -86,7 +86,7 @@ final class SearchResultViewController: BaseViewController {
         changeValue(control: segmentedControl)
     }
 
-    override func render() {
+    override func setupLayout() {
         view.addSubviews(segmentedControl, pageViewController.view)
 
         segmentedControl.snp.makeConstraints {
@@ -107,7 +107,8 @@ final class SearchResultViewController: BaseViewController {
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: searchBar)
     }
 
-    @objc private func changeValue(control: UISegmentedControl) {
+    @objc
+    private func changeValue(control: UISegmentedControl) {
         currentPage = control.selectedSegmentIndex
     }
 }
@@ -117,9 +118,8 @@ extension SearchResultViewController: UIPageViewControllerDataSource, UIPageView
         _: UIPageViewController,
         viewControllerBefore viewController: UIViewController
     ) -> UIViewController? {
-        guard
-            let index = dataViewControllers.firstIndex(of: viewController),
-            index - 1 >= 0
+        guard let index = dataViewControllers.firstIndex(of: viewController),
+              index - 1 >= 0
         else { return nil }
         return dataViewControllers[index - 1]
     }
@@ -128,9 +128,8 @@ extension SearchResultViewController: UIPageViewControllerDataSource, UIPageView
         _: UIPageViewController,
         viewControllerAfter viewController: UIViewController
     ) -> UIViewController? {
-        guard
-            let index = dataViewControllers.firstIndex(of: viewController),
-            index + 1 < dataViewControllers.count
+        guard let index = dataViewControllers.firstIndex(of: viewController),
+              index + 1 < dataViewControllers.count
         else { return nil }
         return dataViewControllers[index + 1]
     }
@@ -141,9 +140,8 @@ extension SearchResultViewController: UIPageViewControllerDataSource, UIPageView
         previousViewControllers _: [UIViewController],
         transitionCompleted _: Bool
     ) {
-        guard
-            let viewController = pageViewController.viewControllers?[0],
-            let index = dataViewControllers.firstIndex(of: viewController)
+        guard let viewController = pageViewController.viewControllers?[0],
+              let index = dataViewControllers.firstIndex(of: viewController)
         else { return }
         currentPage = index
         segmentedControl.selectedSegmentIndex = index

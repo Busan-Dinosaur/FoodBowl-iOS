@@ -12,7 +12,7 @@ final class FeedButton: UIButton {
 
     override init(frame _: CGRect) {
         super.init(frame: .init(origin: .zero, size: .init(width: 24, height: 24)))
-        configUI()
+        configureUI()
     }
 
     @available(*, unavailable)
@@ -22,7 +22,7 @@ final class FeedButton: UIButton {
 
     // MARK: - life cycle
 
-    private func configUI() {
+    private func configureUI() {
         setImage(ImageLiteral.btnFeed.resize(to: CGSize(width: 24, height: 24)).withRenderingMode(.alwaysTemplate), for: .normal)
         tintColor = .mainText
     }

@@ -41,13 +41,16 @@ final class ChatTableViewCell: BaseTableViewCell {
     }
 
     let optionButton = UIButton().then {
-        $0.setImage(ImageLiteral.btnMore.resize(to: CGSize(width: 12, height: 12)).withRenderingMode(.alwaysTemplate), for: .normal)
+        $0.setImage(
+            ImageLiteral.btnMore.resize(to: CGSize(width: 12, height: 12)).withRenderingMode(.alwaysTemplate),
+            for: .normal
+        )
         $0.tintColor = .mainText
     }
 
     // MARK: - func
 
-    override func render() {
+    override func setupLayout() {
         contentView.addSubviews(userImageButton, userNameButton, dateLabel, optionButton, userChatLabel)
 
         userImageButton.snp.makeConstraints {
@@ -78,10 +81,10 @@ final class ChatTableViewCell: BaseTableViewCell {
             $0.bottom.equalToSuperview().inset(10)
         }
     }
-    
-    override func configUI() {
+
+    override func configureUI() {
         backgroundColor = .clear
-        
+
         userImageButton.addAction(UIAction { _ in self.userButtonTapAction?(self) }, for: .touchUpInside)
         userNameButton.addAction(UIAction { _ in self.userButtonTapAction?(self) }, for: .touchUpInside)
         optionButton.addAction(UIAction { _ in self.optionButtonTapAction?(self) }, for: .touchUpInside)

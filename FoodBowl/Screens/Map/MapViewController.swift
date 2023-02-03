@@ -14,13 +14,15 @@ import Then
 
 final class MapViewController: BaseViewController {
     private enum Size {
-        static let collectionInset = UIEdgeInsets(top: 0,
-                                                  left: 20,
-                                                  bottom: 0,
-                                                  right: 20)
+        static let collectionInset = UIEdgeInsets(
+            top: 0,
+            left: 20,
+            bottom: 0,
+            right: 20
+        )
     }
 
-    private var isBookMark: Bool = false
+    private var isBookMark = false
 
     private let categories = Category.allCases
 
@@ -110,7 +112,7 @@ final class MapViewController: BaseViewController {
         setMarkers()
         mapView.delegate = self
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.isNavigationBarHidden = true
@@ -122,7 +124,7 @@ final class MapViewController: BaseViewController {
         locationManager.stopUpdatingLocation()
     }
 
-    override func render() {
+    override func setupLayout() {
         view.addSubviews(mapView, searchBarButton, listCollectionView, gpsButton, bookMarkButton)
 
         mapView.snp.makeConstraints {
@@ -168,7 +170,13 @@ final class MapViewController: BaseViewController {
             return
         }
 
-        mapView.setRegion(MKCoordinateRegion(center: currentLocation.coordinate, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)), animated: true)
+        mapView.setRegion(
+            MKCoordinateRegion(
+                center: currentLocation.coordinate,
+                span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
+            ),
+            animated: true
+        )
     }
 
     private func findMyBookmarks() {
@@ -190,7 +198,10 @@ final class MapViewController: BaseViewController {
             Marker(
                 title: "홍대입구역 편의점",
                 subtitle: "3개의 후기",
-                coordinate: CLLocationCoordinate2D(latitude: currentLocation.coordinate.latitude + 0.001, longitude: currentLocation.coordinate.longitude + 0.001),
+                coordinate: CLLocationCoordinate2D(
+                    latitude: currentLocation.coordinate.latitude + 0.001,
+                    longitude: currentLocation.coordinate.longitude + 0.001
+                ),
                 glyphImage: ImageLiteral.korean,
                 handler: { [weak self] in
                     let storeFeedViewController = StoreFeedViewController()
@@ -201,7 +212,10 @@ final class MapViewController: BaseViewController {
             Marker(
                 title: "홍대입구역 편의점",
                 subtitle: "3개의 후기",
-                coordinate: CLLocationCoordinate2D(latitude: currentLocation.coordinate.latitude + 0.001, longitude: currentLocation.coordinate.longitude + 0.002),
+                coordinate: CLLocationCoordinate2D(
+                    latitude: currentLocation.coordinate.latitude + 0.001,
+                    longitude: currentLocation.coordinate.longitude + 0.002
+                ),
                 glyphImage: ImageLiteral.salad,
                 handler: { [weak self] in
                     let storeFeedViewController = StoreFeedViewController()
@@ -212,7 +226,10 @@ final class MapViewController: BaseViewController {
             Marker(
                 title: "홍대입구역 편의점",
                 subtitle: "3개의 후기",
-                coordinate: CLLocationCoordinate2D(latitude: currentLocation.coordinate.latitude + 0.001, longitude: currentLocation.coordinate.longitude + 0.003),
+                coordinate: CLLocationCoordinate2D(
+                    latitude: currentLocation.coordinate.latitude + 0.001,
+                    longitude: currentLocation.coordinate.longitude + 0.003
+                ),
                 glyphImage: ImageLiteral.chinese,
                 handler: { [weak self] in
                     let storeFeedViewController = StoreFeedViewController()
@@ -223,7 +240,10 @@ final class MapViewController: BaseViewController {
             Marker(
                 title: "홍대입구역 편의점",
                 subtitle: "3개의 후기",
-                coordinate: CLLocationCoordinate2D(latitude: currentLocation.coordinate.latitude + 0.001, longitude: currentLocation.coordinate.longitude + 0.004),
+                coordinate: CLLocationCoordinate2D(
+                    latitude: currentLocation.coordinate.latitude + 0.001,
+                    longitude: currentLocation.coordinate.longitude + 0.004
+                ),
                 glyphImage: ImageLiteral.japanese,
                 handler: { [weak self] in
                     let storeFeedViewController = StoreFeedViewController()
@@ -265,7 +285,10 @@ extension MapViewController: MKMapViewDelegate {
         guard view is ClusterAnnotationView else { return }
 
         let currentSpan = mapView.region.span
-        let zoomSpan = MKCoordinateSpan(latitudeDelta: currentSpan.latitudeDelta / 3.0, longitudeDelta: currentSpan.longitudeDelta / 3.0)
+        let zoomSpan = MKCoordinateSpan(
+            latitudeDelta: currentSpan.latitudeDelta / 3.0,
+            longitudeDelta: currentSpan.longitudeDelta / 3.0
+        )
         let zoomCoordinate = view.annotation?.coordinate ?? mapView.region.center
         let zoomed = MKCoordinateRegion(center: zoomCoordinate, span: zoomSpan)
         mapView.setRegion(zoomed, animated: true)
@@ -280,7 +303,10 @@ extension MapViewController: UICollectionViewDataSource, UICollectionViewDelegat
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CategoryCollectionViewCell.className, for: indexPath) as? CategoryCollectionViewCell else {
+        guard let cell = collectionView.dequeueReusableCell(
+            withReuseIdentifier: CategoryCollectionViewCell.className,
+            for: indexPath
+        ) as? CategoryCollectionViewCell else {
             return UICollectionViewCell()
         }
 

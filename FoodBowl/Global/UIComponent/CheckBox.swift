@@ -55,7 +55,7 @@ open class CheckBox: UIControl {
     var increasedTouchRadius: CGFloat = 5
 
     // By default it is true
-    var useHapticFeedback: Bool = true
+    var useHapticFeedback = true
 
     @IBInspectable
     var isChecked: Bool = false {
@@ -120,7 +120,7 @@ open class CheckBox: UIControl {
         switch borderStyle {
         case .square:
             shapePath = UIBezierPath(rect: newRect)
-        case let .roundedSquare(radius):
+        case .roundedSquare(let radius):
             shapePath = UIBezierPath(roundedRect: newRect, cornerRadius: radius)
         case .rounded:
             shapePath = UIBezierPath(ovalIn: newRect)
@@ -161,7 +161,12 @@ open class CheckBox: UIControl {
     // Usaully check boxes are small in our app's UI, so we need more touchable area for its interaction
     override open func point(inside point: CGPoint, with _: UIEvent?) -> Bool {
         let relativeFrame = bounds
-        let hitTestEdgeInsets = UIEdgeInsets(top: -increasedTouchRadius, left: -increasedTouchRadius, bottom: -increasedTouchRadius, right: -increasedTouchRadius)
+        let hitTestEdgeInsets = UIEdgeInsets(
+            top: -increasedTouchRadius,
+            left: -increasedTouchRadius,
+            bottom: -increasedTouchRadius,
+            right: -increasedTouchRadius
+        )
         let hitFrame = relativeFrame.inset(by: hitTestEdgeInsets)
         return hitFrame.contains(point)
     }

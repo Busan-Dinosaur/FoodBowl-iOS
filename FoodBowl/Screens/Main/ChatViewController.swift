@@ -49,7 +49,7 @@ final class ChatViewController: BaseViewController {
         tabBarController?.tabBar.isHidden = false
     }
 
-    override func render() {
+    override func setupLayout() {
         view.addSubviews(chatSendView, chatTableView)
 
         chatSendView.snp.makeConstraints {
@@ -96,7 +96,9 @@ extension ChatViewController: UITableViewDataSource, UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: ChatTableViewCell.className, for: indexPath) as? ChatTableViewCell else { return UITableViewCell() }
+        guard let cell = tableView
+            .dequeueReusableCell(withIdentifier: ChatTableViewCell.className, for: indexPath) as? ChatTableViewCell
+        else { return UITableViewCell() }
 
         cell.selectionStyle = .none
 
@@ -104,18 +106,18 @@ extension ChatViewController: UITableViewDataSource, UITableViewDelegate {
             let profileViewController = ProfileViewController(isOwn: false)
             self?.navigationController?.pushViewController(profileViewController, animated: true)
         }
-        
+
         cell.optionButtonTapAction = { [weak self] _ in
             let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-    
+
             let report = UIAlertAction(title: "신고하기", style: .destructive, handler: { _ in
                 self?.sendReportMail()
             })
             let cancel = UIAlertAction(title: "취소", style: .cancel, handler: nil)
-            
+
             alert.addAction(cancel)
             alert.addAction(report)
-            
+
             self?.present(alert, animated: true, completion: nil)
         }
 
@@ -134,10 +136,10 @@ extension ChatViewController: MFMailComposeViewControllerDelegate {
     func sendReportMail() {
         if MFMailComposeViewController.canSendMail() {
             let composeVC = MFMailComposeViewController()
-            let emailAdress = "coby5502@gmail.com"
+            let emailAdress = "foodbowl5502@gmail.com"
             let messageBody = """
-            신고 사유를 작성해주세요.
-            """
+                신고 사유를 작성해주세요.
+                """
 
             composeVC.mailComposeDelegate = self
             composeVC.setToRecipients([emailAdress])
@@ -153,9 +155,7 @@ extension ChatViewController: MFMailComposeViewControllerDelegate {
 
     private func showSendMailErrorAlert() {
         let sendMailErrorAlert = UIAlertController(title: "메일 전송 실패", message: "이메일 설정을 확인하고 다시 시도해주세요.", preferredStyle: .alert)
-        let confirmAction = UIAlertAction(title: "확인", style: .default) { _ in
-            print("확인")
-        }
+        let confirmAction = UIAlertAction(title: "확인", style: .default)
         sendMailErrorAlert.addAction(confirmAction)
         present(sendMailErrorAlert, animated: true, completion: nil)
     }

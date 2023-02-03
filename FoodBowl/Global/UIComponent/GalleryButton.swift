@@ -12,7 +12,7 @@ final class GalleryButton: UIButton {
 
     override init(frame _: CGRect) {
         super.init(frame: .init(origin: .zero, size: .init(width: 22, height: 22)))
-        configUI()
+        configureUI()
     }
 
     @available(*, unavailable)
@@ -22,8 +22,11 @@ final class GalleryButton: UIButton {
 
     // MARK: - life cycle
 
-    private func configUI() {
-        setImage(ImageLiteral.btnGallery.resize(to: CGSize(width: 22, height: 22)).withRenderingMode(.alwaysTemplate), for: .normal)
+    private func configureUI() {
+        setImage(
+            ImageLiteral.btnGallery.resize(to: CGSize(width: 22, height: 22)).withRenderingMode(.alwaysTemplate),
+            for: .normal
+        )
         tintColor = .mainText
     }
 }

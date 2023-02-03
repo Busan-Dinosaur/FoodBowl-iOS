@@ -35,8 +35,8 @@ final class SelectedStoreView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        render()
-        configUI()
+        setupLayout()
+        configureUI()
     }
 
     @available(*, unavailable)
@@ -44,7 +44,7 @@ final class SelectedStoreView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    private func render() {
+    private func setupLayout() {
         addSubviews(storeNameLabel, storeAdressLabel, mapButton)
 
         storeNameLabel.snp.makeConstraints {
@@ -64,7 +64,7 @@ final class SelectedStoreView: UIView {
         }
     }
 
-    private func configUI() {
+    private func configureUI() {
         backgroundColor = .clear
         makeBorderLayer(color: .grey002)
     }

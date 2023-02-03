@@ -10,7 +10,7 @@ import UIKit
 import Then
 
 class BaseViewController: UIViewController {
-    // MARK: - property
+    // MARK: - propertyㅋ
 
     private lazy var backButton = BackButton().then {
         let buttonAction = UIAction { [weak self] _ in
@@ -25,19 +25,28 @@ class BaseViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        render()
-        configUI()
+        setupLayout()
+        configureUI()
         setupBackButton()
         hidekeyboardWhenTappedAround()
         setupNavigationBar()
 
         // Do any additional setup after loading the view.
-        NotificationCenter.default.addObserver(self, selector: #selector(BaseViewController.keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(BaseViewController.keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(BaseViewController.keyboardWillShow),
+            name: UIResponder.keyboardWillShowNotification,
+            object: nil
+        )
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(BaseViewController.keyboardWillHide),
+            name: UIResponder.keyboardWillHideNotification,
+            object: nil
+        )
     }
 
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
+    deinit {
         NotificationCenter.default.removeObserver(self)
     }
 
@@ -46,11 +55,11 @@ class BaseViewController: UIViewController {
         setupInteractivePopGestureRecognizer()
     }
 
-    func render() {
+    func setupLayout() {
         // Override Layout
     }
 
-    func configUI() {
+    func configureUI() {
         view.backgroundColor = .mainBackground
     }
 
@@ -96,7 +105,8 @@ class BaseViewController: UIViewController {
 
     // MARK: - func
 
-    @objc func keyboardWillShow(notification: NSNotification) {
+    @objc
+    func keyboardWillShow(notification: NSNotification) {
         guard let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else {
             // if keyboard size is not available for some reason, dont do anything
             return
@@ -119,11 +129,13 @@ class BaseViewController: UIViewController {
         }
     }
 
-    @objc func keyboardWillHide(notification _: NSNotification) {
+    @objc
+    func keyboardWillHide(notification _: NSNotification) {
         view.frame.origin.y = 0
     }
 
-    @objc func backgroundTap(_: UITapGestureRecognizer) {
+    @objc
+    func backgroundTap(_: UITapGestureRecognizer) {
         // go through all of the textfield inside the view, and end editing thus resigning first responder
         // ie. it will trigger a keyboardWillHide notification
         view.endEditing(true)

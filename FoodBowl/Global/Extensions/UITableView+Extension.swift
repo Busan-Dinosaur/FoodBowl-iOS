@@ -15,9 +15,10 @@ extension UITableView {
         return cell
     }
 
-    func register<T>(cell: T.Type,
-                     forCellReuseIdentifier reuseIdentifier: String = T.className) where T: UITableViewCell
-    {
+    func register<T>(
+        cell: T.Type,
+        forCellReuseIdentifier reuseIdentifier: String = T.className
+    ) where T: UITableViewCell {
         register(cell, forCellReuseIdentifier: reuseIdentifier)
     }
 }

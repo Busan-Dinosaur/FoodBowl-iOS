@@ -12,7 +12,7 @@ final class SettingButton: UIButton {
 
     override init(frame _: CGRect) {
         super.init(frame: .init(origin: .zero, size: .init(width: 30, height: 30)))
-        configUI()
+        configureUI()
     }
 
     @available(*, unavailable)
@@ -22,8 +22,11 @@ final class SettingButton: UIButton {
 
     // MARK: - life cycle
 
-    private func configUI() {
-        setImage(ImageLiteral.btnSetting.resize(to: CGSize(width: 24, height: 24)).withRenderingMode(.alwaysTemplate), for: .normal)
+    private func configureUI() {
+        setImage(
+            ImageLiteral.btnSetting.resize(to: CGSize(width: 24, height: 24)).withRenderingMode(.alwaysTemplate),
+            for: .normal
+        )
         tintColor = .mainText
     }
 }

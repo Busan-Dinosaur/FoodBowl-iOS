@@ -30,7 +30,7 @@ final class StoreInfoTableViewCell: BaseTableViewCell {
 
     // MARK: - func
 
-    override func render() {
+    override func setupLayout() {
         contentView.addSubviews(storeNameLabel, storeFeedLabel, storeDistanceLabel)
 
         storeNameLabel.snp.makeConstraints {
@@ -48,8 +48,8 @@ final class StoreInfoTableViewCell: BaseTableViewCell {
             $0.bottom.equalToSuperview().inset(12)
         }
     }
-    
-    override func configUI() {
+
+    override func configureUI() {
         backgroundColor = .clear
     }
 }

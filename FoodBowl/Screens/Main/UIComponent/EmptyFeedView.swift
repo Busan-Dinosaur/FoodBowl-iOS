@@ -26,7 +26,7 @@ final class EmptyFeedView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        render()
+        setupLayout()
     }
 
     @available(*, unavailable)
@@ -34,7 +34,7 @@ final class EmptyFeedView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    private func render() {
+    private func setupLayout() {
         addSubviews(emptyImage, emptyLabel)
 
         emptyImage.snp.makeConstraints {

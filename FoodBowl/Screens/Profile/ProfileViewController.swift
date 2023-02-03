@@ -63,15 +63,15 @@ final class ProfileViewController: BaseViewController {
     private lazy var optionButton = OptionButton().then {
         let optionButtonAction = UIAction { [weak self] _ in
             let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-    
+
             let report = UIAlertAction(title: "신고하기", style: .destructive, handler: { _ in
                 self?.sendReportMail()
             })
             let cancel = UIAlertAction(title: "취소", style: .cancel, handler: nil)
-            
+
             alert.addAction(cancel)
             alert.addAction(report)
-            
+
             self?.present(alert, animated: true, completion: nil)
         }
         $0.addAction(optionButtonAction, for: .touchUpInside)
@@ -127,29 +127,29 @@ final class ProfileViewController: BaseViewController {
         $0.addTarget(self, action: #selector(changeValue(control:)), for: .valueChanged)
     }
 
-    private let childView: UIView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
+    private let childView = UIView().then {
+        $0.translatesAutoresizingMaskIntoConstraints = false
+    }
 
     private let vc1 = UserFeedViewController()
     private let vc2 = UserFeedViewController()
 
-    private lazy var pageViewController: UIPageViewController = {
-        let vc = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
-        vc.setViewControllers([self.dataViewControllers[0]], direction: .forward, animated: true)
-        vc.delegate = self
-        vc.dataSource = self
-        vc.view.translatesAutoresizingMaskIntoConstraints = false
-        return vc
-    }()
+    private lazy var pageViewController = UIPageViewController(
+        transitionStyle: .scroll,
+        navigationOrientation: .horizontal,
+        options: nil
+    ).then {
+        $0.setViewControllers([self.dataViewControllers[0]], direction: .forward, animated: true)
+        $0.delegate = self
+        $0.dataSource = self
+        $0.view.translatesAutoresizingMaskIntoConstraints = false
+    }
 
     var dataViewControllers: [UIViewController] {
         [vc1, vc2]
     }
 
-    var currentPage: Int = 0 {
+    var currentPage = 0 {
         didSet {
             let direction: UIPageViewController.NavigationDirection = oldValue <= self.currentPage ? .forward : .reverse
             self.pageViewController.setViewControllers(
@@ -169,18 +169,18 @@ final class ProfileViewController: BaseViewController {
         } else {
             userProfileView.editButton.isHidden = true
         }
-        
+
         let storeHandler = { [weak self] in
             let storeFeedViewController = StoreFeedViewController()
             storeFeedViewController.title = "coby5502"
             self?.navigationController?.pushViewController(storeFeedViewController, animated: true)
         }
-        
+
         vc1.handler = storeHandler
         vc2.handler = storeHandler
     }
 
-    override func render() {
+    override func setupLayout() {
         view.addSubviews(userProfileView, segmentedControl, pageViewController.view)
 
         userProfileView.snp.makeConstraints {
@@ -218,7 +218,8 @@ final class ProfileViewController: BaseViewController {
         }
     }
 
-    @objc private func changeValue(control: UISegmentedControl) {
+    @objc
+    private func changeValue(control: UISegmentedControl) {
         currentPage = control.selectedSegmentIndex
     }
 
@@ -232,9 +233,8 @@ extension ProfileViewController: UIPageViewControllerDataSource, UIPageViewContr
         _: UIPageViewController,
         viewControllerBefore viewController: UIViewController
     ) -> UIViewController? {
-        guard
-            let index = dataViewControllers.firstIndex(of: viewController),
-            index - 1 >= 0
+        guard let index = dataViewControllers.firstIndex(of: viewController),
+              index - 1 >= 0
         else { return nil }
         return dataViewControllers[index - 1]
     }
@@ -243,9 +243,8 @@ extension ProfileViewController: UIPageViewControllerDataSource, UIPageViewContr
         _: UIPageViewController,
         viewControllerAfter viewController: UIViewController
     ) -> UIViewController? {
-        guard
-            let index = dataViewControllers.firstIndex(of: viewController),
-            index + 1 < dataViewControllers.count
+        guard let index = dataViewControllers.firstIndex(of: viewController),
+              index + 1 < dataViewControllers.count
         else { return nil }
         return dataViewControllers[index + 1]
     }
@@ -256,9 +255,8 @@ extension ProfileViewController: UIPageViewControllerDataSource, UIPageViewContr
         previousViewControllers _: [UIViewController],
         transitionCompleted _: Bool
     ) {
-        guard
-            let viewController = pageViewController.viewControllers?[0],
-            let index = dataViewControllers.firstIndex(of: viewController)
+        guard let viewController = pageViewController.viewControllers?[0],
+              let index = dataViewControllers.firstIndex(of: viewController)
         else { return }
         currentPage = index
         segmentedControl.selectedSegmentIndex = index
@@ -269,10 +267,10 @@ extension ProfileViewController: MFMailComposeViewControllerDelegate {
     func sendReportMail() {
         if MFMailComposeViewController.canSendMail() {
             let composeVC = MFMailComposeViewController()
-            let emailAdress = "coby5502@gmail.com"
+            let emailAdress = "foodbowl5502@gmail.com"
             let messageBody = """
-            신고 사유를 작성해주세요.
-            """
+                신고 사유를 작성해주세요.
+                """
 
             composeVC.mailComposeDelegate = self
             composeVC.setToRecipients([emailAdress])
@@ -288,9 +286,7 @@ extension ProfileViewController: MFMailComposeViewControllerDelegate {
 
     private func showSendMailErrorAlert() {
         let sendMailErrorAlert = UIAlertController(title: "메일 전송 실패", message: "이메일 설정을 확인하고 다시 시도해주세요.", preferredStyle: .alert)
-        let confirmAction = UIAlertAction(title: "확인", style: .default) { _ in
-            print("확인")
-        }
+        let confirmAction = UIAlertAction(title: "확인", style: .default)
         sendMailErrorAlert.addAction(confirmAction)
         present(sendMailErrorAlert, animated: true, completion: nil)
     }

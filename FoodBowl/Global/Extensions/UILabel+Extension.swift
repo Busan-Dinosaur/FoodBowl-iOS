@@ -26,9 +26,13 @@ extension UILabel {
         if let labelText = text, labelText.count > 0 {
             let paragraphStyle = NSMutableParagraphStyle()
             paragraphStyle.lineSpacing = lineSpacing
-            attributedText = NSAttributedString(string: labelText,
-                                                attributes: [.kern: kernValue,
-                                                             .paragraphStyle: paragraphStyle])
+            attributedText = NSAttributedString(
+                string: labelText,
+                attributes: [
+                    .kern: kernValue,
+                    .paragraphStyle: paragraphStyle
+                ]
+            )
             lineBreakStrategy = .hangulWordPriority
         }
     }
@@ -49,7 +53,12 @@ extension UILabel {
         queue.asyncAfter(deadline: .now() + 0.7, execute: writingTask)
     }
 
-    func makeBasicLabel(labelText: String, textColor: UIColor, fontStyle: UIFont.TextStyle, fontWeight: UIFont.Weight) -> UILabel {
+    func makeBasicLabel(
+        labelText: String,
+        textColor: UIColor,
+        fontStyle: UIFont.TextStyle,
+        fontWeight: UIFont.Weight
+    ) -> UILabel {
         let label = UILabel().then {
             $0.text = labelText
             $0.textColor = textColor
@@ -65,9 +74,11 @@ extension NSAttributedString {
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineBreakMode = .byTruncatingTail
         paragraphStyle.lineSpacing = spacing
-        attributedString.addAttribute(.paragraphStyle,
-                                      value: paragraphStyle,
-                                      range: NSRange(location: 0, length: string.count))
+        attributedString.addAttribute(
+            .paragraphStyle,
+            value: paragraphStyle,
+            range: NSRange(location: 0, length: string.count)
+        )
         return NSAttributedString(attributedString: attributedString)
     }
 }

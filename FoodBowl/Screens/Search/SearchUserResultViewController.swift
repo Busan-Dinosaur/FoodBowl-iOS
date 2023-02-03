@@ -23,7 +23,7 @@ final class SearchUserResultViewController: BaseViewController {
 
     // MARK: - life cycle
 
-    override func render() {
+    override func setupLayout() {
         view.addSubviews(userResultTableView)
 
         userResultTableView.snp.makeConstraints {
@@ -42,7 +42,9 @@ extension SearchUserResultViewController: UITableViewDataSource, UITableViewDele
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: UserInfoTableViewCell.className, for: indexPath) as? UserInfoTableViewCell else { return UITableViewCell() }
+        guard let cell = tableView
+            .dequeueReusableCell(withIdentifier: UserInfoTableViewCell.className, for: indexPath) as? UserInfoTableViewCell
+        else { return UITableViewCell() }
 
         cell.selectionStyle = .none
 

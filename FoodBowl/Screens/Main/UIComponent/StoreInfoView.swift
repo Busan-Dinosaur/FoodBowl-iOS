@@ -41,7 +41,7 @@ final class StoreInfoView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        render()
+        setupLayout()
     }
 
     @available(*, unavailable)
@@ -49,7 +49,7 @@ final class StoreInfoView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    private func render() {
+    private func setupLayout() {
         addSubviews(storeNameButton, categoryLabel, distanceLabel, mapButton)
 
         storeNameButton.snp.makeConstraints {

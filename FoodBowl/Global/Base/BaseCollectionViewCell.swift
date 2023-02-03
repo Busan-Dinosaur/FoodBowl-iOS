@@ -12,8 +12,8 @@ class BaseCollectionViewCell: UICollectionViewCell {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        render()
-        configUI()
+        setupLayout()
+        configureUI()
     }
 
     @available(*, unavailable)
@@ -23,11 +23,11 @@ class BaseCollectionViewCell: UICollectionViewCell {
 
     // MARK: - func
 
-    func render() {
+    func setupLayout() {
         // Override Layout
     }
 
-    func configUI() {
+    func configureUI() {
         // View Configuration
     }
 }

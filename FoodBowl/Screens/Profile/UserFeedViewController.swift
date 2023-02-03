@@ -12,14 +12,16 @@ import Then
 
 final class UserFeedViewController: BaseViewController {
     var handler: (() -> Void)?
-    
+
     private enum Size {
         static let cellWidth: CGFloat = (UIScreen.main.bounds.size.width - 8) / 3
         static let cellHeight: CGFloat = cellWidth
-        static let collectionInset = UIEdgeInsets(top: 0,
-                                                  left: 0,
-                                                  bottom: 0,
-                                                  right: 0)
+        static let collectionInset = UIEdgeInsets(
+            top: 0,
+            left: 0,
+            bottom: 0,
+            right: 0
+        )
     }
 
     private var feeds: [String] = ["가나", "다라", "마바", "사아", "자차", "사아", "자차", "사아", "자차", "사아", "자차", "사아", "자차", "사아", "자차"]
@@ -44,7 +46,7 @@ final class UserFeedViewController: BaseViewController {
 
     // MARK: - life cycle
 
-    override func render() {
+    override func setupLayout() {
         view.addSubviews(listCollectionView)
 
         listCollectionView.snp.makeConstraints {
@@ -63,7 +65,10 @@ extension UserFeedViewController: UICollectionViewDataSource, UICollectionViewDe
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FeedThumnailCollectionViewCell.className, for: indexPath) as? FeedThumnailCollectionViewCell else {
+        guard let cell = collectionView.dequeueReusableCell(
+            withReuseIdentifier: FeedThumnailCollectionViewCell.className,
+            for: indexPath
+        ) as? FeedThumnailCollectionViewCell else {
             return UICollectionViewCell()
         }
 

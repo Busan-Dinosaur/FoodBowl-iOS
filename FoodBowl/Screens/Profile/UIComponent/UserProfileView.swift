@@ -43,7 +43,7 @@ final class UserProfileView: UICollectionReusableView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        render()
+        setupLayout()
     }
 
     @available(*, unavailable)
@@ -53,7 +53,7 @@ final class UserProfileView: UICollectionReusableView {
 
     // MARK: - life cycle
 
-    private func render() {
+    private func setupLayout() {
         addSubviews(userImageView, followerInfoButton, followingInfoButton, followButton, editButton)
 
         userImageView.snp.makeConstraints {

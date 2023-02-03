@@ -30,7 +30,7 @@ final class CategoryCollectionViewCell: BaseCollectionViewCell {
         $0.textColor = .mainText
     }
 
-    override func render() {
+    override func setupLayout() {
         contentView.addSubviews(categoryLabel)
 
         categoryLabel.snp.makeConstraints {
@@ -39,7 +39,7 @@ final class CategoryCollectionViewCell: BaseCollectionViewCell {
         }
     }
 
-    override func configUI() {
+    override func configureUI() {
         backgroundColor = .mainBackground
         makeBorderLayer(color: .grey002)
     }

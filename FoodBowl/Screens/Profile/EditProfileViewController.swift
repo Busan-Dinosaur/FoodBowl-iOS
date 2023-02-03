@@ -66,17 +66,19 @@ final class EditProfileViewController: BaseViewController {
     }
 
     // MARK: - life cycle
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(textDidChange(_:)),
-                                               name: UITextField.textDidChangeNotification,
-                                               object: nicknameField)
+
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(textDidChange(_:)),
+            name: UITextField.textDidChangeNotification,
+            object: nicknameField
+        )
     }
 
-    override func render() {
+    override func setupLayout() {
         view.addSubviews(profileImageView, nicknameLabel, nicknameField, signUpButton)
 
         profileImageView.snp.makeConstraints {
@@ -111,7 +113,8 @@ final class EditProfileViewController: BaseViewController {
         title = "프로필 수정"
     }
 
-    @objc private func tappedProfileImageView(_: UITapGestureRecognizer) {
+    @objc
+    private func tappedProfileImageView(_: UITapGestureRecognizer) {
         var config = YPImagePickerConfiguration()
         config.onlySquareImagesFromCamera = true
         config.library.defaultMultipleSelection = false
@@ -135,7 +138,7 @@ final class EditProfileViewController: BaseViewController {
         picker.didFinishPicking { [unowned picker] items, cancelled in
             if !cancelled {
                 let images: [UIImage] = items.compactMap { item in
-                    if case let .photo(photo) = item {
+                    if case .photo(let photo) = item {
                         return photo.image
                     } else {
                         return nil
@@ -148,14 +151,15 @@ final class EditProfileViewController: BaseViewController {
         }
         present(picker, animated: true, completion: nil)
     }
-    
-    @objc private func textDidChange(_ notification: Notification) {
+
+    @objc
+    private func textDidChange(_ notification: Notification) {
         if let textField = notification.object as? UITextField {
             if let text = textField.text {
                 if text.count > maxLength {
                     textField.resignFirstResponder()
                 }
-                
+
                 if text.count >= maxLength {
                     let index = text.index(text.startIndex, offsetBy: maxLength)
                     let newString = text[text.startIndex ..< index]
@@ -164,16 +168,16 @@ final class EditProfileViewController: BaseViewController {
             }
         }
     }
-    
+
     private func tappedCompleteButton() {
         if nicknameField.text?.count != 0 {
             navigationController?.popViewController(animated: true)
         } else {
             let alert = UIAlertController(title: nil, message: "사용할 닉네임을 입력해주세요", preferredStyle: .alert)
             let cancel = UIAlertAction(title: "닫기", style: .cancel, handler: nil)
-            
+
             alert.addAction(cancel)
-            
+
             present(alert, animated: true, completion: nil)
         }
     }

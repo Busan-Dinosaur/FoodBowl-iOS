@@ -36,8 +36,8 @@ final class ChatSendView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        render()
-        configUI()
+        setupLayout()
+        configureUI()
     }
 
     @available(*, unavailable)
@@ -47,7 +47,7 @@ final class ChatSendView: UIView {
 
     // MARK: - func
 
-    private func render() {
+    private func setupLayout() {
         addSubviews(chatTextField, chatSendbutton)
 
         snp.makeConstraints {
@@ -67,7 +67,7 @@ final class ChatSendView: UIView {
         }
     }
 
-    private func configUI() {
+    private func configureUI() {
         layer.borderWidth = 0.3
         layer.borderColor = UIColor.subText.cgColor
         layer.cornerRadius = 20
