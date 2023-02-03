@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CB1566D9298D72FF0056B7D9 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1566D8298D72FF0056B7D9 /* LocationManager.swift */; };
 		CB1790C8296DAB470083D3A4 /* DynamicHeightCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1790C7296DAB470083D3A4 /* DynamicHeightCollectionViewFlowLayout.swift */; };
 		CB1A7C5C29560C2300C6431D /* UserInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1A7C5B29560C2300C6431D /* UserInfoView.swift */; };
 		CB1A7C5E295618A900C6431D /* SettingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1A7C5D295618A900C6431D /* SettingButton.swift */; };
@@ -112,6 +113,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		CB1566D8298D72FF0056B7D9 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		CB1790C7296DAB470083D3A4 /* DynamicHeightCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicHeightCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
 		CB1A7C5B29560C2300C6431D /* UserInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoView.swift; sourceTree = "<group>"; };
 		CB1A7C5D295618A900C6431D /* SettingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingButton.swift; sourceTree = "<group>"; };
@@ -331,6 +333,7 @@
 			isa = PBXGroup;
 			children = (
 				CBADC25D29559BC900E56C93 /* Logger.swift */,
+				CB1566D8298D72FF0056B7D9 /* LocationManager.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -739,6 +742,7 @@
 				CBB778D92979B17200B9994A /* PinButton.swift in Sources */,
 				CB1A7C5E295618A900C6431D /* SettingButton.swift in Sources */,
 				CBADC29B29559BC900E56C93 /* BaseTableViewCell.swift in Sources */,
+				CB1566D9298D72FF0056B7D9 /* LocationManager.swift in Sources */,
 				CBE6190F296C6435005295AF /* MapViewController.swift in Sources */,
 				CB4FBBF42978CFE40052D371 /* FollowingViewController.swift in Sources */,
 				CBADC2A129559BC900E56C93 /* BackButton.swift in Sources */,

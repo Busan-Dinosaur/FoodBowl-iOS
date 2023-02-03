@@ -59,8 +59,7 @@ final class SearchStoreViewController: BaseViewController {
     }
 
     private func searchStores(keyword: String) {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-        guard let currentLoc = appDelegate.currentLoc else { return }
+        guard let currentLoc = LocationManager.shared.manager.location else { return }
 
         let url = "https://dapi.kakao.com/v2/local/search/keyword"
 

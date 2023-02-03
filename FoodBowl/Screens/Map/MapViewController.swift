@@ -28,13 +28,11 @@ final class MapViewController: BaseViewController {
 
     private var marks: [Marker]?
 
-    private lazy var locationManager: CLLocationManager = {
-        let manager = CLLocationManager()
-        manager.desiredAccuracy = kCLLocationAccuracyBest
-        manager.startUpdatingLocation()
-        manager.delegate = self
-        return manager
-    }()
+    private lazy var locationManager = CLLocationManager().then {
+        $0.desiredAccuracy = kCLLocationAccuracyBest
+        $0.startUpdatingLocation()
+        $0.delegate = self
+    }
 
     private lazy var mapView = MKMapView().then {
         $0.delegate = self
