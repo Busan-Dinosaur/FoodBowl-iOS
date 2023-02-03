@@ -17,11 +17,11 @@ class HorizontalScrollView: BaseScrollView<[UIImage]> {
 
         super.init(frame: .zero)
 
-        configUI()
+        configureUI()
     }
 
-    override func configUI() {
-        super.configUI()
+    override func configureUI() {
+        super.configureUI()
 
         isPagingEnabled = true
         showsHorizontalScrollIndicator = false

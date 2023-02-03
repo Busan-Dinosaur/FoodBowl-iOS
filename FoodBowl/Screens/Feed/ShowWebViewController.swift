@@ -31,7 +31,7 @@ final class ShowWebViewController: BaseViewController, WKNavigationDelegate, WKU
 
     // MARK: - life cycle
 
-    override func render() {
+    override func setupLayout() {
         view.addSubviews(webView)
 
         webView.snp.makeConstraints {

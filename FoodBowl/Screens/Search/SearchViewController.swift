@@ -85,7 +85,7 @@ final class SearchViewController: BaseViewController {
         navigationController?.isNavigationBarHidden = false
     }
 
-    override func render() {
+    override func setupLayout() {
         view.addSubviews(searchBarButton, listCollectionView)
 
         searchBarButton.snp.makeConstraints {

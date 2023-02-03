@@ -12,7 +12,7 @@ final class BackButton: UIButton {
 
     override init(frame _: CGRect) {
         super.init(frame: .init(origin: .zero, size: .init(width: 44, height: 44)))
-        configUI()
+        configureUI()
     }
 
     @available(*, unavailable)
@@ -22,7 +22,7 @@ final class BackButton: UIButton {
 
     // MARK: - life cycle
 
-    private func configUI() {
+    private func configureUI() {
         setImage(ImageLiteral.btnBack, for: .normal)
         tintColor = .mainPink
     }

@@ -86,7 +86,7 @@ final class SearchResultViewController: BaseViewController {
         changeValue(control: segmentedControl)
     }
 
-    override func render() {
+    override func setupLayout() {
         view.addSubviews(segmentedControl, pageViewController.view)
 
         segmentedControl.snp.makeConstraints {

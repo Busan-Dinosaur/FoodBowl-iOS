@@ -36,8 +36,8 @@ final class FollowButton: UIButton {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        render()
-        configUI()
+        setupLayout()
+        configureUI()
     }
 
     @available(*, unavailable)
@@ -47,7 +47,7 @@ final class FollowButton: UIButton {
 
     // MARK: - life cycle
 
-    private func render() {
+    private func setupLayout() {
         addSubview(label)
 
         label.snp.makeConstraints {
@@ -55,7 +55,7 @@ final class FollowButton: UIButton {
         }
     }
 
-    private func configUI() {
+    private func configureUI() {
         backgroundColor = .mainPink
         layer.cornerRadius = 15
         layer.masksToBounds = false

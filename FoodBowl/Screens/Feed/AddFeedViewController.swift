@@ -71,7 +71,7 @@ final class AddFeedViewController: BaseViewController {
         pageControl.currentPage = 0
     }
 
-    override func render() {
+    override func setupLayout() {
         addChild(pageViewController)
         view.addSubviews(pageViewController.view)
 
@@ -82,7 +82,7 @@ final class AddFeedViewController: BaseViewController {
         }
     }
 
-    override func configUI() {
+    override func configureUI() {
         if let firstVC = dataViewControllers.first {
             pageViewController.setViewControllers([firstVC], direction: .forward, animated: true, completion: nil)
         }

@@ -49,7 +49,7 @@ final class OnboardingViewController: BaseViewController {
         navigationController?.isNavigationBarHidden = false
     }
 
-    override func render() {
+    override func setupLayout() {
         view.addSubviews(appLogoView, guideLabel, appleLoginButton)
 
         appLogoView.snp.makeConstraints {

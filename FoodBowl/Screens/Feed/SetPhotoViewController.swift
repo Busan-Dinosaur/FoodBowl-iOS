@@ -55,7 +55,7 @@ final class SetPhotoViewController: BaseViewController {
 
     // MARK: - life cycle
 
-    override func render() {
+    override func setupLayout() {
         view.addSubviews(guideLabel, listCollectionView)
 
         guideLabel.snp.makeConstraints {

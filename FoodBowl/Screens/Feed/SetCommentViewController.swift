@@ -68,7 +68,7 @@ final class SetCommentViewController: BaseViewController {
 
     // MARK: - life cycle
 
-    override func render() {
+    override func setupLayout() {
         view.addSubviews(guideLabel, listCollectionView, commentTextView)
 
         guideLabel.snp.makeConstraints {

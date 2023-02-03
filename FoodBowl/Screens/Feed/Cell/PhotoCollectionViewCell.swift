@@ -20,7 +20,7 @@ final class PhotoCollectionViewCell: BaseCollectionViewCell {
         $0.clipsToBounds = true
     }
 
-    override func render() {
+    override func setupLayout() {
         contentView.addSubviews(plusImageView)
 
         plusImageView.snp.makeConstraints {
@@ -29,7 +29,7 @@ final class PhotoCollectionViewCell: BaseCollectionViewCell {
         }
     }
 
-    override func configUI() {
+    override func configureUI() {
         backgroundColor = .grey002
     }
 }

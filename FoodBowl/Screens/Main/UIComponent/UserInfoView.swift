@@ -37,7 +37,7 @@ final class UserInfoView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        render()
+        setupLayout()
     }
 
     @available(*, unavailable)
@@ -45,7 +45,7 @@ final class UserInfoView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    private func render() {
+    private func setupLayout() {
         addSubviews(userImageButton, userNameButton, userFollowerLabel, followButton)
 
         userImageButton.snp.makeConstraints {

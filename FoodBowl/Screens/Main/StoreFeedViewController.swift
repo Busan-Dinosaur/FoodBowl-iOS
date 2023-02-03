@@ -56,7 +56,7 @@ final class StoreFeedViewController: BaseViewController {
         loadData()
     }
 
-    override func render() {
+    override func setupLayout() {
         view.addSubviews(listCollectionView)
 
         listCollectionView.snp.makeConstraints {

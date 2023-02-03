@@ -78,7 +78,7 @@ final class EditProfileViewController: BaseViewController {
         )
     }
 
-    override func render() {
+    override func setupLayout() {
         view.addSubviews(profileImageView, nicknameLabel, nicknameField, signUpButton)
 
         profileImageView.snp.makeConstraints {

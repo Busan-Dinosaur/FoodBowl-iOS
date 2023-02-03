@@ -29,7 +29,7 @@ final class SearchBarButton: UIButton {
     override init(frame: CGRect) {
         super.init(frame: frame)
         render()
-        configUI()
+        configureUI()
     }
 
     @available(*, unavailable)
@@ -53,7 +53,7 @@ final class SearchBarButton: UIButton {
         }
     }
 
-    private func configUI() {
+    private func configureUI() {
         backgroundColor = .mainBackground
         makeBorderLayer(color: .grey002)
     }

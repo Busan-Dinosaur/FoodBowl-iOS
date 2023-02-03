@@ -91,7 +91,7 @@ final class FeedCollectionViewCell: BaseCollectionViewCell {
         $0.text = "10일 전"
     }
 
-    override func render() {
+    override func setupLayout() {
         contentView.addSubviews(userInfoView, feedImageView, storeInfoView, commentLabel, stackView, optionButton, dateLabel)
 
         [bookmarkButton, commentButton].forEach {
@@ -136,7 +136,7 @@ final class FeedCollectionViewCell: BaseCollectionViewCell {
         }
     }
 
-    override func configUI() {
+    override func configureUI() {
         feedImageView.model = [ImageLiteral.food1, ImageLiteral.food2, ImageLiteral.food3]
 
         userInfoView.userImageButton.addAction(UIAction { _ in self.userButtonTapAction?(self) }, for: .touchUpInside)

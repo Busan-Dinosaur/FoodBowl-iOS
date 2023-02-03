@@ -42,7 +42,7 @@ final class SetStoreViewController: BaseViewController {
 
     // MARK: - life cycle
 
-    override func render() {
+    override func setupLayout() {
         view.addSubviews(guideLabel, searchBarButton, selectedStoreView)
 
         guideLabel.snp.makeConstraints {

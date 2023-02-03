@@ -19,7 +19,7 @@ class BaseScrollView<Model>: UIScrollView {
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        configUI()
+        configureUI()
     }
 
     @available(*, unavailable)
@@ -27,6 +27,6 @@ class BaseScrollView<Model>: UIScrollView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func configUI() {}
+    func configureUI() {}
     func bind(_: Model) {}
 }

@@ -31,7 +31,7 @@ final class SettingViewController: BaseViewController {
         setupSettingItems()
     }
 
-    override func render() {
+    override func setupLayout() {
         view.addSubviews(settingItemTableView)
 
         settingItemTableView.snp.makeConstraints {

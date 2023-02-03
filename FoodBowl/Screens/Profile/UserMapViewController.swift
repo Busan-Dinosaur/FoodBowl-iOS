@@ -76,7 +76,7 @@ final class UserMapViewController: BaseViewController, MKMapViewDelegate {
         collectionView(listCollectionView, didSelectItemAt: indexPath)
     }
 
-    override func render() {
+    override func setupLayout() {
         view.addSubviews(mapView, listCollectionView)
 
         mapView.snp.makeConstraints {

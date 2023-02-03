@@ -180,7 +180,7 @@ final class ProfileViewController: BaseViewController {
         vc2.handler = storeHandler
     }
 
-    override func render() {
+    override func setupLayout() {
         view.addSubviews(userProfileView, segmentedControl, pageViewController.view)
 
         userProfileView.snp.makeConstraints {

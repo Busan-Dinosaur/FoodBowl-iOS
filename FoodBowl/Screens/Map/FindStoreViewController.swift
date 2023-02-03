@@ -35,7 +35,7 @@ final class FindStoreViewController: BaseViewController {
         $0.backgroundColor = .clear
     }
 
-    override func render() {
+    override func setupLayout() {
         view.addSubviews(storeResultTableView)
 
         storeResultTableView.snp.makeConstraints {

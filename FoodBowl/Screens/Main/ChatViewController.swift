@@ -49,7 +49,7 @@ final class ChatViewController: BaseViewController {
         tabBarController?.tabBar.isHidden = false
     }
 
-    override func render() {
+    override func setupLayout() {
         view.addSubviews(chatSendView, chatTableView)
 
         chatSendView.snp.makeConstraints {

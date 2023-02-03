@@ -50,7 +50,7 @@ final class ChatTableViewCell: BaseTableViewCell {
 
     // MARK: - func
 
-    override func render() {
+    override func setupLayout() {
         contentView.addSubviews(userImageButton, userNameButton, dateLabel, optionButton, userChatLabel)
 
         userImageButton.snp.makeConstraints {
@@ -82,7 +82,7 @@ final class ChatTableViewCell: BaseTableViewCell {
         }
     }
 
-    override func configUI() {
+    override func configureUI() {
         backgroundColor = .clear
 
         userImageButton.addAction(UIAction { _ in self.userButtonTapAction?(self) }, for: .touchUpInside)

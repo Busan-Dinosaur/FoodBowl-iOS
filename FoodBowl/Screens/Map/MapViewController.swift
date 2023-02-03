@@ -124,7 +124,7 @@ final class MapViewController: BaseViewController {
         locationManager.stopUpdatingLocation()
     }
 
-    override func render() {
+    override func setupLayout() {
         view.addSubviews(mapView, searchBarButton, listCollectionView, gpsButton, bookMarkButton)
 
         mapView.snp.makeConstraints {

@@ -23,7 +23,7 @@ final class FollowingViewController: BaseViewController {
 
     // MARK: - life cycle
 
-    override func render() {
+    override func setupLayout() {
         view.addSubviews(userResultTableView)
 
         userResultTableView.snp.makeConstraints {

@@ -44,7 +44,7 @@ final class SearchStoreViewController: BaseViewController {
 
     // MARK: - life cycle
 
-    override func render() {
+    override func setupLayout() {
         view.addSubviews(storeInfoTableView)
 
         storeInfoTableView.snp.makeConstraints {

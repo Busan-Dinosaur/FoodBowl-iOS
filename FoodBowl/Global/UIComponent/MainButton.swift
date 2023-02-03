@@ -23,8 +23,8 @@ final class MainButton: UIButton {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        render()
-        configUI()
+        setupLayout()
+        configureUI()
     }
 
     @available(*, unavailable)
@@ -34,7 +34,7 @@ final class MainButton: UIButton {
 
     // MARK: - life cycle
 
-    private func render() {
+    private func setupLayout() {
         addSubview(label)
 
         label.snp.makeConstraints {
@@ -42,7 +42,7 @@ final class MainButton: UIButton {
         }
     }
 
-    private func configUI() {
+    private func configureUI() {
         backgroundColor = .mainPink
         layer.cornerRadius = 30
         layer.masksToBounds = false

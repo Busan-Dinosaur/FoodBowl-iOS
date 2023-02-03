@@ -84,7 +84,7 @@ final class AgreementViewController: BaseViewController {
 
     // MARK: - life cycle
 
-    override func render() {
+    override func setupLayout() {
         view.addSubviews(mainAgreeButton, mainCheckBox, subAgreeLabel1, subCheckBox1, subAgreeLabel2, subCheckBox2, nextButton)
 
         mainAgreeButton.snp.makeConstraints {

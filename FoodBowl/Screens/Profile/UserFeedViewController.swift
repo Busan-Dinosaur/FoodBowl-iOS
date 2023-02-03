@@ -46,7 +46,7 @@ final class UserFeedViewController: BaseViewController {
 
     // MARK: - life cycle
 
-    override func render() {
+    override func setupLayout() {
         view.addSubviews(listCollectionView)
 
         listCollectionView.snp.makeConstraints {

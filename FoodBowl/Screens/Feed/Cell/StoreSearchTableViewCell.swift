@@ -30,7 +30,7 @@ final class StoreSearchTableViewCell: BaseTableViewCell {
 
     // MARK: - func
 
-    override func render() {
+    override func setupLayout() {
         contentView.addSubviews(storeNameLabel, storeAdressLabel, storeDistanceLabel)
 
         storeNameLabel.snp.makeConstraints {
@@ -49,7 +49,7 @@ final class StoreSearchTableViewCell: BaseTableViewCell {
         }
     }
 
-    override func configUI() {
+    override func configureUI() {
         backgroundColor = .clear
     }
 }

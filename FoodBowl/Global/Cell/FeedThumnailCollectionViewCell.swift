@@ -19,7 +19,7 @@ final class FeedThumnailCollectionViewCell: BaseCollectionViewCell {
         $0.contentMode = .scaleAspectFill
     }
 
-    override func render() {
+    override func setupLayout() {
         contentView.addSubviews(thumnailImageView)
 
         thumnailImageView.snp.makeConstraints {
