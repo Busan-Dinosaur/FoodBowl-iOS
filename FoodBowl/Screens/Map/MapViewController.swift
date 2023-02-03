@@ -28,12 +28,6 @@ final class MapViewController: BaseViewController {
 
     private var marks: [Marker]?
 
-    private lazy var locationManager = CLLocationManager().then {
-        $0.desiredAccuracy = kCLLocationAccuracyBest
-        $0.startUpdatingLocation()
-        $0.delegate = self
-    }
-
     private lazy var mapView = MKMapView().then {
         $0.delegate = self
         $0.mapType = MKMapType.standard
@@ -108,7 +102,6 @@ final class MapViewController: BaseViewController {
         super.viewDidLoad()
         findMyLocation()
         setMarkers()
-        mapView.delegate = self
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -119,7 +112,6 @@ final class MapViewController: BaseViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         navigationController?.isNavigationBarHidden = false
-        locationManager.stopUpdatingLocation()
     }
 
     override func setupLayout() {
@@ -158,19 +150,12 @@ final class MapViewController: BaseViewController {
         navigationController?.isNavigationBarHidden = true
     }
 
-    private func getLocationUsagePermission() {
-        locationManager.requestWhenInUseAuthorization()
-    }
-
     private func findMyLocation() {
-        guard let currentLocation = locationManager.location else {
-            getLocationUsagePermission()
-            return
-        }
+        guard let currentLoc = LocationManager.shared.manager.location else { return }
 
         mapView.setRegion(
             MKCoordinateRegion(
-                center: currentLocation.coordinate,
+                center: currentLoc.coordinate,
                 span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
             ),
             animated: true
@@ -187,18 +172,15 @@ final class MapViewController: BaseViewController {
     }
 
     private func setMarkers() {
-        guard let currentLocation = locationManager.location else {
-            getLocationUsagePermission()
-            return
-        }
+        guard let currentLoc = LocationManager.shared.manager.location else { return }
 
         marks = [
             Marker(
                 title: "홍대입구역 편의점",
                 subtitle: "3개의 후기",
                 coordinate: CLLocationCoordinate2D(
-                    latitude: currentLocation.coordinate.latitude + 0.001,
-                    longitude: currentLocation.coordinate.longitude + 0.001
+                    latitude: currentLoc.coordinate.latitude + 0.001,
+                    longitude: currentLoc.coordinate.longitude + 0.001
                 ),
                 glyphImage: ImageLiteral.korean,
                 handler: { [weak self] in
@@ -211,8 +193,8 @@ final class MapViewController: BaseViewController {
                 title: "홍대입구역 편의점",
                 subtitle: "3개의 후기",
                 coordinate: CLLocationCoordinate2D(
-                    latitude: currentLocation.coordinate.latitude + 0.001,
-                    longitude: currentLocation.coordinate.longitude + 0.002
+                    latitude: currentLoc.coordinate.latitude + 0.001,
+                    longitude: currentLoc.coordinate.longitude + 0.002
                 ),
                 glyphImage: ImageLiteral.salad,
                 handler: { [weak self] in
@@ -225,8 +207,8 @@ final class MapViewController: BaseViewController {
                 title: "홍대입구역 편의점",
                 subtitle: "3개의 후기",
                 coordinate: CLLocationCoordinate2D(
-                    latitude: currentLocation.coordinate.latitude + 0.001,
-                    longitude: currentLocation.coordinate.longitude + 0.003
+                    latitude: currentLoc.coordinate.latitude + 0.001,
+                    longitude: currentLoc.coordinate.longitude + 0.003
                 ),
                 glyphImage: ImageLiteral.chinese,
                 handler: { [weak self] in
@@ -239,8 +221,8 @@ final class MapViewController: BaseViewController {
                 title: "홍대입구역 편의점",
                 subtitle: "3개의 후기",
                 coordinate: CLLocationCoordinate2D(
-                    latitude: currentLocation.coordinate.latitude + 0.001,
-                    longitude: currentLocation.coordinate.longitude + 0.004
+                    latitude: currentLoc.coordinate.latitude + 0.001,
+                    longitude: currentLoc.coordinate.longitude + 0.004
                 ),
                 glyphImage: ImageLiteral.japanese,
                 handler: { [weak self] in
@@ -253,27 +235,6 @@ final class MapViewController: BaseViewController {
 
         marks?.forEach { mark in
             mapView.addAnnotation(mark)
-        }
-    }
-}
-
-extension MapViewController: CLLocationManagerDelegate {
-    func locationManager(_: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-        switch status {
-        case .authorizedAlways, .authorizedWhenInUse:
-            print("GPS 권한 설정됨")
-        case .restricted, .notDetermined:
-            print("GPS 권한 설정되지 않음")
-            DispatchQueue.main.async {
-                self.getLocationUsagePermission()
-            }
-        case .denied:
-            print("GPS 권한 요청 거부됨")
-            DispatchQueue.main.async {
-                self.getLocationUsagePermission()
-            }
-        default:
-            print("GPS: Default")
         }
     }
 }
