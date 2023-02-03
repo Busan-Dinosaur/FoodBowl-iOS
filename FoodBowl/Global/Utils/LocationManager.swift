@@ -17,11 +17,13 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
     private override init() {}
 
     func checkLocationService() {
-        if CLLocationManager.locationServicesEnabled() {
-            setupLocationManager()
-            checkLocationManagerAuthorization()
-        } else {
-            setupNotificationCenter(object: ["error": true])
+        DispatchQueue.global().async {
+            if CLLocationManager.locationServicesEnabled() {
+                self.setupLocationManager()
+                self.checkLocationManagerAuthorization()
+            } else {
+                self.setupNotificationCenter(object: ["error": true])
+            }
         }
     }
 

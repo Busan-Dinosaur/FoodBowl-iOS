@@ -5,6 +5,7 @@
 //  Created by COBY_PRO on 2022/12/23.
 //
 
+import CoreLocation
 import MessageUI
 import UIKit
 
@@ -20,6 +21,9 @@ final class MainViewController: BaseViewController {
             right: 0
         )
     }
+
+    private let notificationCenter = NotificationCenter.default
+    private var observer: NSObjectProtocol?
 
     private var refreshControl = UIRefreshControl()
 
@@ -65,6 +69,18 @@ final class MainViewController: BaseViewController {
         super.viewDidLoad()
         setupRefreshControl()
         loadData()
+
+        LocationManager.shared.checkLocationService()
+        observerNotification()
+
+        observer = notificationCenter.addObserver(
+            forName: UIApplication.willEnterForegroundNotification,
+            object: nil,
+            queue: .main,
+            using: { notification in
+                print("willEnterForegroundNotification")
+            }
+        )
     }
 
     override func setupLayout() {
@@ -94,6 +110,21 @@ final class MainViewController: BaseViewController {
     }
 
     private func loadData() {}
+
+    func observerNotification() {
+        notificationCenter.addObserver(forName: .sharedLocation, object: nil, queue: .main) { notification in
+
+            guard let object = notification.object as? [String: Any] else { return }
+            guard let error = object["error"] as? Bool else { return }
+
+            if error {
+                print("error to access location service.")
+            } else {
+                guard let location = object["location"] as? CLLocation else { return }
+                print(location.coordinate.latitude)
+            }
+        }
+    }
 }
 
 // MARK: - UICollectionViewDataSource, UICollectionViewDelegate
