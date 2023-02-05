@@ -134,18 +134,3 @@ extension SearchStoreViewController: UISearchBarDelegate {
         searchStores(keyword: searchTerm)
     }
 }
-
-extension String {
-    var prettyDistance: String {
-        guard let distance = Double(self) else { return "" }
-        guard distance > -.infinity else { return "?" }
-        let formatter = LengthFormatter()
-        formatter.numberFormatter.maximumFractionDigits = 1
-        if distance >= 1000 {
-            return formatter.string(fromValue: distance / 1000, unit: LengthFormatter.Unit.kilometer)
-        } else {
-            let value = Double(Int(distance)) // 미터로 표시할 땐 소수점 제거
-            return formatter.string(fromValue: value, unit: LengthFormatter.Unit.meter)
-        }
-    }
-}

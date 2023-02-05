@@ -1,5 +1,5 @@
 //
-//  TabbarViewController.swift
+//  TabBarController.swift
 //  FoodBowl
 //
 //  Created by COBY_PRO on 2022/12/23.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class TabbarViewController: UITabBarController {
+final class TabBarController: UITabBarController {
     private let mainViewController = UINavigationController(rootViewController: MainViewController())
     private let mapViewController = UINavigationController(rootViewController: MapViewController())
     private let searchViewController = UINavigationController(rootViewController: SearchViewController())

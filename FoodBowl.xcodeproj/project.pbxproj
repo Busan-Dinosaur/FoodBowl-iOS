@@ -65,7 +65,7 @@
 		CBADC2B72955A1BD00E56C93 /* SetPhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADC2B62955A1BD00E56C93 /* SetPhotoViewController.swift */; };
 		CBADC2B92955A1CC00E56C93 /* SetCommentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADC2B82955A1CC00E56C93 /* SetCommentViewController.swift */; };
 		CBADC2BD2955A22D00E56C93 /* SearchResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADC2BC2955A22D00E56C93 /* SearchResultViewController.swift */; };
-		CBADC2CF2955A41500E56C93 /* TabbarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADC2CE2955A41500E56C93 /* TabbarViewController.swift */; };
+		CBADC2CF2955A41500E56C93 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADC2CE2955A41500E56C93 /* TabBarController.swift */; };
 		CBADC2D82955AC5900E56C93 /* FeedCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADC2D72955AC5900E56C93 /* FeedCollectionViewCell.swift */; };
 		CBADC2DE2955ACBB00E56C93 /* EmptyFeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADC2DD2955ACBB00E56C93 /* EmptyFeedView.swift */; };
 		CBADC2E02955B92D00E56C93 /* MainButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADC2DF2955B92D00E56C93 /* MainButton.swift */; };
@@ -169,7 +169,7 @@
 		CBADC2B62955A1BD00E56C93 /* SetPhotoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetPhotoViewController.swift; sourceTree = "<group>"; };
 		CBADC2B82955A1CC00E56C93 /* SetCommentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetCommentViewController.swift; sourceTree = "<group>"; };
 		CBADC2BC2955A22D00E56C93 /* SearchResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultViewController.swift; sourceTree = "<group>"; };
-		CBADC2CE2955A41500E56C93 /* TabbarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabbarViewController.swift; sourceTree = "<group>"; };
+		CBADC2CE2955A41500E56C93 /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		CBADC2D72955AC5900E56C93 /* FeedCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedCollectionViewCell.swift; sourceTree = "<group>"; };
 		CBADC2DD2955ACBB00E56C93 /* EmptyFeedView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptyFeedView.swift; sourceTree = "<group>"; };
 		CBADC2DF2955B92D00E56C93 /* MainButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainButton.swift; sourceTree = "<group>"; };
@@ -313,7 +313,7 @@
 		CBADC25229559BC900E56C93 /* Supports */ = {
 			isa = PBXGroup;
 			children = (
-				CBADC2CE2955A41500E56C93 /* TabbarViewController.swift */,
+				CBADC2CE2955A41500E56C93 /* TabBarController.swift */,
 				CBC73103295550A100C7F198 /* AppDelegate.swift */,
 				CBC73105295550A100C7F198 /* SceneDelegate.swift */,
 				CBC73111295550A200C7F198 /* Info.plist */,
@@ -729,7 +729,7 @@
 				CBC73108295550A100C7F198 /* MainViewController.swift in Sources */,
 				CBD1B5F82982D9E100B0AD51 /* ForwordButton.swift in Sources */,
 				CB2E4F892977393700FD2566 /* UserInfoButton.swift in Sources */,
-				CBADC2CF2955A41500E56C93 /* TabbarViewController.swift in Sources */,
+				CBADC2CF2955A41500E56C93 /* TabBarController.swift in Sources */,
 				CBB12B142985845900AC0EF2 /* String+Extension.swift in Sources */,
 				CBB58284297440A600808B0B /* CategoryCollectionViewCell.swift in Sources */,
 				CBC73104295550A100C7F198 /* AppDelegate.swift in Sources */,

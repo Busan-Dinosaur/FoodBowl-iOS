@@ -163,7 +163,7 @@ final class SetProfileViewController: BaseViewController {
 
     private func tappedCompleteButton() {
         if nicknameField.text?.count != 0 {
-            let tabbarViewController = UINavigationController(rootViewController: TabbarViewController())
+            let tabbarViewController = UINavigationController(rootViewController: TabBarController())
             tabbarViewController.modalPresentationStyle = .fullScreen
             tabbarViewController.modalTransitionStyle = .crossDissolve
             DispatchQueue.main.async {

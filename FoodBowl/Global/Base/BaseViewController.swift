@@ -10,7 +10,7 @@ import UIKit
 import Then
 
 class BaseViewController: UIViewController {
-    // MARK: - propertyㅋ
+    // MARK: - property
 
     private lazy var backButton = BackButton().then {
         let buttonAction = UIAction { [weak self] _ in
