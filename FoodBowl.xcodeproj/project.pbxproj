@@ -85,7 +85,7 @@
 		CBD1B5EF2982A5AD00B0AD51 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD1B5EE2982A5AD00B0AD51 /* EditProfileViewController.swift */; };
 		CBD1B5F12982B0A300B0AD51 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD1B5F02982B0A300B0AD51 /* SettingViewController.swift */; };
 		CBD1B5F42982D39B00B0AD51 /* SettingItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD1B5F32982D39B00B0AD51 /* SettingItemTableViewCell.swift */; };
-		CBD1B5F82982D9E100B0AD51 /* ForwordButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD1B5F72982D9E100B0AD51 /* ForwordButton.swift */; };
+		CBD1B5F82982D9E100B0AD51 /* ForwardButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD1B5F72982D9E100B0AD51 /* ForwardButton.swift */; };
 		CBD1B5FA2982E55F00B0AD51 /* AgreementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD1B5F92982E55F00B0AD51 /* AgreementViewController.swift */; };
 		CBD1B5FC2982E83800B0AD51 /* CheckBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD1B5FB2982E83800B0AD51 /* CheckBox.swift */; };
 		CBD1B5FE2982F19300B0AD51 /* UIButton+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD1B5FD2982F19300B0AD51 /* UIButton+Extension.swift */; };
@@ -189,7 +189,7 @@
 		CBD1B5EE2982A5AD00B0AD51 /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
 		CBD1B5F02982B0A300B0AD51 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		CBD1B5F32982D39B00B0AD51 /* SettingItemTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingItemTableViewCell.swift; sourceTree = "<group>"; };
-		CBD1B5F72982D9E100B0AD51 /* ForwordButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForwordButton.swift; sourceTree = "<group>"; };
+		CBD1B5F72982D9E100B0AD51 /* ForwardButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForwardButton.swift; sourceTree = "<group>"; };
 		CBD1B5F92982E55F00B0AD51 /* AgreementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgreementViewController.swift; sourceTree = "<group>"; };
 		CBD1B5FB2982E83800B0AD51 /* CheckBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckBox.swift; sourceTree = "<group>"; };
 		CBD1B5FD2982F19300B0AD51 /* UIButton+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Extension.swift"; sourceTree = "<group>"; };
@@ -389,7 +389,7 @@
 				CBADC27A29559BC900E56C93 /* SendButton.swift */,
 				CBDE38FA2970774800DDE49A /* CloseButton.swift */,
 				CBADC27D29559BC900E56C93 /* BackButton.swift */,
-				CBD1B5F72982D9E100B0AD51 /* ForwordButton.swift */,
+				CBD1B5F72982D9E100B0AD51 /* ForwardButton.swift */,
 				CBE61912296C68D9005295AF /* PlusButton.swift */,
 				CBE61910296C6804005295AF /* OptionButton.swift */,
 				CBFB525E2977C4800049E8BA /* MoreButton.swift */,
@@ -727,7 +727,7 @@
 				CBDE38FB2970774800DDE49A /* CloseButton.swift in Sources */,
 				CB2E4F81297702B800FD2566 /* UserInfoTableViewCell.swift in Sources */,
 				CBC73108295550A100C7F198 /* MainViewController.swift in Sources */,
-				CBD1B5F82982D9E100B0AD51 /* ForwordButton.swift in Sources */,
+				CBD1B5F82982D9E100B0AD51 /* ForwardButton.swift in Sources */,
 				CB2E4F892977393700FD2566 /* UserInfoButton.swift in Sources */,
 				CBADC2CF2955A41500E56C93 /* TabBarController.swift in Sources */,
 				CBB12B142985845900AC0EF2 /* String+Extension.swift in Sources */,

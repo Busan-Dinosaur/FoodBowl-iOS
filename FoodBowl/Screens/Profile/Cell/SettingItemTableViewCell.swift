@@ -18,19 +18,19 @@ final class SettingItemTableViewCell: BaseTableViewCell {
         $0.textColor = .subText
     }
 
-    private let forwordButton = ForwordButton()
+    private let forwardButton = ForwardButton()
 
     // MARK: - func
 
     override func setupLayout() {
-        contentView.addSubviews(menuLabel, forwordButton)
+        contentView.addSubviews(menuLabel, forwardButton)
 
         menuLabel.snp.makeConstraints {
             $0.leading.equalToSuperview().inset(20)
             $0.centerY.equalToSuperview()
         }
 
-        forwordButton.snp.makeConstraints {
+        forwardButton.snp.makeConstraints {
             $0.trailing.equalToSuperview().inset(20)
             $0.centerY.equalToSuperview()
         }
