@@ -182,13 +182,13 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
                     ImageLiteral.btnBookmark.resize(to: CGSize(width: 20, height: 20)).withRenderingMode(.alwaysTemplate),
                     for: .normal
                 )
-                cell.bookmarkButton.setTitle("  4", for: .normal)
+                cell.bookmarkButton.setTitle("4", for: .normal)
             } else {
                 cell.bookmarkButton.setImage(
                     ImageLiteral.btnBookmarkFill.resize(to: CGSize(width: 20, height: 20)).withRenderingMode(.alwaysTemplate),
                     for: .normal
                 )
-                cell.bookmarkButton.setTitle("  5", for: .normal)
+                cell.bookmarkButton.setTitle("5", for: .normal)
             }
             cell.bookmarkButton.isSelected = !cell.bookmarkButton.isSelected
         }
