@@ -95,7 +95,7 @@ final class SetProfileViewController: BaseViewController {
 
         signUpButton.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview().inset(20)
-            $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(20)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(10)
             $0.height.equalTo(60)
         }
     }
@@ -175,7 +175,9 @@ final class SetProfileViewController: BaseViewController {
 
             alert.addAction(cancel)
 
-            present(alert, animated: true, completion: nil)
+            DispatchQueue.main.async {
+                self.present(alert, animated: true, completion: nil)
+            }
         }
     }
 }
