@@ -7,23 +7,9 @@
 
 import UIKit
 
-import CoreLocation
-
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
-    var currentLoc: CLLocation?
-
     func application(_: UIApplication, didFinishLaunchingWithOptions _: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        let locationManager = CLLocationManager()
-        let locationAuthorizationStatus: CLAuthorizationStatus
-        locationAuthorizationStatus = locationManager.authorizationStatus
-        
-        switch locationAuthorizationStatus {
-        case .restricted, .denied:
-            locationManager.requestWhenInUseAuthorization()
-        default:
-            currentLoc = locationManager.location
-        }
         return true
     }
 

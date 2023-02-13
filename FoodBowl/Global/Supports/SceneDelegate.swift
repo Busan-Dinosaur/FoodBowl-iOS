@@ -18,7 +18,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         if !isLogin {
             window?.rootViewController = UINavigationController(rootViewController: OnboardingViewController())
         } else {
-            window?.rootViewController = UINavigationController(rootViewController: TabbarViewController())
+            window?.rootViewController = UINavigationController(rootViewController: TabBarController())
         }
         window?.makeKeyAndVisible()
     }

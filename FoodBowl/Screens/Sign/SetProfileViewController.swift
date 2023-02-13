@@ -95,7 +95,7 @@ final class SetProfileViewController: BaseViewController {
 
         signUpButton.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview().inset(20)
-            $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(20)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(10)
             $0.height.equalTo(60)
         }
     }
@@ -163,7 +163,7 @@ final class SetProfileViewController: BaseViewController {
 
     private func tappedCompleteButton() {
         if nicknameField.text?.count != 0 {
-            let tabbarViewController = UINavigationController(rootViewController: TabbarViewController())
+            let tabbarViewController = UINavigationController(rootViewController: TabBarController())
             tabbarViewController.modalPresentationStyle = .fullScreen
             tabbarViewController.modalTransitionStyle = .crossDissolve
             DispatchQueue.main.async {
@@ -175,7 +175,9 @@ final class SetProfileViewController: BaseViewController {
 
             alert.addAction(cancel)
 
-            present(alert, animated: true, completion: nil)
+            DispatchQueue.main.async {
+                self.present(alert, animated: true, completion: nil)
+            }
         }
     }
 }

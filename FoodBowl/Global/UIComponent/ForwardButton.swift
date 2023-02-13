@@ -1,5 +1,5 @@
 //
-//  ForwordButton.swift
+//  ForwardButton.swift
 //  FoodBowl
 //
 //  Created by COBY_PRO on 2023/01/27.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class ForwordButton: UIButton {
+final class ForwardButton: UIButton {
     // MARK: - init
 
     override init(frame _: CGRect) {

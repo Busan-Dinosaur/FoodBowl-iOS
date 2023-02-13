@@ -5,6 +5,7 @@
 //  Created by COBY_PRO on 2022/12/23.
 //
 
+import CoreLocation
 import MessageUI
 import UIKit
 
@@ -19,6 +20,26 @@ final class MainViewController: BaseViewController {
             bottom: 20,
             right: 0
         )
+    }
+
+    private var locationAlert: UIAlertController {
+        let alert = UIAlertController(title: "위치 정보를 사용할 수 없습니다", message: "", preferredStyle: .alert)
+        let cancel = UIAlertAction(title: "취소", style: .default) { _ in
+            self.navigationController?.popViewController(animated: true)
+        }
+
+        let action = UIAlertAction(title: "허용", style: .default) { _ in
+            guard let settingsUrl = URL(string: UIApplication.openSettingsURLString) else { return }
+
+            if UIApplication.shared.canOpenURL(settingsUrl) {
+                UIApplication.shared.open(settingsUrl, completionHandler: nil)
+            }
+        }
+
+        alert.addAction(cancel)
+        alert.addAction(action)
+
+        return alert
     }
 
     private var refreshControl = UIRefreshControl()
@@ -65,6 +86,9 @@ final class MainViewController: BaseViewController {
         super.viewDidLoad()
         setupRefreshControl()
         loadData()
+
+        LocationManager.shared.checkLocationService()
+        observerNotification()
     }
 
     override func setupLayout() {
@@ -94,6 +118,21 @@ final class MainViewController: BaseViewController {
     }
 
     private func loadData() {}
+
+    func observerNotification() {
+        NotificationCenter.default.addObserver(forName: .sharedLocation, object: nil, queue: .main) { notification in
+            guard let object = notification.object as? [String: Any] else { return }
+            guard let error = object["error"] as? Bool else { return }
+
+            if error {
+                print("error to access location service.")
+                self.present(self.locationAlert, animated: true, completion: nil)
+            } else {
+                guard let location = object["location"] as? CLLocation else { return }
+                print(location.coordinate.latitude)
+            }
+        }
+    }
 }
 
 // MARK: - UICollectionViewDataSource, UICollectionViewDelegate

@@ -100,7 +100,7 @@ final class EditProfileViewController: BaseViewController {
 
         signUpButton.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview().inset(20)
-            $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(20)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(10)
             $0.height.equalTo(60)
         }
     }

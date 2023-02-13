@@ -8,5 +8,5 @@
 import Foundation
 
 extension Notification.Name {
-    static let nameNotification = Notification.Name("NameNotification")
+    static let sharedLocation = NSNotification.Name("sharedLocation")
 }

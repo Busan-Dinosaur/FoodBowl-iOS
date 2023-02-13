@@ -26,7 +26,6 @@ final class FollowButton: UIButton {
     // MARK: - property
 
     let label = UILabel().then {
-        let label = UILabel()
         $0.textColor = .white
         $0.font = UIFont.preferredFont(forTextStyle: .footnote, weight: .medium)
         $0.text = "팔로우"
