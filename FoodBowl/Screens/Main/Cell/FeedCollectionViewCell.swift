@@ -22,7 +22,7 @@ final class FeedCollectionViewCell: BaseCollectionViewCell {
 
     var collapsed = true {
         didSet {
-            commentLabel.numberOfLines = collapsed ? 2 : 0
+            commentLabel.numberOfLines = collapsed ? 0 : 2
             commentLabel.invalidateIntrinsicContentSize()
             commentLabel.setNeedsLayout()
             commentLabel.setNeedsDisplay()
@@ -48,6 +48,8 @@ final class FeedCollectionViewCell: BaseCollectionViewCell {
         $0.textColor = .mainText
         $0.numberOfLines = 2
         $0.isUserInteractionEnabled = true
+        let tap = UITapGestureRecognizer(target: self, action: #selector(invalidate))
+        $0.addGestureRecognizer(tap)
     }
 
     let bookmarkButton = UIButton().then {
@@ -89,6 +91,11 @@ final class FeedCollectionViewCell: BaseCollectionViewCell {
         $0.font = UIFont.preferredFont(forTextStyle: .caption1, weight: .regular)
         $0.textColor = .subText
         $0.text = "10일 전"
+    }
+
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        collapsed = false
     }
 
     override func setupLayout() {
@@ -147,9 +154,6 @@ final class FeedCollectionViewCell: BaseCollectionViewCell {
         bookmarkButton.addAction(UIAction { _ in self.bookmarkButtonTapAction?(self) }, for: .touchUpInside)
         commentButton.addAction(UIAction { _ in self.commentButtonTapAction?(self) }, for: .touchUpInside)
         optionButton.addAction(UIAction { _ in self.optionButtonTapAction?(self) }, for: .touchUpInside)
-
-        let tap = UITapGestureRecognizer(target: self, action: #selector(invalidate))
-        commentLabel.addGestureRecognizer(tap)
     }
 
     override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes)

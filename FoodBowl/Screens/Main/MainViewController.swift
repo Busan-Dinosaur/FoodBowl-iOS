@@ -22,6 +22,8 @@ final class MainViewController: BaseViewController {
         )
     }
 
+    lazy var isCollapsed = [Bool](repeating: false, count: 10)
+
     private var locationAlert: UIAlertController {
         let alert = UIAlertController(title: "위치 정보를 사용할 수 없습니다", message: "", preferredStyle: .alert)
         let cancel = UIAlertAction(title: "취소", style: .default) { _ in
@@ -182,13 +184,13 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
                     ImageLiteral.btnBookmark.resize(to: CGSize(width: 20, height: 20)).withRenderingMode(.alwaysTemplate),
                     for: .normal
                 )
-                cell.bookmarkButton.setTitle("  4", for: .normal)
+                cell.bookmarkButton.setTitle("4", for: .normal)
             } else {
                 cell.bookmarkButton.setImage(
                     ImageLiteral.btnBookmarkFill.resize(to: CGSize(width: 20, height: 20)).withRenderingMode(.alwaysTemplate),
                     for: .normal
                 )
-                cell.bookmarkButton.setTitle("  5", for: .normal)
+                cell.bookmarkButton.setTitle("5", for: .normal)
             }
             cell.bookmarkButton.isSelected = !cell.bookmarkButton.isSelected
         }
@@ -213,10 +215,12 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
         }
 
         cell.commentLabelTapAction = { _ in
-            cell.collapsed = !cell.collapsed
+            self.isCollapsed[indexPath.item] = !self.isCollapsed[indexPath.item]
+            cell.collapsed = self.isCollapsed[indexPath.item]
             self.collectionViewFlowLayout.invalidateLayout()
         }
 
+        cell.collapsed = isCollapsed[indexPath.item]
         cell.userInfoView.userImageButton.setImage(ImageLiteral.food2, for: .normal)
         cell.commentLabel.text = """
             이번에 학교 앞에 새로 생겼길래 가봤는데 너무 맛있었어요.
