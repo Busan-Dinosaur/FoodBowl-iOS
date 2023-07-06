@@ -26,7 +26,7 @@ final class SearchStoreViewController: BaseViewController {
 
     private lazy var cancelButton = UIButton().then {
         $0.setTitle("취소", for: .normal)
-        $0.setTitleColor(.mainPink, for: .normal)
+        $0.setTitleColor(.mainColor, for: .normal)
         $0.titleLabel?.font = UIFont.preferredFont(forTextStyle: .headline, weight: .regular)
         let buttonAction = UIAction { [weak self] _ in
             self?.dismiss(animated: true, completion: nil)

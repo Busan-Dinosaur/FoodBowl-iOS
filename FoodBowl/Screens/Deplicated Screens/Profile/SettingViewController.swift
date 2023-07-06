@@ -40,8 +40,7 @@ final class SettingViewController: BaseViewController {
     }
 
     override func setupNavigationBar() {
-        super.setupNavigationBar()
-        title = "설정"
+        navigationController?.isNavigationBarHidden = true
     }
 
     private func setupSettingItems() {

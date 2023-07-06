@@ -24,6 +24,6 @@ final class BackButton: UIButton {
 
     private func configureUI() {
         setImage(ImageLiteral.btnBack, for: .normal)
-        tintColor = .mainPink
+        tintColor = .mainColor
     }
 }

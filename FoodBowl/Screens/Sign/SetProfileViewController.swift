@@ -123,7 +123,7 @@ final class SetProfileViewController: BaseViewController {
         config.wordings.cameraTitle = "카메라"
         config.wordings.next = "다음"
         config.wordings.cancel = "취소"
-        config.colors.tintColor = .mainPink
+        config.colors.tintColor = .mainColor
 
         let picker = YPImagePicker(configuration: config)
 

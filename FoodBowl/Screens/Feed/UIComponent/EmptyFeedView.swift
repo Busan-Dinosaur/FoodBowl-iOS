@@ -17,7 +17,7 @@ final class EmptyFeedView: UIView {
 
     private let emptyLabel = UILabel().then {
         $0.font = UIFont.preferredFont(forTextStyle: .title2, weight: .bold)
-        $0.textColor = .mainPink
+        $0.textColor = .mainColor
         $0.textAlignment = .center
         $0.text = "피드가 없습니다."
     }

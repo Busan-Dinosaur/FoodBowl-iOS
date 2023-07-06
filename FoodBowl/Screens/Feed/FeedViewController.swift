@@ -1,5 +1,5 @@
 //
-//  MainViewController.swift
+//  FeedViewController.swift
 //  FoodBowl
 //
 //  Created by COBY_PRO on 2022/12/23.
@@ -12,7 +12,7 @@ import UIKit
 import SnapKit
 import Then
 
-final class MainViewController: BaseViewController {
+final class FeedViewController: BaseViewController {
     private enum Size {
         static let collectionInset = UIEdgeInsets(
             top: 0,
@@ -139,7 +139,7 @@ final class MainViewController: BaseViewController {
 
 // MARK: - UICollectionViewDataSource, UICollectionViewDelegate
 
-extension MainViewController: UICollectionViewDataSource, UICollectionViewDelegate {
+extension FeedViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_: UICollectionView, numberOfItemsInSection _: Int) -> Int {
         return 10
     }
@@ -232,7 +232,7 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
     }
 }
 
-extension MainViewController {
+extension FeedViewController {
     // Standard scroll-view delegate
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let contentSize = scrollView.contentSize.height
@@ -245,7 +245,7 @@ extension MainViewController {
     private func didScrollToBottom() {}
 }
 
-extension MainViewController: MFMailComposeViewControllerDelegate {
+extension FeedViewController: MFMailComposeViewControllerDelegate {
     func sendReportMail() {
         if MFMailComposeViewController.canSendMail() {
             let composeVC = MFMailComposeViewController()

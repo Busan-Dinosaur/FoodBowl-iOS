@@ -32,8 +32,12 @@ extension UIColor {
         }
     }
 
-    static var mainPink: UIColor {
-        return UIColor(hex: "#FF689F")
+    static var mainColor: UIColor {
+        return UIColor { traits -> UIColor in
+            traits.userInterfaceStyle == .dark
+                ? UIColor(hex: "#ffffff")
+                : UIColor(hex: "#000000")
+        }
     }
 
     static var mainBlue: UIColor {

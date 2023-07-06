@@ -17,7 +17,7 @@ final class FollowButton: UIButton {
                 backgroundColor = .grey001
                 label.text = "팔로잉"
             } else {
-                backgroundColor = .mainPink
+                backgroundColor = .mainColor
                 label.text = "팔로우"
             }
         }
@@ -55,7 +55,7 @@ final class FollowButton: UIButton {
     }
 
     private func configureUI() {
-        backgroundColor = .mainPink
+        backgroundColor = .mainColor
         layer.cornerRadius = 15
         layer.masksToBounds = false
     }

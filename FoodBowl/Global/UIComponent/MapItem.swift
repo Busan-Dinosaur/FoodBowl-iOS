@@ -22,7 +22,7 @@ class MapItemAnnotationView: MKMarkerAnnotationView {
             rightCalloutAccessoryView = feedButton
             canShowCallout = true
             calloutOffset = CGPoint(x: 0, y: 5)
-            markerTintColor = UIColor.mainPink
+            markerTintColor = UIColor.mainColor
             glyphImage = marker.glyphImage
             canShowCallout = true
         }
@@ -49,7 +49,7 @@ extension UIGraphicsImageRenderer {
         let countText = "\(totalCount)"
 
         return renderer.image { _ in
-            UIColor.mainPink.setFill()
+            UIColor.mainColor.setFill()
             UIBezierPath(ovalIn: rect).fill()
 
             UIColor.white.setFill()

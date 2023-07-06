@@ -46,7 +46,7 @@ final class AddFeedViewController: BaseViewController {
 
     private lazy var nextButton = UIButton().then {
         $0.setTitle("다음", for: .normal)
-        $0.setTitleColor(.mainPink, for: .normal)
+        $0.setTitleColor(.mainColor, for: .normal)
         $0.titleLabel?.font = UIFont.preferredFont(forTextStyle: .headline, weight: .regular)
         let buttonAction = UIAction { [weak self] _ in
             self?.nextPage()
@@ -56,7 +56,7 @@ final class AddFeedViewController: BaseViewController {
 
     private lazy var completeButton = UIButton().then {
         $0.setTitle("완료", for: .normal)
-        $0.setTitleColor(.mainPink, for: .normal)
+        $0.setTitleColor(.mainColor, for: .normal)
         $0.titleLabel?.font = UIFont.preferredFont(forTextStyle: .headline, weight: .regular)
         let buttonAction = UIAction { [weak self] _ in
             self?.completeAddFeed()

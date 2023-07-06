@@ -8,33 +8,33 @@
 import UIKit
 
 final class TabBarController: UITabBarController {
-    private let mainViewController = UINavigationController(rootViewController: MainViewController())
     private let mapViewController = UINavigationController(rootViewController: MapViewController())
-    private let searchViewController = UINavigationController(rootViewController: SearchViewController())
-    private let profileViewController = UINavigationController(rootViewController: ProfileViewController(isOwn: true))
+    private let feedViewController = UINavigationController(rootViewController: FeedViewController())
+    private let bookmarkViewController = UINavigationController(rootViewController: BookmarkViewController())
+    private let settingViewController = UINavigationController(rootViewController: SettingViewController())
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        mainViewController.tabBarItem.image = ImageLiteral.btnMain
-        mainViewController.tabBarItem.title = "메인"
-
         mapViewController.tabBarItem.image = ImageLiteral.btnMap
         mapViewController.tabBarItem.title = "지도"
 
-        searchViewController.tabBarItem.image = ImageLiteral.btnSearch
-        searchViewController.tabBarItem.title = "검색"
+        feedViewController.tabBarItem.image = ImageLiteral.btnMain
+        feedViewController.tabBarItem.title = "발자취"
 
-        profileViewController.tabBarItem.image = ImageLiteral.btnProfile
-        profileViewController.tabBarItem.title = "프로필"
+        bookmarkViewController.tabBarItem.image = ImageLiteral.btnSearch
+        bookmarkViewController.tabBarItem.title = "북마크"
 
-        tabBar.tintColor = .mainPink
+        settingViewController.tabBarItem.image = ImageLiteral.btnProfile
+        settingViewController.tabBarItem.title = "설정"
+
+        tabBar.tintColor = .mainColor
         tabBar.backgroundColor = .mainBackground
         setViewControllers([
-            mainViewController,
             mapViewController,
-            searchViewController,
-            profileViewController
+            feedViewController,
+            bookmarkViewController,
+            settingViewController
         ], animated: true)
 
         if #available(iOS 13.0, *) {

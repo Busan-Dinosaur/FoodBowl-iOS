@@ -43,7 +43,7 @@ final class MainButton: UIButton {
     }
 
     private func configureUI() {
-        backgroundColor = .mainPink
+        backgroundColor = .mainColor
         layer.cornerRadius = 30
         layer.masksToBounds = false
     }

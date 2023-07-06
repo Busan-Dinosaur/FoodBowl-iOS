@@ -165,7 +165,7 @@ final class MapViewController: BaseViewController {
     private func findMyBookmarks() {
         isBookMark = !isBookMark
         if isBookMark {
-            bookMarkButton.tintColor = .mainPink
+            bookMarkButton.tintColor = .mainColor
         } else {
             bookMarkButton.tintColor = .mainText
         }
