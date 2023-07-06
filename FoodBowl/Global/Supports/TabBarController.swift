@@ -16,16 +16,20 @@ final class TabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        mapViewController.tabBarItem.image = ImageLiteral.btnMap
+        mapViewController.tabBarItem.image = ImageLiteral.btnMap.resize(to: CGSize(width: 20, height: 20))
+            .withRenderingMode(.alwaysTemplate)
         mapViewController.tabBarItem.title = "지도"
 
-        feedViewController.tabBarItem.image = ImageLiteral.btnMain
+        feedViewController.tabBarItem.image = ImageLiteral.btnFeed.resize(to: CGSize(width: 20, height: 20))
+            .withRenderingMode(.alwaysTemplate)
         feedViewController.tabBarItem.title = "발자취"
 
-        bookmarkViewController.tabBarItem.image = ImageLiteral.btnSearch
+        bookmarkViewController.tabBarItem.image = ImageLiteral.btnBookmark.resize(to: CGSize(width: 20, height: 20))
+            .withRenderingMode(.alwaysTemplate)
         bookmarkViewController.tabBarItem.title = "북마크"
 
-        settingViewController.tabBarItem.image = ImageLiteral.btnProfile
+        settingViewController.tabBarItem.image = ImageLiteral.btnSetting.resize(to: CGSize(width: 20, height: 20))
+            .withRenderingMode(.alwaysTemplate)
         settingViewController.tabBarItem.title = "설정"
 
         tabBar.tintColor = .mainColor

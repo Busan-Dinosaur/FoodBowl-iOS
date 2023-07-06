@@ -10,19 +10,21 @@ import UIKit
 enum ImageLiteral {
     // MARK: - button
 
+    static var btnMap: UIImage { .load(name: "map") }
+    static var btnFeed: UIImage { .load(name: "feed") }
+    static var btnBookmark: UIImage { .load(name: "bookmark") }
+    static var btnSetting: UIImage { .load(name: "setting") }
+
     static var btnMain: UIImage { .load(systemName: "house") }
-    static var btnMap: UIImage { .load(systemName: "map") }
     static var btnSearch: UIImage { .load(systemName: "magnifyingglass") }
     static var btnProfile: UIImage { .load(systemName: "person") }
-
     static var btnClose: UIImage { .load(systemName: "xmark") }
-    static var btnSetting: UIImage { .load(name: "settings") }
+
     static var btnBack: UIImage { .load(systemName: "chevron.backward") }
     static var btnDown: UIImage { .load(systemName: "chevron.down") }
     static var btnForward: UIImage { .load(systemName: "chevron.forward") }
     static var btnCamera: UIImage { .load(systemName: "camera") }
     static var btnSend: UIImage { .load(systemName: "paperplane") }
-    static var btnBookmark: UIImage { .load(name: "bookmark") }
     static var btnBookmarkFill: UIImage { .load(name: "bookmark_fill") }
     static var btnGps: UIImage { .load(name: "gps") }
     static var btnChat: UIImage { .load(name: "chat") }
@@ -32,7 +34,6 @@ enum ImageLiteral {
     static var btnKakaomap: UIImage { .load(name: "kakaomap") }
     static var btnGallery: UIImage { .load(name: "gallery") }
     static var btnPin: UIImage { .load(name: "pin") }
-    static var btnFeed: UIImage { .load(name: "feed") }
 
     static var defaultProfile: UIImage { .load(name: "user") }
     static var appleLogo: UIImage { .load(systemName: "apple.logo") }
