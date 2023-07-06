@@ -26,7 +26,7 @@ enum ImageLiteral {
     static var btnBookmarkFill: UIImage { .load(name: "bookmark_fill") }
     static var btnGps: UIImage { .load(name: "gps") }
     static var btnChat: UIImage { .load(name: "chat") }
-    static var btnPlus: UIImage { .load(name: "plus.circle") }
+    static var btnPlus: UIImage { .load(name: "plus") }
     static var btnOption: UIImage { .load(name: "option") }
     static var btnMore: UIImage { .load(name: "more") }
     static var btnKakaomap: UIImage { .load(name: "kakaomap") }
