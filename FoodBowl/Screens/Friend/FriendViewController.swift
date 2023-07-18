@@ -46,10 +46,22 @@ final class FriendViewController: BaseViewController {
     }
 
     private lazy var searchBarButton = SearchBarButton().then {
-        $0.label.text = "친구들의 후기를 찾아보세요."
+        $0.label.text = "새로운 맛집과 유저를 찾아보세요."
         let action = UIAction { [weak self] _ in
             let findStoreViewController = FindViewController()
             let navigationController = UINavigationController(rootViewController: findStoreViewController)
+            navigationController.modalPresentationStyle = .fullScreen
+            DispatchQueue.main.async {
+                self?.present(navigationController, animated: true)
+            }
+        }
+        $0.addAction(action, for: .touchUpInside)
+    }
+
+    private lazy var plusButton = PlusButton().then {
+        let action = UIAction { [weak self] _ in
+            let addFeedViewController = AddFeedViewController()
+            let navigationController = UINavigationController(rootViewController: addFeedViewController)
             navigationController.modalPresentationStyle = .fullScreen
             DispatchQueue.main.async {
                 self?.present(navigationController, animated: true)
@@ -103,7 +115,7 @@ final class FriendViewController: BaseViewController {
     }
 
     override func setupLayout() {
-        view.addSubviews(mapView, searchBarButton, listCollectionView, gpsButton)
+        view.addSubviews(mapView, searchBarButton, plusButton, listCollectionView, gpsButton)
 
         mapView.snp.makeConstraints {
             $0.edges.equalToSuperview()
@@ -113,6 +125,12 @@ final class FriendViewController: BaseViewController {
             $0.top.equalTo(view.safeAreaLayoutGuide)
             $0.leading.trailing.equalToSuperview().inset(20)
             $0.height.equalTo(50)
+        }
+
+        plusButton.snp.makeConstraints {
+            $0.top.equalTo(view.safeAreaLayoutGuide)
+            $0.trailing.equalToSuperview().inset(20)
+            $0.width.height.equalTo(50)
         }
 
         listCollectionView.snp.makeConstraints {
