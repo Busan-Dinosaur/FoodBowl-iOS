@@ -9,10 +9,10 @@ import UIKit
 
 // MARK: - Feed
 
-struct Feed {
-    var id: String?
+struct Feed: Identifiable {
+    var id = UUID()
     var store: Place?
-    var categories: [Category]?
+    var category: String?
     var photoes: [UIImage]?
     var comment: String?
 }

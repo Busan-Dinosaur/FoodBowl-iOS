@@ -23,7 +23,7 @@
 		CB2E4F892977393700FD2566 /* UserInfoButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2E4F882977393700FD2566 /* UserInfoButton.swift */; };
 		CB4FBBF22978CFA90052D371 /* FollowerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB4FBBF12978CFA90052D371 /* FollowerViewController.swift */; };
 		CB4FBBF42978CFE40052D371 /* FollowingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB4FBBF32978CFE40052D371 /* FollowingViewController.swift */; };
-		CB558E9A29746B5D00921943 /* PhotoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB558E9929746B5D00921943 /* PhotoCollectionViewCell.swift */; };
+		CB558E9A29746B5D00921943 /* PhotoPlusCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB558E9929746B5D00921943 /* PhotoPlusCollectionViewCell.swift */; };
 		CB558E9C2975B80B00921943 /* Feed.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB558E9B2975B80B00921943 /* Feed.swift */; };
 		CB5AF8A929854AA0003D16D4 /* MapItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5AF8A829854AA0003D16D4 /* MapItem.swift */; };
 		CB7F3325298A51560000A6B4 /* UserDefaultStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB7F3324298A51560000A6B4 /* UserDefaultStorage.swift */; };
@@ -59,13 +59,12 @@
 		CBADC2AD2955A0FF00E56C93 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADC2AC2955A0FF00E56C93 /* ProfileViewController.swift */; };
 		CBADC2B32955A16A00E56C93 /* SetStoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADC2B22955A16A00E56C93 /* SetStoreViewController.swift */; };
 		CBADC2B52955A18C00E56C93 /* SearchStoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADC2B42955A18C00E56C93 /* SearchStoreViewController.swift */; };
-		CBADC2B72955A1BD00E56C93 /* SetPhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADC2B62955A1BD00E56C93 /* SetPhotoViewController.swift */; };
-		CBADC2B92955A1CC00E56C93 /* SetCommentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADC2B82955A1CC00E56C93 /* SetCommentViewController.swift */; };
+		CBADC2B92955A1CC00E56C93 /* SetReviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADC2B82955A1CC00E56C93 /* SetReviewViewController.swift */; };
 		CBADC2CF2955A41500E56C93 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADC2CE2955A41500E56C93 /* TabBarController.swift */; };
 		CBADC2D82955AC5900E56C93 /* FeedCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADC2D72955AC5900E56C93 /* FeedCollectionViewCell.swift */; };
 		CBADC2DE2955ACBB00E56C93 /* EmptyFeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADC2DD2955ACBB00E56C93 /* EmptyFeedView.swift */; };
 		CBADC2E02955B92D00E56C93 /* MainButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADC2DF2955B92D00E56C93 /* MainButton.swift */; };
-		CBADC2E22955C63300E56C93 /* FeedThumnailCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADC2E12955C63300E56C93 /* FeedThumnailCollectionViewCell.swift */; };
+		CBADC2E22955C63300E56C93 /* PhotoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADC2E12955C63300E56C93 /* PhotoCollectionViewCell.swift */; };
 		CBB12B142985845900AC0EF2 /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBB12B132985845900AC0EF2 /* String+Extension.swift */; };
 		CBB582802972C9C400808B0B /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = CBB5827F2972C9C400808B0B /* Alamofire */; };
 		CBB582822973007D00808B0B /* ShowWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBB582812973007D00808B0B /* ShowWebViewController.swift */; };
@@ -101,7 +100,6 @@
 		CBE6190F296C6435005295AF /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBE6190E296C6435005295AF /* MapViewController.swift */; };
 		CBE61911296C6804005295AF /* OptionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBE61910296C6804005295AF /* OptionButton.swift */; };
 		CBE61913296C68D9005295AF /* PlusButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBE61912296C68D9005295AF /* PlusButton.swift */; };
-		CBE61917296C7C1F005295AF /* SetCategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBE61916296C7C1F005295AF /* SetCategoryViewController.swift */; };
 		CBFB52552977B9240049E8BA /* StoreFeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBFB52542977B9240049E8BA /* StoreFeedViewController.swift */; };
 		CBFB52572977B94A0049E8BA /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBFB52562977B94A0049E8BA /* ChatViewController.swift */; };
 		CBFB525B2977B99B0049E8BA /* ChatTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBFB525A2977B99B0049E8BA /* ChatTableViewCell.swift */; };
@@ -128,7 +126,7 @@
 		CB2E4F882977393700FD2566 /* UserInfoButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoButton.swift; sourceTree = "<group>"; };
 		CB4FBBF12978CFA90052D371 /* FollowerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowerViewController.swift; sourceTree = "<group>"; };
 		CB4FBBF32978CFE40052D371 /* FollowingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowingViewController.swift; sourceTree = "<group>"; };
-		CB558E9929746B5D00921943 /* PhotoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCollectionViewCell.swift; sourceTree = "<group>"; };
+		CB558E9929746B5D00921943 /* PhotoPlusCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPlusCollectionViewCell.swift; sourceTree = "<group>"; };
 		CB558E9B2975B80B00921943 /* Feed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Feed.swift; sourceTree = "<group>"; };
 		CB5AF8A829854AA0003D16D4 /* MapItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapItem.swift; sourceTree = "<group>"; };
 		CB7F3321298A4F1E0000A6B4 /* FoodBowl.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = FoodBowl.entitlements; sourceTree = "<group>"; };
@@ -162,13 +160,12 @@
 		CBADC2AC2955A0FF00E56C93 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		CBADC2B22955A16A00E56C93 /* SetStoreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetStoreViewController.swift; sourceTree = "<group>"; };
 		CBADC2B42955A18C00E56C93 /* SearchStoreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchStoreViewController.swift; sourceTree = "<group>"; };
-		CBADC2B62955A1BD00E56C93 /* SetPhotoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetPhotoViewController.swift; sourceTree = "<group>"; };
-		CBADC2B82955A1CC00E56C93 /* SetCommentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetCommentViewController.swift; sourceTree = "<group>"; };
+		CBADC2B82955A1CC00E56C93 /* SetReviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetReviewViewController.swift; sourceTree = "<group>"; };
 		CBADC2CE2955A41500E56C93 /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		CBADC2D72955AC5900E56C93 /* FeedCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedCollectionViewCell.swift; sourceTree = "<group>"; };
 		CBADC2DD2955ACBB00E56C93 /* EmptyFeedView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptyFeedView.swift; sourceTree = "<group>"; };
 		CBADC2DF2955B92D00E56C93 /* MainButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainButton.swift; sourceTree = "<group>"; };
-		CBADC2E12955C63300E56C93 /* FeedThumnailCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedThumnailCollectionViewCell.swift; sourceTree = "<group>"; };
+		CBADC2E12955C63300E56C93 /* PhotoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCollectionViewCell.swift; sourceTree = "<group>"; };
 		CBB12B132985845900AC0EF2 /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 		CBB582812973007D00808B0B /* ShowWebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowWebViewController.swift; sourceTree = "<group>"; };
 		CBB58283297440A600808B0B /* CategoryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -204,7 +201,6 @@
 		CBE6190E296C6435005295AF /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		CBE61910296C6804005295AF /* OptionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionButton.swift; sourceTree = "<group>"; };
 		CBE61912296C68D9005295AF /* PlusButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlusButton.swift; sourceTree = "<group>"; };
-		CBE61916296C7C1F005295AF /* SetCategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetCategoryViewController.swift; sourceTree = "<group>"; };
 		CBFB52542977B9240049E8BA /* StoreFeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreFeedViewController.swift; sourceTree = "<group>"; };
 		CBFB52562977B94A0049E8BA /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		CBFB525A2977B99B0049E8BA /* ChatTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatTableViewCell.swift; sourceTree = "<group>"; };
@@ -275,15 +271,6 @@
 			path = Sign;
 			sourceTree = "<group>";
 		};
-		CBAD1C162976C0850079ABE0 /* Cell */ = {
-			isa = PBXGroup;
-			children = (
-				CBADC2E12955C63300E56C93 /* FeedThumnailCollectionViewCell.swift */,
-				CBB58283297440A600808B0B /* CategoryCollectionViewCell.swift */,
-			);
-			path = Cell;
-			sourceTree = "<group>";
-		};
 		CBADC25129559BC900E56C93 /* Global */ = {
 			isa = PBXGroup;
 			children = (
@@ -294,7 +281,6 @@
 				CBADC26F29559BC900E56C93 /* Resource */,
 				CBADC27429559BC900E56C93 /* Base */,
 				CBADC27829559BC900E56C93 /* UIComponent */,
-				CBAD1C162976C0850079ABE0 /* Cell */,
 			);
 			path = Global;
 			sourceTree = "<group>";
@@ -303,6 +289,7 @@
 			isa = PBXGroup;
 			children = (
 				CBADC2CE2955A41500E56C93 /* TabBarController.swift */,
+				CBB582812973007D00808B0B /* ShowWebViewController.swift */,
 				CBC73103295550A100C7F198 /* AppDelegate.swift */,
 				CBC73105295550A100C7F198 /* SceneDelegate.swift */,
 				CBC73111295550A200C7F198 /* Info.plist */,
@@ -362,6 +349,7 @@
 			isa = PBXGroup;
 			children = (
 				CBE6190E296C6435005295AF /* MapViewController.swift */,
+				CBB58283297440A600808B0B /* CategoryCollectionViewCell.swift */,
 				CBADC27529559BC900E56C93 /* BaseViewController.swift */,
 				CBADC27629559BC900E56C93 /* BaseTableViewCell.swift */,
 				CBADC27729559BC900E56C93 /* BaseCollectionViewCell.swift */,
@@ -398,7 +386,7 @@
 			path = UIComponent;
 			sourceTree = "<group>";
 		};
-		CBADC2A22955A05500E56C93 /* Main */ = {
+		CBADC2A22955A05500E56C93 /* DeplicatedMain */ = {
 			isa = PBXGroup;
 			children = (
 				CBADC2D02955AB7300E56C93 /* UIComponent */,
@@ -407,7 +395,7 @@
 				CBFB52542977B9240049E8BA /* StoreFeedViewController.swift */,
 				CBFB52562977B94A0049E8BA /* ChatViewController.swift */,
 			);
-			path = Main;
+			path = DeplicatedMain;
 			sourceTree = "<group>";
 		};
 		CBADC2A52955A07B00E56C93 /* Profile */ = {
@@ -433,11 +421,8 @@
 				CBDE39002971945300DDE49A /* Cell */,
 				CBDE38F82970745600DDE49A /* AddFeedViewController.swift */,
 				CBADC2B42955A18C00E56C93 /* SearchStoreViewController.swift */,
-				CBB582812973007D00808B0B /* ShowWebViewController.swift */,
 				CBADC2B22955A16A00E56C93 /* SetStoreViewController.swift */,
-				CBE61916296C7C1F005295AF /* SetCategoryViewController.swift */,
-				CBADC2B62955A1BD00E56C93 /* SetPhotoViewController.swift */,
-				CBADC2B82955A1CC00E56C93 /* SetCommentViewController.swift */,
+				CBADC2B82955A1CC00E56C93 /* SetReviewViewController.swift */,
 			);
 			path = Feed;
 			sourceTree = "<group>";
@@ -450,8 +435,8 @@
 				CBCD0F802A66DA2A00A51B32 /* Bookmark */,
 				CBCD0F7D2A66DA0B00A51B32 /* Univ */,
 				CBADC2A52955A07B00E56C93 /* Profile */,
-				CBADC2A22955A05500E56C93 /* Main */,
 				CBADC2B02955A13800E56C93 /* Feed */,
+				CBADC2A22955A05500E56C93 /* DeplicatedMain */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -544,7 +529,8 @@
 			isa = PBXGroup;
 			children = (
 				CBDE39012971947B00DDE49A /* StoreSearchTableViewCell.swift */,
-				CB558E9929746B5D00921943 /* PhotoCollectionViewCell.swift */,
+				CB558E9929746B5D00921943 /* PhotoPlusCollectionViewCell.swift */,
+				CBADC2E12955C63300E56C93 /* PhotoCollectionViewCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -711,7 +697,7 @@
 				CB558E9C2975B80B00921943 /* Feed.swift in Sources */,
 				CB1A7C6829576D7900C6431D /* BaseScrollView.swift in Sources */,
 				CB1A7C6129561BCF00C6431D /* UserProfileView.swift in Sources */,
-				CBADC2E22955C63300E56C93 /* FeedThumnailCollectionViewCell.swift in Sources */,
+				CBADC2E22955C63300E56C93 /* PhotoCollectionViewCell.swift in Sources */,
 				CBD1B5EF2982A5AD00B0AD51 /* EditProfileViewController.swift in Sources */,
 				CBADC28A29559BC900E56C93 /* UIFont+Extension.swift in Sources */,
 				CB1A7C6A29576DCC00C6431D /* HorizontalScrollView.swift in Sources */,
@@ -731,7 +717,6 @@
 				CBB12B142985845900AC0EF2 /* String+Extension.swift in Sources */,
 				CBB58284297440A600808B0B /* CategoryCollectionViewCell.swift in Sources */,
 				CBC73104295550A100C7F198 /* AppDelegate.swift in Sources */,
-				CBADC2B72955A1BD00E56C93 /* SetPhotoViewController.swift in Sources */,
 				CBE6190C296C635D005295AF /* FollowButton.swift in Sources */,
 				CB5AF8A929854AA0003D16D4 /* MapItem.swift in Sources */,
 				CB1790C8296DAB470083D3A4 /* DynamicHeightCollectionViewFlowLayout.swift in Sources */,
@@ -745,9 +730,8 @@
 				CB4FBBF42978CFE40052D371 /* FollowingViewController.swift in Sources */,
 				CBADC2A129559BC900E56C93 /* BackButton.swift in Sources */,
 				CBADC29A29559BC900E56C93 /* BaseViewController.swift in Sources */,
-				CBADC2B92955A1CC00E56C93 /* SetCommentViewController.swift in Sources */,
+				CBADC2B92955A1CC00E56C93 /* SetReviewViewController.swift in Sources */,
 				CBC73106295550A100C7F198 /* SceneDelegate.swift in Sources */,
-				CBE61917296C7C1F005295AF /* SetCategoryViewController.swift in Sources */,
 				CBDE39022971947B00DDE49A /* StoreSearchTableViewCell.swift in Sources */,
 				CBD1B5FC2982E83800B0AD51 /* CheckBox.swift in Sources */,
 				CBADC29529559BC900E56C93 /* UITextView+Extension.swift in Sources */,
@@ -759,7 +743,7 @@
 				CBADC2B32955A16A00E56C93 /* SetStoreViewController.swift in Sources */,
 				CBADC28329559BC900E56C93 /* ImageLiteral.swift in Sources */,
 				CBD1B5F12982B0A300B0AD51 /* SettingViewController.swift in Sources */,
-				CB558E9A29746B5D00921943 /* PhotoCollectionViewCell.swift in Sources */,
+				CB558E9A29746B5D00921943 /* PhotoPlusCollectionViewCell.swift in Sources */,
 				CBD1B6002984297100B0AD51 /* ChatSendView.swift in Sources */,
 				CB4FBBF22978CFA90052D371 /* FollowerViewController.swift in Sources */,
 				CBADC28B29559BC900E56C93 /* UIColor+Extension.swift in Sources */,

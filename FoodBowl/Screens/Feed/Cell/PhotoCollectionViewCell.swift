@@ -2,7 +2,7 @@
 //  PhotoCollectionViewCell.swift
 //  FoodBowl
 //
-//  Created by COBY_PRO on 2023/01/16.
+//  Created by COBY_PRO on 2022/12/23.
 //
 
 import UIKit
@@ -13,23 +13,17 @@ import Then
 final class PhotoCollectionViewCell: BaseCollectionViewCell {
     // MARK: - property
 
-    private let plusImageView = UIImageView().then {
-        $0.image = UIImage(systemName: "plus.circle.fill")
-        $0.tintColor = .grey001
-        $0.contentMode = .scaleAspectFill
+    lazy var thumnailImageView = UIImageView().then {
+        $0.backgroundColor = .grey002
         $0.clipsToBounds = true
+        $0.contentMode = .scaleAspectFill
     }
 
     override func setupLayout() {
-        contentView.addSubviews(plusImageView)
+        contentView.addSubviews(thumnailImageView)
 
-        plusImageView.snp.makeConstraints {
-            $0.centerX.centerY.equalToSuperview()
-            $0.width.height.equalTo(30)
+        thumnailImageView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
         }
-    }
-
-    override func configureUI() {
-        backgroundColor = .grey002
     }
 }

@@ -41,7 +41,7 @@ final class UserFeedViewController: BaseViewController {
         $0.dataSource = self
         $0.delegate = self
         $0.showsVerticalScrollIndicator = false
-        $0.register(FeedThumnailCollectionViewCell.self, forCellWithReuseIdentifier: FeedThumnailCollectionViewCell.className)
+        $0.register(PhotoCollectionViewCell.self, forCellWithReuseIdentifier: PhotoCollectionViewCell.className)
     }
 
     // MARK: - life cycle
@@ -66,9 +66,9 @@ extension UserFeedViewController: UICollectionViewDataSource, UICollectionViewDe
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(
-            withReuseIdentifier: FeedThumnailCollectionViewCell.className,
+            withReuseIdentifier: PhotoCollectionViewCell.className,
             for: indexPath
-        ) as? FeedThumnailCollectionViewCell else {
+        ) as? PhotoCollectionViewCell else {
             return UICollectionViewCell()
         }
 

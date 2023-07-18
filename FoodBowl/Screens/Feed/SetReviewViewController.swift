@@ -1,5 +1,5 @@
 //
-//  SetPhotoViewController.swift
+//  SetReviewViewController.swift
 //  FoodBowl
 //
 //  Created by COBY_PRO on 2022/12/23.
@@ -11,36 +11,36 @@ import SnapKit
 import Then
 import YPImagePicker
 
-final class SetPhotoViewController: BaseViewController {
-    var delegate: SetPhotoViewControllerDelegate?
-    var delegateForComment: SetPhotoViewControllerDelegateForComment?
+final class SetReviewViewController: BaseViewController {
+    var delegate: SetReviewViewControllerDelegate?
 
     private enum Size {
-        static let cellWidth: CGFloat = (UIScreen.main.bounds.size.width - 48) / 3
+        static let cellWidth: CGFloat = 100
         static let cellHeight: CGFloat = cellWidth
         static let collectionInset = UIEdgeInsets(
             top: 0,
             left: 20,
-            bottom: 20,
+            bottom: 0,
             right: 20
         )
     }
 
-    private var selectedImages = [UIImage]()
+    var selectedImages = [UIImage]()
+
+    private let textViewPlaceHolder = "100자 이내"
 
     // MARK: - property
 
-    private let guideLabel = UILabel().then {
+    private let guidePhotoLabel = UILabel().then {
         $0.text = "음식 사진을 등록해주세요."
         $0.font = UIFont.preferredFont(forTextStyle: .title3, weight: .medium)
         $0.textColor = .mainText
     }
 
     private let collectionViewFlowLayout = UICollectionViewFlowLayout().then {
-        $0.scrollDirection = .vertical
+        $0.scrollDirection = .horizontal
         $0.sectionInset = Size.collectionInset
         $0.itemSize = CGSize(width: Size.cellWidth, height: Size.cellHeight)
-        $0.minimumLineSpacing = 4
         $0.minimumInteritemSpacing = 4
     }
 
@@ -48,32 +48,65 @@ final class SetPhotoViewController: BaseViewController {
         $0.dataSource = self
         $0.delegate = self
         $0.showsVerticalScrollIndicator = false
+        $0.register(PhotoPlusCollectionViewCell.self, forCellWithReuseIdentifier: PhotoPlusCollectionViewCell.className)
         $0.register(PhotoCollectionViewCell.self, forCellWithReuseIdentifier: PhotoCollectionViewCell.className)
-        $0.register(FeedThumnailCollectionViewCell.self, forCellWithReuseIdentifier: FeedThumnailCollectionViewCell.className)
+        $0.backgroundColor = .clear
+    }
+
+    private let guideCommentLabel = UILabel().then {
+        $0.text = "후기를 작성해주세요."
+        $0.font = UIFont.preferredFont(forTextStyle: .title3, weight: .medium)
+        $0.textColor = .mainText
+    }
+
+    lazy var commentTextView = UITextView().then {
+        $0.textContainerInset = UIEdgeInsets(top: 12, left: 10, bottom: 12, right: 10)
+        $0.font = UIFont.preferredFont(forTextStyle: .subheadline, weight: .light)
+        $0.textAlignment = NSTextAlignment.left
+        $0.dataDetectorTypes = UIDataDetectorTypes.all
+        $0.text = textViewPlaceHolder
+        $0.textColor = .grey001
+        $0.isEditable = true
+        $0.delegate = self
+        $0.isScrollEnabled = true
+        $0.isUserInteractionEnabled = true
+        $0.makeBorderLayer(color: .grey002)
         $0.backgroundColor = .clear
     }
 
     // MARK: - life cycle
 
     override func setupLayout() {
-        view.addSubviews(guideLabel, listCollectionView)
+        view.addSubviews(guidePhotoLabel, listCollectionView, guideCommentLabel, commentTextView)
 
-        guideLabel.snp.makeConstraints {
+        guidePhotoLabel.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).inset(20)
             $0.leading.equalToSuperview().inset(20)
         }
 
         listCollectionView.snp.makeConstraints {
-            $0.top.equalTo(guideLabel.safeAreaLayoutGuide.snp.bottom).offset(20)
-            $0.leading.trailing.bottom.equalToSuperview()
+            $0.top.equalTo(guidePhotoLabel.snp.bottom).offset(20)
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(100)
+        }
+
+        guideCommentLabel.snp.makeConstraints {
+            $0.top.equalTo(listCollectionView.snp.bottom).offset(30)
+            $0.leading.equalToSuperview().inset(20)
+        }
+
+        commentTextView.snp.makeConstraints {
+            $0.top.equalTo(guideCommentLabel.snp.bottom).offset(10)
+            $0.leading.trailing.equalToSuperview().inset(20)
+            $0.height.equalTo(100)
         }
     }
 
     private func photoAddButtonDidTap() {
         var config = YPImagePickerConfiguration()
         config.onlySquareImagesFromCamera = true
-        config.library.maxNumberOfItems = 10 // 최대 선택 가능한 사진 개수 제한
-        config.library.minNumberOfItems = 1
+        config.library.maxNumberOfItems = 4 // 최대 선택 가능한 사진 개수 제한
+        config.library.minNumberOfItems = 0
         config.library.mediaType = .photo // 미디어타입(사진, 사진/동영상, 동영상)
         config.startOnScreen = YPPickerScreen.library
         config.shouldSaveNewPicturesToAlbum = true
@@ -102,9 +135,6 @@ final class SetPhotoViewController: BaseViewController {
                 }
                 self.selectedImages = images
                 self.listCollectionView.reloadData()
-
-                self.delegate?.setPhotoes(photoes: images)
-                self.delegateForComment?.setPhotoes(photoes: images)
             }
             picker.dismiss(animated: true, completion: nil)
         }
@@ -112,7 +142,25 @@ final class SetPhotoViewController: BaseViewController {
     }
 }
 
-extension SetPhotoViewController: UICollectionViewDataSource, UICollectionViewDelegate {
+extension SetReviewViewController: UITextViewDelegate {
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        if textView.text == textViewPlaceHolder {
+            textView.text = nil
+            textView.textColor = .mainText
+        }
+    }
+
+    func textViewDidEndEditing(_ textView: UITextView) {
+        if textView.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            textView.text = textViewPlaceHolder
+            textView.textColor = .grey001
+        } else {
+            delegate?.setReview(photoes: selectedImages, comment: textView.text)
+        }
+    }
+}
+
+extension SetReviewViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_: UICollectionView, numberOfItemsInSection _: Int) -> Int {
         return selectedImages.count + 1
     }
@@ -120,18 +168,18 @@ extension SetPhotoViewController: UICollectionViewDataSource, UICollectionViewDe
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if indexPath.item == 0 {
             guard let cell = collectionView.dequeueReusableCell(
-                withReuseIdentifier: PhotoCollectionViewCell.className,
+                withReuseIdentifier: PhotoPlusCollectionViewCell.className,
                 for: indexPath
-            ) as? PhotoCollectionViewCell else {
+            ) as? PhotoPlusCollectionViewCell else {
                 return UICollectionViewCell()
             }
 
             return cell
         } else {
             guard let cell = collectionView.dequeueReusableCell(
-                withReuseIdentifier: FeedThumnailCollectionViewCell.className,
+                withReuseIdentifier: PhotoCollectionViewCell.className,
                 for: indexPath
-            ) as? FeedThumnailCollectionViewCell else {
+            ) as? PhotoCollectionViewCell else {
                 return UICollectionViewCell()
             }
 
@@ -148,10 +196,6 @@ extension SetPhotoViewController: UICollectionViewDataSource, UICollectionViewDe
     }
 }
 
-protocol SetPhotoViewControllerDelegate: AnyObject {
-    func setPhotoes(photoes: [UIImage]?)
-}
-
-protocol SetPhotoViewControllerDelegateForComment: AnyObject {
-    func setPhotoes(photoes: [UIImage]?)
+protocol SetReviewViewControllerDelegate: AnyObject {
+    func setReview(photoes: [UIImage]?, comment: String?)
 }

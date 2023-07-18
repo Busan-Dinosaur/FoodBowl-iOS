@@ -64,12 +64,8 @@ final class SetStoreViewController: BaseViewController {
     }
 }
 
-protocol SearchStoreViewControllerDelegate: AnyObject {
-    func setStore(store: Place)
-}
-
 extension SetStoreViewController: SearchStoreViewControllerDelegate {
-    func setStore(store: Place) {
+    func setStore(store: Place, category: String) {
         selectedStore = store
         searchBarButton.label.text = "가게 재검색"
         selectedStoreView.storeNameLabel.text = selectedStore?.placeName
@@ -87,10 +83,10 @@ extension SetStoreViewController: SearchStoreViewControllerDelegate {
         }
         selectedStoreView.mapButton.addAction(action, for: .touchUpInside)
 
-        delegate?.setStore(store: selectedStore)
+        delegate?.setStore(store: selectedStore, category: "cafe")
     }
 }
 
 protocol SetStoreViewControllerDelegate: AnyObject {
-    func setStore(store: Place?)
+    func setStore(store: Place?, category: String?)
 }

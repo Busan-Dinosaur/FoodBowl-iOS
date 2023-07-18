@@ -11,7 +11,7 @@ import SnapKit
 import Then
 
 final class AddFeedViewController: BaseViewController {
-    var newFeed = Feed(id: nil, store: nil, categories: nil, photoes: nil, comment: nil)
+    var newFeed = Feed(store: nil, category: nil, photoes: nil, comment: nil)
 
     private lazy var pageViewController = UIPageViewController(
         transitionStyle: .scroll,
@@ -20,12 +20,10 @@ final class AddFeedViewController: BaseViewController {
     )
 
     private let vc1 = SetStoreViewController()
-    private let vc2 = SetCategoryViewController()
-    private let vc3 = SetPhotoViewController()
-    private let vc4 = SetCommentViewController()
+    private let vc2 = SetReviewViewController()
 
     lazy var dataViewControllers: [UIViewController] = {
-        [vc1, vc2, vc3, vc4]
+        [vc1, vc2]
     }()
 
     private let pageControl = UIPageControl()
@@ -89,9 +87,6 @@ final class AddFeedViewController: BaseViewController {
 
         vc1.delegate = self
         vc2.delegate = self
-        vc3.delegate = self
-        vc4.delegate = self
-        vc3.delegateForComment = vc4
     }
 
     override func setupNavigationBar() {
@@ -120,16 +115,8 @@ final class AddFeedViewController: BaseViewController {
             title = "가게 찾기"
         case 1:
             navigationItem.leftBarButtonItem = backButton
-            navigationItem.rightBarButtonItem = nextButton
-            title = "카테고리 선택"
-        case 2:
-            navigationItem.leftBarButtonItem = backButton
-            navigationItem.rightBarButtonItem = nextButton
-            title = "사진 등록"
-        case 3:
-            navigationItem.leftBarButtonItem = backButton
             navigationItem.rightBarButtonItem = completeButton
-            title = "후기 작성"
+            title = "리뷰 작성"
         default:
             return
         }
@@ -155,16 +142,6 @@ final class AddFeedViewController: BaseViewController {
         case 0:
             if newFeed.store == nil {
                 showAlert(message: "가게를 선택해주세요")
-                return
-            }
-        case 1:
-            if newFeed.categories?.count == 0 {
-                showAlert(message: "카테고리를 선택해주세요")
-                return
-            }
-        case 2:
-            if newFeed.photoes == nil {
-                showAlert(message: "사진을 등록해주세요")
                 return
             }
         default: ()
@@ -193,22 +170,14 @@ final class AddFeedViewController: BaseViewController {
     }
 }
 
-extension AddFeedViewController: SetStoreViewControllerDelegate, SetCategoryViewControllerDelegate,
-    SetPhotoViewControllerDelegate,
-    SetCommentViewControllerDelegate {
-    func setStore(store: Place?) {
+extension AddFeedViewController: SetStoreViewControllerDelegate, SetReviewViewControllerDelegate {
+    func setStore(store: Place?, category: String?) {
         newFeed.store = store
+        newFeed.category = category
     }
 
-    func setCategories(categories: [Category]?) {
-        newFeed.categories = categories
-    }
-
-    func setPhotoes(photoes: [UIImage]?) {
+    func setReview(photoes: [UIImage]?, comment: String?) {
         newFeed.photoes = photoes
-    }
-
-    func setComment(comment: String?) {
         newFeed.comment = comment
     }
 }

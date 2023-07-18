@@ -118,7 +118,10 @@ extension SearchStoreViewController: UITableViewDataSource, UITableViewDelegate 
     }
 
     func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
-        delegate?.setStore(store: stores[indexPath.item])
+        delegate?.setStore(
+            store: stores[indexPath.item],
+            category: "cafe"
+        )
         dismiss(animated: true, completion: nil)
     }
 }
@@ -133,4 +136,8 @@ extension SearchStoreViewController: UISearchBarDelegate {
         guard let searchTerm = searchBar.text, searchTerm.isEmpty == false else { return }
         searchStores(keyword: searchTerm)
     }
+}
+
+protocol SearchStoreViewControllerDelegate: AnyObject {
+    func setStore(store: Place, category: String)
 }
