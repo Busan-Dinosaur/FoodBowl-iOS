@@ -9,8 +9,8 @@ import UIKit
 
 final class TabBarController: UITabBarController {
     private let vc1 = UINavigationController(rootViewController: FriendViewController())
-    private let vc2 = UINavigationController(rootViewController: FriendViewController())
-    private let vc3 = UINavigationController(rootViewController: FriendViewController())
+    private let vc2 = UINavigationController(rootViewController: BookmarkViewController())
+    private let vc3 = UINavigationController(rootViewController: BookmarkViewController())
     private let vc4 = UINavigationController(rootViewController: ProfileViewController(isOwn: true))
 
     override func viewDidLoad() {
