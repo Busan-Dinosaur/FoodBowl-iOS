@@ -13,7 +13,7 @@ import Then
 final class EmptyFeedView: UIView {
     // MARK: - property
 
-    private let emptyImage = UIImageView(image: ImageLiteral.btnProfile)
+    private let emptyImage = UIImageView(image: ImageLiteral.profile)
 
     private let emptyLabel = UILabel().then {
         $0.font = UIFont.preferredFont(forTextStyle: .title2, weight: .bold)

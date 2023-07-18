@@ -1,5 +1,5 @@
 //
-//  MapViewController.swift
+//  FriendViewController.swift
 //  FoodBowl
 //
 //  Created by COBY_PRO on 2023/01/10.
@@ -12,7 +12,7 @@ import MapKit
 import SnapKit
 import Then
 
-final class MapViewController: BaseViewController {
+final class FriendViewController: BaseViewController {
     private enum Size {
         static let collectionInset = UIEdgeInsets(
             top: 0,
@@ -48,7 +48,7 @@ final class MapViewController: BaseViewController {
     private lazy var searchBarButton = SearchBarButton().then {
         $0.label.text = "친구들의 후기를 찾아보세요."
         let action = UIAction { [weak self] _ in
-            let findStoreViewController = FindStoreViewController()
+            let findStoreViewController = FindViewController()
             let navigationController = UINavigationController(rootViewController: findStoreViewController)
             navigationController.modalPresentationStyle = .fullScreen
             DispatchQueue.main.async {
@@ -86,18 +86,6 @@ final class MapViewController: BaseViewController {
         $0.addAction(action, for: .touchUpInside)
     }
 
-    private lazy var bookMarkButton = UIButton().then {
-        $0.backgroundColor = .mainBackground
-        $0.makeBorderLayer(color: .grey002)
-        $0.setImage(ImageLiteral.btnBookmarkFill.withRenderingMode(.alwaysTemplate), for: .normal)
-        $0.tintColor = .mainText
-        $0.imageEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
-        let action = UIAction { [weak self] _ in
-            self?.findMyBookmarks()
-        }
-        $0.addAction(action, for: .touchUpInside)
-    }
-
     override func viewDidLoad() {
         super.viewDidLoad()
         findMyLocation()
@@ -115,7 +103,7 @@ final class MapViewController: BaseViewController {
     }
 
     override func setupLayout() {
-        view.addSubviews(mapView, searchBarButton, listCollectionView, gpsButton, bookMarkButton)
+        view.addSubviews(mapView, searchBarButton, listCollectionView, gpsButton)
 
         mapView.snp.makeConstraints {
             $0.edges.equalToSuperview()
@@ -138,12 +126,6 @@ final class MapViewController: BaseViewController {
             $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(40)
             $0.height.width.equalTo(50)
         }
-
-        bookMarkButton.snp.makeConstraints {
-            $0.trailing.equalToSuperview().inset(20)
-            $0.bottom.equalTo(gpsButton.snp.top).offset(-10)
-            $0.height.width.equalTo(50)
-        }
     }
 
     override func setupNavigationBar() {
@@ -160,15 +142,6 @@ final class MapViewController: BaseViewController {
             ),
             animated: true
         )
-    }
-
-    private func findMyBookmarks() {
-        isBookMark = !isBookMark
-        if isBookMark {
-            bookMarkButton.tintColor = .mainPink
-        } else {
-            bookMarkButton.tintColor = .mainText
-        }
     }
 
     private func setMarkers() {
@@ -239,7 +212,7 @@ final class MapViewController: BaseViewController {
     }
 }
 
-extension MapViewController: MKMapViewDelegate {
+extension FriendViewController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         guard view is ClusterAnnotationView else { return }
 
@@ -256,7 +229,7 @@ extension MapViewController: MKMapViewDelegate {
 
 // MARK: - UICollectionViewDataSource, UICollectionViewDelegate
 
-extension MapViewController: UICollectionViewDataSource, UICollectionViewDelegate {
+extension FriendViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_: UICollectionView, numberOfItemsInSection _: Int) -> Int {
         return categories.count
     }

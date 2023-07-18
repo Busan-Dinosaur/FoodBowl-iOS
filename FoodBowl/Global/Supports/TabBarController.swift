@@ -8,34 +8,33 @@
 import UIKit
 
 final class TabBarController: UITabBarController {
-    private let mainViewController = UINavigationController(rootViewController: MainViewController())
-    private let mapViewController = UINavigationController(rootViewController: MapViewController())
-    private let searchViewController = UINavigationController(rootViewController: SearchViewController())
-    private let profileViewController = UINavigationController(rootViewController: ProfileViewController(isOwn: true))
+    private let vc1 = UINavigationController(rootViewController: FriendViewController())
+    private let vc2 = UINavigationController(rootViewController: FriendViewController())
+    private let vc3 = UINavigationController(rootViewController: FriendViewController())
+    private let vc4 = UINavigationController(rootViewController: ProfileViewController(isOwn: true))
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        mainViewController.tabBarItem.image = ImageLiteral.btnMain
-        mainViewController.tabBarItem.title = "메인"
+        vc1.tabBarItem.image = ImageLiteral.friends
+            .resize(to: CGSize(width: 20, height: 20)).withRenderingMode(.alwaysTemplate)
+        vc1.tabBarItem.title = "친구들"
 
-        mapViewController.tabBarItem.image = ImageLiteral.btnMap
-        mapViewController.tabBarItem.title = "지도"
+        vc2.tabBarItem.image = ImageLiteral.bookmark
+            .resize(to: CGSize(width: 20, height: 20)).withRenderingMode(.alwaysTemplate)
+        vc2.tabBarItem.title = "북마크"
 
-        searchViewController.tabBarItem.image = ImageLiteral.btnSearch
-        searchViewController.tabBarItem.title = "검색"
+        vc3.tabBarItem.image = ImageLiteral.univ
+            .resize(to: CGSize(width: 20, height: 20)).withRenderingMode(.alwaysTemplate)
+        vc3.tabBarItem.title = "대학가"
 
-        profileViewController.tabBarItem.image = ImageLiteral.btnProfile
-        profileViewController.tabBarItem.title = "프로필"
+        vc4.tabBarItem.image = ImageLiteral.profile
+            .resize(to: CGSize(width: 20, height: 20)).withRenderingMode(.alwaysTemplate)
+        vc4.tabBarItem.title = "프로필"
 
         tabBar.tintColor = .mainPink
         tabBar.backgroundColor = .mainBackground
-        setViewControllers([
-            mainViewController,
-            mapViewController,
-            searchViewController,
-            profileViewController
-        ], animated: true)
+        setViewControllers([vc1, vc2, vc3, vc4], animated: true)
 
         if #available(iOS 13.0, *) {
             let tabBarAppearance: UITabBarAppearance = .init()

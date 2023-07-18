@@ -8,12 +8,12 @@
 import UIKit
 
 enum ImageLiteral {
-    // MARK: - button
+    static var friends: UIImage { .load(name: "friends") }
+    static var bookmark: UIImage { .load(name: "bookmark") }
+    static var univ: UIImage { .load(name: "univ") }
+    static var profile: UIImage { .load(name: "profile") }
 
-    static var btnMain: UIImage { .load(systemName: "house") }
-    static var btnMap: UIImage { .load(systemName: "map") }
     static var btnSearch: UIImage { .load(systemName: "magnifyingglass") }
-    static var btnProfile: UIImage { .load(systemName: "person") }
 
     static var btnClose: UIImage { .load(systemName: "xmark") }
     static var btnSetting: UIImage { .load(name: "settings") }

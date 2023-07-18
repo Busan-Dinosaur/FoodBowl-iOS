@@ -1,5 +1,5 @@
 //
-//  FindStoreViewController.swift
+//  FindViewController.swift
 //  FoodBowl
 //
 //  Created by COBY_PRO on 2023/01/18.
@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 import Then
 
-final class FindStoreViewController: BaseViewController {
+final class FindViewController: BaseViewController {
     private lazy var cancelButton = UIButton().then {
         $0.setTitle("취소", for: .normal)
         $0.setTitleColor(.mainPink, for: .normal)
@@ -50,7 +50,7 @@ final class FindStoreViewController: BaseViewController {
     }
 }
 
-extension FindStoreViewController: UISearchBarDelegate {
+extension FindViewController: UISearchBarDelegate {
     private func dissmissKeyboard() {
         searchBar.resignFirstResponder()
     }
@@ -62,7 +62,7 @@ extension FindStoreViewController: UISearchBarDelegate {
     }
 }
 
-extension FindStoreViewController: UITableViewDataSource, UITableViewDelegate {
+extension FindViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
         return 5
     }
