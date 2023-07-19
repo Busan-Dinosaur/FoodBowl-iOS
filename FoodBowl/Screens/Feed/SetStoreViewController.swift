@@ -7,12 +7,15 @@
 
 import UIKit
 
+import Alamofire
 import SnapKit
 import Then
 
 final class SetStoreViewController: BaseViewController {
     var delegate: SetStoreViewControllerDelegate?
     var selectedStore: Place?
+    var category: String?
+    var univ: Place?
 
     // MARK: - property
 
@@ -62,6 +65,60 @@ final class SetStoreViewController: BaseViewController {
             $0.height.equalTo(60)
         }
     }
+
+    private func searchUniv() {
+        let url = "https://dapi.kakao.com/v2/local/search/keyword"
+
+        let headers: HTTPHeaders = [
+            "Content-Type": "application/x-www-form-urlencoded;charset=utf-8",
+            "Authorization": "KakaoAK 855a5bf7cbbe725de0f5b6474fe8d6db"
+        ]
+
+        let parameters: [String: Any] = [
+            "query": "대학교",
+            "x": selectedStore!.longitude,
+            "y": selectedStore!.latitude,
+            "page": 1,
+            "size": 1,
+            "radius": 3000,
+            "category_group_code": "SC4"
+        ]
+
+        AF.request(
+            url,
+            method: .get,
+            parameters: parameters,
+            encoding: URLEncoding.default,
+            headers: headers
+        )
+        .responseDecodable(of: Response.self) { response in
+            switch response.result {
+            case .success(let data):
+                self.univ = data.documents[0]
+            case .failure(let error):
+                print("Request failed with error: \(error)")
+            }
+        }
+    }
+
+    func getCategory() {
+        let categoryName = selectedStore!.categoryName
+            .components(separatedBy: ">").map { $0.trimmingCharacters(in: .whitespaces) }
+
+        print(categoryName)
+
+        let categories = Category.allCases.map { $0.rawValue }
+        if categories.contains(categoryName[1]) == true {
+            category = categoryName[1]
+            if category == "한식" && categoryName[2] == "해물,생선" {
+                category = "해산물"
+            }
+        } else {
+            category = "기타"
+        }
+
+        print(category)
+    }
 }
 
 extension SetStoreViewController: SearchStoreViewControllerDelegate {
@@ -71,6 +128,7 @@ extension SetStoreViewController: SearchStoreViewControllerDelegate {
         selectedStoreView.storeNameLabel.text = selectedStore?.placeName
         selectedStoreView.storeAdressLabel.text = selectedStore?.addressName
         selectedStoreView.isHidden = false
+
         let action = UIAction { [weak self] _ in
             let showWebViewController = ShowWebViewController()
             showWebViewController.title = "가게 정보"
@@ -82,11 +140,13 @@ extension SetStoreViewController: SearchStoreViewControllerDelegate {
             }
         }
         selectedStoreView.mapButton.addAction(action, for: .touchUpInside)
+        searchUniv()
+        getCategory()
 
-        delegate?.setStore(store: selectedStore, category: "cafe")
+        delegate?.setStore(store: selectedStore, univ: univ, category: category)
     }
 }
 
 protocol SetStoreViewControllerDelegate: AnyObject {
-    func setStore(store: Place?, category: String?)
+    func setStore(store: Place?, univ: Place?, category: String?)
 }
