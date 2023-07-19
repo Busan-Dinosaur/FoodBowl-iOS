@@ -73,7 +73,8 @@ final class SearchStoreViewController: BaseViewController {
             "x": String(currentLoc.coordinate.longitude),
             "y": String(currentLoc.coordinate.latitude),
             "page": 1,
-            "size": 15
+            "size": 15,
+            "category_group_code": "FD6,CE7"
         ]
 
         AF.request(

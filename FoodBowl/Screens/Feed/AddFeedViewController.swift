@@ -171,7 +171,7 @@ final class AddFeedViewController: BaseViewController {
 }
 
 extension AddFeedViewController: SetStoreViewControllerDelegate, SetReviewViewControllerDelegate {
-    func setStore(store: Place?, category: String?) {
+    func setStore(store: Place?, univ: Place?, category: String?) {
         newFeed.store = store
         newFeed.category = category
     }
