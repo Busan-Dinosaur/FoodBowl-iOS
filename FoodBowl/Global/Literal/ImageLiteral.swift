@@ -12,8 +12,7 @@ enum ImageLiteral {
     static var bookmark: UIImage { .load(name: "bookmark") }
     static var univ: UIImage { .load(name: "univ") }
     static var profile: UIImage { .load(name: "profile") }
-
-    static var btnSearch: UIImage { .load(systemName: "magnifyingglass") }
+    static var search: UIImage { .load(systemName: "magnifyingglass") }
 
     static var btnClose: UIImage { .load(systemName: "xmark") }
     static var btnSetting: UIImage { .load(name: "settings") }

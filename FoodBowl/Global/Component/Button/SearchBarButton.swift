@@ -12,9 +12,8 @@ import Then
 
 final class SearchBarButton: UIButton {
     // MARK: - property
-
     private let searchIconView = UIImageView().then {
-        $0.image = ImageLiteral.btnSearch.withConfiguration(UIImage.SymbolConfiguration(scale: .large))
+        $0.image = ImageLiteral.search.withConfiguration(UIImage.SymbolConfiguration(scale: .large))
         $0.tintColor = .subText
     }
 
@@ -25,10 +24,9 @@ final class SearchBarButton: UIButton {
     }
 
     // MARK: - init
-
     override init(frame: CGRect) {
         super.init(frame: frame)
-        render()
+        setupLayout()
         configureUI()
     }
 
@@ -38,8 +36,7 @@ final class SearchBarButton: UIButton {
     }
 
     // MARK: - life cycle
-
-    private func render() {
+    private func setupLayout() {
         addSubviews(searchIconView, label)
 
         searchIconView.snp.makeConstraints {

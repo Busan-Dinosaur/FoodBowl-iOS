@@ -11,7 +11,6 @@ import Then
 
 class BaseViewController: UIViewController {
     // MARK: - property
-
     private lazy var backButton = BackButton().then {
         let buttonAction = UIAction { [weak self] _ in
             self?.navigationController?.popViewController(animated: true)
@@ -22,7 +21,6 @@ class BaseViewController: UIViewController {
     private var activeTextField: UITextField?
 
     // MARK: - life cycle
-
     override func viewDidLoad() {
         super.viewDidLoad()
         setupLayout()
@@ -80,7 +78,6 @@ class BaseViewController: UIViewController {
     }
 
     // MARK: - helper func
-
     func makeBarButtonItem<T: UIView>(with view: T) -> UIBarButtonItem {
         return UIBarButtonItem(customView: view)
     }
@@ -104,7 +101,6 @@ class BaseViewController: UIViewController {
     }
 
     // MARK: - func
-
     @objc
     func keyboardWillShow(notification: NSNotification) {
         guard let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else {
