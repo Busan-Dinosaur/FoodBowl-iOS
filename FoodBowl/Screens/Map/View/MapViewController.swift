@@ -84,10 +84,17 @@ class MapViewController: UIViewController {
             $0.height.equalTo(headerHeight)
         }
 
+        trakingButton.layer.backgroundColor = UIColor.mainBackground.cgColor
+        trakingButton.layer.borderColor = UIColor.grey002.cgColor
+        trakingButton.layer.borderWidth = 1
+        trakingButton.layer.cornerRadius = 10
+        trakingButton.layer.masksToBounds = true
+        trakingButton.tintColor = UIColor.mainPink
+
         trakingButton.snp.makeConstraints {
             $0.trailing.equalToSuperview().inset(20)
             $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(40)
-            $0.height.width.equalTo(50)
+            $0.height.width.equalTo(40)
         }
     }
 
