@@ -34,6 +34,8 @@ class MapViewController: UIViewController {
         )
     }
 
+    private lazy var trakingButton = MKUserTrackingButton(mapView: mapView)
+
     private lazy var mapHeaderView = MapHeaderView().then {
         let findAction = UIAction { [weak self] _ in
             let findStoreViewController = FindViewController()
@@ -55,29 +57,17 @@ class MapViewController: UIViewController {
         $0.plusButton.addAction(plusAction, for: .touchUpInside)
     }
 
-    private lazy var gpsButton = UIButton().then {
-        $0.backgroundColor = .mainBackground
-        $0.tintColor = .mainText
-        $0.makeBorderLayer(color: .grey002)
-        $0.setImage(ImageLiteral.btnGps.withRenderingMode(.alwaysTemplate), for: .normal)
-        $0.imageEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
-        let action = UIAction { [weak self] _ in
-            self?.findMyLocation()
-        }
-        $0.addAction(action, for: .touchUpInside)
-    }
-
     // MARK: - life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setupLayout()
         setupNavigationBar()
-        findMyLocation()
+        currentLocation()
         setMarkers()
     }
 
     func setupLayout() {
-        view.addSubviews(mapView, mapHeaderView, gpsButton)
+        view.addSubviews(mapView, mapHeaderView, trakingButton)
 
         mapView.snp.makeConstraints {
             $0.edges.equalToSuperview()
@@ -94,7 +84,7 @@ class MapViewController: UIViewController {
             $0.height.equalTo(headerHeight)
         }
 
-        gpsButton.snp.makeConstraints {
+        trakingButton.snp.makeConstraints {
             $0.trailing.equalToSuperview().inset(20)
             $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(40)
             $0.height.width.equalTo(50)
@@ -105,7 +95,7 @@ class MapViewController: UIViewController {
         navigationController?.isNavigationBarHidden = true
     }
 
-    private func findMyLocation() {
+    private func currentLocation() {
         guard let currentLoc = LocationManager.shared.manager.location else { return }
 
         mapView.setRegion(
