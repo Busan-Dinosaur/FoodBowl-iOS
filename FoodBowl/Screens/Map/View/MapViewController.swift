@@ -45,9 +45,8 @@ class MapViewController: BaseViewController {
         )
     }
 
-    private lazy var searchBarButton = SearchBarButton().then {
-        $0.label.text = "새로운 맛집과 유저를 찾아보세요."
-        let action = UIAction { [weak self] _ in
+    private lazy var mapHeaderView = MapHeaderView().then {
+        let findAction = UIAction { [weak self] _ in
             let findStoreViewController = FindViewController()
             let navigationController = UINavigationController(rootViewController: findStoreViewController)
             navigationController.modalPresentationStyle = .fullScreen
@@ -55,11 +54,7 @@ class MapViewController: BaseViewController {
                 self?.present(navigationController, animated: true)
             }
         }
-        $0.addAction(action, for: .touchUpInside)
-    }
-
-    private lazy var plusButton = PlusButton().then {
-        let action = UIAction { [weak self] _ in
+        let plusAction = UIAction { [weak self] _ in
             let addFeedViewController = AddFeedViewController()
             let navigationController = UINavigationController(rootViewController: addFeedViewController)
             navigationController.modalPresentationStyle = .fullScreen
@@ -67,23 +62,8 @@ class MapViewController: BaseViewController {
                 self?.present(navigationController, animated: true)
             }
         }
-        $0.addAction(action, for: .touchUpInside)
-    }
-
-    private let collectionViewFlowLayout = UICollectionViewFlowLayout().then {
-        $0.scrollDirection = .horizontal
-        $0.sectionInset = Size.collectionInset
-        $0.minimumLineSpacing = 4
-        $0.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
-    }
-
-    private lazy var listCollectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewFlowLayout).then {
-        $0.backgroundColor = .clear
-        $0.dataSource = self
-        $0.delegate = self
-        $0.showsHorizontalScrollIndicator = false
-        $0.allowsMultipleSelection = true
-        $0.register(CategoryCollectionViewCell.self, forCellWithReuseIdentifier: CategoryCollectionViewCell.className)
+        $0.searchBarButton.addAction(findAction, for: .touchUpInside)
+        $0.plusButton.addAction(plusAction, for: .touchUpInside)
     }
 
     private lazy var gpsButton = UIButton().then {
@@ -104,39 +84,16 @@ class MapViewController: BaseViewController {
         setMarkers()
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        navigationController?.isNavigationBarHidden = true
-    }
-
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        navigationController?.isNavigationBarHidden = false
-    }
-
     override func setupLayout() {
-        view.addSubviews(mapView, searchBarButton, plusButton, listCollectionView, gpsButton)
+        view.addSubviews(mapView, mapHeaderView, gpsButton)
 
         mapView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
 
-        searchBarButton.snp.makeConstraints {
+        mapHeaderView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide)
-            $0.leading.trailing.equalToSuperview().inset(20)
-            $0.height.equalTo(50)
-        }
-
-        plusButton.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide)
-            $0.trailing.equalToSuperview().inset(20)
-            $0.width.height.equalTo(50)
-        }
-
-        listCollectionView.snp.makeConstraints {
-            $0.top.equalTo(searchBarButton.snp.bottom).offset(10)
             $0.leading.trailing.equalToSuperview()
-            $0.height.equalTo(40)
         }
 
         gpsButton.snp.makeConstraints {
