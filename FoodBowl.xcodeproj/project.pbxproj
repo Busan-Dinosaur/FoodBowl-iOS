@@ -243,6 +243,31 @@
 			path = UIComponent;
 			sourceTree = "<group>";
 		};
+		CB63B7592A6986B4000AD9C2 /* Map */ = {
+			isa = PBXGroup;
+			children = (
+				CB63B75A2A6986BE000AD9C2 /* UIComponent */,
+				CB63B75B2A6986C8000AD9C2 /* Cell */,
+				CBE6190E296C6435005295AF /* MapViewController.swift */,
+			);
+			path = Map;
+			sourceTree = "<group>";
+		};
+		CB63B75A2A6986BE000AD9C2 /* UIComponent */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = UIComponent;
+			sourceTree = "<group>";
+		};
+		CB63B75B2A6986C8000AD9C2 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				CBB58283297440A600808B0B /* CategoryCollectionViewCell.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
 		CB7F3322298A51330000A6B4 /* Network */ = {
 			isa = PBXGroup;
 			children = (
@@ -274,6 +299,7 @@
 		CBADC25129559BC900E56C93 /* Global */ = {
 			isa = PBXGroup;
 			children = (
+				CB63B7592A6986B4000AD9C2 /* Map */,
 				CBADC25229559BC900E56C93 /* Supports */,
 				CBADC25829559BC900E56C93 /* Literal */,
 				CBADC25A29559BC900E56C93 /* Utils */,
@@ -348,8 +374,6 @@
 		CBADC27429559BC900E56C93 /* Base */ = {
 			isa = PBXGroup;
 			children = (
-				CBE6190E296C6435005295AF /* MapViewController.swift */,
-				CBB58283297440A600808B0B /* CategoryCollectionViewCell.swift */,
 				CBADC27529559BC900E56C93 /* BaseViewController.swift */,
 				CBADC27629559BC900E56C93 /* BaseTableViewCell.swift */,
 				CBADC27729559BC900E56C93 /* BaseCollectionViewCell.swift */,
