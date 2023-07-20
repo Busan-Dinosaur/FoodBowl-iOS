@@ -92,7 +92,7 @@ class MapViewController: UIViewController {
         trakingButton.tintColor = UIColor.mainPink
 
         trakingButton.snp.makeConstraints {
-            $0.trailing.equalToSuperview().inset(20)
+            $0.trailing.equalToSuperview().inset(BaseSize.horizantalPadding)
             $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(40)
             $0.height.width.equalTo(40)
         }
