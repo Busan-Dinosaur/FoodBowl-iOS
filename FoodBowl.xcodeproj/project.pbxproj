@@ -251,7 +251,6 @@
 			isa = PBXGroup;
 			children = (
 				CB63B75C2A698857000AD9C2 /* View */,
-				CB63B75D2A69885D000AD9C2 /* ViewModel */,
 			);
 			path = Map;
 			sourceTree = "<group>";
@@ -281,13 +280,6 @@
 				CBE6190E296C6435005295AF /* MapViewController.swift */,
 			);
 			path = View;
-			sourceTree = "<group>";
-		};
-		CB63B75D2A69885D000AD9C2 /* ViewModel */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		CB63B75E2A6988CC000AD9C2 /* Button */ = {

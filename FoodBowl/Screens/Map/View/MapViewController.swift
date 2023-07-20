@@ -12,7 +12,7 @@ import MapKit
 import SnapKit
 import Then
 
-class MapViewController: BaseViewController {
+class MapViewController: UIViewController {
     private enum Size {
         static let collectionInset = UIEdgeInsets(
             top: 0,
@@ -78,13 +78,16 @@ class MapViewController: BaseViewController {
         $0.addAction(action, for: .touchUpInside)
     }
 
+    // MARK: - life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupLayout()
+        setupNavigationBar()
         findMyLocation()
         setMarkers()
     }
 
-    override func setupLayout() {
+    func setupLayout() {
         view.addSubviews(mapView, mapHeaderView, gpsButton)
 
         mapView.snp.makeConstraints {
@@ -103,7 +106,7 @@ class MapViewController: BaseViewController {
         }
     }
 
-    override func setupNavigationBar() {
+    func setupNavigationBar() {
         navigationController?.isNavigationBarHidden = true
     }
 
@@ -203,7 +206,6 @@ extension MapViewController: MKMapViewDelegate {
 }
 
 // MARK: - UICollectionViewDataSource, UICollectionViewDelegate
-
 extension MapViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_: UICollectionView, numberOfItemsInSection _: Int) -> Int {
         return categories.count
