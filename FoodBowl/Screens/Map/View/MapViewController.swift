@@ -83,19 +83,15 @@ class MapViewController: UIViewController {
             $0.edges.equalToSuperview()
         }
 
-        if #available(iOS 13.0, *) {
-            guard let window = UIApplication.shared.windows.filter { $0.isKeyWindow }.first else { return }
-            let topPadding = window.safeAreaInsets.top
-            let height = topPadding + 120
-            mapHeaderView.snp.makeConstraints {
-                $0.top.leading.trailing.equalToSuperview()
-                $0.height.equalTo(height)
-            }
-        } else {
-            mapHeaderView.snp.makeConstraints {
-                $0.top.leading.trailing.equalToSuperview()
-                $0.height.equalTo(120)
-            }
+        let scenes = UIApplication.shared.connectedScenes
+        let windowScene = scenes.first as? UIWindowScene
+        let window = windowScene?.windows.first
+        let topPadding = window?.safeAreaInsets.top ?? 0
+        let headerHeight = topPadding + 120
+
+        mapHeaderView.snp.makeConstraints {
+            $0.top.leading.trailing.equalToSuperview()
+            $0.height.equalTo(headerHeight)
         }
 
         gpsButton.snp.makeConstraints {
