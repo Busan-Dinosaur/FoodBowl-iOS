@@ -5,29 +5,17 @@
 //  Created by COBY_PRO on 2023/01/10.
 //
 
-import UIKit
-
 import CoreLocation
 import MapKit
+import UIKit
+
 import SnapKit
 import Then
 
 class MapViewController: UIViewController {
-    private enum Size {
-        static let collectionInset = UIEdgeInsets(
-            top: 0,
-            left: 20,
-            bottom: 0,
-            right: 20
-        )
-    }
-
-    private var isBookMark = false
-
-    private let categories = Category.allCases
-
     private var marks: [Marker]?
 
+    // MARK: - property
     private lazy var mapView = MKMapView().then {
         $0.delegate = self
         $0.mapType = MKMapType.standard
@@ -122,6 +110,7 @@ class MapViewController: UIViewController {
         )
     }
 
+    // 임시 데이터
     private func setMarkers() {
         guard let currentLoc = LocationManager.shared.manager.location else { return }
 
@@ -202,30 +191,5 @@ extension MapViewController: MKMapViewDelegate {
         let zoomCoordinate = view.annotation?.coordinate ?? mapView.region.center
         let zoomed = MKCoordinateRegion(center: zoomCoordinate, span: zoomSpan)
         mapView.setRegion(zoomed, animated: true)
-    }
-}
-
-// MARK: - UICollectionViewDataSource, UICollectionViewDelegate
-extension MapViewController: UICollectionViewDataSource, UICollectionViewDelegate {
-    func collectionView(_: UICollectionView, numberOfItemsInSection _: Int) -> Int {
-        return categories.count
-    }
-
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(
-            withReuseIdentifier: CategoryCollectionViewCell.className,
-            for: indexPath
-        ) as? CategoryCollectionViewCell else {
-            return UICollectionViewCell()
-        }
-
-        cell.layer.cornerRadius = 20
-        cell.categoryLabel.text = categories[indexPath.item].rawValue
-
-        return cell
-    }
-
-    func collectionView(_: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print(categories[indexPath.item].rawValue)
     }
 }
