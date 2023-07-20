@@ -13,6 +13,7 @@ import SnapKit
 import Then
 
 class MapViewController: UIViewController {
+    // 임시 마커 데이터
     private var marks: [Marker]?
 
     // MARK: - property
@@ -82,9 +83,19 @@ class MapViewController: UIViewController {
             $0.edges.equalToSuperview()
         }
 
-        mapHeaderView.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide)
-            $0.leading.trailing.equalToSuperview()
+        if #available(iOS 13.0, *) {
+            guard let window = UIApplication.shared.windows.filter { $0.isKeyWindow }.first else { return }
+            let topPadding = window.safeAreaInsets.top
+            let height = topPadding + 120
+            mapHeaderView.snp.makeConstraints {
+                $0.top.leading.trailing.equalToSuperview()
+                $0.height.equalTo(height)
+            }
+        } else {
+            mapHeaderView.snp.makeConstraints {
+                $0.top.leading.trailing.equalToSuperview()
+                $0.height.equalTo(120)
+            }
         }
 
         gpsButton.snp.makeConstraints {

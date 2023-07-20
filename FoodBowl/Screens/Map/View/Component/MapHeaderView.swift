@@ -57,7 +57,7 @@ final class MapHeaderView: UIView {
         addSubviews(searchBarButton, plusButton, listCollectionView)
 
         searchBarButton.snp.makeConstraints {
-            $0.top.equalToSuperview()
+            $0.top.equalTo(safeAreaLayoutGuide).inset(10)
             $0.leading.equalToSuperview().inset(BaseSize.leadingTrailingPadding)
             $0.width.equalTo(Size.SearchBarWidth)
             $0.height.equalTo(50)
@@ -79,7 +79,6 @@ final class MapHeaderView: UIView {
 
     private func configureUI() {
         backgroundColor = .mainBackground
-        makeBorderLayer(color: .grey002)
     }
 }
 
