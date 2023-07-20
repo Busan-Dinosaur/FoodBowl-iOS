@@ -34,12 +34,19 @@ class MapViewController: UIViewController {
         )
     }
 
-    private lazy var trakingButton = MKUserTrackingButton(mapView: mapView)
+    private lazy var trakingButton = MKUserTrackingButton(mapView: mapView).then {
+        $0.layer.backgroundColor = UIColor.mainBackground.cgColor
+        $0.layer.borderColor = UIColor.grey002.cgColor
+        $0.layer.borderWidth = 1
+        $0.layer.cornerRadius = 10
+        $0.layer.masksToBounds = true
+        $0.tintColor = UIColor.mainPink
+    }
 
     private lazy var mapHeaderView = MapHeaderView().then {
         let findAction = UIAction { [weak self] _ in
             let findStoreViewController = FindViewController()
-            let navigationController = UINavigationController(rootViewController: findStoreViewController)
+            let navigationController = UINavigationController(rootViewController: FindViewController())
             navigationController.modalPresentationStyle = .fullScreen
             DispatchQueue.main.async {
                 self?.present(navigationController, animated: true)
@@ -55,6 +62,16 @@ class MapViewController: UIViewController {
         }
         $0.searchBarButton.addAction(findAction, for: .touchUpInside)
         $0.plusButton.addAction(plusAction, for: .touchUpInside)
+
+        let scenes = UIApplication.shared.connectedScenes
+        let windowScene = scenes.first as? UIWindowScene
+        let window = windowScene?.windows.first
+        let topPadding = window?.safeAreaInsets.top ?? 0
+        let headerHeight = topPadding + 120
+
+        $0.snp.makeConstraints {
+            $0.height.equalTo(headerHeight)
+        }
     }
 
     // MARK: - life cycle
@@ -73,23 +90,9 @@ class MapViewController: UIViewController {
             $0.edges.equalToSuperview()
         }
 
-        let scenes = UIApplication.shared.connectedScenes
-        let windowScene = scenes.first as? UIWindowScene
-        let window = windowScene?.windows.first
-        let topPadding = window?.safeAreaInsets.top ?? 0
-        let headerHeight = topPadding + 120
-
         mapHeaderView.snp.makeConstraints {
             $0.top.leading.trailing.equalToSuperview()
-            $0.height.equalTo(headerHeight)
         }
-
-        trakingButton.layer.backgroundColor = UIColor.mainBackground.cgColor
-        trakingButton.layer.borderColor = UIColor.grey002.cgColor
-        trakingButton.layer.borderWidth = 1
-        trakingButton.layer.cornerRadius = 10
-        trakingButton.layer.masksToBounds = true
-        trakingButton.tintColor = UIColor.mainPink
 
         trakingButton.snp.makeConstraints {
             $0.trailing.equalToSuperview().inset(BaseSize.horizantalPadding)
@@ -134,41 +137,13 @@ class MapViewController: UIViewController {
                 }
             ),
             Marker(
-                title: "홍대입구역 편의점",
-                subtitle: "3개의 후기",
+                title: "홍대입구역 서점",
+                subtitle: "123개의 후기",
                 coordinate: CLLocationCoordinate2D(
                     latitude: currentLoc.coordinate.latitude + 0.001,
                     longitude: currentLoc.coordinate.longitude + 0.002
                 ),
                 glyphImage: ImageLiteral.salad,
-                handler: { [weak self] in
-                    let storeFeedViewController = StoreFeedViewController()
-                    storeFeedViewController.title = "틈새라면"
-                    self?.navigationController?.pushViewController(storeFeedViewController, animated: true)
-                }
-            ),
-            Marker(
-                title: "홍대입구역 편의점",
-                subtitle: "3개의 후기",
-                coordinate: CLLocationCoordinate2D(
-                    latitude: currentLoc.coordinate.latitude + 0.001,
-                    longitude: currentLoc.coordinate.longitude + 0.003
-                ),
-                glyphImage: ImageLiteral.chinese,
-                handler: { [weak self] in
-                    let storeFeedViewController = StoreFeedViewController()
-                    storeFeedViewController.title = "틈새라면"
-                    self?.navigationController?.pushViewController(storeFeedViewController, animated: true)
-                }
-            ),
-            Marker(
-                title: "홍대입구역 편의점",
-                subtitle: "3개의 후기",
-                coordinate: CLLocationCoordinate2D(
-                    latitude: currentLoc.coordinate.latitude + 0.001,
-                    longitude: currentLoc.coordinate.longitude + 0.004
-                ),
-                glyphImage: ImageLiteral.japanese,
                 handler: { [weak self] in
                     let storeFeedViewController = StoreFeedViewController()
                     storeFeedViewController.title = "틈새라면"
