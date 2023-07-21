@@ -23,7 +23,6 @@ final class EmptyFeedView: UIView {
     }
 
     // MARK: - init
-
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupLayout()

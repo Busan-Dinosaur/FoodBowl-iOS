@@ -41,7 +41,6 @@ final class PhotoListView: UIView {
     }
 
     // MARK: - init
-
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupLayout()

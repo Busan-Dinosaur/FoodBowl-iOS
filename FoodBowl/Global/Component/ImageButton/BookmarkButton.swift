@@ -12,12 +12,12 @@ final class BookmarkButton: UIButton {
         didSet {
             if isSelected {
                 setImage(
-                    ImageLiteral.bookmarkFill.resize(to: CGSize(width: 20, height: 20)).withRenderingMode(.alwaysTemplate),
+                    ImageLiteral.bookmarkFill.resize(to: CGSize(width: 30, height: 30)).withRenderingMode(.alwaysTemplate),
                     for: .normal
                 )
             } else {
                 setImage(
-                    ImageLiteral.bookmark.resize(to: CGSize(width: 20, height: 20)).withRenderingMode(.alwaysTemplate),
+                    ImageLiteral.bookmark.resize(to: CGSize(width: 30, height: 30)).withRenderingMode(.alwaysTemplate),
                     for: .normal
                 )
             }

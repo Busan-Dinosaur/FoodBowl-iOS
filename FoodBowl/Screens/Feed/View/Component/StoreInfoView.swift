@@ -14,7 +14,7 @@ final class StoreInfoView: UIView {
     // MARK: - property
     let storeNameButton = UIButton().then {
         $0.setTitle("틈새라면 홍대점", for: .normal)
-        $0.setTitleColor(.subText, for: .normal)
+        $0.setTitleColor(.mainText, for: .normal)
         $0.titleLabel?.font = UIFont.preferredFont(forTextStyle: .footnote, weight: .medium)
     }
 
@@ -33,7 +33,6 @@ final class StoreInfoView: UIView {
     let bookmarkButton = BookmarkButton()
 
     // MARK: - init
-
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupLayout()

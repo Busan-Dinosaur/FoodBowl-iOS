@@ -29,10 +29,10 @@ final class FeedCollectionViewCell: BaseCollectionViewCell {
 
     let photoListView = PhotoListView()
 
-    let storeInfoButton = StoreInfoView()
+    let storeInfoView = StoreInfoView()
 
     override func setupLayout() {
-        contentView.addSubviews(userInfoView, commentLabel, photoListView, storeInfoButton)
+        contentView.addSubviews(userInfoView, commentLabel, photoListView, storeInfoView)
 
         userInfoView.snp.makeConstraints {
             $0.top.leading.trailing.equalToSuperview()
@@ -51,7 +51,7 @@ final class FeedCollectionViewCell: BaseCollectionViewCell {
             $0.height.equalTo(100)
         }
 
-        storeInfoButton.snp.makeConstraints {
+        storeInfoView.snp.makeConstraints {
             $0.top.equalTo(photoListView.snp.bottom).offset(10)
             $0.leading.trailing.equalToSuperview().inset(BaseSize.horizantalPadding)
             $0.bottom.equalToSuperview().inset(14)
@@ -64,8 +64,8 @@ final class FeedCollectionViewCell: BaseCollectionViewCell {
         userInfoView.userNameButton.addAction(UIAction { _ in self.userButtonTapAction?(self) }, for: .touchUpInside)
         userInfoView.followButton.addAction(UIAction { _ in self.followButtonTapAction?(self) }, for: .touchUpInside)
         userInfoView.optionButton.addAction(UIAction { _ in self.optionButtonTapAction?(self) }, for: .touchUpInside)
-        storeInfoButton.storeNameButton.addAction(UIAction { _ in self.storeButtonTapAction?(self) }, for: .touchUpInside)
-        storeInfoButton.bookmarkButton.addAction(UIAction { _ in self.bookmarkButtonTapAction?(self) }, for: .touchUpInside)
+        storeInfoView.storeNameButton.addAction(UIAction { _ in self.storeButtonTapAction?(self) }, for: .touchUpInside)
+        storeInfoView.bookmarkButton.addAction(UIAction { _ in self.bookmarkButtonTapAction?(self) }, for: .touchUpInside)
     }
 
     override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes)

@@ -26,6 +26,10 @@ final class StoreDetailViewController: BaseViewController {
     private var refreshControl = UIRefreshControl()
 
     // MARK: - property
+    let switchButton = CustomSwitchButton(frame: CGRect(x: 0, y: 10, width: 50, height: 25))
+
+    private var storeHeaderView = StoreHeaderView()
+
     private let collectionViewFlowLayout = DynamicHeightCollectionViewFlowLayout().then {
         $0.sectionInset = Size.collectionInset
         $0.minimumLineSpacing = 20
@@ -47,11 +51,26 @@ final class StoreDetailViewController: BaseViewController {
     }
 
     override func setupLayout() {
-        view.addSubviews(listCollectionView)
+        view.addSubviews(storeHeaderView, listCollectionView)
+
+        storeHeaderView.snp.makeConstraints {
+            $0.top.equalTo(view.safeAreaLayoutGuide)
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(50)
+        }
 
         listCollectionView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
+            $0.top.equalTo(storeHeaderView.snp.bottom)
+            $0.leading.trailing.bottom.equalToSuperview()
         }
+    }
+
+    override func setupNavigationBar() {
+        super.setupNavigationBar()
+
+        let switchButton = makeBarButtonItem(with: switchButton)
+        navigationItem.rightBarButtonItem = switchButton
+        title = "친구들의 리뷰"
     }
 
     private func setupRefreshControl() {
@@ -121,9 +140,15 @@ extension StoreDetailViewController: UICollectionViewDataSource, UICollectionVie
 
         cell.bookmarkButtonTapAction = { [weak self] _ in
             self?.isBookmarked[indexPath.item].toggle()
-            cell.storeInfoButton.bookmarkButton.isSelected.toggle()
+            cell.storeInfoView.bookmarkButton.isSelected.toggle()
         }
-        cell.storeInfoButton.bookmarkButton.isSelected = isBookmarked[indexPath.item]
+        cell.storeInfoView.bookmarkButton.isSelected = isBookmarked[indexPath.item]
+
+        // 지도 디테일뷰에서는 장소 정보 필요없음
+        cell.storeInfoView.isHidden = true
+        cell.storeInfoView.snp.makeConstraints {
+            $0.height.equalTo(0)
+        }
 
         return cell
     }
