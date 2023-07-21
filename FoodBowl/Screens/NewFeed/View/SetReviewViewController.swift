@@ -81,7 +81,7 @@ final class SetReviewViewController: BaseViewController {
 
         guidePhotoLabel.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).inset(20)
-            $0.leading.equalToSuperview().inset(20)
+            $0.leading.equalToSuperview().inset(BaseSize.horizantalPadding)
         }
 
         listCollectionView.snp.makeConstraints {
@@ -92,12 +92,12 @@ final class SetReviewViewController: BaseViewController {
 
         guideCommentLabel.snp.makeConstraints {
             $0.top.equalTo(listCollectionView.snp.bottom).offset(30)
-            $0.leading.equalToSuperview().inset(20)
+            $0.leading.equalToSuperview().inset(BaseSize.horizantalPadding)
         }
 
         commentTextView.snp.makeConstraints {
             $0.top.equalTo(guideCommentLabel.snp.bottom).offset(10)
-            $0.leading.trailing.equalToSuperview().inset(20)
+            $0.leading.trailing.equalToSuperview().inset(BaseSize.horizantalPadding)
             $0.height.equalTo(100)
         }
     }

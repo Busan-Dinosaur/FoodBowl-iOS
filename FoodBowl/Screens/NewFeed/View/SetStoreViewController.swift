@@ -26,7 +26,7 @@ final class SetStoreViewController: BaseViewController {
     }
 
     lazy var searchBarButton = SearchBarButton().then {
-        $0.label.text = "가게 검색"
+        $0.placeholderLabel.text = "가게 검색"
         let action = UIAction { [weak self] _ in
             let searchStoreViewController = SearchStoreViewController()
             let navigationController = UINavigationController(rootViewController: searchStoreViewController)
@@ -50,18 +50,18 @@ final class SetStoreViewController: BaseViewController {
 
         guideLabel.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).inset(20)
-            $0.leading.equalToSuperview().inset(20)
+            $0.leading.equalToSuperview().inset(BaseSize.horizantalPadding)
         }
 
         searchBarButton.snp.makeConstraints {
             $0.top.equalTo(guideLabel.snp.bottom).offset(20)
-            $0.leading.trailing.equalToSuperview().inset(20)
+            $0.leading.trailing.equalToSuperview().inset(BaseSize.horizantalPadding)
             $0.height.equalTo(50)
         }
 
         selectedStoreView.snp.makeConstraints {
             $0.top.equalTo(searchBarButton.snp.bottom).offset(10)
-            $0.leading.trailing.equalToSuperview().inset(20)
+            $0.leading.trailing.equalToSuperview().inset(BaseSize.horizantalPadding)
             $0.height.equalTo(60)
         }
     }
@@ -104,27 +104,23 @@ final class SetStoreViewController: BaseViewController {
     func getCategory() {
         let categoryName = selectedStore!.categoryName
             .components(separatedBy: ">").map { $0.trimmingCharacters(in: .whitespaces) }
-
-        print(categoryName)
-
         let categories = Category.allCases.map { $0.rawValue }
         if categories.contains(categoryName[1]) == true {
             category = categoryName[1]
-            if category == "한식" && categoryName[2] == "해물,생선" {
+            let subCategory: String? = categoryName[2]
+            if subCategory == "해물,생선" {
                 category = "해산물"
             }
         } else {
             category = "기타"
         }
-
-        print(category)
     }
 }
 
 extension SetStoreViewController: SearchStoreViewControllerDelegate {
     func setStore(store: Place, category: String) {
         selectedStore = store
-        searchBarButton.label.text = "가게 재검색"
+        searchBarButton.placeholderLabel.text = "가게 재검색"
         selectedStoreView.storeNameLabel.text = selectedStore?.placeName
         selectedStoreView.storeAdressLabel.text = selectedStore?.addressName
         selectedStoreView.isHidden = false

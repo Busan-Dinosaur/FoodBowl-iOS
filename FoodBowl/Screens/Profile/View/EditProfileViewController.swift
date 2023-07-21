@@ -13,10 +13,8 @@ import YPImagePicker
 
 final class EditProfileViewController: BaseViewController {
     private var profileImage: UIImage = ImageLiteral.defaultProfile
-    private var maxLength = 10
 
     // MARK: - property
-
     private lazy var closeButton = CloseButton().then {
         let action = UIAction { [weak self] _ in
             self?.dismiss(animated: true, completion: nil)
@@ -28,7 +26,8 @@ final class EditProfileViewController: BaseViewController {
         $0.image = ImageLiteral.defaultProfile
         $0.layer.cornerRadius = 50
         $0.layer.masksToBounds = true
-        $0.clipsToBounds = true
+        $0.layer.borderColor = UIColor.grey002.cgColor
+        $0.layer.borderWidth = 1
         $0.isUserInteractionEnabled = true
         $0.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tappedProfileImageView)))
     }
@@ -51,7 +50,28 @@ final class EditProfileViewController: BaseViewController {
         $0.layer.masksToBounds = true
         $0.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 0))
         $0.leftViewMode = .always
-        $0.clipsToBounds = false
+        $0.clearButtonMode = .always
+        $0.makeBorderLayer(color: .grey002)
+    }
+
+    private let userInfoLabel = UILabel().then {
+        $0.text = "한줄 소개"
+        $0.font = UIFont.preferredFont(forTextStyle: .body, weight: .medium)
+    }
+
+    private let userInfoField = UITextField().then {
+        let attributes = [
+            NSAttributedString.Key.foregroundColor: UIColor.grey001,
+            NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .body, weight: .regular)
+        ]
+
+        $0.backgroundColor = .clear
+        $0.attributedPlaceholder = NSAttributedString(string: "20자 이내 한글 또는 영문", attributes: attributes)
+        $0.autocapitalizationType = .none
+        $0.layer.cornerRadius = 12
+        $0.layer.masksToBounds = true
+        $0.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 0))
+        $0.leftViewMode = .always
         $0.clearButtonMode = .always
         $0.makeBorderLayer(color: .grey002)
     }
@@ -65,21 +85,8 @@ final class EditProfileViewController: BaseViewController {
         $0.addAction(action, for: .touchUpInside)
     }
 
-    // MARK: - life cycle
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(textDidChange(_:)),
-            name: UITextField.textDidChangeNotification,
-            object: nicknameField
-        )
-    }
-
     override func setupLayout() {
-        view.addSubviews(profileImageView, nicknameLabel, nicknameField, signUpButton)
+        view.addSubviews(profileImageView, nicknameLabel, nicknameField, userInfoLabel, userInfoField, signUpButton)
 
         profileImageView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).inset(20)
@@ -89,18 +96,29 @@ final class EditProfileViewController: BaseViewController {
 
         nicknameLabel.snp.makeConstraints {
             $0.top.equalTo(profileImageView.snp.bottom).offset(20)
-            $0.leading.equalToSuperview().inset(20)
+            $0.leading.equalToSuperview().inset(BaseSize.horizantalPadding)
         }
 
         nicknameField.snp.makeConstraints {
             $0.top.equalTo(nicknameLabel.snp.bottom).offset(10)
-            $0.leading.trailing.equalToSuperview().inset(20)
+            $0.leading.trailing.equalToSuperview().inset(BaseSize.horizantalPadding)
+            $0.height.equalTo(60)
+        }
+
+        userInfoLabel.snp.makeConstraints {
+            $0.top.equalTo(nicknameField.snp.bottom).offset(40)
+            $0.leading.equalToSuperview().inset(BaseSize.horizantalPadding)
+        }
+
+        userInfoField.snp.makeConstraints {
+            $0.top.equalTo(userInfoLabel.snp.bottom).offset(10)
+            $0.leading.trailing.equalToSuperview().inset(BaseSize.horizantalPadding)
             $0.height.equalTo(60)
         }
 
         signUpButton.snp.makeConstraints {
-            $0.leading.trailing.equalToSuperview().inset(20)
-            $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(10)
+            $0.leading.trailing.equalToSuperview().inset(BaseSize.horizantalPadding)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide)
             $0.height.equalTo(60)
         }
     }
@@ -152,28 +170,11 @@ final class EditProfileViewController: BaseViewController {
         present(picker, animated: true, completion: nil)
     }
 
-    @objc
-    private func textDidChange(_ notification: Notification) {
-        if let textField = notification.object as? UITextField {
-            if let text = textField.text {
-                if text.count > maxLength {
-                    textField.resignFirstResponder()
-                }
-
-                if text.count >= maxLength {
-                    let index = text.index(text.startIndex, offsetBy: maxLength)
-                    let newString = text[text.startIndex ..< index]
-                    textField.text = String(newString)
-                }
-            }
-        }
-    }
-
     private func tappedCompleteButton() {
-        if nicknameField.text?.count != 0 {
+        if nicknameField.text?.count != 0 && userInfoField.text?.count != 0 {
             navigationController?.popViewController(animated: true)
         } else {
-            let alert = UIAlertController(title: nil, message: "사용할 닉네임을 입력해주세요", preferredStyle: .alert)
+            let alert = UIAlertController(title: nil, message: "닉네임과 한줄 소개를 입력해주세요", preferredStyle: .alert)
             let cancel = UIAlertAction(title: "닫기", style: .cancel, handler: nil)
 
             alert.addAction(cancel)

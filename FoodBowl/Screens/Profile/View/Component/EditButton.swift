@@ -1,8 +1,8 @@
 //
-//  FollowButton.swift
+//  EditButton.swift
 //  FoodBowl
 //
-//  Created by COBY_PRO on 2023/01/09.
+//  Created by COBY_PRO on 2023/07/22.
 //
 
 import UIKit
@@ -10,29 +10,15 @@ import UIKit
 import SnapKit
 import Then
 
-final class FollowButton: UIButton {
-    override var isSelected: Bool {
-        didSet {
-            if isSelected {
-                backgroundColor = .grey001
-                label.text = "팔로잉"
-            } else {
-                backgroundColor = .mainPink
-                label.text = "팔로우"
-            }
-        }
-    }
-
+final class EditButton: UIButton {
     // MARK: - property
-
     let label = UILabel().then {
         $0.textColor = .white
         $0.font = UIFont.preferredFont(forTextStyle: .footnote, weight: .medium)
-        $0.text = "팔로우"
+        $0.text = "수정"
     }
 
     // MARK: - init
-
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupLayout()
@@ -45,7 +31,6 @@ final class FollowButton: UIButton {
     }
 
     // MARK: - life cycle
-
     private func setupLayout() {
         addSubview(label)
 
@@ -55,8 +40,9 @@ final class FollowButton: UIButton {
     }
 
     private func configureUI() {
-        backgroundColor = .mainPink
+        backgroundColor = .mainBlue
         layer.cornerRadius = 15
-        layer.masksToBounds = false
+        layer.borderColor = UIColor.grey002.cgColor
+        layer.borderWidth = 1
     }
 }

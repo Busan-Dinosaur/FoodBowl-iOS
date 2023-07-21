@@ -11,7 +11,7 @@
 		CB1790C8296DAB470083D3A4 /* DynamicHeightCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1790C7296DAB470083D3A4 /* DynamicHeightCollectionViewFlowLayout.swift */; };
 		CB1A7C5C29560C2300C6431D /* UserInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1A7C5B29560C2300C6431D /* UserInfoView.swift */; };
 		CB1A7C5E295618A900C6431D /* SettingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1A7C5D295618A900C6431D /* SettingButton.swift */; };
-		CB1A7C6129561BCF00C6431D /* UserProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1A7C6029561BCF00C6431D /* UserProfileView.swift */; };
+		CB1A7C6129561BCF00C6431D /* ProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1A7C6029561BCF00C6431D /* ProfileHeaderView.swift */; };
 		CB1A7C6329561CF300C6431D /* SubButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1A7C6229561CF300C6431D /* SubButton.swift */; };
 		CB1A7C6829576D7900C6431D /* BaseScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1A7C6729576D7900C6431D /* BaseScrollView.swift */; };
 		CB1A7C6A29576DCC00C6431D /* HorizontalScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1A7C6929576DCC00C6431D /* HorizontalScrollView.swift */; };
@@ -19,8 +19,7 @@
 		CB2E4F7A2976F01700FD2566 /* UnderlineSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2E4F792976F01700FD2566 /* UnderlineSegmentedControl.swift */; };
 		CB2E4F7F297702A800FD2566 /* StoreInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2E4F7E297702A800FD2566 /* StoreInfoTableViewCell.swift */; };
 		CB2E4F81297702B800FD2566 /* UserInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2E4F80297702B800FD2566 /* UserInfoTableViewCell.swift */; };
-		CB2E4F8529772FFE00FD2566 /* UserFeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2E4F8429772FFE00FD2566 /* UserFeedViewController.swift */; };
-		CB2E4F892977393700FD2566 /* UserInfoButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2E4F882977393700FD2566 /* UserInfoButton.swift */; };
+		CB2E4F892977393700FD2566 /* FollowInfoButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2E4F882977393700FD2566 /* FollowInfoButton.swift */; };
 		CB4FBBF22978CFA90052D371 /* FollowerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB4FBBF12978CFA90052D371 /* FollowerViewController.swift */; };
 		CB4FBBF42978CFE40052D371 /* FollowingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB4FBBF32978CFE40052D371 /* FollowingViewController.swift */; };
 		CB558E9A29746B5D00921943 /* PhotoPlusCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB558E9929746B5D00921943 /* PhotoPlusCollectionViewCell.swift */; };
@@ -92,7 +91,8 @@
 		CBD1B6002984297100B0AD51 /* ChatSendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD1B5FF2984297100B0AD51 /* ChatSendView.swift */; };
 		CBD1B6022984394A00B0AD51 /* FeedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD1B6012984394A00B0AD51 /* FeedButton.swift */; };
 		CBDB8F8129897E0200DA2B1E /* Baumans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CBDB8F7F298979DD00DA2B1E /* Baumans-Regular.ttf */; };
-		CBDE38F92970745600DDE49A /* AddFeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDE38F82970745600DDE49A /* AddFeedViewController.swift */; };
+		CBDDF1402A6ADA3800AE3C50 /* EditButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDDF13F2A6ADA3800AE3C50 /* EditButton.swift */; };
+		CBDE38F92970745600DDE49A /* NewFeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDE38F82970745600DDE49A /* NewFeedViewController.swift */; };
 		CBDE38FB2970774800DDE49A /* CloseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDE38FA2970774800DDE49A /* CloseButton.swift */; };
 		CBDE38FD29715C5F00DDE49A /* SearchBarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDE38FC29715C5F00DDE49A /* SearchBarButton.swift */; };
 		CBDE39022971947B00DDE49A /* StoreSearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDE39012971947B00DDE49A /* StoreSearchTableViewCell.swift */; };
@@ -102,13 +102,12 @@
 		CBE6190F296C6435005295AF /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBE6190E296C6435005295AF /* MapViewController.swift */; };
 		CBE61911296C6804005295AF /* OptionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBE61910296C6804005295AF /* OptionButton.swift */; };
 		CBE61913296C68D9005295AF /* PlusButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBE61912296C68D9005295AF /* PlusButton.swift */; };
-		CBFB52552977B9240049E8BA /* StoreFeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBFB52542977B9240049E8BA /* StoreFeedViewController.swift */; };
+		CBFB52552977B9240049E8BA /* StoreDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBFB52542977B9240049E8BA /* StoreDetailViewController.swift */; };
 		CBFB52572977B94A0049E8BA /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBFB52562977B94A0049E8BA /* ChatViewController.swift */; };
 		CBFB525B2977B99B0049E8BA /* ChatTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBFB525A2977B99B0049E8BA /* ChatTableViewCell.swift */; };
 		CBFB525D2977B9C00049E8BA /* EmptyCommentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBFB525C2977B9C00049E8BA /* EmptyCommentView.swift */; };
 		CBFB525F2977C4800049E8BA /* MoreButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBFB525E2977C4800049E8BA /* MoreButton.swift */; };
 		CBFB52612977C9AB0049E8BA /* FindViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBFB52602977C9AB0049E8BA /* FindViewController.swift */; };
-		CBFB52632977CB9F0049E8BA /* UserMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBFB52622977CB9F0049E8BA /* UserMapViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -116,7 +115,7 @@
 		CB1790C7296DAB470083D3A4 /* DynamicHeightCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicHeightCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
 		CB1A7C5B29560C2300C6431D /* UserInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoView.swift; sourceTree = "<group>"; };
 		CB1A7C5D295618A900C6431D /* SettingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingButton.swift; sourceTree = "<group>"; };
-		CB1A7C6029561BCF00C6431D /* UserProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileView.swift; sourceTree = "<group>"; };
+		CB1A7C6029561BCF00C6431D /* ProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderView.swift; sourceTree = "<group>"; };
 		CB1A7C6229561CF300C6431D /* SubButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubButton.swift; sourceTree = "<group>"; };
 		CB1A7C6729576D7900C6431D /* BaseScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseScrollView.swift; sourceTree = "<group>"; };
 		CB1A7C6929576DCC00C6431D /* HorizontalScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalScrollView.swift; sourceTree = "<group>"; };
@@ -124,8 +123,7 @@
 		CB2E4F792976F01700FD2566 /* UnderlineSegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnderlineSegmentedControl.swift; sourceTree = "<group>"; };
 		CB2E4F7E297702A800FD2566 /* StoreInfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreInfoTableViewCell.swift; sourceTree = "<group>"; };
 		CB2E4F80297702B800FD2566 /* UserInfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoTableViewCell.swift; sourceTree = "<group>"; };
-		CB2E4F8429772FFE00FD2566 /* UserFeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserFeedViewController.swift; sourceTree = "<group>"; };
-		CB2E4F882977393700FD2566 /* UserInfoButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoButton.swift; sourceTree = "<group>"; };
+		CB2E4F882977393700FD2566 /* FollowInfoButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowInfoButton.swift; sourceTree = "<group>"; };
 		CB4FBBF12978CFA90052D371 /* FollowerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowerViewController.swift; sourceTree = "<group>"; };
 		CB4FBBF32978CFE40052D371 /* FollowingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowingViewController.swift; sourceTree = "<group>"; };
 		CB558E9929746B5D00921943 /* PhotoPlusCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPlusCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -195,7 +193,8 @@
 		CBD1B5FF2984297100B0AD51 /* ChatSendView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatSendView.swift; sourceTree = "<group>"; };
 		CBD1B6012984394A00B0AD51 /* FeedButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedButton.swift; sourceTree = "<group>"; };
 		CBDB8F7F298979DD00DA2B1E /* Baumans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Baumans-Regular.ttf"; sourceTree = "<group>"; };
-		CBDE38F82970745600DDE49A /* AddFeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFeedViewController.swift; sourceTree = "<group>"; };
+		CBDDF13F2A6ADA3800AE3C50 /* EditButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditButton.swift; sourceTree = "<group>"; };
+		CBDE38F82970745600DDE49A /* NewFeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewFeedViewController.swift; sourceTree = "<group>"; };
 		CBDE38FA2970774800DDE49A /* CloseButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloseButton.swift; sourceTree = "<group>"; };
 		CBDE38FC29715C5F00DDE49A /* SearchBarButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBarButton.swift; sourceTree = "<group>"; };
 		CBDE39012971947B00DDE49A /* StoreSearchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreSearchTableViewCell.swift; sourceTree = "<group>"; };
@@ -205,13 +204,12 @@
 		CBE6190E296C6435005295AF /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		CBE61910296C6804005295AF /* OptionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionButton.swift; sourceTree = "<group>"; };
 		CBE61912296C68D9005295AF /* PlusButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlusButton.swift; sourceTree = "<group>"; };
-		CBFB52542977B9240049E8BA /* StoreFeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreFeedViewController.swift; sourceTree = "<group>"; };
+		CBFB52542977B9240049E8BA /* StoreDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreDetailViewController.swift; sourceTree = "<group>"; };
 		CBFB52562977B94A0049E8BA /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		CBFB525A2977B99B0049E8BA /* ChatTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatTableViewCell.swift; sourceTree = "<group>"; };
 		CBFB525C2977B9C00049E8BA /* EmptyCommentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyCommentView.swift; sourceTree = "<group>"; };
 		CBFB525E2977C4800049E8BA /* MoreButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreButton.swift; sourceTree = "<group>"; };
 		CBFB52602977C9AB0049E8BA /* FindViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindViewController.swift; sourceTree = "<group>"; };
-		CBFB52622977CB9F0049E8BA /* UserMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMapViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -230,21 +228,49 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		CB1A7C5F29561B8400C6431D /* UIComponent */ = {
+		CB1A7C5F29561B8400C6431D /* Component */ = {
 			isa = PBXGroup;
 			children = (
-				CB1A7C6029561BCF00C6431D /* UserProfileView.swift */,
-				CB2E4F882977393700FD2566 /* UserInfoButton.swift */,
+				CB1A7C6029561BCF00C6431D /* ProfileHeaderView.swift */,
+				CB2E4F882977393700FD2566 /* FollowInfoButton.swift */,
+				CBE6190B296C635D005295AF /* FollowButton.swift */,
+				CBDDF13F2A6ADA3800AE3C50 /* EditButton.swift */,
 			);
-			path = UIComponent;
+			path = Component;
 			sourceTree = "<group>";
 		};
-		CB1A7C66295767F000C6431D /* UIComponent */ = {
+		CB1A7C66295767F000C6431D /* Component */ = {
 			isa = PBXGroup;
 			children = (
 				CBDE390629719CB400DDE49A /* SelectedStoreView.swift */,
 			);
-			path = UIComponent;
+			path = Component;
+			sourceTree = "<group>";
+		};
+		CB26A3ED2A6AC9910043A642 /* Feed */ = {
+			isa = PBXGroup;
+			children = (
+				CBDDF1392A6AD74E00AE3C50 /* View */,
+			);
+			path = Feed;
+			sourceTree = "<group>";
+		};
+		CB26A3EE2A6AC9A50043A642 /* Component */ = {
+			isa = PBXGroup;
+			children = (
+				CBADC2DD2955ACBB00E56C93 /* EmptyFeedView.swift */,
+				CB1A7C5B29560C2300C6431D /* UserInfoView.swift */,
+				CB1BCAF62958B15B0021617D /* StoreInfoView.swift */,
+			);
+			path = Component;
+			sourceTree = "<group>";
+		};
+		CB26A3EF2A6AC9C80043A642 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				CBADC2D72955AC5900E56C93 /* FeedCollectionViewCell.swift */,
+			);
+			path = Cell;
 			sourceTree = "<group>";
 		};
 		CB63B7592A6986B4000AD9C2 /* Map */ = {
@@ -268,6 +294,7 @@
 			isa = PBXGroup;
 			children = (
 				CBB58283297440A600808B0B /* CategoryCollectionViewCell.swift */,
+				CB2E4F7E297702A800FD2566 /* StoreInfoTableViewCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -278,6 +305,7 @@
 				CB63B75A2A6986BE000AD9C2 /* Component */,
 				CB63B75B2A6986C8000AD9C2 /* Cell */,
 				CBE6190E296C6435005295AF /* MapViewController.swift */,
+				CBB582812973007D00808B0B /* ShowWebViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -299,7 +327,6 @@
 				CBB778D82979B17200B9994A /* PinButton.swift */,
 				CBADC2DF2955B92D00E56C93 /* MainButton.swift */,
 				CB1A7C6229561CF300C6431D /* SubButton.swift */,
-				CBE6190B296C635D005295AF /* FollowButton.swift */,
 			);
 			path = Button;
 			sourceTree = "<group>";
@@ -335,13 +362,13 @@
 		CBADC25129559BC900E56C93 /* Global */ = {
 			isa = PBXGroup;
 			children = (
-				CBADC25229559BC900E56C93 /* Supports */,
-				CBADC25829559BC900E56C93 /* Literal */,
-				CBADC25A29559BC900E56C93 /* Utils */,
-				CBADC26129559BC900E56C93 /* Extensions */,
-				CBADC26F29559BC900E56C93 /* Resource */,
-				CBADC27429559BC900E56C93 /* Base */,
 				CBADC27829559BC900E56C93 /* Component */,
+				CBADC27429559BC900E56C93 /* Base */,
+				CBADC25A29559BC900E56C93 /* Utils */,
+				CBADC25829559BC900E56C93 /* Literal */,
+				CBADC26129559BC900E56C93 /* Extensions */,
+				CBADC25229559BC900E56C93 /* Supports */,
+				CBADC26F29559BC900E56C93 /* Resource */,
 			);
 			path = Global;
 			sourceTree = "<group>";
@@ -350,7 +377,6 @@
 			isa = PBXGroup;
 			children = (
 				CBADC2CE2955A41500E56C93 /* TabBarController.swift */,
-				CBB582812973007D00808B0B /* ShowWebViewController.swift */,
 				CBC73103295550A100C7F198 /* AppDelegate.swift */,
 				CBC73105295550A100C7F198 /* SceneDelegate.swift */,
 				CBC73111295550A200C7F198 /* Info.plist */,
@@ -436,9 +462,8 @@
 			children = (
 				CBADC2D02955AB7300E56C93 /* UIComponent */,
 				CBADC2BE2955A24A00E56C93 /* Cell */,
-				CBC73107295550A100C7F198 /* MainViewController.swift */,
-				CBFB52542977B9240049E8BA /* StoreFeedViewController.swift */,
 				CBFB52562977B94A0049E8BA /* ChatViewController.swift */,
+				CBC73107295550A100C7F198 /* MainViewController.swift */,
 			);
 			path = DeplicatedMain;
 			sourceTree = "<group>";
@@ -446,30 +471,17 @@
 		CBADC2A52955A07B00E56C93 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
-				CB1A7C5F29561B8400C6431D /* UIComponent */,
-				CBD1B5F22982D38300B0AD51 /* Cell */,
-				CBADC2AC2955A0FF00E56C93 /* ProfileViewController.swift */,
-				CB2E4F8429772FFE00FD2566 /* UserFeedViewController.swift */,
-				CBFB52622977CB9F0049E8BA /* UserMapViewController.swift */,
-				CB4FBBF12978CFA90052D371 /* FollowerViewController.swift */,
-				CB4FBBF32978CFE40052D371 /* FollowingViewController.swift */,
-				CBD1B5EE2982A5AD00B0AD51 /* EditProfileViewController.swift */,
-				CBD1B5F02982B0A300B0AD51 /* SettingViewController.swift */,
+				CBDDF13E2A6AD76E00AE3C50 /* View */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
 		};
-		CBADC2B02955A13800E56C93 /* Feed */ = {
+		CBADC2B02955A13800E56C93 /* NewFeed */ = {
 			isa = PBXGroup;
 			children = (
-				CB1A7C66295767F000C6431D /* UIComponent */,
-				CBDE39002971945300DDE49A /* Cell */,
-				CBDE38F82970745600DDE49A /* AddFeedViewController.swift */,
-				CBADC2B42955A18C00E56C93 /* SearchStoreViewController.swift */,
-				CBADC2B22955A16A00E56C93 /* SetStoreViewController.swift */,
-				CBADC2B82955A1CC00E56C93 /* SetReviewViewController.swift */,
+				CBDDF13A2A6AD75700AE3C50 /* View */,
 			);
-			path = Feed;
+			path = NewFeed;
 			sourceTree = "<group>";
 		};
 		CBADC2B12955A14C00E56C93 /* Screens */ = {
@@ -477,11 +489,12 @@
 			children = (
 				CB981C28297A5A2900AF0167 /* Sign */,
 				CB63B7592A6986B4000AD9C2 /* Map */,
+				CB26A3ED2A6AC9910043A642 /* Feed */,
+				CBADC2B02955A13800E56C93 /* NewFeed */,
 				CBE6190D296C6423005295AF /* Friend */,
 				CBCD0F802A66DA2A00A51B32 /* Bookmark */,
 				CBCD0F7D2A66DA0B00A51B32 /* Univ */,
 				CBADC2A52955A07B00E56C93 /* Profile */,
-				CBADC2B02955A13800E56C93 /* Feed */,
 				CBADC2A22955A05500E56C93 /* DeplicatedMain */,
 			);
 			path = Screens;
@@ -490,7 +503,6 @@
 		CBADC2BE2955A24A00E56C93 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
-				CBADC2D72955AC5900E56C93 /* FeedCollectionViewCell.swift */,
 				CBFB525A2977B99B0049E8BA /* ChatTableViewCell.swift */,
 			);
 			path = Cell;
@@ -499,10 +511,7 @@
 		CBADC2D02955AB7300E56C93 /* UIComponent */ = {
 			isa = PBXGroup;
 			children = (
-				CBADC2DD2955ACBB00E56C93 /* EmptyFeedView.swift */,
 				CBFB525C2977B9C00049E8BA /* EmptyCommentView.swift */,
-				CB1A7C5B29560C2300C6431D /* UserInfoView.swift */,
-				CB1BCAF62958B15B0021617D /* StoreInfoView.swift */,
 				CBD1B5FF2984297100B0AD51 /* ChatSendView.swift */,
 			);
 			path = UIComponent;
@@ -540,7 +549,7 @@
 		CBCD0F7D2A66DA0B00A51B32 /* Univ */ = {
 			isa = PBXGroup;
 			children = (
-				CBCD0F7E2A66DA1600A51B32 /* UnivViewController.swift */,
+				CBDDF13D2A6AD76900AE3C50 /* View */,
 			);
 			path = Univ;
 			sourceTree = "<group>";
@@ -548,7 +557,7 @@
 		CBCD0F802A66DA2A00A51B32 /* Bookmark */ = {
 			isa = PBXGroup;
 			children = (
-				CBCD0F812A66DA3700A51B32 /* BookmarkViewController.swift */,
+				CBDDF13C2A6AD76400AE3C50 /* View */,
 			);
 			path = Bookmark;
 			sourceTree = "<group>";
@@ -556,7 +565,6 @@
 		CBD1B5F22982D38300B0AD51 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
-				CB2E4F7E297702A800FD2566 /* StoreInfoTableViewCell.swift */,
 				CB2E4F80297702B800FD2566 /* UserInfoTableViewCell.swift */,
 				CBD1B5F32982D39B00B0AD51 /* SettingItemTableViewCell.swift */,
 			);
@@ -569,6 +577,68 @@
 				CBDB8F7F298979DD00DA2B1E /* Baumans-Regular.ttf */,
 			);
 			path = Fonts;
+			sourceTree = "<group>";
+		};
+		CBDDF1392A6AD74E00AE3C50 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				CB26A3EE2A6AC9A50043A642 /* Component */,
+				CB26A3EF2A6AC9C80043A642 /* Cell */,
+				CBFB52542977B9240049E8BA /* StoreDetailViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		CBDDF13A2A6AD75700AE3C50 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				CB1A7C66295767F000C6431D /* Component */,
+				CBDE39002971945300DDE49A /* Cell */,
+				CBDE38F82970745600DDE49A /* NewFeedViewController.swift */,
+				CBADC2B42955A18C00E56C93 /* SearchStoreViewController.swift */,
+				CBADC2B22955A16A00E56C93 /* SetStoreViewController.swift */,
+				CBADC2B82955A1CC00E56C93 /* SetReviewViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		CBDDF13B2A6AD75E00AE3C50 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				CBFB52602977C9AB0049E8BA /* FindViewController.swift */,
+				CBCD0F7B2A66D9BC00A51B32 /* FriendViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		CBDDF13C2A6AD76400AE3C50 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				CBCD0F812A66DA3700A51B32 /* BookmarkViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		CBDDF13D2A6AD76900AE3C50 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				CBCD0F7E2A66DA1600A51B32 /* UnivViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		CBDDF13E2A6AD76E00AE3C50 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				CB1A7C5F29561B8400C6431D /* Component */,
+				CBD1B5F22982D38300B0AD51 /* Cell */,
+				CBADC2AC2955A0FF00E56C93 /* ProfileViewController.swift */,
+				CB4FBBF12978CFA90052D371 /* FollowerViewController.swift */,
+				CB4FBBF32978CFE40052D371 /* FollowingViewController.swift */,
+				CBD1B5EE2982A5AD00B0AD51 /* EditProfileViewController.swift */,
+				CBD1B5F02982B0A300B0AD51 /* SettingViewController.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		CBDE39002971945300DDE49A /* Cell */ = {
@@ -594,8 +664,7 @@
 		CBE6190D296C6423005295AF /* Friend */ = {
 			isa = PBXGroup;
 			children = (
-				CBFB52602977C9AB0049E8BA /* FindViewController.swift */,
-				CBCD0F7B2A66D9BC00A51B32 /* FriendViewController.swift */,
+				CBDDF13B2A6AD75E00AE3C50 /* View */,
 			);
 			path = Friend;
 			sourceTree = "<group>";
@@ -736,18 +805,17 @@
 				CBD1B6022984394A00B0AD51 /* FeedButton.swift in Sources */,
 				CBD1B5FE2982F19300B0AD51 /* UIButton+Extension.swift in Sources */,
 				CBD1B5F42982D39B00B0AD51 /* SettingItemTableViewCell.swift in Sources */,
-				CB2E4F8529772FFE00FD2566 /* UserFeedViewController.swift in Sources */,
 				CBCD0F7F2A66DA1600A51B32 /* UnivViewController.swift in Sources */,
 				CB1BCAF72958B15B0021617D /* StoreInfoView.swift in Sources */,
 				CB2E4F7F297702A800FD2566 /* StoreInfoTableViewCell.swift in Sources */,
 				CB558E9C2975B80B00921943 /* Feed.swift in Sources */,
 				CB1A7C6829576D7900C6431D /* BaseScrollView.swift in Sources */,
-				CB1A7C6129561BCF00C6431D /* UserProfileView.swift in Sources */,
+				CB1A7C6129561BCF00C6431D /* ProfileHeaderView.swift in Sources */,
 				CBADC2E22955C63300E56C93 /* PhotoCollectionViewCell.swift in Sources */,
 				CBD1B5EF2982A5AD00B0AD51 /* EditProfileViewController.swift in Sources */,
 				CBADC28A29559BC900E56C93 /* UIFont+Extension.swift in Sources */,
 				CB1A7C6A29576DCC00C6431D /* HorizontalScrollView.swift in Sources */,
-				CBFB52552977B9240049E8BA /* StoreFeedViewController.swift in Sources */,
+				CBFB52552977B9240049E8BA /* StoreDetailViewController.swift in Sources */,
 				CBFB525D2977B9C00049E8BA /* EmptyCommentView.swift in Sources */,
 				CB7F3325298A51560000A6B4 /* UserDefaultStorage.swift in Sources */,
 				CBA7F17F297DB2F6006088A0 /* SetProfileViewController.swift in Sources */,
@@ -759,7 +827,7 @@
 				CBC73108295550A100C7F198 /* MainViewController.swift in Sources */,
 				CBCD0F7C2A66D9BC00A51B32 /* FriendViewController.swift in Sources */,
 				CBD1B5F82982D9E100B0AD51 /* ForwardButton.swift in Sources */,
-				CB2E4F892977393700FD2566 /* UserInfoButton.swift in Sources */,
+				CB2E4F892977393700FD2566 /* FollowInfoButton.swift in Sources */,
 				CBADC2CF2955A41500E56C93 /* TabBarController.swift in Sources */,
 				CBB12B142985845900AC0EF2 /* String+Extension.swift in Sources */,
 				CBB58284297440A600808B0B /* CategoryCollectionViewCell.swift in Sources */,
@@ -775,6 +843,7 @@
 				CB1566D9298D72FF0056B7D9 /* LocationManager.swift in Sources */,
 				CBE6190F296C6435005295AF /* MapViewController.swift in Sources */,
 				CB4FBBF42978CFE40052D371 /* FollowingViewController.swift in Sources */,
+				CBDDF1402A6ADA3800AE3C50 /* EditButton.swift in Sources */,
 				CBADC2A129559BC900E56C93 /* BackButton.swift in Sources */,
 				CBADC29A29559BC900E56C93 /* BaseViewController.swift in Sources */,
 				CBADC2B92955A1CC00E56C93 /* SetReviewViewController.swift in Sources */,
@@ -808,7 +877,7 @@
 				CBADC2A029559BC900E56C93 /* PaddingLabel.swift in Sources */,
 				CBADC29C29559BC900E56C93 /* BaseCollectionViewCell.swift in Sources */,
 				CB1A7C5C29560C2300C6431D /* UserInfoView.swift in Sources */,
-				CBDE38F92970745600DDE49A /* AddFeedViewController.swift in Sources */,
+				CBDE38F92970745600DDE49A /* NewFeedViewController.swift in Sources */,
 				CBDE390729719CB400DDE49A /* SelectedStoreView.swift in Sources */,
 				CBADC29129559BC900E56C93 /* UICollectionView+Extension.swift in Sources */,
 				CBADC2D82955AC5900E56C93 /* FeedCollectionViewCell.swift in Sources */,
@@ -817,7 +886,6 @@
 				CBD1B5FA2982E55F00B0AD51 /* AgreementViewController.swift in Sources */,
 				CBDE38FD29715C5F00DDE49A /* SearchBarButton.swift in Sources */,
 				CBADC2DE2955ACBB00E56C93 /* EmptyFeedView.swift in Sources */,
-				CBFB52632977CB9F0049E8BA /* UserMapViewController.swift in Sources */,
 				CBADC28D29559BC900E56C93 /* NSObject+Extension.swift in Sources */,
 				CBDE390529719B9700DDE49A /* Place.swift in Sources */,
 				CBADC29629559BC900E56C93 /* UITableView+Extension.swift in Sources */,
@@ -889,6 +957,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "풋볼";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -943,6 +1012,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "풋볼";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -960,7 +1030,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = FoodBowl/FoodBowl.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 0;
 				DEVELOPMENT_TEAM = 3Y8YH8GWMM;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = FoodBowl/Global/Supports/Info.plist;
@@ -975,7 +1045,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.4;
+				MARKETING_VERSION = 0.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.coby.FoodBowl;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -994,7 +1064,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = FoodBowl/FoodBowl.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 0;
 				DEVELOPMENT_TEAM = 3Y8YH8GWMM;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = FoodBowl/Global/Supports/Info.plist;
@@ -1009,7 +1079,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.4;
+				MARKETING_VERSION = 0.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.coby.FoodBowl;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";

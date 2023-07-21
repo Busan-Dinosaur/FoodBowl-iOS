@@ -1,8 +1,8 @@
 //
-//  StoreSearchTableViewCell.swift
+//  StoreInfoTableViewCell.swift
 //  FoodBowl
 //
-//  Created by Coby Kim on 2023/01/13.
+//  Created by COBY_PRO on 2023/01/18.
 //
 
 import UIKit
@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 import Then
 
-final class StoreSearchTableViewCell: BaseTableViewCell {
+final class StoreInfoTableViewCell: BaseTableViewCell {
     // MARK: - property
 
     let storeNameLabel = UILabel().then {
@@ -18,7 +18,7 @@ final class StoreSearchTableViewCell: BaseTableViewCell {
         $0.textColor = .mainText
     }
 
-    let storeAdressLabel = UILabel().then {
+    let storeFeedLabel = UILabel().then {
         $0.font = UIFont.preferredFont(forTextStyle: .caption1, weight: .light)
         $0.textColor = .subText
     }
@@ -31,20 +31,20 @@ final class StoreSearchTableViewCell: BaseTableViewCell {
     // MARK: - func
 
     override func setupLayout() {
-        contentView.addSubviews(storeNameLabel, storeAdressLabel, storeDistanceLabel)
+        contentView.addSubviews(storeNameLabel, storeFeedLabel, storeDistanceLabel)
 
         storeNameLabel.snp.makeConstraints {
-            $0.leading.equalToSuperview().inset(20)
+            $0.leading.equalToSuperview().inset(BaseSize.horizantalPadding)
             $0.top.equalToSuperview().inset(12)
         }
 
-        storeAdressLabel.snp.makeConstraints {
-            $0.leading.equalToSuperview().inset(20)
+        storeFeedLabel.snp.makeConstraints {
+            $0.leading.equalToSuperview().inset(BaseSize.horizantalPadding)
             $0.bottom.equalToSuperview().inset(12)
         }
 
         storeDistanceLabel.snp.makeConstraints {
-            $0.trailing.equalToSuperview().inset(20)
+            $0.trailing.equalToSuperview().inset(BaseSize.horizantalPadding)
             $0.bottom.equalToSuperview().inset(12)
         }
     }

@@ -1,5 +1,5 @@
 //
-//  StoreFeedViewController.swift
+//  StoreDetailViewController.swift
 //  FoodBowl
 //
 //  Created by COBY_PRO on 2023/01/18.
@@ -11,7 +11,7 @@ import UIKit
 import SnapKit
 import Then
 
-final class StoreFeedViewController: BaseViewController {
+final class StoreDetailViewController: BaseViewController {
     private enum Size {
         static let collectionInset = UIEdgeInsets(
             top: 0,
@@ -78,7 +78,7 @@ final class StoreFeedViewController: BaseViewController {
 
 // MARK: - UICollectionViewDataSource, UICollectionViewDelegate
 
-extension StoreFeedViewController: UICollectionViewDataSource, UICollectionViewDelegate {
+extension StoreDetailViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_: UICollectionView, numberOfItemsInSection _: Int) -> Int {
         return 10
     }
@@ -112,9 +112,9 @@ extension StoreFeedViewController: UICollectionViewDataSource, UICollectionViewD
         }
 
         cell.storeButtonTapAction = { _ in
-            let storeFeedViewController = StoreFeedViewController()
-            storeFeedViewController.title = "틈새라면"
-            self.navigationController?.pushViewController(storeFeedViewController, animated: true)
+            let storeDetailViewController = StoreDetailViewController()
+            storeDetailViewController.title = "틈새라면"
+            self.navigationController?.pushViewController(storeDetailViewController, animated: true)
         }
 
         cell.bookmarkButtonTapAction = { _ in
@@ -169,7 +169,7 @@ extension StoreFeedViewController: UICollectionViewDataSource, UICollectionViewD
     }
 }
 
-extension StoreFeedViewController {
+extension StoreDetailViewController {
     // Standard scroll-view delegate
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let contentSize = scrollView.contentSize.height
@@ -182,7 +182,7 @@ extension StoreFeedViewController {
     private func didScrollToBottom() {}
 }
 
-extension StoreFeedViewController: MFMailComposeViewControllerDelegate {
+extension StoreDetailViewController: MFMailComposeViewControllerDelegate {
     func sendReportMail() {
         if MFMailComposeViewController.canSendMail() {
             let composeVC = MFMailComposeViewController()
