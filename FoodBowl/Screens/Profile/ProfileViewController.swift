@@ -5,6 +5,7 @@
 //  Created by COBY_PRO on 2022/12/23.
 //
 
+import MapKit
 import MessageUI
 import UIKit
 
@@ -25,6 +26,32 @@ final class ProfileViewController: BaseViewController {
     }
 
     // MARK: - property
+    // MARK: - property
+    private lazy var mapView = MKMapView().then {
+        $0.delegate = self
+        $0.mapType = MKMapType.standard
+        $0.showsUserLocation = true
+        $0.setUserTrackingMode(.follow, animated: true)
+        $0.isZoomEnabled = true
+        $0.showsCompass = false
+        $0.register(
+            MapItemAnnotationView.self,
+            forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier
+        )
+        $0.register(
+            ClusterAnnotationView.self,
+            forAnnotationViewWithReuseIdentifier: MKMapViewDefaultClusterAnnotationViewReuseIdentifier
+        )
+    }
+
+    private lazy var trakingButton = MKUserTrackingButton(mapView: mapView).then {
+        $0.layer.backgroundColor = UIColor.mainBackground.cgColor
+        $0.layer.borderColor = UIColor.grey002.cgColor
+        $0.layer.borderWidth = 1
+        $0.layer.cornerRadius = 10
+        $0.layer.masksToBounds = true
+        $0.tintColor = UIColor.mainPink
+    }
 
     let userNicknameLabel = UILabel().then {
         $0.font = UIFont.preferredFont(forTextStyle: .title1, weight: .bold)
@@ -52,14 +79,6 @@ final class ProfileViewController: BaseViewController {
         $0.addAction(settingAction, for: .touchUpInside)
     }
 
-    private lazy var pinButton = PinButton().then {
-        let mapAction = UIAction { [weak self] _ in
-            let userMapViewController = UserMapViewController()
-            self?.navigationController?.pushViewController(userMapViewController, animated: true)
-        }
-        $0.addAction(mapAction, for: .touchUpInside)
-    }
-
     private lazy var optionButton = OptionButton().then {
         let optionButtonAction = UIAction { [weak self] _ in
             let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
@@ -77,7 +96,7 @@ final class ProfileViewController: BaseViewController {
         $0.addAction(optionButtonAction, for: .touchUpInside)
     }
 
-    private lazy var userProfileView = UserProfileView().then {
+    private lazy var userProfileView = ProfileHeaderView().then {
         let followerAction = UIAction { [weak self] _ in
             let followerViewController = FollowerViewController()
             self?.navigationController?.pushViewController(followerViewController, animated: true)
@@ -107,97 +126,23 @@ final class ProfileViewController: BaseViewController {
         $0.editButton.addAction(editButtonAction, for: .touchUpInside)
     }
 
-    private lazy var segmentedControl = UnderlineSegmentedControl(items: ["게시물 24", "북마크 53"]).then {
-        $0.translatesAutoresizingMaskIntoConstraints = false
-        $0.setTitleTextAttributes(
-            [
-                NSAttributedString.Key.foregroundColor: UIColor.subText,
-                .font: UIFont.preferredFont(forTextStyle: .headline, weight: .medium)
-            ],
-            for: .normal
-        )
-        $0.setTitleTextAttributes(
-            [
-                NSAttributedString.Key.foregroundColor: UIColor.mainText,
-                .font: UIFont.preferredFont(forTextStyle: .headline, weight: .semibold)
-            ],
-            for: .selected
-        )
-        $0.selectedSegmentIndex = 0
-        $0.addTarget(self, action: #selector(changeValue(control:)), for: .valueChanged)
-    }
-
-    private let childView = UIView().then {
-        $0.translatesAutoresizingMaskIntoConstraints = false
-    }
-
-    private let vc1 = UserFeedViewController()
-    private let vc2 = UserFeedViewController()
-
-    private lazy var pageViewController = UIPageViewController(
-        transitionStyle: .scroll,
-        navigationOrientation: .horizontal,
-        options: nil
-    ).then {
-        $0.setViewControllers([self.dataViewControllers[0]], direction: .forward, animated: true)
-        $0.delegate = self
-        $0.dataSource = self
-        $0.view.translatesAutoresizingMaskIntoConstraints = false
-    }
-
-    var dataViewControllers: [UIViewController] {
-        [vc1, vc2]
-    }
-
-    var currentPage = 0 {
-        didSet {
-            let direction: UIPageViewController.NavigationDirection = oldValue <= self.currentPage ? .forward : .reverse
-            self.pageViewController.setViewControllers(
-                [dataViewControllers[self.currentPage]],
-                direction: direction,
-                animated: true,
-                completion: nil
-            )
-        }
-    }
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        changeValue(control: segmentedControl)
-        if isOwn {
-            userProfileView.followButton.isHidden = true
-        } else {
-            userProfileView.editButton.isHidden = true
-        }
-
-        let storeHandler = { [weak self] in
-            let storeFeedViewController = StoreFeedViewController()
-            storeFeedViewController.title = "coby5502"
-            self?.navigationController?.pushViewController(storeFeedViewController, animated: true)
-        }
-
-        vc1.handler = storeHandler
-        vc2.handler = storeHandler
-    }
-
     override func setupLayout() {
-        view.addSubviews(userProfileView, segmentedControl, pageViewController.view)
+        view.addSubviews(mapView, trakingButton, userProfileView)
+
+        mapView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
+
+        trakingButton.snp.makeConstraints {
+            $0.trailing.equalToSuperview().inset(BaseSize.horizantalPadding)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(40)
+            $0.height.width.equalTo(40)
+        }
 
         userProfileView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide)
             $0.leading.trailing.equalToSuperview()
-            $0.height.equalTo(100)
-        }
-
-        segmentedControl.snp.makeConstraints {
-            $0.top.equalTo(userProfileView.snp.bottom)
-            $0.leading.trailing.equalToSuperview()
-            $0.height.equalTo(50)
-        }
-
-        pageViewController.view.snp.makeConstraints {
-            $0.top.equalTo(segmentedControl.snp.bottom).offset(4)
-            $0.leading.trailing.bottom.equalToSuperview()
+            $0.height.equalTo(150)
         }
     }
 
@@ -210,56 +155,17 @@ final class ProfileViewController: BaseViewController {
             let settingButton = makeBarButtonItem(with: settingButton)
             navigationItem.leftBarButtonItem = userNicknameLabel
             navigationItem.rightBarButtonItems = [settingButton, plusButton]
+            userProfileView.followButton.isHidden = true
         } else {
-            let pinButton = makeBarButtonItem(with: pinButton)
             let optionButton = makeBarButtonItem(with: optionButton)
-            navigationItem.rightBarButtonItems = [optionButton, pinButton]
+            navigationItem.leftBarButtonItem = optionButton
             title = "coby5502"
+            userProfileView.editButton.isHidden = true
         }
     }
 
-    @objc
-    private func changeValue(control: UISegmentedControl) {
-        currentPage = control.selectedSegmentIndex
-    }
-
     private func followUser() {
-        userProfileView.followButton.isSelected = !userProfileView.followButton.isSelected
-    }
-}
-
-extension ProfileViewController: UIPageViewControllerDataSource, UIPageViewControllerDelegate {
-    func pageViewController(
-        _: UIPageViewController,
-        viewControllerBefore viewController: UIViewController
-    ) -> UIViewController? {
-        guard let index = dataViewControllers.firstIndex(of: viewController),
-              index - 1 >= 0
-        else { return nil }
-        return dataViewControllers[index - 1]
-    }
-
-    func pageViewController(
-        _: UIPageViewController,
-        viewControllerAfter viewController: UIViewController
-    ) -> UIViewController? {
-        guard let index = dataViewControllers.firstIndex(of: viewController),
-              index + 1 < dataViewControllers.count
-        else { return nil }
-        return dataViewControllers[index + 1]
-    }
-
-    func pageViewController(
-        _ pageViewController: UIPageViewController,
-        didFinishAnimating _: Bool,
-        previousViewControllers _: [UIViewController],
-        transitionCompleted _: Bool
-    ) {
-        guard let viewController = pageViewController.viewControllers?[0],
-              let index = dataViewControllers.firstIndex(of: viewController)
-        else { return }
-        currentPage = index
-        segmentedControl.selectedSegmentIndex = index
+        userProfileView.followButton.isSelected.toggle()
     }
 }
 
@@ -293,5 +199,20 @@ extension ProfileViewController: MFMailComposeViewControllerDelegate {
 
     func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith _: MFMailComposeResult, error _: Error?) {
         controller.dismiss(animated: true, completion: nil)
+    }
+}
+
+extension ProfileViewController: MKMapViewDelegate {
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        guard view is ClusterAnnotationView else { return }
+
+        let currentSpan = mapView.region.span
+        let zoomSpan = MKCoordinateSpan(
+            latitudeDelta: currentSpan.latitudeDelta / 3.0,
+            longitudeDelta: currentSpan.longitudeDelta / 3.0
+        )
+        let zoomCoordinate = view.annotation?.coordinate ?? mapView.region.center
+        let zoomed = MKCoordinateRegion(center: zoomCoordinate, span: zoomSpan)
+        mapView.setRegion(zoomed, animated: true)
     }
 }

@@ -11,7 +11,7 @@
 		CB1790C8296DAB470083D3A4 /* DynamicHeightCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1790C7296DAB470083D3A4 /* DynamicHeightCollectionViewFlowLayout.swift */; };
 		CB1A7C5C29560C2300C6431D /* UserInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1A7C5B29560C2300C6431D /* UserInfoView.swift */; };
 		CB1A7C5E295618A900C6431D /* SettingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1A7C5D295618A900C6431D /* SettingButton.swift */; };
-		CB1A7C6129561BCF00C6431D /* UserProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1A7C6029561BCF00C6431D /* UserProfileView.swift */; };
+		CB1A7C6129561BCF00C6431D /* ProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1A7C6029561BCF00C6431D /* ProfileHeaderView.swift */; };
 		CB1A7C6329561CF300C6431D /* SubButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1A7C6229561CF300C6431D /* SubButton.swift */; };
 		CB1A7C6829576D7900C6431D /* BaseScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1A7C6729576D7900C6431D /* BaseScrollView.swift */; };
 		CB1A7C6A29576DCC00C6431D /* HorizontalScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1A7C6929576DCC00C6431D /* HorizontalScrollView.swift */; };
@@ -116,7 +116,7 @@
 		CB1790C7296DAB470083D3A4 /* DynamicHeightCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicHeightCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
 		CB1A7C5B29560C2300C6431D /* UserInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoView.swift; sourceTree = "<group>"; };
 		CB1A7C5D295618A900C6431D /* SettingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingButton.swift; sourceTree = "<group>"; };
-		CB1A7C6029561BCF00C6431D /* UserProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileView.swift; sourceTree = "<group>"; };
+		CB1A7C6029561BCF00C6431D /* ProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderView.swift; sourceTree = "<group>"; };
 		CB1A7C6229561CF300C6431D /* SubButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubButton.swift; sourceTree = "<group>"; };
 		CB1A7C6729576D7900C6431D /* BaseScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseScrollView.swift; sourceTree = "<group>"; };
 		CB1A7C6929576DCC00C6431D /* HorizontalScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalScrollView.swift; sourceTree = "<group>"; };
@@ -230,13 +230,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		CB1A7C5F29561B8400C6431D /* UIComponent */ = {
+		CB1A7C5F29561B8400C6431D /* Component */ = {
 			isa = PBXGroup;
 			children = (
-				CB1A7C6029561BCF00C6431D /* UserProfileView.swift */,
+				CB1A7C6029561BCF00C6431D /* ProfileHeaderView.swift */,
 				CB2E4F882977393700FD2566 /* UserInfoButton.swift */,
 			);
-			path = UIComponent;
+			path = Component;
 			sourceTree = "<group>";
 		};
 		CB1A7C66295767F000C6431D /* UIComponent */ = {
@@ -268,6 +268,7 @@
 			isa = PBXGroup;
 			children = (
 				CBB58283297440A600808B0B /* CategoryCollectionViewCell.swift */,
+				CB2E4F7E297702A800FD2566 /* StoreInfoTableViewCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -446,7 +447,7 @@
 		CBADC2A52955A07B00E56C93 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
-				CB1A7C5F29561B8400C6431D /* UIComponent */,
+				CB1A7C5F29561B8400C6431D /* Component */,
 				CBD1B5F22982D38300B0AD51 /* Cell */,
 				CBADC2AC2955A0FF00E56C93 /* ProfileViewController.swift */,
 				CB2E4F8429772FFE00FD2566 /* UserFeedViewController.swift */,
@@ -556,7 +557,6 @@
 		CBD1B5F22982D38300B0AD51 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
-				CB2E4F7E297702A800FD2566 /* StoreInfoTableViewCell.swift */,
 				CB2E4F80297702B800FD2566 /* UserInfoTableViewCell.swift */,
 				CBD1B5F32982D39B00B0AD51 /* SettingItemTableViewCell.swift */,
 			);
@@ -742,7 +742,7 @@
 				CB2E4F7F297702A800FD2566 /* StoreInfoTableViewCell.swift in Sources */,
 				CB558E9C2975B80B00921943 /* Feed.swift in Sources */,
 				CB1A7C6829576D7900C6431D /* BaseScrollView.swift in Sources */,
-				CB1A7C6129561BCF00C6431D /* UserProfileView.swift in Sources */,
+				CB1A7C6129561BCF00C6431D /* ProfileHeaderView.swift in Sources */,
 				CBADC2E22955C63300E56C93 /* PhotoCollectionViewCell.swift in Sources */,
 				CBD1B5EF2982A5AD00B0AD51 /* EditProfileViewController.swift in Sources */,
 				CBADC28A29559BC900E56C93 /* UIFont+Extension.swift in Sources */,
