@@ -26,7 +26,7 @@ final class BookmarkButton: UIButton {
 
     // MARK: - init
     override init(frame _: CGRect) {
-        super.init(frame: .init(origin: .zero, size: .init(width: 20, height: 20)))
+        super.init(frame: .init(origin: .zero, size: .init(width: 30, height: 30)))
         configureUI()
     }
 

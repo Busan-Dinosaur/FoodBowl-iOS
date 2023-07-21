@@ -19,9 +19,11 @@ final class ProfileHeaderView: UICollectionReusableView {
 
     // MARK: - property
     lazy var userImageView = UIImageView().then {
-        $0.backgroundColor = .grey001
+        $0.backgroundColor = .grey003
         $0.layer.cornerRadius = 25
         $0.layer.masksToBounds = true
+        $0.layer.borderColor = UIColor.grey002.cgColor
+        $0.layer.borderWidth = 1
     }
 
     let followerInfoButton = FollowInfoButton().then {
@@ -113,14 +115,14 @@ final class ProfileHeaderView: UICollectionReusableView {
         followButton.snp.makeConstraints {
             $0.top.equalToSuperview().inset(10)
             $0.trailing.equalToSuperview().inset(BaseSize.horizantalPadding)
-            $0.width.equalTo(60)
+            $0.width.equalTo(50)
             $0.height.equalTo(30)
         }
 
         editButton.snp.makeConstraints {
             $0.top.equalToSuperview().inset(10)
             $0.trailing.equalToSuperview().inset(BaseSize.horizantalPadding)
-            $0.width.equalTo(60)
+            $0.width.equalTo(50)
             $0.height.equalTo(30)
         }
 

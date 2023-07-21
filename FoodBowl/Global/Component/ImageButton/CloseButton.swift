@@ -9,7 +9,6 @@ import UIKit
 
 final class CloseButton: UIButton {
     // MARK: - init
-
     override init(frame _: CGRect) {
         super.init(frame: .init(origin: .zero, size: .init(width: 44, height: 44)))
         configureUI()
@@ -21,7 +20,6 @@ final class CloseButton: UIButton {
     }
 
     // MARK: - life cycle
-
     private func configureUI() {
         setImage(ImageLiteral.btnClose, for: .normal)
         tintColor = .mainPink

@@ -9,7 +9,6 @@ import UIKit
 
 final class PlusButton: UIButton {
     // MARK: - init
-
     override init(frame _: CGRect) {
         super.init(frame: .init(origin: .zero, size: .init(width: 30, height: 30)))
         configureUI()
@@ -21,9 +20,8 @@ final class PlusButton: UIButton {
     }
 
     // MARK: - life cycle
-
     private func configureUI() {
-        setImage(ImageLiteral.btnPlus.resize(to: CGSize(width: 24, height: 24)).withRenderingMode(.alwaysTemplate), for: .normal)
+        setImage(ImageLiteral.btnPlus.resize(to: CGSize(width: 20, height: 20)).withRenderingMode(.alwaysTemplate), for: .normal)
         tintColor = .mainText
     }
 }

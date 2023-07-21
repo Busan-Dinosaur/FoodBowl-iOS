@@ -15,11 +15,12 @@ final class UserInfoTableViewCell: BaseTableViewCell {
     var followButtonTapAction: ((UserInfoTableViewCell) -> Void)?
 
     // MARK: - property
-
     lazy var userImageButton = UIButton().then {
         $0.backgroundColor = .gray
         $0.layer.cornerRadius = 20
         $0.layer.masksToBounds = true
+        $0.layer.borderColor = UIColor.grey002.cgColor
+        $0.layer.borderWidth = 1
     }
 
     let userNameButton = UIButton().then {
@@ -37,7 +38,6 @@ final class UserInfoTableViewCell: BaseTableViewCell {
     let followButton = FollowButton()
 
     // MARK: - func
-
     override func setupLayout() {
         contentView.addSubviews(userImageButton, userNameButton, userFollowerLabel, followButton)
 
