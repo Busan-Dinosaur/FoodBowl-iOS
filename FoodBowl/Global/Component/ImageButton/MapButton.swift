@@ -1,15 +1,14 @@
 //
-//  OptionButton.swift
+//  MapButton.swift
 //  FoodBowl
 //
-//  Created by COBY_PRO on 2023/01/10.
+//  Created by COBY_PRO on 2023/07/22.
 //
 
 import UIKit
 
-final class OptionButton: UIButton {
+final class MapButton: UIButton {
     // MARK: - init
-
     override init(frame _: CGRect) {
         super.init(frame: .init(origin: .zero, size: .init(width: 30, height: 30)))
         configureUI()
@@ -21,12 +20,9 @@ final class OptionButton: UIButton {
     }
 
     // MARK: - life cycle
-
     private func configureUI() {
-        setImage(
-            ImageLiteral.btnOption.resize(to: CGSize(width: 24, height: 24)).withRenderingMode(.alwaysTemplate),
-            for: .normal
-        )
-        tintColor = .mainText
+        setImage(ImageLiteral.btnKakaomap.resize(to: CGSize(width: 30, height: 30)), for: .normal)
+        clipsToBounds = true
+        layer.cornerRadius = 10
     }
 }

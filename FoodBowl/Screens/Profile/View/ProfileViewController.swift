@@ -182,39 +182,6 @@ final class ProfileViewController: BaseViewController {
     }
 }
 
-extension ProfileViewController: MFMailComposeViewControllerDelegate {
-    func sendReportMail() {
-        if MFMailComposeViewController.canSendMail() {
-            let composeVC = MFMailComposeViewController()
-            let emailAdress = "foodbowl5502@gmail.com"
-            let messageBody = """
-                신고 사유를 작성해주세요.
-                """
-
-            composeVC.mailComposeDelegate = self
-            composeVC.setToRecipients([emailAdress])
-            composeVC.setSubject("[신고] 닉네임")
-            composeVC.setMessageBody(messageBody, isHTML: false)
-            composeVC.modalPresentationStyle = .fullScreen
-
-            present(composeVC, animated: true, completion: nil)
-        } else {
-            showSendMailErrorAlert()
-        }
-    }
-
-    private func showSendMailErrorAlert() {
-        let sendMailErrorAlert = UIAlertController(title: "메일 전송 실패", message: "이메일 설정을 확인하고 다시 시도해주세요.", preferredStyle: .alert)
-        let confirmAction = UIAlertAction(title: "확인", style: .default)
-        sendMailErrorAlert.addAction(confirmAction)
-        present(sendMailErrorAlert, animated: true, completion: nil)
-    }
-
-    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith _: MFMailComposeResult, error _: Error?) {
-        controller.dismiss(animated: true, completion: nil)
-    }
-}
-
 extension ProfileViewController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         guard view is ClusterAnnotationView else { return }

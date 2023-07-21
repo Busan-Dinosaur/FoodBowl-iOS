@@ -25,11 +25,7 @@ final class SelectedStoreView: UIView {
         $0.text = "강원도 동해시 묵호진동 15-9"
     }
 
-    let mapButton = UIButton().then {
-        $0.setImage(ImageLiteral.btnKakaomap, for: .normal)
-        $0.clipsToBounds = true
-        $0.layer.cornerRadius = 10
-    }
+    let mapButton = MapButton()
 
     // MARK: - init
 
@@ -60,7 +56,6 @@ final class SelectedStoreView: UIView {
         mapButton.snp.makeConstraints {
             $0.trailing.equalToSuperview().inset(14)
             $0.centerY.equalToSuperview()
-            $0.width.height.equalTo(33)
         }
     }
 

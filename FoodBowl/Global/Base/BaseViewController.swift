@@ -5,8 +5,10 @@
 //  Created by COBY_PRO on 2022/12/23.
 //
 
+import MessageUI
 import UIKit
 
+import SnapKit
 import Then
 
 class BaseViewController: UIViewController {
@@ -157,5 +159,38 @@ extension BaseViewController: UIGestureRecognizerDelegate {
     func gestureRecognizerShouldBegin(_: UIGestureRecognizer) -> Bool {
         guard let count = navigationController?.viewControllers.count else { return false }
         return count > 1
+    }
+}
+
+extension BaseViewController: MFMailComposeViewControllerDelegate {
+    func sendReportMail() {
+        if MFMailComposeViewController.canSendMail() {
+            let composeVC = MFMailComposeViewController()
+            let emailAdress = "foodbowl5502@gmail.com"
+            let messageBody = """
+                내용을 작성해주세요.
+                """
+
+            composeVC.mailComposeDelegate = self
+            composeVC.setToRecipients([emailAdress])
+            composeVC.setSubject("[풋볼] 닉네임")
+            composeVC.setMessageBody(messageBody, isHTML: false)
+            composeVC.modalPresentationStyle = .fullScreen
+
+            present(composeVC, animated: true, completion: nil)
+        } else {
+            showSendMailErrorAlert()
+        }
+    }
+
+    private func showSendMailErrorAlert() {
+        let sendMailErrorAlert = UIAlertController(title: "메일 전송 실패", message: "이메일 설정을 확인하고 다시 시도해주세요.", preferredStyle: .alert)
+        let confirmAction = UIAlertAction(title: "확인", style: .default)
+        sendMailErrorAlert.addAction(confirmAction)
+        present(sendMailErrorAlert, animated: true, completion: nil)
+    }
+
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith _: MFMailComposeResult, error _: Error?) {
+        controller.dismiss(animated: true, completion: nil)
     }
 }

@@ -1,15 +1,14 @@
 //
-//  SendButton.swift
+//  CloseButton.swift
 //  FoodBowl
 //
-//  Created by COBY_PRO on 2022/12/23.
+//  Created by Coby Kim on 2023/01/13.
 //
 
 import UIKit
 
-final class SendButton: UIButton {
+final class CloseButton: UIButton {
     // MARK: - init
-
     override init(frame _: CGRect) {
         super.init(frame: .init(origin: .zero, size: .init(width: 44, height: 44)))
         configureUI()
@@ -21,9 +20,8 @@ final class SendButton: UIButton {
     }
 
     // MARK: - life cycle
-
     private func configureUI() {
-        setImage(ImageLiteral.btnSend, for: .normal)
-        tintColor = .mainText
+        setImage(ImageLiteral.btnClose, for: .normal)
+        tintColor = .mainPink
     }
 }

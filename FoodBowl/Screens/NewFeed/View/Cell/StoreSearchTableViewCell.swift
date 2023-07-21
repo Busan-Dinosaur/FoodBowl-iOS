@@ -29,7 +29,6 @@ final class StoreSearchTableViewCell: BaseTableViewCell {
     }
 
     // MARK: - func
-
     override func setupLayout() {
         contentView.addSubviews(storeNameLabel, storeAdressLabel, storeDistanceLabel)
 

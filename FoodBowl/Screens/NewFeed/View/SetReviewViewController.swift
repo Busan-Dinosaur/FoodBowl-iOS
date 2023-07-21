@@ -51,6 +51,7 @@ final class SetReviewViewController: BaseViewController {
         $0.register(PhotoPlusCollectionViewCell.self, forCellWithReuseIdentifier: PhotoPlusCollectionViewCell.className)
         $0.register(PhotoCollectionViewCell.self, forCellWithReuseIdentifier: PhotoCollectionViewCell.className)
         $0.backgroundColor = .clear
+        $0.showsHorizontalScrollIndicator = false
     }
 
     private let guideCommentLabel = UILabel().then {
@@ -183,7 +184,7 @@ extension SetReviewViewController: UICollectionViewDataSource, UICollectionViewD
                 return UICollectionViewCell()
             }
 
-            cell.thumnailImageView.image = selectedImages[indexPath.item - 1]
+            cell.foodImageView.image = selectedImages[indexPath.item - 1]
 
             return cell
         }

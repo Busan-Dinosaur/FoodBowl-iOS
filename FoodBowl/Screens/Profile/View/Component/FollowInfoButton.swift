@@ -14,12 +14,12 @@ final class FollowInfoButton: UIButton {
     // MARK: - property
     let infoLabel = UILabel().then {
         $0.font = UIFont.preferredFont(forTextStyle: .caption1, weight: .regular)
-        $0.textColor = .white
+        $0.textColor = .mainBackground
     }
 
     let numberLabel = UILabel().then {
         $0.font = UIFont.preferredFont(forTextStyle: .caption1, weight: .regular)
-        $0.textColor = .white
+        $0.textColor = .mainBackground
     }
 
     // MARK: - init
@@ -51,7 +51,9 @@ final class FollowInfoButton: UIButton {
     }
 
     private func configureUI() {
-        backgroundColor = .mainPink
-        makeBorderLayer(color: .grey002)
+        backgroundColor = .grey001
+        layer.cornerRadius = 10
+        layer.borderWidth = 1
+        layer.borderColor = UIColor.grey002.cgColor
     }
 }

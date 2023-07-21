@@ -1,17 +1,16 @@
 //
-//  GalleryButton.swift
+//  FeedButton.swift
 //  FoodBowl
 //
-//  Created by COBY_PRO on 2023/01/16.
+//  Created by COBY_PRO on 2023/01/28.
 //
 
 import UIKit
 
-final class GalleryButton: UIButton {
+final class FeedButton: UIButton {
     // MARK: - init
-
     override init(frame _: CGRect) {
-        super.init(frame: .init(origin: .zero, size: .init(width: 22, height: 22)))
+        super.init(frame: .init(origin: .zero, size: .init(width: 30, height: 30)))
         configureUI()
     }
 
@@ -21,12 +20,8 @@ final class GalleryButton: UIButton {
     }
 
     // MARK: - life cycle
-
     private func configureUI() {
-        setImage(
-            ImageLiteral.btnGallery.resize(to: CGSize(width: 22, height: 22)).withRenderingMode(.alwaysTemplate),
-            for: .normal
-        )
+        setImage(ImageLiteral.btnFeed.resize(to: CGSize(width: 20, height: 20)).withRenderingMode(.alwaysTemplate), for: .normal)
         tintColor = .mainText
     }
 }

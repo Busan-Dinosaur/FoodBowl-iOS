@@ -12,18 +12,22 @@ import Then
 
 final class PhotoCollectionViewCell: BaseCollectionViewCell {
     // MARK: - property
-
-    lazy var thumnailImageView = UIImageView().then {
+    lazy var foodImageView = UIImageView().then {
         $0.backgroundColor = .grey002
-        $0.clipsToBounds = true
         $0.contentMode = .scaleAspectFill
     }
 
     override func setupLayout() {
-        contentView.addSubviews(thumnailImageView)
+        contentView.addSubviews(foodImageView)
 
-        thumnailImageView.snp.makeConstraints {
+        foodImageView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
+    }
+
+    override func configureUI() {
+        backgroundColor = .grey002
+        clipsToBounds = true
+        makeBorderLayer(color: .grey002)
     }
 }
