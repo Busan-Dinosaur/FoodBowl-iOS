@@ -18,9 +18,7 @@ final class MapHeaderView: UIView {
     private let categories = Category.allCases
 
     // MARK: - property
-    lazy var searchBarButton = SearchBarButton().then {
-        $0.label.text = "새로운 맛집과 유저를 찾아보세요."
-    }
+    let searchBarButton = SearchBarButton()
 
     let plusButton = PlusButton()
 
@@ -60,7 +58,7 @@ final class MapHeaderView: UIView {
             $0.top.equalTo(safeAreaLayoutGuide).inset(10)
             $0.leading.equalToSuperview().inset(BaseSize.horizantalPadding)
             $0.width.equalTo(Size.SearchBarWidth)
-            $0.height.equalTo(50)
+            $0.height.equalTo(40)
         }
 
         plusButton.snp.makeConstraints {

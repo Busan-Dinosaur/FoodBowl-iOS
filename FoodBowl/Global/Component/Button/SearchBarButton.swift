@@ -13,14 +13,14 @@ import Then
 final class SearchBarButton: UIButton {
     // MARK: - property
     private let searchIconView = UIImageView().then {
-        $0.image = ImageLiteral.search.withConfiguration(UIImage.SymbolConfiguration(scale: .large))
+        $0.image = ImageLiteral.search.withConfiguration(UIImage.SymbolConfiguration(scale: .medium))
         $0.tintColor = .subText
     }
 
-    let label = UILabel().then {
-        let label = UILabel()
-        $0.font = UIFont.preferredFont(forTextStyle: .body, weight: .medium)
+    let placeholderLabel = UILabel().then {
+        $0.font = UIFont.preferredFont(forTextStyle: .callout, weight: .medium)
         $0.textColor = .grey001
+        $0.text = "새로운 맛집과 유저를 찾아보세요."
     }
 
     // MARK: - init
@@ -37,14 +37,14 @@ final class SearchBarButton: UIButton {
 
     // MARK: - life cycle
     private func setupLayout() {
-        addSubviews(searchIconView, label)
+        addSubviews(searchIconView, placeholderLabel)
 
         searchIconView.snp.makeConstraints {
             $0.centerY.equalToSuperview()
             $0.leading.equalToSuperview().inset(14)
         }
 
-        label.snp.makeConstraints {
+        placeholderLabel.snp.makeConstraints {
             $0.centerY.equalToSuperview()
             $0.leading.equalTo(searchIconView.snp.trailing).offset(10)
         }
@@ -52,6 +52,8 @@ final class SearchBarButton: UIButton {
 
     private func configureUI() {
         backgroundColor = .mainBackground
-        makeBorderLayer(color: .grey002)
+        layer.cornerRadius = 20
+        layer.borderWidth = 1
+        layer.borderColor = UIColor.grey002.cgColor
     }
 }
