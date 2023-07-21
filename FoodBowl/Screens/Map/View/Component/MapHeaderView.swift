@@ -12,7 +12,7 @@ import Then
 
 final class MapHeaderView: UIView {
     enum Size {
-        static let SearchBarWidth: CGFloat = BaseSize.fullWidth - BaseSize.horizantalPadding - 20
+        static let SearchBarWidth: CGFloat = BaseSize.fullWidth - 40
     }
 
     private let categories = Category.allCases
