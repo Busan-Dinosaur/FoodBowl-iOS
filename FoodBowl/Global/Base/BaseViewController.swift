@@ -162,19 +162,6 @@ extension BaseViewController: UIGestureRecognizerDelegate {
     }
 }
 
-extension BaseViewController {
-    // Standard scroll-view delegate
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let contentSize = scrollView.contentSize.height
-
-        if contentSize - scrollView.contentOffset.y <= scrollView.bounds.height {
-            didScrollToBottom()
-        }
-    }
-
-    private func didScrollToBottom() {}
-}
-
 extension BaseViewController: MFMailComposeViewControllerDelegate {
     func sendReportMail() {
         if MFMailComposeViewController.canSendMail() {

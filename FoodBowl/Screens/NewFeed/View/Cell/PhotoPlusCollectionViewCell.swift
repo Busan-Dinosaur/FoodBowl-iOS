@@ -18,6 +18,7 @@ final class PhotoPlusCollectionViewCell: BaseCollectionViewCell {
         $0.tintColor = .grey001
         $0.contentMode = .scaleAspectFill
         $0.clipsToBounds = true
+        $0.makeBorderLayer(color: .grey002)
     }
 
     override func setupLayout() {

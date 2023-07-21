@@ -10,13 +10,12 @@ import UIKit
 import SnapKit
 import Then
 
-final class StoreInfoView: UIView {
+final class StoreInfoButton: UIButton {
     // MARK: - property
-
-    let storeNameButton = UIButton().then {
-        $0.setTitle("틈새라면 홍대점", for: .normal)
-        $0.setTitleColor(.mainText, for: .normal)
-        $0.titleLabel?.font = .preferredFont(forTextStyle: .subheadline, weight: .medium)
+    let storeNameLabel = UILabel().then {
+        $0.font = UIFont.preferredFont(forTextStyle: .subheadline, weight: .medium)
+        $0.textColor = .subText
+        $0.text = "틈새라면 홍대점"
     }
 
     let categoryLabel = UILabel().then {
@@ -31,8 +30,8 @@ final class StoreInfoView: UIView {
         $0.text = "10km"
     }
 
-    let mapButton = UIButton().then {
-        $0.setImage(ImageLiteral.btnKakaomap, for: .normal)
+    let bookmarkButton = UIButton().then {
+        $0.setImage(ImageLiteral.bookmark, for: .normal)
         $0.clipsToBounds = true
         $0.layer.cornerRadius = 10
     }
@@ -42,6 +41,7 @@ final class StoreInfoView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupLayout()
+        configureUI()
     }
 
     @available(*, unavailable)
@@ -50,28 +50,31 @@ final class StoreInfoView: UIView {
     }
 
     private func setupLayout() {
-        addSubviews(storeNameButton, categoryLabel, distanceLabel, mapButton)
+        addSubviews(storeNameLabel, categoryLabel, distanceLabel, bookmarkButton)
 
-        storeNameButton.snp.makeConstraints {
-            $0.leading.equalToSuperview().inset(BaseSize.horizantalPadding)
+        storeNameLabel.snp.makeConstraints {
+            $0.leading.equalToSuperview().inset(14)
             $0.top.equalToSuperview().inset(12)
-            $0.height.equalTo(20)
         }
 
         categoryLabel.snp.makeConstraints {
-            $0.leading.equalToSuperview().inset(BaseSize.horizantalPadding)
-            $0.top.equalTo(storeNameButton.snp.bottom).offset(4)
+            $0.leading.equalToSuperview().inset(14)
+            $0.top.equalTo(storeNameLabel.snp.bottom).offset(4)
         }
 
         distanceLabel.snp.makeConstraints {
             $0.leading.equalTo(categoryLabel.snp.trailing).offset(8)
-            $0.top.equalTo(storeNameButton.snp.bottom).offset(4)
+            $0.top.equalTo(storeNameLabel.snp.bottom).offset(4)
         }
 
-        mapButton.snp.makeConstraints {
-            $0.trailing.equalToSuperview().inset(BaseSize.horizantalPadding)
+        bookmarkButton.snp.makeConstraints {
+            $0.trailing.equalToSuperview().inset(14)
             $0.centerY.equalToSuperview()
-            $0.width.height.equalTo(33)
+            $0.width.height.equalTo(20)
         }
+    }
+
+    private func configureUI() {
+        makeBorderLayer(color: .grey002)
     }
 }

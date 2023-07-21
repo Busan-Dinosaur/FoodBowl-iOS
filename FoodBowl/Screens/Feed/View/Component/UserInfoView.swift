@@ -12,7 +12,6 @@ import Then
 
 final class UserInfoView: UIView {
     // MARK: - property
-
     lazy var userImageButton = UIButton().then {
         $0.backgroundColor = .gray
         $0.layer.cornerRadius = 20
@@ -33,6 +32,8 @@ final class UserInfoView: UIView {
 
     let followButton = FollowButton()
 
+    let optionButton = OptionButton()
+
     // MARK: - init
 
     override init(frame: CGRect) {
@@ -46,30 +47,28 @@ final class UserInfoView: UIView {
     }
 
     private func setupLayout() {
-        addSubviews(userImageButton, userNameButton, userFollowerLabel, followButton)
+        addSubviews(userImageButton, userNameButton, userFollowerLabel, optionButton)
 
         userImageButton.snp.makeConstraints {
             $0.leading.equalToSuperview().inset(BaseSize.horizantalPadding)
-            $0.centerY.equalToSuperview()
+            $0.top.bottom.equalToSuperview().inset(12)
             $0.width.height.equalTo(40)
         }
 
         userNameButton.snp.makeConstraints {
-            $0.leading.equalTo(userImageButton.snp.trailing).offset(16)
+            $0.leading.equalTo(userImageButton.snp.trailing).offset(12)
             $0.top.equalToSuperview().inset(10)
             $0.height.equalTo(20)
         }
 
         userFollowerLabel.snp.makeConstraints {
-            $0.leading.equalTo(userImageButton.snp.trailing).offset(16)
+            $0.leading.equalTo(userImageButton.snp.trailing).offset(12)
             $0.top.equalTo(userNameButton.snp.bottom).offset(4)
         }
 
-        followButton.snp.makeConstraints {
+        optionButton.snp.makeConstraints {
             $0.trailing.equalToSuperview().inset(BaseSize.horizantalPadding)
             $0.centerY.equalToSuperview()
-            $0.width.equalTo(60)
-            $0.height.equalTo(30)
         }
     }
 }

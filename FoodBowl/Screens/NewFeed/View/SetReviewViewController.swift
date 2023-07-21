@@ -183,7 +183,7 @@ extension SetReviewViewController: UICollectionViewDataSource, UICollectionViewD
                 return UICollectionViewCell()
             }
 
-            cell.thumnailImageView.image = selectedImages[indexPath.item - 1]
+            cell.foodImageView.image = selectedImages[indexPath.item - 1]
 
             return cell
         }

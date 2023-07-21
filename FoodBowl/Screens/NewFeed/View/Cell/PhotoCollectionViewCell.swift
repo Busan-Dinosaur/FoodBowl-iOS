@@ -13,16 +13,17 @@ import Then
 final class PhotoCollectionViewCell: BaseCollectionViewCell {
     // MARK: - property
 
-    lazy var thumnailImageView = UIImageView().then {
+    lazy var foodImageView = UIImageView().then {
         $0.backgroundColor = .grey002
         $0.clipsToBounds = true
         $0.contentMode = .scaleAspectFill
+        $0.makeBorderLayer(color: .grey002)
     }
 
     override func setupLayout() {
-        contentView.addSubviews(thumnailImageView)
+        contentView.addSubviews(foodImageView)
 
-        thumnailImageView.snp.makeConstraints {
+        foodImageView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
     }
