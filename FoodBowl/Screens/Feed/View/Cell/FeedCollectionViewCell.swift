@@ -29,7 +29,7 @@ final class FeedCollectionViewCell: BaseCollectionViewCell {
 
     let photoListView = PhotoListView()
 
-    let storeInfoButton = StoreInfoButton()
+    let storeInfoButton = StoreInfoView()
 
     override func setupLayout() {
         contentView.addSubviews(userInfoView, commentLabel, photoListView, storeInfoButton)
@@ -55,7 +55,7 @@ final class FeedCollectionViewCell: BaseCollectionViewCell {
             $0.top.equalTo(photoListView.snp.bottom).offset(10)
             $0.leading.trailing.equalToSuperview().inset(BaseSize.horizantalPadding)
             $0.bottom.equalToSuperview().inset(14)
-            $0.height.equalTo(56)
+            $0.height.equalTo(54)
         }
     }
 
@@ -64,7 +64,7 @@ final class FeedCollectionViewCell: BaseCollectionViewCell {
         userInfoView.userNameButton.addAction(UIAction { _ in self.userButtonTapAction?(self) }, for: .touchUpInside)
         userInfoView.followButton.addAction(UIAction { _ in self.followButtonTapAction?(self) }, for: .touchUpInside)
         userInfoView.optionButton.addAction(UIAction { _ in self.optionButtonTapAction?(self) }, for: .touchUpInside)
-        storeInfoButton.addAction(UIAction { _ in self.storeButtonTapAction?(self) }, for: .touchUpInside)
+        storeInfoButton.storeNameButton.addAction(UIAction { _ in self.storeButtonTapAction?(self) }, for: .touchUpInside)
         storeInfoButton.bookmarkButton.addAction(UIAction { _ in self.bookmarkButtonTapAction?(self) }, for: .touchUpInside)
     }
 

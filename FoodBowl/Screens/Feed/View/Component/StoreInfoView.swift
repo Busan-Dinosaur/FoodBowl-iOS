@@ -10,12 +10,12 @@ import UIKit
 import SnapKit
 import Then
 
-final class StoreInfoButton: UIButton {
+final class StoreInfoView: UIView {
     // MARK: - property
-    let storeNameLabel = UILabel().then {
-        $0.font = UIFont.preferredFont(forTextStyle: .footnote, weight: .medium)
-        $0.textColor = .subText
-        $0.text = "틈새라면 홍대점"
+    let storeNameButton = UIButton().then {
+        $0.setTitle("틈새라면 홍대점", for: .normal)
+        $0.setTitleColor(.subText, for: .normal)
+        $0.titleLabel?.font = UIFont.preferredFont(forTextStyle: .footnote, weight: .medium)
     }
 
     let categoryLabel = UILabel().then {
@@ -46,21 +46,22 @@ final class StoreInfoButton: UIButton {
     }
 
     private func setupLayout() {
-        addSubviews(storeNameLabel, categoryLabel, distanceLabel, bookmarkButton)
+        addSubviews(storeNameButton, categoryLabel, distanceLabel, bookmarkButton)
 
-        storeNameLabel.snp.makeConstraints {
+        storeNameButton.snp.makeConstraints {
             $0.leading.equalToSuperview().inset(14)
-            $0.top.equalToSuperview().inset(12)
+            $0.top.equalToSuperview().inset(10)
+            $0.height.equalTo(18)
         }
 
         categoryLabel.snp.makeConstraints {
             $0.leading.equalToSuperview().inset(14)
-            $0.top.equalTo(storeNameLabel.snp.bottom).offset(4)
+            $0.top.equalTo(storeNameButton.snp.bottom).offset(2)
         }
 
         distanceLabel.snp.makeConstraints {
             $0.leading.equalTo(categoryLabel.snp.trailing).offset(8)
-            $0.top.equalTo(storeNameLabel.snp.bottom).offset(4)
+            $0.top.equalTo(storeNameButton.snp.bottom).offset(2)
         }
 
         bookmarkButton.snp.makeConstraints {

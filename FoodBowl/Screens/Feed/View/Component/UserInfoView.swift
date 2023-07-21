@@ -12,7 +12,7 @@ import Then
 
 final class UserInfoView: UIView {
     // MARK: - property
-    lazy var userImageButton = UIButton().then {
+    let userImageButton = UIButton().then {
         $0.backgroundColor = .grey003
         $0.layer.cornerRadius = 20
         $0.layer.masksToBounds = true

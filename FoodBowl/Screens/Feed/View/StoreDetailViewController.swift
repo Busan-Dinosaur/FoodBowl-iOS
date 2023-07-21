@@ -21,6 +21,8 @@ final class StoreDetailViewController: BaseViewController {
         )
     }
 
+    private lazy var isBookmarked = [Bool](repeating: false, count: 10)
+
     private var refreshControl = UIRefreshControl()
 
     // MARK: - property
@@ -77,7 +79,7 @@ extension StoreDetailViewController {
 // MARK: - UICollectionViewDataSource, UICollectionViewDelegate
 extension StoreDetailViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_: UICollectionView, numberOfItemsInSection _: Int) -> Int {
-        return 5
+        return 10
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -117,9 +119,11 @@ extension StoreDetailViewController: UICollectionViewDataSource, UICollectionVie
             self?.navigationController?.pushViewController(storeDetailViewController, animated: true)
         }
 
-        cell.bookmarkButtonTapAction = { _ in
+        cell.bookmarkButtonTapAction = { [weak self] _ in
+            self?.isBookmarked[indexPath.item].toggle()
             cell.storeInfoButton.bookmarkButton.isSelected.toggle()
         }
+        cell.storeInfoButton.bookmarkButton.isSelected = isBookmarked[indexPath.item]
 
         return cell
     }
