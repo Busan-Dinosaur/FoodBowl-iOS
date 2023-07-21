@@ -47,7 +47,7 @@ final class ProfileHeaderView: UICollectionReusableView {
     private let collectionViewFlowLayout = UICollectionViewFlowLayout().then {
         $0.scrollDirection = .horizontal
         $0.sectionInset = BaseSize.collectionInset
-        $0.minimumLineSpacing = 8
+        $0.minimumLineSpacing = 4
         $0.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
     }
 
