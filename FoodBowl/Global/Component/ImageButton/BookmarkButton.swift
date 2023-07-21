@@ -11,7 +11,7 @@ final class BookmarkButton: UIButton {
     // MARK: - init
 
     override init(frame _: CGRect) {
-        super.init(frame: .init(origin: .zero, size: .init(width: 24, height: 24)))
+        super.init(frame: .init(origin: .zero, size: .init(width: 20, height: 20)))
         configureUI()
     }
 
@@ -23,7 +23,7 @@ final class BookmarkButton: UIButton {
     // MARK: - life cycle
 
     private func configureUI() {
-        setImage(ImageLiteral.bookmark.resize(to: CGSize(width: 24, height: 24)).withRenderingMode(.alwaysTemplate), for: .normal)
+        setImage(ImageLiteral.bookmark.resize(to: CGSize(width: 20, height: 20)).withRenderingMode(.alwaysTemplate), for: .normal)
         tintColor = .mainText
     }
 }

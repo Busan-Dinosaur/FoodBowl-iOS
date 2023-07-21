@@ -11,7 +11,7 @@ final class OptionButton: UIButton {
     // MARK: - init
 
     override init(frame _: CGRect) {
-        super.init(frame: .init(origin: .zero, size: .init(width: 30, height: 30)))
+        super.init(frame: .init(origin: .zero, size: .init(width: 20, height: 20)))
         configureUI()
     }
 
@@ -24,7 +24,7 @@ final class OptionButton: UIButton {
 
     private func configureUI() {
         setImage(
-            ImageLiteral.btnOption.resize(to: CGSize(width: 24, height: 24)).withRenderingMode(.alwaysTemplate),
+            ImageLiteral.btnOption.resize(to: CGSize(width: 20, height: 20)).withRenderingMode(.alwaysTemplate),
             for: .normal
         )
         tintColor = .mainText

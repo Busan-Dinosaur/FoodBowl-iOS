@@ -13,19 +13,19 @@ import Then
 final class StoreInfoButton: UIButton {
     // MARK: - property
     let storeNameLabel = UILabel().then {
-        $0.font = UIFont.preferredFont(forTextStyle: .subheadline, weight: .medium)
+        $0.font = UIFont.preferredFont(forTextStyle: .footnote, weight: .medium)
         $0.textColor = .subText
         $0.text = "틈새라면 홍대점"
     }
 
     let categoryLabel = UILabel().then {
-        $0.font = UIFont.preferredFont(forTextStyle: .caption1, weight: .regular)
+        $0.font = UIFont.preferredFont(forTextStyle: .caption2, weight: .regular)
         $0.textColor = .subText
         $0.text = "일식"
     }
 
     let distanceLabel = UILabel().then {
-        $0.font = UIFont.preferredFont(forTextStyle: .caption1, weight: .regular)
+        $0.font = UIFont.preferredFont(forTextStyle: .caption2, weight: .regular)
         $0.textColor = .subText
         $0.text = "10km"
     }

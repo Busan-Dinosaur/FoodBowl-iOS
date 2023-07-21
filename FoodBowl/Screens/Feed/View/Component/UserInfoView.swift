@@ -13,19 +13,21 @@ import Then
 final class UserInfoView: UIView {
     // MARK: - property
     lazy var userImageButton = UIButton().then {
-        $0.backgroundColor = .gray
+        $0.backgroundColor = .grey003
         $0.layer.cornerRadius = 20
         $0.layer.masksToBounds = true
+        $0.layer.borderColor = UIColor.grey002.cgColor
+        $0.layer.borderWidth = 1
     }
 
     let userNameButton = UIButton().then {
         $0.setTitle("홍길동", for: .normal)
         $0.setTitleColor(.mainText, for: .normal)
-        $0.titleLabel?.font = .preferredFont(forTextStyle: .subheadline, weight: .medium)
+        $0.titleLabel?.font = .preferredFont(forTextStyle: .footnote, weight: .medium)
     }
 
     let userFollowerLabel = UILabel().then {
-        $0.font = UIFont.preferredFont(forTextStyle: .footnote, weight: .light)
+        $0.font = UIFont.preferredFont(forTextStyle: .caption1, weight: .light)
         $0.textColor = .subText
         $0.text = "팔로워 100명"
     }
@@ -57,13 +59,13 @@ final class UserInfoView: UIView {
 
         userNameButton.snp.makeConstraints {
             $0.leading.equalTo(userImageButton.snp.trailing).offset(12)
-            $0.top.equalToSuperview().inset(10)
-            $0.height.equalTo(20)
+            $0.top.equalToSuperview().inset(14)
+            $0.height.equalTo(18)
         }
 
         userFollowerLabel.snp.makeConstraints {
             $0.leading.equalTo(userImageButton.snp.trailing).offset(12)
-            $0.top.equalTo(userNameButton.snp.bottom).offset(4)
+            $0.top.equalTo(userNameButton.snp.bottom).offset(2)
         }
 
         optionButton.snp.makeConstraints {

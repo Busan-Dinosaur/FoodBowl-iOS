@@ -16,8 +16,6 @@ final class PhotoPlusCollectionViewCell: BaseCollectionViewCell {
         $0.image = UIImage(systemName: "plus.circle.fill")
         $0.tintColor = .grey001
         $0.contentMode = .scaleAspectFill
-        $0.clipsToBounds = true
-        $0.makeBorderLayer(color: .grey002)
     }
 
     override func setupLayout() {
@@ -31,5 +29,7 @@ final class PhotoPlusCollectionViewCell: BaseCollectionViewCell {
 
     override func configureUI() {
         backgroundColor = .grey002
+        clipsToBounds = true
+        makeBorderLayer(color: .grey002)
     }
 }

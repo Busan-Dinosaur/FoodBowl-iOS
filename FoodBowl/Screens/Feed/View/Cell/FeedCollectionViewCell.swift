@@ -52,10 +52,10 @@ final class FeedCollectionViewCell: BaseCollectionViewCell {
         }
 
         storeInfoButton.snp.makeConstraints {
-            $0.top.equalTo(photoListView.snp.bottom).offset(14)
+            $0.top.equalTo(photoListView.snp.bottom).offset(10)
             $0.leading.trailing.equalToSuperview().inset(BaseSize.horizantalPadding)
-            $0.bottom.equalToSuperview().inset(12)
-            $0.height.equalTo(60)
+            $0.bottom.equalToSuperview().inset(14)
+            $0.height.equalTo(56)
         }
     }
 
