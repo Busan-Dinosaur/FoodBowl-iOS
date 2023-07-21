@@ -53,7 +53,7 @@ final class ProfileViewController: BaseViewController {
     }
 
     let userNicknameLabel = UILabel().then {
-        $0.font = UIFont.preferredFont(forTextStyle: .title1, weight: .bold)
+        $0.font = UIFont.preferredFont(forTextStyle: .title2, weight: .bold)
         $0.text = "coby5502"
         $0.textColor = .mainText
     }
@@ -95,7 +95,7 @@ final class ProfileViewController: BaseViewController {
         $0.addAction(optionButtonAction, for: .touchUpInside)
     }
 
-    private lazy var userProfileView = ProfileHeaderView().then {
+    private lazy var profileHeaderView = ProfileHeaderView().then {
         let followerAction = UIAction { [weak self] _ in
             let followerViewController = FollowerViewController()
             self?.navigationController?.pushViewController(followerViewController, animated: true)
@@ -116,7 +116,7 @@ final class ProfileViewController: BaseViewController {
     }
 
     override func setupLayout() {
-        view.addSubviews(mapView, trakingButton, userProfileView)
+        view.addSubviews(mapView, trakingButton, profileHeaderView)
 
         mapView.snp.makeConstraints {
             $0.edges.equalToSuperview()
@@ -128,10 +128,10 @@ final class ProfileViewController: BaseViewController {
             $0.height.width.equalTo(40)
         }
 
-        userProfileView.snp.makeConstraints {
+        profileHeaderView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide)
             $0.leading.trailing.equalToSuperview()
-            $0.height.equalTo(120)
+            $0.height.equalTo(100)
         }
     }
 
@@ -144,12 +144,10 @@ final class ProfileViewController: BaseViewController {
             let settingButton = makeBarButtonItem(with: settingButton)
             navigationItem.leftBarButtonItem = userNicknameLabel
             navigationItem.rightBarButtonItems = [settingButton, plusButton]
-            userProfileView.followButton.isHidden = true
         } else {
             let optionButton = makeBarButtonItem(with: optionButton)
-            navigationItem.leftBarButtonItem = optionButton
+            navigationItem.rightBarButtonItem = optionButton
             title = "coby5502"
-            userProfileView.editButton.isHidden = true
         }
     }
 

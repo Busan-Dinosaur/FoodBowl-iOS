@@ -24,24 +24,21 @@ final class ProfileHeaderView: UICollectionReusableView {
         $0.layer.masksToBounds = true
     }
 
-    let followerInfoButton = UserInfoButton().then {
+    let followerInfoButton = FollowInfoButton().then {
         $0.infoLabel.text = "팔로워"
         $0.numberLabel.text = "100"
     }
 
-    let followingInfoButton = UserInfoButton().then {
+    let followingInfoButton = FollowInfoButton().then {
         $0.infoLabel.text = "팔로잉"
-        $0.numberLabel.text = "100"
+        $0.numberLabel.text = "30"
     }
 
-    let followButton = FollowButton()
-
-    let editButton = UIButton().then {
-        $0.setTitle("프로필 수정", for: .normal)
-        $0.setTitleColor(.white, for: .normal)
-        $0.titleLabel?.font = UIFont.preferredFont(forTextStyle: .footnote, weight: .medium)
-        $0.layer.cornerRadius = 15
-        $0.backgroundColor = .mainBlue
+    let userInfoLabel = UILabel().then {
+        $0.font = UIFont.preferredFont(forTextStyle: .footnote, weight: .regular)
+        $0.text = "중국음식을 좋아하는 김코비입니다."
+        $0.textColor = .mainText
+        $0.numberOfLines = 1
     }
 
     private let collectionViewFlowLayout = UICollectionViewFlowLayout().then {
@@ -75,26 +72,34 @@ final class ProfileHeaderView: UICollectionReusableView {
     // MARK: - life cycle
 
     private func setupLayout() {
-        addSubviews(userImageView, followerInfoButton, followingInfoButton, listCollectionView)
+        addSubviews(userImageView, followerInfoButton, followingInfoButton, userInfoLabel, listCollectionView)
 
         userImageView.snp.makeConstraints {
             $0.leading.equalToSuperview().inset(20)
-            $0.top.equalToSuperview().inset(10)
+            $0.top.equalToSuperview()
             $0.width.height.equalTo(50)
         }
 
         followerInfoButton.snp.makeConstraints {
-            $0.leading.equalTo(userImageView.snp.trailing).offset(40)
-            $0.top.equalToSuperview().inset(15)
+            $0.leading.equalTo(userImageView.snp.trailing).offset(20)
+            $0.top.equalToSuperview().inset(4)
+            $0.height.equalTo(20)
         }
 
         followingInfoButton.snp.makeConstraints {
-            $0.leading.equalTo(followerInfoButton.snp.trailing).offset(40)
-            $0.top.equalToSuperview().inset(15)
+            $0.leading.equalTo(followerInfoButton.snp.trailing).offset(6)
+            $0.top.equalToSuperview().inset(4)
+            $0.height.equalTo(20)
+        }
+
+        userInfoLabel.snp.makeConstraints {
+            $0.leading.equalTo(userImageView.snp.trailing).offset(20)
+            $0.top.equalTo(followerInfoButton.snp.bottom).offset(6)
+            $0.width.equalTo(BaseSize.fullWidth - 70)
         }
 
         listCollectionView.snp.makeConstraints {
-            $0.top.equalTo(userImageView.snp.bottom).offset(20)
+            $0.top.equalTo(userImageView.snp.bottom).offset(10)
             $0.leading.trailing.equalToSuperview()
             $0.height.equalTo(30)
         }
