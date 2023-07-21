@@ -1,5 +1,5 @@
 //
-//  AddFeedViewController.swift
+//  NewFeedViewController.swift
 //  FoodBowl
 //
 //  Created by Coby Kim on 2023/01/13.
@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 import Then
 
-final class AddFeedViewController: BaseViewController {
+final class NewFeedViewController: BaseViewController {
     var newFeed = Feed(store: nil, category: nil, photoes: nil, comment: nil)
 
     private lazy var pageViewController = UIPageViewController(
@@ -170,7 +170,7 @@ final class AddFeedViewController: BaseViewController {
     }
 }
 
-extension AddFeedViewController: SetStoreViewControllerDelegate, SetReviewViewControllerDelegate {
+extension NewFeedViewController: SetStoreViewControllerDelegate, SetReviewViewControllerDelegate {
     func setStore(store: Place?, univ: Place?, category: String?) {
         newFeed.store = store
         newFeed.category = category

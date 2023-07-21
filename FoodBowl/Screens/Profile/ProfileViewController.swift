@@ -60,7 +60,7 @@ final class ProfileViewController: BaseViewController {
 
     private lazy var plusButton = PlusButton().then {
         let action = UIAction { [weak self] _ in
-            let addFeedViewController = AddFeedViewController()
+            let addFeedViewController = NewFeedViewController()
             let navigationController = UINavigationController(rootViewController: addFeedViewController)
             navigationController.modalPresentationStyle = .fullScreen
             DispatchQueue.main.async {

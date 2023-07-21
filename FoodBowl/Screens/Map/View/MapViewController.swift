@@ -53,8 +53,8 @@ class MapViewController: UIViewController {
             }
         }
         let plusAction = UIAction { [weak self] _ in
-            let addFeedViewController = AddFeedViewController()
-            let navigationController = UINavigationController(rootViewController: addFeedViewController)
+            let newFeedViewController = NewFeedViewController()
+            let navigationController = UINavigationController(rootViewController: newFeedViewController)
             navigationController.modalPresentationStyle = .fullScreen
             DispatchQueue.main.async {
                 self?.present(navigationController, animated: true)
@@ -81,6 +81,16 @@ class MapViewController: UIViewController {
         setupNavigationBar()
         currentLocation()
         setMarkers()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.isNavigationBarHidden = true
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.isNavigationBarHidden = false
     }
 
     func setupLayout() {
@@ -131,9 +141,9 @@ class MapViewController: UIViewController {
                 ),
                 glyphImage: ImageLiteral.korean,
                 handler: { [weak self] in
-                    let storeFeedViewController = StoreFeedViewController()
-                    storeFeedViewController.title = "틈새라면"
-                    self?.navigationController?.pushViewController(storeFeedViewController, animated: true)
+                    let storeDetailViewController = StoreDetailViewController()
+                    storeDetailViewController.title = "틈새라면"
+                    self?.navigationController?.pushViewController(storeDetailViewController, animated: true)
                 }
             ),
             Marker(
@@ -145,9 +155,9 @@ class MapViewController: UIViewController {
                 ),
                 glyphImage: ImageLiteral.salad,
                 handler: { [weak self] in
-                    let storeFeedViewController = StoreFeedViewController()
-                    storeFeedViewController.title = "틈새라면"
-                    self?.navigationController?.pushViewController(storeFeedViewController, animated: true)
+                    let storeDetailViewController = StoreDetailViewController()
+                    storeDetailViewController.title = "틈새라면"
+                    self?.navigationController?.pushViewController(storeDetailViewController, animated: true)
                 }
             )
         ]

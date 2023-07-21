@@ -72,8 +72,8 @@ final class MainViewController: BaseViewController {
 
     private lazy var plusButton = PlusButton().then {
         let action = UIAction { [weak self] _ in
-            let addFeedViewController = AddFeedViewController()
-            let navigationController = UINavigationController(rootViewController: addFeedViewController)
+            let newFeedViewController = NewFeedViewController()
+            let navigationController = UINavigationController(rootViewController: newFeedViewController)
             navigationController.modalPresentationStyle = .fullScreen
             DispatchQueue.main.async {
                 self?.present(navigationController, animated: true)
@@ -173,9 +173,9 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
         }
 
         cell.storeButtonTapAction = { [weak self] _ in
-            let storeFeedViewController = StoreFeedViewController()
-            storeFeedViewController.title = "틈새라면"
-            self?.navigationController?.pushViewController(storeFeedViewController, animated: true)
+            let storeDetailViewController = StoreDetailViewController()
+            storeDetailViewController.title = "틈새라면"
+            self?.navigationController?.pushViewController(storeDetailViewController, animated: true)
         }
 
         cell.bookmarkButtonTapAction = { [weak self] _ in

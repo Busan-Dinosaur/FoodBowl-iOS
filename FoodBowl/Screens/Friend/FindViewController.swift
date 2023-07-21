@@ -85,8 +85,8 @@ extension FindViewController: UITableViewDataSource, UITableViewDelegate {
     }
 
     func tableView(_: UITableView, didSelectRowAt _: IndexPath) {
-        let storeFeedViewController = StoreFeedViewController()
-        storeFeedViewController.title = "틈새라면"
-        navigationController?.pushViewController(storeFeedViewController, animated: true)
+        let storeDetailViewController = StoreDetailViewController()
+        storeDetailViewController.title = "틈새라면"
+        navigationController?.pushViewController(storeDetailViewController, animated: true)
     }
 }
