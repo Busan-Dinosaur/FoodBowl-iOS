@@ -53,13 +53,13 @@ final class StoreInfoView: UIView {
         addSubviews(storeNameButton, categoryLabel, distanceLabel, mapButton)
 
         storeNameButton.snp.makeConstraints {
-            $0.leading.equalToSuperview().inset(20)
+            $0.leading.equalToSuperview().inset(BaseSize.horizantalPadding)
             $0.top.equalToSuperview().inset(12)
             $0.height.equalTo(20)
         }
 
         categoryLabel.snp.makeConstraints {
-            $0.leading.equalToSuperview().inset(20)
+            $0.leading.equalToSuperview().inset(BaseSize.horizantalPadding)
             $0.top.equalTo(storeNameButton.snp.bottom).offset(4)
         }
 
@@ -69,7 +69,7 @@ final class StoreInfoView: UIView {
         }
 
         mapButton.snp.makeConstraints {
-            $0.trailing.equalToSuperview().inset(20)
+            $0.trailing.equalToSuperview().inset(BaseSize.horizantalPadding)
             $0.centerY.equalToSuperview()
             $0.width.height.equalTo(33)
         }

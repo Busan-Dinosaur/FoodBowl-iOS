@@ -89,40 +89,40 @@ final class AgreementViewController: BaseViewController {
 
         mainAgreeButton.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).inset(20)
-            $0.leading.equalToSuperview().inset(20)
+            $0.leading.equalToSuperview().inset(BaseSize.horizantalPadding)
         }
 
         mainCheckBox.snp.makeConstraints {
             $0.centerY.equalTo(mainAgreeButton)
-            $0.trailing.equalToSuperview().inset(20)
+            $0.trailing.equalToSuperview().inset(BaseSize.horizantalPadding)
             $0.width.height.equalTo(24)
         }
 
         subAgreeLabel1.snp.makeConstraints {
             $0.top.equalTo(mainAgreeButton.snp.bottom).offset(40)
-            $0.leading.equalToSuperview().inset(20)
+            $0.leading.equalToSuperview().inset(BaseSize.horizantalPadding)
         }
 
         subCheckBox1.snp.makeConstraints {
             $0.centerY.equalTo(subAgreeLabel1)
-            $0.trailing.equalToSuperview().inset(20)
+            $0.trailing.equalToSuperview().inset(BaseSize.horizantalPadding)
             $0.width.height.equalTo(24)
         }
 
         subAgreeLabel2.snp.makeConstraints {
             $0.top.equalTo(subAgreeLabel1.snp.bottom).offset(10)
-            $0.leading.equalToSuperview().inset(20)
+            $0.leading.equalToSuperview().inset(BaseSize.horizantalPadding)
         }
 
         subCheckBox2.snp.makeConstraints {
             $0.centerY.equalTo(subAgreeLabel2)
-            $0.trailing.equalToSuperview().inset(20)
+            $0.trailing.equalToSuperview().inset(BaseSize.horizantalPadding)
             $0.width.height.equalTo(24)
         }
 
         nextButton.snp.makeConstraints {
-            $0.leading.trailing.equalToSuperview().inset(20)
-            $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(20)
+            $0.leading.trailing.equalToSuperview().inset(BaseSize.horizantalPadding)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide)
             $0.height.equalTo(60)
         }
     }

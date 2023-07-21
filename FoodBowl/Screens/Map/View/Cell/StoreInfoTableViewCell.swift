@@ -34,17 +34,17 @@ final class StoreInfoTableViewCell: BaseTableViewCell {
         contentView.addSubviews(storeNameLabel, storeFeedLabel, storeDistanceLabel)
 
         storeNameLabel.snp.makeConstraints {
-            $0.leading.equalToSuperview().inset(20)
+            $0.leading.equalToSuperview().inset(BaseSize.horizantalPadding)
             $0.top.equalToSuperview().inset(12)
         }
 
         storeFeedLabel.snp.makeConstraints {
-            $0.leading.equalToSuperview().inset(20)
+            $0.leading.equalToSuperview().inset(BaseSize.horizantalPadding)
             $0.bottom.equalToSuperview().inset(12)
         }
 
         storeDistanceLabel.snp.makeConstraints {
-            $0.trailing.equalToSuperview().inset(20)
+            $0.trailing.equalToSuperview().inset(BaseSize.horizantalPadding)
             $0.bottom.equalToSuperview().inset(12)
         }
     }

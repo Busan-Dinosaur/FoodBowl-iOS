@@ -123,18 +123,18 @@ final class FeedCollectionViewCell: BaseCollectionViewCell {
 
         commentLabel.snp.makeConstraints {
             $0.top.equalTo(storeInfoView.snp.bottom)
-            $0.leading.trailing.equalToSuperview().inset(20)
+            $0.leading.trailing.equalToSuperview().inset(BaseSize.horizantalPadding)
         }
 
         stackView.snp.makeConstraints {
             $0.top.equalTo(commentLabel.snp.bottom).offset(12)
-            $0.leading.equalToSuperview().inset(20)
+            $0.leading.equalToSuperview().inset(BaseSize.horizantalPadding)
             $0.width.equalTo(120)
         }
 
         optionButton.snp.makeConstraints {
             $0.top.equalTo(commentLabel.snp.bottom).offset(12)
-            $0.trailing.equalToSuperview().inset(20)
+            $0.trailing.equalToSuperview().inset(BaseSize.horizantalPadding)
         }
 
         dateLabel.snp.makeConstraints {

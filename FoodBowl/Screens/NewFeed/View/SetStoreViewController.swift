@@ -50,18 +50,18 @@ final class SetStoreViewController: BaseViewController {
 
         guideLabel.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).inset(20)
-            $0.leading.equalToSuperview().inset(20)
+            $0.leading.equalToSuperview().inset(BaseSize.horizantalPadding)
         }
 
         searchBarButton.snp.makeConstraints {
             $0.top.equalTo(guideLabel.snp.bottom).offset(20)
-            $0.leading.trailing.equalToSuperview().inset(20)
+            $0.leading.trailing.equalToSuperview().inset(BaseSize.horizantalPadding)
             $0.height.equalTo(50)
         }
 
         selectedStoreView.snp.makeConstraints {
             $0.top.equalTo(searchBarButton.snp.bottom).offset(10)
-            $0.leading.trailing.equalToSuperview().inset(20)
+            $0.leading.trailing.equalToSuperview().inset(BaseSize.horizantalPadding)
             $0.height.equalTo(60)
         }
     }

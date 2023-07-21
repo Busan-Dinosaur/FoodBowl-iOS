@@ -96,29 +96,29 @@ final class EditProfileViewController: BaseViewController {
 
         nicknameLabel.snp.makeConstraints {
             $0.top.equalTo(profileImageView.snp.bottom).offset(20)
-            $0.leading.equalToSuperview().inset(20)
+            $0.leading.equalToSuperview().inset(BaseSize.horizantalPadding)
         }
 
         nicknameField.snp.makeConstraints {
             $0.top.equalTo(nicknameLabel.snp.bottom).offset(10)
-            $0.leading.trailing.equalToSuperview().inset(20)
+            $0.leading.trailing.equalToSuperview().inset(BaseSize.horizantalPadding)
             $0.height.equalTo(60)
         }
 
         userInfoLabel.snp.makeConstraints {
             $0.top.equalTo(nicknameField.snp.bottom).offset(40)
-            $0.leading.equalToSuperview().inset(20)
+            $0.leading.equalToSuperview().inset(BaseSize.horizantalPadding)
         }
 
         userInfoField.snp.makeConstraints {
             $0.top.equalTo(userInfoLabel.snp.bottom).offset(10)
-            $0.leading.trailing.equalToSuperview().inset(20)
+            $0.leading.trailing.equalToSuperview().inset(BaseSize.horizantalPadding)
             $0.height.equalTo(60)
         }
 
         signUpButton.snp.makeConstraints {
-            $0.leading.trailing.equalToSuperview().inset(20)
-            $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(10)
+            $0.leading.trailing.equalToSuperview().inset(BaseSize.horizantalPadding)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide)
             $0.height.equalTo(60)
         }
     }
