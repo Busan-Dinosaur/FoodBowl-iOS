@@ -75,7 +75,7 @@ final class ProfileHeaderView: UICollectionReusableView {
     // MARK: - life cycle
 
     private func setupLayout() {
-        addSubviews(userImageView, followerInfoButton, followingInfoButton, followButton, editButton, listCollectionView)
+        addSubviews(userImageView, followerInfoButton, followingInfoButton, listCollectionView)
 
         userImageView.snp.makeConstraints {
             $0.leading.equalToSuperview().inset(20)
@@ -91,20 +91,6 @@ final class ProfileHeaderView: UICollectionReusableView {
         followingInfoButton.snp.makeConstraints {
             $0.leading.equalTo(followerInfoButton.snp.trailing).offset(40)
             $0.top.equalToSuperview().inset(15)
-        }
-
-        followButton.snp.makeConstraints {
-            $0.trailing.equalToSuperview().inset(20)
-            $0.top.equalToSuperview().inset(20)
-            $0.width.equalTo(60)
-            $0.height.equalTo(30)
-        }
-
-        editButton.snp.makeConstraints {
-            $0.trailing.equalToSuperview().inset(20)
-            $0.top.equalToSuperview().inset(20)
-            $0.width.equalTo(80)
-            $0.height.equalTo(30)
         }
 
         listCollectionView.snp.makeConstraints {

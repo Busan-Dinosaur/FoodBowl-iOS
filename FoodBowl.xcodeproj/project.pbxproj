@@ -19,7 +19,6 @@
 		CB2E4F7A2976F01700FD2566 /* UnderlineSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2E4F792976F01700FD2566 /* UnderlineSegmentedControl.swift */; };
 		CB2E4F7F297702A800FD2566 /* StoreInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2E4F7E297702A800FD2566 /* StoreInfoTableViewCell.swift */; };
 		CB2E4F81297702B800FD2566 /* UserInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2E4F80297702B800FD2566 /* UserInfoTableViewCell.swift */; };
-		CB2E4F8529772FFE00FD2566 /* UserFeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2E4F8429772FFE00FD2566 /* UserFeedViewController.swift */; };
 		CB2E4F892977393700FD2566 /* UserInfoButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2E4F882977393700FD2566 /* UserInfoButton.swift */; };
 		CB4FBBF22978CFA90052D371 /* FollowerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB4FBBF12978CFA90052D371 /* FollowerViewController.swift */; };
 		CB4FBBF42978CFE40052D371 /* FollowingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB4FBBF32978CFE40052D371 /* FollowingViewController.swift */; };
@@ -108,7 +107,6 @@
 		CBFB525D2977B9C00049E8BA /* EmptyCommentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBFB525C2977B9C00049E8BA /* EmptyCommentView.swift */; };
 		CBFB525F2977C4800049E8BA /* MoreButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBFB525E2977C4800049E8BA /* MoreButton.swift */; };
 		CBFB52612977C9AB0049E8BA /* FindViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBFB52602977C9AB0049E8BA /* FindViewController.swift */; };
-		CBFB52632977CB9F0049E8BA /* UserMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBFB52622977CB9F0049E8BA /* UserMapViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -124,7 +122,6 @@
 		CB2E4F792976F01700FD2566 /* UnderlineSegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnderlineSegmentedControl.swift; sourceTree = "<group>"; };
 		CB2E4F7E297702A800FD2566 /* StoreInfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreInfoTableViewCell.swift; sourceTree = "<group>"; };
 		CB2E4F80297702B800FD2566 /* UserInfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoTableViewCell.swift; sourceTree = "<group>"; };
-		CB2E4F8429772FFE00FD2566 /* UserFeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserFeedViewController.swift; sourceTree = "<group>"; };
 		CB2E4F882977393700FD2566 /* UserInfoButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoButton.swift; sourceTree = "<group>"; };
 		CB4FBBF12978CFA90052D371 /* FollowerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowerViewController.swift; sourceTree = "<group>"; };
 		CB4FBBF32978CFE40052D371 /* FollowingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowingViewController.swift; sourceTree = "<group>"; };
@@ -211,7 +208,6 @@
 		CBFB525C2977B9C00049E8BA /* EmptyCommentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyCommentView.swift; sourceTree = "<group>"; };
 		CBFB525E2977C4800049E8BA /* MoreButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreButton.swift; sourceTree = "<group>"; };
 		CBFB52602977C9AB0049E8BA /* FindViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindViewController.swift; sourceTree = "<group>"; };
-		CBFB52622977CB9F0049E8BA /* UserMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMapViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -450,8 +446,6 @@
 				CB1A7C5F29561B8400C6431D /* Component */,
 				CBD1B5F22982D38300B0AD51 /* Cell */,
 				CBADC2AC2955A0FF00E56C93 /* ProfileViewController.swift */,
-				CB2E4F8429772FFE00FD2566 /* UserFeedViewController.swift */,
-				CBFB52622977CB9F0049E8BA /* UserMapViewController.swift */,
 				CB4FBBF12978CFA90052D371 /* FollowerViewController.swift */,
 				CB4FBBF32978CFE40052D371 /* FollowingViewController.swift */,
 				CBD1B5EE2982A5AD00B0AD51 /* EditProfileViewController.swift */,
@@ -736,7 +730,6 @@
 				CBD1B6022984394A00B0AD51 /* FeedButton.swift in Sources */,
 				CBD1B5FE2982F19300B0AD51 /* UIButton+Extension.swift in Sources */,
 				CBD1B5F42982D39B00B0AD51 /* SettingItemTableViewCell.swift in Sources */,
-				CB2E4F8529772FFE00FD2566 /* UserFeedViewController.swift in Sources */,
 				CBCD0F7F2A66DA1600A51B32 /* UnivViewController.swift in Sources */,
 				CB1BCAF72958B15B0021617D /* StoreInfoView.swift in Sources */,
 				CB2E4F7F297702A800FD2566 /* StoreInfoTableViewCell.swift in Sources */,
@@ -817,7 +810,6 @@
 				CBD1B5FA2982E55F00B0AD51 /* AgreementViewController.swift in Sources */,
 				CBDE38FD29715C5F00DDE49A /* SearchBarButton.swift in Sources */,
 				CBADC2DE2955ACBB00E56C93 /* EmptyFeedView.swift in Sources */,
-				CBFB52632977CB9F0049E8BA /* UserMapViewController.swift in Sources */,
 				CBADC28D29559BC900E56C93 /* NSObject+Extension.swift in Sources */,
 				CBDE390529719B9700DDE49A /* Place.swift in Sources */,
 				CBADC29629559BC900E56C93 /* UITableView+Extension.swift in Sources */,

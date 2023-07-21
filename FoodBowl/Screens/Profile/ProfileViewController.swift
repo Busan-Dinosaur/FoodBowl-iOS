@@ -26,7 +26,6 @@ final class ProfileViewController: BaseViewController {
     }
 
     // MARK: - property
-    // MARK: - property
     private lazy var mapView = MKMapView().then {
         $0.delegate = self
         $0.mapType = MKMapType.standard
@@ -101,29 +100,13 @@ final class ProfileViewController: BaseViewController {
             let followerViewController = FollowerViewController()
             self?.navigationController?.pushViewController(followerViewController, animated: true)
         }
-
         let followingAction = UIAction { [weak self] _ in
             let followingViewController = FollowingViewController()
             self?.navigationController?.pushViewController(followingViewController, animated: true)
         }
 
-        let followButtonAction = UIAction { [weak self] _ in
-            self?.followUser()
-        }
-
-        let editButtonAction = UIAction { [weak self] _ in
-            let editProfileViewController = EditProfileViewController()
-            let navigationController = UINavigationController(rootViewController: editProfileViewController)
-            navigationController.modalPresentationStyle = .fullScreen
-            DispatchQueue.main.async {
-                self?.present(navigationController, animated: true)
-            }
-        }
-
         $0.followerInfoButton.addAction(followerAction, for: .touchUpInside)
         $0.followingInfoButton.addAction(followingAction, for: .touchUpInside)
-        $0.followButton.addAction(followButtonAction, for: .touchUpInside)
-        $0.editButton.addAction(editButtonAction, for: .touchUpInside)
     }
 
     // MARK: - life cycle
@@ -180,10 +163,6 @@ final class ProfileViewController: BaseViewController {
             ),
             animated: true
         )
-    }
-
-    private func followUser() {
-        userProfileView.followButton.isSelected.toggle()
     }
 }
 
