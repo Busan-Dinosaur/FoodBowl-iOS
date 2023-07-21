@@ -108,7 +108,7 @@ final class ProfileHeaderView: UICollectionReusableView {
         }
 
         listCollectionView.snp.makeConstraints {
-            $0.top.equalTo(userImageView.snp.bottom).offset(10)
+            $0.top.equalTo(userImageView.snp.bottom).offset(20)
             $0.leading.trailing.equalToSuperview()
             $0.height.equalTo(30)
         }

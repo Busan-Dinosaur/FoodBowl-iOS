@@ -126,6 +126,12 @@ final class ProfileViewController: BaseViewController {
         $0.editButton.addAction(editButtonAction, for: .touchUpInside)
     }
 
+    // MARK: - life cycle
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        currentLocation()
+    }
+
     override func setupLayout() {
         view.addSubviews(mapView, trakingButton, userProfileView)
 
@@ -142,7 +148,7 @@ final class ProfileViewController: BaseViewController {
         userProfileView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide)
             $0.leading.trailing.equalToSuperview()
-            $0.height.equalTo(110)
+            $0.height.equalTo(120)
         }
     }
 
@@ -162,6 +168,18 @@ final class ProfileViewController: BaseViewController {
             title = "coby5502"
             userProfileView.editButton.isHidden = true
         }
+    }
+
+    private func currentLocation() {
+        guard let currentLoc = LocationManager.shared.manager.location else { return }
+
+        mapView.setRegion(
+            MKCoordinateRegion(
+                center: currentLoc.coordinate,
+                span: MKCoordinateSpan(latitudeDelta: 0.02, longitudeDelta: 0.02)
+            ),
+            animated: true
+        )
     }
 
     private func followUser() {
