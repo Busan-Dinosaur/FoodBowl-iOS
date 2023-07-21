@@ -24,7 +24,6 @@ final class StoreDetailViewController: BaseViewController {
     private var refreshControl = UIRefreshControl()
 
     // MARK: - property
-
     private lazy var closeButton = CloseButton().then {
         let action = UIAction { [weak self] _ in
             self?.dismiss(animated: true, completion: nil)
@@ -43,17 +42,15 @@ final class StoreDetailViewController: BaseViewController {
         $0.delegate = self
         $0.showsVerticalScrollIndicator = false
         $0.register(FeedCollectionViewCell.self, forCellWithReuseIdentifier: FeedCollectionViewCell.className)
-        $0.backgroundColor = .clear
+        $0.backgroundColor = .mainBackground
     }
 
     private let emptyFeedView = EmptyFeedView()
 
     // MARK: - life cycle
-
     override func viewDidLoad() {
         super.viewDidLoad()
         setupRefreshControl()
-        loadData()
     }
 
     override func setupLayout() {
@@ -66,18 +63,14 @@ final class StoreDetailViewController: BaseViewController {
 
     private func setupRefreshControl() {
         let action = UIAction { [weak self] _ in
-            self?.loadData()
         }
         refreshControl.addAction(action, for: .valueChanged)
         refreshControl.tintColor = .lightGray
         listCollectionView.refreshControl = refreshControl
     }
-
-    private func loadData() {}
 }
 
 // MARK: - UICollectionViewDataSource, UICollectionViewDelegate
-
 extension StoreDetailViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_: UICollectionView, numberOfItemsInSection _: Int) -> Int {
         return 10
@@ -166,51 +159,5 @@ extension StoreDetailViewController: UICollectionViewDataSource, UICollectionVie
             """
 
         return cell
-    }
-}
-
-extension StoreDetailViewController {
-    // Standard scroll-view delegate
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let contentSize = scrollView.contentSize.height
-
-        if contentSize - scrollView.contentOffset.y <= scrollView.bounds.height {
-            didScrollToBottom()
-        }
-    }
-
-    private func didScrollToBottom() {}
-}
-
-extension StoreDetailViewController: MFMailComposeViewControllerDelegate {
-    func sendReportMail() {
-        if MFMailComposeViewController.canSendMail() {
-            let composeVC = MFMailComposeViewController()
-            let emailAdress = "foodbowl5502@gmail.com"
-            let messageBody = """
-                신고 사유를 작성해주세요.
-                """
-
-            composeVC.mailComposeDelegate = self
-            composeVC.setToRecipients([emailAdress])
-            composeVC.setSubject("[신고] 닉네임")
-            composeVC.setMessageBody(messageBody, isHTML: false)
-            composeVC.modalPresentationStyle = .fullScreen
-
-            present(composeVC, animated: true, completion: nil)
-        } else {
-            showSendMailErrorAlert()
-        }
-    }
-
-    private func showSendMailErrorAlert() {
-        let sendMailErrorAlert = UIAlertController(title: "메일 전송 실패", message: "이메일 설정을 확인하고 다시 시도해주세요.", preferredStyle: .alert)
-        let confirmAction = UIAlertAction(title: "확인", style: .default)
-        sendMailErrorAlert.addAction(confirmAction)
-        present(sendMailErrorAlert, animated: true, completion: nil)
-    }
-
-    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith _: MFMailComposeResult, error _: Error?) {
-        controller.dismiss(animated: true, completion: nil)
     }
 }
