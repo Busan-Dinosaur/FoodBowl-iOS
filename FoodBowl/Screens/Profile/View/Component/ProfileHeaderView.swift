@@ -41,6 +41,10 @@ final class ProfileHeaderView: UICollectionReusableView {
         $0.numberOfLines = 1
     }
 
+    let followButton = FollowButton()
+
+    let editButton = EditButton()
+
     private let collectionViewFlowLayout = UICollectionViewFlowLayout().then {
         $0.scrollDirection = .horizontal
         $0.sectionInset = BaseSize.collectionInset
@@ -72,7 +76,15 @@ final class ProfileHeaderView: UICollectionReusableView {
     // MARK: - life cycle
 
     private func setupLayout() {
-        addSubviews(userImageView, followerInfoButton, followingInfoButton, userInfoLabel, listCollectionView)
+        addSubviews(
+            userImageView,
+            followerInfoButton,
+            followingInfoButton,
+            userInfoLabel,
+            followButton,
+            editButton,
+            listCollectionView
+        )
 
         userImageView.snp.makeConstraints {
             $0.leading.equalToSuperview().inset(20)
@@ -95,7 +107,21 @@ final class ProfileHeaderView: UICollectionReusableView {
         userInfoLabel.snp.makeConstraints {
             $0.leading.equalTo(userImageView.snp.trailing).offset(20)
             $0.top.equalTo(followerInfoButton.snp.bottom).offset(6)
-            $0.width.equalTo(BaseSize.fullWidth - 70)
+            $0.width.equalTo(BaseSize.fullWidth - 140)
+        }
+
+        followButton.snp.makeConstraints {
+            $0.top.equalToSuperview().inset(10)
+            $0.trailing.equalToSuperview().inset(20)
+            $0.width.equalTo(60)
+            $0.height.equalTo(30)
+        }
+
+        editButton.snp.makeConstraints {
+            $0.top.equalToSuperview().inset(10)
+            $0.trailing.equalToSuperview().inset(20)
+            $0.width.equalTo(60)
+            $0.height.equalTo(30)
         }
 
         listCollectionView.snp.makeConstraints {

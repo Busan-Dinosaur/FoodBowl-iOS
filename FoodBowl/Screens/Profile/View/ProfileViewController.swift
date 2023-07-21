@@ -104,9 +104,21 @@ final class ProfileViewController: BaseViewController {
             let followingViewController = FollowingViewController()
             self?.navigationController?.pushViewController(followingViewController, animated: true)
         }
-
+        let followButtonAction = UIAction { [weak self] _ in
+            self?.followUser()
+        }
+        let editButtonAction = UIAction { [weak self] _ in
+            let editProfileViewController = EditProfileViewController()
+            let navigationController = UINavigationController(rootViewController: editProfileViewController)
+            navigationController.modalPresentationStyle = .fullScreen
+            DispatchQueue.main.async {
+                self?.present(navigationController, animated: true)
+            }
+        }
         $0.followerInfoButton.addAction(followerAction, for: .touchUpInside)
         $0.followingInfoButton.addAction(followingAction, for: .touchUpInside)
+        $0.followButton.addAction(followButtonAction, for: .touchUpInside)
+        $0.editButton.addAction(editButtonAction, for: .touchUpInside)
     }
 
     // MARK: - life cycle
@@ -144,10 +156,12 @@ final class ProfileViewController: BaseViewController {
             let settingButton = makeBarButtonItem(with: settingButton)
             navigationItem.leftBarButtonItem = userNicknameLabel
             navigationItem.rightBarButtonItems = [settingButton, plusButton]
+            profileHeaderView.followButton.isHidden = true
         } else {
             let optionButton = makeBarButtonItem(with: optionButton)
             navigationItem.rightBarButtonItem = optionButton
             title = "coby5502"
+            profileHeaderView.editButton.isHidden = true
         }
     }
 
@@ -161,6 +175,10 @@ final class ProfileViewController: BaseViewController {
             ),
             animated: true
         )
+    }
+
+    private func followUser() {
+        profileHeaderView.followButton.isSelected.toggle()
     }
 }
 

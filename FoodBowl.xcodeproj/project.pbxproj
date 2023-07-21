@@ -91,6 +91,7 @@
 		CBD1B6002984297100B0AD51 /* ChatSendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD1B5FF2984297100B0AD51 /* ChatSendView.swift */; };
 		CBD1B6022984394A00B0AD51 /* FeedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD1B6012984394A00B0AD51 /* FeedButton.swift */; };
 		CBDB8F8129897E0200DA2B1E /* Baumans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CBDB8F7F298979DD00DA2B1E /* Baumans-Regular.ttf */; };
+		CBDDF1402A6ADA3800AE3C50 /* EditButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDDF13F2A6ADA3800AE3C50 /* EditButton.swift */; };
 		CBDE38F92970745600DDE49A /* NewFeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDE38F82970745600DDE49A /* NewFeedViewController.swift */; };
 		CBDE38FB2970774800DDE49A /* CloseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDE38FA2970774800DDE49A /* CloseButton.swift */; };
 		CBDE38FD29715C5F00DDE49A /* SearchBarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDE38FC29715C5F00DDE49A /* SearchBarButton.swift */; };
@@ -192,6 +193,7 @@
 		CBD1B5FF2984297100B0AD51 /* ChatSendView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatSendView.swift; sourceTree = "<group>"; };
 		CBD1B6012984394A00B0AD51 /* FeedButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedButton.swift; sourceTree = "<group>"; };
 		CBDB8F7F298979DD00DA2B1E /* Baumans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Baumans-Regular.ttf"; sourceTree = "<group>"; };
+		CBDDF13F2A6ADA3800AE3C50 /* EditButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditButton.swift; sourceTree = "<group>"; };
 		CBDE38F82970745600DDE49A /* NewFeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewFeedViewController.swift; sourceTree = "<group>"; };
 		CBDE38FA2970774800DDE49A /* CloseButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloseButton.swift; sourceTree = "<group>"; };
 		CBDE38FC29715C5F00DDE49A /* SearchBarButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBarButton.swift; sourceTree = "<group>"; };
@@ -231,6 +233,8 @@
 			children = (
 				CB1A7C6029561BCF00C6431D /* ProfileHeaderView.swift */,
 				CB2E4F882977393700FD2566 /* FollowInfoButton.swift */,
+				CBE6190B296C635D005295AF /* FollowButton.swift */,
+				CBDDF13F2A6ADA3800AE3C50 /* EditButton.swift */,
 			);
 			path = Component;
 			sourceTree = "<group>";
@@ -246,9 +250,7 @@
 		CB26A3ED2A6AC9910043A642 /* Feed */ = {
 			isa = PBXGroup;
 			children = (
-				CB26A3EE2A6AC9A50043A642 /* Component */,
-				CB26A3EF2A6AC9C80043A642 /* Cell */,
-				CBFB52542977B9240049E8BA /* StoreDetailViewController.swift */,
+				CBDDF1392A6AD74E00AE3C50 /* View */,
 			);
 			path = Feed;
 			sourceTree = "<group>";
@@ -303,6 +305,7 @@
 				CB63B75A2A6986BE000AD9C2 /* Component */,
 				CB63B75B2A6986C8000AD9C2 /* Cell */,
 				CBE6190E296C6435005295AF /* MapViewController.swift */,
+				CBB582812973007D00808B0B /* ShowWebViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -324,7 +327,6 @@
 				CBB778D82979B17200B9994A /* PinButton.swift */,
 				CBADC2DF2955B92D00E56C93 /* MainButton.swift */,
 				CB1A7C6229561CF300C6431D /* SubButton.swift */,
-				CBE6190B296C635D005295AF /* FollowButton.swift */,
 			);
 			path = Button;
 			sourceTree = "<group>";
@@ -360,13 +362,13 @@
 		CBADC25129559BC900E56C93 /* Global */ = {
 			isa = PBXGroup;
 			children = (
-				CBADC25229559BC900E56C93 /* Supports */,
-				CBADC25829559BC900E56C93 /* Literal */,
-				CBADC25A29559BC900E56C93 /* Utils */,
-				CBADC26129559BC900E56C93 /* Extensions */,
-				CBADC26F29559BC900E56C93 /* Resource */,
-				CBADC27429559BC900E56C93 /* Base */,
 				CBADC27829559BC900E56C93 /* Component */,
+				CBADC27429559BC900E56C93 /* Base */,
+				CBADC25A29559BC900E56C93 /* Utils */,
+				CBADC25829559BC900E56C93 /* Literal */,
+				CBADC26129559BC900E56C93 /* Extensions */,
+				CBADC25229559BC900E56C93 /* Supports */,
+				CBADC26F29559BC900E56C93 /* Resource */,
 			);
 			path = Global;
 			sourceTree = "<group>";
@@ -375,7 +377,6 @@
 			isa = PBXGroup;
 			children = (
 				CBADC2CE2955A41500E56C93 /* TabBarController.swift */,
-				CBB582812973007D00808B0B /* ShowWebViewController.swift */,
 				CBC73103295550A100C7F198 /* AppDelegate.swift */,
 				CBC73105295550A100C7F198 /* SceneDelegate.swift */,
 				CBC73111295550A200C7F198 /* Info.plist */,
@@ -470,13 +471,7 @@
 		CBADC2A52955A07B00E56C93 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
-				CB1A7C5F29561B8400C6431D /* Component */,
-				CBD1B5F22982D38300B0AD51 /* Cell */,
-				CBADC2AC2955A0FF00E56C93 /* ProfileViewController.swift */,
-				CB4FBBF12978CFA90052D371 /* FollowerViewController.swift */,
-				CB4FBBF32978CFE40052D371 /* FollowingViewController.swift */,
-				CBD1B5EE2982A5AD00B0AD51 /* EditProfileViewController.swift */,
-				CBD1B5F02982B0A300B0AD51 /* SettingViewController.swift */,
+				CBDDF13E2A6AD76E00AE3C50 /* View */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -484,12 +479,7 @@
 		CBADC2B02955A13800E56C93 /* NewFeed */ = {
 			isa = PBXGroup;
 			children = (
-				CB1A7C66295767F000C6431D /* Component */,
-				CBDE39002971945300DDE49A /* Cell */,
-				CBDE38F82970745600DDE49A /* NewFeedViewController.swift */,
-				CBADC2B42955A18C00E56C93 /* SearchStoreViewController.swift */,
-				CBADC2B22955A16A00E56C93 /* SetStoreViewController.swift */,
-				CBADC2B82955A1CC00E56C93 /* SetReviewViewController.swift */,
+				CBDDF13A2A6AD75700AE3C50 /* View */,
 			);
 			path = NewFeed;
 			sourceTree = "<group>";
@@ -559,7 +549,7 @@
 		CBCD0F7D2A66DA0B00A51B32 /* Univ */ = {
 			isa = PBXGroup;
 			children = (
-				CBCD0F7E2A66DA1600A51B32 /* UnivViewController.swift */,
+				CBDDF13D2A6AD76900AE3C50 /* View */,
 			);
 			path = Univ;
 			sourceTree = "<group>";
@@ -567,7 +557,7 @@
 		CBCD0F802A66DA2A00A51B32 /* Bookmark */ = {
 			isa = PBXGroup;
 			children = (
-				CBCD0F812A66DA3700A51B32 /* BookmarkViewController.swift */,
+				CBDDF13C2A6AD76400AE3C50 /* View */,
 			);
 			path = Bookmark;
 			sourceTree = "<group>";
@@ -587,6 +577,68 @@
 				CBDB8F7F298979DD00DA2B1E /* Baumans-Regular.ttf */,
 			);
 			path = Fonts;
+			sourceTree = "<group>";
+		};
+		CBDDF1392A6AD74E00AE3C50 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				CB26A3EE2A6AC9A50043A642 /* Component */,
+				CB26A3EF2A6AC9C80043A642 /* Cell */,
+				CBFB52542977B9240049E8BA /* StoreDetailViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		CBDDF13A2A6AD75700AE3C50 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				CB1A7C66295767F000C6431D /* Component */,
+				CBDE39002971945300DDE49A /* Cell */,
+				CBDE38F82970745600DDE49A /* NewFeedViewController.swift */,
+				CBADC2B42955A18C00E56C93 /* SearchStoreViewController.swift */,
+				CBADC2B22955A16A00E56C93 /* SetStoreViewController.swift */,
+				CBADC2B82955A1CC00E56C93 /* SetReviewViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		CBDDF13B2A6AD75E00AE3C50 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				CBFB52602977C9AB0049E8BA /* FindViewController.swift */,
+				CBCD0F7B2A66D9BC00A51B32 /* FriendViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		CBDDF13C2A6AD76400AE3C50 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				CBCD0F812A66DA3700A51B32 /* BookmarkViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		CBDDF13D2A6AD76900AE3C50 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				CBCD0F7E2A66DA1600A51B32 /* UnivViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		CBDDF13E2A6AD76E00AE3C50 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				CB1A7C5F29561B8400C6431D /* Component */,
+				CBD1B5F22982D38300B0AD51 /* Cell */,
+				CBADC2AC2955A0FF00E56C93 /* ProfileViewController.swift */,
+				CB4FBBF12978CFA90052D371 /* FollowerViewController.swift */,
+				CB4FBBF32978CFE40052D371 /* FollowingViewController.swift */,
+				CBD1B5EE2982A5AD00B0AD51 /* EditProfileViewController.swift */,
+				CBD1B5F02982B0A300B0AD51 /* SettingViewController.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		CBDE39002971945300DDE49A /* Cell */ = {
@@ -612,8 +664,7 @@
 		CBE6190D296C6423005295AF /* Friend */ = {
 			isa = PBXGroup;
 			children = (
-				CBFB52602977C9AB0049E8BA /* FindViewController.swift */,
-				CBCD0F7B2A66D9BC00A51B32 /* FriendViewController.swift */,
+				CBDDF13B2A6AD75E00AE3C50 /* View */,
 			);
 			path = Friend;
 			sourceTree = "<group>";
@@ -792,6 +843,7 @@
 				CB1566D9298D72FF0056B7D9 /* LocationManager.swift in Sources */,
 				CBE6190F296C6435005295AF /* MapViewController.swift in Sources */,
 				CB4FBBF42978CFE40052D371 /* FollowingViewController.swift in Sources */,
+				CBDDF1402A6ADA3800AE3C50 /* EditButton.swift in Sources */,
 				CBADC2A129559BC900E56C93 /* BackButton.swift in Sources */,
 				CBADC29A29559BC900E56C93 /* BaseViewController.swift in Sources */,
 				CBADC2B92955A1CC00E56C93 /* SetReviewViewController.swift in Sources */,
@@ -905,6 +957,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "풋볼";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -959,6 +1012,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "풋볼";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -976,7 +1030,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = FoodBowl/FoodBowl.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 0;
 				DEVELOPMENT_TEAM = 3Y8YH8GWMM;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = FoodBowl/Global/Supports/Info.plist;
@@ -991,7 +1045,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.4;
+				MARKETING_VERSION = 0.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.coby.FoodBowl;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -1010,7 +1064,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = FoodBowl/FoodBowl.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 0;
 				DEVELOPMENT_TEAM = 3Y8YH8GWMM;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = FoodBowl/Global/Supports/Info.plist;
@@ -1025,7 +1079,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.4;
+				MARKETING_VERSION = 0.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.coby.FoodBowl;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
