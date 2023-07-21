@@ -14,23 +14,16 @@ enum ImageLiteral {
     static var profile: UIImage { .load(name: "profile") }
     static var search: UIImage { .load(systemName: "magnifyingglass") }
 
+    static var bookmarkFill: UIImage { .load(name: "bookmark_fill") }
+
     static var btnClose: UIImage { .load(systemName: "xmark") }
     static var btnSetting: UIImage { .load(name: "settings") }
     static var btnBack: UIImage { .load(systemName: "chevron.backward") }
     static var btnDown: UIImage { .load(systemName: "chevron.down") }
     static var btnForward: UIImage { .load(systemName: "chevron.forward") }
-    static var btnCamera: UIImage { .load(systemName: "camera") }
-    static var btnSend: UIImage { .load(systemName: "paperplane") }
-    static var btnBookmark: UIImage { .load(name: "bookmark") }
-    static var btnBookmarkFill: UIImage { .load(name: "bookmark_fill") }
-    static var btnGps: UIImage { .load(name: "gps") }
-    static var btnChat: UIImage { .load(name: "chat") }
-    static var btnPlus: UIImage { .load(name: "plus.circle") }
+    static var btnPlus: UIImage { .load(name: "plus") }
     static var btnOption: UIImage { .load(name: "option") }
-    static var btnMore: UIImage { .load(name: "more") }
     static var btnKakaomap: UIImage { .load(name: "kakaomap") }
-    static var btnGallery: UIImage { .load(name: "gallery") }
-    static var btnPin: UIImage { .load(name: "pin") }
     static var btnFeed: UIImage { .load(name: "feed") }
 
     static var defaultProfile: UIImage { .load(name: "user") }

@@ -87,6 +87,40 @@ extension StoreDetailViewController: UICollectionViewDataSource, UICollectionVie
         ) as? FeedCollectionViewCell else {
             return UICollectionViewCell()
         }
+
+        cell.userButtonTapAction = { [weak self] _ in
+            let profileViewController = ProfileViewController(isOwn: false)
+            self?.navigationController?.pushViewController(profileViewController, animated: true)
+        }
+
+        cell.optionButtonTapAction = { [weak self] _ in
+            let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+
+            let report = UIAlertAction(title: "신고하기", style: .destructive, handler: { _ in
+                self?.sendReportMail()
+            })
+            let cancel = UIAlertAction(title: "취소", style: .cancel, handler: nil)
+
+            alert.addAction(cancel)
+            alert.addAction(report)
+
+            self?.present(alert, animated: true, completion: nil)
+        }
+
+        cell.followButtonTapAction = { _ in
+            cell.userInfoView.followButton.isSelected.toggle()
+        }
+
+        cell.storeButtonTapAction = { [weak self] _ in
+            let storeDetailViewController = StoreDetailViewController()
+            storeDetailViewController.title = "틈새라면"
+            self?.navigationController?.pushViewController(storeDetailViewController, animated: true)
+        }
+
+        cell.bookmarkButtonTapAction = { _ in
+            cell.storeInfoButton.bookmarkButton.isSelected.toggle()
+        }
+
         return cell
     }
 }
