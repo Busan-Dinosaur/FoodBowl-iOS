@@ -20,7 +20,7 @@ final class ProfileHeaderView: UICollectionReusableView {
     // MARK: - property
     lazy var userImageView = UIImageView().then {
         $0.backgroundColor = .grey001
-        $0.layer.cornerRadius = 40
+        $0.layer.cornerRadius = 25
         $0.layer.masksToBounds = true
     }
 
@@ -80,29 +80,29 @@ final class ProfileHeaderView: UICollectionReusableView {
         userImageView.snp.makeConstraints {
             $0.leading.equalToSuperview().inset(20)
             $0.top.equalToSuperview().inset(10)
-            $0.width.height.equalTo(80)
+            $0.width.height.equalTo(50)
         }
 
         followerInfoButton.snp.makeConstraints {
             $0.leading.equalTo(userImageView.snp.trailing).offset(40)
-            $0.top.equalToSuperview().inset(10)
+            $0.top.equalToSuperview().inset(15)
         }
 
         followingInfoButton.snp.makeConstraints {
             $0.leading.equalTo(followerInfoButton.snp.trailing).offset(40)
-            $0.top.equalToSuperview().inset(10)
+            $0.top.equalToSuperview().inset(15)
         }
 
         followButton.snp.makeConstraints {
             $0.trailing.equalToSuperview().inset(20)
-            $0.top.equalToSuperview().inset(10)
+            $0.top.equalToSuperview().inset(20)
             $0.width.equalTo(60)
             $0.height.equalTo(30)
         }
 
         editButton.snp.makeConstraints {
             $0.trailing.equalToSuperview().inset(20)
-            $0.top.equalToSuperview().inset(10)
+            $0.top.equalToSuperview().inset(20)
             $0.width.equalTo(80)
             $0.height.equalTo(30)
         }

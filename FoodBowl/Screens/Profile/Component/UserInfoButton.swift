@@ -14,7 +14,7 @@ final class UserInfoButton: UIButton {
     // MARK: - property
 
     let numberLabel = UILabel().then {
-        $0.font = UIFont.preferredFont(forTextStyle: .headline, weight: .regular)
+        $0.font = UIFont.preferredFont(forTextStyle: .footnote, weight: .regular)
         $0.textColor = .black
         $0.textAlignment = .center
         $0.text = "100"
@@ -22,7 +22,7 @@ final class UserInfoButton: UIButton {
     }
 
     let infoLabel = UILabel().then {
-        $0.font = UIFont.preferredFont(forTextStyle: .headline, weight: .regular)
+        $0.font = UIFont.preferredFont(forTextStyle: .footnote, weight: .regular)
         $0.textColor = .black
         $0.textAlignment = .center
         $0.text = "팔로잉"
@@ -47,7 +47,7 @@ final class UserInfoButton: UIButton {
         addSubviews(numberLabel, infoLabel)
 
         numberLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(24)
+            $0.top.equalToSuperview()
             $0.centerX.equalToSuperview()
         }
 
