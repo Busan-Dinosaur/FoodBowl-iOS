@@ -110,7 +110,7 @@ final class ProfileHeaderView: UICollectionReusableView {
         listCollectionView.snp.makeConstraints {
             $0.top.equalTo(userImageView.snp.bottom).offset(10)
             $0.leading.trailing.equalToSuperview()
-            $0.height.equalTo(40)
+            $0.height.equalTo(30)
         }
     }
 
@@ -132,8 +132,6 @@ extension ProfileHeaderView: UICollectionViewDataSource, UICollectionViewDelegat
         ) as? CategoryCollectionViewCell else {
             return UICollectionViewCell()
         }
-
-        cell.layer.cornerRadius = 20
         cell.categoryLabel.text = categories[indexPath.item].rawValue
 
         return cell

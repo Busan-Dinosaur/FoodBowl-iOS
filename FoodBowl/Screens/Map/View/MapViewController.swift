@@ -67,7 +67,7 @@ class MapViewController: UIViewController {
         let windowScene = scenes.first as? UIWindowScene
         let window = windowScene?.windows.first
         let topPadding = window?.safeAreaInsets.top ?? 0
-        let headerHeight = topPadding + 120
+        let headerHeight = topPadding + 110
 
         $0.snp.makeConstraints {
             $0.height.equalTo(headerHeight)

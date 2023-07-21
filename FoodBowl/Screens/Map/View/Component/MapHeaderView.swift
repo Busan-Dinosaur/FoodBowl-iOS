@@ -73,7 +73,7 @@ final class MapHeaderView: UIView {
         listCollectionView.snp.makeConstraints {
             $0.top.equalTo(searchBarButton.snp.bottom).offset(10)
             $0.leading.trailing.equalToSuperview()
-            $0.height.equalTo(40)
+            $0.height.equalTo(30)
         }
     }
 
@@ -95,8 +95,6 @@ extension MapHeaderView: UICollectionViewDataSource, UICollectionViewDelegate {
         ) as? CategoryCollectionViewCell else {
             return UICollectionViewCell()
         }
-
-        cell.layer.cornerRadius = 20
         cell.categoryLabel.text = categories[indexPath.item].rawValue
 
         return cell
