@@ -18,7 +18,7 @@ final class FollowButton: UIButton {
                 label.text = "삭제"
             } else {
                 backgroundColor = .mainPink
-                label.text = "팔로우"
+                label.text = "추가"
             }
         }
     }
@@ -54,6 +54,7 @@ final class FollowButton: UIButton {
     private func configureUI() {
         backgroundColor = .mainPink
         layer.cornerRadius = 15
-        layer.masksToBounds = false
+        layer.borderColor = UIColor.grey002.cgColor
+        layer.borderWidth = 1
     }
 }

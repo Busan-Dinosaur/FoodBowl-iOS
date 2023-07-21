@@ -42,6 +42,7 @@ final class EditButton: UIButton {
     private func configureUI() {
         backgroundColor = .mainBlue
         layer.cornerRadius = 15
-        layer.masksToBounds = false
+        layer.borderColor = UIColor.grey002.cgColor
+        layer.borderWidth = 1
     }
 }
