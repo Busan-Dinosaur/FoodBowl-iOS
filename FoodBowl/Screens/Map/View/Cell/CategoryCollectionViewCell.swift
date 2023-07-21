@@ -14,8 +14,8 @@ final class CategoryCollectionViewCell: BaseCollectionViewCell {
     override var isSelected: Bool {
         didSet {
             if isSelected {
-                backgroundColor = .mainText
-                categoryLabel.textColor = .mainBackground
+                backgroundColor = .mainBlue
+                categoryLabel.textColor = .white
             } else {
                 backgroundColor = .mainBackground
                 categoryLabel.textColor = .mainText

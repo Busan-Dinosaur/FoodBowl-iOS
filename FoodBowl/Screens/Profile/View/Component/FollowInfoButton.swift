@@ -51,7 +51,7 @@ final class FollowInfoButton: UIButton {
     }
 
     private func configureUI() {
-        backgroundColor = .mainText
+        backgroundColor = .grey001
         layer.cornerRadius = 10
         layer.borderWidth = 1
         layer.borderColor = UIColor.grey002.cgColor

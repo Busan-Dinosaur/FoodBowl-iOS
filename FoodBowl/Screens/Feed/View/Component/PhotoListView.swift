@@ -37,6 +37,7 @@ final class PhotoListView: UIView {
         $0.register(PhotoPlusCollectionViewCell.self, forCellWithReuseIdentifier: PhotoPlusCollectionViewCell.className)
         $0.register(PhotoCollectionViewCell.self, forCellWithReuseIdentifier: PhotoCollectionViewCell.className)
         $0.backgroundColor = .clear
+        $0.showsHorizontalScrollIndicator = false
     }
 
     // MARK: - init
