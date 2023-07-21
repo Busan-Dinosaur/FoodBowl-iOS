@@ -1,17 +1,17 @@
 //
-//  SendButton.swift
+//  BookmarkButton.swift
 //  FoodBowl
 //
-//  Created by COBY_PRO on 2022/12/23.
+//  Created by COBY_PRO on 2023/07/22.
 //
 
 import UIKit
 
-final class SendButton: UIButton {
+final class BookmarkButton: UIButton {
     // MARK: - init
 
     override init(frame _: CGRect) {
-        super.init(frame: .init(origin: .zero, size: .init(width: 44, height: 44)))
+        super.init(frame: .init(origin: .zero, size: .init(width: 24, height: 24)))
         configureUI()
     }
 
@@ -23,7 +23,7 @@ final class SendButton: UIButton {
     // MARK: - life cycle
 
     private func configureUI() {
-        setImage(ImageLiteral.btnSend, for: .normal)
+        setImage(ImageLiteral.bookmark.resize(to: CGSize(width: 24, height: 24)).withRenderingMode(.alwaysTemplate), for: .normal)
         tintColor = .mainText
     }
 }

@@ -12,7 +12,6 @@ import Then
 
 final class PhotoPlusCollectionViewCell: BaseCollectionViewCell {
     // MARK: - property
-
     private let plusImageView = UIImageView().then {
         $0.image = UIImage(systemName: "plus.circle.fill")
         $0.tintColor = .grey001

@@ -12,7 +12,6 @@ import Then
 
 final class PhotoCollectionViewCell: BaseCollectionViewCell {
     // MARK: - property
-
     lazy var foodImageView = UIImageView().then {
         $0.backgroundColor = .grey002
         $0.clipsToBounds = true

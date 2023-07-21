@@ -12,7 +12,6 @@
 		CB1A7C5C29560C2300C6431D /* UserInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1A7C5B29560C2300C6431D /* UserInfoView.swift */; };
 		CB1A7C5E295618A900C6431D /* SettingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1A7C5D295618A900C6431D /* SettingButton.swift */; };
 		CB1A7C6129561BCF00C6431D /* ProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1A7C6029561BCF00C6431D /* ProfileHeaderView.swift */; };
-		CB1A7C6329561CF300C6431D /* SubButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1A7C6229561CF300C6431D /* SubButton.swift */; };
 		CB1A7C6829576D7900C6431D /* BaseScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1A7C6729576D7900C6431D /* BaseScrollView.swift */; };
 		CB1BCAF72958B15B0021617D /* StoreInfoButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1BCAF62958B15B0021617D /* StoreInfoButton.swift */; };
 		CB2E4F7A2976F01700FD2566 /* UnderlineSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2E4F792976F01700FD2566 /* UnderlineSegmentedControl.swift */; };
@@ -53,8 +52,6 @@
 		CBADC29A29559BC900E56C93 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADC27529559BC900E56C93 /* BaseViewController.swift */; };
 		CBADC29B29559BC900E56C93 /* BaseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADC27629559BC900E56C93 /* BaseTableViewCell.swift */; };
 		CBADC29C29559BC900E56C93 /* BaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADC27729559BC900E56C93 /* BaseCollectionViewCell.swift */; };
-		CBADC29E29559BC900E56C93 /* SendButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADC27A29559BC900E56C93 /* SendButton.swift */; };
-		CBADC2A029559BC900E56C93 /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADC27C29559BC900E56C93 /* PaddingLabel.swift */; };
 		CBADC2A129559BC900E56C93 /* BackButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADC27D29559BC900E56C93 /* BackButton.swift */; };
 		CBADC2AD2955A0FF00E56C93 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADC2AC2955A0FF00E56C93 /* ProfileViewController.swift */; };
 		CBADC2B32955A16A00E56C93 /* SetStoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADC2B22955A16A00E56C93 /* SetStoreViewController.swift */; };
@@ -70,8 +67,6 @@
 		CBB582822973007D00808B0B /* ShowWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBB582812973007D00808B0B /* ShowWebViewController.swift */; };
 		CBB58284297440A600808B0B /* CategoryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBB58283297440A600808B0B /* CategoryCollectionViewCell.swift */; };
 		CBB582872974568500808B0B /* YPImagePicker in Frameworks */ = {isa = PBXBuildFile; productRef = CBB582862974568500808B0B /* YPImagePicker */; };
-		CBB5828929745A8200808B0B /* GalleryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBB5828829745A8200808B0B /* GalleryButton.swift */; };
-		CBB778D92979B17200B9994A /* PinButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBB778D82979B17200B9994A /* PinButton.swift */; };
 		CBC73104295550A100C7F198 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBC73103295550A100C7F198 /* AppDelegate.swift */; };
 		CBC73106295550A100C7F198 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBC73105295550A100C7F198 /* SceneDelegate.swift */; };
 		CBC7310D295550A200C7F198 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CBC7310C295550A200C7F198 /* Assets.xcassets */; };
@@ -97,12 +92,12 @@
 		CBDE39022971947B00DDE49A /* StoreSearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDE39012971947B00DDE49A /* StoreSearchTableViewCell.swift */; };
 		CBDE390529719B9700DDE49A /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDE390429719B9700DDE49A /* Place.swift */; };
 		CBDE390729719CB400DDE49A /* SelectedStoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDE390629719CB400DDE49A /* SelectedStoreView.swift */; };
+		CBDECABE2A6B07DE00259350 /* BookmarkButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDECABD2A6B07DD00259350 /* BookmarkButton.swift */; };
 		CBE6190C296C635D005295AF /* FollowButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBE6190B296C635D005295AF /* FollowButton.swift */; };
 		CBE6190F296C6435005295AF /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBE6190E296C6435005295AF /* MapViewController.swift */; };
 		CBE61911296C6804005295AF /* OptionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBE61910296C6804005295AF /* OptionButton.swift */; };
 		CBE61913296C68D9005295AF /* PlusButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBE61912296C68D9005295AF /* PlusButton.swift */; };
 		CBFB52552977B9240049E8BA /* StoreDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBFB52542977B9240049E8BA /* StoreDetailViewController.swift */; };
-		CBFB525F2977C4800049E8BA /* MoreButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBFB525E2977C4800049E8BA /* MoreButton.swift */; };
 		CBFB52612977C9AB0049E8BA /* FindViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBFB52602977C9AB0049E8BA /* FindViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -112,7 +107,6 @@
 		CB1A7C5B29560C2300C6431D /* UserInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoView.swift; sourceTree = "<group>"; };
 		CB1A7C5D295618A900C6431D /* SettingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingButton.swift; sourceTree = "<group>"; };
 		CB1A7C6029561BCF00C6431D /* ProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderView.swift; sourceTree = "<group>"; };
-		CB1A7C6229561CF300C6431D /* SubButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubButton.swift; sourceTree = "<group>"; };
 		CB1A7C6729576D7900C6431D /* BaseScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseScrollView.swift; sourceTree = "<group>"; };
 		CB1BCAF62958B15B0021617D /* StoreInfoButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreInfoButton.swift; sourceTree = "<group>"; };
 		CB2E4F792976F01700FD2566 /* UnderlineSegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnderlineSegmentedControl.swift; sourceTree = "<group>"; };
@@ -151,8 +145,6 @@
 		CBADC27529559BC900E56C93 /* BaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		CBADC27629559BC900E56C93 /* BaseTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseTableViewCell.swift; sourceTree = "<group>"; };
 		CBADC27729559BC900E56C93 /* BaseCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseCollectionViewCell.swift; sourceTree = "<group>"; };
-		CBADC27A29559BC900E56C93 /* SendButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendButton.swift; sourceTree = "<group>"; };
-		CBADC27C29559BC900E56C93 /* PaddingLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaddingLabel.swift; sourceTree = "<group>"; };
 		CBADC27D29559BC900E56C93 /* BackButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackButton.swift; sourceTree = "<group>"; };
 		CBADC2AC2955A0FF00E56C93 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		CBADC2B22955A16A00E56C93 /* SetStoreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetStoreViewController.swift; sourceTree = "<group>"; };
@@ -166,8 +158,6 @@
 		CBB12B132985845900AC0EF2 /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 		CBB582812973007D00808B0B /* ShowWebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowWebViewController.swift; sourceTree = "<group>"; };
 		CBB58283297440A600808B0B /* CategoryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCollectionViewCell.swift; sourceTree = "<group>"; };
-		CBB5828829745A8200808B0B /* GalleryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryButton.swift; sourceTree = "<group>"; };
-		CBB778D82979B17200B9994A /* PinButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinButton.swift; sourceTree = "<group>"; };
 		CBC73100295550A100C7F198 /* FoodBowl.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FoodBowl.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CBC73103295550A100C7F198 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CBC73105295550A100C7F198 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -195,12 +185,12 @@
 		CBDE39012971947B00DDE49A /* StoreSearchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreSearchTableViewCell.swift; sourceTree = "<group>"; };
 		CBDE390429719B9700DDE49A /* Place.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Place.swift; sourceTree = "<group>"; };
 		CBDE390629719CB400DDE49A /* SelectedStoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedStoreView.swift; sourceTree = "<group>"; };
+		CBDECABD2A6B07DD00259350 /* BookmarkButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkButton.swift; sourceTree = "<group>"; };
 		CBE6190B296C635D005295AF /* FollowButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowButton.swift; sourceTree = "<group>"; };
 		CBE6190E296C6435005295AF /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		CBE61910296C6804005295AF /* OptionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionButton.swift; sourceTree = "<group>"; };
 		CBE61912296C68D9005295AF /* PlusButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlusButton.swift; sourceTree = "<group>"; };
 		CBFB52542977B9240049E8BA /* StoreDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreDetailViewController.swift; sourceTree = "<group>"; };
-		CBFB525E2977C4800049E8BA /* MoreButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreButton.swift; sourceTree = "<group>"; };
 		CBFB52602977C9AB0049E8BA /* FindViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -307,20 +297,8 @@
 		CB63B75E2A6988CC000AD9C2 /* Button */ = {
 			isa = PBXGroup;
 			children = (
-				CBDE38FC29715C5F00DDE49A /* SearchBarButton.swift */,
-				CBADC27A29559BC900E56C93 /* SendButton.swift */,
-				CBDE38FA2970774800DDE49A /* CloseButton.swift */,
-				CBADC27D29559BC900E56C93 /* BackButton.swift */,
-				CBD1B5F72982D9E100B0AD51 /* ForwardButton.swift */,
-				CBE61912296C68D9005295AF /* PlusButton.swift */,
-				CBE61910296C6804005295AF /* OptionButton.swift */,
-				CBFB525E2977C4800049E8BA /* MoreButton.swift */,
-				CB1A7C5D295618A900C6431D /* SettingButton.swift */,
-				CBB5828829745A8200808B0B /* GalleryButton.swift */,
-				CBD1B6012984394A00B0AD51 /* FeedButton.swift */,
-				CBB778D82979B17200B9994A /* PinButton.swift */,
 				CBADC2DF2955B92D00E56C93 /* MainButton.swift */,
-				CB1A7C6229561CF300C6431D /* SubButton.swift */,
+				CBDE38FC29715C5F00DDE49A /* SearchBarButton.swift */,
 			);
 			path = Button;
 			sourceTree = "<group>";
@@ -434,7 +412,6 @@
 				CBADC27629559BC900E56C93 /* BaseTableViewCell.swift */,
 				CBADC27729559BC900E56C93 /* BaseCollectionViewCell.swift */,
 				CB1A7C6729576D7900C6431D /* BaseScrollView.swift */,
-				CB1790C7296DAB470083D3A4 /* DynamicHeightCollectionViewFlowLayout.swift */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -442,8 +419,9 @@
 		CBADC27829559BC900E56C93 /* Component */ = {
 			isa = PBXGroup;
 			children = (
+				CBDECABC2A6B06F900259350 /* ImageButton */,
 				CB63B75E2A6988CC000AD9C2 /* Button */,
-				CBADC27C29559BC900E56C93 /* PaddingLabel.swift */,
+				CB1790C7296DAB470083D3A4 /* DynamicHeightCollectionViewFlowLayout.swift */,
 				CB2E4F792976F01700FD2566 /* UnderlineSegmentedControl.swift */,
 				CBD1B5FB2982E83800B0AD51 /* CheckBox.swift */,
 			);
@@ -625,6 +603,21 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		CBDECABC2A6B06F900259350 /* ImageButton */ = {
+			isa = PBXGroup;
+			children = (
+				CBADC27D29559BC900E56C93 /* BackButton.swift */,
+				CBDE38FA2970774800DDE49A /* CloseButton.swift */,
+				CBD1B5F72982D9E100B0AD51 /* ForwardButton.swift */,
+				CBE61912296C68D9005295AF /* PlusButton.swift */,
+				CBE61910296C6804005295AF /* OptionButton.swift */,
+				CB1A7C5D295618A900C6431D /* SettingButton.swift */,
+				CBD1B6012984394A00B0AD51 /* FeedButton.swift */,
+				CBDECABD2A6B07DD00259350 /* BookmarkButton.swift */,
+			);
+			path = ImageButton;
+			sourceTree = "<group>";
+		};
 		CBE6190D296C6423005295AF /* Friend */ = {
 			isa = PBXGroup;
 			children = (
@@ -784,7 +777,6 @@
 				CB63B7602A698909000AD9C2 /* MapHeaderView.swift in Sources */,
 				CB8A2D9B297844720018AC6E /* Marker.swift in Sources */,
 				CBDDF1452A6AFB5800AE3C50 /* PhotoListView.swift in Sources */,
-				CBFB525F2977C4800049E8BA /* MoreButton.swift in Sources */,
 				CBDE38FB2970774800DDE49A /* CloseButton.swift in Sources */,
 				CB2E4F81297702B800FD2566 /* UserInfoTableViewCell.swift in Sources */,
 				CBCD0F7C2A66D9BC00A51B32 /* FriendViewController.swift in Sources */,
@@ -799,7 +791,6 @@
 				CB1790C8296DAB470083D3A4 /* DynamicHeightCollectionViewFlowLayout.swift in Sources */,
 				CBA7F184297DBB01006088A0 /* YPImagePicker+Extension.swift in Sources */,
 				CBE61913296C68D9005295AF /* PlusButton.swift in Sources */,
-				CBB778D92979B17200B9994A /* PinButton.swift in Sources */,
 				CB1A7C5E295618A900C6431D /* SettingButton.swift in Sources */,
 				CBADC29B29559BC900E56C93 /* BaseTableViewCell.swift in Sources */,
 				CB1566D9298D72FF0056B7D9 /* LocationManager.swift in Sources */,
@@ -815,18 +806,16 @@
 				CB63B7622A698D4E000AD9C2 /* BaseSize.swift in Sources */,
 				CBADC29529559BC900E56C93 /* UITextView+Extension.swift in Sources */,
 				CBADC29229559BC900E56C93 /* Sequence+Extension.swift in Sources */,
-				CBB5828929745A8200808B0B /* GalleryButton.swift in Sources */,
 				CBADC29029559BC900E56C93 /* UIViewController+Extension.swift in Sources */,
 				CBADC28C29559BC900E56C93 /* UILabel+Extension.swift in Sources */,
-				CB1A7C6329561CF300C6431D /* SubButton.swift in Sources */,
 				CBADC2B32955A16A00E56C93 /* SetStoreViewController.swift in Sources */,
 				CBADC28329559BC900E56C93 /* ImageLiteral.swift in Sources */,
 				CBD1B5F12982B0A300B0AD51 /* SettingViewController.swift in Sources */,
+				CBDECABE2A6B07DE00259350 /* BookmarkButton.swift in Sources */,
 				CB558E9A29746B5D00921943 /* PhotoPlusCollectionViewCell.swift in Sources */,
 				CB4FBBF22978CFA90052D371 /* FollowerViewController.swift in Sources */,
 				CBADC28B29559BC900E56C93 /* UIColor+Extension.swift in Sources */,
 				CBADC28629559BC900E56C93 /* Logger.swift in Sources */,
-				CBADC29E29559BC900E56C93 /* SendButton.swift in Sources */,
 				CBADC29429559BC900E56C93 /* Notification+Extension.swift in Sources */,
 				CBA7F182297DB319006088A0 /* OnboardingViewController.swift in Sources */,
 				CBADC2E02955B92D00E56C93 /* MainButton.swift in Sources */,
@@ -834,7 +823,6 @@
 				CBE61911296C6804005295AF /* OptionButton.swift in Sources */,
 				CBADC28E29559BC900E56C93 /* UIView+Extension.swift in Sources */,
 				CB7F3327298A51610000A6B4 /* UserDefaultHandler.swift in Sources */,
-				CBADC2A029559BC900E56C93 /* PaddingLabel.swift in Sources */,
 				CBADC29C29559BC900E56C93 /* BaseCollectionViewCell.swift in Sources */,
 				CB1A7C5C29560C2300C6431D /* UserInfoView.swift in Sources */,
 				CBDE38F92970745600DDE49A /* NewFeedViewController.swift in Sources */,

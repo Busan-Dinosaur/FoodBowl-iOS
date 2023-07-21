@@ -30,11 +30,7 @@ final class StoreInfoButton: UIButton {
         $0.text = "10km"
     }
 
-    let bookmarkButton = UIButton().then {
-        $0.setImage(ImageLiteral.bookmark, for: .normal)
-        $0.clipsToBounds = true
-        $0.layer.cornerRadius = 10
-    }
+    let bookmarkButton = BookmarkButton()
 
     // MARK: - init
 
@@ -70,7 +66,6 @@ final class StoreInfoButton: UIButton {
         bookmarkButton.snp.makeConstraints {
             $0.trailing.equalToSuperview().inset(14)
             $0.centerY.equalToSuperview()
-            $0.width.height.equalTo(20)
         }
     }
 
