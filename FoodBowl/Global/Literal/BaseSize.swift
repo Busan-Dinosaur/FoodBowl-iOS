@@ -14,6 +14,6 @@ enum BaseSize {
         top: 0,
         left: horizantalPadding,
         bottom: 0,
-        right: horizantalPadding
+        right: -horizantalPadding
     )
 }
