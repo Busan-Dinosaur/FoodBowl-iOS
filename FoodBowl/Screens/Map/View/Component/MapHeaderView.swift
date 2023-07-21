@@ -12,7 +12,7 @@ import Then
 
 final class MapHeaderView: UIView {
     enum Size {
-        static let SearchBarWidth: CGFloat = BaseSize.fullWidth - BaseSize.horizantalPadding - 30
+        static let SearchBarWidth: CGFloat = BaseSize.fullWidth - BaseSize.horizantalPadding - 20
     }
 
     private let categories = Category.allCases
@@ -55,7 +55,7 @@ final class MapHeaderView: UIView {
         addSubviews(searchBarButton, plusButton, listCollectionView)
 
         searchBarButton.snp.makeConstraints {
-            $0.top.equalTo(safeAreaLayoutGuide).inset(10)
+            $0.top.equalTo(safeAreaLayoutGuide)
             $0.leading.equalToSuperview().inset(BaseSize.horizantalPadding)
             $0.width.equalTo(Size.SearchBarWidth)
             $0.height.equalTo(40)
@@ -63,9 +63,8 @@ final class MapHeaderView: UIView {
 
         plusButton.snp.makeConstraints {
             $0.centerY.equalTo(searchBarButton)
-            $0.leading.equalTo(searchBarButton.snp.trailing).offset(BaseSize.horizantalPadding)
             $0.trailing.equalToSuperview().inset(BaseSize.horizantalPadding)
-            $0.width.height.equalTo(30)
+            $0.width.height.equalTo(20)
         }
 
         listCollectionView.snp.makeConstraints {
