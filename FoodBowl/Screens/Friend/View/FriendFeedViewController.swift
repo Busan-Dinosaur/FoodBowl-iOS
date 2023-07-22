@@ -14,7 +14,7 @@ import Then
 final class FriendFeedViewController: BaseViewController {
     private enum Size {
         static let collectionInset = UIEdgeInsets(
-            top: 20,
+            top: 0,
             left: 0,
             bottom: 20,
             right: 0
@@ -50,7 +50,8 @@ final class FriendFeedViewController: BaseViewController {
         view.addSubviews(listCollectionView)
 
         listCollectionView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
+            $0.top.equalToSuperview().inset(20)
+            $0.leading.trailing.bottom.equalToSuperview()
         }
     }
 
