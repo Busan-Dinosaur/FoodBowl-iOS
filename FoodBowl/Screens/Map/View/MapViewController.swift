@@ -80,6 +80,7 @@ class MapViewController: UIViewController {
         setupLayout()
         setupNavigationBar()
         currentLocation()
+        showModalViewController()
         setMarkers()
     }
 
@@ -125,6 +126,19 @@ class MapViewController: UIViewController {
             ),
             animated: true
         )
+    }
+
+    func showModalViewController() {
+        let modalViewController = FriendFeedViewController()
+        if let sheet = modalViewController.sheetPresentationController {
+            sheet.detents = [.medium(), .large()]
+            sheet.largestUndimmedDetentIdentifier = .medium
+            sheet.prefersScrollingExpandsWhenScrolledToEdge = false
+            sheet.prefersEdgeAttachedInCompactHeight = true
+            sheet.widthFollowsPreferredContentSizeWhenEdgeAttached = true
+            sheet.prefersGrabberVisible = true
+        }
+        present(modalViewController, animated: true, completion: nil)
     }
 
     // 임시 데이터

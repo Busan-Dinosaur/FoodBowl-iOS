@@ -14,7 +14,7 @@ import Then
 final class FriendFeedViewController: BaseViewController {
     private enum Size {
         static let collectionInset = UIEdgeInsets(
-            top: 0,
+            top: 20,
             left: 0,
             bottom: 20,
             right: 0
