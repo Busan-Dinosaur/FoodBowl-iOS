@@ -21,8 +21,6 @@ final class StoreDetailViewController: BaseViewController {
         )
     }
 
-    private var refreshControl = UIRefreshControl()
-
     // MARK: - property
     let switchButton = CustomSwitchButton(frame: CGRect(x: 0, y: 0, width: 60, height: 30))
 
@@ -40,12 +38,6 @@ final class StoreDetailViewController: BaseViewController {
         $0.showsVerticalScrollIndicator = false
         $0.register(FeedNSCollectionViewCell.self, forCellWithReuseIdentifier: FeedNSCollectionViewCell.className)
         $0.backgroundColor = .mainBackground
-    }
-
-    // MARK: - life cycle
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        setupRefreshControl()
     }
 
     override func setupLayout() {
@@ -69,14 +61,6 @@ final class StoreDetailViewController: BaseViewController {
         let switchButton = makeBarButtonItem(with: switchButton)
         navigationItem.rightBarButtonItem = switchButton
         title = "친구들의 리뷰"
-    }
-
-    private func setupRefreshControl() {
-        let action = UIAction { [weak self] _ in
-        }
-        refreshControl.addAction(action, for: .valueChanged)
-        refreshControl.tintColor = .lightGray
-        listCollectionView.refreshControl = refreshControl
     }
 }
 

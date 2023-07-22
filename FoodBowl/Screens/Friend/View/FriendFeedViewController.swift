@@ -23,8 +23,6 @@ final class FriendFeedViewController: BaseViewController {
 
     private lazy var isBookmarked = [Bool](repeating: false, count: 10)
 
-    private var refreshControl = UIRefreshControl()
-
     // MARK: - property
     private let collectionViewFlowLayout = DynamicHeightCollectionViewFlowLayout().then {
         $0.sectionInset = Size.collectionInset
@@ -40,27 +38,13 @@ final class FriendFeedViewController: BaseViewController {
         $0.backgroundColor = .mainBackground
     }
 
-    // MARK: - life cycle
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        setupRefreshControl()
-    }
-
     override func setupLayout() {
         view.addSubviews(listCollectionView)
 
         listCollectionView.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(20)
+            $0.top.equalToSuperview()
             $0.leading.trailing.bottom.equalToSuperview()
         }
-    }
-
-    private func setupRefreshControl() {
-        let action = UIAction { [weak self] _ in
-        }
-        refreshControl.addAction(action, for: .valueChanged)
-        refreshControl.tintColor = .lightGray
-        listCollectionView.refreshControl = refreshControl
     }
 }
 

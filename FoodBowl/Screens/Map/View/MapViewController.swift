@@ -137,6 +137,7 @@ class MapViewController: UIViewController {
             sheet.prefersEdgeAttachedInCompactHeight = true
             sheet.widthFollowsPreferredContentSizeWhenEdgeAttached = true
             sheet.prefersGrabberVisible = true
+            sheet.presentedViewController.modalPresentationStyle = .currentContext
         }
         present(modalViewController, animated: true, completion: nil)
     }
