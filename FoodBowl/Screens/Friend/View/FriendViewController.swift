@@ -19,9 +19,17 @@ final class FriendViewController: MapViewController {
 
     func showModalViewController() {
         let modalViewController = FriendFeedViewController()
-        modalViewController.definesPresentationContext = true
-        modalViewController.modalPresentationStyle = .overCurrentContext
-        modalViewController.sheetPresentationController?.prefersGrabberVisible = true
+
+        modalViewController.isModalInPresentation = true
+        if let sheet = modalViewController.sheetPresentationController {
+            sheet.detents = [.custom(resolver: { context in
+                0.1 * context.maximumDetentValue
+            }), .large()]
+            sheet.largestUndimmedDetentIdentifier = .large
+            sheet.prefersGrabberVisible = true
+            sheet.presentingViewController.modalPresentationStyle = .overCurrentContext
+        }
+
         present(modalViewController, animated: true, completion: nil)
     }
 }
