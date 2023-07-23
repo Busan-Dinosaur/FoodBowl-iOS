@@ -22,10 +22,12 @@ final class FriendViewController: MapViewController {
 
         modalViewController.isModalInPresentation = true
         if let sheet = modalViewController.sheetPresentationController {
-            sheet.detents = [.custom(resolver: { context in
-                0.1 * context.maximumDetentValue
-            }), .large()]
-            sheet.largestUndimmedDetentIdentifier = .large
+            sheet.detents = [
+                .custom(resolver: { context in
+                    0.1 * context.maximumDetentValue
+                }),.medium()
+            ]
+            sheet.largestUndimmedDetentIdentifier = .medium
             sheet.prefersGrabberVisible = true
             sheet.presentingViewController.modalPresentationStyle = .overCurrentContext
         }
