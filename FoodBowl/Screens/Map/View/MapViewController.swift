@@ -74,12 +74,16 @@ class MapViewController: UIViewController {
         }
     }
 
+    var modalViewController: UIViewController = FriendFeedViewController()
+
     // MARK: - life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setupLayout()
+        configureUI()
         setupNavigationBar()
         currentLocation()
+        showModalViewController()
         setMarkers()
     }
 
@@ -94,7 +98,7 @@ class MapViewController: UIViewController {
     }
 
     func setupLayout() {
-        view.addSubviews(mapView, mapHeaderView, trakingButton)
+        view.addSubviews(mapView, mapHeaderView, trakingButton, modalViewController.view)
 
         mapView.snp.makeConstraints {
             $0.edges.equalToSuperview()
@@ -109,6 +113,16 @@ class MapViewController: UIViewController {
             $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(40)
             $0.height.width.equalTo(40)
         }
+
+        modalViewController.view.snp.makeConstraints {
+//            $0.top.equalTo(mapHeaderView.snp.bottom)
+            $0.leading.trailing.bottom.equalToSuperview()
+            $0.height.equalTo(500)
+        }
+    }
+
+    func configureUI() {
+        definesPresentationContext = true
     }
 
     func setupNavigationBar() {
@@ -125,6 +139,21 @@ class MapViewController: UIViewController {
             ),
             animated: true
         )
+    }
+
+    func showModalViewController() {
+        modalViewController.modalPresentationStyle = .overCurrentContext
+        if let sheet = modalViewController.sheetPresentationController {
+            sheet.detents = [
+                .custom(resolver: { context in
+                    0.1 * context.maximumDetentValue
+                }), .medium()
+            ]
+            sheet.largestUndimmedDetentIdentifier = .medium
+            sheet.prefersGrabberVisible = true
+        }
+
+        present(modalViewController, animated: true, completion: nil)
     }
 
     // 임시 데이터
