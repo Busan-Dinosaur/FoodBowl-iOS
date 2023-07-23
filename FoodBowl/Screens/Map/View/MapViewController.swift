@@ -74,13 +74,10 @@ class MapViewController: UIViewController {
         }
     }
 
-    var modalViewController: UIViewController = FriendFeedViewController()
-
     // MARK: - life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setupLayout()
-        configureUI()
         setupNavigationBar()
         currentLocation()
         setMarkers()
@@ -97,7 +94,7 @@ class MapViewController: UIViewController {
     }
 
     func setupLayout() {
-        view.addSubviews(mapView, mapHeaderView, trakingButton, modalViewController.view)
+        view.addSubviews(mapView, mapHeaderView, trakingButton)
 
         mapView.snp.makeConstraints {
             $0.edges.equalToSuperview()
@@ -112,14 +109,7 @@ class MapViewController: UIViewController {
             $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(40)
             $0.height.width.equalTo(40)
         }
-
-        modalViewController.view.snp.makeConstraints {
-            $0.top.equalTo(mapHeaderView.snp.bottom)
-            $0.leading.trailing.bottom.equalToSuperview()
-        }
     }
-
-    func configureUI() {}
 
     func setupNavigationBar() {
         navigationController?.isNavigationBarHidden = true
