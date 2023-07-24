@@ -40,14 +40,12 @@ final class EditProfileViewController: BaseViewController {
     private let nicknameField = UITextField().then {
         let attributes = [
             NSAttributedString.Key.foregroundColor: UIColor.grey001,
-            NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .body, weight: .regular)
+            NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .callout, weight: .regular)
         ]
 
         $0.backgroundColor = .clear
         $0.attributedPlaceholder = NSAttributedString(string: "10자 이내 한글 또는 영문", attributes: attributes)
         $0.autocapitalizationType = .none
-        $0.layer.cornerRadius = 12
-        $0.layer.masksToBounds = true
         $0.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 0))
         $0.leftViewMode = .always
         $0.clearButtonMode = .always
@@ -62,14 +60,12 @@ final class EditProfileViewController: BaseViewController {
     private let userInfoField = UITextField().then {
         let attributes = [
             NSAttributedString.Key.foregroundColor: UIColor.grey001,
-            NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .body, weight: .regular)
+            NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .callout, weight: .regular)
         ]
 
         $0.backgroundColor = .clear
         $0.attributedPlaceholder = NSAttributedString(string: "20자 이내 한글 또는 영문", attributes: attributes)
         $0.autocapitalizationType = .none
-        $0.layer.cornerRadius = 12
-        $0.layer.masksToBounds = true
         $0.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 0))
         $0.leftViewMode = .always
         $0.clearButtonMode = .always
@@ -102,7 +98,7 @@ final class EditProfileViewController: BaseViewController {
         nicknameField.snp.makeConstraints {
             $0.top.equalTo(nicknameLabel.snp.bottom).offset(10)
             $0.leading.trailing.equalToSuperview().inset(BaseSize.horizantalPadding)
-            $0.height.equalTo(60)
+            $0.height.equalTo(50)
         }
 
         userInfoLabel.snp.makeConstraints {
@@ -113,7 +109,7 @@ final class EditProfileViewController: BaseViewController {
         userInfoField.snp.makeConstraints {
             $0.top.equalTo(userInfoLabel.snp.bottom).offset(10)
             $0.leading.trailing.equalToSuperview().inset(BaseSize.horizantalPadding)
-            $0.height.equalTo(60)
+            $0.height.equalTo(50)
         }
 
         signUpButton.snp.makeConstraints {

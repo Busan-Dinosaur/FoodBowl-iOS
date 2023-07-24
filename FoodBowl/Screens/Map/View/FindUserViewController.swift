@@ -1,8 +1,8 @@
 //
-//  FollowerViewController.swift
+//  FindUserViewController.swift
 //  FoodBowl
 //
-//  Created by COBY_PRO on 2023/01/19.
+//  Created by COBY_PRO on 2023/07/25.
 //
 
 import UIKit
@@ -10,8 +10,12 @@ import UIKit
 import SnapKit
 import Then
 
-final class FollowerViewController: BaseViewController {
-    // MARK: - property
+final class FindUserViewController: BaseViewController {
+    private lazy var searchBar = UISearchBar().then {
+        $0.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width - 80, height: 0)
+        $0.placeholder = "유저의 이름을 검색해주세요."
+        $0.delegate = self
+    }
 
     private lazy var userResultTableView = UITableView().then {
         $0.register(UserInfoTableViewCell.self, forCellReuseIdentifier: UserInfoTableViewCell.className)
@@ -20,8 +24,6 @@ final class FollowerViewController: BaseViewController {
         $0.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 20, right: 0)
         $0.backgroundColor = .clear
     }
-
-    // MARK: - life cycle
 
     override func setupLayout() {
         view.addSubviews(userResultTableView)
@@ -32,12 +34,23 @@ final class FollowerViewController: BaseViewController {
     }
 
     override func setupNavigationBar() {
-        super.setupNavigationBar()
-        title = "팔로워"
+        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: searchBar)
     }
 }
 
-extension FollowerViewController: UITableViewDataSource, UITableViewDelegate {
+extension FindUserViewController: UISearchBarDelegate {
+    private func dissmissKeyboard() {
+        searchBar.resignFirstResponder()
+    }
+
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        dissmissKeyboard()
+        guard let searchTerm = searchBar.text, searchTerm.isEmpty == false else { return }
+        print(searchTerm)
+    }
+}
+
+extension FindUserViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
         return 5
     }

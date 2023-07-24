@@ -97,7 +97,7 @@ final class NewFeedViewController: BaseViewController {
         let nextButton = makeBarButtonItem(with: nextButton)
         navigationItem.leftBarButtonItem = closeButton
         navigationItem.rightBarButtonItem = nextButton
-        title = "가게 찾기"
+        title = "가게 선택"
     }
 
     private func updateNavigationBar(currentPage: Int) {
@@ -112,7 +112,7 @@ final class NewFeedViewController: BaseViewController {
         case 0:
             navigationItem.leftBarButtonItem = closeButton
             navigationItem.rightBarButtonItem = nextButton
-            title = "가게 찾기"
+            title = "가게 선택"
         case 1:
             navigationItem.leftBarButtonItem = backButton
             navigationItem.rightBarButtonItem = completeButton

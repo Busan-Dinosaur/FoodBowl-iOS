@@ -1,5 +1,5 @@
 //
-//  FindViewController.swift
+//  FindStoreViewController.swift
 //  FoodBowl
 //
 //  Created by COBY_PRO on 2023/01/18.
@@ -10,17 +10,7 @@ import UIKit
 import SnapKit
 import Then
 
-final class FindViewController: BaseViewController {
-    private lazy var cancelButton = UIButton().then {
-        $0.setTitle("취소", for: .normal)
-        $0.setTitleColor(.mainPink, for: .normal)
-        $0.titleLabel?.font = UIFont.preferredFont(forTextStyle: .headline, weight: .regular)
-        let buttonAction = UIAction { [weak self] _ in
-            self?.dismiss(animated: true, completion: nil)
-        }
-        $0.addAction(buttonAction, for: .touchUpInside)
-    }
-
+final class FindStoreViewController: BaseViewController {
     private lazy var searchBar = UISearchBar().then {
         $0.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width - 80, height: 0)
         $0.placeholder = "가게의 이름을 검색해주세요."
@@ -44,13 +34,11 @@ final class FindViewController: BaseViewController {
     }
 
     override func setupNavigationBar() {
-        let cancelButton = makeBarButtonItem(with: cancelButton)
-        navigationItem.rightBarButtonItem = cancelButton
-        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: searchBar)
+        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: searchBar)
     }
 }
 
-extension FindViewController: UISearchBarDelegate {
+extension FindStoreViewController: UISearchBarDelegate {
     private func dissmissKeyboard() {
         searchBar.resignFirstResponder()
     }
@@ -62,7 +50,7 @@ extension FindViewController: UISearchBarDelegate {
     }
 }
 
-extension FindViewController: UITableViewDataSource, UITableViewDelegate {
+extension FindStoreViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
         return 5
     }

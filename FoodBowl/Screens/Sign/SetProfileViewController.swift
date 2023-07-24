@@ -34,7 +34,7 @@ final class SetProfileViewController: BaseViewController {
     private lazy var nicknameField = UITextField().then {
         let attributes = [
             NSAttributedString.Key.foregroundColor: UIColor.grey001,
-            NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .body, weight: .regular)
+            NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .callout, weight: .regular)
         ]
 
         $0.backgroundColor = .clear
@@ -57,7 +57,7 @@ final class SetProfileViewController: BaseViewController {
     private let userInfoField = UITextField().then {
         let attributes = [
             NSAttributedString.Key.foregroundColor: UIColor.grey001,
-            NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .body, weight: .regular)
+            NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .callout, weight: .regular)
         ]
 
         $0.backgroundColor = .clear
@@ -97,7 +97,7 @@ final class SetProfileViewController: BaseViewController {
         nicknameField.snp.makeConstraints {
             $0.top.equalTo(nicknameLabel.snp.bottom).offset(10)
             $0.leading.trailing.equalToSuperview().inset(BaseSize.horizantalPadding)
-            $0.height.equalTo(60)
+            $0.height.equalTo(50)
         }
 
         userInfoLabel.snp.makeConstraints {
@@ -108,7 +108,7 @@ final class SetProfileViewController: BaseViewController {
         userInfoField.snp.makeConstraints {
             $0.top.equalTo(userInfoLabel.snp.bottom).offset(10)
             $0.leading.trailing.equalToSuperview().inset(BaseSize.horizantalPadding)
-            $0.height.equalTo(60)
+            $0.height.equalTo(50)
         }
 
         signUpButton.snp.makeConstraints {

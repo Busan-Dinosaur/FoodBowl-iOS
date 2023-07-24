@@ -12,7 +12,6 @@ import Then
 
 final class StoreInfoTableViewCell: BaseTableViewCell {
     // MARK: - property
-
     let storeNameLabel = UILabel().then {
         $0.font = UIFont.preferredFont(forTextStyle: .subheadline, weight: .medium)
         $0.textColor = .mainText

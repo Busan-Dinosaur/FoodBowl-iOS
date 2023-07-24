@@ -28,6 +28,8 @@
 		CB7F3325298A51560000A6B4 /* UserDefaultStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB7F3324298A51560000A6B4 /* UserDefaultStorage.swift */; };
 		CB7F3327298A51610000A6B4 /* UserDefaultHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB7F3326298A51610000A6B4 /* UserDefaultHandler.swift */; };
 		CB8A2D9B297844720018AC6E /* Marker.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB8A2D9A297844720018AC6E /* Marker.swift */; };
+		CBA62D3F2A6EC7B800AA0830 /* FindChooseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA62D3E2A6EC7B800AA0830 /* FindChooseViewController.swift */; };
+		CBA62D412A6ECB3B00AA0830 /* FindUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA62D402A6ECB3B00AA0830 /* FindUserViewController.swift */; };
 		CBA7F17F297DB2F6006088A0 /* SetProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA7F17E297DB2F6006088A0 /* SetProfileViewController.swift */; };
 		CBA7F182297DB319006088A0 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA7F181297DB319006088A0 /* OnboardingViewController.swift */; };
 		CBA7F184297DBB01006088A0 /* YPImagePicker+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA7F183297DBB01006088A0 /* YPImagePicker+Extension.swift */; };
@@ -102,7 +104,7 @@
 		CBE61911296C6804005295AF /* OptionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBE61910296C6804005295AF /* OptionButton.swift */; };
 		CBE61913296C68D9005295AF /* PlusButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBE61912296C68D9005295AF /* PlusButton.swift */; };
 		CBFB52552977B9240049E8BA /* StoreDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBFB52542977B9240049E8BA /* StoreDetailViewController.swift */; };
-		CBFB52612977C9AB0049E8BA /* FindViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBFB52602977C9AB0049E8BA /* FindViewController.swift */; };
+		CBFB52612977C9AB0049E8BA /* FindStoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBFB52602977C9AB0049E8BA /* FindStoreViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -128,6 +130,8 @@
 		CB7F3324298A51560000A6B4 /* UserDefaultStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultStorage.swift; sourceTree = "<group>"; };
 		CB7F3326298A51610000A6B4 /* UserDefaultHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultHandler.swift; sourceTree = "<group>"; };
 		CB8A2D9A297844720018AC6E /* Marker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Marker.swift; sourceTree = "<group>"; };
+		CBA62D3E2A6EC7B800AA0830 /* FindChooseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindChooseViewController.swift; sourceTree = "<group>"; };
+		CBA62D402A6ECB3B00AA0830 /* FindUserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindUserViewController.swift; sourceTree = "<group>"; };
 		CBA7F17E297DB2F6006088A0 /* SetProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetProfileViewController.swift; sourceTree = "<group>"; };
 		CBA7F181297DB319006088A0 /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
 		CBA7F183297DBB01006088A0 /* YPImagePicker+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "YPImagePicker+Extension.swift"; sourceTree = "<group>"; };
@@ -199,7 +203,7 @@
 		CBE61910296C6804005295AF /* OptionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionButton.swift; sourceTree = "<group>"; };
 		CBE61912296C68D9005295AF /* PlusButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlusButton.swift; sourceTree = "<group>"; };
 		CBFB52542977B9240049E8BA /* StoreDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreDetailViewController.swift; sourceTree = "<group>"; };
-		CBFB52602977C9AB0049E8BA /* FindViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindViewController.swift; sourceTree = "<group>"; };
+		CBFB52602977C9AB0049E8BA /* FindStoreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindStoreViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -223,7 +227,6 @@
 			children = (
 				CB1A7C6029561BCF00C6431D /* ProfileHeaderView.swift */,
 				CB2E4F882977393700FD2566 /* FollowInfoButton.swift */,
-				CBE6190B296C635D005295AF /* FollowButton.swift */,
 				CBDDF13F2A6ADA3800AE3C50 /* EditButton.swift */,
 			);
 			path = Component;
@@ -298,6 +301,9 @@
 				CB63B75A2A6986BE000AD9C2 /* Component */,
 				CB63B75B2A6986C8000AD9C2 /* Cell */,
 				CBE6190E296C6435005295AF /* MapViewController.swift */,
+				CBA62D3E2A6EC7B800AA0830 /* FindChooseViewController.swift */,
+				CBFB52602977C9AB0049E8BA /* FindStoreViewController.swift */,
+				CBA62D402A6ECB3B00AA0830 /* FindUserViewController.swift */,
 				CBB582812973007D00808B0B /* ShowWebViewController.swift */,
 			);
 			path = View;
@@ -307,6 +313,7 @@
 			isa = PBXGroup;
 			children = (
 				CBADC2DF2955B92D00E56C93 /* MainButton.swift */,
+				CBE6190B296C635D005295AF /* FollowButton.swift */,
 				CBDE38FC29715C5F00DDE49A /* SearchBarButton.swift */,
 				CBDECAC12A6B258200259350 /* CustomSwitchButton.swift */,
 			);
@@ -341,10 +348,19 @@
 			path = Sign;
 			sourceTree = "<group>";
 		};
+		CBA62D3D2A6EBE8800AA0830 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				CB2E4F80297702B800FD2566 /* UserInfoTableViewCell.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
 		CBADC25129559BC900E56C93 /* Global */ = {
 			isa = PBXGroup;
 			children = (
 				CBADC27829559BC900E56C93 /* Component */,
+				CBA62D3D2A6EBE8800AA0830 /* Cell */,
 				CBADC27429559BC900E56C93 /* Base */,
 				CBADC25A29559BC900E56C93 /* Utils */,
 				CBADC25829559BC900E56C93 /* Literal */,
@@ -517,7 +533,6 @@
 		CBD1B5F22982D38300B0AD51 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
-				CB2E4F80297702B800FD2566 /* UserInfoTableViewCell.swift */,
 				CBD1B5F32982D39B00B0AD51 /* SettingItemTableViewCell.swift */,
 			);
 			path = Cell;
@@ -559,7 +574,6 @@
 			children = (
 				CBCD0F7B2A66D9BC00A51B32 /* FriendViewController.swift */,
 				CBDECAC72A6B2F0700259350 /* FriendFeedViewController.swift */,
-				CBFB52602977C9AB0049E8BA /* FindViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -769,7 +783,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CBCD0F822A66DA3700A51B32 /* BookmarkViewController.swift in Sources */,
-				CBFB52612977C9AB0049E8BA /* FindViewController.swift in Sources */,
+				CBFB52612977C9AB0049E8BA /* FindStoreViewController.swift in Sources */,
 				CBD1B6022984394A00B0AD51 /* FeedButton.swift in Sources */,
 				CBDECACA2A6B2F6800259350 /* FeedNSCollectionViewCell.swift in Sources */,
 				CBD1B5FE2982F19300B0AD51 /* UIButton+Extension.swift in Sources */,
@@ -782,6 +796,7 @@
 				CB1A7C6829576D7900C6431D /* BaseScrollView.swift in Sources */,
 				CB1A7C6129561BCF00C6431D /* ProfileHeaderView.swift in Sources */,
 				CBADC2E22955C63300E56C93 /* PhotoCollectionViewCell.swift in Sources */,
+				CBA62D412A6ECB3B00AA0830 /* FindUserViewController.swift in Sources */,
 				CBD1B5EF2982A5AD00B0AD51 /* EditProfileViewController.swift in Sources */,
 				CBADC28A29559BC900E56C93 /* UIFont+Extension.swift in Sources */,
 				CBFB52552977B9240049E8BA /* StoreDetailViewController.swift in Sources */,
@@ -828,6 +843,7 @@
 				CBD1B5F12982B0A300B0AD51 /* SettingViewController.swift in Sources */,
 				CBDECABE2A6B07DE00259350 /* BookmarkButton.swift in Sources */,
 				CB558E9A29746B5D00921943 /* PhotoPlusCollectionViewCell.swift in Sources */,
+				CBA62D3F2A6EC7B800AA0830 /* FindChooseViewController.swift in Sources */,
 				CB4FBBF22978CFA90052D371 /* FollowerViewController.swift in Sources */,
 				CBADC28B29559BC900E56C93 /* UIColor+Extension.swift in Sources */,
 				CBADC28629559BC900E56C93 /* Logger.swift in Sources */,
