@@ -10,7 +10,7 @@ import UIKit
 final class MapButton: UIButton {
     // MARK: - init
     override init(frame _: CGRect) {
-        super.init(frame: .init(origin: .zero, size: .init(width: 30, height: 30)))
+        super.init(frame: .init(origin: .zero, size: .init(width: 40, height: 40)))
         configureUI()
     }
 
@@ -21,7 +21,7 @@ final class MapButton: UIButton {
 
     // MARK: - life cycle
     private func configureUI() {
-        setImage(ImageLiteral.btnKakaomap.resize(to: CGSize(width: 30, height: 30)), for: .normal)
+        setImage(ImageLiteral.btnKakaomap.resize(to: CGSize(width: 40, height: 40)), for: .normal)
         clipsToBounds = true
         layer.cornerRadius = 10
     }
