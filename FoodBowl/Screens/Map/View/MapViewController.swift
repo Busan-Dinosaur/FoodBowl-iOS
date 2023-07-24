@@ -45,7 +45,7 @@ class MapViewController: UIViewController {
 
     private lazy var mapHeaderView = MapHeaderView().then {
         let searchAction = UIAction { [weak self] _ in
-            let searchChooseViewController = SearchChooseViewController()
+            let searchChooseViewController = FindChooseViewController()
             let navigationController = UINavigationController(rootViewController: searchChooseViewController)
             navigationController.modalPresentationStyle = .fullScreen
             DispatchQueue.main.async {

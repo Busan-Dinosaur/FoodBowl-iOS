@@ -1,5 +1,5 @@
 //
-//  SearchChooseViewController.swift
+//  FindChooseViewController.swift
 //  FoodBowl
 //
 //  Created by COBY_PRO on 2023/07/24.
@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 import Then
 
-final class SearchChooseViewController: BaseViewController {
+final class FindChooseViewController: BaseViewController {
     // MARK: - property
     private lazy var closeButton = CloseButton().then {
         let action = UIAction { [weak self] _ in
@@ -27,10 +27,20 @@ final class SearchChooseViewController: BaseViewController {
 
     lazy var searchStoreButton = SearchBarButton().then {
         $0.placeholderLabel.text = "가게 검색"
+        let action = UIAction { [weak self] _ in
+            let findStoreViewController = FindStoreViewController()
+            self?.navigationController?.pushViewController(findStoreViewController, animated: true)
+        }
+        $0.addAction(action, for: .touchUpInside)
     }
 
     lazy var searchUserButton = SearchBarButton().then {
         $0.placeholderLabel.text = "친구 검색"
+        let action = UIAction { [weak self] _ in
+            let findUserViewController = FindUserViewController()
+            self?.navigationController?.pushViewController(findUserViewController, animated: true)
+        }
+        $0.addAction(action, for: .touchUpInside)
     }
 
     // MARK: - life cycle
