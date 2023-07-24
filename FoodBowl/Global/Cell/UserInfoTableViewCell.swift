@@ -15,8 +15,8 @@ final class UserInfoTableViewCell: BaseTableViewCell {
     var followButtonTapAction: ((UserInfoTableViewCell) -> Void)?
 
     // MARK: - property
-    lazy var userImageButton = UIButton().then {
-        $0.backgroundColor = .gray
+    let userImageButton = UIButton().then {
+        $0.backgroundColor = .grey003
         $0.layer.cornerRadius = 20
         $0.layer.masksToBounds = true
         $0.layer.borderColor = UIColor.grey002.cgColor
@@ -43,32 +43,30 @@ final class UserInfoTableViewCell: BaseTableViewCell {
 
         userImageButton.snp.makeConstraints {
             $0.leading.equalToSuperview().inset(BaseSize.horizantalPadding)
-            $0.centerY.equalToSuperview()
+            $0.top.bottom.equalToSuperview().inset(12)
             $0.width.height.equalTo(40)
         }
 
         userNameButton.snp.makeConstraints {
-            $0.leading.equalTo(userImageButton.snp.trailing).offset(16)
-            $0.top.equalToSuperview().inset(10)
-            $0.height.equalTo(20)
+            $0.leading.equalTo(userImageButton.snp.trailing).offset(12)
+            $0.top.equalToSuperview().inset(14)
+            $0.height.equalTo(18)
         }
 
         userFollowerLabel.snp.makeConstraints {
-            $0.leading.equalTo(userImageButton.snp.trailing).offset(16)
-            $0.top.equalTo(userNameButton.snp.bottom).offset(4)
+            $0.leading.equalTo(userImageButton.snp.trailing).offset(12)
+            $0.top.equalTo(userNameButton.snp.bottom).offset(2)
         }
 
         followButton.snp.makeConstraints {
             $0.trailing.equalToSuperview().inset(BaseSize.horizantalPadding)
             $0.centerY.equalToSuperview()
-            $0.width.equalTo(60)
+            $0.width.equalTo(50)
             $0.height.equalTo(30)
         }
     }
 
     override func configureUI() {
-        backgroundColor = .clear
-
         userImageButton.addAction(UIAction { _ in self.userButtonTapAction?(self) }, for: .touchUpInside)
         userNameButton.addAction(UIAction { _ in self.userButtonTapAction?(self) }, for: .touchUpInside)
         followButton.addAction(UIAction { _ in self.followButtonTapAction?(self) }, for: .touchUpInside)

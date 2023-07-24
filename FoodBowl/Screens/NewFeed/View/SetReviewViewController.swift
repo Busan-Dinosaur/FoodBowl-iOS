@@ -33,7 +33,7 @@ final class SetReviewViewController: BaseViewController {
 
     private let guidePhotoLabel = UILabel().then {
         $0.text = "음식 사진을 등록해주세요."
-        $0.font = UIFont.preferredFont(forTextStyle: .title3, weight: .medium)
+        $0.font = UIFont.preferredFont(forTextStyle: .body, weight: .medium)
         $0.textColor = .mainText
     }
 
@@ -56,7 +56,7 @@ final class SetReviewViewController: BaseViewController {
 
     private let guideCommentLabel = UILabel().then {
         $0.text = "후기를 작성해주세요."
-        $0.font = UIFont.preferredFont(forTextStyle: .title3, weight: .medium)
+        $0.font = UIFont.preferredFont(forTextStyle: .body, weight: .medium)
         $0.textColor = .mainText
     }
 
@@ -86,13 +86,13 @@ final class SetReviewViewController: BaseViewController {
         }
 
         listCollectionView.snp.makeConstraints {
-            $0.top.equalTo(guidePhotoLabel.snp.bottom).offset(20)
+            $0.top.equalTo(guidePhotoLabel.snp.bottom).offset(10)
             $0.leading.trailing.equalToSuperview()
             $0.height.equalTo(100)
         }
 
         guideCommentLabel.snp.makeConstraints {
-            $0.top.equalTo(listCollectionView.snp.bottom).offset(30)
+            $0.top.equalTo(listCollectionView.snp.bottom).offset(40)
             $0.leading.equalToSuperview().inset(BaseSize.horizantalPadding)
         }
 

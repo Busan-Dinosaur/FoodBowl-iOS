@@ -36,16 +36,11 @@ final class TabBarController: UITabBarController {
         tabBar.backgroundColor = .mainBackground
         setViewControllers([vc1, vc2, vc3, vc4], animated: true)
 
-        if #available(iOS 13.0, *) {
-            let tabBarAppearance: UITabBarAppearance = .init()
-            tabBarAppearance.configureWithDefaultBackground()
-            tabBarAppearance.backgroundColor = .mainBackground
-            UITabBar.appearance().standardAppearance = tabBarAppearance
-
-            if #available(iOS 15.0, *) {
-                UITabBar.appearance().scrollEdgeAppearance = tabBarAppearance
-            }
-        }
+        let tabBarAppearance: UITabBarAppearance = .init()
+        tabBarAppearance.configureWithDefaultBackground()
+        tabBarAppearance.backgroundColor = .mainBackground
+        UITabBar.appearance().standardAppearance = tabBarAppearance
+        UITabBar.appearance().scrollEdgeAppearance = tabBarAppearance
     }
 
     override func viewWillAppear(_ animated: Bool) {

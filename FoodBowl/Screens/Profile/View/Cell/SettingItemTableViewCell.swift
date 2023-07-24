@@ -14,7 +14,7 @@ final class SettingItemTableViewCell: BaseTableViewCell {
     // MARK: - property
 
     let menuLabel = UILabel().then {
-        $0.font = UIFont.preferredFont(forTextStyle: .body, weight: .regular)
+        $0.font = UIFont.preferredFont(forTextStyle: .subheadline, weight: .regular)
         $0.textColor = .subText
     }
 

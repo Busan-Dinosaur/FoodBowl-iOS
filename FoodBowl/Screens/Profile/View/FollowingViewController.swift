@@ -55,13 +55,13 @@ extension FollowingViewController: UITableViewDataSource, UITableViewDelegate {
         }
 
         cell.followButtonTapAction = { [weak self] _ in
-            cell.followButton.isSelected = !cell.followButton.isSelected
+            cell.followButton.isSelected.toggle()
         }
 
         return cell
     }
 
     func tableView(_: UITableView, heightForRowAt _: IndexPath) -> CGFloat {
-        return 60
+        return 64
     }
 }

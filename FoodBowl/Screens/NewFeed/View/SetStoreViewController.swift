@@ -18,10 +18,9 @@ final class SetStoreViewController: BaseViewController {
     var univ: Place?
 
     // MARK: - property
-
     private let guideLabel = UILabel().then {
-        $0.text = "게시물을 작성할 가게를 찾아보세요."
-        $0.font = UIFont.preferredFont(forTextStyle: .title3, weight: .medium)
+        $0.text = "후기를 작성할 가게를 찾아주세요."
+        $0.font = UIFont.preferredFont(forTextStyle: .body, weight: .medium)
         $0.textColor = .mainText
     }
 
@@ -44,7 +43,6 @@ final class SetStoreViewController: BaseViewController {
     }
 
     // MARK: - life cycle
-
     override func setupLayout() {
         view.addSubviews(guideLabel, searchBarButton, selectedStoreView)
 
@@ -56,7 +54,7 @@ final class SetStoreViewController: BaseViewController {
         searchBarButton.snp.makeConstraints {
             $0.top.equalTo(guideLabel.snp.bottom).offset(20)
             $0.leading.trailing.equalToSuperview().inset(BaseSize.horizantalPadding)
-            $0.height.equalTo(50)
+            $0.height.equalTo(40)
         }
 
         selectedStoreView.snp.makeConstraints {

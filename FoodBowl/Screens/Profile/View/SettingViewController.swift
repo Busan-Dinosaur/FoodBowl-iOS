@@ -114,7 +114,7 @@ extension SettingViewController: UITableViewDataSource, UITableViewDelegate {
     }
 
     func tableView(_: UITableView, heightForRowAt _: IndexPath) -> CGFloat {
-        return 60
+        return 50
     }
 
     func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {

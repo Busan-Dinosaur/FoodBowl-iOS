@@ -55,27 +55,27 @@ final class StoreHeaderView: UIView {
         addSubviews(mapButton, storeNameLabel, categoryLabel, storeAddressLabel, bookmarkButton)
 
         mapButton.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(4)
+            $0.top.equalToSuperview()
             $0.leading.equalToSuperview().inset(BaseSize.horizantalPadding)
         }
 
         storeNameLabel.snp.makeConstraints {
-            $0.top.equalToSuperview()
-            $0.leading.equalTo(mapButton.snp.trailing).offset(10)
+            $0.top.equalToSuperview().inset(2)
+            $0.leading.equalTo(mapButton.snp.trailing).offset(12)
         }
 
         categoryLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(2)
+            $0.top.equalToSuperview().inset(4)
             $0.leading.equalTo(storeNameLabel.snp.trailing).offset(12)
         }
 
         storeAddressLabel.snp.makeConstraints {
-            $0.top.equalTo(storeNameLabel.snp.bottom).offset(4)
-            $0.leading.equalTo(mapButton.snp.trailing).offset(10)
+            $0.top.equalTo(storeNameLabel.snp.bottom).offset(2)
+            $0.leading.equalTo(mapButton.snp.trailing).offset(12)
         }
 
         bookmarkButton.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(8)
+            $0.top.equalToSuperview().inset(10)
             $0.trailing.equalToSuperview().inset(BaseSize.horizantalPadding)
         }
     }
