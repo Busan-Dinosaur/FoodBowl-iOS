@@ -18,7 +18,6 @@ final class SetStoreViewController: BaseViewController {
     var univ: Place?
 
     // MARK: - property
-
     private let guideLabel = UILabel().then {
         $0.text = "후기를 작성할 가게를 찾아주세요."
         $0.font = UIFont.preferredFont(forTextStyle: .body, weight: .medium)
@@ -44,7 +43,6 @@ final class SetStoreViewController: BaseViewController {
     }
 
     // MARK: - life cycle
-
     override func setupLayout() {
         view.addSubviews(guideLabel, searchBarButton, selectedStoreView)
 

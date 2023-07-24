@@ -15,7 +15,6 @@ final class ShowWebViewController: BaseViewController, WKNavigationDelegate, WKU
     var url = ""
 
     // MARK: - property
-
     private lazy var closeButton = CloseButton().then {
         let action = UIAction { [weak self] _ in
             self?.dismiss(animated: true, completion: nil)
@@ -30,7 +29,6 @@ final class ShowWebViewController: BaseViewController, WKNavigationDelegate, WKU
     }
 
     // MARK: - life cycle
-
     override func setupLayout() {
         view.addSubviews(webView)
 

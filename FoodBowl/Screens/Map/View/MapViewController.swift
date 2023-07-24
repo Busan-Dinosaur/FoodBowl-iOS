@@ -44,9 +44,9 @@ class MapViewController: UIViewController {
     }
 
     private lazy var mapHeaderView = MapHeaderView().then {
-        let findAction = UIAction { [weak self] _ in
-            let findStoreViewController = FindViewController()
-            let navigationController = UINavigationController(rootViewController: FindViewController())
+        let searchAction = UIAction { [weak self] _ in
+            let searchChooseViewController = SearchChooseViewController()
+            let navigationController = UINavigationController(rootViewController: searchChooseViewController)
             navigationController.modalPresentationStyle = .fullScreen
             DispatchQueue.main.async {
                 self?.present(navigationController, animated: true)
@@ -60,7 +60,7 @@ class MapViewController: UIViewController {
                 self?.present(navigationController, animated: true)
             }
         }
-        $0.searchBarButton.addAction(findAction, for: .touchUpInside)
+        $0.searchBarButton.addAction(searchAction, for: .touchUpInside)
         $0.plusButton.addAction(plusAction, for: .touchUpInside)
 
         let scenes = UIApplication.shared.connectedScenes
