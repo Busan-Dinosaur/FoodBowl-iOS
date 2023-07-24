@@ -223,7 +223,6 @@
 			children = (
 				CB1A7C6029561BCF00C6431D /* ProfileHeaderView.swift */,
 				CB2E4F882977393700FD2566 /* FollowInfoButton.swift */,
-				CBE6190B296C635D005295AF /* FollowButton.swift */,
 				CBDDF13F2A6ADA3800AE3C50 /* EditButton.swift */,
 			);
 			path = Component;
@@ -307,6 +306,7 @@
 			isa = PBXGroup;
 			children = (
 				CBADC2DF2955B92D00E56C93 /* MainButton.swift */,
+				CBE6190B296C635D005295AF /* FollowButton.swift */,
 				CBDE38FC29715C5F00DDE49A /* SearchBarButton.swift */,
 				CBDECAC12A6B258200259350 /* CustomSwitchButton.swift */,
 			);
@@ -341,10 +341,19 @@
 			path = Sign;
 			sourceTree = "<group>";
 		};
+		CBA62D3D2A6EBE8800AA0830 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				CB2E4F80297702B800FD2566 /* UserInfoTableViewCell.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
 		CBADC25129559BC900E56C93 /* Global */ = {
 			isa = PBXGroup;
 			children = (
 				CBADC27829559BC900E56C93 /* Component */,
+				CBA62D3D2A6EBE8800AA0830 /* Cell */,
 				CBADC27429559BC900E56C93 /* Base */,
 				CBADC25A29559BC900E56C93 /* Utils */,
 				CBADC25829559BC900E56C93 /* Literal */,
@@ -517,7 +526,6 @@
 		CBD1B5F22982D38300B0AD51 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
-				CB2E4F80297702B800FD2566 /* UserInfoTableViewCell.swift */,
 				CBD1B5F32982D39B00B0AD51 /* SettingItemTableViewCell.swift */,
 			);
 			path = Cell;

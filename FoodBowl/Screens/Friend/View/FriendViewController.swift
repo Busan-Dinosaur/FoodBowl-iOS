@@ -14,7 +14,7 @@ final class FriendViewController: MapViewController {
     // MARK: - life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        showModalViewController()
+//        showModalViewController()
     }
 
     func showModalViewController() {
@@ -25,7 +25,7 @@ final class FriendViewController: MapViewController {
             sheet.detents = [
                 .custom(resolver: { context in
                     0.1 * context.maximumDetentValue
-                }),.medium()
+                }), .medium()
             ]
             sheet.largestUndimmedDetentIdentifier = .medium
             sheet.prefersGrabberVisible = true
