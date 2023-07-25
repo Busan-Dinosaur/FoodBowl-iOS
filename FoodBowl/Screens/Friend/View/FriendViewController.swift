@@ -23,7 +23,7 @@ final class FriendViewController: MapViewController {
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan(_:)))
         grabbarView.isUserInteractionEnabled = true
         grabbarView.addGestureRecognizer(panGesture)
-        currentModalHeight = getModalHeight()
+        currentModalHeight = getModalMaxHeight()
     }
 
     override func setupLayout() {
@@ -38,11 +38,11 @@ final class FriendViewController: MapViewController {
         modalView.snp.makeConstraints {
             $0.top.equalTo(grabbarView.snp.bottom)
             $0.leading.trailing.bottom.equalToSuperview()
-            $0.height.equalTo(getModalHeight())
+            $0.height.equalTo(getModalMaxHeight())
         }
     }
 
-    func getModalHeight() -> CGFloat {
+    func getModalMaxHeight() -> CGFloat {
         return UIScreen.main.bounds.height - getHeaderHeight() - 30
     }
 
@@ -50,20 +50,42 @@ final class FriendViewController: MapViewController {
     func handlePan(_ gesture: UIPanGestureRecognizer) {
         guard gesture.view != nil else { return }
         let translation = gesture.translation(in: gesture.view?.superview)
-        let minHeight: CGFloat = 200
+        let tabBarHeight: CGFloat = tabBarController?.tabBar.frame.height ?? 0
+        let minHeight: CGFloat = tabBarHeight + 50
+        let midHeight: CGFloat = UIScreen.main.bounds.height / 2
+        let maxHeight: CGFloat = getModalMaxHeight()
+
         var newModalHeight = currentModalHeight - translation.y
-        if newModalHeight > getModalHeight() {
-            newModalHeight = getModalHeight()
-        } else if newModalHeight < minHeight {
+        switch newModalHeight {
+        case let height where height < minHeight:
             newModalHeight = minHeight
+        case let height where height > maxHeight:
+            newModalHeight = maxHeight
+        default:
+            break
         }
+
         modalView.snp.remakeConstraints {
             $0.top.equalTo(grabbarView.snp.bottom)
             $0.leading.trailing.bottom.equalToSuperview()
             $0.height.equalTo(newModalHeight)
         }
-        if gesture.state == UIGestureRecognizer.State.ended {
-            currentModalHeight = newModalHeight
+
+        if gesture.state == .ended {
+            switch newModalHeight {
+            case let height where height - minHeight < midHeight - height:
+                currentModalHeight = minHeight
+            case let height where height - midHeight < maxHeight - height:
+                currentModalHeight = midHeight
+            default:
+                currentModalHeight = maxHeight
+            }
+
+            modalView.snp.remakeConstraints {
+                $0.top.equalTo(grabbarView.snp.bottom)
+                $0.leading.trailing.bottom.equalToSuperview()
+                $0.height.equalTo(currentModalHeight)
+            }
         }
     }
 }
