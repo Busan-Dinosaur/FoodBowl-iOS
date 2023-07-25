@@ -58,8 +58,15 @@ final class FriendViewController: MapViewController {
         var newModalHeight = currentModalHeight - translation.y
         if newModalHeight < minHeight {
             newModalHeight = minHeight
+            modalView.showResult()
+            tabBarController?.tabBar.frame.origin = CGPoint(x: 0, y: UIScreen.main.bounds.maxY)
         } else if newModalHeight > maxHeight {
             newModalHeight = maxHeight
+            modalView.showContent()
+            tabBarController?.tabBar.frame.origin = CGPoint(x: 0, y: UIScreen.main.bounds.maxY - tabBarHeight)
+        } else {
+            modalView.showContent()
+            tabBarController?.tabBar.frame.origin = CGPoint(x: 0, y: UIScreen.main.bounds.maxY - tabBarHeight)
         }
 
         modalView.snp.remakeConstraints {
@@ -72,12 +79,15 @@ final class FriendViewController: MapViewController {
             switch newModalHeight {
             case let height where height - minHeight < midHeight - height:
                 currentModalHeight = minHeight
+                modalView.showResult()
                 tabBarController?.tabBar.frame.origin = CGPoint(x: 0, y: UIScreen.main.bounds.maxY)
             case let height where height - midHeight < maxHeight - height:
                 currentModalHeight = midHeight
+                modalView.showContent()
                 tabBarController?.tabBar.frame.origin = CGPoint(x: 0, y: UIScreen.main.bounds.maxY - tabBarHeight)
             default:
                 currentModalHeight = maxHeight
+                modalView.showContent()
                 tabBarController?.tabBar.frame.origin = CGPoint(x: 0, y: UIScreen.main.bounds.maxY - tabBarHeight)
             }
 

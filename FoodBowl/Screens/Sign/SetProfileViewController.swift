@@ -52,6 +52,7 @@ final class SetProfileViewController: BaseViewController {
     private let userInfoLabel = UILabel().then {
         $0.text = "한줄 소개"
         $0.font = UIFont.preferredFont(forTextStyle: .body, weight: .medium)
+        $0.textColor = .mainText
     }
 
     private let userInfoField = UITextField().then {

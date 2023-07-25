@@ -37,6 +37,13 @@ final class FriendFeedView: UIView {
         $0.backgroundColor = .mainBackground
     }
 
+    private let resultLabel = UILabel().then {
+        $0.text = "4개의 맛집, 10개의 후기"
+        $0.font = UIFont.preferredFont(forTextStyle: .subheadline, weight: .medium)
+        $0.textColor = .mainText
+        $0.textAlignment = .center
+    }
+
     // MARK: - init
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -50,15 +57,31 @@ final class FriendFeedView: UIView {
     }
 
     func setupLayout() {
-        addSubviews(listCollectionView)
+        addSubviews(listCollectionView, resultLabel)
 
         listCollectionView.snp.makeConstraints {
-            $0.top.equalToSuperview()
-            $0.leading.trailing.bottom.equalToSuperview()
+            $0.edges.equalToSuperview()
+        }
+
+        resultLabel.snp.makeConstraints {
+            $0.top.leading.trailing.equalToSuperview()
         }
     }
 
-    func configureUI() {}
+    func configureUI() {
+        resultLabel.isHidden = true
+        backgroundColor = .mainBackground
+    }
+
+    func showContent() {
+        listCollectionView.isHidden = false
+        resultLabel.isHidden = true
+    }
+
+    func showResult() {
+        listCollectionView.isHidden = true
+        resultLabel.isHidden = false
+    }
 }
 
 extension FriendFeedView {
