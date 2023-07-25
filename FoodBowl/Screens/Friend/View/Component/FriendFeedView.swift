@@ -64,7 +64,8 @@ final class FriendFeedView: UIView {
         }
 
         resultLabel.snp.makeConstraints {
-            $0.top.leading.trailing.equalToSuperview()
+            $0.top.equalToSuperview().inset(4)
+            $0.leading.trailing.equalToSuperview()
         }
     }
 
