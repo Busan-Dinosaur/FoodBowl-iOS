@@ -35,18 +35,29 @@ final class FriendViewController: MapViewController {
         modalView.snp.makeConstraints {
             $0.top.equalTo(grabbarView.snp.bottom)
             $0.leading.trailing.bottom.equalToSuperview()
-            $0.height.equalTo(UIScreen.main.bounds.height - getHeaderHeight() - 30)
+            $0.height.equalTo(getModalHeight())
         }
+    }
+
+    func getModalHeight() -> CGFloat {
+        return UIScreen.main.bounds.height - getHeaderHeight() - 30
     }
 
     @objc
     func handlePan(_ gesture: UIPanGestureRecognizer) {
         guard gesture.view != nil else { return }
         let translation = gesture.translation(in: gesture.view?.superview)
+        let halfHeight = UIScreen.main.bounds.height / 2
+        var newModalHeight = modalView.bounds.height - translation.y
+        if newModalHeight > getModalHeight() {
+            newModalHeight = getModalHeight()
+        } else if newModalHeight < halfHeight {
+            newModalHeight = halfHeight
+        }
         modalView.snp.remakeConstraints {
             $0.top.equalTo(grabbarView.snp.bottom)
             $0.leading.trailing.bottom.equalToSuperview()
-            $0.height.equalTo(400 - translation.y)
+            $0.height.equalTo(newModalHeight)
         }
     }
 }
