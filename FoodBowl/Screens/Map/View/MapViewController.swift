@@ -17,7 +17,7 @@ class MapViewController: UIViewController {
     private var marks: [Marker]?
 
     // MARK: - property
-    private lazy var mapView = MKMapView().then {
+    lazy var mapView = MKMapView().then {
         $0.delegate = self
         $0.mapType = MKMapType.standard
         $0.showsUserLocation = true
@@ -43,10 +43,10 @@ class MapViewController: UIViewController {
         $0.tintColor = UIColor.mainPink
     }
 
-    private lazy var mapHeaderView = MapHeaderView().then {
-        let searchAction = UIAction { [weak self] _ in
-            let searchChooseViewController = FindChooseViewController()
-            let navigationController = UINavigationController(rootViewController: searchChooseViewController)
+    lazy var mapHeaderView = MapHeaderView().then {
+        let findAction = UIAction { [weak self] _ in
+            let findChooseViewController = FindChooseViewController()
+            let navigationController = UINavigationController(rootViewController: findChooseViewController)
             navigationController.modalPresentationStyle = .fullScreen
             DispatchQueue.main.async {
                 self?.present(navigationController, animated: true)
@@ -60,7 +60,7 @@ class MapViewController: UIViewController {
                 self?.present(navigationController, animated: true)
             }
         }
-        $0.searchBarButton.addAction(searchAction, for: .touchUpInside)
+        $0.searchBarButton.addAction(findAction, for: .touchUpInside)
         $0.plusButton.addAction(plusAction, for: .touchUpInside)
 
         let scenes = UIApplication.shared.connectedScenes
@@ -78,6 +78,7 @@ class MapViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupLayout()
+        configureUI()
         setupNavigationBar()
         currentLocation()
         setMarkers()
@@ -110,6 +111,8 @@ class MapViewController: UIViewController {
             $0.height.width.equalTo(40)
         }
     }
+
+    func configureUI() {}
 
     func setupNavigationBar() {
         navigationController?.isNavigationBarHidden = true

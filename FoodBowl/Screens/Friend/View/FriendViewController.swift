@@ -11,27 +11,42 @@ import SnapKit
 import Then
 
 final class FriendViewController: MapViewController {
-    // MARK: - life cycle
+    var panGesture = UIPanGestureRecognizer()
+
+    let grabbarView = GrabbarView()
+    let modalView = FriendFeedView()
+
     override func viewDidLoad() {
         super.viewDidLoad()
-//        showModalViewController()
+        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan(_:)))
+        grabbarView.isUserInteractionEnabled = true
+        grabbarView.addGestureRecognizer(panGesture)
     }
 
-    func showModalViewController() {
-        let modalViewController = FriendFeedViewController()
+    override func setupLayout() {
+        super.setupLayout()
+        view.addSubviews(grabbarView, modalView)
 
-        modalViewController.isModalInPresentation = true
-        if let sheet = modalViewController.sheetPresentationController {
-            sheet.detents = [
-                .custom(resolver: { context in
-                    0.1 * context.maximumDetentValue
-                }), .medium()
-            ]
-            sheet.largestUndimmedDetentIdentifier = .medium
-            sheet.prefersGrabberVisible = true
-            sheet.presentingViewController.modalPresentationStyle = .overCurrentContext
+        grabbarView.snp.makeConstraints {
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(30)
         }
 
-        present(modalViewController, animated: true, completion: nil)
+        modalView.snp.makeConstraints {
+            $0.top.equalTo(grabbarView.snp.bottom)
+            $0.leading.trailing.bottom.equalToSuperview()
+            $0.height.equalTo(400)
+        }
+    }
+
+    @objc
+    func handlePan(_ gesture: UIPanGestureRecognizer) {
+        guard gesture.view != nil else { return }
+        let translation = gesture.translation(in: gesture.view?.superview)
+        modalView.snp.remakeConstraints {
+            $0.top.equalTo(grabbarView.snp.bottom)
+            $0.leading.trailing.bottom.equalToSuperview()
+            $0.height.equalTo(400 - translation.y)
+        }
     }
 }

@@ -1,17 +1,16 @@
 //
-//  FriendFeedViewController.swift
+//  FriendFeedView.swift
 //  FoodBowl
 //
 //  Created by COBY_PRO on 2023/07/22.
 //
 
-import MessageUI
 import UIKit
 
 import SnapKit
 import Then
 
-final class FriendFeedViewController: BaseViewController {
+final class FriendFeedView: UIView {
     private enum Size {
         static let collectionInset = UIEdgeInsets(
             top: 0,
@@ -38,17 +37,31 @@ final class FriendFeedViewController: BaseViewController {
         $0.backgroundColor = .mainBackground
     }
 
-    override func setupLayout() {
-        view.addSubviews(listCollectionView)
+    // MARK: - init
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setupLayout()
+        configureUI()
+    }
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    func setupLayout() {
+        addSubviews(listCollectionView)
 
         listCollectionView.snp.makeConstraints {
             $0.top.equalToSuperview()
             $0.leading.trailing.bottom.equalToSuperview()
         }
     }
+
+    func configureUI() {}
 }
 
-extension FriendFeedViewController {
+extension FriendFeedView {
     // Standard scroll-view delegate
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let contentSize = scrollView.contentSize.height
@@ -62,7 +75,7 @@ extension FriendFeedViewController {
 }
 
 // MARK: - UICollectionViewDataSource, UICollectionViewDelegate
-extension FriendFeedViewController: UICollectionViewDataSource, UICollectionViewDelegate {
+extension FriendFeedView: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_: UICollectionView, numberOfItemsInSection _: Int) -> Int {
         return 10
     }
@@ -77,21 +90,21 @@ extension FriendFeedViewController: UICollectionViewDataSource, UICollectionView
 
         cell.userButtonTapAction = { [weak self] _ in
             let profileViewController = ProfileViewController(isOwn: false)
-            self?.navigationController?.pushViewController(profileViewController, animated: true)
+//            self?.navigationController?.pushViewController(profileViewController, animated: true)
         }
 
         cell.optionButtonTapAction = { [weak self] _ in
             let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
 
             let report = UIAlertAction(title: "신고하기", style: .destructive, handler: { _ in
-                self?.sendReportMail()
+//                self?.sendReportMail()
             })
             let cancel = UIAlertAction(title: "취소", style: .cancel, handler: nil)
 
             alert.addAction(cancel)
             alert.addAction(report)
 
-            self?.present(alert, animated: true, completion: nil)
+//            self?.present(alert, animated: true, completion: nil)
         }
 
         cell.followButtonTapAction = { _ in
@@ -101,7 +114,7 @@ extension FriendFeedViewController: UICollectionViewDataSource, UICollectionView
         cell.storeButtonTapAction = { [weak self] _ in
             let storeDetailViewController = StoreDetailViewController()
             storeDetailViewController.title = "틈새라면"
-            self?.navigationController?.pushViewController(storeDetailViewController, animated: true)
+//            self?.navigationController?.pushViewController(storeDetailViewController, animated: true)
         }
 
         cell.bookmarkButtonTapAction = { [weak self] _ in
