@@ -114,7 +114,7 @@ extension FriendFeedView: UICollectionViewDataSource, UICollectionViewDelegate {
 
         cell.userButtonTapAction = { [weak self] _ in
             let profileViewController = ProfileViewController(isOwn: false)
-//            self?.navigationController?.pushViewController(profileViewController, animated: true)
+            self?.parentViewController?.navigationController?.pushViewController(profileViewController, animated: true)
         }
 
         cell.optionButtonTapAction = { [weak self] _ in
@@ -128,7 +128,7 @@ extension FriendFeedView: UICollectionViewDataSource, UICollectionViewDelegate {
             alert.addAction(cancel)
             alert.addAction(report)
 
-//            self?.present(alert, animated: true, completion: nil)
+            self?.parentViewController?.present(alert, animated: true, completion: nil)
         }
 
         cell.followButtonTapAction = { _ in
@@ -138,7 +138,7 @@ extension FriendFeedView: UICollectionViewDataSource, UICollectionViewDelegate {
         cell.storeButtonTapAction = { [weak self] _ in
             let storeDetailViewController = StoreDetailViewController()
             storeDetailViewController.title = "틈새라면"
-//            self?.navigationController?.pushViewController(storeDetailViewController, animated: true)
+            self?.parentViewController?.navigationController?.pushViewController(storeDetailViewController, animated: true)
         }
 
         cell.bookmarkButtonTapAction = { [weak self] _ in
