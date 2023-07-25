@@ -35,7 +35,7 @@ final class FriendViewController: MapViewController {
         modalView.snp.makeConstraints {
             $0.top.equalTo(grabbarView.snp.bottom)
             $0.leading.trailing.bottom.equalToSuperview()
-            $0.height.equalTo(400)
+            $0.height.equalTo(UIScreen.main.bounds.height - getHeaderHeight() - 30)
         }
     }
 

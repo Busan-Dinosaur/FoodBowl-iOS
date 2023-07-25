@@ -62,16 +62,6 @@ class MapViewController: UIViewController {
         }
         $0.searchBarButton.addAction(findAction, for: .touchUpInside)
         $0.plusButton.addAction(plusAction, for: .touchUpInside)
-
-        let scenes = UIApplication.shared.connectedScenes
-        let windowScene = scenes.first as? UIWindowScene
-        let window = windowScene?.windows.first
-        let topPadding = window?.safeAreaInsets.top ?? 0
-        let headerHeight = topPadding + 90
-
-        $0.snp.makeConstraints {
-            $0.height.equalTo(headerHeight)
-        }
     }
 
     // MARK: - life cycle
@@ -103,6 +93,7 @@ class MapViewController: UIViewController {
 
         mapHeaderView.snp.makeConstraints {
             $0.top.leading.trailing.equalToSuperview()
+            $0.height.equalTo(getHeaderHeight())
         }
 
         trakingButton.snp.makeConstraints {
@@ -116,6 +107,15 @@ class MapViewController: UIViewController {
 
     func setupNavigationBar() {
         navigationController?.isNavigationBarHidden = true
+    }
+
+    func getHeaderHeight() -> CGFloat {
+        let scenes = UIApplication.shared.connectedScenes
+        let windowScene = scenes.first as? UIWindowScene
+        let window = windowScene?.windows.first
+        let topPadding = window?.safeAreaInsets.top ?? 0
+        let headerHeight = topPadding + 90
+        return headerHeight
     }
 
     private func currentLocation() {
