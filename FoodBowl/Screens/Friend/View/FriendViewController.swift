@@ -51,18 +51,15 @@ final class FriendViewController: MapViewController {
         guard gesture.view != nil else { return }
         let translation = gesture.translation(in: gesture.view?.superview)
         let tabBarHeight: CGFloat = tabBarController?.tabBar.frame.height ?? 0
-        let minHeight: CGFloat = tabBarHeight + 50
-        let midHeight: CGFloat = UIScreen.main.bounds.height / 2
+        let minHeight: CGFloat = tabBarHeight - 20
+        let midHeight: CGFloat = UIScreen.main.bounds.height / 2 - 50
         let maxHeight: CGFloat = getModalMaxHeight()
 
         var newModalHeight = currentModalHeight - translation.y
-        switch newModalHeight {
-        case let height where height < minHeight:
+        if newModalHeight < minHeight {
             newModalHeight = minHeight
-        case let height where height > maxHeight:
+        } else if newModalHeight > maxHeight {
             newModalHeight = maxHeight
-        default:
-            break
         }
 
         modalView.snp.remakeConstraints {
@@ -75,10 +72,13 @@ final class FriendViewController: MapViewController {
             switch newModalHeight {
             case let height where height - minHeight < midHeight - height:
                 currentModalHeight = minHeight
+                tabBarController?.tabBar.frame.origin = CGPoint(x: 0, y: UIScreen.main.bounds.maxY)
             case let height where height - midHeight < maxHeight - height:
                 currentModalHeight = midHeight
+                tabBarController?.tabBar.frame.origin = CGPoint(x: 0, y: UIScreen.main.bounds.maxY - tabBarHeight)
             default:
                 currentModalHeight = maxHeight
+                tabBarController?.tabBar.frame.origin = CGPoint(x: 0, y: UIScreen.main.bounds.maxY - tabBarHeight)
             }
 
             modalView.snp.remakeConstraints {
