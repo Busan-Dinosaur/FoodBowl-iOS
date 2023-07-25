@@ -98,7 +98,7 @@ class MapViewController: UIViewController {
 
         trakingButton.snp.makeConstraints {
             $0.trailing.equalToSuperview().inset(BaseSize.horizantalPadding)
-            $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(40)
+            $0.top.equalTo(mapHeaderView.snp.bottom).offset(20)
             $0.height.width.equalTo(40)
         }
     }
