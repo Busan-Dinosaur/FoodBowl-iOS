@@ -54,20 +54,28 @@ final class FriendViewController: MapViewController {
         let minHeight: CGFloat = tabBarHeight - 20
         let midHeight: CGFloat = UIScreen.main.bounds.height / 2 - 50
         let maxHeight: CGFloat = getModalMaxHeight()
+        let grabbarRadius: CGFloat = 20
 
         var newModalHeight = currentModalHeight - translation.y
-        if newModalHeight < minHeight {
+        if newModalHeight <= minHeight {
             newModalHeight = minHeight
             modalView.showResult()
+            grabbarView.roundCorners(corners: [.topLeft, .topRight], radius: grabbarRadius)
             tabBarController?.tabBar.frame.origin = CGPoint(x: 0, y: UIScreen.main.bounds.maxY)
-        } else if newModalHeight > maxHeight {
+        } else if newModalHeight >= maxHeight {
             newModalHeight = maxHeight
             modalView.showContent()
+            grabbarView.roundCorners(corners: [.topLeft, .topRight], radius: 0)
             tabBarController?.tabBar.frame.origin = CGPoint(x: 0, y: UIScreen.main.bounds.maxY - tabBarHeight)
         } else {
             modalView.showContent()
+            grabbarView.roundCorners(corners: [.topLeft, .topRight], radius: grabbarRadius)
             tabBarController?.tabBar.frame.origin = CGPoint(x: 0, y: UIScreen.main.bounds.maxY - tabBarHeight)
         }
+
+        FriendFeedView.animate(withDuration: 0.2, delay: 0, options: [], animations: { () in
+            self.view.layoutIfNeeded()
+        })
 
         modalView.snp.remakeConstraints {
             $0.top.equalTo(grabbarView.snp.bottom)
@@ -80,14 +88,17 @@ final class FriendViewController: MapViewController {
             case let height where height - minHeight < midHeight - height:
                 currentModalHeight = minHeight
                 modalView.showResult()
+                grabbarView.roundCorners(corners: [.topLeft, .topRight], radius: grabbarRadius)
                 tabBarController?.tabBar.frame.origin = CGPoint(x: 0, y: UIScreen.main.bounds.maxY)
             case let height where height - midHeight < maxHeight - height:
                 currentModalHeight = midHeight
                 modalView.showContent()
+                grabbarView.roundCorners(corners: [.topLeft, .topRight], radius: grabbarRadius)
                 tabBarController?.tabBar.frame.origin = CGPoint(x: 0, y: UIScreen.main.bounds.maxY - tabBarHeight)
             default:
                 currentModalHeight = maxHeight
                 modalView.showContent()
+                grabbarView.roundCorners(corners: [.topLeft, .topRight], radius: 0)
                 tabBarController?.tabBar.frame.origin = CGPoint(x: 0, y: UIScreen.main.bounds.maxY - tabBarHeight)
             }
 
