@@ -16,11 +16,14 @@ final class FriendViewController: MapViewController {
     let grabbarView = GrabbarView()
     let modalView = FriendFeedView()
 
+    var currentModalHeight: CGFloat = 0
+
     override func viewDidLoad() {
         super.viewDidLoad()
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan(_:)))
         grabbarView.isUserInteractionEnabled = true
         grabbarView.addGestureRecognizer(panGesture)
+        currentModalHeight = getModalHeight()
     }
 
     override func setupLayout() {
@@ -47,17 +50,20 @@ final class FriendViewController: MapViewController {
     func handlePan(_ gesture: UIPanGestureRecognizer) {
         guard gesture.view != nil else { return }
         let translation = gesture.translation(in: gesture.view?.superview)
-        let halfHeight = UIScreen.main.bounds.height / 2
-        var newModalHeight = modalView.bounds.height - translation.y
+        let minHeight: CGFloat = 200
+        var newModalHeight = currentModalHeight - translation.y
         if newModalHeight > getModalHeight() {
             newModalHeight = getModalHeight()
-        } else if newModalHeight < halfHeight {
-            newModalHeight = halfHeight
+        } else if newModalHeight < minHeight {
+            newModalHeight = minHeight
         }
         modalView.snp.remakeConstraints {
             $0.top.equalTo(grabbarView.snp.bottom)
             $0.leading.trailing.bottom.equalToSuperview()
             $0.height.equalTo(newModalHeight)
+        }
+        if gesture.state == UIGestureRecognizer.State.ended {
+            currentModalHeight = newModalHeight
         }
     }
 }
