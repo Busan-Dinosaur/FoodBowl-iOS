@@ -19,28 +19,23 @@ class MapViewController: UIViewController {
 
     var panGesture = UIPanGestureRecognizer()
 
-    var mapHeaderHeight: CGFloat {
+    var topPadding: CGFloat {
         let scenes = UIApplication.shared.connectedScenes
         let windowScene = scenes.first as? UIWindowScene
         let window = windowScene?.windows.first
         let topPadding = window?.safeAreaInsets.top ?? 0
-        let headerHeight = topPadding + 90
-        return headerHeight
+        return topPadding
     }
 
-    var modalMaxHeight: CGFloat {
-        UIScreen.main.bounds.height - mapHeaderHeight - 30
-    }
+    lazy var mapHeaderHeight: CGFloat = topPadding + 90
 
-    var modalMinHeight: CGFloat {
-        tabBarHeight - 20
-    }
+    lazy var modalMaxHeight: CGFloat = UIScreen.main.bounds.height - mapHeaderHeight - 30
+
+    lazy var modalMinHeight: CGFloat = tabBarHeight - 20
 
     let modalMidHeight: CGFloat = UIScreen.main.bounds.height / 2 - 80
 
-    var tabBarHeight: CGFloat {
-        tabBarController?.tabBar.frame.height ?? 0
-    }
+    lazy var tabBarHeight: CGFloat = tabBarController?.tabBar.frame.height ?? 0
 
     var currentModalHeight: CGFloat = 0
 
@@ -155,7 +150,7 @@ class MapViewController: UIViewController {
         navigationController?.isNavigationBarHidden = true
     }
 
-    private func currentLocation() {
+    func currentLocation() {
         guard let currentLoc = LocationManager.shared.manager.location else { return }
 
         mapView.setRegion(
@@ -224,7 +219,7 @@ class MapViewController: UIViewController {
     }
 
     // 임시 데이터
-    private func setMarkers() {
+    func setMarkers() {
         guard let currentLoc = LocationManager.shared.manager.location else { return }
 
         marks = [

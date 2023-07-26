@@ -104,6 +104,9 @@ final class ProfileViewController: MapViewController {
 
     override func viewDidLoad() {
         setupBackButton()
+        let navBarHeight = UIApplication.shared.statusBarFrame.size
+            .height + (navigationController?.navigationBar.frame.height ?? 0.0)
+        modalMaxHeight = UIScreen.main.bounds.height - 130 - navBarHeight
         super.viewDidLoad()
     }
 
@@ -112,12 +115,9 @@ final class ProfileViewController: MapViewController {
         setupInteractivePopGestureRecognizer()
     }
 
-    override func viewWillDisappear(_ animated: Bool) {
-        navigationController?.isNavigationBarHidden = false
-    }
-
     override func setupLayout() {
         super.setupLayout()
+        mapHeaderView.removeFromSuperview()
         view.addSubviews(profileHeaderView)
 
         profileHeaderView.snp.makeConstraints {
@@ -125,11 +125,6 @@ final class ProfileViewController: MapViewController {
             $0.leading.trailing.equalToSuperview()
             $0.height.equalTo(100)
         }
-    }
-
-    override func configureUI() {
-        super.configureUI()
-        mapHeaderView.isHidden = true
     }
 
     override func setupNavigationBar() {
