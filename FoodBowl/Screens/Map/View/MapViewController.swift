@@ -16,6 +16,10 @@ class MapViewController: UIViewController {
     // 임시 마커 데이터
     private var marks: [Marker]?
 
+    var panGesture = UIPanGestureRecognizer()
+
+    var currentModalHeight: CGFloat = 0
+
     // MARK: - property
     lazy var mapView = MKMapView().then {
         $0.delegate = self
@@ -64,6 +68,10 @@ class MapViewController: UIViewController {
         $0.plusButton.addAction(plusAction, for: .touchUpInside)
     }
 
+    let grabbarView = GrabbarView()
+
+    var modalView: UIView = .init()
+
     // MARK: - life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -85,7 +93,7 @@ class MapViewController: UIViewController {
     }
 
     func setupLayout() {
-        view.addSubviews(mapView, mapHeaderView, trakingButton)
+        view.addSubviews(mapView, mapHeaderView, trakingButton, grabbarView, modalView)
 
         mapView.snp.makeConstraints {
             $0.edges.equalToSuperview()
@@ -101,21 +109,28 @@ class MapViewController: UIViewController {
             $0.top.equalTo(mapHeaderView.snp.bottom).offset(20)
             $0.height.width.equalTo(40)
         }
+
+        grabbarView.snp.makeConstraints {
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(30)
+        }
+
+        modalView.snp.makeConstraints {
+            $0.top.equalTo(grabbarView.snp.bottom)
+            $0.leading.trailing.bottom.equalToSuperview()
+            $0.height.equalTo(getModalMaxHeight())
+        }
     }
 
-    func configureUI() {}
+    func configureUI() {
+        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan(_:)))
+        grabbarView.isUserInteractionEnabled = true
+        grabbarView.addGestureRecognizer(panGesture)
+        currentModalHeight = getModalMaxHeight()
+    }
 
     func setupNavigationBar() {
         navigationController?.isNavigationBarHidden = true
-    }
-
-    func getHeaderHeight() -> CGFloat {
-        let scenes = UIApplication.shared.connectedScenes
-        let windowScene = scenes.first as? UIWindowScene
-        let window = windowScene?.windows.first
-        let topPadding = window?.safeAreaInsets.top ?? 0
-        let headerHeight = topPadding + 90
-        return headerHeight
     }
 
     private func currentLocation() {
@@ -128,6 +143,73 @@ class MapViewController: UIViewController {
             ),
             animated: true
         )
+    }
+
+    func getHeaderHeight() -> CGFloat {
+        let scenes = UIApplication.shared.connectedScenes
+        let windowScene = scenes.first as? UIWindowScene
+        let window = windowScene?.windows.first
+        let topPadding = window?.safeAreaInsets.top ?? 0
+        let headerHeight = topPadding + 90
+        return headerHeight
+    }
+
+    func getModalMaxHeight() -> CGFloat {
+        return UIScreen.main.bounds.height - getHeaderHeight() - 30
+    }
+
+    @objc
+    func handlePan(_ gesture: UIPanGestureRecognizer) {
+        guard gesture.view != nil else { return }
+        let translation = gesture.translation(in: gesture.view?.superview)
+        let tabBarHeight: CGFloat = tabBarController?.tabBar.frame.height ?? 0
+        let minHeight: CGFloat = tabBarHeight - 20
+        let midHeight: CGFloat = UIScreen.main.bounds.height / 2 - 80
+        let maxHeight: CGFloat = getModalMaxHeight()
+        let grabbarRadius: CGFloat = 15
+
+        var newModalHeight = currentModalHeight - translation.y
+        if newModalHeight <= minHeight {
+            newModalHeight = minHeight
+            grabbarView.roundCorners(corners: [.topLeft, .topRight], radius: grabbarRadius)
+            tabBarController?.tabBar.frame.origin = CGPoint(x: 0, y: UIScreen.main.bounds.maxY)
+        } else if newModalHeight >= maxHeight {
+            newModalHeight = maxHeight
+            grabbarView.roundCorners(corners: [.topLeft, .topRight], radius: 0)
+            tabBarController?.tabBar.frame.origin = CGPoint(x: 0, y: UIScreen.main.bounds.maxY - tabBarHeight)
+        } else {
+            grabbarView.roundCorners(corners: [.topLeft, .topRight], radius: grabbarRadius)
+            tabBarController?.tabBar.frame.origin = CGPoint(x: 0, y: UIScreen.main.bounds.maxY - tabBarHeight)
+        }
+
+        modalView.snp.remakeConstraints {
+            $0.top.equalTo(grabbarView.snp.bottom)
+            $0.leading.trailing.bottom.equalToSuperview()
+            $0.height.equalTo(newModalHeight)
+        }
+
+        if gesture.state == .ended {
+            switch newModalHeight {
+            case let height where height - minHeight < midHeight - height:
+                currentModalHeight = minHeight
+                grabbarView.roundCorners(corners: [.topLeft, .topRight], radius: grabbarRadius)
+                tabBarController?.tabBar.frame.origin = CGPoint(x: 0, y: UIScreen.main.bounds.maxY)
+            case let height where height - midHeight < maxHeight - height:
+                currentModalHeight = midHeight
+                grabbarView.roundCorners(corners: [.topLeft, .topRight], radius: grabbarRadius)
+                tabBarController?.tabBar.frame.origin = CGPoint(x: 0, y: UIScreen.main.bounds.maxY - tabBarHeight)
+            default:
+                currentModalHeight = maxHeight
+                grabbarView.roundCorners(corners: [.topLeft, .topRight], radius: 0)
+                tabBarController?.tabBar.frame.origin = CGPoint(x: 0, y: UIScreen.main.bounds.maxY - tabBarHeight)
+            }
+
+            modalView.snp.remakeConstraints {
+                $0.top.equalTo(grabbarView.snp.bottom)
+                $0.leading.trailing.bottom.equalToSuperview()
+                $0.height.equalTo(currentModalHeight)
+            }
+        }
     }
 
     // 임시 데이터
