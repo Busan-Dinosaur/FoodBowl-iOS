@@ -15,14 +15,6 @@ import Then
 final class ProfileViewController: MapViewController {
     var isOwn: Bool
 
-    override var modalMaxHeight: CGFloat {
-        let scenes = UIApplication.shared.connectedScenes
-        let windowScene = scenes.first as? UIWindowScene
-        let window = windowScene?.windows.first
-        let topPadding = window?.safeAreaInsets.top ?? 0
-        return UIScreen.main.bounds.height - topPadding - 130
-    }
-
     init(isOwn: Bool) {
         self.isOwn = isOwn
         super.init(nibName: nil, bundle: nil)
@@ -111,13 +103,17 @@ final class ProfileViewController: MapViewController {
     }
 
     override func viewDidLoad() {
-        super.viewDidLoad()
         setupBackButton()
+        super.viewDidLoad()
     }
 
     override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+        navigationController?.isNavigationBarHidden = false
         setupInteractivePopGestureRecognizer()
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        navigationController?.isNavigationBarHidden = false
     }
 
     override func setupLayout() {
