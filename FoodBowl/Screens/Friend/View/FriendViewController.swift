@@ -11,8 +11,12 @@ import SnapKit
 import Then
 
 final class FriendViewController: MapViewController {
-    override func viewDidLoad() {
-        modalView = FriendFeedView()
-        super.viewDidLoad()
+    init() {
+        super.init(nibName: nil, bundle: nil)
+        self.modalView = FriendFeedView()
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }

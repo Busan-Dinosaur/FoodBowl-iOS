@@ -12,50 +12,33 @@ import UIKit
 import SnapKit
 import Then
 
-final class ProfileViewController: BaseViewController {
+final class ProfileViewController: MapViewController {
     var isOwn: Bool
+
+    override var modalMaxHeight: CGFloat {
+        let scenes = UIApplication.shared.connectedScenes
+        let windowScene = scenes.first as? UIWindowScene
+        let window = windowScene?.windows.first
+        let topPadding = window?.safeAreaInsets.top ?? 0
+        return UIScreen.main.bounds.height - topPadding - 130
+    }
 
     init(isOwn: Bool) {
         self.isOwn = isOwn
         super.init(nibName: nil, bundle: nil)
+        self.modalView = FriendFeedView()
     }
 
-    @available(*, unavailable)
     required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
     // MARK: - property
-    private lazy var mapView = MKMapView().then {
-        $0.delegate = self
-        $0.mapType = MKMapType.standard
-        $0.showsUserLocation = true
-        $0.setUserTrackingMode(.follow, animated: true)
-        $0.isZoomEnabled = true
-        $0.showsCompass = false
-        $0.register(
-            MapItemAnnotationView.self,
-            forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier
-        )
-        $0.register(
-            ClusterAnnotationView.self,
-            forAnnotationViewWithReuseIdentifier: MKMapViewDefaultClusterAnnotationViewReuseIdentifier
-        )
-    }
-
-    private lazy var trakingButton = MKUserTrackingButton(mapView: mapView).then {
-        $0.layer.backgroundColor = UIColor.mainBackground.cgColor
-        $0.layer.borderColor = UIColor.grey002.cgColor
-        $0.layer.borderWidth = 1
-        $0.layer.cornerRadius = 10
-        $0.layer.masksToBounds = true
-        $0.tintColor = UIColor.mainPink
-    }
-
-    let userNicknameLabel = UILabel().then {
-        $0.font = UIFont.preferredFont(forTextStyle: .title2, weight: .bold)
-        $0.text = "coby5502"
-        $0.textColor = .mainText
+    private lazy var backButton = BackButton().then {
+        let buttonAction = UIAction { [weak self] _ in
+            self?.navigationController?.popViewController(animated: true)
+        }
+        $0.addAction(buttonAction, for: .touchUpInside)
     }
 
     private lazy var plusButton = PlusButton().then {
@@ -95,6 +78,12 @@ final class ProfileViewController: BaseViewController {
         $0.addAction(optionButtonAction, for: .touchUpInside)
     }
 
+    let userNicknameLabel = UILabel().then {
+        $0.font = UIFont.preferredFont(forTextStyle: .title2, weight: .bold)
+        $0.text = "coby5502"
+        $0.textColor = .mainText
+    }
+
     private lazy var profileHeaderView = ProfileHeaderView().then {
         let followerAction = UIAction { [weak self] _ in
             let followerViewController = FollowerViewController()
@@ -121,24 +110,19 @@ final class ProfileViewController: BaseViewController {
         $0.editButton.addAction(editButtonAction, for: .touchUpInside)
     }
 
-    // MARK: - life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        currentLocation()
+        setupBackButton()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setupInteractivePopGestureRecognizer()
     }
 
     override func setupLayout() {
-        view.addSubviews(mapView, trakingButton, profileHeaderView)
-
-        mapView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
-        }
-
-        trakingButton.snp.makeConstraints {
-            $0.trailing.equalToSuperview().inset(BaseSize.horizantalPadding)
-            $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(40)
-            $0.height.width.equalTo(40)
-        }
+        super.setupLayout()
+        view.addSubviews(profileHeaderView)
 
         profileHeaderView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide)
@@ -147,8 +131,27 @@ final class ProfileViewController: BaseViewController {
         }
     }
 
+    override func configureUI() {
+        super.configureUI()
+        mapHeaderView.isHidden = true
+    }
+
     override func setupNavigationBar() {
-        super.setupNavigationBar()
+        navigationController?.isNavigationBarHidden = true
+
+        guard let navigationBar = navigationController?.navigationBar else { return }
+        let appearance = UINavigationBarAppearance()
+        let font = UIFont.systemFont(ofSize: 17, weight: .regular)
+        let largeFont = UIFont.systemFont(ofSize: 34, weight: .semibold)
+
+        appearance.titleTextAttributes = [.font: font]
+        appearance.largeTitleTextAttributes = [.font: largeFont]
+        appearance.shadowColor = .clear
+        appearance.backgroundColor = .mainBackground
+
+        navigationBar.standardAppearance = appearance
+        navigationBar.compactAppearance = appearance
+        navigationBar.scrollEdgeAppearance = appearance
 
         if isOwn {
             let userNicknameLabel = makeBarButtonItem(with: userNicknameLabel)
@@ -165,16 +168,27 @@ final class ProfileViewController: BaseViewController {
         }
     }
 
-    private func currentLocation() {
-        guard let currentLoc = LocationManager.shared.manager.location else { return }
+    // MARK: - helper func
+    func makeBarButtonItem<T: UIView>(with view: T) -> UIBarButtonItem {
+        return UIBarButtonItem(customView: view)
+    }
 
-        mapView.setRegion(
-            MKCoordinateRegion(
-                center: currentLoc.coordinate,
-                span: MKCoordinateSpan(latitudeDelta: 0.02, longitudeDelta: 0.02)
-            ),
-            animated: true
-        )
+    func removeBarButtonItemOffset(with button: UIButton, offsetX: CGFloat = 0, offsetY: CGFloat = 0) -> UIView {
+        let offsetView = UIView(frame: CGRect(x: 0, y: 0, width: 45, height: 45))
+        offsetView.bounds = offsetView.bounds.offsetBy(dx: offsetX, dy: offsetY)
+        offsetView.addSubview(button)
+        return offsetView
+    }
+
+    func setupBackButton() {
+        let leftOffsetBackButton = removeBarButtonItemOffset(with: backButton, offsetX: 10)
+        let backButton = makeBarButtonItem(with: leftOffsetBackButton)
+
+        navigationItem.leftBarButtonItem = backButton
+    }
+
+    func setupInteractivePopGestureRecognizer() {
+        navigationController?.interactivePopGestureRecognizer?.delegate = self
     }
 
     private func followUser() {
@@ -182,17 +196,9 @@ final class ProfileViewController: BaseViewController {
     }
 }
 
-extension ProfileViewController: MKMapViewDelegate {
-    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-        guard view is ClusterAnnotationView else { return }
-
-        let currentSpan = mapView.region.span
-        let zoomSpan = MKCoordinateSpan(
-            latitudeDelta: currentSpan.latitudeDelta / 3.0,
-            longitudeDelta: currentSpan.longitudeDelta / 3.0
-        )
-        let zoomCoordinate = view.annotation?.coordinate ?? mapView.region.center
-        let zoomed = MKCoordinateRegion(center: zoomCoordinate, span: zoomSpan)
-        mapView.setRegion(zoomed, animated: true)
+extension ProfileViewController: UIGestureRecognizerDelegate {
+    func gestureRecognizerShouldBegin(_: UIGestureRecognizer) -> Bool {
+        guard let count = navigationController?.viewControllers.count else { return false }
+        return count > 1
     }
 }

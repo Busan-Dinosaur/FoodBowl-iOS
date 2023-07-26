@@ -13,10 +13,11 @@ import Then
 class ModalView: UIView {
     // MARK: - property
     var collectionViewFlowLayout: DynamicHeightCollectionViewFlowLayout = .init()
+
     lazy var listCollectionView: UICollectionView = .init()
 
     let resultLabel = UILabel().then {
-        $0.font = UIFont.preferredFont(forTextStyle: .subheadline, weight: .medium)
+        $0.font = UIFont.preferredFont(forTextStyle: .subheadline, weight: .regular)
         $0.textColor = .mainText
         $0.textAlignment = .center
     }
