@@ -57,11 +57,11 @@ extension UIView {
         layer.mask = mask
     }
 
-    var parentViewController: UIViewController? {
+    var parentViewController: MapViewController? {
         var parentResponder: UIResponder? = self
         while parentResponder != nil {
             parentResponder = parentResponder!.next
-            if let viewController = parentResponder as? UIViewController {
+            if let viewController = parentResponder as? MapViewController {
                 return viewController
             }
         }

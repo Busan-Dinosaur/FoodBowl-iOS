@@ -7,6 +7,7 @@
 
 import CoreLocation
 import MapKit
+import MessageUI
 import UIKit
 
 import SnapKit
@@ -93,7 +94,7 @@ class MapViewController: UIViewController {
 
     let grabbarView = GrabbarView()
 
-    var modalView: UIView = .init()
+    lazy var modalView: ModalView = .init()
 
     // MARK: - life cycle
     override func viewDidLoad() {
@@ -180,13 +181,16 @@ class MapViewController: UIViewController {
             newModalHeight = modalMinHeight
             grabbarView.roundCorners(corners: [.topLeft, .topRight], radius: grabbarRadius)
             tabBarController?.tabBar.frame.origin = CGPoint(x: 0, y: UIScreen.main.bounds.maxY)
+            modalView.showResult()
         } else if newModalHeight >= modalMaxHeight {
             newModalHeight = modalMaxHeight
             grabbarView.roundCorners(corners: [.topLeft, .topRight], radius: 0)
             tabBarController?.tabBar.frame.origin = CGPoint(x: 0, y: UIScreen.main.bounds.maxY - tabBarHeight)
+            modalView.showContent()
         } else {
             grabbarView.roundCorners(corners: [.topLeft, .topRight], radius: grabbarRadius)
             tabBarController?.tabBar.frame.origin = CGPoint(x: 0, y: UIScreen.main.bounds.maxY - tabBarHeight)
+            modalView.showContent()
         }
 
         modalView.snp.remakeConstraints {
@@ -201,14 +205,17 @@ class MapViewController: UIViewController {
                 currentModalHeight = modalMinHeight
                 grabbarView.roundCorners(corners: [.topLeft, .topRight], radius: grabbarRadius)
                 tabBarController?.tabBar.frame.origin = CGPoint(x: 0, y: UIScreen.main.bounds.maxY)
+                modalView.showResult()
             case let height where height - modalMidHeight < modalMaxHeight - height:
                 currentModalHeight = modalMidHeight
                 grabbarView.roundCorners(corners: [.topLeft, .topRight], radius: grabbarRadius)
                 tabBarController?.tabBar.frame.origin = CGPoint(x: 0, y: UIScreen.main.bounds.maxY - tabBarHeight)
+                modalView.showContent()
             default:
                 currentModalHeight = modalMaxHeight
                 grabbarView.roundCorners(corners: [.topLeft, .topRight], radius: 0)
                 tabBarController?.tabBar.frame.origin = CGPoint(x: 0, y: UIScreen.main.bounds.maxY - tabBarHeight)
+                modalView.showContent()
             }
 
             modalView.snp.remakeConstraints {
@@ -272,5 +279,38 @@ extension MapViewController: MKMapViewDelegate {
         let zoomCoordinate = view.annotation?.coordinate ?? mapView.region.center
         let zoomed = MKCoordinateRegion(center: zoomCoordinate, span: zoomSpan)
         mapView.setRegion(zoomed, animated: true)
+    }
+}
+
+extension MapViewController: MFMailComposeViewControllerDelegate {
+    func sendReportMail() {
+        if MFMailComposeViewController.canSendMail() {
+            let composeVC = MFMailComposeViewController()
+            let emailAdress = "foodbowl5502@gmail.com"
+            let messageBody = """
+                내용을 작성해주세요.
+                """
+
+            composeVC.mailComposeDelegate = self
+            composeVC.setToRecipients([emailAdress])
+            composeVC.setSubject("[풋볼] 닉네임")
+            composeVC.setMessageBody(messageBody, isHTML: false)
+            composeVC.modalPresentationStyle = .fullScreen
+
+            present(composeVC, animated: true, completion: nil)
+        } else {
+            showSendMailErrorAlert()
+        }
+    }
+
+    private func showSendMailErrorAlert() {
+        let sendMailErrorAlert = UIAlertController(title: "메일 전송 실패", message: "이메일 설정을 확인하고 다시 시도해주세요.", preferredStyle: .alert)
+        let confirmAction = UIAlertAction(title: "확인", style: .default)
+        sendMailErrorAlert.addAction(confirmAction)
+        present(sendMailErrorAlert, animated: true, completion: nil)
+    }
+
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith _: MFMailComposeResult, error _: Error?) {
+        controller.dismiss(animated: true, completion: nil)
     }
 }

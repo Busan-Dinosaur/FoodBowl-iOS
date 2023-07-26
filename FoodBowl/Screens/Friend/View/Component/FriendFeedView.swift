@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 import Then
 
-final class FriendFeedView: UIView {
+final class FriendFeedView: ModalView {
     private enum Size {
         static let collectionInset = UIEdgeInsets(
             top: 0,
@@ -22,64 +22,35 @@ final class FriendFeedView: UIView {
 
     private lazy var isBookmarked = [Bool](repeating: false, count: 10)
 
-    // MARK: - property
-    private let collectionViewFlowLayout = DynamicHeightCollectionViewFlowLayout().then {
-        $0.sectionInset = Size.collectionInset
-        $0.minimumLineSpacing = 20
-        $0.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
-    }
-
-    private lazy var listCollectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewFlowLayout).then {
-        $0.dataSource = self
-        $0.delegate = self
-        $0.showsVerticalScrollIndicator = false
-        $0.register(FeedCollectionViewCell.self, forCellWithReuseIdentifier: FeedCollectionViewCell.className)
-        $0.backgroundColor = .mainBackground
-    }
-
-    private let resultLabel = UILabel().then {
-        $0.text = "4개의 맛집, 10개의 후기"
-        $0.font = UIFont.preferredFont(forTextStyle: .subheadline, weight: .medium)
-        $0.textColor = .mainText
-        $0.textAlignment = .center
-    }
-
-    // MARK: - init
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        setupLayout()
-        configureUI()
-    }
-
-    @available(*, unavailable)
-    required init?(coder _: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    func setupLayout() {
-        addSubviews(listCollectionView, resultLabel)
-
-        listCollectionView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
+    override func setupProperty() {
+        collectionViewFlowLayout = DynamicHeightCollectionViewFlowLayout().then {
+            $0.sectionInset = Size.collectionInset
+            $0.minimumLineSpacing = 20
+            $0.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
         }
 
-        resultLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(4)
-            $0.leading.trailing.equalToSuperview()
+        listCollectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewFlowLayout).then {
+            $0.dataSource = self
+            $0.delegate = self
+            $0.showsVerticalScrollIndicator = false
+            $0.register(FeedCollectionViewCell.self, forCellWithReuseIdentifier: FeedCollectionViewCell.className)
+            $0.backgroundColor = .mainBackground
         }
+
+        resultLabel.text = "4개의 맛집, 10개의 후기"
     }
 
-    func configureUI() {
+    override func configureUI() {
         resultLabel.isHidden = true
         backgroundColor = .mainBackground
     }
 
-    func showContent() {
+    override func showContent() {
         listCollectionView.isHidden = false
         resultLabel.isHidden = true
     }
 
-    func showResult() {
+    override func showResult() {
         listCollectionView.isHidden = true
         resultLabel.isHidden = false
     }
@@ -121,7 +92,7 @@ extension FriendFeedView: UICollectionViewDataSource, UICollectionViewDelegate {
             let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
 
             let report = UIAlertAction(title: "신고하기", style: .destructive, handler: { _ in
-//                self?.sendReportMail()
+                self?.parentViewController?.sendReportMail()
             })
             let cancel = UIAlertAction(title: "취소", style: .cancel, handler: nil)
 
