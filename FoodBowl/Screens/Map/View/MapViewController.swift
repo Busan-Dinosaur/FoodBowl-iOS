@@ -143,8 +143,6 @@ class MapViewController: BaseViewController {
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan(_:)))
         grabbarView.isUserInteractionEnabled = true
         grabbarView.addGestureRecognizer(panGesture)
-        grabbarView.layer.cornerRadius = 15
-        grabbarView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         currentModalHeight = Size.modalMidHeight
     }
 

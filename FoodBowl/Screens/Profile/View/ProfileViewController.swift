@@ -95,6 +95,7 @@ final class ProfileViewController: MapViewController {
     }
 
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         navigationController?.isNavigationBarHidden = false
     }
 
@@ -114,6 +115,13 @@ final class ProfileViewController: MapViewController {
             $0.top.equalTo(profileHeaderView.snp.bottom).offset(20)
             $0.height.width.equalTo(40)
         }
+    }
+
+    override func configureUI() {
+        super.configureUI()
+        guard let navigationBarHeigth = navigationController?.navigationBar.frame.height else { return }
+        let navBarHeight = Size.topPadding + navigationBarHeigth
+        modalMaxHeight = UIScreen.main.bounds.height - navBarHeight - 130
     }
 
     override func setupNavigationBar() {

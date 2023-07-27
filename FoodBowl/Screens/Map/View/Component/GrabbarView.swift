@@ -41,5 +41,7 @@ final class GrabbarView: UIView {
 
     func configureUI() {
         backgroundColor = .mainBackground
+        layer.cornerRadius = 15
+        layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
     }
 }
