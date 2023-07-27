@@ -11,27 +11,12 @@ import SnapKit
 import Then
 
 final class FriendViewController: MapViewController {
-    // MARK: - life cycle
-    override func viewDidLoad() {
-        super.viewDidLoad()
-//        showModalViewController()
+    init() {
+        super.init(nibName: nil, bundle: nil)
+        self.modalView = FriendFeedView()
     }
 
-    func showModalViewController() {
-        let modalViewController = FriendFeedViewController()
-
-        modalViewController.isModalInPresentation = true
-        if let sheet = modalViewController.sheetPresentationController {
-            sheet.detents = [
-                .custom(resolver: { context in
-                    0.1 * context.maximumDetentValue
-                }), .medium()
-            ]
-            sheet.largestUndimmedDetentIdentifier = .medium
-            sheet.prefersGrabberVisible = true
-            sheet.presentingViewController.modalPresentationStyle = .overCurrentContext
-        }
-
-        present(modalViewController, animated: true, completion: nil)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }

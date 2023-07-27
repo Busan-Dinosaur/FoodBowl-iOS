@@ -10,4 +10,13 @@ import UIKit
 import SnapKit
 import Then
 
-final class UnivViewController: MapViewController {}
+final class UnivViewController: MapViewController {
+    init() {
+        super.init(nibName: nil, bundle: nil)
+        self.modalView = FriendFeedView()
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}

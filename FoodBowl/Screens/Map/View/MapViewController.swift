@@ -7,17 +7,38 @@
 
 import CoreLocation
 import MapKit
+import MessageUI
 import UIKit
 
 import SnapKit
 import Then
 
-class MapViewController: UIViewController {
+class MapViewController: BaseViewController {
     // 임시 마커 데이터
     private var marks: [Marker]?
 
+    enum Size {
+        static let topPadding: CGFloat = {
+            let scenes = UIApplication.shared.connectedScenes
+            let windowScene = scenes.first as? UIWindowScene
+            let window = windowScene?.windows.first
+            let topPadding = window?.safeAreaInsets.top ?? 0
+            return topPadding
+        }()
+
+        static let mapHeaderHeight: CGFloat = topPadding + 90
+        static let modalMinHeight: CGFloat = 80
+        static let modalMidHeight: CGFloat = UIScreen.main.bounds.height / 2 - 80
+    }
+
+    var panGesture = UIPanGestureRecognizer()
+
+    lazy var tabBarHeight: CGFloat = tabBarController?.tabBar.frame.height ?? 0
+    lazy var modalMaxHeight: CGFloat = UIScreen.main.bounds.height - Size.mapHeaderHeight - 30
+    var currentModalHeight: CGFloat = 0
+
     // MARK: - property
-    private lazy var mapView = MKMapView().then {
+    lazy var mapView = MKMapView().then {
         $0.delegate = self
         $0.mapType = MKMapType.standard
         $0.showsUserLocation = true
@@ -34,7 +55,7 @@ class MapViewController: UIViewController {
         )
     }
 
-    private lazy var trakingButton = MKUserTrackingButton(mapView: mapView).then {
+    lazy var trakingButton = MKUserTrackingButton(mapView: mapView).then {
         $0.layer.backgroundColor = UIColor.mainBackground.cgColor
         $0.layer.borderColor = UIColor.grey002.cgColor
         $0.layer.borderWidth = 1
@@ -43,10 +64,10 @@ class MapViewController: UIViewController {
         $0.tintColor = UIColor.mainPink
     }
 
-    private lazy var mapHeaderView = MapHeaderView().then {
-        let searchAction = UIAction { [weak self] _ in
-            let searchChooseViewController = FindChooseViewController()
-            let navigationController = UINavigationController(rootViewController: searchChooseViewController)
+    lazy var mapHeaderView = MapHeaderView().then {
+        let findAction = UIAction { [weak self] _ in
+            let findChooseViewController = FindChooseViewController()
+            let navigationController = UINavigationController(rootViewController: findChooseViewController)
             navigationController.modalPresentationStyle = .fullScreen
             DispatchQueue.main.async {
                 self?.present(navigationController, animated: true)
@@ -60,24 +81,18 @@ class MapViewController: UIViewController {
                 self?.present(navigationController, animated: true)
             }
         }
-        $0.searchBarButton.addAction(searchAction, for: .touchUpInside)
+        $0.searchBarButton.addAction(findAction, for: .touchUpInside)
         $0.plusButton.addAction(plusAction, for: .touchUpInside)
-
-        let scenes = UIApplication.shared.connectedScenes
-        let windowScene = scenes.first as? UIWindowScene
-        let window = windowScene?.windows.first
-        let topPadding = window?.safeAreaInsets.top ?? 0
-        let headerHeight = topPadding + 90
-
-        $0.snp.makeConstraints {
-            $0.height.equalTo(headerHeight)
-        }
     }
+
+    let grabbarView = GrabbarView()
+
+    lazy var modalView: ModalView = .init()
 
     // MARK: - life cycle
     override func viewDidLoad() {
-        super.viewDidLoad()
         setupLayout()
+        configureUI()
         setupNavigationBar()
         currentLocation()
         setMarkers()
@@ -93,8 +108,8 @@ class MapViewController: UIViewController {
         navigationController?.isNavigationBarHidden = false
     }
 
-    func setupLayout() {
-        view.addSubviews(mapView, mapHeaderView, trakingButton)
+    override func setupLayout() {
+        view.addSubviews(mapView, mapHeaderView, trakingButton, grabbarView, modalView)
 
         mapView.snp.makeConstraints {
             $0.edges.equalToSuperview()
@@ -102,20 +117,41 @@ class MapViewController: UIViewController {
 
         mapHeaderView.snp.makeConstraints {
             $0.top.leading.trailing.equalToSuperview()
+            $0.height.equalTo(Size.mapHeaderHeight)
         }
 
         trakingButton.snp.makeConstraints {
             $0.trailing.equalToSuperview().inset(BaseSize.horizantalPadding)
-            $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(40)
+            $0.top.equalTo(mapHeaderView.snp.bottom).offset(20)
             $0.height.width.equalTo(40)
+        }
+
+        grabbarView.snp.makeConstraints {
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(30)
+        }
+
+        modalView.snp.makeConstraints {
+            $0.top.equalTo(grabbarView.snp.bottom)
+            $0.leading.trailing.bottom.equalToSuperview()
+            $0.height.equalTo(Size.modalMidHeight)
         }
     }
 
-    func setupNavigationBar() {
+    override func configureUI() {
+        super.configureUI()
+        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan(_:)))
+        grabbarView.isUserInteractionEnabled = true
+        grabbarView.addGestureRecognizer(panGesture)
+        currentModalHeight = Size.modalMidHeight
+    }
+
+    override func setupNavigationBar() {
+        super.setupNavigationBar()
         navigationController?.isNavigationBarHidden = true
     }
 
-    private func currentLocation() {
+    func currentLocation() {
         guard let currentLoc = LocationManager.shared.manager.location else { return }
 
         mapView.setRegion(
@@ -127,8 +163,60 @@ class MapViewController: UIViewController {
         )
     }
 
+    @objc
+    func handlePan(_ gesture: UIPanGestureRecognizer) {
+        guard gesture.view != nil else { return }
+        let translation = gesture.translation(in: gesture.view?.superview)
+
+        var newModalHeight = currentModalHeight - translation.y
+        if newModalHeight <= Size.modalMinHeight {
+            newModalHeight = Size.modalMinHeight
+            tabBarController?.tabBar.frame.origin = CGPoint(x: 0, y: UIScreen.main.bounds.maxY)
+            modalView.showResult()
+        } else if newModalHeight >= modalMaxHeight {
+            newModalHeight = modalMaxHeight
+            grabbarView.layer.cornerRadius = 0
+            tabBarController?.tabBar.frame.origin = CGPoint(x: 0, y: UIScreen.main.bounds.maxY - tabBarHeight)
+            modalView.showContent()
+        } else {
+            grabbarView.layer.cornerRadius = 15
+            tabBarController?.tabBar.frame.origin = CGPoint(x: 0, y: UIScreen.main.bounds.maxY - tabBarHeight)
+            modalView.showContent()
+        }
+
+        modalView.snp.remakeConstraints {
+            $0.top.equalTo(grabbarView.snp.bottom)
+            $0.leading.trailing.bottom.equalToSuperview()
+            $0.height.equalTo(newModalHeight)
+        }
+
+        if gesture.state == .ended {
+            switch newModalHeight {
+            case let height where height - Size.modalMinHeight < Size.modalMidHeight - height:
+                currentModalHeight = Size.modalMinHeight
+                tabBarController?.tabBar.frame.origin = CGPoint(x: 0, y: UIScreen.main.bounds.maxY)
+                modalView.showResult()
+            case let height where height - Size.modalMidHeight < modalMaxHeight - height:
+                currentModalHeight = Size.modalMidHeight
+                tabBarController?.tabBar.frame.origin = CGPoint(x: 0, y: UIScreen.main.bounds.maxY - tabBarHeight)
+                modalView.showContent()
+            default:
+                currentModalHeight = modalMaxHeight
+                grabbarView.layer.cornerRadius = 0
+                tabBarController?.tabBar.frame.origin = CGPoint(x: 0, y: UIScreen.main.bounds.maxY - tabBarHeight)
+                modalView.showContent()
+            }
+
+            modalView.snp.remakeConstraints {
+                $0.top.equalTo(grabbarView.snp.bottom)
+                $0.leading.trailing.bottom.equalToSuperview()
+                $0.height.equalTo(currentModalHeight)
+            }
+        }
+    }
+
     // 임시 데이터
-    private func setMarkers() {
+    func setMarkers() {
         guard let currentLoc = LocationManager.shared.manager.location else { return }
 
         marks = [
