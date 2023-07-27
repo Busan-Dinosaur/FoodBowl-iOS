@@ -13,40 +13,31 @@ import UIKit
 import SnapKit
 import Then
 
-class MapViewController: UIViewController {
+class MapViewController: BaseViewController {
     // 임시 마커 데이터
     private var marks: [Marker]?
 
-    var panGesture = UIPanGestureRecognizer()
+    enum Size {
+        static let topPadding: CGFloat = {
+            let scenes = UIApplication.shared.connectedScenes
+            let windowScene = scenes.first as? UIWindowScene
+            let window = windowScene?.windows.first
+            let topPadding = window?.safeAreaInsets.top ?? 0
+            return topPadding
+        }()
 
-    var topPadding: CGFloat {
-        let scenes = UIApplication.shared.connectedScenes
-        let windowScene = scenes.first as? UIWindowScene
-        let window = windowScene?.windows.first
-        let topPadding = window?.safeAreaInsets.top ?? 0
-        return topPadding
+        static let mapHeaderHeight: CGFloat = topPadding + 90
+        static let modalMinHeight: CGFloat = 80
+        static let modalMidHeight: CGFloat = UIScreen.main.bounds.height / 2 - 80
     }
 
-    lazy var mapHeaderHeight: CGFloat = topPadding + 90
-
-    lazy var modalMaxHeight: CGFloat = UIScreen.main.bounds.height - mapHeaderHeight - 30
-
-    lazy var modalMinHeight: CGFloat = tabBarHeight - 20
-
-    let modalMidHeight: CGFloat = UIScreen.main.bounds.height / 2 - 80
+    var panGesture = UIPanGestureRecognizer()
 
     lazy var tabBarHeight: CGFloat = tabBarController?.tabBar.frame.height ?? 0
-
+    lazy var modalMaxHeight: CGFloat = UIScreen.main.bounds.height - Size.mapHeaderHeight - 30
     var currentModalHeight: CGFloat = 0
 
     // MARK: - property
-    private lazy var backButton = BackButton().then {
-        let buttonAction = UIAction { [weak self] _ in
-            self?.navigationController?.popViewController(animated: true)
-        }
-        $0.addAction(buttonAction, for: .touchUpInside)
-    }
-
     lazy var mapView = MKMapView().then {
         $0.delegate = self
         $0.mapType = MKMapType.standard
@@ -108,14 +99,16 @@ class MapViewController: UIViewController {
     }
 
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         navigationController?.isNavigationBarHidden = true
     }
 
     override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
         navigationController?.isNavigationBarHidden = false
     }
 
-    func setupLayout() {
+    override func setupLayout() {
         view.addSubviews(mapView, mapHeaderView, trakingButton, grabbarView, modalView)
 
         mapView.snp.makeConstraints {
@@ -124,7 +117,7 @@ class MapViewController: UIViewController {
 
         mapHeaderView.snp.makeConstraints {
             $0.top.leading.trailing.equalToSuperview()
-            $0.height.equalTo(mapHeaderHeight)
+            $0.height.equalTo(Size.mapHeaderHeight)
         }
 
         trakingButton.snp.makeConstraints {
@@ -141,19 +134,22 @@ class MapViewController: UIViewController {
         modalView.snp.makeConstraints {
             $0.top.equalTo(grabbarView.snp.bottom)
             $0.leading.trailing.bottom.equalToSuperview()
-            $0.height.equalTo(modalMaxHeight)
+            $0.height.equalTo(Size.modalMidHeight)
         }
     }
 
-    func configureUI() {
+    override func configureUI() {
+        super.configureUI()
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan(_:)))
         grabbarView.isUserInteractionEnabled = true
         grabbarView.addGestureRecognizer(panGesture)
-
-        currentModalHeight = modalMaxHeight
+        grabbarView.layer.cornerRadius = 15
+        grabbarView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        currentModalHeight = Size.modalMidHeight
     }
 
-    func setupNavigationBar() {
+    override func setupNavigationBar() {
+        super.setupNavigationBar()
         navigationController?.isNavigationBarHidden = true
     }
 
@@ -169,48 +165,23 @@ class MapViewController: UIViewController {
         )
     }
 
-    // MARK: - helper func
-    func makeBarButtonItem<T: UIView>(with view: T) -> UIBarButtonItem {
-        return UIBarButtonItem(customView: view)
-    }
-
-    func removeBarButtonItemOffset(with button: UIButton, offsetX: CGFloat = 0, offsetY: CGFloat = 0) -> UIView {
-        let offsetView = UIView(frame: CGRect(x: 0, y: 0, width: 45, height: 45))
-        offsetView.bounds = offsetView.bounds.offsetBy(dx: offsetX, dy: offsetY)
-        offsetView.addSubview(button)
-        return offsetView
-    }
-
-    func setupBackButton() {
-        let leftOffsetBackButton = removeBarButtonItemOffset(with: backButton, offsetX: 10)
-        let backButton = makeBarButtonItem(with: leftOffsetBackButton)
-
-        navigationItem.leftBarButtonItem = backButton
-    }
-
-    func setupInteractivePopGestureRecognizer() {
-        navigationController?.interactivePopGestureRecognizer?.delegate = self
-    }
-
     @objc
     func handlePan(_ gesture: UIPanGestureRecognizer) {
         guard gesture.view != nil else { return }
         let translation = gesture.translation(in: gesture.view?.superview)
-        let grabbarRadius: CGFloat = 15
 
         var newModalHeight = currentModalHeight - translation.y
-        if newModalHeight <= modalMinHeight {
-            newModalHeight = modalMinHeight
-            grabbarView.roundCorners(corners: [.topLeft, .topRight], radius: grabbarRadius)
+        if newModalHeight <= Size.modalMinHeight {
+            newModalHeight = Size.modalMinHeight
             tabBarController?.tabBar.frame.origin = CGPoint(x: 0, y: UIScreen.main.bounds.maxY)
             modalView.showResult()
         } else if newModalHeight >= modalMaxHeight {
             newModalHeight = modalMaxHeight
-            grabbarView.roundCorners(corners: [.topLeft, .topRight], radius: 0)
+            grabbarView.layer.cornerRadius = 0
             tabBarController?.tabBar.frame.origin = CGPoint(x: 0, y: UIScreen.main.bounds.maxY - tabBarHeight)
             modalView.showContent()
         } else {
-            grabbarView.roundCorners(corners: [.topLeft, .topRight], radius: grabbarRadius)
+            grabbarView.layer.cornerRadius = 15
             tabBarController?.tabBar.frame.origin = CGPoint(x: 0, y: UIScreen.main.bounds.maxY - tabBarHeight)
             modalView.showContent()
         }
@@ -223,19 +194,17 @@ class MapViewController: UIViewController {
 
         if gesture.state == .ended {
             switch newModalHeight {
-            case let height where height - modalMinHeight < modalMidHeight - height:
-                currentModalHeight = modalMinHeight
-                grabbarView.roundCorners(corners: [.topLeft, .topRight], radius: grabbarRadius)
+            case let height where height - Size.modalMinHeight < Size.modalMidHeight - height:
+                currentModalHeight = Size.modalMinHeight
                 tabBarController?.tabBar.frame.origin = CGPoint(x: 0, y: UIScreen.main.bounds.maxY)
                 modalView.showResult()
-            case let height where height - modalMidHeight < modalMaxHeight - height:
-                currentModalHeight = modalMidHeight
-                grabbarView.roundCorners(corners: [.topLeft, .topRight], radius: grabbarRadius)
+            case let height where height - Size.modalMidHeight < modalMaxHeight - height:
+                currentModalHeight = Size.modalMidHeight
                 tabBarController?.tabBar.frame.origin = CGPoint(x: 0, y: UIScreen.main.bounds.maxY - tabBarHeight)
                 modalView.showContent()
             default:
                 currentModalHeight = modalMaxHeight
-                grabbarView.roundCorners(corners: [.topLeft, .topRight], radius: 0)
+                grabbarView.layer.cornerRadius = 0
                 tabBarController?.tabBar.frame.origin = CGPoint(x: 0, y: UIScreen.main.bounds.maxY - tabBarHeight)
                 modalView.showContent()
             }
@@ -301,45 +270,5 @@ extension MapViewController: MKMapViewDelegate {
         let zoomCoordinate = view.annotation?.coordinate ?? mapView.region.center
         let zoomed = MKCoordinateRegion(center: zoomCoordinate, span: zoomSpan)
         mapView.setRegion(zoomed, animated: true)
-    }
-}
-
-extension MapViewController: UIGestureRecognizerDelegate {
-    func gestureRecognizerShouldBegin(_: UIGestureRecognizer) -> Bool {
-        guard let count = navigationController?.viewControllers.count else { return false }
-        return count > 1
-    }
-}
-
-extension MapViewController: MFMailComposeViewControllerDelegate {
-    func sendReportMail() {
-        if MFMailComposeViewController.canSendMail() {
-            let composeVC = MFMailComposeViewController()
-            let emailAdress = "foodbowl5502@gmail.com"
-            let messageBody = """
-                내용을 작성해주세요.
-                """
-
-            composeVC.mailComposeDelegate = self
-            composeVC.setToRecipients([emailAdress])
-            composeVC.setSubject("[풋볼] 닉네임")
-            composeVC.setMessageBody(messageBody, isHTML: false)
-            composeVC.modalPresentationStyle = .fullScreen
-
-            present(composeVC, animated: true, completion: nil)
-        } else {
-            showSendMailErrorAlert()
-        }
-    }
-
-    private func showSendMailErrorAlert() {
-        let sendMailErrorAlert = UIAlertController(title: "메일 전송 실패", message: "이메일 설정을 확인하고 다시 시도해주세요.", preferredStyle: .alert)
-        let confirmAction = UIAlertAction(title: "확인", style: .default)
-        sendMailErrorAlert.addAction(confirmAction)
-        present(sendMailErrorAlert, animated: true, completion: nil)
-    }
-
-    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith _: MFMailComposeResult, error _: Error?) {
-        controller.dismiss(animated: true, completion: nil)
     }
 }

@@ -94,17 +94,8 @@ final class ProfileViewController: MapViewController {
         $0.editButton.addAction(editButtonAction, for: .touchUpInside)
     }
 
-    override func viewDidLoad() {
-        setupBackButton()
-        let navBarHeight = UIApplication.shared.statusBarFrame.size
-            .height + (navigationController?.navigationBar.frame.height ?? 0.0)
-        modalMaxHeight = UIScreen.main.bounds.height - 130 - navBarHeight
-        super.viewDidLoad()
-    }
-
     override func viewWillAppear(_ animated: Bool) {
         navigationController?.isNavigationBarHidden = false
-        setupInteractivePopGestureRecognizer()
     }
 
     override func setupLayout() {
@@ -126,21 +117,8 @@ final class ProfileViewController: MapViewController {
     }
 
     override func setupNavigationBar() {
+        super.setupNavigationBar()
         navigationController?.isNavigationBarHidden = true
-
-        guard let navigationBar = navigationController?.navigationBar else { return }
-        let appearance = UINavigationBarAppearance()
-        let font = UIFont.systemFont(ofSize: 17, weight: .regular)
-        let largeFont = UIFont.systemFont(ofSize: 34, weight: .semibold)
-
-        appearance.titleTextAttributes = [.font: font]
-        appearance.largeTitleTextAttributes = [.font: largeFont]
-        appearance.shadowColor = .clear
-        appearance.backgroundColor = .mainBackground
-
-        navigationBar.standardAppearance = appearance
-        navigationBar.compactAppearance = appearance
-        navigationBar.scrollEdgeAppearance = appearance
 
         if isOwn {
             let userNicknameLabel = makeBarButtonItem(with: userNicknameLabel)
