@@ -21,7 +21,7 @@ final class SettingViewController: BaseViewController {
         $0.delegate = self
         $0.dataSource = self
         $0.separatorStyle = .none
-        $0.backgroundColor = .clear
+        $0.backgroundColor = .mainBackground
     }
 
     // MARK: - life cycle
@@ -114,7 +114,7 @@ extension SettingViewController: UITableViewDataSource, UITableViewDelegate {
     }
 
     func tableView(_: UITableView, heightForRowAt _: IndexPath) -> CGFloat {
-        return 50
+        return 60
     }
 
     func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {

@@ -43,7 +43,7 @@ final class UserInfoTableViewCell: BaseTableViewCell {
 
         userImageButton.snp.makeConstraints {
             $0.leading.equalToSuperview().inset(BaseSize.horizantalPadding)
-            $0.top.bottom.equalToSuperview().inset(12)
+            $0.centerY.equalToSuperview()
             $0.width.height.equalTo(40)
         }
 

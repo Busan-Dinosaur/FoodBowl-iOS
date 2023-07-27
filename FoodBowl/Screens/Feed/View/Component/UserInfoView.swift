@@ -13,11 +13,7 @@ import Then
 final class UserInfoView: UIView {
     // MARK: - property
     let userImageButton = UIButton().then {
-        $0.backgroundColor = .grey003
-        $0.layer.cornerRadius = 20
-        $0.layer.masksToBounds = true
-        $0.layer.borderColor = UIColor.grey002.cgColor
-        $0.layer.borderWidth = 1
+        $0.makeBorderLayer(color: .grey002)
     }
 
     let userNameButton = UIButton().then {

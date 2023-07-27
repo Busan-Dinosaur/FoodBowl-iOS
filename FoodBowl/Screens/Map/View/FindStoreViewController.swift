@@ -22,7 +22,7 @@ final class FindStoreViewController: BaseViewController {
         $0.delegate = self
         $0.dataSource = self
         $0.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 20, right: 0)
-        $0.backgroundColor = .clear
+        $0.backgroundColor = .mainBackground
     }
 
     override func setupLayout() {
@@ -69,7 +69,7 @@ extension FindStoreViewController: UITableViewDataSource, UITableViewDelegate {
     }
 
     func tableView(_: UITableView, heightForRowAt _: IndexPath) -> CGFloat {
-        return 60
+        return 64
     }
 
     func tableView(_: UITableView, didSelectRowAt _: IndexPath) {
