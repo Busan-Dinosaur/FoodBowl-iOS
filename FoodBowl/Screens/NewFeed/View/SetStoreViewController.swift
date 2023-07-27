@@ -92,7 +92,9 @@ final class SetStoreViewController: BaseViewController {
         .responseDecodable(of: Response.self) { response in
             switch response.result {
             case .success(let data):
-                self.univ = data.documents[0]
+                if data.documents.count > 0 {
+                    self.univ = data.documents[0]
+                }
             case .failure(let error):
                 print("Request failed with error: \(error)")
             }

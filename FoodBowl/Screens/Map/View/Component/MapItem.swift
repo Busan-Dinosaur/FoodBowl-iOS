@@ -24,7 +24,6 @@ class MapItemAnnotationView: MKMarkerAnnotationView {
             calloutOffset = CGPoint(x: 0, y: 5)
             markerTintColor = UIColor.mainPink
             glyphImage = marker.glyphImage
-            canShowCallout = true
         }
     }
 }

@@ -12,16 +12,14 @@ import Then
 
 final class SettingItemTableViewCell: BaseTableViewCell {
     // MARK: - property
-
     let menuLabel = UILabel().then {
-        $0.font = UIFont.preferredFont(forTextStyle: .subheadline, weight: .regular)
+        $0.font = UIFont.preferredFont(forTextStyle: .callout, weight: .regular)
         $0.textColor = .subText
     }
 
     private let forwardButton = ForwardButton()
 
     // MARK: - func
-
     override func setupLayout() {
         contentView.addSubviews(menuLabel, forwardButton)
 
@@ -34,9 +32,5 @@ final class SettingItemTableViewCell: BaseTableViewCell {
             $0.trailing.equalToSuperview().inset(BaseSize.horizantalPadding)
             $0.centerY.equalToSuperview()
         }
-    }
-
-    override func configureUI() {
-        backgroundColor = .clear
     }
 }
