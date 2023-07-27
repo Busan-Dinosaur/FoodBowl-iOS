@@ -25,14 +25,6 @@ final class ProfileViewController: MapViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
-    // MARK: - property
-    private lazy var backButton = BackButton().then {
-        let buttonAction = UIAction { [weak self] _ in
-            self?.navigationController?.popViewController(animated: true)
-        }
-        $0.addAction(buttonAction, for: .touchUpInside)
-    }
-
     private lazy var plusButton = PlusButton().then {
         let action = UIAction { [weak self] _ in
             let addFeedViewController = NewFeedViewController()
@@ -125,6 +117,12 @@ final class ProfileViewController: MapViewController {
             $0.leading.trailing.equalToSuperview()
             $0.height.equalTo(100)
         }
+
+        trakingButton.snp.makeConstraints {
+            $0.trailing.equalToSuperview().inset(BaseSize.horizantalPadding)
+            $0.top.equalTo(profileHeaderView.snp.bottom).offset(20)
+            $0.height.width.equalTo(40)
+        }
     }
 
     override func setupNavigationBar() {
@@ -159,37 +157,7 @@ final class ProfileViewController: MapViewController {
         }
     }
 
-    // MARK: - helper func
-    func makeBarButtonItem<T: UIView>(with view: T) -> UIBarButtonItem {
-        return UIBarButtonItem(customView: view)
-    }
-
-    func removeBarButtonItemOffset(with button: UIButton, offsetX: CGFloat = 0, offsetY: CGFloat = 0) -> UIView {
-        let offsetView = UIView(frame: CGRect(x: 0, y: 0, width: 45, height: 45))
-        offsetView.bounds = offsetView.bounds.offsetBy(dx: offsetX, dy: offsetY)
-        offsetView.addSubview(button)
-        return offsetView
-    }
-
-    func setupBackButton() {
-        let leftOffsetBackButton = removeBarButtonItemOffset(with: backButton, offsetX: 10)
-        let backButton = makeBarButtonItem(with: leftOffsetBackButton)
-
-        navigationItem.leftBarButtonItem = backButton
-    }
-
-    func setupInteractivePopGestureRecognizer() {
-        navigationController?.interactivePopGestureRecognizer?.delegate = self
-    }
-
     private func followUser() {
         profileHeaderView.followButton.isSelected.toggle()
-    }
-}
-
-extension ProfileViewController: UIGestureRecognizerDelegate {
-    func gestureRecognizerShouldBegin(_: UIGestureRecognizer) -> Bool {
-        guard let count = navigationController?.viewControllers.count else { return false }
-        return count > 1
     }
 }

@@ -40,6 +40,13 @@ class MapViewController: UIViewController {
     var currentModalHeight: CGFloat = 0
 
     // MARK: - property
+    private lazy var backButton = BackButton().then {
+        let buttonAction = UIAction { [weak self] _ in
+            self?.navigationController?.popViewController(animated: true)
+        }
+        $0.addAction(buttonAction, for: .touchUpInside)
+    }
+
     lazy var mapView = MKMapView().then {
         $0.delegate = self
         $0.mapType = MKMapType.standard
@@ -57,7 +64,7 @@ class MapViewController: UIViewController {
         )
     }
 
-    private lazy var trakingButton = MKUserTrackingButton(mapView: mapView).then {
+    lazy var trakingButton = MKUserTrackingButton(mapView: mapView).then {
         $0.layer.backgroundColor = UIColor.mainBackground.cgColor
         $0.layer.borderColor = UIColor.grey002.cgColor
         $0.layer.borderWidth = 1
@@ -160,6 +167,29 @@ class MapViewController: UIViewController {
             ),
             animated: true
         )
+    }
+
+    // MARK: - helper func
+    func makeBarButtonItem<T: UIView>(with view: T) -> UIBarButtonItem {
+        return UIBarButtonItem(customView: view)
+    }
+
+    func removeBarButtonItemOffset(with button: UIButton, offsetX: CGFloat = 0, offsetY: CGFloat = 0) -> UIView {
+        let offsetView = UIView(frame: CGRect(x: 0, y: 0, width: 45, height: 45))
+        offsetView.bounds = offsetView.bounds.offsetBy(dx: offsetX, dy: offsetY)
+        offsetView.addSubview(button)
+        return offsetView
+    }
+
+    func setupBackButton() {
+        let leftOffsetBackButton = removeBarButtonItemOffset(with: backButton, offsetX: 10)
+        let backButton = makeBarButtonItem(with: leftOffsetBackButton)
+
+        navigationItem.leftBarButtonItem = backButton
+    }
+
+    func setupInteractivePopGestureRecognizer() {
+        navigationController?.interactivePopGestureRecognizer?.delegate = self
     }
 
     @objc
@@ -271,6 +301,13 @@ extension MapViewController: MKMapViewDelegate {
         let zoomCoordinate = view.annotation?.coordinate ?? mapView.region.center
         let zoomed = MKCoordinateRegion(center: zoomCoordinate, span: zoomSpan)
         mapView.setRegion(zoomed, animated: true)
+    }
+}
+
+extension MapViewController: UIGestureRecognizerDelegate {
+    func gestureRecognizerShouldBegin(_: UIGestureRecognizer) -> Bool {
+        guard let count = navigationController?.viewControllers.count else { return false }
+        return count > 1
     }
 }
 
