@@ -126,7 +126,7 @@ final class ProfileViewController: MapViewController {
         super.configureUI()
         guard let navigationBarHeigth = navigationController?.navigationBar.frame.height else { return }
         let navBarHeight = Size.topPadding + navigationBarHeigth
-        modalMaxHeight = UIScreen.main.bounds.height - navBarHeight - 130
+        modalMaxHeight = UIScreen.main.bounds.height - navBarHeight - 180
     }
 
     override func setupNavigationBar() {

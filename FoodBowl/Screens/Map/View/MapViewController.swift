@@ -28,13 +28,13 @@ class MapViewController: BaseViewController {
 
         static let mapHeaderHeight: CGFloat = topPadding + 90
         static let modalMinHeight: CGFloat = 80
-        static let modalMidHeight: CGFloat = UIScreen.main.bounds.height / 2 - 80
+        static let modalMidHeight: CGFloat = UIScreen.main.bounds.height / 2 - 100
     }
 
     var panGesture = UIPanGestureRecognizer()
 
     lazy var tabBarHeight: CGFloat = tabBarController?.tabBar.frame.height ?? 0
-    lazy var modalMaxHeight: CGFloat = UIScreen.main.bounds.height - Size.mapHeaderHeight - 30
+    lazy var modalMaxHeight: CGFloat = UIScreen.main.bounds.height - Size.mapHeaderHeight - 80
     var currentModalHeight: CGFloat = 0
 
     // MARK: - property
@@ -128,7 +128,7 @@ class MapViewController: BaseViewController {
 
         grabbarView.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview()
-            $0.height.equalTo(30)
+            $0.height.equalTo(80)
         }
 
         modalView.snp.makeConstraints {
@@ -167,21 +167,17 @@ class MapViewController: BaseViewController {
     func handlePan(_ gesture: UIPanGestureRecognizer) {
         guard gesture.view != nil else { return }
         let translation = gesture.translation(in: gesture.view?.superview)
-
         var newModalHeight = currentModalHeight - translation.y
         if newModalHeight <= Size.modalMinHeight {
             newModalHeight = Size.modalMinHeight
-            tabBarController?.tabBar.frame.origin = CGPoint(x: 0, y: UIScreen.main.bounds.maxY)
-            modalView.showResult()
+            modalMinState()
         } else if newModalHeight >= modalMaxHeight {
             newModalHeight = modalMaxHeight
             grabbarView.layer.cornerRadius = 0
-            tabBarController?.tabBar.frame.origin = CGPoint(x: 0, y: UIScreen.main.bounds.maxY - tabBarHeight)
-            modalView.showContent()
+            modalMaxState()
         } else {
             grabbarView.layer.cornerRadius = 15
-            tabBarController?.tabBar.frame.origin = CGPoint(x: 0, y: UIScreen.main.bounds.maxY - tabBarHeight)
-            modalView.showContent()
+            modalMaxState()
         }
 
         modalView.snp.remakeConstraints {
@@ -194,17 +190,13 @@ class MapViewController: BaseViewController {
             switch newModalHeight {
             case let height where height - Size.modalMinHeight < Size.modalMidHeight - height:
                 currentModalHeight = Size.modalMinHeight
-                tabBarController?.tabBar.frame.origin = CGPoint(x: 0, y: UIScreen.main.bounds.maxY)
-                modalView.showResult()
+                modalMinState()
             case let height where height - Size.modalMidHeight < modalMaxHeight - height:
                 currentModalHeight = Size.modalMidHeight
-                tabBarController?.tabBar.frame.origin = CGPoint(x: 0, y: UIScreen.main.bounds.maxY - tabBarHeight)
-                modalView.showContent()
+                modalMaxState()
             default:
                 currentModalHeight = modalMaxHeight
-                grabbarView.layer.cornerRadius = 0
-                tabBarController?.tabBar.frame.origin = CGPoint(x: 0, y: UIScreen.main.bounds.maxY - tabBarHeight)
-                modalView.showContent()
+                modalMaxState()
             }
 
             modalView.snp.remakeConstraints {
@@ -213,6 +205,25 @@ class MapViewController: BaseViewController {
                 $0.height.equalTo(currentModalHeight)
             }
         }
+    }
+
+    func modalMinState() {
+        modalView.showResult()
+        grabbarView.showResult()
+        tabBarController?.tabBar.frame.origin = CGPoint(x: 0, y: UIScreen.main.bounds.maxY)
+    }
+
+    func modalMidState() {
+        grabbarView.showContent()
+        modalView.showContent()
+        tabBarController?.tabBar.frame.origin = CGPoint(x: 0, y: UIScreen.main.bounds.maxY - tabBarHeight)
+    }
+
+    func modalMaxState() {
+        grabbarView.showContent()
+        modalView.showContent()
+        tabBarController?.tabBar.frame.origin = CGPoint(x: 0, y: UIScreen.main.bounds.maxY - tabBarHeight)
+        grabbarView.layer.cornerRadius = 0
     }
 
     // 임시 데이터

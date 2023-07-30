@@ -18,7 +18,7 @@ class ModalView: UIView {
 
     let resultLabel = UILabel().then {
         $0.font = UIFont.preferredFont(forTextStyle: .subheadline, weight: .regular)
-        $0.textColor = .mainText
+        $0.textColor = .subText
         $0.textAlignment = .center
     }
 
