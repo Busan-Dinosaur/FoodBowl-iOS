@@ -16,12 +16,6 @@ class ModalView: UIView {
 
     lazy var listCollectionView: UICollectionView = .init()
 
-    let resultLabel = UILabel().then {
-        $0.font = UIFont.preferredFont(forTextStyle: .subheadline, weight: .regular)
-        $0.textColor = .subText
-        $0.textAlignment = .center
-    }
-
     // MARK: - init
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -38,24 +32,14 @@ class ModalView: UIView {
     func setupProperty() {}
 
     func setupLayout() {
-        addSubviews(listCollectionView, resultLabel)
+        addSubviews(listCollectionView)
 
         listCollectionView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
-
-        resultLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(4)
-            $0.leading.trailing.equalToSuperview()
-        }
     }
 
     func configureUI() {
-        resultLabel.isHidden = true
         backgroundColor = .mainBackground
     }
-
-    func showContent() {}
-
-    func showResult() {}
 }

@@ -39,23 +39,10 @@ final class BookmarkListView: ModalView {
             $0.register(BookmarkCollectionViewCell.self, forCellWithReuseIdentifier: BookmarkCollectionViewCell.className)
             $0.backgroundColor = .mainBackground
         }
-
-        resultLabel.text = "4개의 맛집"
     }
 
     override func configureUI() {
-        resultLabel.isHidden = true
         backgroundColor = .mainBackground
-    }
-
-    override func showContent() {
-        listCollectionView.isHidden = false
-        resultLabel.isHidden = true
-    }
-
-    override func showResult() {
-        listCollectionView.isHidden = true
-        resultLabel.isHidden = false
     }
 }
 

@@ -19,4 +19,10 @@ final class BookmarkViewController: MapViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
+    override func configureUI() {
+        super.configureUI()
+        grabbarView.modalTitleLabel.text = "북마크 목록"
+        grabbarView.modalResultLabel.text = "4개의 맛집"
+    }
 }

@@ -27,7 +27,7 @@ class MapViewController: BaseViewController {
         }()
 
         static let mapHeaderHeight: CGFloat = topPadding + 90
-        static let modalMinHeight: CGFloat = 80
+        static let modalMinHeight: CGFloat = 40
         static let modalMidHeight: CGFloat = UIScreen.main.bounds.height / 2 - 100
     }
 
@@ -173,11 +173,9 @@ class MapViewController: BaseViewController {
             modalMinState()
         } else if newModalHeight >= modalMaxHeight {
             newModalHeight = modalMaxHeight
-            grabbarView.layer.cornerRadius = 0
             modalMaxState()
         } else {
-            grabbarView.layer.cornerRadius = 15
-            modalMaxState()
+            modalMidState()
         }
 
         modalView.snp.remakeConstraints {
@@ -193,7 +191,7 @@ class MapViewController: BaseViewController {
                 modalMinState()
             case let height where height - Size.modalMidHeight < modalMaxHeight - height:
                 currentModalHeight = Size.modalMidHeight
-                modalMaxState()
+                modalMidState()
             default:
                 currentModalHeight = modalMaxHeight
                 modalMaxState()
@@ -208,20 +206,20 @@ class MapViewController: BaseViewController {
     }
 
     func modalMinState() {
-        modalView.showResult()
         grabbarView.showResult()
+        modalView.listCollectionView.isHidden = true
         tabBarController?.tabBar.frame.origin = CGPoint(x: 0, y: UIScreen.main.bounds.maxY)
     }
 
     func modalMidState() {
         grabbarView.showContent()
-        modalView.showContent()
+        modalView.listCollectionView.isHidden = false
         tabBarController?.tabBar.frame.origin = CGPoint(x: 0, y: UIScreen.main.bounds.maxY - tabBarHeight)
+        grabbarView.layer.cornerRadius = 15
     }
 
     func modalMaxState() {
         grabbarView.showContent()
-        modalView.showContent()
         tabBarController?.tabBar.frame.origin = CGPoint(x: 0, y: UIScreen.main.bounds.maxY - tabBarHeight)
         grabbarView.layer.cornerRadius = 0
     }

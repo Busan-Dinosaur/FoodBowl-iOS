@@ -19,7 +19,6 @@ final class GrabbarView: UIView {
     let modalTitleLabel = UILabel().then {
         $0.font = UIFont.preferredFont(forTextStyle: .title2, weight: .bold)
         $0.textColor = .mainText
-        $0.text = "친구들의 맛집"
     }
 
     let modalResultLabel = UILabel().then {
