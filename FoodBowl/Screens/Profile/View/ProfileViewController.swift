@@ -94,6 +94,11 @@ final class ProfileViewController: MapViewController {
         $0.editButton.addAction(editButtonAction, for: .touchUpInside)
     }
 
+    override func viewDidLoad() {
+        setupBackButton()
+        super.viewDidLoad()
+    }
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.isNavigationBarHidden = false
@@ -121,7 +126,10 @@ final class ProfileViewController: MapViewController {
         super.configureUI()
         guard let navigationBarHeigth = navigationController?.navigationBar.frame.height else { return }
         let navBarHeight = Size.topPadding + navigationBarHeigth
-        modalMaxHeight = UIScreen.main.bounds.height - navBarHeight - 130
+        modalMaxHeight = UIScreen.main.bounds.height - navBarHeight - 180
+
+        grabbarView.modalTitleLabel.text = "나의 맛집"
+        grabbarView.modalResultLabel.text = "4개의 맛집, 10개의 후기"
     }
 
     override func setupNavigationBar() {

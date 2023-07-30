@@ -36,23 +36,10 @@ final class FriendFeedView: ModalView {
             $0.register(FeedCollectionViewCell.self, forCellWithReuseIdentifier: FeedCollectionViewCell.className)
             $0.backgroundColor = .mainBackground
         }
-
-        resultLabel.text = "4개의 맛집, 10개의 후기"
     }
 
     override func configureUI() {
-        resultLabel.isHidden = true
         backgroundColor = .mainBackground
-    }
-
-    override func showContent() {
-        listCollectionView.isHidden = false
-        resultLabel.isHidden = true
-    }
-
-    override func showResult() {
-        listCollectionView.isHidden = true
-        resultLabel.isHidden = false
     }
 }
 

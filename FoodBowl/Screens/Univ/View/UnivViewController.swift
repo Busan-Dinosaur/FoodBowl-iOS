@@ -19,4 +19,10 @@ final class UnivViewController: MapViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
+    override func configureUI() {
+        super.configureUI()
+        grabbarView.modalTitleLabel.text = "부산대학교 맛집"
+        grabbarView.modalResultLabel.text = "4개의 맛집, 10개의 후기"
+    }
 }
