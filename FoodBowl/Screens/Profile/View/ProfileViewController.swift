@@ -94,6 +94,11 @@ final class ProfileViewController: MapViewController {
         $0.editButton.addAction(editButtonAction, for: .touchUpInside)
     }
 
+    override func viewDidLoad() {
+        setupBackButton()
+        super.viewDidLoad()
+    }
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.isNavigationBarHidden = false
