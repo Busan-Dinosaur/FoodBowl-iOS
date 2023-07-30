@@ -12,7 +12,7 @@ import Then
 
 class ModalView: UIView {
     // MARK: - property
-    var collectionViewFlowLayout: DynamicHeightCollectionViewFlowLayout = .init()
+    var collectionViewFlowLayout: UICollectionViewFlowLayout = .init()
 
     lazy var listCollectionView: UICollectionView = .init()
 

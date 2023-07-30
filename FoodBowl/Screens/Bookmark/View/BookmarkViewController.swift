@@ -13,7 +13,7 @@ import Then
 final class BookmarkViewController: MapViewController {
     init() {
         super.init(nibName: nil, bundle: nil)
-        self.modalView = FriendFeedView()
+        self.modalView = BookmarkListView()
     }
 
     required init?(coder: NSCoder) {

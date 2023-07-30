@@ -24,7 +24,6 @@ final class CategoryCollectionViewCell: BaseCollectionViewCell {
     }
 
     // MARK: - property
-
     let categoryLabel = UILabel().then {
         $0.font = UIFont.preferredFont(forTextStyle: .footnote, weight: .light)
         $0.textColor = .mainText
