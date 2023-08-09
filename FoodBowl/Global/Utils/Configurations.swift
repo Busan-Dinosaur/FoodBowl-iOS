@@ -9,6 +9,7 @@ import Foundation
 
 enum ConfigurationsKey: String {
     case nonce = "Nonce"
+    case baseURL = "BaseURL"
 }
 
 @propertyWrapper

@@ -17,6 +17,9 @@
 		CB2E4F7F297702A800FD2566 /* StoreInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2E4F7E297702A800FD2566 /* StoreInfoTableViewCell.swift */; };
 		CB2E4F81297702B800FD2566 /* UserInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2E4F80297702B800FD2566 /* UserInfoTableViewCell.swift */; };
 		CB2E4F892977393700FD2566 /* FollowInfoButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2E4F882977393700FD2566 /* FollowInfoButton.swift */; };
+		CB40C6F82A83E812003E3F06 /* SignViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB40C6F72A83E812003E3F06 /* SignViewModel.swift */; };
+		CB40C6FA2A83E916003E3F06 /* MoyaProvider+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB40C6F92A83E916003E3F06 /* MoyaProvider+Extensions.swift */; };
+		CB40C6FC2A83E9A0003E3F06 /* SignResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB40C6FB2A83E9A0003E3F06 /* SignResponse.swift */; };
 		CB4FBBF22978CFA90052D371 /* FollowerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB4FBBF12978CFA90052D371 /* FollowerViewController.swift */; };
 		CB4FBBF42978CFE40052D371 /* FollowingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB4FBBF32978CFE40052D371 /* FollowingViewController.swift */; };
 		CB558E9A29746B5D00921943 /* PhotoPlusCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB558E9929746B5D00921943 /* PhotoPlusCollectionViewCell.swift */; };
@@ -77,7 +80,6 @@
 		CBC73110295550A200C7F198 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CBC7310E295550A200C7F198 /* LaunchScreen.storyboard */; };
 		CBC747A92A83D95200F171F5 /* Moya in Frameworks */ = {isa = PBXBuildFile; productRef = CBC747A82A83D95200F171F5 /* Moya */; };
 		CBC747AB2A83D95200F171F5 /* RxMoya in Frameworks */ = {isa = PBXBuildFile; productRef = CBC747AA2A83D95200F171F5 /* RxMoya */; };
-		CBC747B02A83D9D900F171F5 /* HttpsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBC747AF2A83D9D900F171F5 /* HttpsResponse.swift */; };
 		CBC747B32A83D9F600F171F5 /* ServiceAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBC747B22A83D9F600F171F5 /* ServiceAPI.swift */; };
 		CBC747B52A83DBE300F171F5 /* KeychainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBC747B42A83DBE300F171F5 /* KeychainManager.swift */; };
 		CBC747B82A83DC2000F171F5 /* KeychainSwift in Frameworks */ = {isa = PBXBuildFile; productRef = CBC747B72A83DC2000F171F5 /* KeychainSwift */; };
@@ -128,6 +130,9 @@
 		CB2E4F7E297702A800FD2566 /* StoreInfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreInfoTableViewCell.swift; sourceTree = "<group>"; };
 		CB2E4F80297702B800FD2566 /* UserInfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoTableViewCell.swift; sourceTree = "<group>"; };
 		CB2E4F882977393700FD2566 /* FollowInfoButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowInfoButton.swift; sourceTree = "<group>"; };
+		CB40C6F72A83E812003E3F06 /* SignViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignViewModel.swift; sourceTree = "<group>"; };
+		CB40C6F92A83E916003E3F06 /* MoyaProvider+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MoyaProvider+Extensions.swift"; sourceTree = "<group>"; };
+		CB40C6FB2A83E9A0003E3F06 /* SignResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignResponse.swift; sourceTree = "<group>"; };
 		CB4FBBF12978CFA90052D371 /* FollowerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowerViewController.swift; sourceTree = "<group>"; };
 		CB4FBBF32978CFE40052D371 /* FollowingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowingViewController.swift; sourceTree = "<group>"; };
 		CB558E9929746B5D00921943 /* PhotoPlusCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPlusCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -184,7 +189,6 @@
 		CBC7310C295550A200C7F198 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CBC7310F295550A200C7F198 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CBC73111295550A200C7F198 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		CBC747AF2A83D9D900F171F5 /* HttpsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpsResponse.swift; sourceTree = "<group>"; };
 		CBC747B22A83D9F600F171F5 /* ServiceAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceAPI.swift; sourceTree = "<group>"; };
 		CBC747B42A83DBE300F171F5 /* KeychainManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainManager.swift; sourceTree = "<group>"; };
 		CBC747B92A83DD6400F171F5 /* Configurations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configurations.swift; sourceTree = "<group>"; };
@@ -289,6 +293,24 @@
 			path = Cell;
 			sourceTree = "<group>";
 		};
+		CB40C6F52A83E7F4003E3F06 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				CBA7F181297DB319006088A0 /* OnboardingViewController.swift */,
+				CBD1B5F92982E55F00B0AD51 /* AgreementViewController.swift */,
+				CBA7F17E297DB2F6006088A0 /* SetProfileViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		CB40C6F62A83E804003E3F06 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				CB40C6F72A83E812003E3F06 /* SignViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 		CB63B7592A6986B4000AD9C2 /* Map */ = {
 			isa = PBXGroup;
 			children = (
@@ -383,9 +405,8 @@
 		CB981C28297A5A2900AF0167 /* Sign */ = {
 			isa = PBXGroup;
 			children = (
-				CBA7F181297DB319006088A0 /* OnboardingViewController.swift */,
-				CBD1B5F92982E55F00B0AD51 /* AgreementViewController.swift */,
-				CBA7F17E297DB2F6006088A0 /* SetProfileViewController.swift */,
+				CB40C6F52A83E7F4003E3F06 /* View */,
+				CB40C6F62A83E804003E3F06 /* ViewModel */,
 			);
 			path = Sign;
 			sourceTree = "<group>";
@@ -452,6 +473,7 @@
 				CBD1B5FD2982F19300B0AD51 /* UIButton+Extension.swift */,
 				CBA7F183297DBB01006088A0 /* YPImagePicker+Extension.swift */,
 				CBB12B132985845900AC0EF2 /* String+Extension.swift */,
+				CB40C6F92A83E916003E3F06 /* MoyaProvider+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -551,7 +573,6 @@
 		CBC747AC2A83D96E00F171F5 /* Map */ = {
 			isa = PBXGroup;
 			children = (
-				CBDE390429719B9700DDE49A /* Place.swift */,
 				CB558E9B2975B80B00921943 /* Feed.swift */,
 				CB8A2D9A297844720018AC6E /* Marker.swift */,
 			);
@@ -568,7 +589,8 @@
 		CBC747AE2A83D9C400F171F5 /* Response */ = {
 			isa = PBXGroup;
 			children = (
-				CBC747AF2A83D9D900F171F5 /* HttpsResponse.swift */,
+				CB40C6FB2A83E9A0003E3F06 /* SignResponse.swift */,
+				CBDE390429719B9700DDE49A /* Place.swift */,
 			);
 			path = Response;
 			sourceTree = "<group>";
@@ -874,7 +896,6 @@
 				CBDDF1422A6AF70500AE3C50 /* StoreHeaderView.swift in Sources */,
 				CB558E9C2975B80B00921943 /* Feed.swift in Sources */,
 				CB1A7C6829576D7900C6431D /* BaseScrollView.swift in Sources */,
-				CBC747B02A83D9D900F171F5 /* HttpsResponse.swift in Sources */,
 				CB1A7C6129561BCF00C6431D /* ProfileHeaderView.swift in Sources */,
 				CBADC2E22955C63300E56C93 /* PhotoCollectionViewCell.swift in Sources */,
 				CBA62D412A6ECB3B00AA0830 /* FindUserViewController.swift in Sources */,
@@ -915,6 +936,7 @@
 				CBDDF1402A6ADA3800AE3C50 /* EditButton.swift in Sources */,
 				CBADC2A129559BC900E56C93 /* BackButton.swift in Sources */,
 				CBADC29A29559BC900E56C93 /* BaseViewController.swift in Sources */,
+				CB40C6FA2A83E916003E3F06 /* MoyaProvider+Extensions.swift in Sources */,
 				CBADC2B92955A1CC00E56C93 /* SetReviewViewController.swift in Sources */,
 				CBC73106295550A100C7F198 /* SceneDelegate.swift in Sources */,
 				CBDE39022971947B00DDE49A /* StoreSearchTableViewCell.swift in Sources */,
@@ -934,9 +956,11 @@
 				CB4FBBF22978CFA90052D371 /* FollowerViewController.swift in Sources */,
 				CBADC28B29559BC900E56C93 /* UIColor+Extension.swift in Sources */,
 				CBADC28629559BC900E56C93 /* Logger.swift in Sources */,
+				CB40C6FC2A83E9A0003E3F06 /* SignResponse.swift in Sources */,
 				CBADC29429559BC900E56C93 /* Notification+Extension.swift in Sources */,
 				CBA7F182297DB319006088A0 /* OnboardingViewController.swift in Sources */,
 				CBADC2E02955B92D00E56C93 /* MainButton.swift in Sources */,
+				CB40C6F82A83E812003E3F06 /* SignViewModel.swift in Sources */,
 				CBADC2B52955A18C00E56C93 /* SearchStoreViewController.swift in Sources */,
 				CBE61911296C6804005295AF /* OptionButton.swift in Sources */,
 				CBADC28E29559BC900E56C93 /* UIView+Extension.swift in Sources */,
@@ -1095,6 +1119,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				BASE_URL = "http://justdoeat.shop/";
 				CODE_SIGN_ENTITLEMENTS = FoodBowl/FoodBowl.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 0;
@@ -1135,6 +1160,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				BASE_URL = "http://justdoeat.shop/";
 				CODE_SIGN_ENTITLEMENTS = FoodBowl/FoodBowl.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 0;

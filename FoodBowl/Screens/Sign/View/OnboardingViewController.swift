@@ -12,6 +12,8 @@ import SnapKit
 import Then
 
 final class OnboardingViewController: BaseViewController {
+    private var viewModel = SignInViewModel()
+
     private var nonce: String {
         @Configurations(key: ConfigurationsKey.nonce, defaultValue: "")
         var nonce: String
@@ -103,17 +105,9 @@ extension OnboardingViewController: ASAuthorizationControllerDelegate {
                     guard let token = appleIDCredential.identityToken else { return }
                     guard let tokenToString = String(data: token, encoding: .utf8) else { return }
 
-                    print("번들ID값")
-                    print(Bundle.main.infoDictionary?["CFBundleIdentifier"] as? String ?? "")
-                    print("------------")
-                    print("토큰 값")
-                    print(tokenToString)
-                    print("------------")
-                    print("암호화 되지 않은 nonce값")
-                    print(self.nonce)
-                    print("------------")
-
-                    UserDefaultHandler.setIsLogin(isLogin: true)
+                    Task {
+                        await self.viewModel.signIn(appleToken: tokenToString)
+                    }
 
                     DispatchQueue.main.async {
                         let agreementViewController = AgreementViewController()

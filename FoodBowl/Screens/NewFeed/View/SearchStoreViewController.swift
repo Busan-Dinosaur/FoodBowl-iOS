@@ -84,7 +84,7 @@ final class SearchStoreViewController: BaseViewController {
             encoding: URLEncoding.default,
             headers: headers
         )
-        .responseDecodable(of: Response.self) { response in
+        .responseDecodable(of: MapResponse.self) { response in
             switch response.result {
             case .success(let data):
                 self.stores = data.documents
