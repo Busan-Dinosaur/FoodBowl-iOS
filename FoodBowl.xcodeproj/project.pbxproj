@@ -20,6 +20,7 @@
 		CB40C6F82A83E812003E3F06 /* SignViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB40C6F72A83E812003E3F06 /* SignViewModel.swift */; };
 		CB40C6FA2A83E916003E3F06 /* MoyaProvider+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB40C6F92A83E916003E3F06 /* MoyaProvider+Extensions.swift */; };
 		CB40C6FC2A83E9A0003E3F06 /* SignResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB40C6FB2A83E9A0003E3F06 /* SignResponse.swift */; };
+		CB40C6FE2A83EEF8003E3F06 /* SignRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB40C6FD2A83EEF8003E3F06 /* SignRequest.swift */; };
 		CB4FBBF22978CFA90052D371 /* FollowerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB4FBBF12978CFA90052D371 /* FollowerViewController.swift */; };
 		CB4FBBF42978CFE40052D371 /* FollowingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB4FBBF32978CFE40052D371 /* FollowingViewController.swift */; };
 		CB558E9A29746B5D00921943 /* PhotoPlusCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB558E9929746B5D00921943 /* PhotoPlusCollectionViewCell.swift */; };
@@ -103,7 +104,7 @@
 		CBDE38FB2970774800DDE49A /* CloseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDE38FA2970774800DDE49A /* CloseButton.swift */; };
 		CBDE38FD29715C5F00DDE49A /* SearchBarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDE38FC29715C5F00DDE49A /* SearchBarButton.swift */; };
 		CBDE39022971947B00DDE49A /* StoreSearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDE39012971947B00DDE49A /* StoreSearchTableViewCell.swift */; };
-		CBDE390529719B9700DDE49A /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDE390429719B9700DDE49A /* Place.swift */; };
+		CBDE390529719B9700DDE49A /* PlaceResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDE390429719B9700DDE49A /* PlaceResponse.swift */; };
 		CBDE390729719CB400DDE49A /* SelectedStoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDE390629719CB400DDE49A /* SelectedStoreView.swift */; };
 		CBDECABE2A6B07DE00259350 /* BookmarkButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDECABD2A6B07DD00259350 /* BookmarkButton.swift */; };
 		CBDECAC22A6B258200259350 /* CustomSwitchButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDECAC12A6B258200259350 /* CustomSwitchButton.swift */; };
@@ -133,6 +134,7 @@
 		CB40C6F72A83E812003E3F06 /* SignViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignViewModel.swift; sourceTree = "<group>"; };
 		CB40C6F92A83E916003E3F06 /* MoyaProvider+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MoyaProvider+Extensions.swift"; sourceTree = "<group>"; };
 		CB40C6FB2A83E9A0003E3F06 /* SignResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignResponse.swift; sourceTree = "<group>"; };
+		CB40C6FD2A83EEF8003E3F06 /* SignRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignRequest.swift; sourceTree = "<group>"; };
 		CB4FBBF12978CFA90052D371 /* FollowerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowerViewController.swift; sourceTree = "<group>"; };
 		CB4FBBF32978CFE40052D371 /* FollowingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowingViewController.swift; sourceTree = "<group>"; };
 		CB558E9929746B5D00921943 /* PhotoPlusCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPlusCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -211,7 +213,7 @@
 		CBDE38FA2970774800DDE49A /* CloseButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloseButton.swift; sourceTree = "<group>"; };
 		CBDE38FC29715C5F00DDE49A /* SearchBarButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBarButton.swift; sourceTree = "<group>"; };
 		CBDE39012971947B00DDE49A /* StoreSearchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreSearchTableViewCell.swift; sourceTree = "<group>"; };
-		CBDE390429719B9700DDE49A /* Place.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Place.swift; sourceTree = "<group>"; };
+		CBDE390429719B9700DDE49A /* PlaceResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceResponse.swift; sourceTree = "<group>"; };
 		CBDE390629719CB400DDE49A /* SelectedStoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedStoreView.swift; sourceTree = "<group>"; };
 		CBDECABD2A6B07DD00259350 /* BookmarkButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkButton.swift; sourceTree = "<group>"; };
 		CBDECAC12A6B258200259350 /* CustomSwitchButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSwitchButton.swift; sourceTree = "<group>"; };
@@ -582,6 +584,7 @@
 		CBC747AD2A83D9BC00F171F5 /* Request */ = {
 			isa = PBXGroup;
 			children = (
+				CB40C6FD2A83EEF8003E3F06 /* SignRequest.swift */,
 			);
 			path = Request;
 			sourceTree = "<group>";
@@ -590,7 +593,7 @@
 			isa = PBXGroup;
 			children = (
 				CB40C6FB2A83E9A0003E3F06 /* SignResponse.swift */,
-				CBDE390429719B9700DDE49A /* Place.swift */,
+				CBDE390429719B9700DDE49A /* PlaceResponse.swift */,
 			);
 			path = Response;
 			sourceTree = "<group>";
@@ -960,6 +963,7 @@
 				CBADC29429559BC900E56C93 /* Notification+Extension.swift in Sources */,
 				CBA7F182297DB319006088A0 /* OnboardingViewController.swift in Sources */,
 				CBADC2E02955B92D00E56C93 /* MainButton.swift in Sources */,
+				CB40C6FE2A83EEF8003E3F06 /* SignRequest.swift in Sources */,
 				CB40C6F82A83E812003E3F06 /* SignViewModel.swift in Sources */,
 				CBADC2B52955A18C00E56C93 /* SearchStoreViewController.swift in Sources */,
 				CBE61911296C6804005295AF /* OptionButton.swift in Sources */,
@@ -978,7 +982,7 @@
 				CBDE38FD29715C5F00DDE49A /* SearchBarButton.swift in Sources */,
 				CBADC2DE2955ACBB00E56C93 /* EmptyFeedView.swift in Sources */,
 				CBADC28D29559BC900E56C93 /* NSObject+Extension.swift in Sources */,
-				CBDE390529719B9700DDE49A /* Place.swift in Sources */,
+				CBDE390529719B9700DDE49A /* PlaceResponse.swift in Sources */,
 				CBADC29629559BC900E56C93 /* UITableView+Extension.swift in Sources */,
 				CBB582822973007D00808B0B /* ShowWebViewController.swift in Sources */,
 			);
@@ -1119,7 +1123,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				BASE_URL = "http://justdoeat.shop/";
+				BASE_URL = "http://justdoeat.shop";
 				CODE_SIGN_ENTITLEMENTS = FoodBowl/FoodBowl.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 0;
@@ -1160,7 +1164,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				BASE_URL = "http://justdoeat.shop/";
+				BASE_URL = "http://justdoeat.shop";
 				CODE_SIGN_ENTITLEMENTS = FoodBowl/FoodBowl.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 0;

@@ -89,7 +89,7 @@ final class SetStoreViewController: BaseViewController {
             encoding: URLEncoding.default,
             headers: headers
         )
-        .responseDecodable(of: MapResponse.self) { response in
+        .responseDecodable(of: PlaceResponse.self) { response in
             switch response.result {
             case .success(let data):
                 if data.documents.count > 0 {

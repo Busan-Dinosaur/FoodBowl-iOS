@@ -8,8 +8,6 @@
 import Foundation
 
 struct SignResponse: Decodable {
-    let accessToken: String?
-    let refreshToken: String?
-    let errorCode: String?
-    let message: String?
+    let accessToken: String
+    let refreshToken: String
 }

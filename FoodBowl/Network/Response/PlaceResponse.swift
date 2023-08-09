@@ -7,8 +7,8 @@
 
 import Foundation
 
-// MARK: - MapResponse
-struct MapResponse: Codable {
+// MARK: - PlaceResponse
+struct PlaceResponse: Codable {
     let documents: [Place]
     let meta: Meta
 }

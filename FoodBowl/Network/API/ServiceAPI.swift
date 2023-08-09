@@ -10,7 +10,7 @@ import Foundation
 import Moya
 
 enum ServiceAPI {
-    case signIn(appleToken: String)
+    case signIn(form: SignRequest)
 }
 
 extension ServiceAPI: TargetType {
@@ -38,14 +38,8 @@ extension ServiceAPI: TargetType {
 
     var task: Task {
         switch self {
-        case .signIn(let appleToken):
-            let params: [String: String] = [
-                "appleToken": appleToken
-            ]
-            return .requestParameters(
-                parameters: params,
-                encoding: URLEncoding.default
-            )
+        case .signIn(let form):
+            return .requestJSONEncodable(form)
         }
     }
 
