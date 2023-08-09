@@ -79,6 +79,9 @@
 		CBC747AB2A83D95200F171F5 /* RxMoya in Frameworks */ = {isa = PBXBuildFile; productRef = CBC747AA2A83D95200F171F5 /* RxMoya */; };
 		CBC747B02A83D9D900F171F5 /* HttpsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBC747AF2A83D9D900F171F5 /* HttpsResponse.swift */; };
 		CBC747B32A83D9F600F171F5 /* ServiceAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBC747B22A83D9F600F171F5 /* ServiceAPI.swift */; };
+		CBC747B52A83DBE300F171F5 /* KeychainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBC747B42A83DBE300F171F5 /* KeychainManager.swift */; };
+		CBC747B82A83DC2000F171F5 /* KeychainSwift in Frameworks */ = {isa = PBXBuildFile; productRef = CBC747B72A83DC2000F171F5 /* KeychainSwift */; };
+		CBC747BA2A83DD6400F171F5 /* Configurations.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBC747B92A83DD6400F171F5 /* Configurations.swift */; };
 		CBCD0F7C2A66D9BC00A51B32 /* FriendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBCD0F7B2A66D9BC00A51B32 /* FriendViewController.swift */; };
 		CBCD0F7F2A66DA1600A51B32 /* UnivViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBCD0F7E2A66DA1600A51B32 /* UnivViewController.swift */; };
 		CBCD0F822A66DA3700A51B32 /* BookmarkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBCD0F812A66DA3700A51B32 /* BookmarkViewController.swift */; };
@@ -183,6 +186,8 @@
 		CBC73111295550A200C7F198 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CBC747AF2A83D9D900F171F5 /* HttpsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpsResponse.swift; sourceTree = "<group>"; };
 		CBC747B22A83D9F600F171F5 /* ServiceAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceAPI.swift; sourceTree = "<group>"; };
+		CBC747B42A83DBE300F171F5 /* KeychainManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainManager.swift; sourceTree = "<group>"; };
+		CBC747B92A83DD6400F171F5 /* Configurations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configurations.swift; sourceTree = "<group>"; };
 		CBCD0F7B2A66D9BC00A51B32 /* FriendViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendViewController.swift; sourceTree = "<group>"; };
 		CBCD0F7E2A66DA1600A51B32 /* UnivViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnivViewController.swift; sourceTree = "<group>"; };
 		CBCD0F812A66DA3700A51B32 /* BookmarkViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkViewController.swift; sourceTree = "<group>"; };
@@ -229,6 +234,7 @@
 				CBB582802972C9C400808B0B /* Alamofire in Frameworks */,
 				CBC747AB2A83D95200F171F5 /* RxMoya in Frameworks */,
 				CBADC2482955993A00E56C93 /* SkeletonUI in Frameworks */,
+				CBC747B82A83DC2000F171F5 /* KeychainSwift in Frameworks */,
 				CBADC245295598A200E56C93 /* Then in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -423,6 +429,8 @@
 			children = (
 				CBADC25D29559BC900E56C93 /* Logger.swift */,
 				CB1566D8298D72FF0056B7D9 /* LocationManager.swift */,
+				CBC747B42A83DBE300F171F5 /* KeychainManager.swift */,
+				CBC747B92A83DD6400F171F5 /* Configurations.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -745,6 +753,7 @@
 				CBB582862974568500808B0B /* YPImagePicker */,
 				CBC747A82A83D95200F171F5 /* Moya */,
 				CBC747AA2A83D95200F171F5 /* RxMoya */,
+				CBC747B72A83DC2000F171F5 /* KeychainSwift */,
 			);
 			productName = FoodBowl;
 			productReference = CBC73100295550A100C7F198 /* FoodBowl.app */;
@@ -781,6 +790,7 @@
 				CBB5827E2972C9C400808B0B /* XCRemoteSwiftPackageReference "Alamofire" */,
 				CBB582852974568500808B0B /* XCRemoteSwiftPackageReference "YPImagePicker" */,
 				CBC747A72A83D95200F171F5 /* XCRemoteSwiftPackageReference "Moya" */,
+				CBC747B62A83DC2000F171F5 /* XCRemoteSwiftPackageReference "keychain-swift" */,
 			);
 			productRefGroup = CBC73101295550A100C7F198 /* Products */;
 			projectDirPath = "";
@@ -873,6 +883,7 @@
 				CBFB52552977B9240049E8BA /* StoreDetailViewController.swift in Sources */,
 				CB7F3325298A51560000A6B4 /* UserDefaultStorage.swift in Sources */,
 				CBA7F17F297DB2F6006088A0 /* SetProfileViewController.swift in Sources */,
+				CBC747BA2A83DD6400F171F5 /* Configurations.swift in Sources */,
 				CB63B7602A698909000AD9C2 /* MapHeaderView.swift in Sources */,
 				CB8A2D9B297844720018AC6E /* Marker.swift in Sources */,
 				CBDDF1452A6AFB5800AE3C50 /* PhotoListView.swift in Sources */,
@@ -913,6 +924,7 @@
 				CBADC29229559BC900E56C93 /* Sequence+Extension.swift in Sources */,
 				CBADC29029559BC900E56C93 /* UIViewController+Extension.swift in Sources */,
 				CBADC28C29559BC900E56C93 /* UILabel+Extension.swift in Sources */,
+				CBC747B52A83DBE300F171F5 /* KeychainManager.swift in Sources */,
 				CBADC2B32955A16A00E56C93 /* SetStoreViewController.swift in Sources */,
 				CBADC28329559BC900E56C93 /* ImageLiteral.swift in Sources */,
 				CBD1B5F12982B0A300B0AD51 /* SettingViewController.swift in Sources */,
@@ -1218,6 +1230,14 @@
 				minimumVersion = 15.0.0;
 			};
 		};
+		CBC747B62A83DC2000F171F5 /* XCRemoteSwiftPackageReference "keychain-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/evgenyneu/keychain-swift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 20.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1255,6 +1275,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = CBC747A72A83D95200F171F5 /* XCRemoteSwiftPackageReference "Moya" */;
 			productName = RxMoya;
+		};
+		CBC747B72A83DC2000F171F5 /* KeychainSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CBC747B62A83DC2000F171F5 /* XCRemoteSwiftPackageReference "keychain-swift" */;
+			productName = KeychainSwift;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
