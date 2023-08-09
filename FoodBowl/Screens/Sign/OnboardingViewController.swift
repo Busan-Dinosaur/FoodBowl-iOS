@@ -8,10 +8,13 @@
 import AuthenticationServices
 import UIKit
 
+import CryptoKit
 import SnapKit
 import Then
 
 final class OnboardingViewController: BaseViewController {
+    fileprivate var currentNonce: String?
+
     // MARK: - property
 
     private let appLogoView = UILabel().then {
@@ -72,11 +75,58 @@ final class OnboardingViewController: BaseViewController {
     private func appleSignIn() {
         let provider = ASAuthorizationAppleIDProvider()
         let request = provider.createRequest()
+        let nonce = randomNonceString()
+        currentNonce = nonce
         request.requestedScopes = [.fullName, .email]
+        request.nonce = sha256(nonce)
+        let _ = print(request.nonce ?? "")
         let controller = ASAuthorizationController(authorizationRequests: [request])
         controller.delegate = self
         controller.presentationContextProvider = self
         controller.performRequests()
+    }
+
+    // String으로 nonce 생성
+    private func randomNonceString(length: Int = 32) -> String {
+        precondition(length > 0)
+        let charset: [Character] =
+            Array("0123456789ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz-._")
+        var result = ""
+        var remainingLength = length
+
+        while remainingLength > 0 {
+            let randoms: [UInt8] = (0 ..< 16).map { _ in
+                var random: UInt8 = 0
+                let errorCode = SecRandomCopyBytes(kSecRandomDefault, 1, &random)
+                if errorCode != errSecSuccess {
+                    fatalError(
+                        "Unable to generate nonce. SecRandomCopyBytes failed with OSStatus \(errorCode)"
+                    )
+                }
+                return random
+            }
+
+            randoms.forEach { random in
+                if remainingLength == 0 {
+                    return
+                }
+                if random < charset.count {
+                    result.append(charset[Int(random)])
+                    remainingLength -= 1
+                }
+            }
+        }
+        return result
+    }
+
+    private func sha256(_ input: String) -> String {
+        let inputData = Data(input.utf8)
+        let hashedData = SHA256.hash(data: inputData)
+        let hashString = hashedData.compactMap {
+            String(format: "%02x", $0)
+        }.joined()
+
+        return hashString
     }
 }
 
@@ -96,10 +146,18 @@ extension OnboardingViewController: ASAuthorizationControllerDelegate {
                 switch credentialState {
                 case .authorized:
                     // The Apple ID credential is valid. Show Home UI Here
-//                    guard let token = appleIDCredential.identityToken else { return }
-//                    guard let tokenToString = String(data: token, encoding: .utf8) else { return }
+                    guard let token = appleIDCredential.identityToken else { return }
+                    guard let tokenToString = String(data: token, encoding: .utf8) else { return }
+                    guard let nonce = self.currentNonce else { return }
+
                     UserDefaultHandler.setIsLogin(isLogin: true)
                     DispatchQueue.main.async {
+                        let _ = print(Bundle.main.infoDictionary?["CFBundleIdentifier"] as? String ?? "")
+                        let _ = print("------------")
+                        let _ = print(tokenToString)
+                        let _ = print("------------")
+                        let _ = print(nonce)
+                        let _ = print("------------")
                         let agreementViewController = AgreementViewController()
                         self.navigationController?.pushViewController(agreementViewController, animated: true)
                     }
