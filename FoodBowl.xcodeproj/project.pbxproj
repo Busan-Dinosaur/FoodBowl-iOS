@@ -1101,7 +1101,12 @@
 				DEVELOPMENT_TEAM = 3Y8YH8GWMM;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = FoodBowl/Global/Supports/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "풋볼";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.food-and-drink";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Camera permissions for taking photos";
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "Application wants to use your location";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Application wants to use your location";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Album permissions to save photos";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = "";
@@ -1113,6 +1118,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 0.0.1;
+				NONCE = wH_pSu5wSUHzoFPBUE9Q9ZRs3fcKzGSn;
 				PRODUCT_BUNDLE_IDENTIFIER = com.coby.FoodBowl;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -1135,7 +1141,12 @@
 				DEVELOPMENT_TEAM = 3Y8YH8GWMM;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = FoodBowl/Global/Supports/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "풋볼";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.food-and-drink";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Camera permissions for taking photos";
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "Application wants to use your location";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Application wants to use your location";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Album permissions to save photos";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = "";
@@ -1147,6 +1158,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 0.0.1;
+				NONCE = wH_pSu5wSUHzoFPBUE9Q9ZRs3fcKzGSn;
 				PRODUCT_BUNDLE_IDENTIFIER = com.coby.FoodBowl;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
