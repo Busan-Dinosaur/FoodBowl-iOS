@@ -14,7 +14,6 @@ import Then
 
 final class OnboardingViewController: BaseViewController {
     fileprivate var currentNonce: String?
-
     // MARK: - property
 
     private let appLogoView = UILabel().then {
@@ -75,48 +74,18 @@ final class OnboardingViewController: BaseViewController {
     private func appleSignIn() {
         let provider = ASAuthorizationAppleIDProvider()
         let request = provider.createRequest()
-        let nonce = randomNonceString()
+        let nonce = "wH_pSu5wSUHzoFPBUE9Q9ZRs3fcKzGSn"
         currentNonce = nonce
         request.requestedScopes = [.fullName, .email]
         request.nonce = sha256(nonce)
+        let _ = print("------------")
+        let _ = print("암호화 된 nonce값")
         let _ = print(request.nonce ?? "")
+        let _ = print("------------")
         let controller = ASAuthorizationController(authorizationRequests: [request])
         controller.delegate = self
         controller.presentationContextProvider = self
         controller.performRequests()
-    }
-
-    // String으로 nonce 생성
-    private func randomNonceString(length: Int = 32) -> String {
-        precondition(length > 0)
-        let charset: [Character] =
-            Array("0123456789ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz-._")
-        var result = ""
-        var remainingLength = length
-
-        while remainingLength > 0 {
-            let randoms: [UInt8] = (0 ..< 16).map { _ in
-                var random: UInt8 = 0
-                let errorCode = SecRandomCopyBytes(kSecRandomDefault, 1, &random)
-                if errorCode != errSecSuccess {
-                    fatalError(
-                        "Unable to generate nonce. SecRandomCopyBytes failed with OSStatus \(errorCode)"
-                    )
-                }
-                return random
-            }
-
-            randoms.forEach { random in
-                if remainingLength == 0 {
-                    return
-                }
-                if random < charset.count {
-                    result.append(charset[Int(random)])
-                    remainingLength -= 1
-                }
-            }
-        }
-        return result
     }
 
     private func sha256(_ input: String) -> String {
@@ -152,10 +121,13 @@ extension OnboardingViewController: ASAuthorizationControllerDelegate {
 
                     UserDefaultHandler.setIsLogin(isLogin: true)
                     DispatchQueue.main.async {
+                        let _ = print("번들ID값")
                         let _ = print(Bundle.main.infoDictionary?["CFBundleIdentifier"] as? String ?? "")
                         let _ = print("------------")
+                        let _ = print("토큰 값")
                         let _ = print(tokenToString)
                         let _ = print("------------")
+                        let _ = print("암호화 되지 않은 nonce값")
                         let _ = print(nonce)
                         let _ = print("------------")
                         let agreementViewController = AgreementViewController()
