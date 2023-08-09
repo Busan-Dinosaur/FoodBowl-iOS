@@ -75,6 +75,10 @@
 		CBC73106295550A100C7F198 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBC73105295550A100C7F198 /* SceneDelegate.swift */; };
 		CBC7310D295550A200C7F198 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CBC7310C295550A200C7F198 /* Assets.xcassets */; };
 		CBC73110295550A200C7F198 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CBC7310E295550A200C7F198 /* LaunchScreen.storyboard */; };
+		CBC747A92A83D95200F171F5 /* Moya in Frameworks */ = {isa = PBXBuildFile; productRef = CBC747A82A83D95200F171F5 /* Moya */; };
+		CBC747AB2A83D95200F171F5 /* RxMoya in Frameworks */ = {isa = PBXBuildFile; productRef = CBC747AA2A83D95200F171F5 /* RxMoya */; };
+		CBC747B02A83D9D900F171F5 /* HttpsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBC747AF2A83D9D900F171F5 /* HttpsResponse.swift */; };
+		CBC747B32A83D9F600F171F5 /* ServiceAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBC747B22A83D9F600F171F5 /* ServiceAPI.swift */; };
 		CBCD0F7C2A66D9BC00A51B32 /* FriendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBCD0F7B2A66D9BC00A51B32 /* FriendViewController.swift */; };
 		CBCD0F7F2A66DA1600A51B32 /* UnivViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBCD0F7E2A66DA1600A51B32 /* UnivViewController.swift */; };
 		CBCD0F822A66DA3700A51B32 /* BookmarkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBCD0F812A66DA3700A51B32 /* BookmarkViewController.swift */; };
@@ -177,6 +181,8 @@
 		CBC7310C295550A200C7F198 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CBC7310F295550A200C7F198 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CBC73111295550A200C7F198 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CBC747AF2A83D9D900F171F5 /* HttpsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpsResponse.swift; sourceTree = "<group>"; };
+		CBC747B22A83D9F600F171F5 /* ServiceAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceAPI.swift; sourceTree = "<group>"; };
 		CBCD0F7B2A66D9BC00A51B32 /* FriendViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendViewController.swift; sourceTree = "<group>"; };
 		CBCD0F7E2A66DA1600A51B32 /* UnivViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnivViewController.swift; sourceTree = "<group>"; };
 		CBCD0F812A66DA3700A51B32 /* BookmarkViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkViewController.swift; sourceTree = "<group>"; };
@@ -219,7 +225,9 @@
 			files = (
 				CBADC2422955989400E56C93 /* SnapKit in Frameworks */,
 				CBB582872974568500808B0B /* YPImagePicker in Frameworks */,
+				CBC747A92A83D95200F171F5 /* Moya in Frameworks */,
 				CBB582802972C9C400808B0B /* Alamofire in Frameworks */,
+				CBC747AB2A83D95200F171F5 /* RxMoya in Frameworks */,
 				CBADC2482955993A00E56C93 /* SkeletonUI in Frameworks */,
 				CBADC245295598A200E56C93 /* Then in Frameworks */,
 			);
@@ -332,6 +340,9 @@
 		CB7F3322298A51330000A6B4 /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				CBC747B12A83D9E900F171F5 /* API */,
+				CBC747AD2A83D9BC00F171F5 /* Request */,
+				CBC747AE2A83D9C400F171F5 /* Response */,
 				CB7F3323298A51430000A6B4 /* Storage */,
 				CBDE390329719B8100DDE49A /* Models */,
 			);
@@ -529,6 +540,39 @@
 			path = FoodBowl;
 			sourceTree = "<group>";
 		};
+		CBC747AC2A83D96E00F171F5 /* Map */ = {
+			isa = PBXGroup;
+			children = (
+				CBDE390429719B9700DDE49A /* Place.swift */,
+				CB558E9B2975B80B00921943 /* Feed.swift */,
+				CB8A2D9A297844720018AC6E /* Marker.swift */,
+			);
+			path = Map;
+			sourceTree = "<group>";
+		};
+		CBC747AD2A83D9BC00F171F5 /* Request */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Request;
+			sourceTree = "<group>";
+		};
+		CBC747AE2A83D9C400F171F5 /* Response */ = {
+			isa = PBXGroup;
+			children = (
+				CBC747AF2A83D9D900F171F5 /* HttpsResponse.swift */,
+			);
+			path = Response;
+			sourceTree = "<group>";
+		};
+		CBC747B12A83D9E900F171F5 /* API */ = {
+			isa = PBXGroup;
+			children = (
+				CBC747B22A83D9F600F171F5 /* ServiceAPI.swift */,
+			);
+			path = API;
+			sourceTree = "<group>";
+		};
 		CBCD0F7D2A66DA0B00A51B32 /* Univ */ = {
 			isa = PBXGroup;
 			children = (
@@ -638,9 +682,7 @@
 		CBDE390329719B8100DDE49A /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				CBDE390429719B9700DDE49A /* Place.swift */,
-				CB558E9B2975B80B00921943 /* Feed.swift */,
-				CB8A2D9A297844720018AC6E /* Marker.swift */,
+				CBC747AC2A83D96E00F171F5 /* Map */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -701,6 +743,8 @@
 				CBADC2472955993A00E56C93 /* SkeletonUI */,
 				CBB5827F2972C9C400808B0B /* Alamofire */,
 				CBB582862974568500808B0B /* YPImagePicker */,
+				CBC747A82A83D95200F171F5 /* Moya */,
+				CBC747AA2A83D95200F171F5 /* RxMoya */,
 			);
 			productName = FoodBowl;
 			productReference = CBC73100295550A100C7F198 /* FoodBowl.app */;
@@ -736,6 +780,7 @@
 				CBADC2462955993A00E56C93 /* XCRemoteSwiftPackageReference "SkeletonUI" */,
 				CBB5827E2972C9C400808B0B /* XCRemoteSwiftPackageReference "Alamofire" */,
 				CBB582852974568500808B0B /* XCRemoteSwiftPackageReference "YPImagePicker" */,
+				CBC747A72A83D95200F171F5 /* XCRemoteSwiftPackageReference "Moya" */,
 			);
 			productRefGroup = CBC73101295550A100C7F198 /* Products */;
 			projectDirPath = "";
@@ -819,6 +864,7 @@
 				CBDDF1422A6AF70500AE3C50 /* StoreHeaderView.swift in Sources */,
 				CB558E9C2975B80B00921943 /* Feed.swift in Sources */,
 				CB1A7C6829576D7900C6431D /* BaseScrollView.swift in Sources */,
+				CBC747B02A83D9D900F171F5 /* HttpsResponse.swift in Sources */,
 				CB1A7C6129561BCF00C6431D /* ProfileHeaderView.swift in Sources */,
 				CBADC2E22955C63300E56C93 /* PhotoCollectionViewCell.swift in Sources */,
 				CBA62D412A6ECB3B00AA0830 /* FindUserViewController.swift in Sources */,
@@ -888,6 +934,7 @@
 				CBDE38F92970745600DDE49A /* NewFeedViewController.swift in Sources */,
 				CBDE390729719CB400DDE49A /* SelectedStoreView.swift in Sources */,
 				CBADC29129559BC900E56C93 /* UICollectionView+Extension.swift in Sources */,
+				CBC747B32A83D9F600F171F5 /* ServiceAPI.swift in Sources */,
 				CBADC2D82955AC5900E56C93 /* FeedCollectionViewCell.swift in Sources */,
 				CBDECAC22A6B258200259350 /* CustomSwitchButton.swift in Sources */,
 				CBADC2AD2955A0FF00E56C93 /* ProfileViewController.swift in Sources */,
@@ -1163,6 +1210,14 @@
 				minimumVersion = 5.0.0;
 			};
 		};
+		CBC747A72A83D95200F171F5 /* XCRemoteSwiftPackageReference "Moya" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Moya/Moya.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 15.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1190,6 +1245,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = CBB582852974568500808B0B /* XCRemoteSwiftPackageReference "YPImagePicker" */;
 			productName = YPImagePicker;
+		};
+		CBC747A82A83D95200F171F5 /* Moya */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CBC747A72A83D95200F171F5 /* XCRemoteSwiftPackageReference "Moya" */;
+			productName = Moya;
+		};
+		CBC747AA2A83D95200F171F5 /* RxMoya */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CBC747A72A83D95200F171F5 /* XCRemoteSwiftPackageReference "Moya" */;
+			productName = RxMoya;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
