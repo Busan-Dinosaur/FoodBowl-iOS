@@ -7,15 +7,13 @@
 
 import Foundation
 
-// MARK: - Response
-
-struct Response: Codable {
+// MARK: - PlaceResponse
+struct PlaceResponse: Codable {
     let documents: [Place]
     let meta: Meta
 }
 
 // MARK: - Document
-
 struct Place: Codable {
     let addressName: String
     let categoryGroupCode: String
@@ -40,7 +38,6 @@ struct Place: Codable {
 }
 
 // MARK: - Meta
-
 struct Meta: Codable {
     let isEnd: Bool
     let pageableCount: Int

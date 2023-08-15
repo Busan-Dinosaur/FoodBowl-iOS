@@ -5,6 +5,7 @@
 //  Created by COBY_PRO on 2023/01/29.
 //
 
+import CryptoKit
 import UIKit
 
 extension String {
@@ -33,5 +34,17 @@ extension String {
             let value = Double(Int(distance)) // 미터로 표시할 땐 소수점 제거
             return formatter.string(fromValue: value, unit: LengthFormatter.Unit.meter)
         }
+    }
+}
+
+extension String {
+    var sha256: String {
+        let inputData = Data(self.utf8)
+        let hashedData = SHA256.hash(data: inputData)
+        let hashString = hashedData.compactMap {
+            String(format: "%02x", $0)
+        }.joined()
+
+        return hashString
     }
 }

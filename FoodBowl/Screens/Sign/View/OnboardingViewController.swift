@@ -8,14 +8,19 @@
 import AuthenticationServices
 import UIKit
 
-import CryptoKit
 import SnapKit
 import Then
 
 final class OnboardingViewController: BaseViewController {
-    fileprivate var currentNonce: String?
-    // MARK: - property
+    private var viewModel = SignInViewModel()
 
+    private var nonce: String {
+        @Configurations(key: ConfigurationsKey.nonce, defaultValue: "")
+        var nonce: String
+        return nonce
+    }
+
+    // MARK: - property
     private let appLogoView = UILabel().then {
         $0.font = .font(.regular, ofSize: 50)
         $0.textColor = .mainText
@@ -74,28 +79,14 @@ final class OnboardingViewController: BaseViewController {
     private func appleSignIn() {
         let provider = ASAuthorizationAppleIDProvider()
         let request = provider.createRequest()
-        let nonce = "wH_pSu5wSUHzoFPBUE9Q9ZRs3fcKzGSn"
-        currentNonce = nonce
+
         request.requestedScopes = [.fullName, .email]
-        request.nonce = sha256(nonce)
-        let _ = print("------------")
-        let _ = print("암호화 된 nonce값")
-        let _ = print(request.nonce ?? "")
-        let _ = print("------------")
+        request.nonce = nonce.sha256
+
         let controller = ASAuthorizationController(authorizationRequests: [request])
         controller.delegate = self
         controller.presentationContextProvider = self
         controller.performRequests()
-    }
-
-    private func sha256(_ input: String) -> String {
-        let inputData = Data(input.utf8)
-        let hashedData = SHA256.hash(data: inputData)
-        let hashString = hashedData.compactMap {
-            String(format: "%02x", $0)
-        }.joined()
-
-        return hashString
     }
 }
 
@@ -106,10 +97,6 @@ extension OnboardingViewController: ASAuthorizationControllerDelegate {
     ) {
         if let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential {
             let userIdentifier = appleIDCredential.user
-//            let userFirstName = appleIDCredential.fullName?.givenName
-//            let userLastName = appleIDCredential.fullName?.familyName
-//            let userEmail = appleIDCredential.email
-
             let appleIDProvider = ASAuthorizationAppleIDProvider()
             appleIDProvider.getCredentialState(forUserID: userIdentifier) { credentialState, _ in
                 switch credentialState {
@@ -117,19 +104,12 @@ extension OnboardingViewController: ASAuthorizationControllerDelegate {
                     // The Apple ID credential is valid. Show Home UI Here
                     guard let token = appleIDCredential.identityToken else { return }
                     guard let tokenToString = String(data: token, encoding: .utf8) else { return }
-                    guard let nonce = self.currentNonce else { return }
 
-                    UserDefaultHandler.setIsLogin(isLogin: true)
+                    Task {
+                        await self.viewModel.signIn(appleToken: tokenToString)
+                    }
+
                     DispatchQueue.main.async {
-                        let _ = print("번들ID값")
-                        let _ = print(Bundle.main.infoDictionary?["CFBundleIdentifier"] as? String ?? "")
-                        let _ = print("------------")
-                        let _ = print("토큰 값")
-                        let _ = print(tokenToString)
-                        let _ = print("------------")
-                        let _ = print("암호화 되지 않은 nonce값")
-                        let _ = print(nonce)
-                        let _ = print("------------")
                         let agreementViewController = AgreementViewController()
                         self.navigationController?.pushViewController(agreementViewController, animated: true)
                     }

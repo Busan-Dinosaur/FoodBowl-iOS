@@ -9,4 +9,55 @@ import Foundation
 
 import Moya
 
-enum ServiceAPI {}
+enum ServiceAPI {
+    case signIn(form: SignRequest)
+}
+
+extension ServiceAPI: TargetType {
+    var baseURL: URL {
+        @Configurations(key: ConfigurationsKey.baseURL, defaultValue: "")
+        var baseURL: String
+        return URL(string: baseURL)!
+    }
+
+    var path: String {
+        switch self {
+        case .signIn:
+            return "/v1/auth/login/oauth/apple"
+        }
+    }
+
+    var method: Moya.Method {
+        switch self {
+        case .signIn:
+            return .post
+        default:
+            return .get
+        }
+    }
+
+    var task: Task {
+        switch self {
+        case .signIn(let form):
+            return .requestJSONEncodable(form)
+        }
+    }
+
+    var headers: [String: String]? {
+        switch self {
+        case .signIn:
+            return [
+                "Content-Type": "application/json"
+            ]
+        default:
+            let token: String = KeychainManager.get(.token)
+
+            return [
+                "Content-Type": "application/json",
+                "Authorization": token
+            ]
+        }
+    }
+
+    var validationType: ValidationType { .successCodes }
+}

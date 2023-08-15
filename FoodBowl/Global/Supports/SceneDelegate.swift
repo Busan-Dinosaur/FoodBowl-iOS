@@ -53,7 +53,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 }
 
 extension SceneDelegate {
-    func logout() {
+    func signOut() {
+        KeychainManager.clear()
         UserDefaultHandler.clearAllData()
         window?.rootViewController = OnboardingViewController()
     }
