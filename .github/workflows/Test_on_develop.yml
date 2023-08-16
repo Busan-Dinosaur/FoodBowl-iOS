@@ -18,4 +18,4 @@ jobs:
     - uses: actions/checkout@v3
     - name: Start xcode build
       run: |
-        xcodebuild clean build -project FoodBowl.xcodeproj -scheme FoodBowl -destination 'platform=iOS Simulator,name=iPhone 14 Pro,OS=16.0'
+        xcodebuild clean build -project FoodBowl/FoodBowl.xcodeproj -scheme FoodBowl -destination 'platform=iOS Simulator,name=iPhone 14 Pro,OS=16.0'
