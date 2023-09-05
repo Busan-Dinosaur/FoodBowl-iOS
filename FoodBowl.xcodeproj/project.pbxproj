@@ -19,6 +19,9 @@
 		CB2E4F892977393700FD2566 /* FollowInfoButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2E4F882977393700FD2566 /* FollowInfoButton.swift */; };
 		CB2E823F2AA749450016820E /* RenewRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2E823E2AA749450016820E /* RenewRequest.swift */; };
 		CB2E82412AA74A050016820E /* UpdateProfileRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2E82402AA74A050016820E /* UpdateProfileRequest.swift */; };
+		CB2E82432AA74DE30016820E /* MemberProfileResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2E82422AA74DE30016820E /* MemberProfileResponse.swift */; };
+		CB2E82452AA74E160016820E /* RenewResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2E82442AA74E160016820E /* RenewResponse.swift */; };
+		CB2E82472AA74FB60016820E /* NicknameExistResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2E82462AA74FB60016820E /* NicknameExistResponse.swift */; };
 		CB40C6F82A83E812003E3F06 /* SignViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB40C6F72A83E812003E3F06 /* SignViewModel.swift */; };
 		CB40C6FA2A83E916003E3F06 /* MoyaProvider+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB40C6F92A83E916003E3F06 /* MoyaProvider+Extensions.swift */; };
 		CB40C6FC2A83E9A0003E3F06 /* SignResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB40C6FB2A83E9A0003E3F06 /* SignResponse.swift */; };
@@ -135,6 +138,9 @@
 		CB2E4F882977393700FD2566 /* FollowInfoButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowInfoButton.swift; sourceTree = "<group>"; };
 		CB2E823E2AA749450016820E /* RenewRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenewRequest.swift; sourceTree = "<group>"; };
 		CB2E82402AA74A050016820E /* UpdateProfileRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateProfileRequest.swift; sourceTree = "<group>"; };
+		CB2E82422AA74DE30016820E /* MemberProfileResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberProfileResponse.swift; sourceTree = "<group>"; };
+		CB2E82442AA74E160016820E /* RenewResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenewResponse.swift; sourceTree = "<group>"; };
+		CB2E82462AA74FB60016820E /* NicknameExistResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameExistResponse.swift; sourceTree = "<group>"; };
 		CB40C6F72A83E812003E3F06 /* SignViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignViewModel.swift; sourceTree = "<group>"; };
 		CB40C6F92A83E916003E3F06 /* MoyaProvider+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MoyaProvider+Extensions.swift"; sourceTree = "<group>"; };
 		CB40C6FB2A83E9A0003E3F06 /* SignResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignResponse.swift; sourceTree = "<group>"; };
@@ -607,6 +613,9 @@
 			isa = PBXGroup;
 			children = (
 				CB40C6FB2A83E9A0003E3F06 /* SignResponse.swift */,
+				CB2E82442AA74E160016820E /* RenewResponse.swift */,
+				CB2E82422AA74DE30016820E /* MemberProfileResponse.swift */,
+				CB2E82462AA74FB60016820E /* NicknameExistResponse.swift */,
 				CBDE390429719B9700DDE49A /* PlaceResponse.swift */,
 			);
 			path = Response;
@@ -924,6 +933,7 @@
 				CBA7F17F297DB2F6006088A0 /* SetProfileViewController.swift in Sources */,
 				CBC747BA2A83DD6400F171F5 /* Configurations.swift in Sources */,
 				CB63B7602A698909000AD9C2 /* MapHeaderView.swift in Sources */,
+				CB2E82472AA74FB60016820E /* NicknameExistResponse.swift in Sources */,
 				CB8A2D9B297844720018AC6E /* Marker.swift in Sources */,
 				CBDDF1452A6AFB5800AE3C50 /* PhotoListView.swift in Sources */,
 				CBDE38FB2970774800DDE49A /* CloseButton.swift in Sources */,
@@ -958,6 +968,7 @@
 				CB40C6FA2A83E916003E3F06 /* MoyaProvider+Extensions.swift in Sources */,
 				CBADC2B92955A1CC00E56C93 /* SetReviewViewController.swift in Sources */,
 				CBC73106295550A100C7F198 /* SceneDelegate.swift in Sources */,
+				CB2E82452AA74E160016820E /* RenewResponse.swift in Sources */,
 				CBDE39022971947B00DDE49A /* StoreSearchTableViewCell.swift in Sources */,
 				CBD1B5FC2982E83800B0AD51 /* CheckBox.swift in Sources */,
 				CB63B7622A698D4E000AD9C2 /* BaseSize.swift in Sources */,
@@ -991,6 +1002,7 @@
 				CBDE390729719CB400DDE49A /* SelectedStoreView.swift in Sources */,
 				CBADC29129559BC900E56C93 /* UICollectionView+Extension.swift in Sources */,
 				CBC747B32A83D9F600F171F5 /* UserAPI.swift in Sources */,
+				CB2E82432AA74DE30016820E /* MemberProfileResponse.swift in Sources */,
 				CBADC2D82955AC5900E56C93 /* FeedCollectionViewCell.swift in Sources */,
 				CBDECAC22A6B258200259350 /* CustomSwitchButton.swift in Sources */,
 				CBADC2AD2955A0FF00E56C93 /* ProfileViewController.swift in Sources */,

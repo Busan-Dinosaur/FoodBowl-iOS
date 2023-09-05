@@ -12,8 +12,8 @@ import Moya
 enum UserAPI {
     case signIn(form: SignRequest)
     case renew(form: RenewRequest)
-    case updateProfile(form: RenewRequest)
-    case getProfile(id: String)
+    case updateProfile(form: UpdateProfileRequest)
+    case getMemberProfile(id: Int)
     case checkNickname(nickname: String)
 }
 
@@ -32,7 +32,7 @@ extension UserAPI: TargetType {
             return "/v1/auth/token/renew"
         case .updateProfile:
             return "/v1/members/profile"
-        case .getProfile(let id):
+        case .getMemberProfile(let id):
             return "/v1/members/\(id)/profile"
         case .checkNickname:
             return "/v1/members/nickname/exist"
@@ -60,7 +60,7 @@ extension UserAPI: TargetType {
             return .requestJSONEncodable(form)
         case .updateProfile(let form):
             return .requestJSONEncodable(form)
-        case .getProfile:
+        case .getMemberProfile:
             return .requestPlain
         case .checkNickname(let nickname):
             let params: [String: String] = [
