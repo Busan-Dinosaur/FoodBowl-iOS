@@ -70,4 +70,4 @@
 --rules trailingClosures
 
 # file options
---exclude Pods, FoodBowl/Global/Supports/AppDelegate.swift, FoodBowl/Global/Supports/SceneDelegate.swift, FoodBowl/Global/Extensions/String+Extension.swift
+--exclude Pods, FoodBowl/Global/Supports, FoodBowl/Global/Extensions

@@ -104,7 +104,7 @@ final class SetStoreViewController: BaseViewController {
     func getCategory() {
         let categoryName = selectedStore!.categoryName
             .components(separatedBy: ">").map { $0.trimmingCharacters(in: .whitespaces) }
-        let categories = Category.allCases.map { $0.rawValue }
+        let categories = Categories.allCases.map { $0.rawValue }
         if categories.contains(categoryName[1]) == true {
             category = categoryName[1]
             let subCategory: String? = categoryName[2]

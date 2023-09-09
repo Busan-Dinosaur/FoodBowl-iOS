@@ -15,7 +15,7 @@ final class ProfileHeaderView: UICollectionReusableView {
         static let SearchBarWidth: CGFloat = BaseSize.fullWidth - BaseSize.horizantalPadding - 30
     }
 
-    private let categories = Category.allCases
+    private let categories = Categories.allCases
 
     // MARK: - property
     lazy var userImageView = UIImageView().then {

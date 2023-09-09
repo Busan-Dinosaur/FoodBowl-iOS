@@ -17,9 +17,9 @@ struct Feed: Identifiable {
     var comment: String?
 }
 
-// MARK: - Category
+// MARK: - Categories
 
-enum Category: String, CaseIterable {
+enum Categories: String, CaseIterable {
     case cafe = "카페"
     case pub = "술집"
     case korean = "한식"

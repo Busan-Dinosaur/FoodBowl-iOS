@@ -64,9 +64,7 @@ extension UserAPI: TargetType {
             return .requestJSONEncodable(form)
         case .updateProfile(let form):
             return .requestJSONEncodable(form)
-        case .getMyProfile:
-            return .requestPlain
-        case .getMemberProfile:
+        case .getMyProfile, .getMemberProfile:
             return .requestPlain
         case .checkNickname(let nickname):
             let params: [String: String] = [

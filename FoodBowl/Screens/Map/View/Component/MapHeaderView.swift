@@ -15,7 +15,7 @@ final class MapHeaderView: UIView {
         static let SearchBarWidth: CGFloat = BaseSize.fullWidth - 40
     }
 
-    private let categories = Category.allCases
+    private let categories = Categories.allCases
 
     // MARK: - property
     let searchBarButton = SearchBarButton()
