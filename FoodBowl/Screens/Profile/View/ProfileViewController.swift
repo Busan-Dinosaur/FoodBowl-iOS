@@ -15,6 +15,8 @@ import Then
 final class ProfileViewController: MapViewController {
     var isOwn: Bool
 
+    private var viewModel = ProfileViewModel()
+
     init(isOwn: Bool) {
         self.isOwn = isOwn
         super.init(nibName: nil, bundle: nil)
@@ -81,12 +83,8 @@ final class ProfileViewController: MapViewController {
             self?.followUser()
         }
         let editButtonAction = UIAction { [weak self] _ in
-            let editProfileViewController = EditProfileViewController()
-            let navigationController = UINavigationController(rootViewController: editProfileViewController)
-            navigationController.modalPresentationStyle = .fullScreen
-            DispatchQueue.main.async {
-                self?.present(navigationController, animated: true)
-            }
+            let editProfileViewController = ProfileEditViewController()
+            self?.navigationController?.pushViewController(editProfileViewController, animated: true)
         }
         $0.followerInfoButton.addAction(followerAction, for: .touchUpInside)
         $0.followingInfoButton.addAction(followingAction, for: .touchUpInside)
@@ -102,6 +100,26 @@ final class ProfileViewController: MapViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.isNavigationBarHidden = false
+        Task {
+            if isOwn {
+                let id = UserDefaultStorage.userID
+                await viewModel.getProfile(id: id)
+            } else {
+                await viewModel.getProfile(id: 1)
+            }
+            setupData()
+        }
+    }
+
+    private func setupData() {
+        profileHeaderView.userInfoLabel.text = viewModel.profileData?.introduction
+        profileHeaderView.followerInfoButton.numberLabel.text = "\(viewModel.profileData!.followerCount)"
+        profileHeaderView.followingInfoButton.numberLabel.text = "\(viewModel.profileData!.followingCount)"
+        if isOwn {
+            userNicknameLabel.text = viewModel.profileData?.nickname
+        } else {
+            title = viewModel.profileData?.nickname
+        }
     }
 
     override func setupLayout() {
@@ -146,7 +164,6 @@ final class ProfileViewController: MapViewController {
         } else {
             let optionButton = makeBarButtonItem(with: optionButton)
             navigationItem.rightBarButtonItem = optionButton
-            title = "coby5502"
             profileHeaderView.editButton.isHidden = true
         }
     }

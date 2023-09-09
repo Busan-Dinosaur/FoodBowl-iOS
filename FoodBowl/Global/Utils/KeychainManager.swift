@@ -49,6 +49,7 @@ struct KeychainManager {
     }
 
     enum Key: String, CaseIterable {
-        case token
+        case accessToken
+        case refreshToken
     }
 }

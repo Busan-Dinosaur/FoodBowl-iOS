@@ -16,7 +16,7 @@ struct UserDefaultHandler {
         UserData.setValue(isLogin, forKey: .isLogin)
     }
 
-    static func setUserID(userID: String) {
+    static func setUserID(userID: Int) {
         UserData.setValue(userID, forKey: .userID)
     }
 
@@ -30,5 +30,9 @@ struct UserDefaultHandler {
 
     static func setNickname(nickname: String) {
         UserData.setValue(nickname, forKey: .nickname)
+    }
+
+    static func setProfileImageUrl(profileImageUrl: String) {
+        UserData.setValue(profileImageUrl, forKey: .profileImageUrl)
     }
 }
