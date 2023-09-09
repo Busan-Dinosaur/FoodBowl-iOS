@@ -13,7 +13,7 @@ import Then
 final class FriendViewController: MapViewController {
     init() {
         super.init(nibName: nil, bundle: nil)
-        self.modalView = FriendFeedView()
+        self.modalView = FeedListView()
     }
 
     required init?(coder: NSCoder) {

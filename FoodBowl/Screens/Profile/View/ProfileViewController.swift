@@ -20,7 +20,7 @@ final class ProfileViewController: MapViewController {
     init(isOwn: Bool) {
         self.isOwn = isOwn
         super.init(nibName: nil, bundle: nil)
-        self.modalView = FriendFeedView()
+        self.modalView = FeedListView()
     }
 
     required init?(coder _: NSCoder) {
@@ -113,8 +113,8 @@ final class ProfileViewController: MapViewController {
 
     private func setupData() {
         profileHeaderView.userInfoLabel.text = viewModel.profileData?.introduction
-        profileHeaderView.followerInfoButton.numberLabel.text = "\(viewModel.profileData!.followerCount)"
-        profileHeaderView.followingInfoButton.numberLabel.text = "\(viewModel.profileData!.followingCount)"
+        profileHeaderView.followerInfoButton.numberLabel.text = "\(viewModel.profileData?.followerCount)"
+        profileHeaderView.followingInfoButton.numberLabel.text = "\(viewModel.profileData?.followingCount)"
         if isOwn {
             userNicknameLabel.text = viewModel.profileData?.nickname
         } else {

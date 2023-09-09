@@ -1,5 +1,5 @@
 //
-//  FriendFeedView.swift
+//  FeedListView.swift
 //  FoodBowl
 //
 //  Created by COBY_PRO on 2023/07/22.
@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 import Then
 
-final class FriendFeedView: ModalView {
+final class FeedListView: ModalView {
     private enum Size {
         static let collectionInset = UIEdgeInsets(
             top: 0,
@@ -43,7 +43,7 @@ final class FriendFeedView: ModalView {
     }
 }
 
-extension FriendFeedView {
+extension FeedListView {
     // Standard scroll-view delegate
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let contentSize = scrollView.contentSize.height
@@ -57,7 +57,7 @@ extension FriendFeedView {
 }
 
 // MARK: - UICollectionViewDataSource, UICollectionViewDelegate
-extension FriendFeedView: UICollectionViewDataSource, UICollectionViewDelegate {
+extension FeedListView: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_: UICollectionView, numberOfItemsInSection _: Int) -> Int {
         return 10
     }

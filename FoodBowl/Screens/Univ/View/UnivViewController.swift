@@ -13,7 +13,7 @@ import Then
 final class UnivViewController: MapViewController {
     init() {
         super.init(nibName: nil, bundle: nil)
-        self.modalView = FriendFeedView()
+        self.modalView = FeedListView()
     }
 
     required init?(coder: NSCoder) {
@@ -22,7 +22,7 @@ final class UnivViewController: MapViewController {
 
     override func configureUI() {
         super.configureUI()
-        grabbarView.modalTitleLabel.text = "부산대학교 맛집"
-        grabbarView.modalResultLabel.text = "4개의 맛집, 10개의 후기"
+        grabbarView.modalTitleLabel.text = "부산대학교"
+        grabbarView.modalResultLabel.text = "4개의 맛집"
     }
 }
