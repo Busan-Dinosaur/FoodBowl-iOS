@@ -22,7 +22,7 @@ final class BookmarkViewController: MapViewController {
 
     override func configureUI() {
         super.configureUI()
-        grabbarView.modalTitleLabel.text = "북마크 목록"
+        grabbarView.modalTitleLabel.text = "북마크"
         grabbarView.modalResultLabel.text = "4개의 맛집"
     }
 }

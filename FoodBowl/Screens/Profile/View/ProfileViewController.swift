@@ -100,6 +100,7 @@ final class ProfileViewController: MapViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.isNavigationBarHidden = false
+
         Task {
             if isOwn {
                 let id = UserDefaultStorage.userID
@@ -112,9 +113,15 @@ final class ProfileViewController: MapViewController {
     }
 
     private func setupData() {
+        guard let follower = viewModel.profileData?.followerCount,
+              let following = viewModel.profileData?.followingCount else {
+            return
+        }
+
         profileHeaderView.userInfoLabel.text = viewModel.profileData?.introduction
-        profileHeaderView.followerInfoButton.numberLabel.text = "\(viewModel.profileData?.followerCount)"
-        profileHeaderView.followingInfoButton.numberLabel.text = "\(viewModel.profileData?.followingCount)"
+        profileHeaderView.followerInfoButton.numberLabel.text = "\(follower)"
+        profileHeaderView.followingInfoButton.numberLabel.text = "\(following)"
+
         if isOwn {
             userNicknameLabel.text = viewModel.profileData?.nickname
         } else {
