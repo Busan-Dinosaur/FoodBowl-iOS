@@ -13,6 +13,7 @@ enum DataKeys: String, CaseIterable {
     case accessToken
     case refreshToken
     case nickname
+    case profileImageUrl
 }
 
 enum UserDefaultStorage {
@@ -20,8 +21,8 @@ enum UserDefaultStorage {
         return UserData<Bool>.getValue(forKey: .isLogin) ?? false
     }
 
-    static var userID: String {
-        return UserData<String>.getValue(forKey: .userID) ?? ""
+    static var userID: Int {
+        return UserData<Int>.getValue(forKey: .userID) ?? 0
     }
 
     static var accessToken: String {
@@ -32,8 +33,12 @@ enum UserDefaultStorage {
         return UserData<String>.getValue(forKey: .refreshToken) ?? ""
     }
 
-    static var nickname: String? {
-        return UserData<String?>.getValue(forKey: .nickname) ?? nil
+    static var nickname: String {
+        return UserData<String>.getValue(forKey: .nickname) ?? ""
+    }
+
+    static var profileImageUrl: String {
+        return UserData<String>.getValue(forKey: .profileImageUrl) ?? ""
     }
 }
 

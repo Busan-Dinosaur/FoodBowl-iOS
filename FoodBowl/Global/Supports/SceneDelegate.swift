@@ -15,11 +15,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(windowScene: windowScene)
         
         let isLogin = UserDefaultStorage.isLogin
-        if !isLogin {
-            window?.rootViewController = UINavigationController(rootViewController: OnboardingViewController())
-        } else {
-            window?.rootViewController = UINavigationController(rootViewController: TabBarController())
-        }
+        window?.rootViewController = UINavigationController(
+            rootViewController: isLogin ? TabBarController() : OnboardingViewController()
+        )
         window?.makeKeyAndVisible()
     }
 

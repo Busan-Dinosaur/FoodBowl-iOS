@@ -13,6 +13,7 @@ enum UserAPI {
     case signIn(form: SignRequest)
     case renew(form: RenewRequest)
     case updateProfile(form: UpdateProfileRequest)
+    case getMyProfile
     case getMemberProfile(id: Int)
     case checkNickname(nickname: String)
 }
@@ -32,6 +33,8 @@ extension UserAPI: TargetType {
             return "/v1/auth/token/renew"
         case .updateProfile:
             return "/v1/members/profile"
+        case .getMyProfile:
+            return "/v1/members/me/profile"
         case .getMemberProfile(let id):
             return "/v1/members/\(id)/profile"
         case .checkNickname:
@@ -60,6 +63,8 @@ extension UserAPI: TargetType {
             return .requestJSONEncodable(form)
         case .updateProfile(let form):
             return .requestJSONEncodable(form)
+        case .getMyProfile:
+            return .requestPlain
         case .getMemberProfile:
             return .requestPlain
         case .checkNickname(let nickname):
@@ -84,7 +89,7 @@ extension UserAPI: TargetType {
 
             return [
                 "Content-Type": "application/json",
-                "Authorization": accessToken
+                "Authorization": "Bearer " + accessToken
             ]
         }
     }

@@ -107,6 +107,7 @@ extension OnboardingViewController: ASAuthorizationControllerDelegate {
 
                     Task {
                         await self.viewModel.signIn(appleToken: tokenToString)
+                        await self.viewModel.getMyProfile()
                     }
 
                     DispatchQueue.main.async {
