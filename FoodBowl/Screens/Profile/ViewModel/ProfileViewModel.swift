@@ -10,16 +10,16 @@ import UIKit
 import Moya
 
 final class ProfileViewModel {
-    var myProfile: MemberProfileResponse?
+    var profileData: MemberProfileResponse?
 
     private let provider = MoyaProvider<UserAPI>()
 
-    func getMyProfile() async {
-        let response = await provider.request(.getMyProfile)
+    func getProfile(id: Int) async {
+        let response = await provider.request(.getMemberProfile(id: id))
         switch response {
         case .success(let result):
             guard let data = try? result.map(MemberProfileResponse.self) else { return }
-            myProfile = data
+            profileData = data
         case .failure(let err):
             print(err.localizedDescription)
         }

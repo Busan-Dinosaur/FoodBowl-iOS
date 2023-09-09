@@ -17,13 +17,6 @@ final class ProfileEditViewController: BaseViewController {
     private var viewModel = ProfileViewModel()
 
     // MARK: - property
-    private lazy var closeButton = CloseButton().then {
-        let action = UIAction { [weak self] _ in
-            self?.dismiss(animated: true, completion: nil)
-        }
-        $0.addAction(action, for: .touchUpInside)
-    }
-
     private lazy var profileImageView = UIImageView().then {
         $0.image = ImageLiteral.defaultProfile
         $0.layer.cornerRadius = 50
@@ -74,31 +67,32 @@ final class ProfileEditViewController: BaseViewController {
         $0.makeBorderLayer(color: .grey002)
     }
 
-    private lazy var signUpButton = MainButton().then {
-        $0.label.text = "완료"
-
-        let action = UIAction { [weak self] _ in
+    private lazy var completeButton = UIButton().then {
+        $0.setTitle("완료", for: .normal)
+        $0.setTitleColor(.mainPink, for: .normal)
+        $0.titleLabel?.font = UIFont.preferredFont(forTextStyle: .headline, weight: .regular)
+        let buttonAction = UIAction { [weak self] _ in
             self?.tappedCompleteButton()
         }
-        $0.addAction(action, for: .touchUpInside)
+        $0.addAction(buttonAction, for: .touchUpInside)
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         Task {
-            await viewModel.getMyProfile()
+            let id = UserDefaultStorage.userID
+            await viewModel.getProfile(id: id)
             setupData()
         }
     }
 
     private func setupData() {
-        let data = viewModel
-        nicknameField.text = viewModel.myProfile?.nickname
-        userInfoField.text = viewModel.myProfile?.introduction
+        nicknameField.text = viewModel.profileData?.nickname
+        userInfoField.text = viewModel.profileData?.introduction
     }
 
     override func setupLayout() {
-        view.addSubviews(profileImageView, nicknameLabel, nicknameField, userInfoLabel, userInfoField, signUpButton)
+        view.addSubviews(profileImageView, nicknameLabel, nicknameField, userInfoLabel, userInfoField)
 
         profileImageView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).inset(20)
@@ -127,19 +121,12 @@ final class ProfileEditViewController: BaseViewController {
             $0.leading.trailing.equalToSuperview().inset(BaseSize.horizantalPadding)
             $0.height.equalTo(50)
         }
-
-        signUpButton.snp.makeConstraints {
-            $0.leading.trailing.equalToSuperview().inset(BaseSize.horizantalPadding)
-            $0.bottom.equalTo(view.safeAreaLayoutGuide)
-            $0.height.equalTo(60)
-        }
     }
 
     override func setupNavigationBar() {
         super.setupNavigationBar()
-        let leftOffsetCloseButton = removeBarButtonItemOffset(with: closeButton, offsetX: 10)
-        let closeButton = makeBarButtonItem(with: leftOffsetCloseButton)
-        navigationItem.leftBarButtonItem = closeButton
+        let completeButton = makeBarButtonItem(with: completeButton)
+        navigationItem.rightBarButtonItem = completeButton
         title = "프로필 수정"
     }
 
@@ -188,9 +175,8 @@ final class ProfileEditViewController: BaseViewController {
                 let updatedProfile = UpdateProfileRequest(nickname: nickname, introduction: introduction)
                 Task {
                     await viewModel.updateProfile(profile: updatedProfile)
-                    print("굳")
-                    navigationController?.popViewController(animated: true)
                 }
+                navigationController?.popViewController(animated: true)
             } else {
                 let alert = UIAlertController(title: nil, message: "닉네임과 한줄 소개를 입력해주세요", preferredStyle: .alert)
                 let cancel = UIAlertAction(title: "닫기", style: .cancel, handler: nil)

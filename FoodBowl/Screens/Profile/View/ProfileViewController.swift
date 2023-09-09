@@ -84,11 +84,7 @@ final class ProfileViewController: MapViewController {
         }
         let editButtonAction = UIAction { [weak self] _ in
             let editProfileViewController = ProfileEditViewController()
-            let navigationController = UINavigationController(rootViewController: editProfileViewController)
-            navigationController.modalPresentationStyle = .fullScreen
-            DispatchQueue.main.async {
-                self?.present(navigationController, animated: true)
-            }
+            self?.navigationController?.pushViewController(editProfileViewController, animated: true)
         }
         $0.followerInfoButton.addAction(followerAction, for: .touchUpInside)
         $0.followingInfoButton.addAction(followingAction, for: .touchUpInside)
@@ -105,19 +101,24 @@ final class ProfileViewController: MapViewController {
         super.viewWillAppear(animated)
         navigationController?.isNavigationBarHidden = false
         Task {
-            await viewModel.getMyProfile()
+            if isOwn {
+                let id = UserDefaultStorage.userID
+                await viewModel.getProfile(id: id)
+            } else {
+                await viewModel.getProfile(id: 1)
+            }
             setupData()
         }
     }
 
     private func setupData() {
-        profileHeaderView.userInfoLabel.text = viewModel.myProfile?.introduction
-        profileHeaderView.followerInfoButton.numberLabel.text = "\(viewModel.myProfile!.followerCount)"
-        profileHeaderView.followingInfoButton.numberLabel.text = "\(viewModel.myProfile!.followingCount)"
+        profileHeaderView.userInfoLabel.text = viewModel.profileData?.introduction
+        profileHeaderView.followerInfoButton.numberLabel.text = "\(viewModel.profileData!.followerCount)"
+        profileHeaderView.followingInfoButton.numberLabel.text = "\(viewModel.profileData!.followingCount)"
         if isOwn {
-            userNicknameLabel.text = viewModel.myProfile?.nickname
+            userNicknameLabel.text = viewModel.profileData?.nickname
         } else {
-            title = viewModel.myProfile?.nickname
+            title = viewModel.profileData?.nickname
         }
     }
 
