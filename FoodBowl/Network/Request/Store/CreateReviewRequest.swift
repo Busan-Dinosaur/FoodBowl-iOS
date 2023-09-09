@@ -8,5 +8,16 @@
 import Foundation
 
 struct CreateReviewRequest: Encodable {
-    let appleToken: String
+    let locationId: String
+    let storeName: String
+    let storeAddress: String
+    let x: Double
+    let y: Double
+    let storeUrl: String
+    let phone: String
+    let category: String
+    let reviewContent: String
+    let schoolName: String
+    let schoolX: Double
+    let schoolY: Double
 }

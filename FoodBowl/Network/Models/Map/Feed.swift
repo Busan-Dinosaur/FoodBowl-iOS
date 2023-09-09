@@ -12,6 +12,7 @@ import UIKit
 struct Feed: Identifiable {
     var id = UUID()
     var store: Place?
+    var univ: Place?
     var category: String?
     var photoes: [UIImage]?
     var comment: String?

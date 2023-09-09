@@ -13,6 +13,8 @@ import Then
 final class NewFeedViewController: BaseViewController {
     var newFeed = Feed(store: nil, category: nil, photoes: nil, comment: nil)
 
+    private var viewModel = NewFeedViewModel()
+
     private lazy var pageViewController = UIPageViewController(
         transitionStyle: .scroll,
         navigationOrientation: .horizontal,
@@ -138,13 +140,8 @@ final class NewFeedViewController: BaseViewController {
         let currentPage = pageControl.currentPage
         let nextPage = currentPage + 1
 
-        switch currentPage {
-        case 0:
-            if newFeed.store == nil {
-                showAlert(message: "가게를 선택해주세요")
-                return
-            }
-        default: ()
+        if currentPage == 0 && newFeed.store == nil {
+            showAlert(message: "가게를 선택해주세요")
         }
 
         let nextVC = dataViewControllers[nextPage]
@@ -157,7 +154,7 @@ final class NewFeedViewController: BaseViewController {
 
     private func completeAddFeed() {
         print(newFeed)
-        dismiss(animated: true, completion: nil)
+//        dismiss(animated: true, completion: nil)
     }
 
     private func showAlert(message: String) {
@@ -173,6 +170,7 @@ final class NewFeedViewController: BaseViewController {
 extension NewFeedViewController: SetStoreViewControllerDelegate, SetReviewViewControllerDelegate {
     func setStore(store: Place?, univ: Place?, category: String?) {
         newFeed.store = store
+        newFeed.univ = univ
         newFeed.category = category
     }
 

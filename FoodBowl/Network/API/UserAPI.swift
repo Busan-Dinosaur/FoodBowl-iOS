@@ -58,9 +58,10 @@ extension UserAPI: TargetType {
         case .signIn(let form):
             return .requestJSONEncodable(form)
         case .renew:
-            let accessToken: String = KeychainManager.get(.accessToken)
-            let refreshToken: String = KeychainManager.get(.refreshToken)
-            let form = RenewRequest(accessToken: accessToken, refreshToken: refreshToken)
+            let form = RenewRequest(
+                accessToken: KeychainManager.get(.accessToken),
+                refreshToken: KeychainManager.get(.refreshToken)
+            )
             return .requestJSONEncodable(form)
         case .updateProfile(let form):
             return .requestJSONEncodable(form)

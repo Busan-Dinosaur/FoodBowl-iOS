@@ -16,6 +16,7 @@
 		CB1579092AACCFCB00007183 /* CreateReviewRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1579082AACCFCB00007183 /* CreateReviewRequest.swift */; };
 		CB15790B2AACD44700007183 /* SchoolResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB15790A2AACD44700007183 /* SchoolResponse.swift */; };
 		CB15790D2AACD45400007183 /* CategoriesResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB15790C2AACD45400007183 /* CategoriesResponse.swift */; };
+		CB1579102AACD98600007183 /* NewFeedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB15790F2AACD98600007183 /* NewFeedViewModel.swift */; };
 		CB1790C8296DAB470083D3A4 /* DynamicHeightCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1790C7296DAB470083D3A4 /* DynamicHeightCollectionViewFlowLayout.swift */; };
 		CB1A7C5C29560C2300C6431D /* UserInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1A7C5B29560C2300C6431D /* UserInfoView.swift */; };
 		CB1A7C5E295618A900C6431D /* SettingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1A7C5D295618A900C6431D /* SettingButton.swift */; };
@@ -139,6 +140,7 @@
 		CB1579082AACCFCB00007183 /* CreateReviewRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateReviewRequest.swift; sourceTree = "<group>"; };
 		CB15790A2AACD44700007183 /* SchoolResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchoolResponse.swift; sourceTree = "<group>"; };
 		CB15790C2AACD45400007183 /* CategoriesResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesResponse.swift; sourceTree = "<group>"; };
+		CB15790F2AACD98600007183 /* NewFeedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewFeedViewModel.swift; sourceTree = "<group>"; };
 		CB1790C7296DAB470083D3A4 /* DynamicHeightCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicHeightCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
 		CB1A7C5B29560C2300C6431D /* UserInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoView.swift; sourceTree = "<group>"; };
 		CB1A7C5D295618A900C6431D /* SettingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingButton.swift; sourceTree = "<group>"; };
@@ -309,6 +311,14 @@
 				CB1579082AACCFCB00007183 /* CreateReviewRequest.swift */,
 			);
 			path = Store;
+			sourceTree = "<group>";
+		};
+		CB15790E2AACD97300007183 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				CB15790F2AACD98600007183 /* NewFeedViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		CB1A7C5F29561B8400C6431D /* Component */ = {
@@ -583,6 +593,7 @@
 		CBADC2B02955A13800E56C93 /* NewFeed */ = {
 			isa = PBXGroup;
 			children = (
+				CB15790E2AACD97300007183 /* ViewModel */,
 				CBDDF13A2A6AD75700AE3C50 /* View */,
 			);
 			path = NewFeed;
@@ -1045,6 +1056,7 @@
 				CBDE390529719B9700DDE49A /* PlaceResponse.swift in Sources */,
 				CBADC29629559BC900E56C93 /* UITableView+Extension.swift in Sources */,
 				CBB582822973007D00808B0B /* ShowWebViewController.swift in Sources */,
+				CB1579102AACD98600007183 /* NewFeedViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
