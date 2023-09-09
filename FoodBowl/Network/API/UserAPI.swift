@@ -11,7 +11,7 @@ import Moya
 
 enum UserAPI {
     case signIn(form: SignRequest)
-    case renew(form: RenewRequest)
+    case renew
     case updateProfile(form: UpdateProfileRequest)
     case getMyProfile
     case getMemberProfile(id: Int)
@@ -44,9 +44,7 @@ extension UserAPI: TargetType {
 
     var method: Moya.Method {
         switch self {
-        case .signIn:
-            return .post
-        case .renew:
+        case .signIn, .renew:
             return .post
         case .updateProfile:
             return .patch
@@ -59,7 +57,10 @@ extension UserAPI: TargetType {
         switch self {
         case .signIn(let form):
             return .requestJSONEncodable(form)
-        case .renew(let form):
+        case .renew:
+            let accessToken: String = KeychainManager.get(.accessToken)
+            let refreshToken: String = KeychainManager.get(.refreshToken)
+            let form = RenewRequest(accessToken: accessToken, refreshToken: refreshToken)
             return .requestJSONEncodable(form)
         case .updateProfile(let form):
             return .requestJSONEncodable(form)

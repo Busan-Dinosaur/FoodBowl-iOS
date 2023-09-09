@@ -15,6 +15,8 @@ import Then
 final class ProfileViewController: MapViewController {
     var isOwn: Bool
 
+    private var viewModel = ProfileViewModel()
+
     init(isOwn: Bool) {
         self.isOwn = isOwn
         super.init(nibName: nil, bundle: nil)
@@ -81,7 +83,7 @@ final class ProfileViewController: MapViewController {
             self?.followUser()
         }
         let editButtonAction = UIAction { [weak self] _ in
-            let editProfileViewController = EditProfileViewController()
+            let editProfileViewController = ProfileEditViewController()
             let navigationController = UINavigationController(rootViewController: editProfileViewController)
             navigationController.modalPresentationStyle = .fullScreen
             DispatchQueue.main.async {
@@ -102,6 +104,21 @@ final class ProfileViewController: MapViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.isNavigationBarHidden = false
+        Task {
+            await viewModel.getMyProfile()
+            setupData()
+        }
+    }
+
+    private func setupData() {
+        profileHeaderView.userInfoLabel.text = viewModel.myProfile?.introduction
+        profileHeaderView.followerInfoButton.numberLabel.text = "\(viewModel.myProfile!.followerCount)"
+        profileHeaderView.followingInfoButton.numberLabel.text = "\(viewModel.myProfile!.followingCount)"
+        if isOwn {
+            userNicknameLabel.text = viewModel.myProfile?.nickname
+        } else {
+            title = viewModel.myProfile?.nickname
+        }
     }
 
     override func setupLayout() {
@@ -146,7 +163,6 @@ final class ProfileViewController: MapViewController {
         } else {
             let optionButton = makeBarButtonItem(with: optionButton)
             navigationItem.rightBarButtonItem = optionButton
-            title = "coby5502"
             profileHeaderView.editButton.isHidden = true
         }
     }

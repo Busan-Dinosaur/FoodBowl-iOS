@@ -1,5 +1,5 @@
 //
-//  EditProfileViewController.swift
+//  ProfileEditViewController.swift
 //  FoodBowl
 //
 //  Created by COBY_PRO on 2023/01/26.
@@ -11,8 +11,10 @@ import SnapKit
 import Then
 import YPImagePicker
 
-final class EditProfileViewController: BaseViewController {
+final class ProfileEditViewController: BaseViewController {
     private var profileImage: UIImage = ImageLiteral.defaultProfile
+
+    private var viewModel = ProfileViewModel()
 
     // MARK: - property
     private lazy var closeButton = CloseButton().then {
@@ -79,6 +81,20 @@ final class EditProfileViewController: BaseViewController {
             self?.tappedCompleteButton()
         }
         $0.addAction(action, for: .touchUpInside)
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        Task {
+            await viewModel.getMyProfile()
+            setupData()
+        }
+    }
+
+    private func setupData() {
+        let data = viewModel
+        nicknameField.text = viewModel.myProfile?.nickname
+        userInfoField.text = viewModel.myProfile?.introduction
     }
 
     override func setupLayout() {
@@ -167,15 +183,22 @@ final class EditProfileViewController: BaseViewController {
     }
 
     private func tappedCompleteButton() {
-        if nicknameField.text?.count != 0 && userInfoField.text?.count != 0 {
-            navigationController?.popViewController(animated: true)
-        } else {
-            let alert = UIAlertController(title: nil, message: "닉네임과 한줄 소개를 입력해주세요", preferredStyle: .alert)
-            let cancel = UIAlertAction(title: "닫기", style: .cancel, handler: nil)
+        if let nickname = nicknameField.text, let introduction = userInfoField.text {
+            if nickname.count != 0 && introduction.count != 0 {
+                let updatedProfile = UpdateProfileRequest(nickname: nickname, introduction: introduction)
+                Task {
+                    await viewModel.updateProfile(profile: updatedProfile)
+                    print("굳")
+                    navigationController?.popViewController(animated: true)
+                }
+            } else {
+                let alert = UIAlertController(title: nil, message: "닉네임과 한줄 소개를 입력해주세요", preferredStyle: .alert)
+                let cancel = UIAlertAction(title: "닫기", style: .cancel, handler: nil)
 
-            alert.addAction(cancel)
+                alert.addAction(cancel)
 
-            present(alert, animated: true, completion: nil)
+                present(alert, animated: true, completion: nil)
+            }
         }
     }
 }
