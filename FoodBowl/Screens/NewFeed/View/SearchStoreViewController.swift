@@ -12,6 +12,17 @@ import SnapKit
 import Then
 
 final class SearchStoreViewController: BaseViewController {
+    private var viewModel: NewFeedViewModel
+
+    init(viewModel: NewFeedViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     var delegate: SearchStoreViewControllerDelegate?
 
     private var stores = [Place]()
@@ -59,40 +70,8 @@ final class SearchStoreViewController: BaseViewController {
     }
 
     private func searchStores(keyword: String) {
-        guard let currentLoc = LocationManager.shared.manager.location else { return }
-
-        let url = "https://dapi.kakao.com/v2/local/search/keyword"
-
-        let headers: HTTPHeaders = [
-            "Content-Type": "application/x-www-form-urlencoded;charset=utf-8",
-            "Authorization": "KakaoAK 855a5bf7cbbe725de0f5b6474fe8d6db"
-        ]
-
-        let parameters: [String: Any] = [
-            "query": keyword,
-            "x": String(currentLoc.coordinate.longitude),
-            "y": String(currentLoc.coordinate.latitude),
-            "page": 1,
-            "size": 15,
-            "category_group_code": "FD6,CE7"
-        ]
-
-        AF.request(
-            url,
-            method: .get,
-            parameters: parameters,
-            encoding: URLEncoding.default,
-            headers: headers
-        )
-        .responseDecodable(of: PlaceResponse.self) { response in
-            switch response.result {
-            case .success(let data):
-                self.stores = data.documents
-                self.storeInfoTableView.reloadData()
-            case .failure(let error):
-                print("Request failed with error: \(error)")
-            }
-        }
+        stores = viewModel.searchStores(keyword: keyword)
+        storeInfoTableView.reloadData()
     }
 }
 
@@ -119,10 +98,7 @@ extension SearchStoreViewController: UITableViewDataSource, UITableViewDelegate 
     }
 
     func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
-        delegate?.setStore(
-            store: stores[indexPath.item],
-            category: "cafe"
-        )
+        delegate?.setStore(store: stores[indexPath.item])
         dismiss(animated: true, completion: nil)
     }
 }
@@ -140,5 +116,5 @@ extension SearchStoreViewController: UISearchBarDelegate {
 }
 
 protocol SearchStoreViewControllerDelegate: AnyObject {
-    func setStore(store: Place, category: String)
+    func setStore(store: Place)
 }

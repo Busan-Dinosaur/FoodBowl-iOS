@@ -11,8 +11,6 @@ import SnapKit
 import Then
 
 final class NewFeedViewController: BaseViewController {
-    var newFeed = Feed(store: nil, category: nil, photoes: nil, comment: nil)
-
     private var viewModel = NewFeedViewModel()
 
     private lazy var pageViewController = UIPageViewController(
@@ -21,10 +19,10 @@ final class NewFeedViewController: BaseViewController {
         options: nil
     )
 
-    private let vc1 = SetStoreViewController()
-    private let vc2 = SetReviewViewController()
+    private lazy var vc1 = SetStoreViewController(viewModel: viewModel)
+    private lazy var vc2 = SetReviewViewController(viewModel: viewModel)
 
-    lazy var dataViewControllers: [UIViewController] = {
+    private lazy var dataViewControllers: [UIViewController] = {
         [vc1, vc2]
     }()
 
@@ -86,9 +84,6 @@ final class NewFeedViewController: BaseViewController {
         if let firstVC = dataViewControllers.first {
             pageViewController.setViewControllers([firstVC], direction: .forward, animated: true, completion: nil)
         }
-
-        vc1.delegate = self
-        vc2.delegate = self
     }
 
     override func setupNavigationBar() {
@@ -140,7 +135,7 @@ final class NewFeedViewController: BaseViewController {
         let currentPage = pageControl.currentPage
         let nextPage = currentPage + 1
 
-        if currentPage == 0 && newFeed.store == nil {
+        if currentPage == 0 && viewModel.newFeed.locationId == "" {
             showAlert(message: "가게를 선택해주세요")
         }
 
@@ -153,7 +148,7 @@ final class NewFeedViewController: BaseViewController {
     }
 
     private func completeAddFeed() {
-        print(newFeed)
+        print(viewModel.newFeed)
 //        dismiss(animated: true, completion: nil)
     }
 
@@ -164,18 +159,5 @@ final class NewFeedViewController: BaseViewController {
         alert.addAction(cancel)
 
         present(alert, animated: true, completion: nil)
-    }
-}
-
-extension NewFeedViewController: SetStoreViewControllerDelegate, SetReviewViewControllerDelegate {
-    func setStore(store: Place?, univ: Place?, category: String?) {
-        newFeed.store = store
-        newFeed.univ = univ
-        newFeed.category = category
-    }
-
-    func setReview(photoes: [UIImage]?, comment: String?) {
-        newFeed.photoes = photoes
-        newFeed.comment = comment
     }
 }

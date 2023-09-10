@@ -12,10 +12,16 @@ import SnapKit
 import Then
 
 final class SetStoreViewController: BaseViewController {
-    var delegate: SetStoreViewControllerDelegate?
-    var selectedStore: Place?
-    var category: String?
-    var univ: Place?
+    private var viewModel: NewFeedViewModel
+
+    init(viewModel: NewFeedViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     // MARK: - property
     private let guideLabel = UILabel().then {
@@ -24,10 +30,11 @@ final class SetStoreViewController: BaseViewController {
         $0.textColor = .mainText
     }
 
-    lazy var searchBarButton = SearchBarButton().then {
+    private lazy var searchBarButton = SearchBarButton().then {
         $0.placeholderLabel.text = "가게 검색"
         let action = UIAction { [weak self] _ in
-            let searchStoreViewController = SearchStoreViewController()
+            guard let viewModel = self?.viewModel else { return }
+            let searchStoreViewController = SearchStoreViewController(viewModel: viewModel)
             let navigationController = UINavigationController(rootViewController: searchStoreViewController)
             navigationController.modalPresentationStyle = .fullScreen
             searchStoreViewController.delegate = self
@@ -38,7 +45,7 @@ final class SetStoreViewController: BaseViewController {
         $0.addAction(action, for: .touchUpInside)
     }
 
-    lazy var selectedStoreView = SelectedStoreView().then {
+    private lazy var selectedStoreView = SelectedStoreView().then {
         $0.isHidden = true
     }
 
@@ -63,72 +70,19 @@ final class SetStoreViewController: BaseViewController {
             $0.height.equalTo(60)
         }
     }
-
-    private func searchUniv() {
-        let url = "https://dapi.kakao.com/v2/local/search/keyword"
-
-        let headers: HTTPHeaders = [
-            "Content-Type": "application/x-www-form-urlencoded;charset=utf-8",
-            "Authorization": "KakaoAK 855a5bf7cbbe725de0f5b6474fe8d6db"
-        ]
-
-        let parameters: [String: Any] = [
-            "query": "대학교",
-            "x": selectedStore!.longitude,
-            "y": selectedStore!.latitude,
-            "page": 1,
-            "size": 1,
-            "radius": 3000,
-            "category_group_code": "SC4"
-        ]
-
-        AF.request(
-            url,
-            method: .get,
-            parameters: parameters,
-            encoding: URLEncoding.default,
-            headers: headers
-        )
-        .responseDecodable(of: PlaceResponse.self) { response in
-            switch response.result {
-            case .success(let data):
-                if data.documents.count > 0 {
-                    self.univ = data.documents[0]
-                }
-            case .failure(let error):
-                print("Request failed with error: \(error)")
-            }
-        }
-    }
-
-    func getCategory() {
-        let categoryName = selectedStore!.categoryName
-            .components(separatedBy: ">").map { $0.trimmingCharacters(in: .whitespaces) }
-        let categories = Categories.allCases.map { $0.rawValue }
-        if categories.contains(categoryName[1]) == true {
-            category = categoryName[1]
-            let subCategory: String? = categoryName[2]
-            if subCategory == "해물,생선" {
-                category = "해산물"
-            }
-        } else {
-            category = "기타"
-        }
-    }
 }
 
 extension SetStoreViewController: SearchStoreViewControllerDelegate {
-    func setStore(store: Place, category: String) {
-        selectedStore = store
+    func setStore(store: Place) {
         searchBarButton.placeholderLabel.text = "가게 재검색"
-        selectedStoreView.storeNameLabel.text = selectedStore?.placeName
-        selectedStoreView.storeAdressLabel.text = selectedStore?.addressName
+        selectedStoreView.storeNameLabel.text = store.placeName
+        selectedStoreView.storeAdressLabel.text = store.addressName
         selectedStoreView.isHidden = false
 
         let action = UIAction { [weak self] _ in
             let showWebViewController = ShowWebViewController()
             showWebViewController.title = "가게 정보"
-            showWebViewController.url = self?.selectedStore?.placeURL ?? ""
+            showWebViewController.url = store.placeURL
             let navigationController = UINavigationController(rootViewController: showWebViewController)
             navigationController.modalPresentationStyle = .fullScreen
             DispatchQueue.main.async {
@@ -136,13 +90,20 @@ extension SetStoreViewController: SearchStoreViewControllerDelegate {
             }
         }
         selectedStoreView.mapButton.addAction(action, for: .touchUpInside)
-        searchUniv()
-        getCategory()
 
-        delegate?.setStore(store: selectedStore, univ: univ, category: category)
+        viewModel.newFeed.locationId = store.id
+        viewModel.newFeed.storeName = store.placeName
+        viewModel.newFeed.storeAddress = store.addressName
+        viewModel.newFeed.x = Double(store.longitude) ?? 0.0
+        viewModel.newFeed.y = Double(store.latitude) ?? 0.0
+        viewModel.newFeed.storeUrl = store.placeURL
+        viewModel.newFeed.phone = store.phone
+        viewModel.newFeed.category = viewModel.getCategory(categoryName: store.categoryName)
+
+        if let univ = viewModel.searchUniv(store: store) {
+            viewModel.newFeed.schoolName = univ.addressName
+            viewModel.newFeed.schoolX = Double(univ.longitude) ?? 0.0
+            viewModel.newFeed.schoolY = Double(univ.latitude) ?? 0.0
+        }
     }
-}
-
-protocol SetStoreViewControllerDelegate: AnyObject {
-    func setStore(store: Place?, univ: Place?, category: String?)
 }

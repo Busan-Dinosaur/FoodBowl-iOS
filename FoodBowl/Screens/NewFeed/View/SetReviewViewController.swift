@@ -12,8 +12,6 @@ import Then
 import YPImagePicker
 
 final class SetReviewViewController: BaseViewController {
-    var delegate: SetReviewViewControllerDelegate?
-
     private enum Size {
         static let cellWidth: CGFloat = 100
         static let cellHeight: CGFloat = cellWidth
@@ -25,9 +23,19 @@ final class SetReviewViewController: BaseViewController {
         )
     }
 
-    var selectedImages = [UIImage]()
-
+    private var selectedImages = [UIImage]()
     private let textViewPlaceHolder = "100자 이내"
+
+    private var viewModel: NewFeedViewModel
+
+    init(viewModel: NewFeedViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     // MARK: - property
 
@@ -155,9 +163,11 @@ extension SetReviewViewController: UITextViewDelegate {
         if textView.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
             textView.text = textViewPlaceHolder
             textView.textColor = .grey001
-        } else {
-            delegate?.setReview(photoes: selectedImages, comment: textView.text)
         }
+    }
+
+    func textViewDidChange(_ textView: UITextView) {
+        viewModel.newFeed.reviewContent = textView.text
     }
 }
 
@@ -195,8 +205,4 @@ extension SetReviewViewController: UICollectionViewDataSource, UICollectionViewD
             photoAddButtonDidTap()
         }
     }
-}
-
-protocol SetReviewViewControllerDelegate: AnyObject {
-    func setReview(photoes: [UIImage]?, comment: String?)
 }
