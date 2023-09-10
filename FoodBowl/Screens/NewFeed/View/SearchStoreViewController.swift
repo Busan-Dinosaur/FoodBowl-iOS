@@ -7,7 +7,6 @@
 
 import UIKit
 
-import Alamofire
 import SnapKit
 import Then
 
@@ -70,8 +69,10 @@ final class SearchStoreViewController: BaseViewController {
     }
 
     private func searchStores(keyword: String) {
-        stores = viewModel.searchStores(keyword: keyword)
-        storeInfoTableView.reloadData()
+        Task {
+            stores = await viewModel.searchStores(keyword: keyword)
+            storeInfoTableView.reloadData()
+        }
     }
 }
 

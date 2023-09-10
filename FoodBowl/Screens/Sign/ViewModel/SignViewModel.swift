@@ -20,21 +20,16 @@ final class SignInViewModel {
             KeychainManager.set(data.accessToken, for: .accessToken)
             KeychainManager.set(data.refreshToken, for: .refreshToken)
             UserDefaultHandler.setIsLogin(isLogin: true)
-            print("로그인")
-            print(data)
         case .failure(let err):
             print(err.localizedDescription)
         }
     }
 
     func getMyProfile() async {
-        print("프로필 진입")
         let response = await provider.request(.getMyProfile)
         switch response {
         case .success(let result):
             guard let data = try? result.map(MemberProfileResponse.self) else { return }
-            print("프로필")
-            print(data)
             UserDefaultHandler.setUserID(userID: data.id)
             UserDefaultHandler.setNickname(nickname: data.nickname)
             UserDefaultHandler.setProfileImageUrl(profileImageUrl: data.profileImageUrl ?? "")

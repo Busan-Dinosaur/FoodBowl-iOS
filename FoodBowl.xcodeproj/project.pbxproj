@@ -17,6 +17,7 @@
 		CB15790B2AACD44700007183 /* SchoolResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB15790A2AACD44700007183 /* SchoolResponse.swift */; };
 		CB15790D2AACD45400007183 /* CategoriesResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB15790C2AACD45400007183 /* CategoriesResponse.swift */; };
 		CB1579102AACD98600007183 /* NewFeedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB15790F2AACD98600007183 /* NewFeedViewModel.swift */; };
+		CB1579122AADB50600007183 /* KakaoAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1579112AADB50600007183 /* KakaoAPI.swift */; };
 		CB1790C8296DAB470083D3A4 /* DynamicHeightCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1790C7296DAB470083D3A4 /* DynamicHeightCollectionViewFlowLayout.swift */; };
 		CB1A7C5C29560C2300C6431D /* UserInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1A7C5B29560C2300C6431D /* UserInfoView.swift */; };
 		CB1A7C5E295618A900C6431D /* SettingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1A7C5D295618A900C6431D /* SettingButton.swift */; };
@@ -141,6 +142,7 @@
 		CB15790A2AACD44700007183 /* SchoolResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchoolResponse.swift; sourceTree = "<group>"; };
 		CB15790C2AACD45400007183 /* CategoriesResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesResponse.swift; sourceTree = "<group>"; };
 		CB15790F2AACD98600007183 /* NewFeedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewFeedViewModel.swift; sourceTree = "<group>"; };
+		CB1579112AADB50600007183 /* KakaoAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoAPI.swift; sourceTree = "<group>"; };
 		CB1790C7296DAB470083D3A4 /* DynamicHeightCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicHeightCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
 		CB1A7C5B29560C2300C6431D /* UserInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoView.swift; sourceTree = "<group>"; };
 		CB1A7C5D295618A900C6431D /* SettingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingButton.swift; sourceTree = "<group>"; };
@@ -675,6 +677,7 @@
 			children = (
 				CBC747B22A83D9F600F171F5 /* UserAPI.swift */,
 				CB1579032AACCEAB00007183 /* StoreAPI.swift */,
+				CB1579112AADB50600007183 /* KakaoAPI.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -1014,6 +1017,7 @@
 				CB63B7622A698D4E000AD9C2 /* BaseSize.swift in Sources */,
 				CB1578FB2AAC5B3D00007183 /* ProfileViewModel.swift in Sources */,
 				CBADC29529559BC900E56C93 /* UITextView+Extension.swift in Sources */,
+				CB1579122AADB50600007183 /* KakaoAPI.swift in Sources */,
 				CBADC29229559BC900E56C93 /* Sequence+Extension.swift in Sources */,
 				CBADC29029559BC900E56C93 /* UIViewController+Extension.swift in Sources */,
 				CBADC28C29559BC900E56C93 /* UILabel+Extension.swift in Sources */,
@@ -1214,6 +1218,8 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				KAKAO_TOKEN = 855a5bf7cbbe725de0f5b6474fe8d6db;
+				KAKAO_URL = "https://dapi.kakao.com";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1255,6 +1261,8 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				KAKAO_TOKEN = 855a5bf7cbbe725de0f5b6474fe8d6db;
+				KAKAO_URL = "https://dapi.kakao.com";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

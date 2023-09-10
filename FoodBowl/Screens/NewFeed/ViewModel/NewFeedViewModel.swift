@@ -7,12 +7,12 @@
 
 import UIKit
 
-import Alamofire
 import Moya
 
 final class NewFeedViewModel {
     var newFeed = CreateReviewRequest()
 
+    private let providerKakao = MoyaProvider<KakaoAPI>()
     private let provider = MoyaProvider<StoreAPI>()
 
     func createReview() async {
@@ -25,87 +25,46 @@ final class NewFeedViewModel {
         }
     }
 
-    func searchStores(keyword: String) -> [Place] {
+    func searchStores(keyword: String) async -> [Place] {
         var stores = [Place]()
-
         guard let currentLoc = LocationManager.shared.manager.location else { return stores }
 
-        let url = "https://dapi.kakao.com/v2/local/search/keyword"
+        let response = await providerKakao.request(.searchStores(
+            x: String(currentLoc.coordinate.longitude),
+            y: String(currentLoc.coordinate.latitude),
+            keyword: keyword
+        ))
 
-        let headers: HTTPHeaders = [
-            "Content-Type": "application/x-www-form-urlencoded;charset=utf-8",
-            "Authorization": "KakaoAK 855a5bf7cbbe725de0f5b6474fe8d6db"
-        ]
-
-        let parameters: [String: Any] = [
-            "query": keyword,
-            "x": String(currentLoc.coordinate.longitude),
-            "y": String(currentLoc.coordinate.latitude),
-            "page": 1,
-            "size": 15,
-            "category_group_code": "FD6,CE7"
-        ]
-
-        AF.request(
-            url,
-            method: .get,
-            parameters: parameters,
-            encoding: URLEncoding.default,
-            headers: headers
-        )
-        .responseDecodable(of: PlaceResponse.self) { response in
-            switch response.result {
-            case .success(let data):
-                stores = data.documents
-            case .failure(let error):
-                print("Request failed with error: \(error)")
-            }
+        switch response {
+        case .success(let result):
+            guard let data = try? result.map(PlaceResponse.self) else { return stores }
+            stores = data.documents
+        case .failure(let err):
+            print(err.localizedDescription)
         }
 
         return stores
     }
 
-    func searchUniv(store: Place) -> Place? {
+    private func searchUniv(store: Place) async -> Place? {
         var univ: Place?
-        let url = "https://dapi.kakao.com/v2/local/search/keyword"
 
-        let headers: HTTPHeaders = [
-            "Content-Type": "application/x-www-form-urlencoded;charset=utf-8",
-            "Authorization": "KakaoAK 855a5bf7cbbe725de0f5b6474fe8d6db"
-        ]
+        let response = await providerKakao.request(.searchUniv(x: store.longitude, y: store.latitude))
 
-        let parameters: [String: Any] = [
-            "query": "대학교",
-            "x": store.longitude,
-            "y": store.latitude,
-            "page": 1,
-            "size": 1,
-            "radius": 3000,
-            "category_group_code": "SC4"
-        ]
-
-        AF.request(
-            url,
-            method: .get,
-            parameters: parameters,
-            encoding: URLEncoding.default,
-            headers: headers
-        )
-        .responseDecodable(of: PlaceResponse.self) { response in
-            switch response.result {
-            case .success(let data):
-                if data.documents.count > 0 {
-                    univ = data.documents[0]
-                }
-            case .failure(let error):
-                print("Request failed with error: \(error)")
+        switch response {
+        case .success(let result):
+            guard let data = try? result.map(PlaceResponse.self) else { return univ }
+            if data.documents.count > 0 {
+                univ = data.documents[0]
             }
+        case .failure(let err):
+            print(err.localizedDescription)
         }
 
         return univ
     }
 
-    func getCategory(categoryName: String) -> String {
+    private func getCategory(categoryName: String) -> String {
         let categoryArray = categoryName
             .components(separatedBy: ">").map { $0.trimmingCharacters(in: .whitespaces) }
         let categories = Categories.allCases.map { $0.rawValue }
@@ -118,5 +77,21 @@ final class NewFeedViewModel {
             return categoryArray[1]
         }
         return "기타"
+    }
+
+    func setStore(store: Place) async {
+        newFeed.locationId = store.id
+        newFeed.storeName = store.placeName
+        newFeed.storeAddress = store.addressName
+        newFeed.x = Double(store.longitude) ?? 0.0
+        newFeed.y = Double(store.latitude) ?? 0.0
+        newFeed.storeUrl = store.placeURL
+        newFeed.phone = store.phone
+        newFeed.category = getCategory(categoryName: store.categoryName)
+
+        guard let univ = await searchUniv(store: store) else { return }
+        newFeed.schoolName = univ.placeName
+        newFeed.schoolX = Double(univ.longitude) ?? 0.0
+        newFeed.schoolY = Double(univ.latitude) ?? 0.0
     }
 }

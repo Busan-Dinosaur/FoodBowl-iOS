@@ -7,7 +7,6 @@
 
 import UIKit
 
-import Alamofire
 import SnapKit
 import Then
 
@@ -83,27 +82,18 @@ extension SetStoreViewController: SearchStoreViewControllerDelegate {
             let showWebViewController = ShowWebViewController()
             showWebViewController.title = "가게 정보"
             showWebViewController.url = store.placeURL
+
             let navigationController = UINavigationController(rootViewController: showWebViewController)
             navigationController.modalPresentationStyle = .fullScreen
+
             DispatchQueue.main.async {
                 self?.present(navigationController, animated: true)
             }
         }
         selectedStoreView.mapButton.addAction(action, for: .touchUpInside)
 
-        viewModel.newFeed.locationId = store.id
-        viewModel.newFeed.storeName = store.placeName
-        viewModel.newFeed.storeAddress = store.addressName
-        viewModel.newFeed.x = Double(store.longitude) ?? 0.0
-        viewModel.newFeed.y = Double(store.latitude) ?? 0.0
-        viewModel.newFeed.storeUrl = store.placeURL
-        viewModel.newFeed.phone = store.phone
-        viewModel.newFeed.category = viewModel.getCategory(categoryName: store.categoryName)
-
-        if let univ = viewModel.searchUniv(store: store) {
-            viewModel.newFeed.schoolName = univ.addressName
-            viewModel.newFeed.schoolX = Double(univ.longitude) ?? 0.0
-            viewModel.newFeed.schoolY = Double(univ.latitude) ?? 0.0
+        Task {
+            await viewModel.setStore(store: store)
         }
     }
 }

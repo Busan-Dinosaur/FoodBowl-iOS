@@ -137,6 +137,7 @@ final class NewFeedViewController: BaseViewController {
 
         if currentPage == 0 && viewModel.newFeed.locationId == "" {
             showAlert(message: "가게를 선택해주세요")
+            return
         }
 
         let nextVC = dataViewControllers[nextPage]
