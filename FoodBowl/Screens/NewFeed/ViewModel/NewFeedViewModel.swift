@@ -18,6 +18,7 @@ final class NewFeedViewModel {
     private let provider = MoyaProvider<StoreAPI>()
 
     func createReview() async {
+        print(newFeed)
         let response = await provider.request(.createReview(
             form: CreateReviewRequest(request: newFeed, images: photoesURL)
         ))
@@ -76,12 +77,12 @@ final class NewFeedViewModel {
         if categoryArray.count >= 2 && categories.contains(categoryArray[1]) == true {
             if categoryArray.count >= 3 && categoryArray[2] == "해물,생선" {
                 return "해산물"
-            } else if categoryArray.count >= 3 && categoryArray[2] == "제과,베이커리" {
-                return "카페"
             }
-
             return categoryArray[1]
+        } else if categoryArray.count >= 3 && categoryArray[2] == "제과,베이커리" {
+            return "카페"
         }
+
         return "기타"
     }
 
