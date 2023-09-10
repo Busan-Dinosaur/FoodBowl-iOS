@@ -57,7 +57,7 @@ extension KakaoAPI: TargetType {
                 "y": y,
                 "page": 1,
                 "size": 1,
-                "radius": 3000,
+                "radius": 1000,
                 "category_group_code": "SC4"
             ]
             return .requestParameters(
