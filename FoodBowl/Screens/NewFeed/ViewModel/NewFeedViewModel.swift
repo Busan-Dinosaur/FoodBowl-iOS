@@ -10,13 +10,17 @@ import UIKit
 import Moya
 
 final class NewFeedViewModel {
-    var newFeed = CreateReviewRequest()
+    var newFeed = NewFeed()
+    var photoes = [UIImage]()
+    var photoesURL = [String]()
 
     private let providerKakao = MoyaProvider<KakaoAPI>()
     private let provider = MoyaProvider<StoreAPI>()
 
     func createReview() async {
-        let response = await provider.request(.createReview(form: newFeed))
+        let response = await provider.request(.createReview(
+            form: CreateReviewRequest(request: newFeed, images: photoesURL)
+        ))
         switch response {
         case .success:
             print("success to create review")

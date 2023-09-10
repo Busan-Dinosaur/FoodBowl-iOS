@@ -23,7 +23,6 @@ final class SetReviewViewController: BaseViewController {
         )
     }
 
-    private var selectedImages = [UIImage]()
     private let textViewPlaceHolder = "100자 이내"
 
     private var viewModel: NewFeedViewModel
@@ -142,7 +141,7 @@ final class SetReviewViewController: BaseViewController {
                         return nil
                     }
                 }
-                self.selectedImages = images
+                self.viewModel.photoes = images
                 self.listCollectionView.reloadData()
             }
             picker.dismiss(animated: true, completion: nil)
@@ -173,7 +172,7 @@ extension SetReviewViewController: UITextViewDelegate {
 
 extension SetReviewViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_: UICollectionView, numberOfItemsInSection _: Int) -> Int {
-        return selectedImages.count + 1
+        return viewModel.photoes.count + 1
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -194,7 +193,7 @@ extension SetReviewViewController: UICollectionViewDataSource, UICollectionViewD
                 return UICollectionViewCell()
             }
 
-            cell.foodImageView.image = selectedImages[indexPath.item - 1]
+            cell.foodImageView.image = viewModel.photoes[indexPath.item - 1]
 
             return cell
         }

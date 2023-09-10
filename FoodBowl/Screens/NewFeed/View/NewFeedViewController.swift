@@ -150,7 +150,10 @@ final class NewFeedViewController: BaseViewController {
 
     private func completeAddFeed() {
         print(viewModel.newFeed)
-//        dismiss(animated: true, completion: nil)
+        Task {
+            await viewModel.createReview()
+        }
+        dismiss(animated: true, completion: nil)
     }
 
     private func showAlert(message: String) {

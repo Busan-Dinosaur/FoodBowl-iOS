@@ -8,6 +8,11 @@
 import Foundation
 
 struct CreateReviewRequest: Encodable {
+    let request: NewFeed
+    let images: [String]
+}
+
+struct NewFeed: Encodable {
     var locationId: String
     var storeName: String
     var storeAddress: String
