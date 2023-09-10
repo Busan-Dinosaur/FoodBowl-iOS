@@ -10,18 +10,14 @@ import UIKit
 import Moya
 
 final class NewFeedViewModel {
-    var newFeed = NewFeed()
-    var photoes = [UIImage]()
-    var photoesURL = [String]()
+    var review = ReviewCreateRequest()
+    var images = [UIImage]()
 
     private let providerKakao = MoyaProvider<KakaoAPI>()
     private let provider = MoyaProvider<StoreAPI>()
 
     func createReview() async {
-        print(newFeed)
-        let response = await provider.request(.createReview(
-            form: CreateReviewRequest(request: newFeed, images: photoesURL)
-        ))
+        let response = await provider.request(.createReview(review: review, images: images))
         switch response {
         case .success:
             print("success to create review")
@@ -87,18 +83,18 @@ final class NewFeedViewModel {
     }
 
     func setStore(store: Place) async {
-        newFeed.locationId = store.id
-        newFeed.storeName = store.placeName
-        newFeed.storeAddress = store.addressName
-        newFeed.x = Double(store.longitude) ?? 0.0
-        newFeed.y = Double(store.latitude) ?? 0.0
-        newFeed.storeUrl = store.placeURL
-        newFeed.phone = store.phone
-        newFeed.category = getCategory(categoryName: store.categoryName)
+        review.locationId = store.id
+        review.storeName = store.placeName
+        review.storeAddress = store.addressName
+        review.x = Double(store.longitude) ?? 0.0
+        review.y = Double(store.latitude) ?? 0.0
+        review.storeUrl = store.placeURL
+        review.phone = store.phone
+        review.category = getCategory(categoryName: store.categoryName)
 
         guard let univ = await searchUniv(store: store) else { return }
-        newFeed.schoolName = univ.placeName
-        newFeed.schoolX = Double(univ.longitude) ?? 0.0
-        newFeed.schoolY = Double(univ.latitude) ?? 0.0
+        review.schoolName = univ.placeName
+        review.schoolX = Double(univ.longitude) ?? 0.0
+        review.schoolY = Double(univ.latitude) ?? 0.0
     }
 }

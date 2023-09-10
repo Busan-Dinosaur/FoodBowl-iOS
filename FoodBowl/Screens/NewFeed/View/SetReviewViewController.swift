@@ -141,7 +141,7 @@ final class SetReviewViewController: BaseViewController {
                         return nil
                     }
                 }
-                self.viewModel.photoes = images
+                self.viewModel.images = images
                 self.listCollectionView.reloadData()
             }
             picker.dismiss(animated: true, completion: nil)
@@ -166,13 +166,13 @@ extension SetReviewViewController: UITextViewDelegate {
     }
 
     func textViewDidChange(_ textView: UITextView) {
-        viewModel.newFeed.reviewContent = textView.text
+        viewModel.review.reviewContent = textView.text
     }
 }
 
 extension SetReviewViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_: UICollectionView, numberOfItemsInSection _: Int) -> Int {
-        return viewModel.photoes.count + 1
+        return viewModel.images.count + 1
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -193,7 +193,7 @@ extension SetReviewViewController: UICollectionViewDataSource, UICollectionViewD
                 return UICollectionViewCell()
             }
 
-            cell.foodImageView.image = viewModel.photoes[indexPath.item - 1]
+            cell.foodImageView.image = viewModel.images[indexPath.item - 1]
 
             return cell
         }
