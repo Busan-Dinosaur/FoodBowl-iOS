@@ -13,7 +13,7 @@ import Then
 final class BookmarkViewController: MapViewController {
     init() {
         super.init(nibName: nil, bundle: nil)
-        self.modalView = BookmarkListView()
+        self.modalView = FeedListView()
     }
 
     required init?(coder: NSCoder) {
@@ -22,7 +22,7 @@ final class BookmarkViewController: MapViewController {
 
     override func configureUI() {
         super.configureUI()
-        grabbarView.modalTitleLabel.text = "북마크 목록"
+        grabbarView.modalTitleLabel.text = "북마크"
         grabbarView.modalResultLabel.text = "4개의 맛집"
     }
 }

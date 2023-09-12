@@ -18,10 +18,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
         
-        _Concurrency.Task {
-            await renewToken()
-        }
-        
         let isLogin = UserDefaultStorage.isLogin
         window?.rootViewController = UINavigationController(
             rootViewController: isLogin ? TabBarController() : OnboardingViewController()
@@ -59,18 +55,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 }
 
 extension SceneDelegate {
-    func renewToken() async {
-        let response = await provider.request(.renew)
-        switch response {
-        case .success(let result):
-            guard let data = try? result.map(RenewResponse.self) else { return }
-            let accessToken = data.accessToken
-            UserDefaultHandler.setAccessToken(accessToken: accessToken)
-        case .failure(let err):
-            print(err.localizedDescription)
-        }
-    }
-    
     func signOut() {
         KeychainManager.clear()
         UserDefaultHandler.clearAllData()
