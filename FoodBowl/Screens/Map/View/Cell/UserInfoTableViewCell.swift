@@ -70,5 +70,7 @@ final class UserInfoTableViewCell: BaseTableViewCell {
         userImageButton.addAction(UIAction { _ in self.userButtonTapAction?(self) }, for: .touchUpInside)
         userNameButton.addAction(UIAction { _ in self.userButtonTapAction?(self) }, for: .touchUpInside)
         followButton.addAction(UIAction { _ in self.followButtonTapAction?(self) }, for: .touchUpInside)
+
+        backgroundColor = .clear
     }
 }
