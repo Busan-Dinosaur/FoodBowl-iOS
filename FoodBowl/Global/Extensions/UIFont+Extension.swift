@@ -17,7 +17,7 @@ extension UIFont {
 }
 
 enum AppFontName: String {
-    case regular = "Baumans-Regular"
+    case regular = "BMJUAOTF"
 }
 
 extension UIFont {

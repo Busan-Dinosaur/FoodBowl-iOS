@@ -25,7 +25,7 @@
 	<string>$(NONCE)</string>
 	<key>UIAppFonts</key>
 	<array>
-		<string>Baumans-Regular.ttf</string>
+		<string>BMJUAOTF.otf</string>
 	</array>
 	<key>UIApplicationSceneManifest</key>
 	<dict>

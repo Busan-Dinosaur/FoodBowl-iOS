@@ -23,6 +23,6 @@ final class FriendViewController: MapViewController {
     override func configureUI() {
         super.configureUI()
         grabbarView.modalTitleLabel.text = "친구들"
-        grabbarView.modalResultLabel.text = "4개의 맛집, 10개의 후기"
+        grabbarView.modalResultLabel.text = "4개의 맛집"
     }
 }
