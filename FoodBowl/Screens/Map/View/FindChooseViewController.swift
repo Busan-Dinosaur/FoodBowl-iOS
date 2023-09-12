@@ -1,5 +1,5 @@
 //
-//  FindChooseViewController.swift
+//  FindViewController.swift
 //  FoodBowl
 //
 //  Created by COBY_PRO on 2023/07/24.
@@ -10,67 +10,132 @@ import UIKit
 import SnapKit
 import Then
 
-final class FindChooseViewController: BaseViewController {
-    // MARK: - property
-    private lazy var closeButton = CloseButton().then {
-        let action = UIAction { [weak self] _ in
+final class FindViewController: BaseViewController {
+    private lazy var searchBar = UISearchBar().then {
+        $0.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width - 80, height: 0)
+        $0.placeholder = "가게 이름을 검색해주세요"
+    }
+
+    private lazy var cancelButton = UIButton().then {
+        $0.setTitle("취소", for: .normal)
+        $0.setTitleColor(.mainPink, for: .normal)
+        $0.titleLabel?.font = UIFont.preferredFont(forTextStyle: .headline, weight: .regular)
+        let buttonAction = UIAction { [weak self] _ in
             self?.dismiss(animated: true, completion: nil)
         }
-        $0.addAction(action, for: .touchUpInside)
+        $0.addAction(buttonAction, for: .touchUpInside)
     }
 
-    private let guideLabel = UILabel().then {
-        $0.text = "맛집과 유저를 이름으로 찾아보세요."
-        $0.font = UIFont.preferredFont(forTextStyle: .body, weight: .medium)
-        $0.textColor = .mainText
+    private lazy var segmentedControl = UnderlineSegmentedControl(items: ["맛집", "유저"]).then {
+        $0.translatesAutoresizingMaskIntoConstraints = false
+        $0.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.subText], for: .normal)
+        $0.setTitleTextAttributes(
+            [
+                NSAttributedString.Key.foregroundColor: UIColor.mainText,
+                .font: UIFont.preferredFont(forTextStyle: .subheadline, weight: .medium)
+            ],
+            for: .selected
+        )
+        $0.addTarget(self, action: #selector(changeValue(control:)), for: .valueChanged)
+        $0.selectedSegmentIndex = 0
     }
 
-    lazy var searchStoreButton = SearchBarButton().then {
-        $0.placeholderLabel.text = "가게 검색"
-        let action = UIAction { [weak self] _ in
-            let findStoreViewController = FindStoreViewController()
-            self?.navigationController?.pushViewController(findStoreViewController, animated: true)
+    private let vc1 = FindStoreViewController()
+
+    private let vc2 = FindUserViewController()
+
+    private lazy var pageViewController = UIPageViewController(
+        transitionStyle: .scroll,
+        navigationOrientation: .horizontal,
+        options: nil
+    ).then {
+        $0.setViewControllers([self.dataViewControllers[0]], direction: .forward, animated: true)
+        $0.delegate = self
+        $0.dataSource = self
+        $0.view.translatesAutoresizingMaskIntoConstraints = false
+    }
+
+    private var dataViewControllers: [UIViewController] {
+        [vc1, vc2]
+    }
+
+    private var currentPage: Int = 0 {
+        didSet {
+            // from segmentedControl -> pageViewController 업데이트
+            print(oldValue, self.currentPage)
+            let direction: UIPageViewController.NavigationDirection = oldValue <= self.currentPage ? .forward : .reverse
+            self.pageViewController.setViewControllers(
+                [dataViewControllers[self.currentPage]],
+                direction: direction,
+                animated: true,
+                completion: nil
+            )
         }
-        $0.addAction(action, for: .touchUpInside)
     }
 
-    lazy var searchUserButton = SearchBarButton().then {
-        $0.placeholderLabel.text = "친구 검색"
-        let action = UIAction { [weak self] _ in
-            let findUserViewController = FindUserViewController()
-            self?.navigationController?.pushViewController(findUserViewController, animated: true)
-        }
-        $0.addAction(action, for: .touchUpInside)
-    }
-
-    // MARK: - life cycle
     override func setupLayout() {
-        view.addSubviews(guideLabel, searchStoreButton, searchUserButton)
+        view.addSubviews(segmentedControl, pageViewController.view)
 
-        guideLabel.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).inset(20)
-            $0.leading.equalToSuperview().inset(BaseSize.horizantalPadding)
-        }
-
-        searchStoreButton.snp.makeConstraints {
-            $0.top.equalTo(guideLabel.snp.bottom).offset(20)
-            $0.leading.trailing.equalToSuperview().inset(BaseSize.horizantalPadding)
+        segmentedControl.snp.makeConstraints {
+            $0.leading.trailing.equalToSuperview()
+            $0.top.equalToSuperview().inset(100)
             $0.height.equalTo(40)
         }
 
-        searchUserButton.snp.makeConstraints {
-            $0.top.equalTo(searchStoreButton.snp.bottom).offset(10)
-            $0.leading.trailing.equalToSuperview().inset(BaseSize.horizantalPadding)
-            $0.height.equalTo(40)
+        pageViewController.view.snp.makeConstraints {
+            $0.top.equalTo(segmentedControl.snp.bottom)
+            $0.leading.trailing.bottom.equalToSuperview()
         }
+    }
+
+    override func configureUI() {
+        super.configureUI()
+        changeValue(control: segmentedControl)
     }
 
     override func setupNavigationBar() {
-        super.setupNavigationBar()
+        let cancelButton = makeBarButtonItem(with: cancelButton)
+        navigationItem.rightBarButtonItem = cancelButton
+        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: searchBar)
+    }
 
-        let leftOffsetCloseButton = removeBarButtonItemOffset(with: closeButton, offsetX: 10)
-        let closeButton = makeBarButtonItem(with: leftOffsetCloseButton)
-        navigationItem.leftBarButtonItem = closeButton
-        title = "찾기"
+    @objc
+    private func changeValue(control: UISegmentedControl) {
+        currentPage = control.selectedSegmentIndex
+    }
+}
+
+extension FindViewController: UIPageViewControllerDataSource, UIPageViewControllerDelegate {
+    func pageViewController(
+        _ pageViewController: UIPageViewController,
+        viewControllerBefore viewController: UIViewController
+    ) -> UIViewController? {
+        guard let index = dataViewControllers.firstIndex(of: viewController),
+              index - 1 >= 0
+        else { return nil }
+        return dataViewControllers[index - 1]
+    }
+
+    func pageViewController(
+        _ pageViewController: UIPageViewController,
+        viewControllerAfter viewController: UIViewController
+    ) -> UIViewController? {
+        guard let index = dataViewControllers.firstIndex(of: viewController),
+              index + 1 < dataViewControllers.count
+        else { return nil }
+        return dataViewControllers[index + 1]
+    }
+
+    func pageViewController(
+        _ pageViewController: UIPageViewController,
+        didFinishAnimating finished: Bool,
+        previousViewControllers: [UIViewController],
+        transitionCompleted completed: Bool
+    ) {
+        guard let viewController = pageViewController.viewControllers?[0],
+              let index = dataViewControllers.firstIndex(of: viewController)
+        else { return }
+        currentPage = index
+        segmentedControl.selectedSegmentIndex = index
     }
 }
