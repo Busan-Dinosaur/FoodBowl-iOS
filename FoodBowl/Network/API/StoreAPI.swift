@@ -12,7 +12,7 @@ import Moya
 enum StoreAPI {
     case addBookmark(storeId: Int)
     case removeBookmark(storeId: Int)
-    case createReview(review: ReviewCreateRequest, images: [UIImage])
+    case createReview(request: CreateReviewRequest)
     case removeReview(id: Int)
     case getSchools
     case getCategories
@@ -44,7 +44,7 @@ extension StoreAPI: TargetType {
             return .post
         case .removeBookmark, .removeReview:
             return .delete
-        default:
+        case .getSchools, .getCategories:
             return .get
         }
     }
@@ -67,41 +67,29 @@ extension StoreAPI: TargetType {
                 parameters: params,
                 encoding: URLEncoding.default
             )
-        case .createReview(let review, let images):
+        case .createReview(let request):
             var multipartFormData = [MultipartFormData]()
-            let params: [String: String] = [
-                "locationId": review.locationId,
-                "storeName": review.storeName,
-                "storeAddress": review.storeAddress,
-                "x": String(review.x),
-                "y": String(review.y),
-                "storeUrl": review.storeUrl,
-                "phone": review.phone,
-                "category": review.category,
-                "reviewContent": review.reviewContent,
-                "schoolName": review.schoolName,
-                "schoolX": String(review.schoolX),
-                "schoolY": String(review.schoolY)
-            ]
 
-            for (key, value) in params {
-                multipartFormData.append(MultipartFormData(provider: .data(value.data(using: String.Encoding.utf8)!), name: key))
-            }
-
-            let imagesData = images.map { $0.jpegData(compressionQuality: 1.0) }
-
-            for imageData in imagesData {
+            if let reviewData = try? JSONEncoder().encode(request.request) {
                 multipartFormData.append(
                     MultipartFormData(
-                        provider: .data(imageData!),
-                        name: "images",
-                        fileName: "photo.jpg",
-                        mimeType: "image/jpeg"
+                        provider: .data(reviewData),
+                        name: "request",
+                        mimeType: "application/json"
                     )
                 )
             }
 
-            print(multipartFormData)
+            for image in request.images {
+                multipartFormData.append(
+                    MultipartFormData(
+                        provider: .data(image),
+                        name: "images[]",
+                        fileName: "\(request.request.storeName)_\(UUID().uuidString).jpg",
+                        mimeType: "image/jpeg"
+                    )
+                )
+            }
 
             return .uploadMultipart(multipartFormData)
         case .removeReview(let id):
@@ -123,7 +111,8 @@ extension StoreAPI: TargetType {
         switch self {
         case .createReview:
             return [
-                "Content-Type": "multipart/form-data",
+                "Content-Type": "application/json",
+                "Content-type": "multipart/form-data",
                 "Authorization": "Bearer " + accessToken
             ]
         default:

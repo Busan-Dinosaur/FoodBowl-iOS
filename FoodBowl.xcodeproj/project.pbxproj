@@ -13,7 +13,7 @@
 		CB1579002AAC61CD00007183 /* RenewRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1578FF2AAC61CD00007183 /* RenewRequest.swift */; };
 		CB1579022AAC62A600007183 /* RenewResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1579012AAC62A600007183 /* RenewResponse.swift */; };
 		CB1579042AACCEAB00007183 /* StoreAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1579032AACCEAB00007183 /* StoreAPI.swift */; };
-		CB1579092AACCFCB00007183 /* ReviewCreateRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1579082AACCFCB00007183 /* ReviewCreateRequest.swift */; };
+		CB1579092AACCFCB00007183 /* CreateReviewRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1579082AACCFCB00007183 /* CreateReviewRequest.swift */; };
 		CB15790B2AACD44700007183 /* SchoolResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB15790A2AACD44700007183 /* SchoolResponse.swift */; };
 		CB15790D2AACD45400007183 /* CategoriesResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB15790C2AACD45400007183 /* CategoriesResponse.swift */; };
 		CB1579102AACD98600007183 /* NewFeedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB15790F2AACD98600007183 /* NewFeedViewModel.swift */; };
@@ -107,7 +107,6 @@
 		CBD1B5FC2982E83800B0AD51 /* CheckBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD1B5FB2982E83800B0AD51 /* CheckBox.swift */; };
 		CBD1B5FE2982F19300B0AD51 /* UIButton+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD1B5FD2982F19300B0AD51 /* UIButton+Extension.swift */; };
 		CBD1B6022984394A00B0AD51 /* FeedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD1B6012984394A00B0AD51 /* FeedButton.swift */; };
-		CBD2B97D2AADEDDE002EA207 /* Encodable+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD2B97C2AADEDDE002EA207 /* Encodable+Extension.swift */; };
 		CBDB8F8129897E0200DA2B1E /* Baumans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CBDB8F7F298979DD00DA2B1E /* Baumans-Regular.ttf */; };
 		CBDDF1402A6ADA3800AE3C50 /* EditButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDDF13F2A6ADA3800AE3C50 /* EditButton.swift */; };
 		CBDDF1422A6AF70500AE3C50 /* StoreHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDDF1412A6AF70500AE3C50 /* StoreHeaderView.swift */; };
@@ -139,7 +138,7 @@
 		CB1578FF2AAC61CD00007183 /* RenewRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenewRequest.swift; sourceTree = "<group>"; };
 		CB1579012AAC62A600007183 /* RenewResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenewResponse.swift; sourceTree = "<group>"; };
 		CB1579032AACCEAB00007183 /* StoreAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreAPI.swift; sourceTree = "<group>"; };
-		CB1579082AACCFCB00007183 /* ReviewCreateRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewCreateRequest.swift; sourceTree = "<group>"; };
+		CB1579082AACCFCB00007183 /* CreateReviewRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateReviewRequest.swift; sourceTree = "<group>"; };
 		CB15790A2AACD44700007183 /* SchoolResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchoolResponse.swift; sourceTree = "<group>"; };
 		CB15790C2AACD45400007183 /* CategoriesResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesResponse.swift; sourceTree = "<group>"; };
 		CB15790F2AACD98600007183 /* NewFeedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewFeedViewModel.swift; sourceTree = "<group>"; };
@@ -228,7 +227,6 @@
 		CBD1B5FB2982E83800B0AD51 /* CheckBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckBox.swift; sourceTree = "<group>"; };
 		CBD1B5FD2982F19300B0AD51 /* UIButton+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Extension.swift"; sourceTree = "<group>"; };
 		CBD1B6012984394A00B0AD51 /* FeedButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedButton.swift; sourceTree = "<group>"; };
-		CBD2B97C2AADEDDE002EA207 /* Encodable+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Encodable+Extension.swift"; sourceTree = "<group>"; };
 		CBDB8F7F298979DD00DA2B1E /* Baumans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Baumans-Regular.ttf"; sourceTree = "<group>"; };
 		CBDDF13F2A6ADA3800AE3C50 /* EditButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditButton.swift; sourceTree = "<group>"; };
 		CBDDF1412A6AF70500AE3C50 /* StoreHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreHeaderView.swift; sourceTree = "<group>"; };
@@ -312,7 +310,7 @@
 		CB1579072AACCECD00007183 /* Store */ = {
 			isa = PBXGroup;
 			children = (
-				CB1579082AACCFCB00007183 /* ReviewCreateRequest.swift */,
+				CB1579082AACCFCB00007183 /* CreateReviewRequest.swift */,
 			);
 			path = Store;
 			sourceTree = "<group>";
@@ -549,7 +547,6 @@
 				CBA7F183297DBB01006088A0 /* YPImagePicker+Extension.swift */,
 				CBB12B132985845900AC0EF2 /* String+Extension.swift */,
 				CB40C6F92A83E916003E3F06 /* MoyaProvider+Extensions.swift */,
-				CBD2B97C2AADEDDE002EA207 /* Encodable+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -955,10 +952,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CB1579092AACCFCB00007183 /* ReviewCreateRequest.swift in Sources */,
+				CB1579092AACCFCB00007183 /* CreateReviewRequest.swift in Sources */,
 				CBCD0F822A66DA3700A51B32 /* BookmarkViewController.swift in Sources */,
 				CBFB52612977C9AB0049E8BA /* FindStoreViewController.swift in Sources */,
-				CBD2B97D2AADEDDE002EA207 /* Encodable+Extension.swift in Sources */,
 				CBD1B6022984394A00B0AD51 /* FeedButton.swift in Sources */,
 				CBDECACA2A6B2F6800259350 /* FeedNSCollectionViewCell.swift in Sources */,
 				CBD1B5FE2982F19300B0AD51 /* UIButton+Extension.swift in Sources */,

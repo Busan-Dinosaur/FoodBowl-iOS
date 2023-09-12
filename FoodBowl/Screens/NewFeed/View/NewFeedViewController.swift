@@ -135,7 +135,7 @@ final class NewFeedViewController: BaseViewController {
         let currentPage = pageControl.currentPage
         let nextPage = currentPage + 1
 
-        if currentPage == 0 && viewModel.review.locationId == "" {
+        if currentPage == 0 && viewModel.request.locationId == "" {
             showAlert(message: "가게를 선택해주세요")
             return
         }
@@ -152,7 +152,7 @@ final class NewFeedViewController: BaseViewController {
         Task {
             await viewModel.createReview()
         }
-//        dismiss(animated: true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
 
     private func showAlert(message: String) {

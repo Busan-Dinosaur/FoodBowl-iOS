@@ -1,25 +1,30 @@
 //
-//  ReviewCreateRequest.swift
+//  CreateReviewRequest.swift
 //  FoodBowl
 //
 //  Created by COBY_PRO on 2023/09/10.
 //
 
-import Foundation
+import UIKit
 
-struct ReviewCreateRequest: Encodable {
+struct CreateReviewRequest: Encodable {
+    let request: Request
+    let images: [Data]
+}
+
+struct Request: Encodable {
     var locationId: String
     var storeName: String
     var storeAddress: String
     var x: Double
     var y: Double
     var storeUrl: String
-    var phone: String
+    var phone: String?
     var category: String
     var reviewContent: String
-    var schoolName: String
-    var schoolX: Double
-    var schoolY: Double
+    var schoolName: String?
+    var schoolX: Double?
+    var schoolY: Double?
 
     init(
         locationId: String = "",
@@ -28,12 +33,12 @@ struct ReviewCreateRequest: Encodable {
         x: Double = 0.0,
         y: Double = 0.0,
         storeUrl: String = "",
-        phone: String = "",
+        phone: String? = nil,
         category: String = "",
         reviewContent: String = "",
-        schoolName: String = "",
-        schoolX: Double = 0.0,
-        schoolY: Double = 0.0
+        schoolName: String? = nil,
+        schoolX: Double? = nil,
+        schoolY: Double? = nil
     ) {
         self.locationId = locationId
         self.storeName = storeName

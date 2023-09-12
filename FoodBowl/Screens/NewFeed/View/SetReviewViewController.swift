@@ -166,7 +166,7 @@ extension SetReviewViewController: UITextViewDelegate {
     }
 
     func textViewDidChange(_ textView: UITextView) {
-        viewModel.review.reviewContent = textView.text
+        viewModel.request.reviewContent = textView.text
     }
 }
 

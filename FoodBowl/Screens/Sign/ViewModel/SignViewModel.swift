@@ -20,6 +20,7 @@ final class SignInViewModel {
             KeychainManager.set(data.accessToken, for: .accessToken)
             KeychainManager.set(data.refreshToken, for: .refreshToken)
             UserDefaultHandler.setIsLogin(isLogin: true)
+            print(data.accessToken)
         case .failure(let err):
             print(err.localizedDescription)
         }

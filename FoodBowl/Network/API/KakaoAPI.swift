@@ -22,17 +22,11 @@ extension KakaoAPI: TargetType {
     }
 
     var path: String {
-        switch self {
-        case .searchStores, .searchUniv:
-            return "/v2/local/search/keyword"
-        }
+        return "/v2/local/search/keyword"
     }
 
     var method: Moya.Method {
-        switch self {
-        default:
-            return .get
-        }
+        return .get
     }
 
     var task: Task {
