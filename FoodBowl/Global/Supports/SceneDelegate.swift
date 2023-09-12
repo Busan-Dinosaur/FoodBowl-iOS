@@ -7,19 +7,25 @@
 
 import UIKit
 
+import Moya
+
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
+    
+    private let provider = MoyaProvider<UserAPI>()
 
     func scene(_ scene: UIScene, willConnectTo _: UISceneSession, options _: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
         
-        let isLogin = UserDefaultStorage.isLogin
-        if !isLogin {
-            window?.rootViewController = UINavigationController(rootViewController: OnboardingViewController())
-        } else {
-            window?.rootViewController = UINavigationController(rootViewController: TabBarController())
+        _Concurrency.Task {
+            await renewToken()
         }
+        
+        let isLogin = UserDefaultStorage.isLogin
+        window?.rootViewController = UINavigationController(
+            rootViewController: isLogin ? TabBarController() : OnboardingViewController()
+        )
         window?.makeKeyAndVisible()
     }
 
@@ -53,6 +59,18 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 }
 
 extension SceneDelegate {
+    func renewToken() async {
+        let response = await provider.request(.renew)
+        switch response {
+        case .success(let result):
+            guard let data = try? result.map(RenewResponse.self) else { return }
+            let accessToken = data.accessToken
+            UserDefaultHandler.setAccessToken(accessToken: accessToken)
+        case .failure(let err):
+            print(err.localizedDescription)
+        }
+    }
+    
     func signOut() {
         KeychainManager.clear()
         UserDefaultHandler.clearAllData()

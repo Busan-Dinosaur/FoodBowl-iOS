@@ -107,11 +107,14 @@ extension OnboardingViewController: ASAuthorizationControllerDelegate {
 
                     Task {
                         await self.viewModel.signIn(appleToken: tokenToString)
+                        await self.viewModel.getMyProfile()
                     }
 
                     DispatchQueue.main.async {
-                        let agreementViewController = AgreementViewController()
-                        self.navigationController?.pushViewController(agreementViewController, animated: true)
+                        let tabbarViewController = UINavigationController(rootViewController: TabBarController())
+                        tabbarViewController.modalPresentationStyle = .fullScreen
+                        tabbarViewController.modalTransitionStyle = .crossDissolve
+                        self.present(tabbarViewController, animated: true)
                     }
                 case .revoked:
                     // The Apple ID credential is revoked. Show SignIn UI Here.

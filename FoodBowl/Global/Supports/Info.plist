@@ -11,7 +11,7 @@
 			<key>localhost</key>
 			<dict>
 				<key>NSTemporaryExceptionAllowsInsecureHTTPLoads</key>
-				<true/>
+				<false/>
 			</dict>
 		</dict>
 		<key>NSAllowsArbitraryLoads</key>
