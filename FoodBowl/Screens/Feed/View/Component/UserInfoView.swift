@@ -10,16 +10,20 @@ import UIKit
 import SnapKit
 import Then
 
-final class UserInfoView: UIView {
+final class UserInfoView: UIButton {
     // MARK: - property
-    let userImageButton = UIButton().then {
-        $0.makeBorderLayer(color: .grey002)
+    let userImageView = UIImageView().then {
+        $0.image = ImageLiteral.defaultProfile
+        $0.layer.cornerRadius = 20
+        $0.layer.masksToBounds = true
+        $0.layer.borderColor = UIColor.grey002.cgColor
+        $0.layer.borderWidth = 1
     }
 
-    let userNameButton = UIButton().then {
-        $0.setTitle("홍길동", for: .normal)
-        $0.setTitleColor(.mainText, for: .normal)
-        $0.titleLabel?.font = .preferredFont(forTextStyle: .subheadline, weight: .medium)
+    let userNameLabel = UILabel().then {
+        $0.font = UIFont.preferredFont(forTextStyle: .subheadline, weight: .medium)
+        $0.textColor = .mainText
+        $0.text = "홍길동"
     }
 
     let userFollowerLabel = UILabel().then {
@@ -45,23 +49,23 @@ final class UserInfoView: UIView {
     }
 
     private func setupLayout() {
-        addSubviews(userImageButton, userNameButton, userFollowerLabel, optionButton)
+        addSubviews(userImageView, userNameLabel, userFollowerLabel, optionButton)
 
-        userImageButton.snp.makeConstraints {
+        userImageView.snp.makeConstraints {
             $0.leading.equalToSuperview().inset(BaseSize.horizantalPadding)
             $0.top.bottom.equalToSuperview().inset(12)
             $0.width.height.equalTo(40)
         }
 
-        userNameButton.snp.makeConstraints {
-            $0.leading.equalTo(userImageButton.snp.trailing).offset(12)
+        userNameLabel.snp.makeConstraints {
+            $0.leading.equalTo(userImageView.snp.trailing).offset(12)
             $0.top.equalToSuperview().inset(14)
             $0.height.equalTo(18)
         }
 
         userFollowerLabel.snp.makeConstraints {
-            $0.leading.equalTo(userImageButton.snp.trailing).offset(12)
-            $0.top.equalTo(userNameButton.snp.bottom).offset(2)
+            $0.leading.equalTo(userImageView.snp.trailing).offset(12)
+            $0.top.equalTo(userNameLabel.snp.bottom).offset(4)
         }
 
         optionButton.snp.makeConstraints {

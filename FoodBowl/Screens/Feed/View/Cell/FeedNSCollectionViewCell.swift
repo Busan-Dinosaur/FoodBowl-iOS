@@ -50,8 +50,7 @@ final class FeedNSCollectionViewCell: BaseCollectionViewCell {
     }
 
     override func configureUI() {
-        userInfoView.userImageButton.addAction(UIAction { _ in self.userButtonTapAction?(self) }, for: .touchUpInside)
-        userInfoView.userNameButton.addAction(UIAction { _ in self.userButtonTapAction?(self) }, for: .touchUpInside)
+        userInfoView.addAction(UIAction { _ in self.userButtonTapAction?(self) }, for: .touchUpInside)
         userInfoView.followButton.addAction(UIAction { _ in self.followButtonTapAction?(self) }, for: .touchUpInside)
         userInfoView.optionButton.addAction(UIAction { _ in self.optionButtonTapAction?(self) }, for: .touchUpInside)
     }

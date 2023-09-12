@@ -18,8 +18,8 @@ final class ProfileHeaderView: UICollectionReusableView {
     private let categories = Categories.allCases
 
     // MARK: - property
-    lazy var userImageView = UIImageView().then {
-        $0.backgroundColor = .grey003
+    let userImageView = UIImageView().then {
+        $0.image = ImageLiteral.defaultProfile
         $0.layer.cornerRadius = 25
         $0.layer.masksToBounds = true
         $0.layer.borderColor = UIColor.grey002.cgColor
