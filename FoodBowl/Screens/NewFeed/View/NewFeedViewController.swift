@@ -57,7 +57,7 @@ final class NewFeedViewController: BaseViewController {
         $0.setTitleColor(.mainPink, for: .normal)
         $0.titleLabel?.font = UIFont.preferredFont(forTextStyle: .headline, weight: .regular)
         let buttonAction = UIAction { [weak self] _ in
-            self?.completeAddFeed()
+            self?.tappedCompleteButton()
         }
         $0.addAction(buttonAction, for: .touchUpInside)
     }
@@ -148,7 +148,7 @@ final class NewFeedViewController: BaseViewController {
         updateNavigationBar(currentPage: nextPage)
     }
 
-    private func completeAddFeed() {
+    private func tappedCompleteButton() {
         Task {
             await viewModel.createReview()
         }

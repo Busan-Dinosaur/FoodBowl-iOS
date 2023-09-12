@@ -87,6 +87,8 @@
 		CBB58284297440A600808B0B /* CategoryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBB58283297440A600808B0B /* CategoryCollectionViewCell.swift */; };
 		CBB582872974568500808B0B /* YPImagePicker in Frameworks */ = {isa = PBXBuildFile; productRef = CBB582862974568500808B0B /* YPImagePicker */; };
 		CBBB97EC2AB068DE00272CCE /* BMJUAOTF.otf in Resources */ = {isa = PBXBuildFile; fileRef = CBBB97EB2AB068AA00272CCE /* BMJUAOTF.otf */; };
+		CBBB97EE2AB0828600272CCE /* EditFeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBBB97ED2AB0828600272CCE /* EditFeedViewController.swift */; };
+		CBBB97F12AB0832F00272CCE /* EditFeedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBBB97F02AB0832F00272CCE /* EditFeedViewModel.swift */; };
 		CBC73104295550A100C7F198 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBC73103295550A100C7F198 /* AppDelegate.swift */; };
 		CBC73106295550A100C7F198 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBC73105295550A100C7F198 /* SceneDelegate.swift */; };
 		CBC7310D295550A200C7F198 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CBC7310C295550A200C7F198 /* Assets.xcassets */; };
@@ -208,6 +210,8 @@
 		CBB582812973007D00808B0B /* ShowWebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowWebViewController.swift; sourceTree = "<group>"; };
 		CBB58283297440A600808B0B /* CategoryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCollectionViewCell.swift; sourceTree = "<group>"; };
 		CBBB97EB2AB068AA00272CCE /* BMJUAOTF.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = BMJUAOTF.otf; sourceTree = "<group>"; };
+		CBBB97ED2AB0828600272CCE /* EditFeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditFeedViewController.swift; sourceTree = "<group>"; };
+		CBBB97F02AB0832F00272CCE /* EditFeedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditFeedViewModel.swift; sourceTree = "<group>"; };
 		CBC73100295550A100C7F198 /* FoodBowl.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FoodBowl.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CBC73103295550A100C7F198 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CBC73105295550A100C7F198 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -344,6 +348,7 @@
 		CB26A3ED2A6AC9910043A642 /* Feed */ = {
 			isa = PBXGroup;
 			children = (
+				CBBB97EF2AB0831B00272CCE /* ViewModel */,
 				CBDDF1392A6AD74E00AE3C50 /* View */,
 			);
 			path = Feed;
@@ -616,6 +621,14 @@
 			path = Screens;
 			sourceTree = "<group>";
 		};
+		CBBB97EF2AB0831B00272CCE /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				CBBB97F02AB0832F00272CCE /* EditFeedViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 		CBC730F7295550A100C7F198 = {
 			isa = PBXGroup;
 			children = (
@@ -720,6 +733,7 @@
 				CB26A3EE2A6AC9A50043A642 /* Component */,
 				CB26A3EF2A6AC9C80043A642 /* Cell */,
 				CBFB52542977B9240049E8BA /* StoreDetailViewController.swift */,
+				CBBB97ED2AB0828600272CCE /* EditFeedViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -972,11 +986,13 @@
 				CB1579042AACCEAB00007183 /* StoreAPI.swift in Sources */,
 				CBADC28A29559BC900E56C93 /* UIFont+Extension.swift in Sources */,
 				CBFB52552977B9240049E8BA /* StoreDetailViewController.swift in Sources */,
+				CBBB97EE2AB0828600272CCE /* EditFeedViewController.swift in Sources */,
 				CB7F3325298A51560000A6B4 /* UserDefaultStorage.swift in Sources */,
 				CBA7F17F297DB2F6006088A0 /* SetProfileViewController.swift in Sources */,
 				CBC747BA2A83DD6400F171F5 /* Configurations.swift in Sources */,
 				CB63B7602A698909000AD9C2 /* MapHeaderView.swift in Sources */,
 				CB2E82472AA74FB60016820E /* NicknameExistResponse.swift in Sources */,
+				CBBB97F12AB0832F00272CCE /* EditFeedViewModel.swift in Sources */,
 				CB8A2D9B297844720018AC6E /* Marker.swift in Sources */,
 				CBDDF1452A6AFB5800AE3C50 /* PhotoListView.swift in Sources */,
 				CBDE38FB2970774800DDE49A /* CloseButton.swift in Sources */,
