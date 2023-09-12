@@ -28,7 +28,13 @@ final class FindViewController: BaseViewController {
 
     private lazy var segmentedControl = UnderlineSegmentedControl(items: ["맛집", "유저"]).then {
         $0.translatesAutoresizingMaskIntoConstraints = false
-        $0.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.subText], for: .normal)
+        $0.setTitleTextAttributes(
+            [
+                NSAttributedString.Key.foregroundColor: UIColor.subText,
+                .font: UIFont.preferredFont(forTextStyle: .footnote, weight: .regular)
+            ],
+            for: .normal
+        )
         $0.setTitleTextAttributes(
             [
                 NSAttributedString.Key.foregroundColor: UIColor.mainText,
@@ -44,6 +50,10 @@ final class FindViewController: BaseViewController {
 
     private let vc2 = FindUserViewController()
 
+    private var dataViewControllers: [UIViewController] {
+        [vc1, vc2]
+    }
+
     private lazy var pageViewController = UIPageViewController(
         transitionStyle: .scroll,
         navigationOrientation: .horizontal,
@@ -52,17 +62,10 @@ final class FindViewController: BaseViewController {
         $0.setViewControllers([self.dataViewControllers[0]], direction: .forward, animated: true)
         $0.delegate = self
         $0.dataSource = self
-        $0.view.translatesAutoresizingMaskIntoConstraints = false
-    }
-
-    private var dataViewControllers: [UIViewController] {
-        [vc1, vc2]
     }
 
     private var currentPage: Int = 0 {
         didSet {
-            // from segmentedControl -> pageViewController 업데이트
-            print(oldValue, self.currentPage)
             let direction: UIPageViewController.NavigationDirection = oldValue <= self.currentPage ? .forward : .reverse
             self.pageViewController.setViewControllers(
                 [dataViewControllers[self.currentPage]],
@@ -91,6 +94,8 @@ final class FindViewController: BaseViewController {
     override func configureUI() {
         super.configureUI()
         changeValue(control: segmentedControl)
+        vc1.delegate = self
+        vc2.delegate = self
     }
 
     override func setupNavigationBar() {
@@ -137,5 +142,27 @@ extension FindViewController: UIPageViewControllerDataSource, UIPageViewControll
         else { return }
         currentPage = index
         segmentedControl.selectedSegmentIndex = index
+    }
+}
+
+extension FindViewController: UISearchBarDelegate {
+    private func dissmissKeyboard() {
+        searchBar.resignFirstResponder()
+    }
+
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        dissmissKeyboard()
+        guard let searchTerm = searchBar.text, searchTerm.isEmpty == false else { return }
+        print(searchTerm)
+    }
+}
+
+extension FindViewController: FindStoreViewControllerDelegate, FindUserViewControllerDelegate {
+    func setStore(storeDetailViewController: StoreDetailViewController) {
+        navigationController?.pushViewController(storeDetailViewController, animated: true)
+    }
+
+    func setUser(profileViewController: ProfileViewController) {
+        navigationController?.pushViewController(profileViewController, animated: true)
     }
 }

@@ -11,11 +11,7 @@ import SnapKit
 import Then
 
 final class FindUserViewController: BaseViewController {
-    private lazy var searchBar = UISearchBar().then {
-        $0.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width - 80, height: 0)
-        $0.placeholder = "유저의 이름을 검색해주세요."
-        $0.delegate = self
-    }
+    var delegate: FindUserViewControllerDelegate?
 
     private lazy var userResultTableView = UITableView().then {
         $0.register(UserInfoTableViewCell.self, forCellReuseIdentifier: UserInfoTableViewCell.className)
@@ -32,22 +28,6 @@ final class FindUserViewController: BaseViewController {
             $0.edges.equalToSuperview()
         }
     }
-
-    override func setupNavigationBar() {
-        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: searchBar)
-    }
-}
-
-extension FindUserViewController: UISearchBarDelegate {
-    private func dissmissKeyboard() {
-        searchBar.resignFirstResponder()
-    }
-
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        dissmissKeyboard()
-        guard let searchTerm = searchBar.text, searchTerm.isEmpty == false else { return }
-        print(searchTerm)
-    }
 }
 
 extension FindUserViewController: UITableViewDataSource, UITableViewDelegate {
@@ -62,11 +42,6 @@ extension FindUserViewController: UITableViewDataSource, UITableViewDelegate {
 
         cell.selectionStyle = .none
 
-        cell.userButtonTapAction = { [weak self] _ in
-            let profileViewController = ProfileViewController(isOwn: false)
-            self?.navigationController?.pushViewController(profileViewController, animated: true)
-        }
-
         cell.followButtonTapAction = { [weak self] _ in
             cell.followButton.isSelected.toggle()
         }
@@ -77,4 +52,14 @@ extension FindUserViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_: UITableView, heightForRowAt _: IndexPath) -> CGFloat {
         return 64
     }
+
+    func tableView(_: UITableView, didSelectRowAt _: IndexPath) {
+        let profileViewController = ProfileViewController(isOwn: false)
+        profileViewController.title = "초코비"
+        delegate?.setUser(profileViewController: profileViewController)
+    }
+}
+
+protocol FindUserViewControllerDelegate: AnyObject {
+    func setUser(profileViewController: ProfileViewController)
 }
