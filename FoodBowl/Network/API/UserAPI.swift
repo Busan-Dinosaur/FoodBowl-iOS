@@ -16,6 +16,11 @@ enum UserAPI {
     case getMyProfile
     case getMemberProfile(id: Int)
     case checkNickname(nickname: String)
+    case followUser(memberId: Int)
+    case unfollowUser(memberId: Int)
+    case removeFollower(memberId: Int)
+    case getFollowingUser(memberId: Int)
+    case getFollowerUser(memberId: Int)
 }
 
 extension UserAPI: TargetType {
@@ -39,15 +44,27 @@ extension UserAPI: TargetType {
             return "/v1/members/\(id)/profile"
         case .checkNickname:
             return "/v1/members/nickname/exist"
+        case .followUser(let memberId):
+            return "/v1/follows/\(memberId)/follow"
+        case .unfollowUser(let memberId):
+            return "/v1/follows/\(memberId)/unfollow"
+        case .removeFollower(let memberId):
+            return "/v1/follows/followers/\(memberId)"
+        case .getFollowingUser(let memberId):
+            return "/v1/follows/\(memberId)/followings"
+        case .getFollowerUser(let memberId):
+            return "/v1/follows/\(memberId)/followers"
         }
     }
 
     var method: Moya.Method {
         switch self {
-        case .signIn, .renew:
+        case .signIn, .renew, .followUser:
             return .post
         case .updateProfile:
             return .patch
+        case .unfollowUser, .removeFollower:
+            return .delete
         default:
             return .get
         }
@@ -58,16 +75,13 @@ extension UserAPI: TargetType {
         case .signIn(let form):
             return .requestJSONEncodable(form)
         case .renew:
-            let accessToken: String = KeychainManager.get(.accessToken)
-            let refreshToken: String = KeychainManager.get(.refreshToken)
-            let form = RenewRequest(accessToken: accessToken, refreshToken: refreshToken)
+            let form = RenewRequest(
+                accessToken: KeychainManager.get(.accessToken),
+                refreshToken: KeychainManager.get(.refreshToken)
+            )
             return .requestJSONEncodable(form)
         case .updateProfile(let form):
             return .requestJSONEncodable(form)
-        case .getMyProfile:
-            return .requestPlain
-        case .getMemberProfile:
-            return .requestPlain
         case .checkNickname(let nickname):
             let params: [String: String] = [
                 "nickname": nickname
@@ -76,6 +90,8 @@ extension UserAPI: TargetType {
                 parameters: params,
                 encoding: URLEncoding.default
             )
+        default:
+            return .requestPlain
         }
     }
 

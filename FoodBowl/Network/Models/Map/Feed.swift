@@ -12,14 +12,15 @@ import UIKit
 struct Feed: Identifiable {
     var id = UUID()
     var store: Place?
+    var univ: Place?
     var category: String?
     var photoes: [UIImage]?
     var comment: String?
 }
 
-// MARK: - Category
+// MARK: - Categories
 
-enum Category: String, CaseIterable {
+enum Categories: String, CaseIterable {
     case cafe = "카페"
     case pub = "술집"
     case korean = "한식"

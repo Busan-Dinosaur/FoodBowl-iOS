@@ -10,7 +10,6 @@ import Foundation
 // MARK: - PlaceResponse
 struct PlaceResponse: Codable {
     let documents: [Place]
-    let meta: Meta
 }
 
 // MARK: - Document
@@ -34,18 +33,5 @@ struct Place: Codable {
         case roadAddressName = "road_address_name"
         case longitude = "x"
         case latitude = "y"
-    }
-}
-
-// MARK: - Meta
-struct Meta: Codable {
-    let isEnd: Bool
-    let pageableCount: Int
-    let totalCount: Int
-
-    enum CodingKeys: String, CodingKey {
-        case isEnd = "is_end"
-        case pageableCount = "pageable_count"
-        case totalCount = "total_count"
     }
 }

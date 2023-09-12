@@ -10,6 +10,8 @@ import Foundation
 enum ConfigurationsKey: String {
     case nonce = "Nonce"
     case baseURL = "BaseURL"
+    case kakaoURL = "KakaoURL"
+    case kakaoToken = "KakaoToken"
 }
 
 @propertyWrapper

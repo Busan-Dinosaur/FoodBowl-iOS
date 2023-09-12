@@ -11,13 +11,13 @@ import Moya
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
-    
+
     private let provider = MoyaProvider<UserAPI>()
 
     func scene(_ scene: UIScene, willConnectTo _: UISceneSession, options _: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
-        
+
         let isLogin = UserDefaultStorage.isLogin
         window?.rootViewController = UINavigationController(
             rootViewController: isLogin ? TabBarController() : OnboardingViewController()
