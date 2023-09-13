@@ -11,22 +11,21 @@ import SnapKit
 import Then
 
 final class UserInfoTableViewCell: BaseTableViewCell {
-    var userButtonTapAction: ((UserInfoTableViewCell) -> Void)?
     var followButtonTapAction: ((UserInfoTableViewCell) -> Void)?
 
     // MARK: - property
-    let userImageButton = UIButton().then {
-        $0.backgroundColor = .grey003
+    let userImageView = UIImageView().then {
+        $0.image = ImageLiteral.defaultProfile
         $0.layer.cornerRadius = 20
         $0.layer.masksToBounds = true
         $0.layer.borderColor = UIColor.grey002.cgColor
         $0.layer.borderWidth = 1
     }
 
-    let userNameButton = UIButton().then {
-        $0.setTitle("홍길동", for: .normal)
-        $0.setTitleColor(.mainText, for: .normal)
-        $0.titleLabel?.font = .preferredFont(forTextStyle: .subheadline, weight: .medium)
+    let userNameLabel = UILabel().then {
+        $0.font = UIFont.preferredFont(forTextStyle: .subheadline, weight: .medium)
+        $0.textColor = .mainText
+        $0.text = "홍길동"
     }
 
     let userFollowerLabel = UILabel().then {
@@ -39,23 +38,23 @@ final class UserInfoTableViewCell: BaseTableViewCell {
 
     // MARK: - func
     override func setupLayout() {
-        contentView.addSubviews(userImageButton, userNameButton, userFollowerLabel, followButton)
+        contentView.addSubviews(userImageView, userNameLabel, userFollowerLabel, followButton)
 
-        userImageButton.snp.makeConstraints {
+        userImageView.snp.makeConstraints {
             $0.leading.equalToSuperview().inset(BaseSize.horizantalPadding)
             $0.centerY.equalToSuperview()
             $0.width.height.equalTo(40)
         }
 
-        userNameButton.snp.makeConstraints {
-            $0.leading.equalTo(userImageButton.snp.trailing).offset(12)
+        userNameLabel.snp.makeConstraints {
+            $0.leading.equalTo(userImageView.snp.trailing).offset(12)
             $0.top.equalToSuperview().inset(14)
             $0.height.equalTo(18)
         }
 
         userFollowerLabel.snp.makeConstraints {
-            $0.leading.equalTo(userImageButton.snp.trailing).offset(12)
-            $0.top.equalTo(userNameButton.snp.bottom).offset(2)
+            $0.leading.equalTo(userImageView.snp.trailing).offset(12)
+            $0.top.equalTo(userNameLabel.snp.bottom).offset(4)
         }
 
         followButton.snp.makeConstraints {
@@ -67,8 +66,8 @@ final class UserInfoTableViewCell: BaseTableViewCell {
     }
 
     override func configureUI() {
-        userImageButton.addAction(UIAction { _ in self.userButtonTapAction?(self) }, for: .touchUpInside)
-        userNameButton.addAction(UIAction { _ in self.userButtonTapAction?(self) }, for: .touchUpInside)
         followButton.addAction(UIAction { _ in self.followButtonTapAction?(self) }, for: .touchUpInside)
+
+        backgroundColor = .clear
     }
 }

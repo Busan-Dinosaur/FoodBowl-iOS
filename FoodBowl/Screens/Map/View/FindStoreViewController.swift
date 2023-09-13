@@ -11,11 +11,7 @@ import SnapKit
 import Then
 
 final class FindStoreViewController: BaseViewController {
-    private lazy var searchBar = UISearchBar().then {
-        $0.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width - 80, height: 0)
-        $0.placeholder = "가게의 이름을 검색해주세요."
-        $0.delegate = self
-    }
+    var delegate: FindStoreViewControllerDelegate?
 
     private lazy var storeResultTableView = UITableView().then {
         $0.register(StoreInfoTableViewCell.self, forCellReuseIdentifier: StoreInfoTableViewCell.className)
@@ -31,22 +27,6 @@ final class FindStoreViewController: BaseViewController {
         storeResultTableView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
-    }
-
-    override func setupNavigationBar() {
-        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: searchBar)
-    }
-}
-
-extension FindStoreViewController: UISearchBarDelegate {
-    private func dissmissKeyboard() {
-        searchBar.resignFirstResponder()
-    }
-
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        dissmissKeyboard()
-        guard let searchTerm = searchBar.text, searchTerm.isEmpty == false else { return }
-        print(searchTerm)
     }
 }
 
@@ -75,6 +55,10 @@ extension FindStoreViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_: UITableView, didSelectRowAt _: IndexPath) {
         let storeDetailViewController = StoreDetailViewController()
         storeDetailViewController.title = "틈새라면"
-        navigationController?.pushViewController(storeDetailViewController, animated: true)
+        delegate?.setStore(storeDetailViewController: storeDetailViewController)
     }
+}
+
+protocol FindStoreViewControllerDelegate: AnyObject {
+    func setStore(storeDetailViewController: StoreDetailViewController)
 }

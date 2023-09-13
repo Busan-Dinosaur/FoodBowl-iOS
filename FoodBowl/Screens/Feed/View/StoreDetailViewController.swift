@@ -99,11 +99,21 @@ extension StoreDetailViewController: UICollectionViewDataSource, UICollectionVie
         cell.optionButtonTapAction = { [weak self] _ in
             let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
 
-            let report = UIAlertAction(title: "신고하기", style: .destructive, handler: { _ in
+            let edit = UIAlertAction(title: "수정", style: .default, handler: { _ in
+                let editFeedViewModel = EditFeedViewModel()
+                let editReviewViewController = EditFeedViewController(viewModel: editFeedViewModel)
+                let navigationController = UINavigationController(rootViewController: editReviewViewController)
+                navigationController.modalPresentationStyle = .fullScreen
+                DispatchQueue.main.async {
+                    self?.present(navigationController, animated: true)
+                }
+            })
+            let report = UIAlertAction(title: "신고", style: .destructive, handler: { _ in
                 self?.sendReportMail()
             })
             let cancel = UIAlertAction(title: "취소", style: .cancel, handler: nil)
 
+            alert.addAction(edit)
             alert.addAction(cancel)
             alert.addAction(report)
 

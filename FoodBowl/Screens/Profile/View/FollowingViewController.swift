@@ -49,11 +49,6 @@ extension FollowingViewController: UITableViewDataSource, UITableViewDelegate {
 
         cell.selectionStyle = .none
 
-        cell.userButtonTapAction = { [weak self] _ in
-            let profileViewController = ProfileViewController(isOwn: false)
-            self?.navigationController?.pushViewController(profileViewController, animated: true)
-        }
-
         cell.followButtonTapAction = { [weak self] _ in
             cell.followButton.isSelected.toggle()
         }
@@ -63,5 +58,10 @@ extension FollowingViewController: UITableViewDataSource, UITableViewDelegate {
 
     func tableView(_: UITableView, heightForRowAt _: IndexPath) -> CGFloat {
         return 64
+    }
+
+    func tableView(_: UITableView, didSelectRowAt _: IndexPath) {
+        let profileViewController = ProfileViewController(isOwn: false)
+        navigationController?.pushViewController(profileViewController, animated: true)
     }
 }

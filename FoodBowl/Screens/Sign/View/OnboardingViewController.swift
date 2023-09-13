@@ -21,10 +21,16 @@ final class OnboardingViewController: BaseViewController {
     }
 
     // MARK: - property
-    private let appLogoView = UILabel().then {
+    private let titleLabel = UILabel().then {
         $0.font = .font(.regular, ofSize: 50)
         $0.textColor = .mainText
         $0.text = "FoodBowl"
+    }
+
+    private let subTitleLabel = UILabel().then {
+        $0.font = .font(.regular, ofSize: 30)
+        $0.textColor = .mainText
+        $0.text = "Just Do Eat"
     }
 
     private let guideLabel = UILabel().then {
@@ -57,21 +63,26 @@ final class OnboardingViewController: BaseViewController {
     }
 
     override func setupLayout() {
-        view.addSubviews(appLogoView, guideLabel, appleLoginButton)
+        view.addSubviews(titleLabel, subTitleLabel, guideLabel, appleLoginButton)
 
-        appLogoView.snp.makeConstraints {
+        titleLabel.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).inset(100)
             $0.centerX.equalToSuperview()
         }
 
+        subTitleLabel.snp.makeConstraints {
+            $0.top.equalTo(titleLabel.snp.bottom).offset(40)
+            $0.centerX.equalToSuperview()
+        }
+
         guideLabel.snp.makeConstraints {
-            $0.top.equalTo(appLogoView.snp.bottom).offset(40)
+            $0.top.equalTo(subTitleLabel.snp.bottom).offset(100)
             $0.centerX.equalToSuperview()
         }
 
         appleLoginButton.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview().inset(BaseSize.horizantalPadding)
-            $0.bottom.equalTo(view.safeAreaLayoutGuide)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(BaseSize.bottomPadding)
             $0.height.equalTo(60)
         }
     }

@@ -66,7 +66,7 @@ class MapViewController: BaseViewController {
 
     lazy var mapHeaderView = MapHeaderView().then {
         let findAction = UIAction { [weak self] _ in
-            let findChooseViewController = FindChooseViewController()
+            let findChooseViewController = FindViewController()
             let navigationController = UINavigationController(rootViewController: findChooseViewController)
             navigationController.modalPresentationStyle = .fullScreen
             DispatchQueue.main.async {
@@ -197,11 +197,21 @@ class MapViewController: BaseViewController {
                 modalMaxState()
             }
 
-            modalView.snp.remakeConstraints {
-                $0.top.equalTo(grabbarView.snp.bottom)
-                $0.leading.trailing.bottom.equalToSuperview()
-                $0.height.equalTo(currentModalHeight)
-            }
+            UIView.animate(
+                withDuration: 0.5,
+                delay: 0,
+                usingSpringWithDamping: 0.5,
+                initialSpringVelocity: 0.5,
+                options: .curveEaseInOut,
+                animations: {
+                    self.modalView.snp.updateConstraints {
+                        $0.top.equalTo(self.grabbarView.snp.bottom)
+                        $0.leading.trailing.bottom.equalToSuperview()
+                        $0.height.equalTo(self.currentModalHeight)
+                    }
+                    self.modalView.superview?.layoutIfNeeded()
+                }
+            )
         }
     }
 
