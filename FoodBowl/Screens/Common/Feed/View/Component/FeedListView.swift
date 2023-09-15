@@ -13,12 +13,14 @@ import Then
 final class FeedListView: ModalView {
     private enum Size {
         static let collectionInset = UIEdgeInsets(
-            top: 0,
+            top: 10,
             left: 0,
-            bottom: 20,
+            bottom: 10,
             right: 0
         )
     }
+
+    private var refreshControl = UIRefreshControl()
 
     private lazy var isBookmarked = [Bool](repeating: false, count: 10)
 
@@ -38,9 +40,16 @@ final class FeedListView: ModalView {
         }
     }
 
-    override func configureUI() {
-        backgroundColor = .mainBackground
+    override func setupRefreshControl() {
+        let action = UIAction { [weak self] _ in
+            self?.loadData()
+        }
+        refreshControl.addAction(action, for: .valueChanged)
+        refreshControl.tintColor = .grey002
+        listCollectionView.refreshControl = refreshControl
     }
+
+    func loadData() {}
 }
 
 extension FeedListView {

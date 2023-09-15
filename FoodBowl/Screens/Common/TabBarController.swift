@@ -9,10 +9,9 @@ import UIKit
 
 final class TabBarController: UITabBarController {
     private let vc1 = UINavigationController(rootViewController: FriendViewController())
-    private let vc2 = UINavigationController(rootViewController: BookmarkViewController())
-    private let vc3 = UINavigationController(rootViewController: FindViewController())
-    private let vc4 = UINavigationController(rootViewController: UnivViewController())
-    private let vc5 = UINavigationController(rootViewController: ProfileViewController(isOwn: true))
+    private let vc2 = UINavigationController(rootViewController: FindViewController())
+    private let vc3 = UINavigationController(rootViewController: UnivViewController())
+    private let vc4 = UINavigationController(rootViewController: ProfileViewController(isOwn: true))
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,25 +20,21 @@ final class TabBarController: UITabBarController {
             .resize(to: CGSize(width: 20, height: 20))
         vc1.tabBarItem.title = "친구들"
 
-        vc2.tabBarItem.image = ImageLiteral.bookmark
+        vc2.tabBarItem.image = ImageLiteral.search
             .resize(to: CGSize(width: 20, height: 20))
-        vc2.tabBarItem.title = "북마크"
+        vc2.tabBarItem.title = "찾기"
 
-        vc3.tabBarItem.image = ImageLiteral.search
+        vc3.tabBarItem.image = ImageLiteral.univ
             .resize(to: CGSize(width: 20, height: 20))
-        vc3.tabBarItem.title = "찾기"
+        vc3.tabBarItem.title = "대학가"
 
-        vc4.tabBarItem.image = ImageLiteral.univ
+        vc4.tabBarItem.image = ImageLiteral.profile
             .resize(to: CGSize(width: 20, height: 20))
-        vc4.tabBarItem.title = "대학가"
-
-        vc5.tabBarItem.image = ImageLiteral.profile
-            .resize(to: CGSize(width: 20, height: 20))
-        vc5.tabBarItem.title = "프로필"
+        vc4.tabBarItem.title = "프로필"
 
         tabBar.tintColor = .mainPink
         tabBar.backgroundColor = .mainBackground
-        setViewControllers([vc1, vc2, vc3, vc4, vc5], animated: true)
+        setViewControllers([vc1, vc2, vc3, vc4], animated: true)
 
         let tabBarAppearance: UITabBarAppearance = .init()
         tabBarAppearance.configureWithDefaultBackground()

@@ -12,6 +12,10 @@ import Then
 
 class ModalView: UIView {
     // MARK: - property
+    let borderLineView = UIView().then {
+        $0.backgroundColor = .grey003
+    }
+
     var collectionViewFlowLayout: UICollectionViewFlowLayout = .init()
 
     lazy var listCollectionView: UICollectionView = .init()
@@ -22,6 +26,7 @@ class ModalView: UIView {
         setupProperty()
         setupLayout()
         configureUI()
+        setupRefreshControl()
     }
 
     @available(*, unavailable)
@@ -32,14 +37,23 @@ class ModalView: UIView {
     func setupProperty() {}
 
     func setupLayout() {
-        addSubviews(listCollectionView)
+        addSubviews(borderLineView, listCollectionView)
+
+        borderLineView.snp.makeConstraints {
+            $0.top.equalToSuperview()
+            $0.leading.trailing.equalToSuperview().inset(BaseSize.horizantalPadding)
+            $0.height.equalTo(1)
+        }
 
         listCollectionView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
+            $0.top.equalTo(borderLineView.snp.bottom)
+            $0.leading.trailing.bottom.equalToSuperview()
         }
     }
 
     func configureUI() {
         backgroundColor = .mainBackground
     }
+
+    func setupRefreshControl() {}
 }

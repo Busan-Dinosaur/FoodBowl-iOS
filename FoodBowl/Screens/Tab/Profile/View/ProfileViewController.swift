@@ -27,43 +27,6 @@ final class ProfileViewController: MapViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
-    private lazy var plusButton = PlusButton().then {
-        let action = UIAction { [weak self] _ in
-            let addFeedViewController = NewFeedViewController()
-            let navigationController = UINavigationController(rootViewController: addFeedViewController)
-            navigationController.modalPresentationStyle = .fullScreen
-            DispatchQueue.main.async {
-                self?.present(navigationController, animated: true)
-            }
-        }
-        $0.addAction(action, for: .touchUpInside)
-    }
-
-    private lazy var settingButton = SettingButton().then {
-        let settingAction = UIAction { [weak self] _ in
-            let settingViewController = SettingViewController()
-            self?.navigationController?.pushViewController(settingViewController, animated: true)
-        }
-        $0.addAction(settingAction, for: .touchUpInside)
-    }
-
-    private lazy var optionButton = OptionButton().then {
-        let optionButtonAction = UIAction { [weak self] _ in
-            let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-
-            let report = UIAlertAction(title: "신고하기", style: .destructive, handler: { _ in
-                self?.sendReportMail()
-            })
-            let cancel = UIAlertAction(title: "취소", style: .cancel, handler: nil)
-
-            alert.addAction(cancel)
-            alert.addAction(report)
-
-            self?.present(alert, animated: true, completion: nil)
-        }
-        $0.addAction(optionButtonAction, for: .touchUpInside)
-    }
-
     let userNicknameLabel = PaddingLabel().then {
         $0.font = UIFont.preferredFont(forTextStyle: .title2, weight: .bold)
         $0.text = "coby5502"

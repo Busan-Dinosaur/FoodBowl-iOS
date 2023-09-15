@@ -37,7 +37,46 @@ class MapViewController: BaseViewController {
 
     // MARK: - property
 
-    private lazy var mapView = MKMapView().then {
+    let bookmarkToggleButton = BookmarkToggleButton()
+
+    lazy var plusButton = PlusButton().then {
+        let action = UIAction { [weak self] _ in
+            let addFeedViewController = NewFeedViewController()
+            let navigationController = UINavigationController(rootViewController: addFeedViewController)
+            navigationController.modalPresentationStyle = .fullScreen
+            DispatchQueue.main.async {
+                self?.present(navigationController, animated: true)
+            }
+        }
+        $0.addAction(action, for: .touchUpInside)
+    }
+
+    lazy var settingButton = SettingButton().then {
+        let settingAction = UIAction { [weak self] _ in
+            let settingViewController = SettingViewController()
+            self?.navigationController?.pushViewController(settingViewController, animated: true)
+        }
+        $0.addAction(settingAction, for: .touchUpInside)
+    }
+
+    lazy var optionButton = OptionButton().then {
+        let optionButtonAction = UIAction { [weak self] _ in
+            let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+
+            let report = UIAlertAction(title: "신고하기", style: .destructive, handler: { _ in
+                self?.sendReportMail()
+            })
+            let cancel = UIAlertAction(title: "취소", style: .cancel, handler: nil)
+
+            alert.addAction(cancel)
+            alert.addAction(report)
+
+            self?.present(alert, animated: true, completion: nil)
+        }
+        $0.addAction(optionButtonAction, for: .touchUpInside)
+    }
+
+    lazy var mapView = MKMapView().then {
         $0.delegate = self
         $0.mapType = MKMapType.standard
         $0.showsUserLocation = true
@@ -185,19 +224,19 @@ class MapViewController: BaseViewController {
     func modalMinState() {
         grabbarView.showResult()
         modalView.listCollectionView.isHidden = true
+        modalView.borderLineView.isHidden = true
         tabBarController?.tabBar.frame.origin = CGPoint(x: 0, y: UIScreen.main.bounds.maxY)
     }
 
     func modalMidState() {
         grabbarView.showContent()
         modalView.listCollectionView.isHidden = false
+        modalView.borderLineView.isHidden = false
         tabBarController?.tabBar.frame.origin = CGPoint(x: 0, y: UIScreen.main.bounds.maxY - tabBarHeight)
         grabbarView.layer.cornerRadius = 15
     }
 
     func modalMaxState() {
-        grabbarView.showContent()
-        tabBarController?.tabBar.frame.origin = CGPoint(x: 0, y: UIScreen.main.bounds.maxY - tabBarHeight)
         grabbarView.layer.cornerRadius = 0
     }
 
