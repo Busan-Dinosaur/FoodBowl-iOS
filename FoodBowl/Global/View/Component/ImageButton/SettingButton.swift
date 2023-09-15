@@ -1,13 +1,13 @@
 //
-//  PlusButton.swift
+//  SettingButton.swift
 //  FoodBowl
 //
-//  Created by COBY_PRO on 2023/01/10.
+//  Created by COBY_PRO on 2022/12/24.
 //
 
 import UIKit
 
-final class PlusButton: UIButton {
+final class SettingButton: UIButton {
     // MARK: - init
     override init(frame _: CGRect) {
         super.init(frame: .init(origin: .zero, size: .init(width: 30, height: 30)))
@@ -21,7 +21,10 @@ final class PlusButton: UIButton {
 
     // MARK: - life cycle
     private func configureUI() {
-        setImage(ImageLiteral.btnPlus.resize(to: CGSize(width: 20, height: 20)).withRenderingMode(.alwaysTemplate), for: .normal)
+        setImage(
+            ImageLiteral.btnSetting.resize(to: CGSize(width: 20, height: 20)),
+            for: .normal
+        )
         tintColor = .mainText
     }
 }

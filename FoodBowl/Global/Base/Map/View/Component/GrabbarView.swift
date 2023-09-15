@@ -31,8 +31,6 @@ final class GrabbarView: UIView {
         super.init(frame: frame)
         setupLayout()
         configureUI()
-        showContent()
-        showResult()
     }
 
     @available(*, unavailable)
@@ -67,7 +65,19 @@ final class GrabbarView: UIView {
         layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
     }
 
-    func showContent() {}
+    func showContent() {
+        modalTitleLabel.isHidden = false
+        modalResultLabel.snp.remakeConstraints {
+            $0.top.equalTo(grabbar.snp.bottom).offset(26)
+            $0.trailing.equalToSuperview().inset(BaseSize.horizantalPadding)
+        }
+    }
 
-    func showResult() {}
+    func showResult() {
+        modalTitleLabel.isHidden = true
+        modalResultLabel.snp.remakeConstraints {
+            $0.top.equalTo(grabbar.snp.bottom).offset(26)
+            $0.centerX.equalToSuperview()
+        }
+    }
 }

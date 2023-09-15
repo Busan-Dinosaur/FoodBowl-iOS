@@ -406,6 +406,64 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
+		CB49256C2AB44CFE00B66B68 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				CBADC27829559BC900E56C93 /* Component */,
+				CB49256D2AB44D0E00B66B68 /* Cell */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		CB49256D2AB44D0E00B66B68 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				CB2E4F7E297702A800FD2566 /* StoreInfoTableViewCell.swift */,
+				CB2E4F80297702B800FD2566 /* UserInfoTableViewCell.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		CB49256E2AB44D4400B66B68 /* Find */ = {
+			isa = PBXGroup;
+			children = (
+				CB49256F2AB44D5500B66B68 /* View */,
+			);
+			path = Find;
+			sourceTree = "<group>";
+		};
+		CB49256F2AB44D5500B66B68 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				CBA62D3E2A6EC7B800AA0830 /* FindViewController.swift */,
+				CBFB52602977C9AB0049E8BA /* FindStoreViewController.swift */,
+				CBA62D402A6ECB3B00AA0830 /* FindUserViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		CB4925702AB44D7100B66B68 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				CB26A3ED2A6AC9910043A642 /* Feed */,
+				CBADC2B02955A13800E56C93 /* NewFeed */,
+				CBADC2CE2955A41500E56C93 /* TabBarController.swift */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		CB4925712AB44D9E00B66B68 /* Tab */ = {
+			isa = PBXGroup;
+			children = (
+				CBE6190D296C6423005295AF /* Friend */,
+				CBCD0F802A66DA2A00A51B32 /* Bookmark */,
+				CB49256E2AB44D4400B66B68 /* Find */,
+				CBCD0F7D2A66DA0B00A51B32 /* Univ */,
+				CBADC2A52955A07B00E56C93 /* Profile */,
+			);
+			path = Tab;
+			sourceTree = "<group>";
+		};
 		CB63B7592A6986B4000AD9C2 /* Map */ = {
 			isa = PBXGroup;
 			children = (
@@ -429,8 +487,6 @@
 			isa = PBXGroup;
 			children = (
 				CBB58283297440A600808B0B /* CategoryCollectionViewCell.swift */,
-				CB2E4F7E297702A800FD2566 /* StoreInfoTableViewCell.swift */,
-				CB2E4F80297702B800FD2566 /* UserInfoTableViewCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -441,10 +497,6 @@
 				CB63B75A2A6986BE000AD9C2 /* Component */,
 				CB63B75B2A6986C8000AD9C2 /* Cell */,
 				CBE6190E296C6435005295AF /* MapViewController.swift */,
-				CBA62D3E2A6EC7B800AA0830 /* FindViewController.swift */,
-				CBFB52602977C9AB0049E8BA /* FindStoreViewController.swift */,
-				CBA62D402A6ECB3B00AA0830 /* FindUserViewController.swift */,
-				CBB582812973007D00808B0B /* ShowWebViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -493,9 +545,9 @@
 		CBADC25129559BC900E56C93 /* Global */ = {
 			isa = PBXGroup;
 			children = (
-				CB1578FC2AAC5D2700007183 /* Protocol */,
-				CBADC27829559BC900E56C93 /* Component */,
 				CBADC27429559BC900E56C93 /* Base */,
+				CB49256C2AB44CFE00B66B68 /* View */,
+				CB1578FC2AAC5D2700007183 /* Protocol */,
 				CBADC25A29559BC900E56C93 /* Utils */,
 				CBADC25829559BC900E56C93 /* Literal */,
 				CBADC26129559BC900E56C93 /* Extensions */,
@@ -508,7 +560,6 @@
 		CBADC25229559BC900E56C93 /* Supports */ = {
 			isa = PBXGroup;
 			children = (
-				CBADC2CE2955A41500E56C93 /* TabBarController.swift */,
 				CBC73103295550A100C7F198 /* AppDelegate.swift */,
 				CBC73105295550A100C7F198 /* SceneDelegate.swift */,
 				CBC73111295550A200C7F198 /* Info.plist */,
@@ -571,6 +622,8 @@
 		CBADC27429559BC900E56C93 /* Base */ = {
 			isa = PBXGroup;
 			children = (
+				CB63B7592A6986B4000AD9C2 /* Map */,
+				CBB582812973007D00808B0B /* ShowWebViewController.swift */,
 				CBADC27529559BC900E56C93 /* BaseViewController.swift */,
 				CBADC27629559BC900E56C93 /* BaseTableViewCell.swift */,
 				CBADC27729559BC900E56C93 /* BaseCollectionViewCell.swift */,
@@ -613,13 +666,8 @@
 			isa = PBXGroup;
 			children = (
 				CB981C28297A5A2900AF0167 /* Sign */,
-				CB63B7592A6986B4000AD9C2 /* Map */,
-				CB26A3ED2A6AC9910043A642 /* Feed */,
-				CBADC2B02955A13800E56C93 /* NewFeed */,
-				CBE6190D296C6423005295AF /* Friend */,
-				CBCD0F802A66DA2A00A51B32 /* Bookmark */,
-				CBCD0F7D2A66DA0B00A51B32 /* Univ */,
-				CBADC2A52955A07B00E56C93 /* Profile */,
+				CB4925702AB44D7100B66B68 /* Common */,
+				CB4925712AB44D9E00B66B68 /* Tab */,
 			);
 			path = Screens;
 			sourceTree = "<group>";

@@ -1,5 +1,5 @@
 //
-//  OptionButton.swift
+//  PlusButton.swift
 //  FoodBowl
 //
 //  Created by COBY_PRO on 2023/01/10.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class OptionButton: UIButton {
+final class PlusButton: UIButton {
     // MARK: - init
     override init(frame _: CGRect) {
         super.init(frame: .init(origin: .zero, size: .init(width: 30, height: 30)))
@@ -21,10 +21,7 @@ final class OptionButton: UIButton {
 
     // MARK: - life cycle
     private func configureUI() {
-        setImage(
-            ImageLiteral.btnOption.resize(to: CGSize(width: 20, height: 20)).withRenderingMode(.alwaysTemplate),
-            for: .normal
-        )
+        setImage(ImageLiteral.btnPlus.resize(to: CGSize(width: 20, height: 20)), for: .normal)
         tintColor = .mainText
     }
 }

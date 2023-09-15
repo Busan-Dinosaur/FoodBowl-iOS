@@ -10,9 +10,9 @@ import UIKit
 enum ImageLiteral {
     static var friends: UIImage { .load(name: "friends") }
     static var bookmark: UIImage { .load(name: "bookmark") }
+    static var search: UIImage { .load(name: "search") }
     static var univ: UIImage { .load(name: "univ") }
     static var profile: UIImage { .load(name: "profile") }
-    static var search: UIImage { .load(systemName: "magnifyingglass") }
 
     static var bookmarkFill: UIImage { .load(name: "bookmark_fill") }
 

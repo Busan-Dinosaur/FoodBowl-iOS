@@ -13,7 +13,7 @@ import Then
 final class SearchBarButton: UIButton {
     // MARK: - property
     private let searchIconView = UIImageView().then {
-        $0.image = ImageLiteral.search.withConfiguration(UIImage.SymbolConfiguration(scale: .medium))
+        $0.image = ImageLiteral.search.resize(to: CGSize(width: 20, height: 20))
         $0.tintColor = .subText
     }
 
