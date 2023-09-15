@@ -1,5 +1,5 @@
 //
-//  MapHeaderView.swift
+//  CategoryListView.swift
 //  FoodBowl
 //
 //  Created by COBY_PRO on 2023/07/21.
@@ -10,18 +10,10 @@ import UIKit
 import SnapKit
 import Then
 
-final class MapHeaderView: UIView {
-    enum Size {
-        static let SearchBarWidth: CGFloat = BaseSize.fullWidth - 40
-    }
-
+final class CategoryListView: UIView {
     private let categories = Categories.allCases
 
     // MARK: - property
-    let searchBarButton = SearchBarButton()
-
-    let plusButton = PlusButton()
-
     private let collectionViewFlowLayout = UICollectionViewFlowLayout().then {
         $0.scrollDirection = .horizontal
         $0.sectionInset = BaseSize.collectionInset
@@ -52,24 +44,10 @@ final class MapHeaderView: UIView {
 
     // MARK: - life cycle
     private func setupLayout() {
-        addSubviews(searchBarButton, plusButton, listCollectionView)
-
-        searchBarButton.snp.makeConstraints {
-            $0.top.equalTo(safeAreaLayoutGuide)
-            $0.leading.equalToSuperview().inset(BaseSize.horizantalPadding)
-            $0.width.equalTo(Size.SearchBarWidth)
-            $0.height.equalTo(40)
-        }
-
-        plusButton.snp.makeConstraints {
-            $0.centerY.equalTo(searchBarButton)
-            $0.trailing.equalToSuperview().inset(BaseSize.horizantalPadding)
-            $0.width.height.equalTo(20)
-        }
+        addSubviews(listCollectionView)
 
         listCollectionView.snp.makeConstraints {
-            $0.top.equalTo(searchBarButton.snp.bottom).offset(10)
-            $0.leading.trailing.equalToSuperview()
+            $0.edges.equalToSuperview()
             $0.height.equalTo(30)
         }
     }
@@ -80,7 +58,7 @@ final class MapHeaderView: UIView {
 }
 
 // MARK: - UICollectionViewDataSource, UICollectionViewDelegate
-extension MapHeaderView: UICollectionViewDataSource, UICollectionViewDelegate {
+extension CategoryListView: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_: UICollectionView, numberOfItemsInSection _: Int) -> Int {
         return categories.count
     }

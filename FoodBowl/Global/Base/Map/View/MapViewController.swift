@@ -26,19 +26,18 @@ class MapViewController: BaseViewController {
             return topPadding
         }()
 
-        static let mapHeaderHeight: CGFloat = topPadding + 90
         static let modalMinHeight: CGFloat = 40
         static let modalMidHeight: CGFloat = UIScreen.main.bounds.height / 2 - 100
     }
 
-    var panGesture = UIPanGestureRecognizer()
+    private var panGesture = UIPanGestureRecognizer()
 
     lazy var tabBarHeight: CGFloat = tabBarController?.tabBar.frame.height ?? 0
-    lazy var modalMaxHeight: CGFloat = UIScreen.main.bounds.height - Size.mapHeaderHeight - 80
+    lazy var modalMaxHeight: CGFloat = UIScreen.main.bounds.height - 30 - 80
     var currentModalHeight: CGFloat = 0
 
     // MARK: - property
-    lazy var mapView = MKMapView().then {
+    private lazy var mapView = MKMapView().then {
         $0.delegate = self
         $0.mapType = MKMapType.standard
         $0.showsUserLocation = true
@@ -64,26 +63,7 @@ class MapViewController: BaseViewController {
         $0.tintColor = UIColor.mainPink
     }
 
-    lazy var mapHeaderView = MapHeaderView().then {
-        let findAction = UIAction { [weak self] _ in
-            let findChooseViewController = FindViewController()
-            let navigationController = UINavigationController(rootViewController: findChooseViewController)
-            navigationController.modalPresentationStyle = .fullScreen
-            DispatchQueue.main.async {
-                self?.present(navigationController, animated: true)
-            }
-        }
-        let plusAction = UIAction { [weak self] _ in
-            let newFeedViewController = NewFeedViewController()
-            let navigationController = UINavigationController(rootViewController: newFeedViewController)
-            navigationController.modalPresentationStyle = .fullScreen
-            DispatchQueue.main.async {
-                self?.present(navigationController, animated: true)
-            }
-        }
-        $0.searchBarButton.addAction(findAction, for: .touchUpInside)
-        $0.plusButton.addAction(plusAction, for: .touchUpInside)
-    }
+    let categoryListView = CategoryListView()
 
     let grabbarView = GrabbarView()
 
@@ -98,31 +78,23 @@ class MapViewController: BaseViewController {
         setMarkers()
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        navigationController?.isNavigationBarHidden = true
-    }
-
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        navigationController?.isNavigationBarHidden = false
-    }
-
     override func setupLayout() {
-        view.addSubviews(mapView, mapHeaderView, trakingButton, grabbarView, modalView)
+        view.addSubviews(mapView, categoryListView, trakingButton, grabbarView, modalView)
 
         mapView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
+            $0.top.equalTo(view.safeAreaLayoutGuide)
+            $0.leading.trailing.bottom.equalToSuperview()
         }
 
-        mapHeaderView.snp.makeConstraints {
-            $0.top.leading.trailing.equalToSuperview()
-            $0.height.equalTo(Size.mapHeaderHeight)
+        categoryListView.snp.makeConstraints {
+            $0.top.equalTo(view.safeAreaLayoutGuide)
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(50)
         }
 
         trakingButton.snp.makeConstraints {
             $0.trailing.equalToSuperview().inset(BaseSize.horizantalPadding)
-            $0.top.equalTo(mapHeaderView.snp.bottom).offset(20)
+            $0.top.equalTo(categoryListView.snp.bottom).offset(20)
             $0.height.width.equalTo(40)
         }
 
@@ -144,11 +116,6 @@ class MapViewController: BaseViewController {
         grabbarView.isUserInteractionEnabled = true
         grabbarView.addGestureRecognizer(panGesture)
         currentModalHeight = Size.modalMidHeight
-    }
-
-    override func setupNavigationBar() {
-        super.setupNavigationBar()
-        navigationController?.isNavigationBarHidden = true
     }
 
     func currentLocation() {

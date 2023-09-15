@@ -13,7 +13,7 @@ import SnapKit
 import Then
 
 final class ProfileViewController: MapViewController {
-    var isOwn: Bool
+    private var isOwn: Bool
 
     private var viewModel = ProfileViewModel()
 
@@ -64,10 +64,12 @@ final class ProfileViewController: MapViewController {
         $0.addAction(optionButtonAction, for: .touchUpInside)
     }
 
-    let userNicknameLabel = UILabel().then {
+    let userNicknameLabel = PaddingLabel().then {
         $0.font = UIFont.preferredFont(forTextStyle: .title2, weight: .bold)
         $0.text = "coby5502"
         $0.textColor = .mainText
+        $0.padding = UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 0)
+        $0.frame = CGRect(x: 0, y: 0, width: 150, height: 0)
     }
 
     private lazy var profileHeaderView = ProfileHeaderView().then {
@@ -131,7 +133,7 @@ final class ProfileViewController: MapViewController {
 
     override func setupLayout() {
         super.setupLayout()
-        mapHeaderView.removeFromSuperview()
+        categoryListView.removeFromSuperview()
         view.addSubviews(profileHeaderView)
 
         profileHeaderView.snp.makeConstraints {
@@ -159,7 +161,6 @@ final class ProfileViewController: MapViewController {
 
     override func setupNavigationBar() {
         super.setupNavigationBar()
-        navigationController?.isNavigationBarHidden = true
 
         if isOwn {
             let userNicknameLabel = makeBarButtonItem(with: userNicknameLabel)

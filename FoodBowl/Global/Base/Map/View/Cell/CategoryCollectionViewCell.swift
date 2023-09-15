@@ -34,13 +34,13 @@ final class CategoryCollectionViewCell: BaseCollectionViewCell {
 
         categoryLabel.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview().inset(14)
-            $0.top.bottom.equalToSuperview().inset(7)
+            $0.top.bottom.equalToSuperview().inset(6)
         }
     }
 
     override func configureUI() {
         backgroundColor = .mainBackground
-        layer.cornerRadius = 15
+        layer.cornerRadius = 14
         layer.borderWidth = 1
         layer.borderColor = UIColor.grey002.cgColor
     }
