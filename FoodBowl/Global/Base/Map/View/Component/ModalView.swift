@@ -40,8 +40,7 @@ class ModalView: UIView {
         addSubviews(borderLineView, listCollectionView)
 
         borderLineView.snp.makeConstraints {
-            $0.top.equalToSuperview()
-            $0.leading.trailing.equalToSuperview().inset(BaseSize.horizantalPadding)
+            $0.top.leading.trailing.equalToSuperview()
             $0.height.equalTo(1)
         }
 

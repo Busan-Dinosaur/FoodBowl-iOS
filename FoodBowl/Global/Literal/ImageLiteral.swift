@@ -23,6 +23,7 @@ enum ImageLiteral {
     static var btnForward: UIImage { .load(systemName: "chevron.forward") }
     static var btnPlus: UIImage { .load(name: "plus") }
     static var btnOption: UIImage { .load(name: "option") }
+    static var btnFilter: UIImage { .load(name: "filter") }
     static var btnKakaomap: UIImage { .load(name: "kakaomap") }
     static var btnFeed: UIImage { .load(name: "feed") }
 

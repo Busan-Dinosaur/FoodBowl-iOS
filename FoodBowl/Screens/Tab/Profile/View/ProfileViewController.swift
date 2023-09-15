@@ -115,7 +115,6 @@ final class ProfileViewController: MapViewController {
     override func configureUI() {
         super.configureUI()
         modalMaxHeight = UIScreen.main.bounds.height - topPadding - navBarHeight - 180
-
         grabbarView.modalTitleLabel.text = "나의 맛집"
         grabbarView.modalResultLabel.text = "4개의 맛집, 10개의 후기"
     }

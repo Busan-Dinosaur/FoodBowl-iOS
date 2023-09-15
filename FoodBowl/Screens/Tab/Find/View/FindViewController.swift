@@ -11,27 +11,22 @@ import SnapKit
 import Then
 
 final class FindViewController: BaseViewController {
-    private lazy var searchBar = UISearchBar().then {
-        $0.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width - 80, height: 0)
-        $0.placeholder = "가게 이름을 검색해주세요"
+    let findGuideLabel = PaddingLabel().then {
+        $0.font = .font(.regular, ofSize: 22)
+        $0.text = "찾기"
+        $0.textColor = .mainText
+        $0.padding = UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 0)
+        $0.frame = CGRect(x: 0, y: 0, width: 150, height: 0)
     }
 
-    private lazy var cancelButton = UIButton().then {
-        $0.setTitle("취소", for: .normal)
-        $0.setTitleColor(.mainPink, for: .normal)
-        $0.titleLabel?.font = UIFont.preferredFont(forTextStyle: .headline, weight: .regular)
-        let buttonAction = UIAction { [weak self] _ in
-            self?.dismiss(animated: true, completion: nil)
-        }
-        $0.addAction(buttonAction, for: .touchUpInside)
-    }
+    private var searchBarView = SearchBarButton()
 
     private lazy var segmentedControl = UnderlineSegmentedControl(items: ["맛집", "유저"]).then {
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.setTitleTextAttributes(
             [
                 NSAttributedString.Key.foregroundColor: UIColor.subText,
-                .font: UIFont.preferredFont(forTextStyle: .footnote, weight: .regular)
+                .font: UIFont.preferredFont(forTextStyle: .subheadline, weight: .regular)
             ],
             for: .normal
         )
@@ -77,16 +72,22 @@ final class FindViewController: BaseViewController {
     }
 
     override func setupLayout() {
-        view.addSubviews(segmentedControl, pageViewController.view)
+        view.addSubviews(searchBarView, segmentedControl, pageViewController.view)
+
+        searchBarView.snp.makeConstraints {
+            $0.leading.trailing.equalToSuperview().inset(BaseSize.horizantalPadding)
+            $0.top.equalTo(view.safeAreaLayoutGuide)
+            $0.height.equalTo(40)
+        }
 
         segmentedControl.snp.makeConstraints {
-            $0.leading.trailing.equalToSuperview()
-            $0.top.equalToSuperview().inset(100)
+            $0.leading.trailing.equalToSuperview().inset(BaseSize.horizantalPadding)
+            $0.top.equalTo(searchBarView.snp.bottom).offset(4)
             $0.height.equalTo(40)
         }
 
         pageViewController.view.snp.makeConstraints {
-            $0.top.equalTo(segmentedControl.snp.bottom)
+            $0.top.equalTo(segmentedControl.snp.bottom).offset(4)
             $0.leading.trailing.bottom.equalToSuperview()
         }
     }
@@ -99,9 +100,9 @@ final class FindViewController: BaseViewController {
     }
 
     override func setupNavigationBar() {
-        let cancelButton = makeBarButtonItem(with: cancelButton)
-        navigationItem.rightBarButtonItem = cancelButton
-        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: searchBar)
+        super.setupNavigationBar()
+        let findGuideLabel = makeBarButtonItem(with: findGuideLabel)
+        navigationItem.leftBarButtonItem = findGuideLabel
     }
 
     @objc
@@ -142,18 +143,6 @@ extension FindViewController: UIPageViewControllerDataSource, UIPageViewControll
         else { return }
         currentPage = index
         segmentedControl.selectedSegmentIndex = index
-    }
-}
-
-extension FindViewController: UISearchBarDelegate {
-    private func dissmissKeyboard() {
-        searchBar.resignFirstResponder()
-    }
-
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        dissmissKeyboard()
-        guard let searchTerm = searchBar.text, searchTerm.isEmpty == false else { return }
-        print(searchTerm)
     }
 }
 

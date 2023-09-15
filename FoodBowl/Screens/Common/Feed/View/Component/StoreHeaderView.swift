@@ -40,6 +40,10 @@ final class StoreHeaderView: UIView {
 
     let bookmarkButton = BookmarkButton()
 
+    let borderLineView = UIView().then {
+        $0.backgroundColor = .grey003
+    }
+
     // MARK: - init
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -52,7 +56,7 @@ final class StoreHeaderView: UIView {
     }
 
     private func setupLayout() {
-        addSubviews(mapButton, storeNameLabel, categoryLabel, storeAddressLabel, bookmarkButton)
+        addSubviews(mapButton, storeNameLabel, categoryLabel, storeAddressLabel, bookmarkButton, borderLineView)
 
         mapButton.snp.makeConstraints {
             $0.top.equalToSuperview()
@@ -77,6 +81,11 @@ final class StoreHeaderView: UIView {
         bookmarkButton.snp.makeConstraints {
             $0.top.equalToSuperview().inset(10)
             $0.trailing.equalToSuperview().inset(BaseSize.horizantalPadding)
+        }
+
+        borderLineView.snp.makeConstraints {
+            $0.leading.trailing.bottom.equalToSuperview()
+            $0.height.equalTo(1)
         }
     }
 }

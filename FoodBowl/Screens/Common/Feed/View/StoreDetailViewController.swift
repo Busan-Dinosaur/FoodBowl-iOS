@@ -22,8 +22,6 @@ final class StoreDetailViewController: BaseViewController {
     }
 
     // MARK: - property
-    let switchButton = CustomSwitchButton(frame: CGRect(x: 0, y: 0, width: 60, height: 30))
-
     private var storeHeaderView = StoreHeaderView()
 
     private let collectionViewFlowLayout = DynamicHeightCollectionViewFlowLayout().then {
@@ -57,9 +55,6 @@ final class StoreDetailViewController: BaseViewController {
 
     override func setupNavigationBar() {
         super.setupNavigationBar()
-
-        let switchButton = makeBarButtonItem(with: switchButton)
-        navigationItem.rightBarButtonItem = switchButton
         title = "친구들의 리뷰"
     }
 }

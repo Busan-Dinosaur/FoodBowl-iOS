@@ -17,7 +17,6 @@ class MapViewController: BaseViewController {
     // 임시 마커 데이터
     private var marks: [Marker]?
 
-    // MARK: - height values
     lazy var topPadding: CGFloat = {
         let scenes = UIApplication.shared.connectedScenes
         let windowScene = scenes.first as? UIWindowScene
@@ -33,12 +32,11 @@ class MapViewController: BaseViewController {
     lazy var modalMaxHeight: CGFloat = UIScreen.main.bounds.height - topPadding - navBarHeight - 120
     var currentModalHeight: CGFloat = 0
 
+    var categoryListHeight: CGFloat = 40
+
     private var panGesture = UIPanGestureRecognizer()
 
-    // MARK: - property
-
-    let bookmarkToggleButton = BookmarkToggleButton()
-
+    // MARK: - propert
     lazy var plusButton = PlusButton().then {
         let action = UIAction { [weak self] _ in
             let addFeedViewController = NewFeedViewController()
@@ -52,11 +50,11 @@ class MapViewController: BaseViewController {
     }
 
     lazy var settingButton = SettingButton().then {
-        let settingAction = UIAction { [weak self] _ in
+        let action = UIAction { [weak self] _ in
             let settingViewController = SettingViewController()
             self?.navigationController?.pushViewController(settingViewController, animated: true)
         }
-        $0.addAction(settingAction, for: .touchUpInside)
+        $0.addAction(action, for: .touchUpInside)
     }
 
     lazy var optionButton = OptionButton().then {
@@ -102,6 +100,15 @@ class MapViewController: BaseViewController {
         $0.tintColor = UIColor.mainPink
     }
 
+    lazy var bookmarkButton = BookmarkButton().then {
+        $0.layer.backgroundColor = UIColor.mainBackground.cgColor
+        $0.layer.borderColor = UIColor.grey002.cgColor
+        $0.layer.borderWidth = 1
+        $0.layer.cornerRadius = 10
+        $0.layer.masksToBounds = true
+        $0.tintColor = UIColor.mainPink
+    }
+
     let categoryListView = CategoryListView()
 
     let grabbarView = GrabbarView()
@@ -118,7 +125,7 @@ class MapViewController: BaseViewController {
     }
 
     override func setupLayout() {
-        view.addSubviews(mapView, categoryListView, trakingButton, grabbarView, modalView)
+        view.addSubviews(mapView, categoryListView, trakingButton, bookmarkButton, grabbarView, modalView)
 
         mapView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide)
@@ -134,6 +141,12 @@ class MapViewController: BaseViewController {
         trakingButton.snp.makeConstraints {
             $0.trailing.equalToSuperview().inset(BaseSize.horizantalPadding)
             $0.top.equalTo(categoryListView.snp.bottom).offset(20)
+            $0.height.width.equalTo(40)
+        }
+
+        bookmarkButton.snp.makeConstraints {
+            $0.trailing.equalToSuperview().inset(BaseSize.horizantalPadding)
+            $0.top.equalTo(trakingButton.snp.bottom).offset(8)
             $0.height.width.equalTo(40)
         }
 
@@ -155,6 +168,7 @@ class MapViewController: BaseViewController {
         grabbarView.isUserInteractionEnabled = true
         grabbarView.addGestureRecognizer(panGesture)
         currentModalHeight = modalMidHeight
+        bookmarkButton.isHidden = true
     }
 
     func currentLocation() {
