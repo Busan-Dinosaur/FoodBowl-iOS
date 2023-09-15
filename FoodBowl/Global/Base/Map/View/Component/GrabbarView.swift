@@ -17,7 +17,7 @@ final class GrabbarView: UIView {
     }
 
     let modalTitleLabel = UILabel().then {
-        $0.font = UIFont.preferredFont(forTextStyle: .title2, weight: .bold)
+        $0.font = UIFont.preferredFont(forTextStyle: .title3, weight: .bold)
         $0.textColor = .mainText
     }
 
@@ -50,11 +50,12 @@ final class GrabbarView: UIView {
 
         modalTitleLabel.snp.makeConstraints {
             $0.top.equalTo(grabbar.snp.bottom).offset(20)
+            $0.bottom.equalToSuperview().inset(10)
             $0.leading.equalToSuperview().inset(BaseSize.horizantalPadding)
         }
 
         modalResultLabel.snp.makeConstraints {
-            $0.top.equalTo(grabbar.snp.bottom).offset(26)
+            $0.top.equalTo(grabbar.snp.bottom).offset(28)
             $0.trailing.equalToSuperview().inset(BaseSize.horizantalPadding)
         }
     }

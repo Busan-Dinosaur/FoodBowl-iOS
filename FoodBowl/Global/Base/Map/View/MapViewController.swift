@@ -17,27 +17,26 @@ class MapViewController: BaseViewController {
     // 임시 마커 데이터
     private var marks: [Marker]?
 
-    enum Size {
-        static let topPadding: CGFloat = {
-            let scenes = UIApplication.shared.connectedScenes
-            let windowScene = scenes.first as? UIWindowScene
-            let window = windowScene?.windows.first
-            let topPadding = window?.safeAreaInsets.top ?? 0
-            return topPadding
-        }()
+    // MARK: - height values
+    lazy var topPadding: CGFloat = {
+        let scenes = UIApplication.shared.connectedScenes
+        let windowScene = scenes.first as? UIWindowScene
+        let window = windowScene?.windows.first
+        let topPadding = window?.safeAreaInsets.top ?? 0
+        return topPadding
+    }()
 
-        static let modalMinHeight: CGFloat = 40
-        static let modalMidHeight: CGFloat = UIScreen.main.bounds.height / 2 - 100
-    }
+    let modalMinHeight: CGFloat = 40
+    let modalMidHeight: CGFloat = UIScreen.main.bounds.height / 2 - 100
+    lazy var tabBarHeight: CGFloat = tabBarController?.tabBar.frame.height ?? 0
+    lazy var navBarHeight: CGFloat = navigationController?.navigationBar.frame.height ?? 0
+    lazy var modalMaxHeight: CGFloat = UIScreen.main.bounds.height - topPadding - navBarHeight - 120
+    var currentModalHeight: CGFloat = 0
 
     private var panGesture = UIPanGestureRecognizer()
 
-    lazy var tabBarHeight: CGFloat = tabBarController?.tabBar.frame.height ?? 0
-    lazy var navBarHeight: CGFloat = navigationController?.navigationBar.frame.height ?? 0
-    lazy var modalMaxHeight: CGFloat = UIScreen.main.bounds.height - Size.topPadding - navBarHeight - 120
-    var currentModalHeight: CGFloat = 0
-
     // MARK: - property
+
     private lazy var mapView = MKMapView().then {
         $0.delegate = self
         $0.mapType = MKMapType.standard
@@ -107,7 +106,7 @@ class MapViewController: BaseViewController {
         modalView.snp.makeConstraints {
             $0.top.equalTo(grabbarView.snp.bottom)
             $0.leading.trailing.bottom.equalToSuperview()
-            $0.height.equalTo(Size.modalMidHeight)
+            $0.height.equalTo(modalMidHeight)
         }
     }
 
@@ -116,7 +115,7 @@ class MapViewController: BaseViewController {
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan(_:)))
         grabbarView.isUserInteractionEnabled = true
         grabbarView.addGestureRecognizer(panGesture)
-        currentModalHeight = Size.modalMidHeight
+        currentModalHeight = modalMidHeight
     }
 
     func currentLocation() {
@@ -136,8 +135,8 @@ class MapViewController: BaseViewController {
         guard gesture.view != nil else { return }
         let translation = gesture.translation(in: gesture.view?.superview)
         var newModalHeight = currentModalHeight - translation.y
-        if newModalHeight <= Size.modalMinHeight {
-            newModalHeight = Size.modalMinHeight
+        if newModalHeight <= modalMinHeight {
+            newModalHeight = modalMinHeight
             modalMinState()
         } else if newModalHeight >= modalMaxHeight {
             newModalHeight = modalMaxHeight
@@ -154,11 +153,11 @@ class MapViewController: BaseViewController {
 
         if gesture.state == .ended {
             switch newModalHeight {
-            case let height where height - Size.modalMinHeight < Size.modalMidHeight - height:
-                currentModalHeight = Size.modalMinHeight
+            case let height where height - modalMinHeight < modalMidHeight - height:
+                currentModalHeight = modalMinHeight
                 modalMinState()
-            case let height where height - Size.modalMidHeight < modalMaxHeight - height:
-                currentModalHeight = Size.modalMidHeight
+            case let height where height - modalMidHeight < modalMaxHeight - height:
+                currentModalHeight = modalMidHeight
                 modalMidState()
             default:
                 currentModalHeight = modalMaxHeight

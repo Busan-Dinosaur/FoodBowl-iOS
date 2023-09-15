@@ -48,7 +48,7 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
     }
 
     func authorizationStatus() -> CLAuthorizationStatus {
-        var status: CLAuthorizationStatus = CLLocationManager().authorizationStatus
+        let status: CLAuthorizationStatus = CLLocationManager().authorizationStatus
         return status
     }
 
