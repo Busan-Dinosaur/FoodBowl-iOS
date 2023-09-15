@@ -11,12 +11,22 @@ import SnapKit
 import Then
 
 final class CategoryListView: UIView {
+    enum Size {
+        static let horizantalPadding: CGFloat = 20
+        static let collectionInset = UIEdgeInsets(
+            top: 0,
+            left: horizantalPadding,
+            bottom: 10,
+            right: -horizantalPadding
+        )
+    }
+
     private let categories = Categories.allCases
 
     // MARK: - property
     private let collectionViewFlowLayout = UICollectionViewFlowLayout().then {
         $0.scrollDirection = .horizontal
-        $0.sectionInset = BaseSize.collectionInset
+        $0.sectionInset = Size.collectionInset
         $0.minimumLineSpacing = 6
         $0.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
     }
@@ -48,7 +58,7 @@ final class CategoryListView: UIView {
 
         listCollectionView.snp.makeConstraints {
             $0.edges.equalToSuperview()
-            $0.height.equalTo(30)
+            $0.height.equalTo(40)
         }
     }
 

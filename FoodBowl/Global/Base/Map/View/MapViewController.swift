@@ -33,7 +33,8 @@ class MapViewController: BaseViewController {
     private var panGesture = UIPanGestureRecognizer()
 
     lazy var tabBarHeight: CGFloat = tabBarController?.tabBar.frame.height ?? 0
-    lazy var modalMaxHeight: CGFloat = UIScreen.main.bounds.height - 30 - 80
+    lazy var navBarHeight: CGFloat = navigationController?.navigationBar.frame.height ?? 0
+    lazy var modalMaxHeight: CGFloat = UIScreen.main.bounds.height - Size.topPadding - navBarHeight - 120
     var currentModalHeight: CGFloat = 0
 
     // MARK: - property
@@ -89,7 +90,7 @@ class MapViewController: BaseViewController {
         categoryListView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide)
             $0.leading.trailing.equalToSuperview()
-            $0.height.equalTo(50)
+            $0.height.equalTo(40)
         }
 
         trakingButton.snp.makeConstraints {

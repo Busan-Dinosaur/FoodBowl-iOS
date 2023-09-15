@@ -12,7 +12,7 @@ import Then
 
 final class FriendViewController: MapViewController {
     let logoLabel = PaddingLabel().then {
-        $0.font = .font(.regular, ofSize: 24)
+        $0.font = .font(.regular, ofSize: 22)
         $0.textColor = .mainText
         $0.text = "FoodBowl"
         $0.padding = UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 0)
