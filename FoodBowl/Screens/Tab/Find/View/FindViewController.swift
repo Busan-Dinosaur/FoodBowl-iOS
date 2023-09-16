@@ -23,6 +23,7 @@ final class FindViewController: BaseViewController {
     private lazy var searchController = UISearchController(searchResultsController: nil).then {
         $0.searchBar.placeholder = "검색"
         $0.searchResultsUpdater = self
+        $0.delegate = self
         $0.obscuresBackgroundDuringPresentation = false
         $0.searchBar.setValue("취소", forKey: "cancelButtonText")
         $0.searchBar.tintColor = .mainPink
@@ -112,6 +113,16 @@ final class FindViewController: BaseViewController {
     }
 }
 
+extension FindViewController: UISearchResultsUpdating, UISearchControllerDelegate {
+    func updateSearchResults(for searchController: UISearchController) {
+        guard let text = searchController.searchBar.text?.lowercased() else { return }
+    }
+
+    func searchBar(searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
+        print(selectedScope)
+    }
+}
+
 extension FindViewController: UIPageViewControllerDataSource, UIPageViewControllerDelegate {
     func pageViewController(
         _ pageViewController: UIPageViewController,
@@ -154,11 +165,5 @@ extension FindViewController: FindStoreViewControllerDelegate, FindUserViewContr
 
     func setUser(profileViewController: ProfileViewController) {
         navigationController?.pushViewController(profileViewController, animated: true)
-    }
-}
-
-extension FindViewController: UISearchResultsUpdating {
-    func updateSearchResults(for searchController: UISearchController) {
-        guard let text = searchController.searchBar.text?.lowercased() else { return }
     }
 }
