@@ -29,7 +29,7 @@ final class ProfileViewController: MapViewController {
 
     let userNicknameLabel = PaddingLabel().then {
         $0.font = UIFont.preferredFont(forTextStyle: .title2, weight: .bold)
-        $0.text = "coby5502"
+        $0.text = "홍길동"
         $0.textColor = .mainText
         $0.padding = UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 0)
         $0.frame = CGRect(x: 0, y: 0, width: 200, height: 0)
@@ -68,8 +68,9 @@ final class ProfileViewController: MapViewController {
 
         Task {
             if isOwn {
-                let id = UserDefaultStorage.userID
-                await viewModel.getProfile(id: id)
+                if let id = UserDefaultsManager.currentUser?.id {
+                    await viewModel.getProfile(id: id)
+                }
             } else {
                 await viewModel.getProfile(id: 1)
             }
@@ -78,19 +79,15 @@ final class ProfileViewController: MapViewController {
     }
 
     private func setupData() {
-        guard let follower = viewModel.profileData?.followerCount,
-              let following = viewModel.profileData?.followingCount else {
-            return
-        }
-
-        profileHeaderView.userInfoLabel.text = viewModel.profileData?.introduction
-        profileHeaderView.followerInfoButton.numberLabel.text = "\(follower)"
-        profileHeaderView.followingInfoButton.numberLabel.text = "\(following)"
+        guard let userProfile = viewModel.userProfile else { return }
+        profileHeaderView.userInfoLabel.text = viewModel.userProfile?.introduction
+        profileHeaderView.followerInfoButton.numberLabel.text = "\(userProfile.followerCount)"
+        profileHeaderView.followingInfoButton.numberLabel.text = "\(userProfile.followingCount)"
 
         if isOwn {
-            userNicknameLabel.text = viewModel.profileData?.nickname
+            userNicknameLabel.text = userProfile.nickname
         } else {
-            title = viewModel.profileData?.nickname
+            title = userProfile.nickname
         }
     }
 

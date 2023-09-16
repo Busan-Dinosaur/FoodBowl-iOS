@@ -207,11 +207,11 @@ extension BaseViewController: MFMailComposeViewControllerDelegate {
             let messageBody = """
                 내용을 작성해주세요.
                 """
-            let nickname = UserDefaultStorage.nickname
+            let nickname = UserDefaultsManager.currentUser?.nickname
 
             composeVC.mailComposeDelegate = self
             composeVC.setToRecipients([emailAdress])
-            composeVC.setSubject("[풋볼] \(nickname)")
+            composeVC.setSubject("[풋볼] \(String(describing: nickname))")
             composeVC.setMessageBody(messageBody, isHTML: false)
             composeVC.modalPresentationStyle = .fullScreen
 

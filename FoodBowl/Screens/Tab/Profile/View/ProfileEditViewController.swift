@@ -80,15 +80,16 @@ final class ProfileEditViewController: BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         Task {
-            let id = UserDefaultStorage.userID
-            await viewModel.getProfile(id: id)
+            if let id = UserDefaultsManager.currentUser?.id {
+                await viewModel.getProfile(id: id)
+            }
             setupData()
         }
     }
 
     private func setupData() {
-        nicknameField.text = viewModel.profileData?.nickname
-        userInfoField.text = viewModel.profileData?.introduction
+        nicknameField.text = UserDefaultsManager.currentUser?.nickname
+        userInfoField.text = UserDefaultsManager.currentUser?.introduction
     }
 
     override func setupLayout() {

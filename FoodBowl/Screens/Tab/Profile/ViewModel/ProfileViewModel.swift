@@ -10,7 +10,7 @@ import UIKit
 import Moya
 
 final class ProfileViewModel {
-    var profileData: MemberProfileResponse?
+    var userProfile: MemberProfileResponse?
 
     private let provider = MoyaProvider<UserAPI>()
 
@@ -19,7 +19,7 @@ final class ProfileViewModel {
         switch response {
         case .success(let result):
             guard let data = try? result.map(MemberProfileResponse.self) else { return }
-            profileData = data
+            userProfile = data
         case .failure(let err):
             print(err.localizedDescription)
         }
@@ -29,7 +29,11 @@ final class ProfileViewModel {
         let response = await provider.request(.updateProfile(form: profile))
         switch response {
         case .success:
-            UserDefaultHandler.setNickname(nickname: profile.nickname)
+            if var currentUser = UserDefaultsManager.currentUser {
+                currentUser.nickname = profile.nickname
+                currentUser.introduction = profile.introduction
+                UserDefaultsManager.currentUser = currentUser
+            }
         case .failure(let err):
             print(err.localizedDescription)
         }

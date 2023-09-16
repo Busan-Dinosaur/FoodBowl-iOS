@@ -55,7 +55,6 @@ final class OnboardingViewController: BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.isNavigationBarHidden = true
-        LocationManager.shared.checkLocationService()
     }
 
     override func viewWillDisappear(_ animated: Bool) {

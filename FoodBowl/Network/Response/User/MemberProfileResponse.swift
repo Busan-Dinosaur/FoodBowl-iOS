@@ -7,11 +7,11 @@
 
 import Foundation
 
-struct MemberProfileResponse: Decodable {
+struct MemberProfileResponse: Codable {
     let id: Int
-    let profileImageUrl: String?
-    let nickname: String
-    let introduction: String?
+    var profileImageUrl: String?
+    var nickname: String
+    var introduction: String?
     let followerCount: Int
     let followingCount: Int
     let isMyProfile: Bool
