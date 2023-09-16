@@ -451,9 +451,11 @@
 		CB4925702AB44D7100B66B68 /* Common */ = {
 			isa = PBXGroup;
 			children = (
-				CBADC2CE2955A41500E56C93 /* TabBarController.swift */,
+				CB63B7592A6986B4000AD9C2 /* Map */,
 				CB26A3ED2A6AC9910043A642 /* Feed */,
 				CBADC2B02955A13800E56C93 /* NewFeed */,
+				CBADC2CE2955A41500E56C93 /* TabBarController.swift */,
+				CBB582812973007D00808B0B /* ShowWebViewController.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -627,8 +629,6 @@
 		CBADC27429559BC900E56C93 /* Base */ = {
 			isa = PBXGroup;
 			children = (
-				CB63B7592A6986B4000AD9C2 /* Map */,
-				CBB582812973007D00808B0B /* ShowWebViewController.swift */,
 				CBADC27529559BC900E56C93 /* BaseViewController.swift */,
 				CBADC27629559BC900E56C93 /* BaseTableViewCell.swift */,
 				CBADC27729559BC900E56C93 /* BaseCollectionViewCell.swift */,
