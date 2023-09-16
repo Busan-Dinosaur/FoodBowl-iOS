@@ -79,12 +79,7 @@ final class ProfileEditViewController: BaseViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        Task {
-            if let id = UserDefaultsManager.currentUser?.id {
-                await viewModel.getProfile(id: id)
-            }
-            setupData()
-        }
+        setupData()
     }
 
     private func setupData() {
