@@ -143,7 +143,7 @@ final class CreateReviewController: BaseViewController {
         }
 
         guidePhotoLabel.snp.makeConstraints {
-            $0.top.equalTo(commentTextView.snp.bottom).offset(20)
+            $0.top.equalTo(commentTextView.snp.bottom).offset(30)
             $0.leading.equalToSuperview().inset(BaseSize.horizantalPadding)
         }
 
