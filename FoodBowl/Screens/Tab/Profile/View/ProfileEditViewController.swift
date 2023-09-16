@@ -171,8 +171,8 @@ final class ProfileEditViewController: BaseViewController {
                 let updatedProfile = UpdateProfileRequest(nickname: nickname, introduction: introduction)
                 Task {
                     await viewModel.updateProfile(profile: updatedProfile)
+                    navigationController?.popViewController(animated: true)
                 }
-                navigationController?.popViewController(animated: true)
             } else {
                 let alert = UIAlertController(title: nil, message: "닉네임과 한줄 소개를 입력해주세요", preferredStyle: .alert)
                 let cancel = UIAlertAction(title: "닫기", style: .cancel, handler: nil)
