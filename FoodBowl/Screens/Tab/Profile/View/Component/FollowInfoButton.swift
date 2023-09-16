@@ -13,12 +13,12 @@ import Then
 final class FollowInfoButton: UIButton {
     // MARK: - property
     let infoLabel = UILabel().then {
-        $0.font = UIFont.preferredFont(forTextStyle: .caption1, weight: .regular)
+        $0.font = UIFont.preferredFont(forTextStyle: .footnote, weight: .medium)
         $0.textColor = .mainText
     }
 
     let numberLabel = UILabel().then {
-        $0.font = UIFont.preferredFont(forTextStyle: .caption1, weight: .regular)
+        $0.font = UIFont.preferredFont(forTextStyle: .footnote, weight: .medium)
         $0.textColor = .mainText
     }
 
@@ -26,7 +26,7 @@ final class FollowInfoButton: UIButton {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupLayout()
-        configureUI()
+//        configureUI()
     }
 
     @available(*, unavailable)
@@ -40,13 +40,13 @@ final class FollowInfoButton: UIButton {
 
         infoLabel.snp.makeConstraints {
             $0.top.bottom.equalToSuperview()
-            $0.leading.equalToSuperview().inset(8)
+            $0.leading.equalToSuperview()
         }
 
         numberLabel.snp.makeConstraints {
             $0.top.bottom.trailing.equalToSuperview()
             $0.leading.equalTo(infoLabel.snp.trailing).offset(4)
-            $0.trailing.equalToSuperview().inset(8)
+            $0.trailing.equalToSuperview()
         }
     }
 

@@ -102,7 +102,9 @@ final class FindViewController: BaseViewController {
     override func setupNavigationBar() {
         super.setupNavigationBar()
         let findGuideLabel = makeBarButtonItem(with: findGuideLabel)
+        let plusButton = makeBarButtonItem(with: plusButton)
         navigationItem.leftBarButtonItem = findGuideLabel
+        navigationItem.rightBarButtonItem = plusButton
     }
 
     @objc

@@ -105,7 +105,6 @@
 		CBC747BA2A83DD6400F171F5 /* Configurations.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBC747B92A83DD6400F171F5 /* Configurations.swift */; };
 		CBCD0F7C2A66D9BC00A51B32 /* FriendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBCD0F7B2A66D9BC00A51B32 /* FriendViewController.swift */; };
 		CBCD0F7F2A66DA1600A51B32 /* UnivViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBCD0F7E2A66DA1600A51B32 /* UnivViewController.swift */; };
-		CBCD0F822A66DA3700A51B32 /* BookmarkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBCD0F812A66DA3700A51B32 /* BookmarkViewController.swift */; };
 		CBD1B5EF2982A5AD00B0AD51 /* ProfileEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD1B5EE2982A5AD00B0AD51 /* ProfileEditViewController.swift */; };
 		CBD1B5F12982B0A300B0AD51 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD1B5F02982B0A300B0AD51 /* SettingViewController.swift */; };
 		CBD1B5F42982D39B00B0AD51 /* SettingItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD1B5F32982D39B00B0AD51 /* SettingItemTableViewCell.swift */; };
@@ -230,7 +229,6 @@
 		CBC747B92A83DD6400F171F5 /* Configurations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configurations.swift; sourceTree = "<group>"; };
 		CBCD0F7B2A66D9BC00A51B32 /* FriendViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendViewController.swift; sourceTree = "<group>"; };
 		CBCD0F7E2A66DA1600A51B32 /* UnivViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnivViewController.swift; sourceTree = "<group>"; };
-		CBCD0F812A66DA3700A51B32 /* BookmarkViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkViewController.swift; sourceTree = "<group>"; };
 		CBD1B5EE2982A5AD00B0AD51 /* ProfileEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditViewController.swift; sourceTree = "<group>"; };
 		CBD1B5F02982B0A300B0AD51 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		CBD1B5F32982D39B00B0AD51 /* SettingItemTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingItemTableViewCell.swift; sourceTree = "<group>"; };
@@ -460,7 +458,6 @@
 			isa = PBXGroup;
 			children = (
 				CBE6190D296C6423005295AF /* Friend */,
-				CBCD0F802A66DA2A00A51B32 /* Bookmark */,
 				CB49256E2AB44D4400B66B68 /* Find */,
 				CBCD0F7D2A66DA0B00A51B32 /* Univ */,
 				CBADC2A52955A07B00E56C93 /* Profile */,
@@ -759,14 +756,6 @@
 			path = Univ;
 			sourceTree = "<group>";
 		};
-		CBCD0F802A66DA2A00A51B32 /* Bookmark */ = {
-			isa = PBXGroup;
-			children = (
-				CBDDF13C2A6AD76400AE3C50 /* View */,
-			);
-			path = Bookmark;
-			sourceTree = "<group>";
-		};
 		CBD1B5F22982D38300B0AD51 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
@@ -811,14 +800,6 @@
 			isa = PBXGroup;
 			children = (
 				CBCD0F7B2A66D9BC00A51B32 /* FriendViewController.swift */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		CBDDF13C2A6AD76400AE3C50 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				CBCD0F812A66DA3700A51B32 /* BookmarkViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1024,7 +1005,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				CB1579092AACCFCB00007183 /* CreateReviewRequest.swift in Sources */,
-				CBCD0F822A66DA3700A51B32 /* BookmarkViewController.swift in Sources */,
 				CBFB52612977C9AB0049E8BA /* FindStoreViewController.swift in Sources */,
 				CBD1B6022984394A00B0AD51 /* FeedButton.swift in Sources */,
 				CBDECACA2A6B2F6800259350 /* FeedNSCollectionViewCell.swift in Sources */,

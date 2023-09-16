@@ -16,11 +16,6 @@ final class GrabbarView: UIView {
         $0.layer.cornerRadius = 4
     }
 
-    let modalTitleLabel = UILabel().then {
-        $0.font = UIFont.preferredFont(forTextStyle: .title3, weight: .bold)
-        $0.textColor = .mainText
-    }
-
     let modalResultLabel = UILabel().then {
         $0.font = UIFont.preferredFont(forTextStyle: .subheadline, weight: .regular)
         $0.textColor = .subText
@@ -39,7 +34,7 @@ final class GrabbarView: UIView {
     }
 
     func setupLayout() {
-        addSubviews(grabbar, modalTitleLabel, modalResultLabel)
+        addSubviews(grabbar, modalResultLabel)
 
         grabbar.snp.makeConstraints {
             $0.top.equalToSuperview().inset(10)
@@ -48,15 +43,9 @@ final class GrabbarView: UIView {
             $0.height.equalTo(8)
         }
 
-        modalTitleLabel.snp.makeConstraints {
-            $0.top.equalTo(grabbar.snp.bottom).offset(20)
-            $0.bottom.equalToSuperview().inset(10)
-            $0.leading.equalToSuperview().inset(BaseSize.horizantalPadding)
-        }
-
         modalResultLabel.snp.makeConstraints {
-            $0.top.equalTo(grabbar.snp.bottom).offset(28)
-            $0.trailing.equalToSuperview().inset(BaseSize.horizantalPadding)
+            $0.top.equalTo(grabbar.snp.bottom).offset(30)
+            $0.leading.equalToSuperview().inset(BaseSize.horizantalPadding)
         }
     }
 
@@ -67,17 +56,15 @@ final class GrabbarView: UIView {
     }
 
     func showContent() {
-        modalTitleLabel.isHidden = false
         modalResultLabel.snp.remakeConstraints {
-            $0.top.equalTo(grabbar.snp.bottom).offset(26)
-            $0.trailing.equalToSuperview().inset(BaseSize.horizantalPadding)
+            $0.top.equalTo(grabbar.snp.bottom).offset(30)
+            $0.leading.equalToSuperview().inset(BaseSize.horizantalPadding)
         }
     }
 
     func showResult() {
-        modalTitleLabel.isHidden = true
         modalResultLabel.snp.remakeConstraints {
-            $0.top.equalTo(grabbar.snp.bottom).offset(26)
+            $0.top.equalTo(grabbar.snp.bottom).offset(30)
             $0.centerX.equalToSuperview()
         }
     }

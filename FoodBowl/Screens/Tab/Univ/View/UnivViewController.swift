@@ -30,7 +30,6 @@ final class UnivViewController: MapViewController {
 
     override func configureUI() {
         super.configureUI()
-        grabbarView.modalTitleLabel.text = "부산대학교"
         grabbarView.modalResultLabel.text = "4개의 맛집"
     }
 

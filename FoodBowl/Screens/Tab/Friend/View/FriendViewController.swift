@@ -31,7 +31,6 @@ final class FriendViewController: MapViewController {
     override func configureUI() {
         super.configureUI()
         bookmarkButton.isHidden = false
-        grabbarView.modalTitleLabel.text = "후기"
         grabbarView.modalResultLabel.text = "4개의 맛집"
     }
 
