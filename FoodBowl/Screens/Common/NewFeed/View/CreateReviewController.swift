@@ -51,9 +51,30 @@ final class CreateReviewController: BaseViewController {
         $0.addAction(action, for: .touchUpInside)
     }
 
+    private let guideCommentLabel = UILabel().then {
+        $0.text = "한줄평"
+        $0.font = .font(.regular, ofSize: 17)
+        $0.textColor = .mainText
+    }
+
+    lazy var commentTextView = UITextView().then {
+        $0.textContainerInset = UIEdgeInsets(top: 12, left: 10, bottom: 12, right: 10)
+        $0.font = UIFont.preferredFont(forTextStyle: .subheadline, weight: .light)
+        $0.textAlignment = NSTextAlignment.left
+        $0.dataDetectorTypes = UIDataDetectorTypes.all
+        $0.text = textViewPlaceHolder
+        $0.textColor = .grey001
+        $0.isEditable = true
+        $0.delegate = self
+        $0.isScrollEnabled = true
+        $0.isUserInteractionEnabled = true
+        $0.makeBorderLayer(color: .grey002)
+        $0.backgroundColor = .clear
+    }
+
     private let guidePhotoLabel = UILabel().then {
-        $0.text = "사진을 등록해주세요."
-        $0.font = UIFont.preferredFont(forTextStyle: .body, weight: .medium)
+        $0.text = "사진"
+        $0.font = .font(.regular, ofSize: 17)
         $0.textColor = .mainText
     }
 
@@ -74,27 +95,6 @@ final class CreateReviewController: BaseViewController {
         $0.showsHorizontalScrollIndicator = false
     }
 
-    private let guideCommentLabel = UILabel().then {
-        $0.text = "후기를 작성해주세요."
-        $0.font = UIFont.preferredFont(forTextStyle: .body, weight: .medium)
-        $0.textColor = .mainText
-    }
-
-    lazy var commentTextView = UITextView().then {
-        $0.textContainerInset = UIEdgeInsets(top: 12, left: 10, bottom: 12, right: 10)
-        $0.font = UIFont.preferredFont(forTextStyle: .subheadline, weight: .light)
-        $0.textAlignment = NSTextAlignment.left
-        $0.dataDetectorTypes = UIDataDetectorTypes.all
-        $0.text = textViewPlaceHolder
-        $0.textColor = .grey001
-        $0.isEditable = true
-        $0.delegate = self
-        $0.isScrollEnabled = true
-        $0.isUserInteractionEnabled = true
-        $0.makeBorderLayer(color: .grey002)
-        $0.backgroundColor = .clear
-    }
-
     private lazy var completeButton = MainButton().then {
         $0.label.text = "완료"
         let action = UIAction { [weak self] _ in
@@ -112,11 +112,11 @@ final class CreateReviewController: BaseViewController {
         view.addSubviews(
             searchBarButton,
             selectedStoreView,
+            commentTextView,
+            completeButton,
             guidePhotoLabel,
             listCollectionView,
-            guideCommentLabel,
-            commentTextView,
-            completeButton
+            guideCommentLabel
         )
 
         searchBarButton.snp.makeConstraints {
@@ -131,25 +131,25 @@ final class CreateReviewController: BaseViewController {
             $0.height.equalTo(60)
         }
 
-        guidePhotoLabel.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(60)
-            $0.leading.equalToSuperview().inset(BaseSize.horizantalPadding)
-        }
-
-        listCollectionView.snp.makeConstraints {
-            $0.top.equalTo(guidePhotoLabel.snp.bottom).offset(10)
-            $0.leading.trailing.equalToSuperview()
-            $0.height.equalTo(100)
-        }
-
         guideCommentLabel.snp.makeConstraints {
-            $0.top.equalTo(listCollectionView.snp.bottom).offset(20)
+            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(80)
             $0.leading.equalToSuperview().inset(BaseSize.horizantalPadding)
         }
 
         commentTextView.snp.makeConstraints {
             $0.top.equalTo(guideCommentLabel.snp.bottom).offset(10)
             $0.leading.trailing.equalToSuperview().inset(BaseSize.horizantalPadding)
+            $0.height.equalTo(100)
+        }
+
+        guidePhotoLabel.snp.makeConstraints {
+            $0.top.equalTo(commentTextView.snp.bottom).offset(20)
+            $0.leading.equalToSuperview().inset(BaseSize.horizantalPadding)
+        }
+
+        listCollectionView.snp.makeConstraints {
+            $0.top.equalTo(guidePhotoLabel.snp.bottom).offset(10)
+            $0.leading.trailing.equalToSuperview()
             $0.height.equalTo(100)
         }
 
@@ -190,8 +190,8 @@ final class CreateReviewController: BaseViewController {
 
             searchBarButton.placeholderLabel.text = "가게 재검색"
 
-            guidePhotoLabel.snp.updateConstraints {
-                $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(130)
+            guideCommentLabel.snp.updateConstraints {
+                $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(150)
             }
         }
     }
