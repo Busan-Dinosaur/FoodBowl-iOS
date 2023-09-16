@@ -17,7 +17,7 @@ final class EditFeedViewModel {
     private let provider = MoyaProvider<StoreAPI>()
 
     func updateReview() async {
-        let imagesData = images.map { $0.jpegData(compressionQuality: 1.0)! }
+        let imagesData = images.map { $0.jpegData(compressionQuality: 0.5)! }
         let request = CreateReviewRequest(request: request, images: imagesData)
 //        let response = await provider.request(.createReview(request: request))
 //        switch response {

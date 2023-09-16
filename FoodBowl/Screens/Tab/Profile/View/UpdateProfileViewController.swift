@@ -18,7 +18,7 @@ final class UpdateProfileViewController: BaseViewController {
 
     // MARK: - property
     private lazy var profileImageView = UIImageView().then {
-        $0.image = ImageLiteral.defaultProfile
+        $0.image = profileImage
         $0.layer.cornerRadius = 50
         $0.layer.masksToBounds = true
         $0.layer.borderColor = UIColor.grey002.cgColor
@@ -29,13 +29,14 @@ final class UpdateProfileViewController: BaseViewController {
 
     private let nicknameLabel = UILabel().then {
         $0.text = "닉네임"
-        $0.font = UIFont.preferredFont(forTextStyle: .body, weight: .medium)
+        $0.font = .font(.regular, ofSize: 17)
+        $0.textColor = .mainText
     }
 
     private let nicknameField = UITextField().then {
         let attributes = [
             NSAttributedString.Key.foregroundColor: UIColor.grey001,
-            NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .callout, weight: .regular)
+            NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .footnote, weight: .regular)
         ]
 
         $0.backgroundColor = .clear
@@ -49,13 +50,14 @@ final class UpdateProfileViewController: BaseViewController {
 
     private let userInfoLabel = UILabel().then {
         $0.text = "한줄 소개"
-        $0.font = UIFont.preferredFont(forTextStyle: .body, weight: .medium)
+        $0.font = .font(.regular, ofSize: 17)
+        $0.textColor = .mainText
     }
 
     private let userInfoField = UITextField().then {
         let attributes = [
             NSAttributedString.Key.foregroundColor: UIColor.grey001,
-            NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .callout, weight: .regular)
+            NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .footnote, weight: .regular)
         ]
 
         $0.backgroundColor = .clear
@@ -97,7 +99,7 @@ final class UpdateProfileViewController: BaseViewController {
         }
 
         nicknameLabel.snp.makeConstraints {
-            $0.top.equalTo(profileImageView.snp.bottom).offset(20)
+            $0.top.equalTo(profileImageView.snp.bottom).offset(40)
             $0.leading.equalToSuperview().inset(BaseSize.horizantalPadding)
         }
 
@@ -108,7 +110,7 @@ final class UpdateProfileViewController: BaseViewController {
         }
 
         userInfoLabel.snp.makeConstraints {
-            $0.top.equalTo(nicknameField.snp.bottom).offset(40)
+            $0.top.equalTo(nicknameField.snp.bottom).offset(30)
             $0.leading.equalToSuperview().inset(BaseSize.horizantalPadding)
         }
 

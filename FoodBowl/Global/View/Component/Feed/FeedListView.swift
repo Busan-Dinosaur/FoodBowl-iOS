@@ -89,7 +89,7 @@ extension FeedListView: UICollectionViewDataSource, UICollectionViewDelegate {
 
             let edit = UIAlertAction(title: "수정", style: .default, handler: { _ in
                 let editFeedViewModel = EditFeedViewModel()
-                let editReviewViewController = EditFeedViewController(viewModel: editFeedViewModel)
+                let editReviewViewController = UpdateReviewViewController(viewModel: editFeedViewModel)
                 let navigationController = UINavigationController(rootViewController: editReviewViewController)
                 navigationController.modalPresentationStyle = .fullScreen
                 DispatchQueue.main.async {

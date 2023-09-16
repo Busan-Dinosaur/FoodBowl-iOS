@@ -205,12 +205,43 @@ final class CreateReviewController: BaseViewController {
     }
 
     private func tappedCompleteButton() {
+        if viewModel.store == nil {
+            showAlert(message: "가게를 선택하지 않았습니다.")
+            return
+        }
+
+        if viewModel.request.reviewContent == "" {
+            showAlert(message: "한줄평을 작성하지 않았습니다.")
+            return
+        }
+
         Task {
             await viewModel.createReview()
+            dismiss(animated: true, completion: nil)
         }
-        dismiss(animated: true, completion: nil)
     }
 }
+
+extension CreateReviewController: UITextViewDelegate {
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        if textView.text == textViewPlaceHolder {
+            textView.text = nil
+            textView.textColor = .mainText
+        }
+    }
+
+    func textViewDidEndEditing(_ textView: UITextView) {
+        if textView.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            textView.text = textViewPlaceHolder
+            textView.textColor = .grey001
+        }
+    }
+
+    func textViewDidChange(_ textView: UITextView) {
+        viewModel.request.reviewContent = textView.text
+    }
+}
+
 
 extension CreateReviewController {
     private func photoAddButtonDidTap() {
@@ -286,25 +317,5 @@ extension CreateReviewController: UICollectionViewDataSource, UICollectionViewDe
         if indexPath.item == 0 {
             photoAddButtonDidTap()
         }
-    }
-}
-
-extension CreateReviewController: UITextViewDelegate {
-    func textViewDidBeginEditing(_ textView: UITextView) {
-        if textView.text == textViewPlaceHolder {
-            textView.text = nil
-            textView.textColor = .mainText
-        }
-    }
-
-    func textViewDidEndEditing(_ textView: UITextView) {
-        if textView.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-            textView.text = textViewPlaceHolder
-            textView.textColor = .grey001
-        }
-    }
-
-    func textViewDidChange(_ textView: UITextView) {
-        viewModel.request.reviewContent = textView.text
     }
 }

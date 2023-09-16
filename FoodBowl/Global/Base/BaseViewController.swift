@@ -24,7 +24,7 @@ class BaseViewController: UIViewController {
 
     lazy var closeButton = UIButton().then {
         $0.setTitle("닫기", for: .normal)
-        $0.setTitleColor(.mainPink, for: .normal)
+        $0.setTitleColor(.mainText, for: .normal)
         $0.titleLabel?.font = UIFont.preferredFont(forTextStyle: .headline, weight: .regular)
         let action = UIAction { [weak self] _ in
             self?.dismiss(animated: true, completion: nil)
@@ -217,11 +217,11 @@ extension BaseViewController: MFMailComposeViewControllerDelegate {
             let messageBody = """
                 내용을 작성해주세요.
                 """
-            let nickname = UserDefaultsManager.currentUser?.nickname
+            guard let nickname = UserDefaultsManager.currentUser?.nickname else { return }
 
             composeVC.mailComposeDelegate = self
             composeVC.setToRecipients([emailAdress])
-            composeVC.setSubject("[풋볼] \(String(describing: nickname))")
+            composeVC.setSubject("[풋볼] \(nickname)")
             composeVC.setMessageBody(messageBody, isHTML: false)
             composeVC.modalPresentationStyle = .fullScreen
 

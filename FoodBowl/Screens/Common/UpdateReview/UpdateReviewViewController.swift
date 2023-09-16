@@ -1,5 +1,5 @@
 //
-//  EditFeedViewController.swift
+//  UpdateReviewViewController.swift
 //  FoodBowl
 //
 //  Created by COBY_PRO on 2023/09/12.
@@ -11,7 +11,7 @@ import SnapKit
 import Then
 import YPImagePicker
 
-final class EditFeedViewController: BaseViewController {
+final class UpdateReviewViewController: BaseViewController {
     private enum Size {
         static let cellWidth: CGFloat = 100
         static let cellHeight: CGFloat = cellWidth
@@ -37,19 +37,40 @@ final class EditFeedViewController: BaseViewController {
     }
 
     // MARK: - property
-    private lazy var completeButton = UIButton().then {
-        $0.setTitle("완료", for: .normal)
-        $0.setTitleColor(.mainPink, for: .normal)
-        $0.titleLabel?.font = UIFont.preferredFont(forTextStyle: .headline, weight: .regular)
-        let buttonAction = UIAction { [weak self] _ in
-            self?.tappedCompleteButton()
-        }
-        $0.addAction(buttonAction, for: .touchUpInside)
+    private let editFeedGuideLabel = PaddingLabel().then {
+        $0.font = .font(.regular, ofSize: 22)
+        $0.text = "후기 수정"
+        $0.textColor = .mainText
+        $0.padding = UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 0)
+        $0.frame = CGRect(x: 0, y: 0, width: 150, height: 0)
+    }
+
+    private let selectedStoreView = SelectedStoreView()
+
+    private let guideCommentLabel = UILabel().then {
+        $0.text = "한줄평"
+        $0.font = .font(.regular, ofSize: 17)
+        $0.textColor = .mainText
+    }
+
+    lazy var commentTextView = UITextView().then {
+        $0.textContainerInset = UIEdgeInsets(top: 12, left: 10, bottom: 12, right: 10)
+        $0.font = UIFont.preferredFont(forTextStyle: .subheadline, weight: .light)
+        $0.textAlignment = NSTextAlignment.left
+        $0.dataDetectorTypes = UIDataDetectorTypes.all
+        $0.text = textViewPlaceHolder
+        $0.textColor = .grey001
+        $0.isEditable = true
+        $0.delegate = self
+        $0.isScrollEnabled = true
+        $0.isUserInteractionEnabled = true
+        $0.makeBorderLayer(color: .grey002)
+        $0.backgroundColor = .clear
     }
 
     private let guidePhotoLabel = UILabel().then {
-        $0.text = "음식 사진을 수정해주세요."
-        $0.font = UIFont.preferredFont(forTextStyle: .body, weight: .medium)
+        $0.text = "사진"
+        $0.font = .font(.regular, ofSize: 17)
         $0.textColor = .mainText
     }
 
@@ -70,34 +91,44 @@ final class EditFeedViewController: BaseViewController {
         $0.showsHorizontalScrollIndicator = false
     }
 
-    private let guideCommentLabel = UILabel().then {
-        $0.text = "후기를 수정해주세요."
-        $0.font = UIFont.preferredFont(forTextStyle: .body, weight: .medium)
-        $0.textColor = .mainText
-    }
-
-    lazy var commentTextView = UITextView().then {
-        $0.textContainerInset = UIEdgeInsets(top: 12, left: 10, bottom: 12, right: 10)
-        $0.font = UIFont.preferredFont(forTextStyle: .subheadline, weight: .light)
-        $0.textAlignment = NSTextAlignment.left
-        $0.dataDetectorTypes = UIDataDetectorTypes.all
-        $0.text = textViewPlaceHolder
-        $0.textColor = .grey001
-        $0.isEditable = true
-        $0.delegate = self
-        $0.isScrollEnabled = true
-        $0.isUserInteractionEnabled = true
-        $0.makeBorderLayer(color: .grey002)
-        $0.backgroundColor = .clear
+    private lazy var completeButton = MainButton().then {
+        $0.label.text = "완료"
+        let action = UIAction { [weak self] _ in
+            self?.tappedCompleteButton()
+        }
+        $0.addAction(action, for: .touchUpInside)
     }
 
     // MARK: - life cycle
-
     override func setupLayout() {
-        view.addSubviews(guidePhotoLabel, listCollectionView, guideCommentLabel, commentTextView)
+        view.addSubviews(
+            selectedStoreView,
+            commentTextView,
+            completeButton,
+            guidePhotoLabel,
+            listCollectionView,
+            guideCommentLabel
+        )
+
+        selectedStoreView.snp.makeConstraints {
+            $0.top.equalTo(view.safeAreaLayoutGuide)
+            $0.leading.trailing.equalToSuperview().inset(BaseSize.horizantalPadding)
+            $0.height.equalTo(60)
+        }
+
+        guideCommentLabel.snp.makeConstraints {
+            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(80)
+            $0.leading.equalToSuperview().inset(BaseSize.horizantalPadding)
+        }
+
+        commentTextView.snp.makeConstraints {
+            $0.top.equalTo(guideCommentLabel.snp.bottom).offset(10)
+            $0.leading.trailing.equalToSuperview().inset(BaseSize.horizantalPadding)
+            $0.height.equalTo(100)
+        }
 
         guidePhotoLabel.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).inset(20)
+            $0.top.equalTo(commentTextView.snp.bottom).offset(30)
             $0.leading.equalToSuperview().inset(BaseSize.horizantalPadding)
         }
 
@@ -107,27 +138,62 @@ final class EditFeedViewController: BaseViewController {
             $0.height.equalTo(100)
         }
 
-        guideCommentLabel.snp.makeConstraints {
-            $0.top.equalTo(listCollectionView.snp.bottom).offset(40)
-            $0.leading.equalToSuperview().inset(BaseSize.horizantalPadding)
-        }
-
-        commentTextView.snp.makeConstraints {
-            $0.top.equalTo(guideCommentLabel.snp.bottom).offset(10)
+        completeButton.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview().inset(BaseSize.horizantalPadding)
-            $0.height.equalTo(100)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(BaseSize.bottomPadding)
+            $0.height.equalTo(60)
         }
     }
 
     override func setupNavigationBar() {
-        let leftOffsetCloseButton = removeBarButtonItemOffset(with: closeButton, offsetX: 10)
-        let closeButton = makeBarButtonItem(with: leftOffsetCloseButton)
-        let completeButton = makeBarButtonItem(with: completeButton)
-        navigationItem.leftBarButtonItem = closeButton
-        navigationItem.rightBarButtonItem = completeButton
-        title = "리뷰 수정"
+        let editFeedGuideLabel = makeBarButtonItem(with: editFeedGuideLabel)
+        let closeButton = makeBarButtonItem(with: closeButton)
+        navigationItem.leftBarButtonItem = editFeedGuideLabel
+        navigationItem.rightBarButtonItem = closeButton
     }
 
+    private func showAlert(message: String) {
+        let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
+        let cancel = UIAlertAction(title: "닫기", style: .cancel, handler: nil)
+        alert.addAction(cancel)
+
+        present(alert, animated: true, completion: nil)
+    }
+
+    private func tappedCompleteButton() {
+        if viewModel.request.reviewContent == "" {
+            showAlert(message: "한줄평을 작성하지 않았습니다.")
+            return
+        }
+
+        Task {
+            await viewModel.updateReview()
+            dismiss(animated: true, completion: nil)
+        }
+    }
+}
+
+extension UpdateReviewViewController: UITextViewDelegate {
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        if textView.text == textViewPlaceHolder {
+            textView.text = nil
+            textView.textColor = .mainText
+        }
+    }
+
+    func textViewDidEndEditing(_ textView: UITextView) {
+        if textView.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            textView.text = textViewPlaceHolder
+            textView.textColor = .grey001
+        }
+    }
+
+    func textViewDidChange(_ textView: UITextView) {
+        viewModel.request.reviewContent = textView.text
+    }
+}
+
+extension UpdateReviewViewController {
     private func photoAddButtonDidTap() {
         var config = YPImagePickerConfiguration()
         config.onlySquareImagesFromCamera = true
@@ -166,36 +232,9 @@ final class EditFeedViewController: BaseViewController {
         }
         present(picker, animated: true, completion: nil)
     }
-
-    private func tappedCompleteButton() {
-        Task {
-            await viewModel.updateReview()
-        }
-        dismiss(animated: true, completion: nil)
-    }
 }
 
-extension EditFeedViewController: UITextViewDelegate {
-    func textViewDidBeginEditing(_ textView: UITextView) {
-        if textView.text == textViewPlaceHolder {
-            textView.text = nil
-            textView.textColor = .mainText
-        }
-    }
-
-    func textViewDidEndEditing(_ textView: UITextView) {
-        if textView.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-            textView.text = textViewPlaceHolder
-            textView.textColor = .grey001
-        }
-    }
-
-    func textViewDidChange(_ textView: UITextView) {
-        viewModel.request.reviewContent = textView.text
-    }
-}
-
-extension EditFeedViewController: UICollectionViewDataSource, UICollectionViewDelegate {
+extension UpdateReviewViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_: UICollectionView, numberOfItemsInSection _: Int) -> Int {
         return viewModel.images.count + 1
     }
