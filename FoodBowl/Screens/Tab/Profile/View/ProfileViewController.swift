@@ -78,11 +78,6 @@ final class ProfileViewController: MapViewController {
         }
     }
 
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        navigationController?.isNavigationBarHidden = false
-    }
-
     private func setupProfile(user: MemberProfileResponse) {
         profileHeaderView.userInfoLabel.text = user.introduction
         profileHeaderView.followerInfoButton.numberLabel.text = "\(user.followerCount)"

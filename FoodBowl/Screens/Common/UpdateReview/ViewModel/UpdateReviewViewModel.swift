@@ -1,5 +1,5 @@
 //
-//  EditFeedViewModel.swift
+//  UpdateReviewViewModel.swift
 //  FoodBowl
 //
 //  Created by COBY_PRO on 2023/09/12.
@@ -9,7 +9,7 @@ import UIKit
 
 import Moya
 
-final class EditFeedViewModel {
+final class UpdateReviewViewModel {
     var request = Request()
     var images = [UIImage]()
 

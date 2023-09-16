@@ -88,9 +88,9 @@ extension FeedListView: UICollectionViewDataSource, UICollectionViewDelegate {
             let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
 
             let edit = UIAlertAction(title: "수정", style: .default, handler: { _ in
-                let editFeedViewModel = EditFeedViewModel()
-                let editReviewViewController = UpdateReviewViewController(viewModel: editFeedViewModel)
-                let navigationController = UINavigationController(rootViewController: editReviewViewController)
+                let viewModel = UpdateReviewViewModel()
+                let updateReviewViewController = UpdateReviewViewController(viewModel: viewModel)
+                let navigationController = UINavigationController(rootViewController: updateReviewViewController)
                 navigationController.modalPresentationStyle = .fullScreen
                 DispatchQueue.main.async {
                     self?.parentViewController?.present(navigationController, animated: true)
