@@ -53,7 +53,6 @@
 		CBA4C7DD2AB49B4900FC9DD8 /* BookmarkToggleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA4C7DC2AB49B4900FC9DD8 /* BookmarkToggleButton.swift */; };
 		CBA62D3F2A6EC7B800AA0830 /* FindViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA62D3E2A6EC7B800AA0830 /* FindViewController.swift */; };
 		CBA62D412A6ECB3B00AA0830 /* FindUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA62D402A6ECB3B00AA0830 /* FindUserViewController.swift */; };
-		CBA7F17F297DB2F6006088A0 /* SetProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA7F17E297DB2F6006088A0 /* SetProfileViewController.swift */; };
 		CBA7F182297DB319006088A0 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA7F181297DB319006088A0 /* OnboardingViewController.swift */; };
 		CBA7F184297DBB01006088A0 /* YPImagePicker+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA7F183297DBB01006088A0 /* YPImagePicker+Extension.swift */; };
 		CBADC2422955989400E56C93 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = CBADC2412955989400E56C93 /* SnapKit */; };
@@ -111,7 +110,6 @@
 		CBD1B5F12982B0A300B0AD51 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD1B5F02982B0A300B0AD51 /* SettingViewController.swift */; };
 		CBD1B5F42982D39B00B0AD51 /* SettingItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD1B5F32982D39B00B0AD51 /* SettingItemTableViewCell.swift */; };
 		CBD1B5F82982D9E100B0AD51 /* ForwardButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD1B5F72982D9E100B0AD51 /* ForwardButton.swift */; };
-		CBD1B5FA2982E55F00B0AD51 /* AgreementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD1B5F92982E55F00B0AD51 /* AgreementViewController.swift */; };
 		CBD1B5FC2982E83800B0AD51 /* CheckBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD1B5FB2982E83800B0AD51 /* CheckBox.swift */; };
 		CBD1B5FE2982F19300B0AD51 /* UIButton+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD1B5FD2982F19300B0AD51 /* UIButton+Extension.swift */; };
 		CBD1B6022984394A00B0AD51 /* FeedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD1B6012984394A00B0AD51 /* FeedButton.swift */; };
@@ -184,7 +182,6 @@
 		CBA4C7DC2AB49B4900FC9DD8 /* BookmarkToggleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkToggleButton.swift; sourceTree = "<group>"; };
 		CBA62D3E2A6EC7B800AA0830 /* FindViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindViewController.swift; sourceTree = "<group>"; };
 		CBA62D402A6ECB3B00AA0830 /* FindUserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindUserViewController.swift; sourceTree = "<group>"; };
-		CBA7F17E297DB2F6006088A0 /* SetProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetProfileViewController.swift; sourceTree = "<group>"; };
 		CBA7F181297DB319006088A0 /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
 		CBA7F183297DBB01006088A0 /* YPImagePicker+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "YPImagePicker+Extension.swift"; sourceTree = "<group>"; };
 		CBADC24D29559AA900E56C93 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
@@ -236,7 +233,6 @@
 		CBD1B5F02982B0A300B0AD51 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		CBD1B5F32982D39B00B0AD51 /* SettingItemTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingItemTableViewCell.swift; sourceTree = "<group>"; };
 		CBD1B5F72982D9E100B0AD51 /* ForwardButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForwardButton.swift; sourceTree = "<group>"; };
-		CBD1B5F92982E55F00B0AD51 /* AgreementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgreementViewController.swift; sourceTree = "<group>"; };
 		CBD1B5FB2982E83800B0AD51 /* CheckBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckBox.swift; sourceTree = "<group>"; };
 		CBD1B5FD2982F19300B0AD51 /* UIButton+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Extension.swift"; sourceTree = "<group>"; };
 		CBD1B6012984394A00B0AD51 /* FeedButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedButton.swift; sourceTree = "<group>"; };
@@ -351,37 +347,6 @@
 			path = Component;
 			sourceTree = "<group>";
 		};
-		CB26A3ED2A6AC9910043A642 /* Feed */ = {
-			isa = PBXGroup;
-			children = (
-				CBBB97EF2AB0831B00272CCE /* ViewModel */,
-				CBDDF1392A6AD74E00AE3C50 /* View */,
-			);
-			path = Feed;
-			sourceTree = "<group>";
-		};
-		CB26A3EE2A6AC9A50043A642 /* Component */ = {
-			isa = PBXGroup;
-			children = (
-				CBDDF1412A6AF70500AE3C50 /* StoreHeaderView.swift */,
-				CB1A7C5B29560C2300C6431D /* UserInfoView.swift */,
-				CBDDF1442A6AFB5800AE3C50 /* PhotoListView.swift */,
-				CB1BCAF62958B15B0021617D /* StoreInfoView.swift */,
-				CBADC2DD2955ACBB00E56C93 /* EmptyFeedView.swift */,
-				CBDECAC72A6B2F0700259350 /* FeedListView.swift */,
-			);
-			path = Component;
-			sourceTree = "<group>";
-		};
-		CB26A3EF2A6AC9C80043A642 /* Cell */ = {
-			isa = PBXGroup;
-			children = (
-				CBDECAC92A6B2F6800259350 /* FeedNSCollectionViewCell.swift */,
-				CBADC2D72955AC5900E56C93 /* FeedCollectionViewCell.swift */,
-			);
-			path = Cell;
-			sourceTree = "<group>";
-		};
 		CB2E823D2AA749340016820E /* User */ = {
 			isa = PBXGroup;
 			children = (
@@ -396,8 +361,6 @@
 			isa = PBXGroup;
 			children = (
 				CBA7F181297DB319006088A0 /* OnboardingViewController.swift */,
-				CBD1B5F92982E55F00B0AD51 /* AgreementViewController.swift */,
-				CBA7F17E297DB2F6006088A0 /* SetProfileViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -422,6 +385,8 @@
 		CB49256D2AB44D0E00B66B68 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
+				CBDECAC92A6B2F6800259350 /* FeedNSCollectionViewCell.swift */,
+				CBADC2D72955AC5900E56C93 /* FeedCollectionViewCell.swift */,
 				CB2E4F7E297702A800FD2566 /* StoreInfoTableViewCell.swift */,
 				CB2E4F80297702B800FD2566 /* UserInfoTableViewCell.swift */,
 			);
@@ -450,8 +415,9 @@
 			isa = PBXGroup;
 			children = (
 				CB63B7592A6986B4000AD9C2 /* Map */,
-				CB26A3ED2A6AC9910043A642 /* Feed */,
-				CBADC2B02955A13800E56C93 /* NewFeed */,
+				CBADC2B02955A13800E56C93 /* CreateReview */,
+				CB73E00F2AB5FEA9005B6BF1 /* UpdateReview */,
+				CB73E0102AB5FEB4005B6BF1 /* StoreDetail */,
 				CBADC2CE2955A41500E56C93 /* TabBarController.swift */,
 				CBB582812973007D00808B0B /* ShowWebViewController.swift */,
 			);
@@ -516,6 +482,44 @@
 				CBBA9F182AB5681900BE37AE /* UnivTitleButton.swift */,
 			);
 			path = CustomButton;
+			sourceTree = "<group>";
+		};
+		CB73E00F2AB5FEA9005B6BF1 /* UpdateReview */ = {
+			isa = PBXGroup;
+			children = (
+				CBBB97EF2AB0831B00272CCE /* ViewModel */,
+				CBBB97ED2AB0828600272CCE /* EditFeedViewController.swift */,
+			);
+			path = UpdateReview;
+			sourceTree = "<group>";
+		};
+		CB73E0102AB5FEB4005B6BF1 /* StoreDetail */ = {
+			isa = PBXGroup;
+			children = (
+				CB73E0112AB5FEDF005B6BF1 /* Component */,
+				CBFB52542977B9240049E8BA /* StoreDetailViewController.swift */,
+			);
+			path = StoreDetail;
+			sourceTree = "<group>";
+		};
+		CB73E0112AB5FEDF005B6BF1 /* Component */ = {
+			isa = PBXGroup;
+			children = (
+				CBDDF1412A6AF70500AE3C50 /* StoreHeaderView.swift */,
+			);
+			path = Component;
+			sourceTree = "<group>";
+		};
+		CB73E0122AB5FF1E005B6BF1 /* Feed */ = {
+			isa = PBXGroup;
+			children = (
+				CB1A7C5B29560C2300C6431D /* UserInfoView.swift */,
+				CBDDF1442A6AFB5800AE3C50 /* PhotoListView.swift */,
+				CB1BCAF62958B15B0021617D /* StoreInfoView.swift */,
+				CBADC2DD2955ACBB00E56C93 /* EmptyFeedView.swift */,
+				CBDECAC72A6B2F0700259350 /* FeedListView.swift */,
+			);
+			path = Feed;
 			sourceTree = "<group>";
 		};
 		CB7F3322298A51330000A6B4 /* Network */ = {
@@ -639,6 +643,7 @@
 		CBADC27829559BC900E56C93 /* Component */ = {
 			isa = PBXGroup;
 			children = (
+				CB73E0122AB5FF1E005B6BF1 /* Feed */,
 				CBDECABC2A6B06F900259350 /* ImageButton */,
 				CB63B75E2A6988CC000AD9C2 /* CustomButton */,
 				CBD1B5FB2982E83800B0AD51 /* CheckBox.swift */,
@@ -658,13 +663,13 @@
 			path = Profile;
 			sourceTree = "<group>";
 		};
-		CBADC2B02955A13800E56C93 /* NewFeed */ = {
+		CBADC2B02955A13800E56C93 /* CreateReview */ = {
 			isa = PBXGroup;
 			children = (
 				CB15790E2AACD97300007183 /* ViewModel */,
 				CBDDF13A2A6AD75700AE3C50 /* View */,
 			);
-			path = NewFeed;
+			path = CreateReview;
 			sourceTree = "<group>";
 		};
 		CBADC2B12955A14C00E56C93 /* Screens */ = {
@@ -774,17 +779,6 @@
 				CBBB97EB2AB068AA00272CCE /* BMJUAOTF.otf */,
 			);
 			path = Fonts;
-			sourceTree = "<group>";
-		};
-		CBDDF1392A6AD74E00AE3C50 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				CB26A3EE2A6AC9A50043A642 /* Component */,
-				CB26A3EF2A6AC9C80043A642 /* Cell */,
-				CBFB52542977B9240049E8BA /* StoreDetailViewController.swift */,
-				CBBB97ED2AB0828600272CCE /* EditFeedViewController.swift */,
-			);
-			path = View;
 			sourceTree = "<group>";
 		};
 		CBDDF13A2A6AD75700AE3C50 /* View */ = {
@@ -1031,7 +1025,6 @@
 				CBFB52552977B9240049E8BA /* StoreDetailViewController.swift in Sources */,
 				CBBB97EE2AB0828600272CCE /* EditFeedViewController.swift in Sources */,
 				CB7F3325298A51560000A6B4 /* UserDefaultStorage.swift in Sources */,
-				CBA7F17F297DB2F6006088A0 /* SetProfileViewController.swift in Sources */,
 				CBC747BA2A83DD6400F171F5 /* Configurations.swift in Sources */,
 				CB63B7602A698909000AD9C2 /* CategoryListView.swift in Sources */,
 				CB2E82472AA74FB60016820E /* NicknameExistResponse.swift in Sources */,
@@ -1110,7 +1103,6 @@
 				CBADC2D82955AC5900E56C93 /* FeedCollectionViewCell.swift in Sources */,
 				CB5DD42F2AB587CD009FCB43 /* UserDefaultWrapper.swift in Sources */,
 				CBADC2AD2955A0FF00E56C93 /* ProfileViewController.swift in Sources */,
-				CBD1B5FA2982E55F00B0AD51 /* AgreementViewController.swift in Sources */,
 				CBBA9F1B2AB5691900BE37AE /* DownButton.swift in Sources */,
 				CBDE38FD29715C5F00DDE49A /* SearchBarButton.swift in Sources */,
 				CBADC2DE2955ACBB00E56C93 /* EmptyFeedView.swift in Sources */,
