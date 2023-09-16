@@ -100,6 +100,7 @@ final class FindViewController: BaseViewController {
         navigationItem.leftBarButtonItem = findGuideLabel
         navigationItem.rightBarButtonItem = plusButton
         navigationItem.searchController = searchController
+        navigationItem.hidesSearchBarWhenScrolling = false
     }
 
     @objc

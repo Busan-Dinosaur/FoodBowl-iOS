@@ -25,9 +25,9 @@ final class SetReviewViewController: BaseViewController {
 
     private let textViewPlaceHolder = "100자 이내"
 
-    private var viewModel: NewFeedViewModel
+    private var viewModel: CreateReviewViewModel
 
-    init(viewModel: NewFeedViewModel) {
+    init(viewModel: CreateReviewViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }

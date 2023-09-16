@@ -37,14 +37,6 @@ final class EditFeedViewController: BaseViewController {
     }
 
     // MARK: - property
-
-    private lazy var closeButton = CloseButton().then {
-        let action = UIAction { [weak self] _ in
-            self?.dismiss(animated: true, completion: nil)
-        }
-        $0.addAction(action, for: .touchUpInside)
-    }
-
     private lazy var completeButton = UIButton().then {
         $0.setTitle("완료", for: .normal)
         $0.setTitleColor(.mainPink, for: .normal)

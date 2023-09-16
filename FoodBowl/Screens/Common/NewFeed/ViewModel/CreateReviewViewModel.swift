@@ -9,7 +9,7 @@ import UIKit
 
 import Moya
 
-final class NewFeedViewModel {
+final class CreateReviewViewModel {
     var request = Request()
     var store: Place?
     var images = [UIImage]()

@@ -15,13 +15,6 @@ final class ShowWebViewController: BaseViewController, WKNavigationDelegate, WKU
     var url = ""
 
     // MARK: - property
-    private lazy var closeButton = CloseButton().then {
-        let action = UIAction { [weak self] _ in
-            self?.dismiss(animated: true, completion: nil)
-        }
-        $0.addAction(action, for: .touchUpInside)
-    }
-
     lazy var webView = WKWebView(frame: .zero, configuration: WKWebViewConfiguration()).then {
         $0.navigationDelegate = self
         $0.uiDelegate = self
@@ -44,10 +37,9 @@ final class ShowWebViewController: BaseViewController, WKNavigationDelegate, WKU
 
     override func setupNavigationBar() {
         super.setupNavigationBar()
-
-        let leftOffsetCloseButton = removeBarButtonItemOffset(with: closeButton, offsetX: 10)
-        let closeButton = makeBarButtonItem(with: leftOffsetCloseButton)
-        navigationItem.leftBarButtonItem = closeButton
+        let closeButton = makeBarButtonItem(with: closeButton)
+        navigationItem.rightBarButtonItem = closeButton
+        navigationItem.leftBarButtonItem = nil
     }
 
     func webView(

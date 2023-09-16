@@ -13,6 +13,8 @@ import Then
 
 class BaseViewController: UIViewController {
     // MARK: - property
+    private var activeTextField: UITextField?
+
     private lazy var backButton = BackButton().then {
         let buttonAction = UIAction { [weak self] _ in
             self?.navigationController?.popViewController(animated: true)
@@ -20,12 +22,21 @@ class BaseViewController: UIViewController {
         $0.addAction(buttonAction, for: .touchUpInside)
     }
 
-    private var activeTextField: UITextField?
+    lazy var closeButton = UIButton().then {
+        $0.setTitle("닫기", for: .normal)
+        $0.setTitleColor(.mainPink, for: .normal)
+        $0.titleLabel?.font = UIFont.preferredFont(forTextStyle: .headline, weight: .regular)
+        let action = UIAction { [weak self] _ in
+            self?.dismiss(animated: true, completion: nil)
+        }
+        $0.addAction(action, for: .touchUpInside)
+    }
 
     lazy var plusButton = PlusButton().then {
         let action = UIAction { [weak self] _ in
             let createReviewController = CreateReviewController()
             let navigationController = UINavigationController(rootViewController: createReviewController)
+            navigationController.modalPresentationStyle = .fullScreen
             DispatchQueue.main.async {
                 self?.present(navigationController, animated: true)
             }

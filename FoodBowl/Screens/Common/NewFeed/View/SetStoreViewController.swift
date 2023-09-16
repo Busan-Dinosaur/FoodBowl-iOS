@@ -11,9 +11,9 @@ import SnapKit
 import Then
 
 final class SetStoreViewController: BaseViewController {
-    private var viewModel: NewFeedViewModel
+    private var viewModel: CreateReviewViewModel
 
-    init(viewModel: NewFeedViewModel) {
+    init(viewModel: CreateReviewViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -62,6 +62,7 @@ final class SetStoreViewController: BaseViewController {
     override func setupNavigationBar() {
         super.setupNavigationBar()
         navigationItem.searchController = searchController
+        navigationItem.hidesSearchBarWhenScrolling = false
         title = "맛집 검색"
     }
 

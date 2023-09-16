@@ -11,7 +11,7 @@ import SnapKit
 import Then
 
 final class CreateReviewController: BaseViewController {
-    private var viewModel = NewFeedViewModel()
+    private var viewModel = CreateReviewViewModel()
 
     private let newFeedGuideLabel = PaddingLabel().then {
         $0.font = .font(.regular, ofSize: 22)
@@ -60,7 +60,9 @@ final class CreateReviewController: BaseViewController {
     override func setupNavigationBar() {
         super.setupNavigationBar()
         let newFeedGuideLabel = makeBarButtonItem(with: newFeedGuideLabel)
+        let closeButton = makeBarButtonItem(with: closeButton)
         navigationItem.leftBarButtonItem = newFeedGuideLabel
+        navigationItem.rightBarButtonItem = closeButton
     }
 
     private func tappedCompleteButton() {

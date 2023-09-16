@@ -11,7 +11,7 @@ import SnapKit
 import Then
 
 final class NewFeedViewController: BaseViewController {
-    private var viewModel = NewFeedViewModel()
+    private var viewModel = CreateReviewViewModel()
 
     private lazy var pageViewController = UIPageViewController(
         transitionStyle: .scroll,
@@ -27,13 +27,6 @@ final class NewFeedViewController: BaseViewController {
     }()
 
     private let pageControl = UIPageControl()
-
-    private lazy var closeButton = CloseButton().then {
-        let action = UIAction { [weak self] _ in
-            self?.dismiss(animated: true, completion: nil)
-        }
-        $0.addAction(action, for: .touchUpInside)
-    }
 
     private lazy var backButton = BackButton().then {
         let buttonAction = UIAction { [weak self] _ in
