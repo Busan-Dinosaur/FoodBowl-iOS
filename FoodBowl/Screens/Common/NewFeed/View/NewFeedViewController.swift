@@ -42,6 +42,14 @@ final class NewFeedViewController: BaseViewController {
         $0.addAction(buttonAction, for: .touchUpInside)
     }
 
+    let newFeedGuideLabel = PaddingLabel().then {
+        $0.font = .font(.regular, ofSize: 22)
+        $0.text = "후기 작성"
+        $0.textColor = .mainText
+        $0.padding = UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 0)
+        $0.frame = CGRect(x: 0, y: 0, width: 150, height: 0)
+    }
+
     private lazy var nextButton = UIButton().then {
         $0.setTitle("다음", for: .normal)
         $0.setTitleColor(.mainPink, for: .normal)
@@ -88,13 +96,8 @@ final class NewFeedViewController: BaseViewController {
 
     override func setupNavigationBar() {
         super.setupNavigationBar()
-
-        let leftOffsetCloseButton = removeBarButtonItemOffset(with: closeButton, offsetX: 10)
-        let closeButton = makeBarButtonItem(with: leftOffsetCloseButton)
-        let nextButton = makeBarButtonItem(with: nextButton)
-        navigationItem.leftBarButtonItem = closeButton
-        navigationItem.rightBarButtonItem = nextButton
-        title = "가게 선택"
+        let newFeedGuideLabel = makeBarButtonItem(with: newFeedGuideLabel)
+        navigationItem.leftBarButtonItem = newFeedGuideLabel
     }
 
     private func updateNavigationBar(currentPage: Int) {

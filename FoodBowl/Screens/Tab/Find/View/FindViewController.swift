@@ -19,7 +19,13 @@ final class FindViewController: BaseViewController {
         $0.frame = CGRect(x: 0, y: 0, width: 150, height: 0)
     }
 
-    private var searchBarView = SearchBarButton()
+    // MARK: - property
+    private lazy var searchController = UISearchController(searchResultsController: nil).then {
+        $0.searchBar.placeholder = "검색"
+        $0.searchBar.scopeButtonTitles = ["맛집", "유저"]
+        $0.searchResultsUpdater = self
+        $0.searchBar.showsScopeBar = true
+    }
 
     private lazy var segmentedControl = UnderlineSegmentedControl(items: ["맛집", "유저"]).then {
         $0.translatesAutoresizingMaskIntoConstraints = false
@@ -72,22 +78,10 @@ final class FindViewController: BaseViewController {
     }
 
     override func setupLayout() {
-        view.addSubviews(searchBarView, segmentedControl, pageViewController.view)
-
-        searchBarView.snp.makeConstraints {
-            $0.leading.trailing.equalToSuperview().inset(BaseSize.horizantalPadding)
-            $0.top.equalTo(view.safeAreaLayoutGuide)
-            $0.height.equalTo(40)
-        }
-
-        segmentedControl.snp.makeConstraints {
-            $0.leading.trailing.equalToSuperview().inset(BaseSize.horizantalPadding)
-            $0.top.equalTo(searchBarView.snp.bottom).offset(4)
-            $0.height.equalTo(40)
-        }
+        view.addSubviews(pageViewController.view)
 
         pageViewController.view.snp.makeConstraints {
-            $0.top.equalTo(segmentedControl.snp.bottom).offset(4)
+            $0.top.equalTo(view.safeAreaLayoutGuide)
             $0.leading.trailing.bottom.equalToSuperview()
         }
     }
@@ -105,6 +99,7 @@ final class FindViewController: BaseViewController {
         let plusButton = makeBarButtonItem(with: plusButton)
         navigationItem.leftBarButtonItem = findGuideLabel
         navigationItem.rightBarButtonItem = plusButton
+        navigationItem.searchController = searchController
     }
 
     @objc
@@ -155,5 +150,11 @@ extension FindViewController: FindStoreViewControllerDelegate, FindUserViewContr
 
     func setUser(profileViewController: ProfileViewController) {
         navigationController?.pushViewController(profileViewController, animated: true)
+    }
+}
+
+extension FindViewController: UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+        guard let text = searchController.searchBar.text?.lowercased() else { return }
     }
 }

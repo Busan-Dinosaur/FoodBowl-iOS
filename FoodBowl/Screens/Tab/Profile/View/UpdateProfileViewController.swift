@@ -1,5 +1,5 @@
 //
-//  ProfileEditViewController.swift
+//  UpdateProfileViewController.swift
 //  FoodBowl
 //
 //  Created by COBY_PRO on 2023/01/26.
@@ -11,7 +11,7 @@ import SnapKit
 import Then
 import YPImagePicker
 
-final class ProfileEditViewController: BaseViewController {
+final class UpdateProfileViewController: BaseViewController {
     private var profileImage: UIImage = ImageLiteral.defaultProfile
 
     private var viewModel = ProfileViewModel()

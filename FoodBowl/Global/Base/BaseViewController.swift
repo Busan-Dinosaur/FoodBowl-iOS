@@ -24,9 +24,8 @@ class BaseViewController: UIViewController {
 
     lazy var plusButton = PlusButton().then {
         let action = UIAction { [weak self] _ in
-            let addFeedViewController = NewFeedViewController()
-            let navigationController = UINavigationController(rootViewController: addFeedViewController)
-            navigationController.modalPresentationStyle = .fullScreen
+            let createReviewController = CreateReviewController()
+            let navigationController = UINavigationController(rootViewController: createReviewController)
             DispatchQueue.main.async {
                 self?.present(navigationController, animated: true)
             }

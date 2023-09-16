@@ -11,6 +11,7 @@ import Moya
 
 final class NewFeedViewModel {
     var request = Request()
+    var store: Place?
     var images = [UIImage]()
 
     private let providerKakao = MoyaProvider<KakaoAPI>()
@@ -85,6 +86,7 @@ final class NewFeedViewModel {
     }
 
     func setStore(store: Place) async {
+        self.store = store
         request.locationId = store.id
         request.storeName = store.placeName
         request.storeAddress = store.addressName
