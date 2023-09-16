@@ -68,9 +68,9 @@ final class ProfileViewController: MapViewController {
 
         Task {
             if isOwn {
-                if let id = UserDefaultsManager.currentUser?.id {
-                    await viewModel.getProfile(id: id)
-                }
+                guard let user = UserDefaultsManager.currentUser else { return }
+                setupProfile(user: user)
+                await viewModel.getProfile(id: user.id)
             } else {
                 await viewModel.getProfile(id: 1)
             }
@@ -78,17 +78,21 @@ final class ProfileViewController: MapViewController {
         }
     }
 
-    private func setupData() {
-        guard let userProfile = viewModel.userProfile else { return }
-        profileHeaderView.userInfoLabel.text = viewModel.userProfile?.introduction
-        profileHeaderView.followerInfoButton.numberLabel.text = "\(userProfile.followerCount)"
-        profileHeaderView.followingInfoButton.numberLabel.text = "\(userProfile.followingCount)"
+    private func setupProfile(user: MemberProfileResponse) {
+        profileHeaderView.userInfoLabel.text = user.introduction
+        profileHeaderView.followerInfoButton.numberLabel.text = "\(user.followerCount)"
+        profileHeaderView.followingInfoButton.numberLabel.text = "\(user.followingCount)"
 
         if isOwn {
-            userNicknameLabel.text = userProfile.nickname
+            userNicknameLabel.text = user.nickname
         } else {
-            title = userProfile.nickname
+            title = user.nickname
         }
+    }
+
+    private func setupData() {
+        guard let user = viewModel.userProfile else { return }
+        setupProfile(user: user)
     }
 
     override func setupLayout() {
