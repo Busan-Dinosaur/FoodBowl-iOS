@@ -30,8 +30,7 @@ final class CreateReviewViewModel {
     }
 
     func searchStores(keyword: String) async -> [Place] {
-        var stores = [Place]()
-        guard let currentLoc = LocationManager.shared.manager.location else { return stores }
+        guard let currentLoc = LocationManager.shared.manager.location else { return [Place]() }
 
         let response = await providerKakao.request(.searchStores(
             x: String(currentLoc.coordinate.longitude),
@@ -41,13 +40,12 @@ final class CreateReviewViewModel {
 
         switch response {
         case .success(let result):
-            guard let data = try? result.map(PlaceResponse.self) else { return stores }
-            stores = data.documents
+            guard let data = try? result.map(PlaceResponse.self) else { return [Place]() }
+            return data.documents
         case .failure(let err):
             print(err.localizedDescription)
+            return [Place]()
         }
-
-        return stores
     }
 
     private func searchUniv(store: Place) async -> Place? {

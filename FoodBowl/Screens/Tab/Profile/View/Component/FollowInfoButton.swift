@@ -13,7 +13,7 @@ import Then
 final class FollowInfoButton: UIButton {
     // MARK: - property
     let infoLabel = UILabel().then {
-        $0.font = UIFont.preferredFont(forTextStyle: .callout, weight: .medium)
+        $0.font = UIFont.preferredFont(forTextStyle: .subheadline, weight: .medium)
         $0.textColor = .subText
     }
 

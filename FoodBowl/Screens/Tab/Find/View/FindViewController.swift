@@ -22,8 +22,11 @@ final class FindViewController: BaseViewController {
     // MARK: - property
     private lazy var searchController = UISearchController(searchResultsController: nil).then {
         $0.searchBar.placeholder = "검색"
-        $0.searchBar.scopeButtonTitles = ["맛집", "유저"]
         $0.searchResultsUpdater = self
+        $0.obscuresBackgroundDuringPresentation = false
+        $0.searchBar.setValue("취소", forKey: "cancelButtonText")
+        $0.searchBar.tintColor = .mainPink
+        $0.searchBar.scopeButtonTitles = ["맛집", "유저"]
         $0.searchBar.showsScopeBar = true
     }
 

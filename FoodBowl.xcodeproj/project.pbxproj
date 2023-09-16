@@ -78,7 +78,7 @@
 		CBADC29C29559BC900E56C93 /* BaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADC27729559BC900E56C93 /* BaseCollectionViewCell.swift */; };
 		CBADC2A129559BC900E56C93 /* BackButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADC27D29559BC900E56C93 /* BackButton.swift */; };
 		CBADC2AD2955A0FF00E56C93 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADC2AC2955A0FF00E56C93 /* ProfileViewController.swift */; };
-		CBADC2B52955A18C00E56C93 /* SetStoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADC2B42955A18C00E56C93 /* SetStoreViewController.swift */; };
+		CBADC2B52955A18C00E56C93 /* ResultsStoresViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADC2B42955A18C00E56C93 /* ResultsStoresViewController.swift */; };
 		CBADC2B92955A1CC00E56C93 /* SetReviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADC2B82955A1CC00E56C93 /* SetReviewViewController.swift */; };
 		CBADC2CF2955A41500E56C93 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADC2CE2955A41500E56C93 /* TabBarController.swift */; };
 		CBADC2D82955AC5900E56C93 /* FeedCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADC2D72955AC5900E56C93 /* FeedCollectionViewCell.swift */; };
@@ -208,7 +208,7 @@
 		CBADC27729559BC900E56C93 /* BaseCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseCollectionViewCell.swift; sourceTree = "<group>"; };
 		CBADC27D29559BC900E56C93 /* BackButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackButton.swift; sourceTree = "<group>"; };
 		CBADC2AC2955A0FF00E56C93 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
-		CBADC2B42955A18C00E56C93 /* SetStoreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetStoreViewController.swift; sourceTree = "<group>"; };
+		CBADC2B42955A18C00E56C93 /* ResultsStoresViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultsStoresViewController.swift; sourceTree = "<group>"; };
 		CBADC2B82955A1CC00E56C93 /* SetReviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetReviewViewController.swift; sourceTree = "<group>"; };
 		CBADC2CE2955A41500E56C93 /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		CBADC2D72955AC5900E56C93 /* FeedCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -796,10 +796,10 @@
 			children = (
 				CB1A7C66295767F000C6431D /* Component */,
 				CBDE39002971945300DDE49A /* Cell */,
-				CBDE38F82970745600DDE49A /* NewFeedViewController.swift */,
-				CBADC2B42955A18C00E56C93 /* SetStoreViewController.swift */,
 				CBADC2B82955A1CC00E56C93 /* SetReviewViewController.swift */,
+				CBDE38F82970745600DDE49A /* NewFeedViewController.swift */,
 				CB5DD4322AB5A175009FCB43 /* CreateReviewController.swift */,
+				CBADC2B42955A18C00E56C93 /* ResultsStoresViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1102,7 +1102,7 @@
 				CB40C6FE2A83EEF8003E3F06 /* SignRequest.swift in Sources */,
 				CB40C6F82A83E812003E3F06 /* SignViewModel.swift in Sources */,
 				CB1578FE2AAC5D3700007183 /* ViewModelType.swift in Sources */,
-				CBADC2B52955A18C00E56C93 /* SetStoreViewController.swift in Sources */,
+				CBADC2B52955A18C00E56C93 /* ResultsStoresViewController.swift in Sources */,
 				CBA4C7DB2AB4840100FC9DD8 /* PaddingLabel.swift in Sources */,
 				CBE61911296C6804005295AF /* OptionButton.swift in Sources */,
 				CBADC28E29559BC900E56C93 /* UIView+Extension.swift in Sources */,
