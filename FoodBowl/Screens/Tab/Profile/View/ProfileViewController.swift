@@ -28,8 +28,7 @@ final class ProfileViewController: MapViewController {
     }
 
     let userNicknameLabel = PaddingLabel().then {
-        $0.font = UIFont.preferredFont(forTextStyle: .title2, weight: .bold)
-        $0.text = "홍길동"
+        $0.font = .font(.regular, ofSize: 22)
         $0.textColor = .mainText
         $0.padding = UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 0)
         $0.frame = CGRect(x: 0, y: 0, width: 200, height: 0)
