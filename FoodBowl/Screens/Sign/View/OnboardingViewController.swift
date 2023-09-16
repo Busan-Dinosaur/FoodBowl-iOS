@@ -55,6 +55,7 @@ final class OnboardingViewController: BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.isNavigationBarHidden = true
+        LocationManager.shared.checkLocationService()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -85,6 +86,10 @@ final class OnboardingViewController: BaseViewController {
             $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(BaseSize.bottomPadding)
             $0.height.equalTo(60)
         }
+    }
+
+    override func configureUI() {
+        view.backgroundColor = .mainBackground
     }
 
     private func appleSignIn() {

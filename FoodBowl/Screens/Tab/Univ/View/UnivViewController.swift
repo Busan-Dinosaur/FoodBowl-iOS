@@ -11,12 +11,15 @@ import SnapKit
 import Then
 
 final class UnivViewController: MapViewController {
+    private var univName: String = "대학가"
+
     private lazy var univTitleButton = UnivTitleButton().then {
         let action = UIAction { [weak self] _ in
             self?.tappedUnivButton()
         }
         $0.addAction(action, for: .touchUpInside)
         $0.frame = CGRect(x: 0, y: 0, width: 300, height: 45)
+        $0.label.text = univName
     }
 
     init() {
@@ -51,5 +54,6 @@ final class UnivViewController: MapViewController {
 
     private func tappedUnivButton() {
         print("tapped")
+        univTitleButton.label.text = univName
     }
 }

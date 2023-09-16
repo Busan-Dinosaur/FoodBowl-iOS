@@ -101,7 +101,7 @@ final class ProfileHeaderView: UICollectionReusableView {
         }
 
         followingInfoButton.snp.makeConstraints {
-            $0.leading.equalTo(followerInfoButton.snp.trailing).offset(6)
+            $0.leading.equalTo(followerInfoButton.snp.trailing).offset(20)
             $0.top.equalToSuperview().inset(4)
             $0.height.equalTo(20)
         }
