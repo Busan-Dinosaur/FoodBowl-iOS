@@ -36,7 +36,7 @@ final class UpdateProfileViewController: BaseViewController {
     private let nicknameField = UITextField().then {
         let attributes = [
             NSAttributedString.Key.foregroundColor: UIColor.grey001,
-            NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .footnote, weight: .regular)
+            NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .subheadline, weight: .regular)
         ]
 
         $0.backgroundColor = .clear
@@ -45,6 +45,8 @@ final class UpdateProfileViewController: BaseViewController {
         $0.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 0))
         $0.leftViewMode = .always
         $0.clearButtonMode = .always
+        $0.font = UIFont.preferredFont(forTextStyle: .subheadline, weight: .regular)
+        $0.textColor = .mainText
         $0.makeBorderLayer(color: .grey002)
     }
 
@@ -57,7 +59,7 @@ final class UpdateProfileViewController: BaseViewController {
     private let userInfoField = UITextField().then {
         let attributes = [
             NSAttributedString.Key.foregroundColor: UIColor.grey001,
-            NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .footnote, weight: .regular)
+            NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .subheadline, weight: .regular)
         ]
 
         $0.backgroundColor = .clear
@@ -66,6 +68,8 @@ final class UpdateProfileViewController: BaseViewController {
         $0.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 0))
         $0.leftViewMode = .always
         $0.clearButtonMode = .always
+        $0.font = UIFont.preferredFont(forTextStyle: .subheadline, weight: .regular)
+        $0.textColor = .mainText
         $0.makeBorderLayer(color: .grey002)
     }
 
