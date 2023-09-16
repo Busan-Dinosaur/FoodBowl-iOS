@@ -23,11 +23,9 @@ final class CreateReviewController: BaseViewController {
         )
     }
 
-    private let textViewPlaceHolder = "100자 이내"
-
-    private var stores = [Place]()
-
     private var viewModel = CreateReviewViewModel()
+
+    private let textViewPlaceHolder = "100자 이내"
 
     private let newFeedGuideLabel = PaddingLabel().then {
         $0.font = .font(.regular, ofSize: 22)
@@ -37,24 +35,24 @@ final class CreateReviewController: BaseViewController {
         $0.frame = CGRect(x: 0, y: 0, width: 150, height: 0)
     }
 
-    private lazy var resultsStoreTableViewController = ResultsStoreTableViewController().then {
-        $0.storeInfoTableView.delegate = self
-        $0.storeInfoTableView.dataSource = self
-    }
-
-    private lazy var searchController = UISearchController(searchResultsController: resultsStoreTableViewController).then {
-        $0.searchBar.placeholder = "맛집 검색"
-        $0.searchResultsUpdater = self
-        $0.searchBar.setValue("취소", forKey: "cancelButtonText")
-        $0.searchBar.tintColor = .mainPink
-    }
-
     private lazy var selectedStoreView = SelectedStoreView().then {
         $0.isHidden = true
     }
 
+    private lazy var searchBarButton = SearchBarButton().then {
+        $0.placeholderLabel.text = "가게 검색"
+        let action = UIAction { [weak self] _ in
+            guard let viewModel = self?.viewModel else { return }
+            let searchStoreViewController = SearchStoreViewController(viewModel: viewModel)
+            DispatchQueue.main.async {
+                self?.navigationController?.pushViewController(searchStoreViewController, animated: true)
+            }
+        }
+        $0.addAction(action, for: .touchUpInside)
+    }
+
     private let guidePhotoLabel = UILabel().then {
-        $0.text = "음식 사진을 등록해주세요."
+        $0.text = "사진을 등록해주세요."
         $0.font = UIFont.preferredFont(forTextStyle: .body, weight: .medium)
         $0.textColor = .mainText
     }
@@ -107,10 +105,12 @@ final class CreateReviewController: BaseViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        setStore()
     }
 
     override func setupLayout() {
         view.addSubviews(
+            searchBarButton,
             selectedStoreView,
             guidePhotoLabel,
             listCollectionView,
@@ -119,14 +119,20 @@ final class CreateReviewController: BaseViewController {
             completeButton
         )
 
-        selectedStoreView.snp.makeConstraints {
+        searchBarButton.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide)
             $0.leading.trailing.equalToSuperview().inset(BaseSize.horizantalPadding)
-            $0.height.equalTo(0)
+            $0.height.equalTo(40)
+        }
+
+        selectedStoreView.snp.makeConstraints {
+            $0.top.equalTo(searchBarButton.snp.bottom).offset(10)
+            $0.leading.trailing.equalToSuperview().inset(BaseSize.horizantalPadding)
+            $0.height.equalTo(60)
         }
 
         guidePhotoLabel.snp.makeConstraints {
-            $0.top.equalTo(selectedStoreView.snp.bottom).offset(40)
+            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(60)
             $0.leading.equalToSuperview().inset(BaseSize.horizantalPadding)
         }
 
@@ -137,7 +143,7 @@ final class CreateReviewController: BaseViewController {
         }
 
         guideCommentLabel.snp.makeConstraints {
-            $0.top.equalTo(listCollectionView.snp.bottom).offset(40)
+            $0.top.equalTo(listCollectionView.snp.bottom).offset(20)
             $0.leading.equalToSuperview().inset(BaseSize.horizantalPadding)
         }
 
@@ -160,10 +166,53 @@ final class CreateReviewController: BaseViewController {
         let closeButton = makeBarButtonItem(with: closeButton)
         navigationItem.leftBarButtonItem = newFeedGuideLabel
         navigationItem.rightBarButtonItem = closeButton
-        navigationItem.searchController = searchController
-        navigationItem.hidesSearchBarWhenScrolling = false
     }
 
+    private func setStore() {
+        if let store = viewModel.store {
+            let action = UIAction { [weak self] _ in
+                let showWebViewController = ShowWebViewController()
+                showWebViewController.title = "가게 정보"
+                showWebViewController.url = store.placeURL
+
+                let navigationController = UINavigationController(rootViewController: showWebViewController)
+                navigationController.modalPresentationStyle = .fullScreen
+
+                DispatchQueue.main.async {
+                    self?.present(navigationController, animated: true)
+                }
+            }
+
+            selectedStoreView.mapButton.addAction(action, for: .touchUpInside)
+            selectedStoreView.storeNameLabel.text = store.placeName
+            selectedStoreView.storeAdressLabel.text = store.addressName
+            selectedStoreView.isHidden = false
+
+            searchBarButton.placeholderLabel.text = "가게 재검색"
+
+            guidePhotoLabel.snp.updateConstraints {
+                $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(130)
+            }
+        }
+    }
+
+    private func showAlert(message: String) {
+        let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
+        let cancel = UIAlertAction(title: "닫기", style: .cancel, handler: nil)
+        alert.addAction(cancel)
+
+        present(alert, animated: true, completion: nil)
+    }
+
+    private func tappedCompleteButton() {
+        Task {
+            await viewModel.createReview()
+        }
+        dismiss(animated: true, completion: nil)
+    }
+}
+
+extension CreateReviewController {
     private func photoAddButtonDidTap() {
         var config = YPImagePickerConfiguration()
         config.onlySquareImagesFromCamera = true
@@ -202,109 +251,6 @@ final class CreateReviewController: BaseViewController {
         }
         present(picker, animated: true, completion: nil)
     }
-
-    private func showAlert(message: String) {
-        let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
-        let cancel = UIAlertAction(title: "닫기", style: .cancel, handler: nil)
-        alert.addAction(cancel)
-
-        present(alert, animated: true, completion: nil)
-    }
-
-    private func tappedCompleteButton() {
-        Task {
-            await viewModel.createReview()
-        }
-        dismiss(animated: true, completion: nil)
-    }
-}
-
-extension CreateReviewController: UISearchResultsUpdating {
-    func updateSearchResults(for searchController: UISearchController) {
-        guard let text = searchController.searchBar.text?.lowercased() else { return }
-        searchStores(keyword: text)
-    }
-
-    private func searchStores(keyword: String) {
-        Task {
-            stores = await viewModel.searchStores(keyword: keyword)
-            resultsStoreTableViewController.storeInfoTableView.reloadData()
-        }
-    }
-}
-
-extension CreateReviewController: UITableViewDataSource, UITableViewDelegate {
-    func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
-        return stores.count
-    }
-
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView
-            .dequeueReusableCell(withIdentifier: StoreSearchTableViewCell.className, for: indexPath) as? StoreSearchTableViewCell
-        else { return UITableViewCell() }
-
-        cell.selectionStyle = .none
-        cell.storeNameLabel.text = stores[indexPath.item].placeName
-        cell.storeAdressLabel.text = stores[indexPath.item].addressName
-        cell.storeDistanceLabel.text = stores[indexPath.item].distance.prettyDistance
-
-        return cell
-    }
-
-    func tableView(_: UITableView, heightForRowAt _: IndexPath) -> CGFloat {
-        return 60
-    }
-
-    func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
-        setStore(store: stores[indexPath.item])
-    }
-
-    private func setStore(store: Place) {
-        let action = UIAction { [weak self] _ in
-            let showWebViewController = ShowWebViewController()
-            showWebViewController.title = "맛집 정보"
-            showWebViewController.url = store.placeURL
-
-            let navigationController = UINavigationController(rootViewController: showWebViewController)
-            navigationController.modalPresentationStyle = .fullScreen
-
-            DispatchQueue.main.async {
-                self?.present(navigationController, animated: true)
-            }
-        }
-
-        selectedStoreView.mapButton.addAction(action, for: .touchUpInside)
-        selectedStoreView.storeNameLabel.text = store.placeName
-        selectedStoreView.storeAdressLabel.text = store.addressName
-        selectedStoreView.snp.updateConstraints {
-            $0.height.equalTo(60)
-        }
-        selectedStoreView.isHidden = false
-
-        Task {
-            await viewModel.setStore(store: store)
-        }
-    }
-}
-
-extension CreateReviewController: UITextViewDelegate {
-    func textViewDidBeginEditing(_ textView: UITextView) {
-        if textView.text == textViewPlaceHolder {
-            textView.text = nil
-            textView.textColor = .mainText
-        }
-    }
-
-    func textViewDidEndEditing(_ textView: UITextView) {
-        if textView.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-            textView.text = textViewPlaceHolder
-            textView.textColor = .grey001
-        }
-    }
-
-    func textViewDidChange(_ textView: UITextView) {
-        viewModel.request.reviewContent = textView.text
-    }
 }
 
 extension CreateReviewController: UICollectionViewDataSource, UICollectionViewDelegate {
@@ -340,5 +286,25 @@ extension CreateReviewController: UICollectionViewDataSource, UICollectionViewDe
         if indexPath.item == 0 {
             photoAddButtonDidTap()
         }
+    }
+}
+
+extension CreateReviewController: UITextViewDelegate {
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        if textView.text == textViewPlaceHolder {
+            textView.text = nil
+            textView.textColor = .mainText
+        }
+    }
+
+    func textViewDidEndEditing(_ textView: UITextView) {
+        if textView.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            textView.text = textViewPlaceHolder
+            textView.textColor = .grey001
+        }
+    }
+
+    func textViewDidChange(_ textView: UITextView) {
+        viewModel.request.reviewContent = textView.text
     }
 }

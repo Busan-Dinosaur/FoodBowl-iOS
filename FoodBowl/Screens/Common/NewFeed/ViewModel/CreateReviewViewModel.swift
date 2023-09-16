@@ -11,8 +11,8 @@ import Moya
 
 final class CreateReviewViewModel {
     var request = Request()
-    var store: Place?
     var images = [UIImage]()
+    var store: Place?
 
     private let providerKakao = MoyaProvider<KakaoAPI>()
     private let provider = MoyaProvider<StoreAPI>()
