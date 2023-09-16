@@ -37,7 +37,7 @@ final class CreateReviewController: BaseViewController {
         }
 
     private lazy var selectedStoreView = SelectedStoreView().then {
-        $0.isHidden = false
+        $0.isHidden = true
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -49,7 +49,7 @@ final class CreateReviewController: BaseViewController {
         selectedStoreView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide)
             $0.leading.trailing.equalToSuperview().inset(BaseSize.horizantalPadding)
-            $0.height.equalTo(60)
+            $0.height.equalTo(0)
         }
     }
 
@@ -121,10 +121,6 @@ extension CreateReviewController: UITableViewDataSource, UITableViewDelegate {
     }
 
     private func setStore(store: Place) {
-        selectedStoreView.storeNameLabel.text = store.placeName
-        selectedStoreView.storeAdressLabel.text = store.addressName
-        selectedStoreView.isHidden = false
-
         let action = UIAction { [weak self] _ in
             let showWebViewController = ShowWebViewController()
             showWebViewController.title = "가게 정보"
@@ -137,7 +133,13 @@ extension CreateReviewController: UITableViewDataSource, UITableViewDelegate {
                 self?.present(navigationController, animated: true)
             }
         }
+
         selectedStoreView.mapButton.addAction(action, for: .touchUpInside)
+        selectedStoreView.storeNameLabel.text = store.placeName
+        selectedStoreView.storeAdressLabel.text = store.addressName
+        selectedStoreView.snp.updateConstraints {
+            $0.height.equalTo(60)
+        }
 
         Task {
             await viewModel.setStore(store: store)
