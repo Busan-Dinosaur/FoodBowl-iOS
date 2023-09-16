@@ -10,7 +10,7 @@ import UIKit
 final class DownButton: UIButton {
     // MARK: - init
     override init(frame _: CGRect) {
-        super.init(frame: .init(origin: .zero, size: .init(width: 44, height: 44)))
+        super.init(frame: .init(origin: .zero, size: .init(width: 30, height: 30)))
         configureUI()
     }
 
@@ -21,7 +21,7 @@ final class DownButton: UIButton {
 
     // MARK: - life cycle
     private func configureUI() {
-        setImage(ImageLiteral.btnDown, for: .normal)
-        tintColor = .grey001
+        setImage(ImageLiteral.btnDown.resize(to: CGSize(width: 20, height: 20)).withRenderingMode(.alwaysTemplate), for: .normal)
+        tintColor = .mainText
     }
 }

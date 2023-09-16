@@ -22,7 +22,7 @@ final class OptionButton: UIButton {
     // MARK: - life cycle
     private func configureUI() {
         setImage(
-            ImageLiteral.btnOption.resize(to: CGSize(width: 20, height: 20)),
+            ImageLiteral.btnOption.resize(to: CGSize(width: 20, height: 20)).withRenderingMode(.alwaysTemplate),
             for: .normal
         )
         tintColor = .mainText

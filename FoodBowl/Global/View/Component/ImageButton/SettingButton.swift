@@ -22,7 +22,7 @@ final class SettingButton: UIButton {
     // MARK: - life cycle
     private func configureUI() {
         setImage(
-            ImageLiteral.btnSetting.resize(to: CGSize(width: 20, height: 20)),
+            ImageLiteral.btnSetting.resize(to: CGSize(width: 20, height: 20)).withRenderingMode(.alwaysTemplate),
             for: .normal
         )
         tintColor = .mainText

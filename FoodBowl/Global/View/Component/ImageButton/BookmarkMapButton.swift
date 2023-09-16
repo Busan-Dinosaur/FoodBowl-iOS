@@ -1,13 +1,13 @@
 //
-//  BookmarkButton.swift
+//  BookmarkMapButton.swift
 //  FoodBowl
 //
-//  Created by COBY_PRO on 2023/07/22.
+//  Created by COBY_PRO on 2023/09/16.
 //
 
 import UIKit
 
-final class BookmarkButton: UIButton {
+final class BookmarkMapButton: UIButton {
     override var isSelected: Bool {
         didSet {
             if isSelected {
@@ -15,11 +15,15 @@ final class BookmarkButton: UIButton {
                     ImageLiteral.bookmarkFill.resize(to: CGSize(width: 20, height: 20)).withRenderingMode(.alwaysTemplate),
                     for: .normal
                 )
+                tintColor = .mainBackground
+                backgroundColor = .mainPink
             } else {
                 setImage(
                     ImageLiteral.bookmark.resize(to: CGSize(width: 20, height: 20)).withRenderingMode(.alwaysTemplate),
                     for: .normal
                 )
+                tintColor = .mainPink
+                backgroundColor = .mainBackground
             }
         }
     }
@@ -39,5 +43,6 @@ final class BookmarkButton: UIButton {
     private func configureUI() {
         setImage(ImageLiteral.bookmark.resize(to: CGSize(width: 20, height: 20)).withRenderingMode(.alwaysTemplate), for: .normal)
         tintColor = .mainText
+        backgroundColor = .mainBackground
     }
 }

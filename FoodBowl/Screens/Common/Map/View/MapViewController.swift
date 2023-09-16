@@ -63,13 +63,17 @@ class MapViewController: BaseViewController {
         $0.tintColor = UIColor.mainPink
     }
 
-    lazy var bookmarkButton = BookmarkButton().then {
+    lazy var bookmarkButton = BookmarkMapButton().then {
         $0.layer.backgroundColor = UIColor.mainBackground.cgColor
         $0.layer.borderColor = UIColor.grey002.cgColor
         $0.layer.borderWidth = 1
         $0.layer.cornerRadius = 10
         $0.layer.masksToBounds = true
-        $0.tintColor = UIColor.mainPink
+//        $0.tintColor = UIColor.mainPink
+        let action = UIAction { [weak self] _ in
+            self?.tappedBookMarkButton()
+        }
+        $0.addAction(action, for: .touchUpInside)
     }
 
     let categoryListView = CategoryListView()
@@ -215,6 +219,10 @@ class MapViewController: BaseViewController {
 
     func modalMaxState() {
         grabbarView.layer.cornerRadius = 0
+    }
+
+    func tappedBookMarkButton() {
+        bookmarkButton.isSelected.toggle()
     }
 
     // 임시 데이터

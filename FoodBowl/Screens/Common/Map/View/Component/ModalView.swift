@@ -13,7 +13,7 @@ import Then
 class ModalView: UIView {
     // MARK: - property
     let borderLineView = UIView().then {
-        $0.backgroundColor = .grey003
+        $0.backgroundColor = .grey002.withAlphaComponent(0.5)
     }
 
     var collectionViewFlowLayout: UICollectionViewFlowLayout = .init()

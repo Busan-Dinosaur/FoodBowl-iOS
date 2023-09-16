@@ -41,7 +41,7 @@ final class StoreHeaderView: UIView {
     let bookmarkButton = BookmarkButton()
 
     let borderLineView = UIView().then {
-        $0.backgroundColor = .grey003
+        $0.backgroundColor = .grey002.withAlphaComponent(0.5)
     }
 
     // MARK: - init

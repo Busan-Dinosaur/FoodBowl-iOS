@@ -21,7 +21,7 @@ final class FeedButton: UIButton {
 
     // MARK: - life cycle
     private func configureUI() {
-        setImage(ImageLiteral.btnFeed.resize(to: CGSize(width: 20, height: 20)), for: .normal)
+        setImage(ImageLiteral.btnFeed.resize(to: CGSize(width: 20, height: 20)).withRenderingMode(.alwaysTemplate), for: .normal)
         tintColor = .mainText
     }
 }
