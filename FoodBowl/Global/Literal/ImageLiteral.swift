@@ -19,7 +19,7 @@ enum ImageLiteral {
     static var btnClose: UIImage { .load(systemName: "xmark") }
     static var btnSetting: UIImage { .load(name: "settings") }
     static var btnBack: UIImage { .load(systemName: "chevron.backward") }
-    static var btnDown: UIImage { .load(systemName: "chevron.down") }
+    static var btnDown: UIImage { .load(name: "down") }
     static var btnForward: UIImage { .load(systemName: "chevron.forward") }
     static var btnPlus: UIImage { .load(name: "plus") }
     static var btnOption: UIImage { .load(name: "option") }

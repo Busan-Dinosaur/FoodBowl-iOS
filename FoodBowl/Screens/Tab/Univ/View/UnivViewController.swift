@@ -11,12 +11,12 @@ import SnapKit
 import Then
 
 final class UnivViewController: MapViewController {
-    let univGuideLabel = PaddingLabel().then {
-        $0.font = .font(.regular, ofSize: 22)
-        $0.text = "대학가"
-        $0.textColor = .mainText
-        $0.padding = UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 0)
-        $0.frame = CGRect(x: 0, y: 0, width: 150, height: 0)
+    private lazy var univTitleButton = UnivTitleButton().then {
+        let action = UIAction { [weak self] _ in
+            self?.tappedUnivButton()
+        }
+        $0.addAction(action, for: .touchUpInside)
+        $0.frame = CGRect(x: 0, y: 0, width: 300, height: 45)
     }
 
     init() {
@@ -35,9 +35,21 @@ final class UnivViewController: MapViewController {
 
     override func setupNavigationBar() {
         super.setupNavigationBar()
-        let univGuideLabel = makeBarButtonItem(with: univGuideLabel)
+        let leftOffsetUnivTitleButton = removeBarButtonItemOffset(with: univTitleButton, offsetX: 10)
+        let univTitleButton = makeBarButtonItem(with: leftOffsetUnivTitleButton)
         let plusButton = makeBarButtonItem(with: plusButton)
-        navigationItem.leftBarButtonItem = univGuideLabel
+        navigationItem.leftBarButtonItem = univTitleButton
         navigationItem.rightBarButtonItem = plusButton
+    }
+
+    override func removeBarButtonItemOffset(with button: UIButton, offsetX: CGFloat = 0, offsetY: CGFloat = 0) -> UIView {
+        let offsetView = UIView(frame: CGRect(x: 0, y: 0, width: 300, height: 45))
+        offsetView.bounds = offsetView.bounds.offsetBy(dx: offsetX, dy: offsetY)
+        offsetView.addSubview(button)
+        return offsetView
+    }
+
+    private func tappedUnivButton() {
+        print("tapped")
     }
 }

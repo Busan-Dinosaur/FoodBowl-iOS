@@ -32,7 +32,7 @@ final class ProfileViewController: MapViewController {
         $0.text = "coby5502"
         $0.textColor = .mainText
         $0.padding = UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 0)
-        $0.frame = CGRect(x: 0, y: 0, width: 150, height: 0)
+        $0.frame = CGRect(x: 0, y: 0, width: 200, height: 0)
     }
 
     private lazy var profileHeaderView = ProfileHeaderView().then {
