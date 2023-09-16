@@ -18,8 +18,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
         
-        LocationManager.shared.checkLocationService()
         renewToken()
+        LocationManager.shared.checkLocationService()
 
         let isLogin = UserDefaultStorage.isLogin
         window?.rootViewController = UINavigationController(
@@ -61,6 +61,7 @@ extension SceneDelegate {
     func signOut() {
         KeychainManager.clear()
         UserDefaultHandler.clearAllData()
+        UserDefaultsManager.currentUser = nil
         window?.rootViewController = OnboardingViewController()
     }
     
