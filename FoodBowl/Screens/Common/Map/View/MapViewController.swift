@@ -36,7 +36,7 @@ class MapViewController: BaseViewController {
 
     private var panGesture = UIPanGestureRecognizer()
 
-    // MARK: - propert
+    // MARK: - property
     lazy var mapView = MKMapView().then {
         $0.delegate = self
         $0.mapType = MKMapType.standard
