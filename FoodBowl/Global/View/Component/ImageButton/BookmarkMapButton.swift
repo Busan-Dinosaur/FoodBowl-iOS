@@ -42,7 +42,7 @@ final class BookmarkMapButton: UIButton {
     // MARK: - life cycle
     private func configureUI() {
         setImage(ImageLiteral.bookmark.resize(to: CGSize(width: 20, height: 20)).withRenderingMode(.alwaysTemplate), for: .normal)
-        tintColor = .mainText
+        tintColor = .mainPink
         backgroundColor = .mainBackground
     }
 }
