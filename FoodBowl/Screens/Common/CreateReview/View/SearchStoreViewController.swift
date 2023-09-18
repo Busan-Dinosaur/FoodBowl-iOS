@@ -27,7 +27,7 @@ final class SearchStoreViewController: BaseViewController {
     // MARK: - property
     private lazy var searchBar = UISearchBar().then {
         $0.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width - 80, height: 0)
-        $0.placeholder = "가게 이름을 검색해주세요"
+        $0.placeholder = "검색"
         $0.delegate = self
     }
 
@@ -113,7 +113,12 @@ extension SearchStoreViewController: UISearchBarDelegate {
 
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         dissmissKeyboard()
-        guard let searchTerm = searchBar.text, searchTerm.isEmpty == false else { return }
-        searchStores(keyword: searchTerm)
+        guard let keyword = searchBar.text, keyword.isEmpty == false else { return }
+        searchStores(keyword: keyword)
+    }
+
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        guard let keyword = searchBar.text, keyword.isEmpty == false else { return }
+        searchStores(keyword: keyword)
     }
 }

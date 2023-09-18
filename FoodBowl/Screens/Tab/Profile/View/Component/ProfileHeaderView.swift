@@ -11,12 +11,6 @@ import SnapKit
 import Then
 
 final class ProfileHeaderView: UICollectionReusableView {
-    enum Size {
-        static let SearchBarWidth: CGFloat = BaseSize.fullWidth - BaseSize.horizantalPadding - 30
-    }
-
-    private let categories = Categories.allCases
-
     // MARK: - property
     let userImageView = UIImageView().then {
         $0.image = ImageLiteral.defaultProfile
@@ -47,22 +41,6 @@ final class ProfileHeaderView: UICollectionReusableView {
 
     let editButton = EditButton()
 
-    private let collectionViewFlowLayout = UICollectionViewFlowLayout().then {
-        $0.scrollDirection = .horizontal
-        $0.sectionInset = BaseSize.collectionInset
-        $0.minimumLineSpacing = 6
-        $0.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
-    }
-
-    private lazy var listCollectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewFlowLayout).then {
-        $0.backgroundColor = .clear
-        $0.dataSource = self
-        $0.delegate = self
-        $0.showsHorizontalScrollIndicator = false
-        $0.allowsMultipleSelection = true
-        $0.register(CategoryCollectionViewCell.self, forCellWithReuseIdentifier: CategoryCollectionViewCell.className)
-    }
-
     // MARK: - init
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -84,8 +62,7 @@ final class ProfileHeaderView: UICollectionReusableView {
             followingInfoButton,
             userInfoLabel,
             followButton,
-            editButton,
-            listCollectionView
+            editButton
         )
 
         userImageView.snp.makeConstraints {
@@ -125,38 +102,9 @@ final class ProfileHeaderView: UICollectionReusableView {
             $0.width.equalTo(50)
             $0.height.equalTo(30)
         }
-
-        listCollectionView.snp.makeConstraints {
-            $0.top.equalTo(userImageView.snp.bottom).offset(10)
-            $0.leading.trailing.equalToSuperview()
-            $0.height.equalTo(30)
-        }
     }
 
     private func configureUI() {
         backgroundColor = .mainBackground
-    }
-}
-
-// MARK: - UICollectionViewDataSource, UICollectionViewDelegate
-extension ProfileHeaderView: UICollectionViewDataSource, UICollectionViewDelegate {
-    func collectionView(_: UICollectionView, numberOfItemsInSection _: Int) -> Int {
-        return categories.count
-    }
-
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(
-            withReuseIdentifier: CategoryCollectionViewCell.className,
-            for: indexPath
-        ) as? CategoryCollectionViewCell else {
-            return UICollectionViewCell()
-        }
-        cell.categoryLabel.text = categories[indexPath.item].rawValue
-
-        return cell
-    }
-
-    func collectionView(_: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print(categories[indexPath.item].rawValue)
     }
 }

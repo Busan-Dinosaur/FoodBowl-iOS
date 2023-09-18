@@ -106,13 +106,13 @@ class MapViewController: BaseViewController {
         }
 
         trakingButton.snp.makeConstraints {
-            $0.trailing.equalToSuperview().inset(BaseSize.horizantalPadding)
+            $0.trailing.equalToSuperview().inset(10)
             $0.top.equalTo(categoryListView.snp.bottom).offset(20)
             $0.height.width.equalTo(40)
         }
 
         bookmarkButton.snp.makeConstraints {
-            $0.trailing.equalToSuperview().inset(BaseSize.horizantalPadding)
+            $0.trailing.equalToSuperview().inset(10)
             $0.top.equalTo(trakingButton.snp.bottom).offset(8)
             $0.height.width.equalTo(40)
         }

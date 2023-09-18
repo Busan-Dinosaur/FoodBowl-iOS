@@ -163,20 +163,16 @@ final class CreateReviewController: BaseViewController {
     override func setupNavigationBar() {
         super.setupNavigationBar()
         let newFeedGuideLabel = makeBarButtonItem(with: newFeedGuideLabel)
-        let closeButton = makeBarButtonItem(with: closeButton)
         navigationItem.leftBarButtonItem = newFeedGuideLabel
-        navigationItem.rightBarButtonItem = closeButton
     }
 
     private func setStore() {
         if let store = viewModel.store {
             let action = UIAction { [weak self] _ in
                 let showWebViewController = ShowWebViewController()
-                showWebViewController.title = "가게 정보"
                 showWebViewController.url = store.placeURL
 
                 let navigationController = UINavigationController(rootViewController: showWebViewController)
-                navigationController.modalPresentationStyle = .fullScreen
 
                 DispatchQueue.main.async {
                     self?.present(navigationController, animated: true)
@@ -241,7 +237,6 @@ extension CreateReviewController: UITextViewDelegate {
         viewModel.request.reviewContent = textView.text
     }
 }
-
 
 extension CreateReviewController {
     private func photoAddButtonDidTap() {

@@ -147,9 +147,7 @@ final class UpdateReviewViewController: BaseViewController {
 
     override func setupNavigationBar() {
         let editFeedGuideLabel = makeBarButtonItem(with: editFeedGuideLabel)
-        let closeButton = makeBarButtonItem(with: closeButton)
         navigationItem.leftBarButtonItem = editFeedGuideLabel
-        navigationItem.rightBarButtonItem = closeButton
     }
 
     private func showAlert(message: String) {

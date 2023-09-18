@@ -36,10 +36,7 @@ final class ShowWebViewController: BaseViewController, WKNavigationDelegate, WKU
     }
 
     override func setupNavigationBar() {
-        super.setupNavigationBar()
-        let closeButton = makeBarButtonItem(with: closeButton)
-        navigationItem.rightBarButtonItem = closeButton
-        navigationItem.leftBarButtonItem = nil
+        navigationController?.navigationBar.isHidden = true
     }
 
     func webView(

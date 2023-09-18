@@ -98,17 +98,23 @@ final class ProfileViewController: MapViewController {
     override func setupLayout() {
         super.setupLayout()
         categoryListView.removeFromSuperview()
-        view.addSubviews(profileHeaderView)
+        view.addSubviews(profileHeaderView, categoryListView)
 
         profileHeaderView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide)
             $0.leading.trailing.equalToSuperview()
-            $0.height.equalTo(100)
+            $0.height.equalTo(60)
+        }
+
+        categoryListView.snp.makeConstraints {
+            $0.top.equalTo(profileHeaderView.snp.bottom)
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(40)
         }
 
         trakingButton.snp.makeConstraints {
-            $0.trailing.equalToSuperview().inset(BaseSize.horizantalPadding)
-            $0.top.equalTo(profileHeaderView.snp.bottom).offset(20)
+            $0.trailing.equalToSuperview().inset(10)
+            $0.top.equalTo(categoryListView.snp.bottom).offset(20)
             $0.height.width.equalTo(40)
         }
     }

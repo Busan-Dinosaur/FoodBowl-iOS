@@ -91,7 +91,6 @@ extension FeedListView: UICollectionViewDataSource, UICollectionViewDelegate {
                 let viewModel = UpdateReviewViewModel()
                 let updateReviewViewController = UpdateReviewViewController(viewModel: viewModel)
                 let navigationController = UINavigationController(rootViewController: updateReviewViewController)
-                navigationController.modalPresentationStyle = .fullScreen
                 DispatchQueue.main.async {
                     self?.parentViewController?.present(navigationController, animated: true)
                 }
