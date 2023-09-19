@@ -24,6 +24,8 @@ final class StoreDetailViewController: BaseViewController {
     private var isFriend: Bool = true
 
     // MARK: - property
+    private var refreshControl = UIRefreshControl()
+
     private lazy var reviewToggleButton = ReviewToggleButton().then {
         let action = UIAction { [weak self] _ in
             self?.reviewToggleButtonTapped()
@@ -45,6 +47,11 @@ final class StoreDetailViewController: BaseViewController {
         $0.showsVerticalScrollIndicator = false
         $0.register(FeedNSCollectionViewCell.self, forCellWithReuseIdentifier: FeedNSCollectionViewCell.className)
         $0.backgroundColor = .mainBackground
+    }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupRefreshControl()
     }
 
     override func setupLayout() {
@@ -75,6 +82,17 @@ final class StoreDetailViewController: BaseViewController {
 
         title = isFriend ? "친구들의 후기" : "모두의 후기"
     }
+
+    private func setupRefreshControl() {
+        let action = UIAction { [weak self] _ in
+            self?.loadData()
+        }
+        refreshControl.addAction(action, for: .valueChanged)
+        refreshControl.tintColor = .grey002
+        listCollectionView.refreshControl = refreshControl
+    }
+
+    private func loadData() {}
 }
 
 extension StoreDetailViewController {

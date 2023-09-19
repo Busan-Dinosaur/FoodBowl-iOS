@@ -20,11 +20,11 @@ final class FindViewController: BaseViewController {
         )
     }
 
-    private var refreshControl = UIRefreshControl()
-
     private lazy var isBookmarked = [Bool](repeating: false, count: 10)
 
     // MARK: - property
+    private var refreshControl = UIRefreshControl()
+
     private let findGuideLabel = PaddingLabel().then {
         $0.font = .font(.regular, ofSize: 22)
         $0.text = "찾기"
@@ -55,6 +55,11 @@ final class FindViewController: BaseViewController {
         $0.showsVerticalScrollIndicator = false
         $0.register(FeedCollectionViewCell.self, forCellWithReuseIdentifier: FeedCollectionViewCell.className)
         $0.backgroundColor = .mainBackground
+    }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupRefreshControl()
     }
 
     override func setupLayout() {
