@@ -58,6 +58,14 @@ final class SearchStoreViewController: BaseViewController {
         }
     }
 
+    override func configureUI() {
+        super.configureUI()
+
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) {
+            self.searchBar.becomeFirstResponder()
+        }
+    }
+
     override func setupNavigationBar() {
         let cancelButton = makeBarButtonItem(with: cancelButton)
         navigationItem.rightBarButtonItem = cancelButton
