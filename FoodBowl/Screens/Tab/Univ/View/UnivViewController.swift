@@ -11,15 +11,22 @@ import SnapKit
 import Then
 
 final class UnivViewController: MapViewController {
-    private var univName: String = "대학가"
+    private var viewModel = UnivViewModel()
+
+    private var univ = UserDefaultsManager.currentUniv
 
     private lazy var univTitleButton = UnivTitleButton().then {
         let action = UIAction { [weak self] _ in
-            self?.tappedUnivButton()
+            let searchUnivViewController = SearchUnivViewController()
+            searchUnivViewController.delegate = self
+            let navigationController = UINavigationController(rootViewController: searchUnivViewController)
+            DispatchQueue.main.async {
+                self?.present(navigationController, animated: true)
+            }
         }
         $0.addAction(action, for: .touchUpInside)
         $0.frame = CGRect(x: 0, y: 0, width: 300, height: 45)
-        $0.label.text = univName
+        $0.label.text = "대학가"
     }
 
     init() {
@@ -52,8 +59,16 @@ final class UnivViewController: MapViewController {
         return offsetView
     }
 
-    private func tappedUnivButton() {
-        print("tapped")
-        univTitleButton.label.text = univName
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        univTitleButton.label.text = univ?.name ?? "대학가"
+    }
+}
+
+extension UnivViewController: SearchUnivViewControllerDelegate {
+    func setUniv(univ: School) {
+        self.univ = univ
+        univTitleButton.label.text = univ.name
+        UserDefaultsManager.currentUniv = univ
     }
 }

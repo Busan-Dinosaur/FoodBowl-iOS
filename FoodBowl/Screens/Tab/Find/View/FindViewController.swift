@@ -11,6 +11,18 @@ import SnapKit
 import Then
 
 final class FindViewController: BaseViewController {
+    private enum Size {
+        static let cellWidth: CGFloat = (UIScreen.main.bounds.size.width - 60) / 3
+        static let cellHeight: CGFloat = cellWidth
+        static let collectionInset = UIEdgeInsets(
+            top: 0,
+            left: 20,
+            bottom: 20,
+            right: 20
+        )
+    }
+
+    // MARK: - property
     let findGuideLabel = PaddingLabel().then {
         $0.font = .font(.regular, ofSize: 22)
         $0.text = "찾기"
@@ -19,82 +31,38 @@ final class FindViewController: BaseViewController {
         $0.frame = CGRect(x: 0, y: 0, width: 150, height: 0)
     }
 
-    // MARK: - property
-    private lazy var searchController = UISearchController(searchResultsController: nil).then {
+    private lazy var searchController = UISearchController(searchResultsController: FindStoreViewController()).then {
         $0.searchBar.placeholder = "검색"
         $0.searchResultsUpdater = self
         $0.delegate = self
-        $0.obscuresBackgroundDuringPresentation = false
+        $0.obscuresBackgroundDuringPresentation = true
         $0.searchBar.setValue("취소", forKey: "cancelButtonText")
         $0.searchBar.tintColor = .mainPink
         $0.searchBar.scopeButtonTitles = ["맛집", "유저"]
-        $0.searchBar.showsScopeBar = true
     }
 
-    private lazy var segmentedControl = UnderlineSegmentedControl(items: ["맛집", "유저"]).then {
-        $0.translatesAutoresizingMaskIntoConstraints = false
-        $0.setTitleTextAttributes(
-            [
-                NSAttributedString.Key.foregroundColor: UIColor.subText,
-                .font: UIFont.preferredFont(forTextStyle: .subheadline, weight: .regular)
-            ],
-            for: .normal
-        )
-        $0.setTitleTextAttributes(
-            [
-                NSAttributedString.Key.foregroundColor: UIColor.mainText,
-                .font: UIFont.preferredFont(forTextStyle: .subheadline, weight: .medium)
-            ],
-            for: .selected
-        )
-        $0.addTarget(self, action: #selector(changeValue(control:)), for: .valueChanged)
-        $0.selectedSegmentIndex = 0
+    private let collectionViewFlowLayout = UICollectionViewFlowLayout().then {
+        $0.scrollDirection = .vertical
+        $0.sectionInset = Size.collectionInset
+        $0.itemSize = CGSize(width: Size.cellWidth, height: Size.cellHeight)
+        $0.minimumLineSpacing = 10
+        $0.minimumInteritemSpacing = 10
     }
 
-    private let vc1 = FindStoreViewController()
-
-    private let vc2 = FindUserViewController()
-
-    private var dataViewControllers: [UIViewController] {
-        [vc1, vc2]
-    }
-
-    private lazy var pageViewController = UIPageViewController(
-        transitionStyle: .scroll,
-        navigationOrientation: .horizontal,
-        options: nil
-    ).then {
-        $0.setViewControllers([self.dataViewControllers[0]], direction: .forward, animated: true)
-        $0.delegate = self
+    private lazy var listCollectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewFlowLayout).then {
+        $0.backgroundColor = .clear
         $0.dataSource = self
-    }
-
-    private var currentPage: Int = 0 {
-        didSet {
-            let direction: UIPageViewController.NavigationDirection = oldValue <= self.currentPage ? .forward : .reverse
-            self.pageViewController.setViewControllers(
-                [dataViewControllers[self.currentPage]],
-                direction: direction,
-                animated: true,
-                completion: nil
-            )
-        }
+        $0.delegate = self
+        $0.showsVerticalScrollIndicator = false
+        $0.register(PhotoCollectionViewCell.self, forCellWithReuseIdentifier: PhotoCollectionViewCell.className)
     }
 
     override func setupLayout() {
-        view.addSubviews(pageViewController.view)
+        view.addSubviews(listCollectionView)
 
-        pageViewController.view.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide)
-            $0.leading.trailing.bottom.equalToSuperview()
+        listCollectionView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
         }
-    }
-
-    override func configureUI() {
-        super.configureUI()
-        changeValue(control: segmentedControl)
-        vc1.delegate = self
-        vc2.delegate = self
     }
 
     override func setupNavigationBar() {
@@ -105,11 +73,6 @@ final class FindViewController: BaseViewController {
         navigationItem.rightBarButtonItem = plusButton
         navigationItem.searchController = searchController
         navigationItem.hidesSearchBarWhenScrolling = false
-    }
-
-    @objc
-    private func changeValue(control: UISegmentedControl) {
-        currentPage = control.selectedSegmentIndex
     }
 }
 
@@ -123,47 +86,21 @@ extension FindViewController: UISearchResultsUpdating, UISearchControllerDelegat
     }
 }
 
-extension FindViewController: UIPageViewControllerDataSource, UIPageViewControllerDelegate {
-    func pageViewController(
-        _ pageViewController: UIPageViewController,
-        viewControllerBefore viewController: UIViewController
-    ) -> UIViewController? {
-        guard let index = dataViewControllers.firstIndex(of: viewController),
-              index - 1 >= 0
-        else { return nil }
-        return dataViewControllers[index - 1]
+extension FindViewController: UICollectionViewDataSource, UICollectionViewDelegate {
+    func collectionView(_: UICollectionView, numberOfItemsInSection _: Int) -> Int {
+        return 20
     }
 
-    func pageViewController(
-        _ pageViewController: UIPageViewController,
-        viewControllerAfter viewController: UIViewController
-    ) -> UIViewController? {
-        guard let index = dataViewControllers.firstIndex(of: viewController),
-              index + 1 < dataViewControllers.count
-        else { return nil }
-        return dataViewControllers[index + 1]
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(
+            withReuseIdentifier: PhotoCollectionViewCell.className,
+            for: indexPath
+        ) as? PhotoCollectionViewCell else {
+            return UICollectionViewCell()
+        }
+
+        return cell
     }
 
-    func pageViewController(
-        _ pageViewController: UIPageViewController,
-        didFinishAnimating finished: Bool,
-        previousViewControllers: [UIViewController],
-        transitionCompleted completed: Bool
-    ) {
-        guard let viewController = pageViewController.viewControllers?[0],
-              let index = dataViewControllers.firstIndex(of: viewController)
-        else { return }
-        currentPage = index
-        segmentedControl.selectedSegmentIndex = index
-    }
-}
-
-extension FindViewController: FindStoreViewControllerDelegate, FindUserViewControllerDelegate {
-    func setStore(storeDetailViewController: StoreDetailViewController) {
-        navigationController?.pushViewController(storeDetailViewController, animated: true)
-    }
-
-    func setUser(profileViewController: ProfileViewController) {
-        navigationController?.pushViewController(profileViewController, animated: true)
-    }
+    func collectionView(_: UICollectionView, didSelectItemAt _: IndexPath) {}
 }

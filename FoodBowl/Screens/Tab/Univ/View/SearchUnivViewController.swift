@@ -1,8 +1,8 @@
 //
-//  SearchStoreViewController.swift
+//  SearchUnivViewController.swift
 //  FoodBowl
 //
-//  Created by COBY_PRO on 2023/09/16.
+//  Created by COBY_PRO on 2023/09/18.
 //
 
 import UIKit
@@ -10,19 +10,13 @@ import UIKit
 import SnapKit
 import Then
 
-final class SearchStoreViewController: BaseViewController {
-    private var viewModel: CreateReviewViewModel
+final class SearchUnivViewController: BaseViewController {
+    var delegate: SearchUnivViewControllerDelegate?
 
-    init(viewModel: CreateReviewViewModel) {
-        self.viewModel = viewModel
-        super.init(nibName: nil, bundle: nil)
-    }
+    private var viewModel = UnivViewModel()
 
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    private var stores = [Place]()
+    private var schools = [School]()
+    private var filteredSchools = [School]()
 
     // MARK: - property
     private lazy var searchBar = UISearchBar().then {
@@ -36,12 +30,12 @@ final class SearchStoreViewController: BaseViewController {
         $0.setTitleColor(.mainPink, for: .normal)
         $0.titleLabel?.font = UIFont.preferredFont(forTextStyle: .headline, weight: .regular)
         let action = UIAction { [weak self] _ in
-            self?.navigationController?.popViewController(animated: true)
+            self?.dismiss(animated: true)
         }
         $0.addAction(action, for: .touchUpInside)
     }
 
-    private lazy var storeInfoTableView = UITableView().then {
+    private lazy var univTableView = UITableView().then {
         $0.register(StoreSearchTableViewCell.self, forCellReuseIdentifier: StoreSearchTableViewCell.className)
         $0.delegate = self
         $0.dataSource = self
@@ -50,10 +44,19 @@ final class SearchStoreViewController: BaseViewController {
     }
 
     // MARK: - life cycle
-    override func setupLayout() {
-        view.addSubviews(storeInfoTableView)
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        Task {
+            await schools = viewModel.getSchools()
+            filteredSchools = schools
+            univTableView.reloadData()
+        }
+    }
 
-        storeInfoTableView.snp.makeConstraints {
+    override func setupLayout() {
+        view.addSubviews(univTableView)
+
+        univTableView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
     }
@@ -64,24 +67,15 @@ final class SearchStoreViewController: BaseViewController {
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: searchBar)
     }
 
-    private func searchStores(keyword: String) {
-        Task {
-            stores = await viewModel.searchStores(keyword: keyword)
-            storeInfoTableView.reloadData()
-        }
-    }
-
-    private func setStore(store: Place) {
-        Task {
-            await viewModel.setStore(store: store)
-            navigationController?.popViewController(animated: true)
-        }
+    private func setUniv(univ: School) {
+        delegate?.setUniv(univ: univ)
+        dismiss(animated: true)
     }
 }
 
-extension SearchStoreViewController: UITableViewDataSource, UITableViewDelegate {
+extension SearchUnivViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
-        return stores.count
+        return filteredSchools.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -90,9 +84,9 @@ extension SearchStoreViewController: UITableViewDataSource, UITableViewDelegate 
         else { return UITableViewCell() }
 
         cell.selectionStyle = .none
-        cell.storeNameLabel.text = stores[indexPath.item].placeName
-        cell.storeAdressLabel.text = stores[indexPath.item].addressName
-        cell.storeDistanceLabel.text = stores[indexPath.item].distance.prettyDistance
+        cell.storeNameLabel.text = filteredSchools[indexPath.item].name
+        cell.storeAdressLabel.text = "어딘가"
+        cell.storeDistanceLabel.text = filteredSchools[indexPath.item].distance
 
         return cell
     }
@@ -102,11 +96,11 @@ extension SearchStoreViewController: UITableViewDataSource, UITableViewDelegate 
     }
 
     func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
-        setStore(store: stores[indexPath.item])
+        setUniv(univ: filteredSchools[indexPath.item])
     }
 }
 
-extension SearchStoreViewController: UISearchBarDelegate {
+extension SearchUnivViewController: UISearchBarDelegate {
     private func dissmissKeyboard() {
         searchBar.resignFirstResponder()
     }
@@ -116,6 +110,15 @@ extension SearchStoreViewController: UISearchBarDelegate {
     }
 
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        searchStores(keyword: searchText)
+        if searchText == "" {
+            filteredSchools = schools
+        } else {
+            filteredSchools = schools.filter { $0.name.contains(searchText) }
+        }
+        univTableView.reloadData()
     }
+}
+
+protocol SearchUnivViewControllerDelegate: AnyObject {
+    func setUniv(univ: School)
 }

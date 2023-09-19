@@ -212,7 +212,6 @@ extension BaseViewController: MFMailComposeViewControllerDelegate {
             composeVC.setToRecipients([emailAdress])
             composeVC.setSubject("[풋볼] \(nickname)")
             composeVC.setMessageBody(messageBody, isHTML: false)
-            composeVC.modalPresentationStyle = .fullScreen
 
             present(composeVC, animated: true, completion: nil)
         } else {

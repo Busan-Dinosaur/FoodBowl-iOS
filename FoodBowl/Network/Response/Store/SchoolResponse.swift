@@ -5,15 +5,22 @@
 //  Created by COBY_PRO on 2023/09/10.
 //
 
+import CoreLocation
 import Foundation
 
-struct SchoolResponse: Decodable {
+struct SchoolResponse: Codable {
     let schools: [School]
 }
 
-struct School: Decodable {
+struct School: Codable {
     let id: Int
     let name: String
     let x: Double
     let y: Double
+
+    var distance: String {
+        guard let currentLoc = LocationManager.shared.manager.location else { return "" }
+        let distance = currentLoc.distance(from: CLLocation(latitude: y, longitude: x))
+        return String(distance).prettyDistance
+    }
 }
