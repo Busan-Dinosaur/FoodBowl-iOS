@@ -23,17 +23,12 @@ enum ImageLiteral {
     static var btnForward: UIImage { .load(systemName: "chevron.forward") }
     static var btnPlus: UIImage { .load(name: "plus") }
     static var btnOption: UIImage { .load(name: "option") }
-    static var btnFilter: UIImage { .load(name: "filter") }
     static var btnKakaomap: UIImage { .load(name: "kakaomap") }
     static var btnFeed: UIImage { .load(name: "feed") }
 
     static var defaultProfile: UIImage { .load(name: "user") }
     static var appleLogo: UIImage { .load(systemName: "apple.logo") }
-
-    static var food1: UIImage { .load(name: "food1") }
-    static var food2: UIImage { .load(name: "food2") }
-    static var food3: UIImage { .load(name: "food3") }
-
+    
     static var vegan: UIImage { .load(name: "vegan") }
     static var cafe: UIImage { .load(name: "cafe") }
     static var korean: UIImage { .load(name: "korean") }

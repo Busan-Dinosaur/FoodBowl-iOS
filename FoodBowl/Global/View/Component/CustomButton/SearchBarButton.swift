@@ -20,7 +20,6 @@ final class SearchBarButton: UIButton {
     let placeholderLabel = UILabel().then {
         $0.font = UIFont.preferredFont(forTextStyle: .callout, weight: .regular)
         $0.textColor = .grey001
-        $0.text = "새로운 맛집과 유저를 찾아보세요."
     }
 
     // MARK: - init
