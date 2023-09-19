@@ -22,6 +22,10 @@ final class FindViewController: BaseViewController {
 
     private lazy var isBookmarked = [Bool](repeating: false, count: 10)
 
+    private var stores = [Place]()
+    private var users = [MemberProfileResponse]()
+    private var scope: Int = 0
+
     // MARK: - property
     private var refreshControl = UIRefreshControl()
 
@@ -33,14 +37,19 @@ final class FindViewController: BaseViewController {
         $0.frame = CGRect(x: 0, y: 0, width: 150, height: 0)
     }
 
-    private lazy var searchController = UISearchController(searchResultsController: FindStoreViewController()).then {
-        $0.searchBar.placeholder = "검색"
+    private lazy var findResultViewController = FindResultViewController().then {
+        $0.searchResultTableView.delegate = self
+        $0.searchResultTableView.dataSource = self
+    }
+
+    private lazy var searchController = UISearchController(searchResultsController: findResultViewController).then {
         $0.searchResultsUpdater = self
-        $0.delegate = self
-        $0.obscuresBackgroundDuringPresentation = true
+        $0.searchBar.delegate = self
+        $0.searchBar.placeholder = "검색"
         $0.searchBar.setValue("취소", forKey: "cancelButtonText")
         $0.searchBar.tintColor = .mainPink
         $0.searchBar.scopeButtonTitles = ["맛집", "유저"]
+        $0.obscuresBackgroundDuringPresentation = true
     }
 
     private let collectionViewFlowLayout = DynamicHeightCollectionViewFlowLayout().then {
@@ -105,13 +114,15 @@ extension FindViewController {
     private func didScrollToBottom() {}
 }
 
-extension FindViewController: UISearchResultsUpdating, UISearchControllerDelegate {
+extension FindViewController: UISearchResultsUpdating, UISearchBarDelegate {
     func updateSearchResults(for searchController: UISearchController) {
         guard let text = searchController.searchBar.text?.lowercased() else { return }
+        print(text)
     }
 
-    func searchBar(searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
-        print(selectedScope)
+    func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
+        scope = selectedScope
+        findResultViewController.searchResultTableView.reloadData()
     }
 }
 
@@ -175,5 +186,57 @@ extension FindViewController: UICollectionViewDataSource, UICollectionViewDelega
         cell.storeInfoView.bookmarkButton.isSelected = isBookmarked[indexPath.item]
 
         return cell
+    }
+}
+
+extension FindViewController: UITableViewDataSource, UITableViewDelegate {
+    func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
+        return 5
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if scope == 0 {
+            guard let cell = tableView
+                .dequeueReusableCell(withIdentifier: StoreInfoTableViewCell.className, for: indexPath) as? StoreInfoTableViewCell
+            else { return UITableViewCell() }
+
+            cell.storeNameLabel.text = "가게이름"
+            cell.storeFeedLabel.text = "100명이 후기를 남겼습니다."
+            cell.storeDistanceLabel.text = "10km"
+            cell.selectionStyle = .none
+
+            return cell
+        } else {
+            guard let cell = tableView
+                .dequeueReusableCell(withIdentifier: UserInfoTableViewCell.className, for: indexPath) as? UserInfoTableViewCell
+            else { return UITableViewCell() }
+
+            cell.followButtonTapAction = { _ in
+                cell.followButton.isSelected.toggle()
+            }
+            cell.selectionStyle = .none
+
+            return cell
+        }
+    }
+
+    func tableView(_: UITableView, heightForRowAt _: IndexPath) -> CGFloat {
+        return 64
+    }
+
+    func tableView(_: UITableView, didSelectRowAt _: IndexPath) {
+        if scope == 0 {
+            let storeDetailViewController = StoreDetailViewController()
+            storeDetailViewController.title = "틈새라면"
+            DispatchQueue.main.async { [weak self] in
+                self?.navigationController?.pushViewController(storeDetailViewController, animated: true)
+            }
+        } else {
+            let profileViewController = ProfileViewController(isOwn: false)
+            profileViewController.title = "초코비"
+            DispatchQueue.main.async { [weak self] in
+                self?.navigationController?.pushViewController(profileViewController, animated: true)
+            }
+        }
     }
 }
