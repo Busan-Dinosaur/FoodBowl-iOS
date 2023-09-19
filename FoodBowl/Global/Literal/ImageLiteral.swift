@@ -28,7 +28,7 @@ enum ImageLiteral {
 
     static var defaultProfile: UIImage { .load(name: "user") }
     static var appleLogo: UIImage { .load(systemName: "apple.logo") }
-    
+
     static var vegan: UIImage { .load(name: "vegan") }
     static var cafe: UIImage { .load(name: "cafe") }
     static var korean: UIImage { .load(name: "korean") }

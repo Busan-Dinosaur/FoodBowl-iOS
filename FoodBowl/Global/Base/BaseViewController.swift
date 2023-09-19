@@ -74,7 +74,7 @@ class BaseViewController: UIViewController {
             name: UIResponder.keyboardWillShowNotification,
             object: nil
         )
-        
+
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(BaseViewController.keyboardWillHide),
