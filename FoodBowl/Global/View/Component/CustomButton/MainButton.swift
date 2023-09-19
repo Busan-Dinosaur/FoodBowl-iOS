@@ -15,7 +15,7 @@ final class MainButton: UIButton {
 
     let label = UILabel().then {
         let label = UILabel()
-        $0.textColor = .mainBackground
+        $0.textColor = .mainBackgroundColor
         $0.font = UIFont.preferredFont(forTextStyle: .body, weight: .medium)
     }
 
@@ -43,7 +43,7 @@ final class MainButton: UIButton {
     }
 
     private func configureUI() {
-        backgroundColor = .mainText
+        backgroundColor = .mainTextColor
         layer.cornerRadius = 30
         layer.masksToBounds = false
     }

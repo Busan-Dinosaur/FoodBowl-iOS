@@ -33,7 +33,7 @@ final class ProfileHeaderView: UICollectionReusableView {
     let userInfoLabel = UILabel().then {
         $0.font = UIFont.preferredFont(forTextStyle: .footnote, weight: .regular)
         $0.text = "중국음식을 좋아하는 김코비입니다."
-        $0.textColor = .mainText
+        $0.textColor = .mainTextColor
         $0.numberOfLines = 1
     }
 
@@ -105,6 +105,6 @@ final class ProfileHeaderView: UICollectionReusableView {
     }
 
     private func configureUI() {
-        backgroundColor = .mainBackground
+        backgroundColor = .mainBackgroundColor
     }
 }

@@ -15,7 +15,7 @@ final class ReviewToggleButton: UIButton {
                 label.textColor = .mainPink
             } else {
                 label.text = "모두"
-                label.textColor = .subText
+                label.textColor = .subTextColor
             }
         }
     }
@@ -24,7 +24,7 @@ final class ReviewToggleButton: UIButton {
     private let label = UILabel().then {
         let label = UILabel()
         $0.text = "친구만"
-        $0.textColor = .subText
+        $0.textColor = .subTextColor
         $0.font = UIFont.preferredFont(forTextStyle: .subheadline, weight: .medium)
     }
 

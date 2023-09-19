@@ -16,25 +16,25 @@ final class StoreHeaderView: UIView {
 
     let storeNameLabel = UILabel().then {
         $0.font = UIFont.preferredFont(forTextStyle: .subheadline, weight: .medium)
-        $0.textColor = .mainText
+        $0.textColor = .mainTextColor
         $0.text = "틈새라면 홍대점"
     }
 
     let categoryLabel = UILabel().then {
         $0.font = UIFont.preferredFont(forTextStyle: .footnote, weight: .light)
-        $0.textColor = .subText
+        $0.textColor = .subTextColor
         $0.text = "일식"
     }
 
     let storeAddressLabel = UILabel().then {
         $0.font = UIFont.preferredFont(forTextStyle: .footnote, weight: .regular)
-        $0.textColor = .subText
+        $0.textColor = .subTextColor
         $0.text = "강원도 한섬로73 103동 1401호"
     }
 
     let distanceLabel = UILabel().then {
         $0.font = UIFont.preferredFont(forTextStyle: .footnote, weight: .light)
-        $0.textColor = .subText
+        $0.textColor = .subTextColor
         $0.text = "10km"
     }
 

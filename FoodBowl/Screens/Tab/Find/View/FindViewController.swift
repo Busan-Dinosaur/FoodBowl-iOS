@@ -32,7 +32,7 @@ final class FindViewController: BaseViewController {
     private let findGuideLabel = PaddingLabel().then {
         $0.font = .font(.regular, ofSize: 22)
         $0.text = "찾기"
-        $0.textColor = .mainText
+        $0.textColor = .mainTextColor
         $0.padding = UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 0)
         $0.frame = CGRect(x: 0, y: 0, width: 150, height: 0)
     }
@@ -63,7 +63,7 @@ final class FindViewController: BaseViewController {
         $0.delegate = self
         $0.showsVerticalScrollIndicator = false
         $0.register(FeedCollectionViewCell.self, forCellWithReuseIdentifier: FeedCollectionViewCell.className)
-        $0.backgroundColor = .mainBackground
+        $0.backgroundColor = .mainBackgroundColor
     }
 
     override func viewDidLoad() {

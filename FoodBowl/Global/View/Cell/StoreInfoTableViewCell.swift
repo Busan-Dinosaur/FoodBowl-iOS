@@ -14,17 +14,17 @@ final class StoreInfoTableViewCell: BaseTableViewCell {
     // MARK: - property
     let storeNameLabel = UILabel().then {
         $0.font = UIFont.preferredFont(forTextStyle: .subheadline, weight: .medium)
-        $0.textColor = .mainText
+        $0.textColor = .mainTextColor
     }
 
     let storeFeedLabel = UILabel().then {
         $0.font = UIFont.preferredFont(forTextStyle: .caption1, weight: .light)
-        $0.textColor = .subText
+        $0.textColor = .subTextColor
     }
 
     let storeDistanceLabel = UILabel().then {
         $0.font = UIFont.preferredFont(forTextStyle: .caption1, weight: .light)
-        $0.textColor = .mainText
+        $0.textColor = .mainTextColor
     }
 
     // MARK: - func

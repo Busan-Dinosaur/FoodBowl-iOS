@@ -47,7 +47,7 @@ open class CheckBox: UIControl {
     var checkedBorderColor: UIColor = .grey001
 
     @IBInspectable
-    var checkmarkColor: UIColor = .subText
+    var checkmarkColor: UIColor = .subTextColor
 
     var checkboxBackgroundColor: UIColor = .grey001
 

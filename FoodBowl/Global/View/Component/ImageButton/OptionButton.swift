@@ -25,6 +25,6 @@ final class OptionButton: UIButton {
             ImageLiteral.btnOption.resize(to: CGSize(width: 20, height: 20)).withRenderingMode(.alwaysTemplate),
             for: .normal
         )
-        tintColor = .mainText
+        tintColor = .mainTextColor
     }
 }

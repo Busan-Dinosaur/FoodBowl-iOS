@@ -51,7 +51,7 @@ class ModalView: UIView {
     }
 
     func configureUI() {
-        backgroundColor = .mainBackground
+        backgroundColor = .mainBackgroundColor
     }
 
     func setupRefreshControl() {}

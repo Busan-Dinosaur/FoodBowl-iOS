@@ -23,19 +23,19 @@ final class OnboardingViewController: BaseViewController {
     // MARK: - property
     private let titleLabel = UILabel().then {
         $0.font = .font(.regular, ofSize: 50)
-        $0.textColor = .mainText
+        $0.textColor = .mainTextColor
         $0.text = "FoodBowl"
     }
 
     private let subTitleLabel = UILabel().then {
         $0.font = .font(.regular, ofSize: 30)
-        $0.textColor = .mainText
+        $0.textColor = .mainTextColor
         $0.text = "Just Do Eat"
     }
 
     private let guideLabel = UILabel().then {
         $0.font = UIFont.preferredFont(forTextStyle: .title3, weight: .medium)
-        $0.textColor = .mainText
+        $0.textColor = .mainTextColor
         $0.text = "친구들과 함께 만들어가는 맛집지도"
     }
 
@@ -88,7 +88,7 @@ final class OnboardingViewController: BaseViewController {
     }
 
     override func configureUI() {
-        view.backgroundColor = .mainBackground
+        view.backgroundColor = .mainBackgroundColor
     }
 
     private func appleSignIn() {

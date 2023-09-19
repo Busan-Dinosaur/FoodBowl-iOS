@@ -18,7 +18,7 @@ final class GrabbarView: UIView {
 
     let modalResultLabel = UILabel().then {
         $0.font = UIFont.preferredFont(forTextStyle: .subheadline, weight: .regular)
-        $0.textColor = .subText
+        $0.textColor = .subTextColor
     }
 
     // MARK: - init
@@ -50,7 +50,7 @@ final class GrabbarView: UIView {
     }
 
     func configureUI() {
-        backgroundColor = .mainBackground
+        backgroundColor = .mainBackgroundColor
         layer.cornerRadius = 15
         layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
     }

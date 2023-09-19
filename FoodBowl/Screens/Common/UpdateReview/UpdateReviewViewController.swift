@@ -40,7 +40,7 @@ final class UpdateReviewViewController: BaseViewController {
     private let editFeedGuideLabel = PaddingLabel().then {
         $0.font = .font(.regular, ofSize: 22)
         $0.text = "후기 수정"
-        $0.textColor = .mainText
+        $0.textColor = .mainTextColor
         $0.padding = UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 0)
         $0.frame = CGRect(x: 0, y: 0, width: 150, height: 0)
     }
@@ -50,7 +50,7 @@ final class UpdateReviewViewController: BaseViewController {
     private let guideCommentLabel = UILabel().then {
         $0.text = "한줄평"
         $0.font = .font(.regular, ofSize: 17)
-        $0.textColor = .mainText
+        $0.textColor = .mainTextColor
     }
 
     lazy var commentTextView = UITextView().then {
@@ -71,7 +71,7 @@ final class UpdateReviewViewController: BaseViewController {
     private let guidePhotoLabel = UILabel().then {
         $0.text = "사진"
         $0.font = .font(.regular, ofSize: 17)
-        $0.textColor = .mainText
+        $0.textColor = .mainTextColor
     }
 
     private let collectionViewFlowLayout = UICollectionViewFlowLayout().then {
@@ -175,7 +175,7 @@ extension UpdateReviewViewController: UITextViewDelegate {
     func textViewDidBeginEditing(_ textView: UITextView) {
         if textView.text == textViewPlaceHolder {
             textView.text = nil
-            textView.textColor = .mainText
+            textView.textColor = .mainTextColor
         }
     }
 

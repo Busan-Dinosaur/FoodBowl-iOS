@@ -15,7 +15,7 @@ final class BookmarkMapButton: UIButton {
                     ImageLiteral.bookmarkFill.resize(to: CGSize(width: 20, height: 20)).withRenderingMode(.alwaysTemplate),
                     for: .normal
                 )
-                tintColor = .mainBackground
+                tintColor = .mainBackgroundColor
                 backgroundColor = .mainPink
             } else {
                 setImage(
@@ -23,7 +23,7 @@ final class BookmarkMapButton: UIButton {
                     for: .normal
                 )
                 tintColor = .mainPink
-                backgroundColor = .mainBackground
+                backgroundColor = .mainBackgroundColor
             }
         }
     }
@@ -43,6 +43,6 @@ final class BookmarkMapButton: UIButton {
     private func configureUI() {
         setImage(ImageLiteral.bookmark.resize(to: CGSize(width: 20, height: 20)).withRenderingMode(.alwaysTemplate), for: .normal)
         tintColor = .mainPink
-        backgroundColor = .mainBackground
+        backgroundColor = .mainBackgroundColor
     }
 }

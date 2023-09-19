@@ -13,7 +13,7 @@ import Then
 final class FriendViewController: MapViewController {
     let logoLabel = PaddingLabel().then {
         $0.font = .font(.regular, ofSize: 22)
-        $0.textColor = .mainText
+        $0.textColor = .mainTextColor
         $0.text = "친구들"
         $0.padding = UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 0)
         $0.frame = CGRect(x: 0, y: 0, width: 150, height: 0)

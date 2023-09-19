@@ -14,11 +14,11 @@ final class CategoryCollectionViewCell: BaseCollectionViewCell {
     override var isSelected: Bool {
         didSet {
             if isSelected {
-                backgroundColor = .mainText
-                categoryLabel.textColor = .mainBackground
+                backgroundColor = .mainTextColor
+                categoryLabel.textColor = .mainBackgroundColor
             } else {
-                backgroundColor = .mainBackground
-                categoryLabel.textColor = .mainText
+                backgroundColor = .mainBackgroundColor
+                categoryLabel.textColor = .mainTextColor
             }
         }
     }
@@ -26,7 +26,7 @@ final class CategoryCollectionViewCell: BaseCollectionViewCell {
     // MARK: - property
     let categoryLabel = UILabel().then {
         $0.font = UIFont.preferredFont(forTextStyle: .footnote, weight: .light)
-        $0.textColor = .mainText
+        $0.textColor = .mainTextColor
     }
 
     override func setupLayout() {
@@ -39,7 +39,7 @@ final class CategoryCollectionViewCell: BaseCollectionViewCell {
     }
 
     override func configureUI() {
-        backgroundColor = .mainBackground
+        backgroundColor = .mainBackgroundColor
         layer.cornerRadius = 14
         layer.borderWidth = 1
         layer.borderColor = UIColor.grey002.cgColor

@@ -15,7 +15,7 @@ final class FindResultViewController: BaseViewController {
         $0.register(StoreInfoTableViewCell.self, forCellReuseIdentifier: StoreInfoTableViewCell.className)
         $0.register(UserInfoTableViewCell.self, forCellReuseIdentifier: UserInfoTableViewCell.className)
         $0.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 20, right: 0)
-        $0.backgroundColor = .mainBackground
+        $0.backgroundColor = .mainBackgroundColor
     }
 
     override func setupLayout() {

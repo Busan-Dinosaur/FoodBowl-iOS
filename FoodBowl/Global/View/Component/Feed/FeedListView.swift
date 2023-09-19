@@ -36,7 +36,7 @@ final class FeedListView: ModalView {
             $0.delegate = self
             $0.showsVerticalScrollIndicator = false
             $0.register(FeedCollectionViewCell.self, forCellWithReuseIdentifier: FeedCollectionViewCell.className)
-            $0.backgroundColor = .mainBackground
+            $0.backgroundColor = .mainBackgroundColor
         }
     }
 

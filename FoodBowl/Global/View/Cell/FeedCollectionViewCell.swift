@@ -22,7 +22,7 @@ final class FeedCollectionViewCell: BaseCollectionViewCell {
 
     lazy var commentLabel = UILabel().then {
         $0.font = UIFont.preferredFont(forTextStyle: .subheadline, weight: .light)
-        $0.textColor = .mainText
+        $0.textColor = .mainTextColor
         $0.numberOfLines = 0
         $0.text = "맛있어요 정말로"
     }

@@ -21,7 +21,7 @@ final class SettingViewController: BaseViewController {
         $0.delegate = self
         $0.dataSource = self
         $0.separatorStyle = .none
-        $0.backgroundColor = .mainBackground
+        $0.backgroundColor = .mainBackgroundColor
     }
 
     // MARK: - life cycle

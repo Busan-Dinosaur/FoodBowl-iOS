@@ -22,6 +22,6 @@ final class DownButton: UIButton {
     // MARK: - life cycle
     private func configureUI() {
         setImage(ImageLiteral.btnDown.resize(to: CGSize(width: 20, height: 20)).withRenderingMode(.alwaysTemplate), for: .normal)
-        tintColor = .mainText
+        tintColor = .mainTextColor
     }
 }

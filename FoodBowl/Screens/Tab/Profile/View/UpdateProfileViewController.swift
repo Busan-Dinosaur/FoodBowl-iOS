@@ -30,7 +30,7 @@ final class UpdateProfileViewController: BaseViewController {
     private let nicknameLabel = UILabel().then {
         $0.text = "닉네임"
         $0.font = .font(.regular, ofSize: 17)
-        $0.textColor = .mainText
+        $0.textColor = .mainTextColor
     }
 
     private let nicknameField = UITextField().then {
@@ -46,14 +46,14 @@ final class UpdateProfileViewController: BaseViewController {
         $0.leftViewMode = .always
         $0.clearButtonMode = .always
         $0.font = UIFont.preferredFont(forTextStyle: .subheadline, weight: .regular)
-        $0.textColor = .mainText
+        $0.textColor = .mainTextColor
         $0.makeBorderLayer(color: .grey002)
     }
 
     private let userInfoLabel = UILabel().then {
         $0.text = "한줄 소개"
         $0.font = .font(.regular, ofSize: 17)
-        $0.textColor = .mainText
+        $0.textColor = .mainTextColor
     }
 
     private let userInfoField = UITextField().then {
@@ -69,7 +69,7 @@ final class UpdateProfileViewController: BaseViewController {
         $0.leftViewMode = .always
         $0.clearButtonMode = .always
         $0.font = UIFont.preferredFont(forTextStyle: .subheadline, weight: .regular)
-        $0.textColor = .mainText
+        $0.textColor = .mainTextColor
         $0.makeBorderLayer(color: .grey002)
     }
 

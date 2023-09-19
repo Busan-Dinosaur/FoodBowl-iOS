@@ -14,7 +14,7 @@ final class SettingItemTableViewCell: BaseTableViewCell {
     // MARK: - property
     let menuLabel = UILabel().then {
         $0.font = UIFont.preferredFont(forTextStyle: .callout, weight: .regular)
-        $0.textColor = .subText
+        $0.textColor = .subTextColor
     }
 
     private let forwardButton = ForwardButton()

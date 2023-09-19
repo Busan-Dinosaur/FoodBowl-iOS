@@ -22,13 +22,13 @@ final class UserInfoView: UIButton {
 
     let userNameLabel = UILabel().then {
         $0.font = UIFont.preferredFont(forTextStyle: .subheadline, weight: .medium)
-        $0.textColor = .mainText
+        $0.textColor = .mainTextColor
         $0.text = "홍길동"
     }
 
     let userFollowerLabel = UILabel().then {
         $0.font = UIFont.preferredFont(forTextStyle: .footnote, weight: .light)
-        $0.textColor = .subText
+        $0.textColor = .subTextColor
         $0.text = "팔로워 100명"
     }
 

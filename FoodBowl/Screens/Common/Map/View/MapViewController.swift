@@ -55,7 +55,7 @@ class MapViewController: BaseViewController {
     }
 
     lazy var trakingButton = MKUserTrackingButton(mapView: mapView).then {
-        $0.layer.backgroundColor = UIColor.mainBackground.cgColor
+        $0.layer.backgroundColor = UIColor.mainBackgroundColor.cgColor
         $0.layer.borderColor = UIColor.grey002.cgColor
         $0.layer.borderWidth = 1
         $0.layer.cornerRadius = 10
@@ -64,7 +64,7 @@ class MapViewController: BaseViewController {
     }
 
     lazy var bookmarkButton = BookmarkMapButton().then {
-        $0.layer.backgroundColor = UIColor.mainBackground.cgColor
+        $0.layer.backgroundColor = UIColor.mainBackgroundColor.cgColor
         $0.layer.borderColor = UIColor.grey002.cgColor
         $0.layer.borderWidth = 1
         $0.layer.cornerRadius = 10

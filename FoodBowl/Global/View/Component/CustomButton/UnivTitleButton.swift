@@ -11,7 +11,7 @@ final class UnivTitleButton: UIButton {
     // MARK: - property
     let label = UILabel().then {
         $0.text = "부산대학교 금정캠퍼스"
-        $0.textColor = .mainText
+        $0.textColor = .mainTextColor
         $0.font = .font(.regular, ofSize: 22)
     }
 

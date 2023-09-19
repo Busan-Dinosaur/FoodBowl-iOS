@@ -46,7 +46,7 @@ final class StoreDetailViewController: BaseViewController {
         $0.delegate = self
         $0.showsVerticalScrollIndicator = false
         $0.register(FeedNSCollectionViewCell.self, forCellWithReuseIdentifier: FeedNSCollectionViewCell.className)
-        $0.backgroundColor = .mainBackground
+        $0.backgroundColor = .mainBackgroundColor
     }
 
     override func viewDidLoad() {

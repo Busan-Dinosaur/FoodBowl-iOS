@@ -14,7 +14,7 @@ final class SearchBarButton: UIButton {
     // MARK: - property
     private let searchIconView = UIImageView().then {
         $0.image = ImageLiteral.search.resize(to: CGSize(width: 20, height: 20)).withRenderingMode(.alwaysTemplate)
-        $0.tintColor = .subText
+        $0.tintColor = .subTextColor
     }
 
     let placeholderLabel = UILabel().then {
@@ -51,7 +51,7 @@ final class SearchBarButton: UIButton {
     }
 
     private func configureUI() {
-        backgroundColor = .mainBackground
+        backgroundColor = .mainBackgroundColor
         layer.cornerRadius = 20
         layer.borderWidth = 1
         layer.borderColor = UIColor.grey002.cgColor

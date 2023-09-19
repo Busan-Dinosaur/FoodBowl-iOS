@@ -63,7 +63,7 @@ final class CategoryListView: UIView {
     }
 
     private func configureUI() {
-        backgroundColor = .mainBackground
+        backgroundColor = .mainBackgroundColor
     }
 }
 
