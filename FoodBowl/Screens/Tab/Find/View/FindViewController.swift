@@ -117,7 +117,6 @@ extension FindViewController {
 extension FindViewController: UISearchResultsUpdating, UISearchBarDelegate {
     func updateSearchResults(for searchController: UISearchController) {
         guard let text = searchController.searchBar.text?.lowercased() else { return }
-        print(text)
     }
 
     func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
