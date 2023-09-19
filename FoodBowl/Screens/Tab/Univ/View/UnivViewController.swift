@@ -24,7 +24,7 @@ final class UnivViewController: MapViewController {
                 self?.present(navigationController, animated: true)
             }
         }
-        $0.addAction(action, for: .touchUpInside)
+        $0.downButton.addAction(action, for: .touchUpInside)
         $0.frame = CGRect(x: 0, y: 0, width: 300, height: 45)
         $0.label.text = "대학가"
     }

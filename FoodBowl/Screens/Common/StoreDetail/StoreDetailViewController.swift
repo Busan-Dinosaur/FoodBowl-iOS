@@ -73,7 +73,7 @@ final class StoreDetailViewController: BaseViewController {
         reviewToggleButton.isSelected.toggle()
         isFriend.toggle()
 
-        title = isFriend ? "친구들의 후기" : "모든 후기"
+        title = isFriend ? "친구들의 후기" : "모두의 후기"
     }
 }
 
