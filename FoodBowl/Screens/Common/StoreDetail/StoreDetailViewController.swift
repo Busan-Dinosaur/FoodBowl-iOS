@@ -21,7 +21,16 @@ final class StoreDetailViewController: BaseViewController {
         )
     }
 
+    private var isFriend: Bool = true
+
     // MARK: - property
+    private lazy var reviewToggleButton = ReviewToggleButton().then {
+        let action = UIAction { [weak self] _ in
+            self?.reviewToggleButtonTapped()
+        }
+        $0.addAction(action, for: .touchUpInside)
+    }
+
     private var storeHeaderView = StoreHeaderView()
 
     private let collectionViewFlowLayout = DynamicHeightCollectionViewFlowLayout().then {
@@ -55,7 +64,16 @@ final class StoreDetailViewController: BaseViewController {
 
     override func setupNavigationBar() {
         super.setupNavigationBar()
+        let reviewToggleButton = makeBarButtonItem(with: reviewToggleButton)
+        navigationItem.rightBarButtonItem = reviewToggleButton
         title = "친구들의 리뷰"
+    }
+
+    private func reviewToggleButtonTapped() {
+        reviewToggleButton.isSelected.toggle()
+        isFriend.toggle()
+
+        title = isFriend ? "친구들의 후기" : "모든 후기"
     }
 }
 

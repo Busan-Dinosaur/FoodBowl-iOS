@@ -1,5 +1,5 @@
 //
-//  BookmarkToggleButton.swift
+//  ReviewToggleButton.swift
 //  FoodBowl
 //
 //  Created by COBY_PRO on 2023/09/15.
@@ -7,14 +7,14 @@
 
 import UIKit
 
-final class BookmarkToggleButton: UIButton {
+final class ReviewToggleButton: UIButton {
     override var isSelected: Bool {
         didSet {
             if isSelected {
-                label.text = "북마크 On"
+                label.text = "친구만"
                 label.textColor = .mainPink
             } else {
-                label.text = "북마크 Off"
+                label.text = "모두"
                 label.textColor = .subText
             }
         }
@@ -23,9 +23,9 @@ final class BookmarkToggleButton: UIButton {
     // MARK: - property
     private let label = UILabel().then {
         let label = UILabel()
-        $0.text = "북마크 On"
+        $0.text = "친구만"
         $0.textColor = .subText
-        $0.font = UIFont.preferredFont(forTextStyle: .subheadline, weight: .regular)
+        $0.font = UIFont.preferredFont(forTextStyle: .subheadline, weight: .medium)
     }
 
     // MARK: - init
@@ -56,7 +56,8 @@ final class BookmarkToggleButton: UIButton {
 
     // MARK: - life cycle
     private func configureUI() {
-        tintColor = .mainText
+        isSelected = true
+        label.textColor = .mainPink
         layer.cornerRadius = 4
         layer.borderColor = UIColor.grey002.cgColor
         layer.borderWidth = 1
