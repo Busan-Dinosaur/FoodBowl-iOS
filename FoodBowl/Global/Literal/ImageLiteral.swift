@@ -10,19 +10,20 @@ import UIKit
 enum ImageLiteral {
     static var friends: UIImage { .load(name: "friends") }
     static var bookmark: UIImage { .load(name: "bookmark") }
+    static var search: UIImage { .load(name: "search") }
     static var univ: UIImage { .load(name: "univ") }
     static var profile: UIImage { .load(name: "profile") }
-    static var search: UIImage { .load(systemName: "magnifyingglass") }
 
     static var bookmarkFill: UIImage { .load(name: "bookmark_fill") }
 
     static var btnClose: UIImage { .load(systemName: "xmark") }
     static var btnSetting: UIImage { .load(name: "settings") }
     static var btnBack: UIImage { .load(systemName: "chevron.backward") }
-    static var btnDown: UIImage { .load(systemName: "chevron.down") }
+    static var btnDown: UIImage { .load(name: "down") }
     static var btnForward: UIImage { .load(systemName: "chevron.forward") }
     static var btnPlus: UIImage { .load(name: "plus") }
     static var btnOption: UIImage { .load(name: "option") }
+    static var btnFilter: UIImage { .load(name: "filter") }
     static var btnKakaomap: UIImage { .load(name: "kakaomap") }
     static var btnFeed: UIImage { .load(name: "feed") }
 
@@ -67,19 +68,5 @@ extension UIImage {
             draw(in: CGRect(origin: .zero, size: size))
         }
         return image
-    }
-}
-
-extension UIImageView {
-    func load(url: URL) {
-        DispatchQueue.global().async { [weak self] in
-            if let data = try? Data(contentsOf: url) {
-                if let image = UIImage(data: data) {
-                    DispatchQueue.main.async {
-                        self?.image = image
-                    }
-                }
-            }
-        }
     }
 }

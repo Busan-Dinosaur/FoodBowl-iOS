@@ -8,7 +8,7 @@
 import UIKit
 
 extension UIColor {
-    static var mainBackground: UIColor {
+    static var mainBackgroundColor: UIColor {
         return UIColor { traits -> UIColor in
             traits.userInterfaceStyle == .dark
                 ? UIColor(hex: "#222222")
@@ -16,7 +16,7 @@ extension UIColor {
         }
     }
 
-    static var mainText: UIColor {
+    static var mainTextColor: UIColor {
         return UIColor { traits -> UIColor in
             traits.userInterfaceStyle == .dark
                 ? UIColor(hex: "#ffffff")
@@ -24,7 +24,7 @@ extension UIColor {
         }
     }
 
-    static var subText: UIColor {
+    static var subTextColor: UIColor {
         return UIColor { traits -> UIColor in
             traits.userInterfaceStyle == .dark
                 ? UIColor(hex: "#E2E2E2")

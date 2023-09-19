@@ -20,7 +20,6 @@ final class SignInViewModel {
             KeychainManager.set(data.accessToken, for: .accessToken)
             KeychainManager.set(data.refreshToken, for: .refreshToken)
             UserDefaultHandler.setIsLogin(isLogin: true)
-            print(data.accessToken)
         case .failure(let err):
             print(err.localizedDescription)
         }
@@ -31,9 +30,7 @@ final class SignInViewModel {
         switch response {
         case .success(let result):
             guard let data = try? result.map(MemberProfileResponse.self) else { return }
-            UserDefaultHandler.setUserID(userID: data.id)
-            UserDefaultHandler.setNickname(nickname: data.nickname)
-            UserDefaultHandler.setProfileImageUrl(profileImageUrl: data.profileImageUrl ?? "")
+            UserDefaultsManager.currentUser = data
         case .failure(let err):
             print(err.localizedDescription)
         }

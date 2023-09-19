@@ -13,6 +13,8 @@ import Then
 
 class BaseViewController: UIViewController {
     // MARK: - property
+    private var activeTextField: UITextField?
+
     private lazy var backButton = BackButton().then {
         let buttonAction = UIAction { [weak self] _ in
             self?.navigationController?.popViewController(animated: true)
@@ -20,7 +22,41 @@ class BaseViewController: UIViewController {
         $0.addAction(buttonAction, for: .touchUpInside)
     }
 
-    private var activeTextField: UITextField?
+    lazy var plusButton = PlusButton().then {
+        let action = UIAction { [weak self] _ in
+            let createReviewController = CreateReviewController()
+            let navigationController = UINavigationController(rootViewController: createReviewController)
+            DispatchQueue.main.async {
+                self?.present(navigationController, animated: true)
+            }
+        }
+        $0.addAction(action, for: .touchUpInside)
+    }
+
+    lazy var settingButton = SettingButton().then {
+        let action = UIAction { [weak self] _ in
+            let settingViewController = SettingViewController()
+            self?.navigationController?.pushViewController(settingViewController, animated: true)
+        }
+        $0.addAction(action, for: .touchUpInside)
+    }
+
+    lazy var optionButton = OptionButton().then {
+        let optionButtonAction = UIAction { [weak self] _ in
+            let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+
+            let report = UIAlertAction(title: "신고하기", style: .destructive, handler: { _ in
+                self?.sendReportMail()
+            })
+            let cancel = UIAlertAction(title: "취소", style: .cancel, handler: nil)
+
+            alert.addAction(cancel)
+            alert.addAction(report)
+
+            self?.present(alert, animated: true, completion: nil)
+        }
+        $0.addAction(optionButtonAction, for: .touchUpInside)
+    }
 
     // MARK: - life cycle
     override func viewDidLoad() {
@@ -60,7 +96,7 @@ class BaseViewController: UIViewController {
     }
 
     func configureUI() {
-        view.backgroundColor = .mainBackground
+        view.backgroundColor = .mainBackgroundColor
     }
 
     func setupNavigationBar() {
@@ -72,7 +108,7 @@ class BaseViewController: UIViewController {
         appearance.titleTextAttributes = [.font: font]
         appearance.largeTitleTextAttributes = [.font: largeFont]
         appearance.shadowColor = .clear
-        appearance.backgroundColor = .mainBackground
+        appearance.backgroundColor = .mainBackgroundColor
 
         navigationBar.standardAppearance = appearance
         navigationBar.compactAppearance = appearance
@@ -170,13 +206,12 @@ extension BaseViewController: MFMailComposeViewControllerDelegate {
             let messageBody = """
                 내용을 작성해주세요.
                 """
-            let nickname = UserDefaultStorage.nickname
+            guard let nickname = UserDefaultsManager.currentUser?.nickname else { return }
 
             composeVC.mailComposeDelegate = self
             composeVC.setToRecipients([emailAdress])
             composeVC.setSubject("[풋볼] \(nickname)")
             composeVC.setMessageBody(messageBody, isHTML: false)
-            composeVC.modalPresentationStyle = .fullScreen
 
             present(composeVC, animated: true, completion: nil)
         } else {
