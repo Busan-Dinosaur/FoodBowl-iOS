@@ -105,6 +105,7 @@
 		CBCD0F7C2A66D9BC00A51B32 /* FriendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBCD0F7B2A66D9BC00A51B32 /* FriendViewController.swift */; };
 		CBCD0F7F2A66DA1600A51B32 /* UnivViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBCD0F7E2A66DA1600A51B32 /* UnivViewController.swift */; };
 		CBD0362F2ABA150600E1AE9A /* RecentReviewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD0362E2ABA150600E1AE9A /* RecentReviewController.swift */; };
+		CBD036322ABA163F00E1AE9A /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = CBD036312ABA163F00E1AE9A /* Kingfisher */; };
 		CBD1B5EF2982A5AD00B0AD51 /* UpdateProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD1B5EE2982A5AD00B0AD51 /* UpdateProfileViewController.swift */; };
 		CBD1B5F12982B0A300B0AD51 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD1B5F02982B0A300B0AD51 /* SettingViewController.swift */; };
 		CBD1B5F42982D39B00B0AD51 /* SettingItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD1B5F32982D39B00B0AD51 /* SettingItemTableViewCell.swift */; };
@@ -265,6 +266,7 @@
 				CBADC2422955989400E56C93 /* SnapKit in Frameworks */,
 				CBC747A92A83D95200F171F5 /* Moya in Frameworks */,
 				CBB582802972C9C400808B0B /* Alamofire in Frameworks */,
+				CBD036322ABA163F00E1AE9A /* Kingfisher in Frameworks */,
 				CBC747AB2A83D95200F171F5 /* RxMoya in Frameworks */,
 				CBADC2482955993A00E56C93 /* SkeletonUI in Frameworks */,
 				CBC747B82A83DC2000F171F5 /* KeychainSwift in Frameworks */,
@@ -909,6 +911,7 @@
 				CBC747AA2A83D95200F171F5 /* RxMoya */,
 				CBC747B72A83DC2000F171F5 /* KeychainSwift */,
 				CB56C3852AB9D9D000C65AF4 /* YPImagePicker */,
+				CBD036312ABA163F00E1AE9A /* Kingfisher */,
 			);
 			productName = FoodBowl;
 			productReference = CBC73100295550A100C7F198 /* FoodBowl.app */;
@@ -946,6 +949,7 @@
 				CBC747A72A83D95200F171F5 /* XCRemoteSwiftPackageReference "Moya" */,
 				CBC747B62A83DC2000F171F5 /* XCRemoteSwiftPackageReference "keychain-swift" */,
 				CB56C3842AB9D9D000C65AF4 /* XCRemoteSwiftPackageReference "YPImagePicker" */,
+				CBD036302ABA163E00E1AE9A /* XCRemoteSwiftPackageReference "Kingfisher" */,
 			);
 			productRefGroup = CBC73101295550A100C7F198 /* Products */;
 			projectDirPath = "";
@@ -1428,6 +1432,14 @@
 				minimumVersion = 20.0.0;
 			};
 		};
+		CBD036302ABA163E00E1AE9A /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.9.1;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1470,6 +1482,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = CBC747B62A83DC2000F171F5 /* XCRemoteSwiftPackageReference "keychain-swift" */;
 			productName = KeychainSwift;
+		};
+		CBD036312ABA163F00E1AE9A /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CBD036302ABA163E00E1AE9A /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

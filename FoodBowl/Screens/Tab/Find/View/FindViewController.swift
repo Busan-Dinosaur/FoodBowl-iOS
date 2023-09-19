@@ -160,9 +160,12 @@ extension FindViewController: UITableViewDataSource, UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if scope == 0 {
-            guard let cell = tableView
-                .dequeueReusableCell(withIdentifier: StoreInfoTableViewCell.className, for: indexPath) as? StoreInfoTableViewCell
-            else { return UITableViewCell() }
+            guard let cell = tableView.dequeueReusableCell(
+                withIdentifier: StoreInfoTableViewCell.className,
+                for: indexPath
+            ) as? StoreInfoTableViewCell else {
+                return UITableViewCell()
+            }
 
             cell.storeNameLabel.text = "가게이름"
             cell.storeFeedLabel.text = "100명이 후기를 남겼습니다."
@@ -171,9 +174,12 @@ extension FindViewController: UITableViewDataSource, UITableViewDelegate {
 
             return cell
         } else {
-            guard let cell = tableView
-                .dequeueReusableCell(withIdentifier: UserInfoTableViewCell.className, for: indexPath) as? UserInfoTableViewCell
-            else { return UITableViewCell() }
+            guard let cell = tableView.dequeueReusableCell(
+                withIdentifier: UserInfoTableViewCell.className,
+                for: indexPath
+            ) as? UserInfoTableViewCell else {
+                return UITableViewCell()
+            }
 
             cell.followButtonTapAction = { _ in
                 cell.followButton.isSelected.toggle()
