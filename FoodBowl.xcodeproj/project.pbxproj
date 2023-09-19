@@ -104,6 +104,7 @@
 		CBC747BA2A83DD6400F171F5 /* Configurations.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBC747B92A83DD6400F171F5 /* Configurations.swift */; };
 		CBCD0F7C2A66D9BC00A51B32 /* FriendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBCD0F7B2A66D9BC00A51B32 /* FriendViewController.swift */; };
 		CBCD0F7F2A66DA1600A51B32 /* UnivViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBCD0F7E2A66DA1600A51B32 /* UnivViewController.swift */; };
+		CBD0362F2ABA150600E1AE9A /* RecentReviewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD0362E2ABA150600E1AE9A /* RecentReviewController.swift */; };
 		CBD1B5EF2982A5AD00B0AD51 /* UpdateProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD1B5EE2982A5AD00B0AD51 /* UpdateProfileViewController.swift */; };
 		CBD1B5F12982B0A300B0AD51 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD1B5F02982B0A300B0AD51 /* SettingViewController.swift */; };
 		CBD1B5F42982D39B00B0AD51 /* SettingItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD1B5F32982D39B00B0AD51 /* SettingItemTableViewCell.swift */; };
@@ -226,6 +227,7 @@
 		CBC747B92A83DD6400F171F5 /* Configurations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configurations.swift; sourceTree = "<group>"; };
 		CBCD0F7B2A66D9BC00A51B32 /* FriendViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendViewController.swift; sourceTree = "<group>"; };
 		CBCD0F7E2A66DA1600A51B32 /* UnivViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnivViewController.swift; sourceTree = "<group>"; };
+		CBD0362E2ABA150600E1AE9A /* RecentReviewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentReviewController.swift; sourceTree = "<group>"; };
 		CBD1B5EE2982A5AD00B0AD51 /* UpdateProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateProfileViewController.swift; sourceTree = "<group>"; };
 		CBD1B5F02982B0A300B0AD51 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		CBD1B5F32982D39B00B0AD51 /* SettingItemTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingItemTableViewCell.swift; sourceTree = "<group>"; };
@@ -406,6 +408,7 @@
 			children = (
 				CBA62D3E2A6EC7B800AA0830 /* FindViewController.swift */,
 				CBFB52602977C9AB0049E8BA /* FindResultViewController.swift */,
+				CBD0362E2ABA150600E1AE9A /* RecentReviewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1108,6 +1111,7 @@
 				CBADC29C29559BC900E56C93 /* BaseCollectionViewCell.swift in Sources */,
 				CB1579002AAC61CD00007183 /* RenewRequest.swift in Sources */,
 				CB1A7C5C29560C2300C6431D /* UserInfoView.swift in Sources */,
+				CBD0362F2ABA150600E1AE9A /* RecentReviewController.swift in Sources */,
 				CBDE390729719CB400DDE49A /* SelectedStoreView.swift in Sources */,
 				CBADC29129559BC900E56C93 /* UICollectionView+Extension.swift in Sources */,
 				CBD641A32AB824A2009A05D8 /* SearchUnivViewController.swift in Sources */,

@@ -145,7 +145,12 @@ extension FindViewController: UICollectionViewDataSource, UICollectionViewDelega
         return cell
     }
 
-    func collectionView(_: UICollectionView, didSelectItemAt _: IndexPath) {}
+    func collectionView(_: UICollectionView, didSelectItemAt _: IndexPath) {
+        let recentReviewController = RecentReviewController()
+        DispatchQueue.main.async { [weak self] in
+            self?.navigationController?.pushViewController(recentReviewController, animated: true)
+        }
+    }
 }
 
 extension FindViewController: UITableViewDataSource, UITableViewDelegate {
