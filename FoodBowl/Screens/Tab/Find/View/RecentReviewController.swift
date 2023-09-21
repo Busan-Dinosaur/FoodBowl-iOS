@@ -36,7 +36,7 @@ final class RecentReviewController: BaseViewController {
         $0.dataSource = self
         $0.delegate = self
         $0.showsVerticalScrollIndicator = false
-        $0.register(FeedNSCollectionViewCell.self, forCellWithReuseIdentifier: FeedNSCollectionViewCell.className)
+        $0.register(FeedCollectionViewCell.self, forCellWithReuseIdentifier: FeedCollectionViewCell.className)
         $0.backgroundColor = .mainBackgroundColor
     }
 
@@ -91,9 +91,9 @@ extension RecentReviewController: UICollectionViewDataSource, UICollectionViewDe
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(
-            withReuseIdentifier: FeedNSCollectionViewCell.className,
+            withReuseIdentifier: FeedCollectionViewCell.className,
             for: indexPath
-        ) as? FeedNSCollectionViewCell else {
+        ) as? FeedCollectionViewCell else {
             return UICollectionViewCell()
         }
 
