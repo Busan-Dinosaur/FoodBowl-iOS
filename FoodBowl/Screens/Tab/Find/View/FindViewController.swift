@@ -12,11 +12,13 @@ import Then
 
 final class FindViewController: BaseViewController {
     private enum Size {
+        static let cellWidth: CGFloat = (UIScreen.main.bounds.size.width - 60) / 3
+        static let cellHeight: CGFloat = cellWidth
         static let collectionInset = UIEdgeInsets(
             top: 0,
-            left: 0,
-            bottom: 10,
-            right: 0
+            left: 20,
+            bottom: 20,
+            right: 20
         )
     }
 
@@ -52,18 +54,20 @@ final class FindViewController: BaseViewController {
         $0.obscuresBackgroundDuringPresentation = true
     }
 
-    private let collectionViewFlowLayout = DynamicHeightCollectionViewFlowLayout().then {
+    private let collectionViewFlowLayout = UICollectionViewFlowLayout().then {
+        $0.scrollDirection = .vertical
         $0.sectionInset = Size.collectionInset
-        $0.minimumLineSpacing = 20
-        $0.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
+        $0.itemSize = CGSize(width: Size.cellWidth, height: Size.cellHeight)
+        $0.minimumLineSpacing = 10
+        $0.minimumInteritemSpacing = 10
     }
 
     private lazy var listCollectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewFlowLayout).then {
+        $0.backgroundColor = .clear
         $0.dataSource = self
         $0.delegate = self
         $0.showsVerticalScrollIndicator = false
-        $0.register(FeedCollectionViewCell.self, forCellWithReuseIdentifier: FeedCollectionViewCell.className)
-        $0.backgroundColor = .mainBackgroundColor
+        $0.register(PhotoCollectionViewCell.self, forCellWithReuseIdentifier: PhotoCollectionViewCell.className)
     }
 
     override func viewDidLoad() {
@@ -125,66 +129,27 @@ extension FindViewController: UISearchResultsUpdating, UISearchBarDelegate {
     }
 }
 
-// MARK: - UICollectionViewDataSource, UICollectionViewDelegate
 extension FindViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_: UICollectionView, numberOfItemsInSection _: Int) -> Int {
-        return 10
+        return 20
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(
-            withReuseIdentifier: FeedCollectionViewCell.className,
+            withReuseIdentifier: PhotoCollectionViewCell.className,
             for: indexPath
-        ) as? FeedCollectionViewCell else {
+        ) as? PhotoCollectionViewCell else {
             return UICollectionViewCell()
         }
 
-        cell.userButtonTapAction = { [weak self] _ in
-            let profileViewController = ProfileViewController(isOwn: false)
-            self?.navigationController?.pushViewController(profileViewController, animated: true)
-        }
-
-        cell.optionButtonTapAction = { [weak self] _ in
-            let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-
-            let edit = UIAlertAction(title: "수정", style: .default, handler: { _ in
-                let viewModel = UpdateReviewViewModel()
-                let updateReviewViewController = UpdateReviewViewController(viewModel: viewModel)
-                let navigationController = UINavigationController(rootViewController: updateReviewViewController)
-                DispatchQueue.main.async {
-                    self?.present(navigationController, animated: true)
-                }
-            })
-
-            let report = UIAlertAction(title: "신고", style: .destructive, handler: { _ in
-                self?.sendReportMail()
-            })
-            let cancel = UIAlertAction(title: "취소", style: .cancel, handler: nil)
-
-            alert.addAction(edit)
-            alert.addAction(cancel)
-            alert.addAction(report)
-
-            self?.present(alert, animated: true, completion: nil)
-        }
-
-        cell.followButtonTapAction = { _ in
-            cell.userInfoView.followButton.isSelected.toggle()
-        }
-
-        cell.storeButtonTapAction = { [weak self] _ in
-            let storeDetailViewController = StoreDetailViewController()
-            storeDetailViewController.title = "틈새라면"
-            self?.navigationController?.pushViewController(storeDetailViewController, animated: true)
-        }
-
-        cell.bookmarkButtonTapAction = { [weak self] _ in
-            self?.isBookmarked[indexPath.item].toggle()
-            cell.storeInfoView.bookmarkButton.isSelected.toggle()
-        }
-        cell.storeInfoView.bookmarkButton.isSelected = isBookmarked[indexPath.item]
-
         return cell
+    }
+
+    func collectionView(_: UICollectionView, didSelectItemAt _: IndexPath) {
+        let recentReviewController = RecentReviewController()
+        DispatchQueue.main.async { [weak self] in
+            self?.navigationController?.pushViewController(recentReviewController, animated: true)
+        }
     }
 }
 
@@ -195,9 +160,12 @@ extension FindViewController: UITableViewDataSource, UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if scope == 0 {
-            guard let cell = tableView
-                .dequeueReusableCell(withIdentifier: StoreInfoTableViewCell.className, for: indexPath) as? StoreInfoTableViewCell
-            else { return UITableViewCell() }
+            guard let cell = tableView.dequeueReusableCell(
+                withIdentifier: StoreInfoTableViewCell.className,
+                for: indexPath
+            ) as? StoreInfoTableViewCell else {
+                return UITableViewCell()
+            }
 
             cell.storeNameLabel.text = "가게이름"
             cell.storeFeedLabel.text = "100명이 후기를 남겼습니다."
@@ -206,9 +174,12 @@ extension FindViewController: UITableViewDataSource, UITableViewDelegate {
 
             return cell
         } else {
-            guard let cell = tableView
-                .dequeueReusableCell(withIdentifier: UserInfoTableViewCell.className, for: indexPath) as? UserInfoTableViewCell
-            else { return UITableViewCell() }
+            guard let cell = tableView.dequeueReusableCell(
+                withIdentifier: UserInfoTableViewCell.className,
+                for: indexPath
+            ) as? UserInfoTableViewCell else {
+                return UITableViewCell()
+            }
 
             cell.followButtonTapAction = { _ in
                 cell.followButton.isSelected.toggle()

@@ -140,7 +140,7 @@ final class UpdateReviewViewController: BaseViewController {
 
         completeButton.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview().inset(BaseSize.horizantalPadding)
-            $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(BaseSize.bottomPadding)
+            $0.bottom.equalToSuperview().inset(BaseSize.bottomPadding)
             $0.height.equalTo(60)
         }
     }
