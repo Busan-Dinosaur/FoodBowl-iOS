@@ -10,13 +10,14 @@ import Foundation
 import Moya
 
 enum ServiceAPI {
-    case signIn(form: SignRequest)
+    case signIn(request: SignRequest)
     case renew
     case checkNickname(nickname: String)
     case createBookmark(storeId: Int)
     case removeBookmark(storeId: Int)
     case getSchools
     case getCategories
+    case createBlame(request: CreateBlameRequest)
 }
 
 extension ServiceAPI: TargetType {
@@ -40,12 +41,14 @@ extension ServiceAPI: TargetType {
             return "/v1/schools"
         case .getCategories:
             return "/v1/stores/categories"
+        case .createBlame:
+            return "/v1/blames"
         }
     }
 
     var method: Moya.Method {
         switch self {
-        case .signIn, .renew, .createBookmark:
+        case .signIn, .renew, .createBookmark, .createBlame:
             return .post
         case .removeBookmark:
             return .delete
@@ -56,8 +59,8 @@ extension ServiceAPI: TargetType {
 
     var task: Task {
         switch self {
-        case .signIn(let form):
-            return .requestJSONEncodable(form)
+        case .signIn(let request):
+            return .requestJSONEncodable(request)
         case .renew:
             let form = RenewRequest(
                 accessToken: KeychainManager.get(.accessToken),
@@ -88,6 +91,8 @@ extension ServiceAPI: TargetType {
                 parameters: params,
                 encoding: URLEncoding.default
             )
+        case .createBlame(let request):
+            return .requestJSONEncodable(request)
         default:
             return .requestPlain
         }

@@ -9,11 +9,11 @@ import Foundation
 
 // MARK: - SearchStoresResponse
 struct SearchStoresResponse: Codable {
-    let searchResponses: [SearchResponse]
+    let searchResponses: [StoreBySearch]
 }
 
-// MARK: - SearchResponse
-struct SearchResponse: Codable {
+// MARK: - StoreBySearch
+struct StoreBySearch: Codable {
     let storeId: Int
     let storeName: String
     let distance: Double

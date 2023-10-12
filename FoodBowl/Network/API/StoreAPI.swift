@@ -10,11 +10,11 @@ import UIKit
 import Moya
 
 enum StoreAPI {
-    case getStoresBySearch(request: SearchStoresRequest)
-    case getStoresBySchool(request: GetStoresRequest, schoolId: Int)
-    case getStoresByMember(request: GetStoresRequest, memberId: Int)
-    case getStoresByFollowing(request: GetStoresRequest)
-    case getStoresByBookmark(request: GetStoresRequest)
+    case getStoresBySearch(form: SearchStoresRequest)
+    case getStoresBySchool(form: GetStoresRequest, schoolId: Int)
+    case getStoresByMember(form: GetStoresRequest, memberId: Int)
+    case getStoresByFollowing(form: GetStoresRequest)
+    case getStoresByBookmark(form: GetStoresRequest)
 }
 
 extension StoreAPI: TargetType {
@@ -48,58 +48,58 @@ extension StoreAPI: TargetType {
 
     var task: Task {
         switch self {
-        case .getStoresBySearch(let request):
+        case .getStoresBySearch(let form):
             let params: [String: Any?] = [
-                "name": request.name,
-                "x": request.x,
-                "y": request.y,
-                "size": request.size
+                "name": form.name,
+                "x": form.x,
+                "y": form.y,
+                "size": form.size
             ]
             return .requestParameters(
                 parameters: params as [String: Any],
                 encoding: URLEncoding.default
             )
-        case .getStoresBySchool(let request, let schoolId):
+        case .getStoresBySchool(let form, let schoolId):
             let params: [String: Any?] = [
                 "schoolId": schoolId,
-                "x": request.x,
-                "y": request.y,
-                "deltaX": request.deltaX,
-                "deltaY": request.deltaY
+                "x": form.x,
+                "y": form.y,
+                "deltaX": form.deltaX,
+                "deltaY": form.deltaY
             ]
             return .requestParameters(
                 parameters: params as [String: Any],
                 encoding: URLEncoding.default
             )
-        case .getStoresByMember(let request, let memberId):
+        case .getStoresByMember(let form, let memberId):
             let params: [String: Any?] = [
                 "memberId": memberId,
-                "x": request.x,
-                "y": request.y,
-                "deltaX": request.deltaX,
-                "deltaY": request.deltaY
+                "x": form.x,
+                "y": form.y,
+                "deltaX": form.deltaX,
+                "deltaY": form.deltaY
             ]
             return .requestParameters(
                 parameters: params as [String: Any],
                 encoding: URLEncoding.default
             )
-        case .getStoresByFollowing(let request):
+        case .getStoresByFollowing(let form):
             let params: [String: Any?] = [
-                "x": request.x,
-                "y": request.y,
-                "deltaX": request.deltaX,
-                "deltaY": request.deltaY
+                "x": form.x,
+                "y": form.y,
+                "deltaX": form.deltaX,
+                "deltaY": form.deltaY
             ]
             return .requestParameters(
                 parameters: params as [String: Any],
                 encoding: URLEncoding.default
             )
-        case .getStoresByBookmark(let request):
+        case .getStoresByBookmark(let form):
             let params: [String: Any?] = [
-                "x": request.x,
-                "y": request.y,
-                "deltaX": request.deltaX,
-                "deltaY": request.deltaY
+                "x": form.x,
+                "y": form.y,
+                "deltaX": form.deltaX,
+                "deltaY": form.deltaY
             ]
             return .requestParameters(
                 parameters: params as [String: Any],

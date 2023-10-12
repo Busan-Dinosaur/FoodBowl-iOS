@@ -10,14 +10,12 @@ import Foundation
 import Moya
 
 enum MemberAPI {
-    case updateProfile(form: UpdateProfileRequest)
-    case getMyProfile
+    case updateProfile(request: UpdateProfileRequest)
+    case removeProfileImage
+    case updateProfileImage(request: UpdateProfileRequest)
     case getMemberProfile(id: Int)
-    case followMember(memberId: Int)
-    case unfollowMember(memberId: Int)
-    case removeFollower(memberId: Int)
-    case getFollowingMember(memberId: Int)
-    case getFollowerMember(memberId: Int)
+    case getMemberBySearch(form: SearchMembersRequest)
+    case getMyProfile
 }
 
 extension MemberAPI: TargetType {
@@ -31,30 +29,22 @@ extension MemberAPI: TargetType {
         switch self {
         case .updateProfile:
             return "/v1/members/profile"
-        case .getMyProfile:
-            return "/v1/members/me/profile"
+        case .removeProfileImage, .updateProfileImage:
+            return "/v1/members/profile/image"
         case .getMemberProfile(let id):
             return "/v1/members/\(id)/profile"
-        case .followMember(let memberId):
-            return "/v1/follows/\(memberId)/follow"
-        case .unfollowMember(let memberId):
-            return "/v1/follows/\(memberId)/unfollow"
-        case .removeFollower(let memberId):
-            return "/v1/follows/followers/\(memberId)"
-        case .getFollowingMember(let memberId):
-            return "/v1/follows/\(memberId)/followings"
-        case .getFollowerMember(let memberId):
-            return "/v1/follows/\(memberId)/followers"
+        case .getMemberBySearch:
+            return "/v1/members/search"
+        case .getMyProfile:
+            return "/v1/members/me/profile"
         }
     }
 
     var method: Moya.Method {
         switch self {
-        case .followMember:
-            return .post
-        case .updateProfile:
+        case .updateProfile, .updateProfileImage:
             return .patch
-        case .unfollowMember, .removeFollower:
+        case .removeProfileImage:
             return .delete
         default:
             return .get
@@ -63,8 +53,19 @@ extension MemberAPI: TargetType {
 
     var task: Task {
         switch self {
-        case .updateProfile(let form):
-            return .requestJSONEncodable(form)
+        case .updateProfile(let request):
+            return .requestJSONEncodable(request)
+        case .updateProfileImage(let request):
+            return .requestJSONEncodable(request) // 수정 예정
+        case .getMemberBySearch(let form):
+            let params: [String: Any?] = [
+                "name": form.name,
+                "size": form.size
+            ]
+            return .requestParameters(
+                parameters: params as [String: Any],
+                encoding: URLEncoding.default
+            )
         default:
             return .requestPlain
         }

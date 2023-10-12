@@ -26,7 +26,7 @@ final class ProfileViewModel {
     }
 
     func updateProfile(profile: UpdateProfileRequest) async {
-        let response = await providerMember.request(.updateProfile(form: profile))
+        let response = await providerMember.request(.updateProfile(request: profile))
         switch response {
         case .success:
             if var currentUser = UserDefaultsManager.currentUser {

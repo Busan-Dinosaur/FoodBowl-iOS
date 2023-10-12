@@ -12,10 +12,10 @@ import Moya
 enum ReviewAPI {
     case createReview(request: CreateReviewRequest)
     case removeReview(id: Int)
-    case getReviewsBySchool(request: GetReviewsRequest, schoolId: Int)
-    case getReviewsByMember(request: GetReviewsRequest, memberId: Int)
-    case getReviewsByFollowing(request: GetReviewsRequest)
-    case getReviewsByBookmark(request: GetReviewsRequest)
+    case getReviewsBySchool(form: GetReviewsRequest, schoolId: Int)
+    case getReviewsByMember(form: GetReviewsRequest, memberId: Int)
+    case getReviewsByFollowing(form: GetReviewsRequest)
+    case getReviewsByBookmark(form: GetReviewsRequest)
 }
 
 extension ReviewAPI: TargetType {
@@ -60,7 +60,7 @@ extension ReviewAPI: TargetType {
                 multipartFormData.append(
                     MultipartFormData(
                         provider: .data(reviewData),
-                        name: "request",
+                        name: "form",
                         mimeType: "application/json"
                     )
                 )
@@ -86,63 +86,63 @@ extension ReviewAPI: TargetType {
                 parameters: params,
                 encoding: URLEncoding.default
             )
-        case .getReviewsBySchool(let request, let schoolId):
+        case .getReviewsBySchool(let form, let schoolId):
             let params: [String: Any?] = [
                 "schoolId": schoolId,
-                "lastReviewId": request.lastReviewId,
-                "x": request.x,
-                "y": request.y,
-                "deltaX": request.deltaX,
-                "deltaY": request.deltaY,
-                "deviceX": request.deviceX,
-                "deviceY": request.deviceY,
-                "pageSize": request.pageSize
+                "lastReviewId": form.lastReviewId,
+                "x": form.x,
+                "y": form.y,
+                "deltaX": form.deltaX,
+                "deltaY": form.deltaY,
+                "deviceX": form.deviceX,
+                "deviceY": form.deviceY,
+                "pageSize": form.pageSize
             ]
             return .requestParameters(
                 parameters: params as [String: Any],
                 encoding: URLEncoding.default
             )
-        case .getReviewsByMember(let request, let memberId):
+        case .getReviewsByMember(let form, let memberId):
             let params: [String: Any?] = [
                 "memberId": memberId,
-                "lastReviewId": request.lastReviewId,
-                "x": request.x,
-                "y": request.y,
-                "deltaX": request.deltaX,
-                "deltaY": request.deltaY,
-                "deviceX": request.deviceX,
-                "deviceY": request.deviceY,
-                "pageSize": request.pageSize
+                "lastReviewId": form.lastReviewId,
+                "x": form.x,
+                "y": form.y,
+                "deltaX": form.deltaX,
+                "deltaY": form.deltaY,
+                "deviceX": form.deviceX,
+                "deviceY": form.deviceY,
+                "pageSize": form.pageSize
             ]
             return .requestParameters(
                 parameters: params as [String: Any],
                 encoding: URLEncoding.default
             )
-        case .getReviewsByFollowing(let request):
+        case .getReviewsByFollowing(let form):
             let params: [String: Any?] = [
-                "lastReviewId": request.lastReviewId,
-                "x": request.x,
-                "y": request.y,
-                "deltaX": request.deltaX,
-                "deltaY": request.deltaY,
-                "deviceX": request.deviceX,
-                "deviceY": request.deviceY,
-                "pageSize": request.pageSize
+                "lastReviewId": form.lastReviewId,
+                "x": form.x,
+                "y": form.y,
+                "deltaX": form.deltaX,
+                "deltaY": form.deltaY,
+                "deviceX": form.deviceX,
+                "deviceY": form.deviceY,
+                "pageSize": form.pageSize
             ]
             return .requestParameters(
                 parameters: params as [String: Any],
                 encoding: URLEncoding.default
             )
-        case .getReviewsByBookmark(let request):
+        case .getReviewsByBookmark(let form):
             let params: [String: Any?] = [
-                "lastReviewId": request.lastReviewId,
-                "x": request.x,
-                "y": request.y,
-                "deltaX": request.deltaX,
-                "deltaY": request.deltaY,
-                "deviceX": request.deviceX,
-                "deviceY": request.deviceY,
-                "pageSize": request.pageSize
+                "lastReviewId": form.lastReviewId,
+                "x": form.x,
+                "y": form.y,
+                "deltaX": form.deltaX,
+                "deltaY": form.deltaY,
+                "deviceX": form.deviceX,
+                "deviceY": form.deviceY,
+                "pageSize": form.pageSize
             ]
             return .requestParameters(
                 parameters: params as [String: Any],

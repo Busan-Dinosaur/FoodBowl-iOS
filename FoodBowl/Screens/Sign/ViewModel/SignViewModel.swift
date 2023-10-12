@@ -14,7 +14,7 @@ final class SignInViewModel {
     private let providerMember = MoyaProvider<MemberAPI>()
 
     func signIn(appleToken: String) async {
-        let response = await providerService.request(.signIn(form: SignRequest(appleToken: appleToken)))
+        let response = await providerService.request(.signIn(request: SignRequest(appleToken: appleToken)))
         switch response {
         case .success(let result):
             guard let data = try? result.map(SignResponse.self) else { return }
