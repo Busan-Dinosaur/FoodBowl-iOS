@@ -10,12 +10,11 @@ import UIKit
 import Moya
 
 enum StoreAPI {
-    case addBookmark(storeId: Int)
-    case removeBookmark(storeId: Int)
-    case createReview(request: CreateReviewRequest)
-    case removeReview(id: Int)
-    case getSchools
-    case getCategories
+    case getStoresBySearch(request: SearchStoresRequest)
+    case getStoresBySchool(request: GetStoresRequest, schoolId: Int)
+    case getStoresByMember(request: GetStoresRequest, memberId: Int)
+    case getStoresByFollowing(request: GetStoresRequest)
+    case getStoresByBookmark(request: GetStoresRequest)
 }
 
 extension StoreAPI: TargetType {
@@ -27,100 +26,95 @@ extension StoreAPI: TargetType {
 
     var path: String {
         switch self {
-        case .addBookmark, .removeBookmark:
-            return "/v1/bookmarks"
-        case .createReview, .removeReview:
-            return "/v1/reviews"
-        case .getSchools:
+        case .getStoresBySearch:
+            return "/v1/stores/search"
+        case .getStoresBySchool:
             return "/v1/stores/schools"
-        case .getCategories:
-            return "/v1/stores/categories"
+        case .getStoresByMember:
+            return "/v1/stores/members"
+        case .getStoresByFollowing:
+            return "/v1/stores/followings"
+        case .getStoresByBookmark:
+            return "/v1/stores/bookmarks"
         }
     }
 
     var method: Moya.Method {
         switch self {
-        case .addBookmark, .createReview:
-            return .post
-        case .removeBookmark, .removeReview:
-            return .delete
-        case .getSchools, .getCategories:
+        default:
             return .get
         }
     }
 
     var task: Task {
         switch self {
-        case .addBookmark(let storeId):
-            let params: [String: Int] = [
-                "storeId": storeId
+        case .getStoresBySearch(let request):
+            let params: [String: Any?] = [
+                "name": request.name,
+                "x": request.x,
+                "y": request.y,
+                "size": request.size
             ]
             return .requestParameters(
-                parameters: params,
+                parameters: params as [String: Any],
                 encoding: URLEncoding.default
             )
-        case .removeBookmark(let storeId):
-            let params: [String: Int] = [
-                "storeId": storeId
+        case .getStoresBySchool(let request, let schoolId):
+            let params: [String: Any?] = [
+                "schoolId": schoolId,
+                "x": request.x,
+                "y": request.y,
+                "deltaX": request.deltaX,
+                "deltaY": request.deltaY
             ]
             return .requestParameters(
-                parameters: params,
+                parameters: params as [String: Any],
                 encoding: URLEncoding.default
             )
-        case .createReview(let request):
-            var multipartFormData = [MultipartFormData]()
-
-            if let reviewData = try? JSONEncoder().encode(request.request) {
-                multipartFormData.append(
-                    MultipartFormData(
-                        provider: .data(reviewData),
-                        name: "request",
-                        mimeType: "application/json"
-                    )
-                )
-            }
-
-            for image in request.images {
-                multipartFormData.append(
-                    MultipartFormData(
-                        provider: .data(image),
-                        name: "images[]",
-                        fileName: "\(request.request.storeName)_\(UUID().uuidString).jpg",
-                        mimeType: "image/jpeg"
-                    )
-                )
-            }
-
-            return .uploadMultipart(multipartFormData)
-        case .removeReview(let id):
-            let params: [String: Int] = [
-                "id": id
+        case .getStoresByMember(let request, let memberId):
+            let params: [String: Any?] = [
+                "memberId": memberId,
+                "x": request.x,
+                "y": request.y,
+                "deltaX": request.deltaX,
+                "deltaY": request.deltaY
             ]
             return .requestParameters(
-                parameters: params,
+                parameters: params as [String: Any],
                 encoding: URLEncoding.default
             )
-        case .getSchools, .getCategories:
-            return .requestPlain
+        case .getStoresByFollowing(let request):
+            let params: [String: Any?] = [
+                "x": request.x,
+                "y": request.y,
+                "deltaX": request.deltaX,
+                "deltaY": request.deltaY
+            ]
+            return .requestParameters(
+                parameters: params as [String: Any],
+                encoding: URLEncoding.default
+            )
+        case .getStoresByBookmark(let request):
+            let params: [String: Any?] = [
+                "x": request.x,
+                "y": request.y,
+                "deltaX": request.deltaX,
+                "deltaY": request.deltaY
+            ]
+            return .requestParameters(
+                parameters: params as [String: Any],
+                encoding: URLEncoding.default
+            )
         }
     }
 
     var headers: [String: String]? {
         let accessToken: String = KeychainManager.get(.accessToken)
 
-        switch self {
-        case .createReview:
-            return [
-                "Content-Type": "application/json",
-                "Content-type": "multipart/form-data",
-                "Authorization": "Bearer " + accessToken
-            ]
-        default:
-            return [
-                "Content-Type": "application/json",
-                "Authorization": "Bearer " + accessToken
-            ]
-        }
+        return [
+            "Content-Type": "application/json",
+            "Authorization": "Bearer " + accessToken
+        ]
     }
 
     var validationType: ValidationType { .successCodes }

@@ -10,11 +10,11 @@ import UIKit
 import Moya
 
 final class UpdateReviewViewModel {
-    var request = Request()
+    var request = ReviewRequest()
     var images = [UIImage]()
 
     private let providerKakao = MoyaProvider<KakaoAPI>()
-    private let provider = MoyaProvider<StoreAPI>()
+    private let providerStore = MoyaProvider<StoreAPI>()
 
     func updateReview() async {
         let imagesData = images.map { $0.jpegData(compressionQuality: 0.5)! }

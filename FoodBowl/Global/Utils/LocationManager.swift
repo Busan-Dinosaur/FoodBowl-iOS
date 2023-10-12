@@ -99,9 +99,10 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
         }
 
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now()) {
-            guard let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate else { return }
+            guard let rootVC = (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.windows.first?.rootViewController
+            else { return }
 
-            sceneDelegate.window?.rootViewController?.present(locationAlert, animated: true, completion: nil)
+            rootVC.present(locationAlert, animated: true, completion: nil)
         }
     }
 }

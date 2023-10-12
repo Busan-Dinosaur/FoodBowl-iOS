@@ -10,10 +10,10 @@ import UIKit
 import Moya
 
 final class UnivViewModel {
-    private let provider = MoyaProvider<StoreAPI>()
+    private let providerService = MoyaProvider<ServiceAPI>()
 
     func getSchools() async -> [School] {
-        let response = await provider.request(.getSchools)
+        let response = await providerService.request(.getSchools)
         switch response {
         case .success(let result):
             guard let data = try? result.map(SchoolResponse.self) else { return [School]() }

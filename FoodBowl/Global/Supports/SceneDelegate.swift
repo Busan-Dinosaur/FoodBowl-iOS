@@ -12,8 +12,6 @@ import Moya
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
 
-    private let provider = MoyaProvider<UserAPI>()
-
     func scene(_ scene: UIScene, willConnectTo _: UISceneSession, options _: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
@@ -66,8 +64,8 @@ extension SceneDelegate {
     }
     
     func renewToken() {
-        let provider = MoyaProvider<UserAPI>()
-        provider.request(.renew) { response in
+        let providerService = MoyaProvider<ServiceAPI>()
+        providerService.request(.renew) { response in
             switch response {
             case .success(let result):
                 guard let data = try? result.map(RenewResponse.self) else { return }

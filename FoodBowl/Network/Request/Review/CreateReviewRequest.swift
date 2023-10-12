@@ -8,11 +8,11 @@
 import UIKit
 
 struct CreateReviewRequest: Encodable {
-    let request: Request
+    let request: ReviewRequest
     let images: [Data]
 }
 
-struct Request: Encodable {
+struct ReviewRequest: Encodable {
     var locationId: String
     var storeName: String
     var storeAddress: String

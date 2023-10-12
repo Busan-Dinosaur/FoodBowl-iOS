@@ -10,17 +10,17 @@ import UIKit
 import Moya
 
 final class CreateReviewViewModel {
-    var request = Request()
+    var request = ReviewRequest()
     var images = [UIImage]()
     var store: Place?
 
     private let providerKakao = MoyaProvider<KakaoAPI>()
-    private let provider = MoyaProvider<StoreAPI>()
+    private let providerReview = MoyaProvider<ReviewAPI>()
 
     func createReview() async {
         let imagesData = images.map { $0.jpegData(compressionQuality: 0.5)! }
         let request = CreateReviewRequest(request: request, images: imagesData)
-        let response = await provider.request(.createReview(request: request))
+        let response = await providerReview.request(.createReview(request: request))
         switch response {
         case .success:
             print("success to create review")

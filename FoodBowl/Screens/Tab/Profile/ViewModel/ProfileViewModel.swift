@@ -12,10 +12,10 @@ import Moya
 final class ProfileViewModel {
     var userProfile: MemberProfileResponse?
 
-    private let provider = MoyaProvider<UserAPI>()
+    private let providerMember = MoyaProvider<MemberAPI>()
 
     func getProfile(id: Int) async {
-        let response = await provider.request(.getMemberProfile(id: id))
+        let response = await providerMember.request(.getMemberProfile(id: id))
         switch response {
         case .success(let result):
             guard let data = try? result.map(MemberProfileResponse.self) else { return }
@@ -26,7 +26,7 @@ final class ProfileViewModel {
     }
 
     func updateProfile(profile: UpdateProfileRequest) async {
-        let response = await provider.request(.updateProfile(form: profile))
+        let response = await providerMember.request(.updateProfile(form: profile))
         switch response {
         case .success:
             if var currentUser = UserDefaultsManager.currentUser {
