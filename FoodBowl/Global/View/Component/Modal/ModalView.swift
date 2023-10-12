@@ -56,3 +56,4 @@ class ModalView: UIView {
 
     func setupRefreshControl() {}
 }
+

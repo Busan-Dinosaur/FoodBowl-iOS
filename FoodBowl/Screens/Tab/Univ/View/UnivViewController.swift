@@ -29,15 +29,6 @@ final class UnivViewController: MapViewController {
         $0.label.text = "대학가"
     }
 
-    init() {
-        super.init(nibName: nil, bundle: nil)
-        self.modalView = FeedListView()
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
     override func configureUI() {
         super.configureUI()
         grabbarView.modalResultLabel.text = "4개의 맛집"

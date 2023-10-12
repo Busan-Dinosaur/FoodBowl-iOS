@@ -11,6 +11,8 @@ import SnapKit
 import Then
 
 final class FindViewController: BaseViewController {
+    private var viewModel = FindViewModel()
+
     private enum Size {
         static let cellWidth: CGFloat = (UIScreen.main.bounds.size.width - 60) / 3
         static let cellHeight: CGFloat = cellWidth

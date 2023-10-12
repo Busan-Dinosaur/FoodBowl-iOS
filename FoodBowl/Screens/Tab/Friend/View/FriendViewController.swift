@@ -11,6 +11,8 @@ import SnapKit
 import Then
 
 final class FriendViewController: MapViewController {
+    private var viewModel = FriendViewModel()
+
     let logoLabel = PaddingLabel().then {
         $0.font = .font(.regular, ofSize: 22)
         $0.textColor = .mainTextColor
@@ -19,13 +21,8 @@ final class FriendViewController: MapViewController {
         $0.frame = CGRect(x: 0, y: 0, width: 150, height: 0)
     }
 
-    init() {
-        super.init(nibName: nil, bundle: nil)
-        self.modalView = FeedListView()
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
     }
 
     override func configureUI() {
@@ -40,5 +37,12 @@ final class FriendViewController: MapViewController {
         let plusButton = makeBarButtonItem(with: plusButton)
         navigationItem.leftBarButtonItem = logoLabel
         navigationItem.rightBarButtonItem = plusButton
+    }
+
+    override func getReviews() {
+        Task {
+            reviews = await viewModel.getReviews()
+            super.getReviews()
+        }
     }
 }

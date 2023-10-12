@@ -104,6 +104,8 @@
 		CBC158642AD80AF800FD263B /* SearchMembersRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBC158632AD80AF800FD263B /* SearchMembersRequest.swift */; };
 		CBC158662AD80BB600FD263B /* SearchMembersResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBC158652AD80BB600FD263B /* SearchMembersResponse.swift */; };
 		CBC158682AD80C3300FD263B /* CreateBlameRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBC158672AD80C3300FD263B /* CreateBlameRequest.swift */; };
+		CBC1586B2AD8183D00FD263B /* FindViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBC1586A2AD8183D00FD263B /* FindViewModel.swift */; };
+		CBC1586E2AD81A8400FD263B /* FriendViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBC1586D2AD81A8400FD263B /* FriendViewModel.swift */; };
 		CBC73104295550A100C7F198 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBC73103295550A100C7F198 /* AppDelegate.swift */; };
 		CBC73106295550A100C7F198 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBC73105295550A100C7F198 /* SceneDelegate.swift */; };
 		CBC7310D295550A200C7F198 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CBC7310C295550A200C7F198 /* Assets.xcassets */; };
@@ -241,6 +243,8 @@
 		CBC158632AD80AF800FD263B /* SearchMembersRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchMembersRequest.swift; sourceTree = "<group>"; };
 		CBC158652AD80BB600FD263B /* SearchMembersResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchMembersResponse.swift; sourceTree = "<group>"; };
 		CBC158672AD80C3300FD263B /* CreateBlameRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateBlameRequest.swift; sourceTree = "<group>"; };
+		CBC1586A2AD8183D00FD263B /* FindViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindViewModel.swift; sourceTree = "<group>"; };
+		CBC1586D2AD81A8400FD263B /* FriendViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendViewModel.swift; sourceTree = "<group>"; };
 		CBC73100295550A100C7F198 /* FoodBowl.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FoodBowl.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CBC73103295550A100C7F198 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CBC73105295550A100C7F198 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -421,6 +425,7 @@
 		CB49256E2AB44D4400B66B68 /* Find */ = {
 			isa = PBXGroup;
 			children = (
+				CBC158692AD8182800FD263B /* ViewModel */,
 				CB49256F2AB44D5500B66B68 /* View */,
 			);
 			path = Find;
@@ -469,8 +474,7 @@
 		CB63B75A2A6986BE000AD9C2 /* Component */ = {
 			isa = PBXGroup;
 			children = (
-				CBF617612A6FD94900452B7B /* GrabbarView.swift */,
-				CB7CA37E2A719054005EA993 /* ModalView.swift */,
+				CBDECAC72A6B2F0700259350 /* FeedListView.swift */,
 				CB63B75F2A698909000AD9C2 /* CategoryListView.swift */,
 				CB5AF8A829854AA0003D16D4 /* MapItem.swift */,
 			);
@@ -540,7 +544,6 @@
 				CBDDF1442A6AFB5800AE3C50 /* PhotoListView.swift */,
 				CB1BCAF62958B15B0021617D /* StoreInfoView.swift */,
 				CBADC2DD2955ACBB00E56C93 /* EmptyFeedView.swift */,
-				CBDECAC72A6B2F0700259350 /* FeedListView.swift */,
 			);
 			path = Feed;
 			sourceTree = "<group>";
@@ -673,6 +676,7 @@
 		CBADC27829559BC900E56C93 /* Component */ = {
 			isa = PBXGroup;
 			children = (
+				CBC1586F2AD822DD00FD263B /* Modal */,
 				CB73E0122AB5FF1E005B6BF1 /* Feed */,
 				CBDECABC2A6B06F900259350 /* ImageButton */,
 				CB63B75E2A6988CC000AD9C2 /* CustomButton */,
@@ -763,6 +767,31 @@
 				CBDE390429719B9700DDE49A /* PlaceResponse.swift */,
 			);
 			path = Kakao;
+			sourceTree = "<group>";
+		};
+		CBC158692AD8182800FD263B /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				CBC1586A2AD8183D00FD263B /* FindViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		CBC1586C2AD81A7900FD263B /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				CBC1586D2AD81A8400FD263B /* FriendViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		CBC1586F2AD822DD00FD263B /* Modal */ = {
+			isa = PBXGroup;
+			children = (
+				CBF617612A6FD94900452B7B /* GrabbarView.swift */,
+				CB7CA37E2A719054005EA993 /* ModalView.swift */,
+			);
+			path = Modal;
 			sourceTree = "<group>";
 		};
 		CBC730F7295550A100C7F198 = {
@@ -955,6 +984,7 @@
 		CBE6190D296C6423005295AF /* Friend */ = {
 			isa = PBXGroup;
 			children = (
+				CBC1586C2AD81A7900FD263B /* ViewModel */,
 				CBDDF13B2A6AD75E00AE3C50 /* View */,
 			);
 			path = Friend;
@@ -1099,6 +1129,7 @@
 			files = (
 				CB1579092AACCFCB00007183 /* CreateReviewRequest.swift in Sources */,
 				CB73E00E2AB5F6BF005B6BF1 /* SearchStoreViewController.swift in Sources */,
+				CBC1586E2AD81A8400FD263B /* FriendViewModel.swift in Sources */,
 				CBFB52612977C9AB0049E8BA /* FindResultViewController.swift in Sources */,
 				CBD1B6022984394A00B0AD51 /* FeedButton.swift in Sources */,
 				CBDECACA2A6B2F6800259350 /* FeedNSCollectionViewCell.swift in Sources */,
@@ -1135,6 +1166,7 @@
 				CBCD0F7C2A66D9BC00A51B32 /* FriendViewController.swift in Sources */,
 				CBD1B5F82982D9E100B0AD51 /* ForwardButton.swift in Sources */,
 				CB2E4F892977393700FD2566 /* FollowInfoButton.swift in Sources */,
+				CBC1586B2AD8183D00FD263B /* FindViewModel.swift in Sources */,
 				CB2E82412AA74A050016820E /* UpdateProfileRequest.swift in Sources */,
 				CBADC2CF2955A41500E56C93 /* TabBarController.swift in Sources */,
 				CBB12B142985845900AC0EF2 /* String+Extension.swift in Sources */,

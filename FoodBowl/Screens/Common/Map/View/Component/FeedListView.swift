@@ -20,6 +20,8 @@ final class FeedListView: ModalView {
         )
     }
 
+    var reviews = [Review]()
+
     private var refreshControl = UIRefreshControl()
 
     private lazy var isBookmarked = [Bool](repeating: false, count: 10)
@@ -68,7 +70,7 @@ extension FeedListView {
 // MARK: - UICollectionViewDataSource, UICollectionViewDelegate
 extension FeedListView: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_: UICollectionView, numberOfItemsInSection _: Int) -> Int {
-        return 10
+        return reviews.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -123,6 +125,8 @@ extension FeedListView: UICollectionViewDataSource, UICollectionViewDelegate {
             cell.storeInfoView.bookmarkButton.isSelected.toggle()
         }
         cell.storeInfoView.bookmarkButton.isSelected = isBookmarked[indexPath.item]
+
+        cell.commentLabel.text = reviews[indexPath.item].review.content
 
         return cell
     }

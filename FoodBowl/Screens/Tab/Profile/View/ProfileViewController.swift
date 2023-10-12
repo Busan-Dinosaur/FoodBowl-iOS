@@ -20,7 +20,6 @@ final class ProfileViewController: MapViewController {
     init(isOwn: Bool) {
         self.isOwn = isOwn
         super.init(nibName: nil, bundle: nil)
-        self.modalView = FeedListView()
     }
 
     required init?(coder _: NSCoder) {
@@ -121,7 +120,7 @@ final class ProfileViewController: MapViewController {
 
     override func configureUI() {
         super.configureUI()
-        modalMaxHeight = UIScreen.main.bounds.height - topPadding - navBarHeight - 180
+        modalMaxHeight = UIScreen.main.bounds.height - BaseSize.topAreaPadding - navBarHeight - 180
         grabbarView.modalResultLabel.text = "4개의 맛집"
     }
 

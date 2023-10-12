@@ -1,0 +1,64 @@
+//
+//  FriendViewModel.swift
+//  FoodBowl
+//
+//  Created by COBY_PRO on 10/12/23.
+//
+
+import UIKit
+
+import Moya
+
+final class FriendViewModel {
+    private let providerService = MoyaProvider<ServiceAPI>()
+    private let providerReview = MoyaProvider<ReviewAPI>()
+    private let providerStore = MoyaProvider<StoreAPI>()
+    private let providerFollow = MoyaProvider<FollowAPI>()
+}
+
+// MARK: - Get reviews and stores
+extension FriendViewModel {
+    func getReviews() async -> [Review] {
+        let response = await providerReview.request(
+            .getReviewsByFollowing(
+                form: GetReviewsRequest(
+                    x: 1,
+                    y: 1,
+                    deltaX: 1,
+                    deltaY: 1,
+                    deviceX: 1,
+                    deviceY: 1
+                )
+            )
+        )
+        switch response {
+        case .success(let result):
+            guard let data = try? result.map(ReviewResponse.self) else { return [Review]() }
+            return data.reviews
+        case .failure(let err):
+            print(err.localizedDescription)
+            return [Review]()
+        }
+    }
+
+    func getStores() async -> [Store] {
+        let response = await providerStore.request(
+            .getStoresByFollowing(
+                form: GetStoresRequest(
+                    x: 1,
+                    y: 1,
+                    deltaX: 1,
+                    deltaY: 1
+                )
+            )
+        )
+        switch response {
+        case .success(let result):
+            guard let data = try? result.map(StoreResponse.self) else { return [Store]() }
+            return data.stores
+        case .failure(let err):
+            print(err.localizedDescription)
+            return [Store]()
+        }
+    }
+}
