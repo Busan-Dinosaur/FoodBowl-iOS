@@ -176,8 +176,10 @@ final class UpdateProfileViewController: BaseViewController {
             if nickname.count != 0 && introduction.count != 0 {
                 let updatedProfile = UpdateMemberProfileRequest(nickname: nickname, introduction: introduction)
                 Task {
+                    animationView!.isHidden = false
                     await viewModel.updateMembeProfile(profile: updatedProfile)
                     navigationController?.popViewController(animated: true)
+                    animationView!.isHidden = true
                 }
             } else {
                 let alert = UIAlertController(title: nil, message: "닉네임과 한줄 소개를 입력해주세요", preferredStyle: .alert)

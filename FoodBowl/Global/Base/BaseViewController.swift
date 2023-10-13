@@ -8,11 +8,14 @@
 import MessageUI
 import UIKit
 
+import Lottie
 import SnapKit
 import Then
 
 class BaseViewController: UIViewController {
     // MARK: - property
+    var animationView: LottieAnimationView?
+
     private var activeTextField: UITextField?
 
     private lazy var backButton = BackButton().then {
@@ -58,6 +61,7 @@ class BaseViewController: UIViewController {
         setupBackButton()
         hidekeyboardWhenTappedAround()
         setupNavigationBar()
+        setupLottie()
 
         // Do any additional setup after loading the view.
         NotificationCenter.default.addObserver(
@@ -129,6 +133,18 @@ class BaseViewController: UIViewController {
 
     func setupInteractivePopGestureRecognizer() {
         navigationController?.interactivePopGestureRecognizer?.delegate = self
+    }
+
+    func setupLottie() {
+        animationView = .init(name: "loading")
+        animationView!.frame = view.bounds
+        animationView!.center = view.center
+        animationView!.contentMode = .scaleAspectFit
+        animationView!.loopMode = .loop
+        animationView!.play()
+        animationView!.isHidden = true
+
+        view.addSubview(animationView!)
     }
 
     // MARK: - func

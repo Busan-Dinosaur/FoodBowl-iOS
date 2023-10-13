@@ -212,7 +212,9 @@ final class CreateReviewController: BaseViewController {
         }
 
         Task {
+            animationView!.isHidden = false
             await viewModel.createReview()
+            animationView!.isHidden = true
             dismiss(animated: true, completion: nil)
         }
     }

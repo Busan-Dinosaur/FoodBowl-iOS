@@ -55,6 +55,8 @@
 		CB7CA37F2A719054005EA993 /* ModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB7CA37E2A719054005EA993 /* ModalView.swift */; };
 		CB7F3325298A51560000A6B4 /* UserDefaultStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB7F3324298A51560000A6B4 /* UserDefaultStorage.swift */; };
 		CB7F3327298A51610000A6B4 /* UserDefaultHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB7F3326298A51610000A6B4 /* UserDefaultHandler.swift */; };
+		CB84C9812AD98E2A00A2E0F2 /* loading.json in Resources */ = {isa = PBXBuildFile; fileRef = CB84C9802AD98E2A00A2E0F2 /* loading.json */; };
+		CB84C9842AD98E9000A2E0F2 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = CB84C9832AD98E9000A2E0F2 /* Lottie */; };
 		CB8A2D9B297844720018AC6E /* Marker.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB8A2D9A297844720018AC6E /* Marker.swift */; };
 		CBA4C7DB2AB4840100FC9DD8 /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA4C7DA2AB4840100FC9DD8 /* PaddingLabel.swift */; };
 		CBA4C7DD2AB49B4900FC9DD8 /* ReviewToggleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA4C7DC2AB49B4900FC9DD8 /* ReviewToggleButton.swift */; };
@@ -198,6 +200,7 @@
 		CB7F3321298A4F1E0000A6B4 /* FoodBowl.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = FoodBowl.entitlements; sourceTree = "<group>"; };
 		CB7F3324298A51560000A6B4 /* UserDefaultStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultStorage.swift; sourceTree = "<group>"; };
 		CB7F3326298A51610000A6B4 /* UserDefaultHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultHandler.swift; sourceTree = "<group>"; };
+		CB84C9802AD98E2A00A2E0F2 /* loading.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = loading.json; sourceTree = "<group>"; };
 		CB8A2D9A297844720018AC6E /* Marker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Marker.swift; sourceTree = "<group>"; };
 		CBA4C7DA2AB4840100FC9DD8 /* PaddingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddingLabel.swift; sourceTree = "<group>"; };
 		CBA4C7DC2AB49B4900FC9DD8 /* ReviewToggleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewToggleButton.swift; sourceTree = "<group>"; };
@@ -296,6 +299,7 @@
 				CBB582802972C9C400808B0B /* Alamofire in Frameworks */,
 				CBD036322ABA163F00E1AE9A /* Kingfisher in Frameworks */,
 				CBC747AB2A83D95200F171F5 /* RxMoya in Frameworks */,
+				CB84C9842AD98E9000A2E0F2 /* Lottie in Frameworks */,
 				CBADC2482955993A00E56C93 /* SkeletonUI in Frameworks */,
 				CBC747B82A83DC2000F171F5 /* KeychainSwift in Frameworks */,
 				CBADC245295598A200E56C93 /* Then in Frameworks */,
@@ -575,6 +579,14 @@
 			path = Storage;
 			sourceTree = "<group>";
 		};
+		CB84C97F2AD98E1C00A2E0F2 /* Lottie */ = {
+			isa = PBXGroup;
+			children = (
+				CB84C9802AD98E2A00A2E0F2 /* loading.json */,
+			);
+			path = Lottie;
+			sourceTree = "<group>";
+		};
 		CB981C28297A5A2900AF0167 /* Sign */ = {
 			isa = PBXGroup;
 			children = (
@@ -654,6 +666,7 @@
 		CBADC26F29559BC900E56C93 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				CB84C97F2AD98E1C00A2E0F2 /* Lottie */,
 				CBDB8F8029897CCC00DA2B1E /* Fonts */,
 				CBC7310C295550A200C7F198 /* Assets.xcassets */,
 				CBC7310E295550A200C7F198 /* LaunchScreen.storyboard */,
@@ -1042,6 +1055,7 @@
 				CBC747B72A83DC2000F171F5 /* KeychainSwift */,
 				CB56C3852AB9D9D000C65AF4 /* YPImagePicker */,
 				CBD036312ABA163F00E1AE9A /* Kingfisher */,
+				CB84C9832AD98E9000A2E0F2 /* Lottie */,
 			);
 			productName = FoodBowl;
 			productReference = CBC73100295550A100C7F198 /* FoodBowl.app */;
@@ -1080,6 +1094,7 @@
 				CBC747B62A83DC2000F171F5 /* XCRemoteSwiftPackageReference "keychain-swift" */,
 				CB56C3842AB9D9D000C65AF4 /* XCRemoteSwiftPackageReference "YPImagePicker" */,
 				CBD036302ABA163E00E1AE9A /* XCRemoteSwiftPackageReference "Kingfisher" */,
+				CB84C9822AD98E9000A2E0F2 /* XCRemoteSwiftPackageReference "lottie-ios" */,
 			);
 			productRefGroup = CBC73101295550A100C7F198 /* Products */;
 			projectDirPath = "";
@@ -1097,6 +1112,7 @@
 			files = (
 				CBBB97EC2AB068DE00272CCE /* BMJUAOTF.otf in Resources */,
 				CBADC25029559AB700E56C93 /* .swiftformat in Resources */,
+				CB84C9812AD98E2A00A2E0F2 /* loading.json in Resources */,
 				CBADC24E29559AA900E56C93 /* .swiftlint.yml in Resources */,
 				CBC73110295550A200C7F198 /* LaunchScreen.storyboard in Resources */,
 				CBC7310D295550A200C7F198 /* Assets.xcassets in Resources */,
@@ -1528,6 +1544,14 @@
 				version = 5.2.2;
 			};
 		};
+		CB84C9822AD98E9000A2E0F2 /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/airbnb/lottie-ios.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.3.3;
+			};
+		};
 		CBADC2402955989400E56C93 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
@@ -1591,6 +1615,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = CB56C3842AB9D9D000C65AF4 /* XCRemoteSwiftPackageReference "YPImagePicker" */;
 			productName = YPImagePicker;
+		};
+		CB84C9832AD98E9000A2E0F2 /* Lottie */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CB84C9822AD98E9000A2E0F2 /* XCRemoteSwiftPackageReference "lottie-ios" */;
+			productName = Lottie;
 		};
 		CBADC2412955989400E56C93 /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;
