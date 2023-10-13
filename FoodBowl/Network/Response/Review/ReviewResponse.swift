@@ -9,6 +9,8 @@ import Foundation
 
 // MARK: - ReviewResponse
 struct ReviewResponse: Codable {
+    let errorCode: String
+    let message: String
     let reviews: [Review]
     let page: Page
 }

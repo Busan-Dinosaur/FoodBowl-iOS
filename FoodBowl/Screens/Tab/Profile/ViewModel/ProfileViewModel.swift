@@ -51,7 +51,6 @@ extension ProfileViewModel {
 // MARK: - Get Member's Reviews and Stores
 extension ProfileViewModel {
     func getReviews(location: CustomLocation, memberId: Int) async -> [Review] {
-        print("reivew 불러오기")
         let response = await providerReview.request(
             .getReviewsByMember(
                 form: location,
@@ -60,6 +59,7 @@ extension ProfileViewModel {
                 pageSize: nil
             )
         )
+
         switch response {
         case .success(let result):
             guard let data = try? result.map(ReviewResponse.self) else { return [Review]() }

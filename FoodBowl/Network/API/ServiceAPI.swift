@@ -103,7 +103,7 @@ extension ServiceAPI: TargetType {
 
     var headers: [String: String]? {
         switch self {
-        case .signIn:
+        case .signIn, .renew:
             return [
                 "Content-Type": "application/json"
             ]
