@@ -11,10 +11,10 @@ import Moya
 
 enum StoreAPI {
     case getStoresBySearch(form: SearchStoresRequest)
-    case getStoresBySchool(form: GetStoresRequest, schoolId: Int)
-    case getStoresByMember(form: GetStoresRequest, memberId: Int)
-    case getStoresByFollowing(form: GetStoresRequest)
-    case getStoresByBookmark(form: GetStoresRequest)
+    case getStoresBySchool(form: CustomLocation, schoolId: Int)
+    case getStoresByMember(form: CustomLocation, memberId: Int)
+    case getStoresByFollowing(form: CustomLocation)
+    case getStoresByBookmark(form: CustomLocation)
 }
 
 extension StoreAPI: TargetType {

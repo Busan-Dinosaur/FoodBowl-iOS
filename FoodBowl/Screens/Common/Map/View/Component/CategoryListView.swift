@@ -12,12 +12,11 @@ import Then
 
 final class CategoryListView: UIView {
     enum Size {
-        static let horizantalPadding: CGFloat = 20
         static let collectionInset = UIEdgeInsets(
             top: 0,
-            left: horizantalPadding,
+            left: BaseSize.horizantalPadding,
             bottom: 10,
-            right: -horizantalPadding
+            right: BaseSize.horizantalPadding
         )
     }
 

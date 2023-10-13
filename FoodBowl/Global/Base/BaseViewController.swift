@@ -33,20 +33,12 @@ class BaseViewController: UIViewController {
         $0.addAction(action, for: .touchUpInside)
     }
 
-    lazy var settingButton = SettingButton().then {
-        let action = UIAction { [weak self] _ in
-            let settingViewController = SettingViewController()
-            self?.navigationController?.pushViewController(settingViewController, animated: true)
-        }
-        $0.addAction(action, for: .touchUpInside)
-    }
-
     lazy var optionButton = OptionButton().then {
         let optionButtonAction = UIAction { [weak self] _ in
             let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
 
             let report = UIAlertAction(title: "신고하기", style: .destructive, handler: { _ in
-                self?.sendReportMail()
+                self?.presentBlameViewController()
             })
             let cancel = UIAlertAction(title: "취소", style: .cancel, handler: nil)
 
@@ -175,6 +167,8 @@ class BaseViewController: UIViewController {
         // ie. it will trigger a keyboardWillHide notification
         view.endEditing(true)
     }
+
+    func presentBlameViewController() {}
 }
 
 extension BaseViewController: UITextFieldDelegate {
@@ -196,38 +190,5 @@ extension BaseViewController: UIGestureRecognizerDelegate {
     func gestureRecognizerShouldBegin(_: UIGestureRecognizer) -> Bool {
         guard let count = navigationController?.viewControllers.count else { return false }
         return count > 1
-    }
-}
-
-extension BaseViewController: MFMailComposeViewControllerDelegate {
-    func sendReportMail() {
-        if MFMailComposeViewController.canSendMail() {
-            let composeVC = MFMailComposeViewController()
-            let emailAdress = "foodbowl5502@gmail.com"
-            let messageBody = """
-                내용을 작성해주세요.
-                """
-            guard let nickname = UserDefaultsManager.currentUser?.nickname else { return }
-
-            composeVC.mailComposeDelegate = self
-            composeVC.setToRecipients([emailAdress])
-            composeVC.setSubject("[풋볼] \(nickname)")
-            composeVC.setMessageBody(messageBody, isHTML: false)
-
-            present(composeVC, animated: true, completion: nil)
-        } else {
-            showSendMailErrorAlert()
-        }
-    }
-
-    private func showSendMailErrorAlert() {
-        let sendMailErrorAlert = UIAlertController(title: "메일 전송 실패", message: "이메일 설정을 확인하고 다시 시도해주세요.", preferredStyle: .alert)
-        let confirmAction = UIAlertAction(title: "확인", style: .default)
-        sendMailErrorAlert.addAction(confirmAction)
-        present(sendMailErrorAlert, animated: true, completion: nil)
-    }
-
-    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith _: MFMailComposeResult, error _: Error?) {
-        controller.dismiss(animated: true, completion: nil)
     }
 }

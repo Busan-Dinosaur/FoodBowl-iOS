@@ -10,17 +10,16 @@ import UIKit
 import Moya
 
 final class CreateReviewViewModel {
-    var request = ReviewRequest()
-    var images = [UIImage]()
+    var reviewRequest = CreateReviewRequest()
+    var reviewImages = [UIImage]()
     var store: Place?
 
     private let providerKakao = MoyaProvider<KakaoAPI>()
     private let providerReview = MoyaProvider<ReviewAPI>()
 
     func createReview() async {
-        let imagesData = images.map { $0.jpegData(compressionQuality: 0.5)! }
-        let request = CreateReviewRequest(request: request, images: imagesData)
-        let response = await providerReview.request(.createReview(request: request))
+        let imagesData = reviewImages.map { $0.jpegData(compressionQuality: 0.5)! }
+        let response = await providerReview.request(.createReview(request: reviewRequest, images: imagesData))
         switch response {
         case .success:
             print("success to create review")
@@ -85,18 +84,18 @@ final class CreateReviewViewModel {
 
     func setStore(store: Place) async {
         self.store = store
-        request.locationId = store.id
-        request.storeName = store.placeName
-        request.storeAddress = store.addressName
-        request.x = Double(store.longitude) ?? 0.0
-        request.y = Double(store.latitude) ?? 0.0
-        request.storeUrl = store.placeURL
-        request.phone = store.phone
-        request.category = getCategory(categoryName: store.categoryName)
+        reviewRequest.locationId = store.id
+        reviewRequest.storeName = store.placeName
+        reviewRequest.storeAddress = store.addressName
+        reviewRequest.x = Double(store.longitude) ?? 0.0
+        reviewRequest.y = Double(store.latitude) ?? 0.0
+        reviewRequest.storeUrl = store.placeURL
+        reviewRequest.phone = store.phone
+        reviewRequest.category = getCategory(categoryName: store.categoryName)
 
         guard let univ = await searchUniv(store: store) else { return }
-        request.schoolName = univ.placeName
-        request.schoolX = Double(univ.longitude) ?? 0.0
-        request.schoolY = Double(univ.latitude) ?? 0.0
+        reviewRequest.schoolName = univ.placeName
+        reviewRequest.schoolX = Double(univ.longitude) ?? 0.0
+        reviewRequest.schoolY = Double(univ.latitude) ?? 0.0
     }
 }

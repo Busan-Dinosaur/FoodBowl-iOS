@@ -14,7 +14,8 @@ import SnapKit
 import Then
 
 class MapViewController: BaseViewController {
-    var reviews = [Review]()
+    var customLocation: CustomLocation?
+    var stores = [Store]()
     var marks = [Marker]()
 
     let modalMinHeight: CGFloat = 40
@@ -28,6 +29,14 @@ class MapViewController: BaseViewController {
     private var panGesture = UIPanGestureRecognizer()
 
     // MARK: - property
+    lazy var settingButton = SettingButton().then {
+        let action = UIAction { [weak self] _ in
+            let settingViewController = SettingViewController()
+            self?.navigationController?.pushViewController(settingViewController, animated: true)
+        }
+        $0.addAction(action, for: .touchUpInside)
+    }
+
     lazy var mapView = MKMapView().then {
         $0.delegate = self
         $0.mapType = MKMapType.standard
@@ -78,7 +87,6 @@ class MapViewController: BaseViewController {
         configureUI()
         setupNavigationBar()
         currentLocation()
-        setMarkers()
     }
 
     override func setupLayout() {
@@ -128,17 +136,82 @@ class MapViewController: BaseViewController {
         bookmarkButton.isHidden = true
     }
 
+    func currentLocation() {
+        guard let currentLoc = LocationManager.shared.manager.location else { return }
+
+        mapView.setRegion(
+            MKCoordinateRegion(
+                center: currentLoc.coordinate,
+                span: MKCoordinateSpan(latitudeDelta: 0.02, longitudeDelta: 0.02)
+            ),
+            animated: true
+        )
+    }
+
+    func loadData() {}
+
+    func setMarkers() {
+        mapView.removeAnnotations(marks)
+
+        marks = stores.map { store in
+            Marker(
+                title: store.name,
+                subtitle: "\(store.reviewCount)개의 후기",
+                coordinate: CLLocationCoordinate2D(
+                    latitude: store.y,
+                    longitude: store.x
+                ),
+                glyphImage: ImageLiteral.korean,
+                handler: { [weak self] in
+                    let storeDetailViewController = StoreDetailViewController()
+                    storeDetailViewController.title = store.name
+                    self?.navigationController?.pushViewController(storeDetailViewController, animated: true)
+                }
+            )
+        }
+
+        mapView.addAnnotations(marks)
+    }
+
     func tappedBookMarkButton() {
         bookmarkButton.isSelected.toggle()
     }
+}
 
-    func getReviews() {
-        feedListView.reviews = reviews
-        feedListView.listCollectionView.reloadData()
+extension MapViewController: MKMapViewDelegate {
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        guard view is ClusterAnnotationView else { return }
+
+        let currentSpan = mapView.region.span
+        let zoomSpan = MKCoordinateSpan(
+            latitudeDelta: currentSpan.latitudeDelta / 3.0,
+            longitudeDelta: currentSpan.longitudeDelta / 3.0
+        )
+        let zoomCoordinate = view.annotation?.coordinate ?? mapView.region.center
+        let zoomed = MKCoordinateRegion(center: zoomCoordinate, span: zoomSpan)
+        mapView.setRegion(zoomed, animated: true)
+    }
+
+    func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
+        let center = mapView.centerCoordinate
+        let visibleMapRect = mapView.visibleMapRect
+        let topLeftCoordinate = MKMapPoint(x: visibleMapRect.minX, y: visibleMapRect.minY).coordinate
+        guard let currentLoc = LocationManager.shared.manager.location?.coordinate else { return }
+
+        customLocation = CustomLocation(
+            x: center.longitude,
+            y: center.latitude,
+            deltaX: abs(topLeftCoordinate.longitude - center.longitude),
+            deltaY: abs(topLeftCoordinate.latitude - center.latitude),
+            deviceX: currentLoc.longitude,
+            deviceY: currentLoc.latitude
+        )
+
+        loadData()
     }
 }
 
-// MARK: - control modal
+// MARK: - Control Modal
 extension MapViewController {
     @objc
     func handlePan(_ gesture: UIPanGestureRecognizer) {
@@ -209,77 +282,5 @@ extension MapViewController {
 
     func modalMaxState() {
         grabbarView.layer.cornerRadius = 0
-    }
-}
-
-// MARK: - configure map
-extension MapViewController {
-    func currentLocation() {
-        guard let currentLoc = LocationManager.shared.manager.location else { return }
-
-        mapView.setRegion(
-            MKCoordinateRegion(
-                center: currentLoc.coordinate,
-                span: MKCoordinateSpan(latitudeDelta: 0.02, longitudeDelta: 0.02)
-            ),
-            animated: true
-        )
-    }
-}
-
-extension MapViewController: MKMapViewDelegate {
-    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-        guard view is ClusterAnnotationView else { return }
-
-        let currentSpan = mapView.region.span
-        let zoomSpan = MKCoordinateSpan(
-            latitudeDelta: currentSpan.latitudeDelta / 3.0,
-            longitudeDelta: currentSpan.longitudeDelta / 3.0
-        )
-        let zoomCoordinate = view.annotation?.coordinate ?? mapView.region.center
-        let zoomed = MKCoordinateRegion(center: zoomCoordinate, span: zoomSpan)
-        mapView.setRegion(zoomed, animated: true)
-    }
-}
-
-// MARK: - 임시 데이터
-extension MapViewController {
-    func setMarkers() {
-        guard let currentLoc = LocationManager.shared.manager.location else { return }
-
-        marks = [
-            Marker(
-                title: "홍대입구역 편의점",
-                subtitle: "3개의 후기",
-                coordinate: CLLocationCoordinate2D(
-                    latitude: currentLoc.coordinate.latitude + 0.001,
-                    longitude: currentLoc.coordinate.longitude + 0.001
-                ),
-                glyphImage: ImageLiteral.korean,
-                handler: { [weak self] in
-                    let storeDetailViewController = StoreDetailViewController()
-                    storeDetailViewController.title = "틈새라면"
-                    self?.navigationController?.pushViewController(storeDetailViewController, animated: true)
-                }
-            ),
-            Marker(
-                title: "홍대입구역 서점",
-                subtitle: "123개의 후기",
-                coordinate: CLLocationCoordinate2D(
-                    latitude: currentLoc.coordinate.latitude + 0.001,
-                    longitude: currentLoc.coordinate.longitude + 0.002
-                ),
-                glyphImage: ImageLiteral.salad,
-                handler: { [weak self] in
-                    let storeDetailViewController = StoreDetailViewController()
-                    storeDetailViewController.title = "틈새라면"
-                    self?.navigationController?.pushViewController(storeDetailViewController, animated: true)
-                }
-            )
-        ]
-
-        marks.forEach { mark in
-            mapView.addAnnotation(mark)
-        }
     }
 }

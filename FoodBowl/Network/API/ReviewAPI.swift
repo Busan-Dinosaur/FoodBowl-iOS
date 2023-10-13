@@ -10,12 +10,12 @@ import UIKit
 import Moya
 
 enum ReviewAPI {
-    case createReview(request: CreateReviewRequest)
+    case createReview(request: CreateReviewRequest, images: [Data])
     case removeReview(id: Int)
-    case getReviewsBySchool(form: GetReviewsRequest, schoolId: Int)
-    case getReviewsByMember(form: GetReviewsRequest, memberId: Int)
-    case getReviewsByFollowing(form: GetReviewsRequest)
-    case getReviewsByBookmark(form: GetReviewsRequest)
+    case getReviewsBySchool(form: CustomLocation, schoolId: Int, lastReviewId: Int?, pageSize: Int?)
+    case getReviewsByMember(form: CustomLocation, memberId: Int, lastReviewId: Int?, pageSize: Int?)
+    case getReviewsByFollowing(form: CustomLocation, lastReviewId: Int?, pageSize: Int?)
+    case getReviewsByBookmark(form: CustomLocation, lastReviewId: Int?, pageSize: Int?)
 }
 
 extension ReviewAPI: TargetType {
@@ -53,25 +53,25 @@ extension ReviewAPI: TargetType {
 
     var task: Task {
         switch self {
-        case .createReview(let request):
+        case .createReview(let request, let images):
             var multipartFormData = [MultipartFormData]()
 
-            if let reviewData = try? JSONEncoder().encode(request.request) {
+            if let reviewData = try? JSONEncoder().encode(request) {
                 multipartFormData.append(
                     MultipartFormData(
                         provider: .data(reviewData),
-                        name: "form",
+                        name: "request",
                         mimeType: "application/json"
                     )
                 )
             }
 
-            for image in request.images {
+            for image in images {
                 multipartFormData.append(
                     MultipartFormData(
                         provider: .data(image),
                         name: "images[]",
-                        fileName: "\(request.request.storeName)_\(UUID().uuidString).jpg",
+                        fileName: "\(request.storeName)_\(UUID().uuidString).jpg",
                         mimeType: "image/jpeg"
                     )
                 )
@@ -86,63 +86,63 @@ extension ReviewAPI: TargetType {
                 parameters: params,
                 encoding: URLEncoding.default
             )
-        case .getReviewsBySchool(let form, let schoolId):
+        case .getReviewsBySchool(let form, let schoolId, let lastReviewId, let pageSize):
             let params: [String: Any?] = [
                 "schoolId": schoolId,
-                "lastReviewId": form.lastReviewId,
+                "lastReviewId": lastReviewId,
                 "x": form.x,
                 "y": form.y,
                 "deltaX": form.deltaX,
                 "deltaY": form.deltaY,
                 "deviceX": form.deviceX,
                 "deviceY": form.deviceY,
-                "pageSize": form.pageSize
+                "pageSize": pageSize
             ]
             return .requestParameters(
                 parameters: params as [String: Any],
                 encoding: URLEncoding.default
             )
-        case .getReviewsByMember(let form, let memberId):
+        case .getReviewsByMember(let form, let memberId, let lastReviewId, let pageSize):
             let params: [String: Any?] = [
                 "memberId": memberId,
-                "lastReviewId": form.lastReviewId,
+                "lastReviewId": lastReviewId,
                 "x": form.x,
                 "y": form.y,
                 "deltaX": form.deltaX,
                 "deltaY": form.deltaY,
                 "deviceX": form.deviceX,
                 "deviceY": form.deviceY,
-                "pageSize": form.pageSize
+                "pageSize": pageSize
             ]
             return .requestParameters(
                 parameters: params as [String: Any],
                 encoding: URLEncoding.default
             )
-        case .getReviewsByFollowing(let form):
+        case .getReviewsByFollowing(let form, let lastReviewId, let pageSize):
             let params: [String: Any?] = [
-                "lastReviewId": form.lastReviewId,
+                "lastReviewId": lastReviewId,
                 "x": form.x,
                 "y": form.y,
                 "deltaX": form.deltaX,
                 "deltaY": form.deltaY,
                 "deviceX": form.deviceX,
                 "deviceY": form.deviceY,
-                "pageSize": form.pageSize
+                "pageSize": pageSize
             ]
             return .requestParameters(
                 parameters: params as [String: Any],
                 encoding: URLEncoding.default
             )
-        case .getReviewsByBookmark(let form):
+        case .getReviewsByBookmark(let form, let lastReviewId, let pageSize):
             let params: [String: Any?] = [
-                "lastReviewId": form.lastReviewId,
+                "lastReviewId": lastReviewId,
                 "x": form.x,
                 "y": form.y,
                 "deltaX": form.deltaX,
                 "deltaY": form.deltaY,
                 "deviceX": form.deviceX,
                 "deviceY": form.deviceY,
-                "pageSize": form.pageSize
+                "pageSize": pageSize
             ]
             return .requestParameters(
                 parameters: params as [String: Any],

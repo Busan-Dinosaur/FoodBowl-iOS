@@ -56,7 +56,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 }
 
 extension SceneDelegate {
-    func signOut() {
+    func logOut() {
         KeychainManager.clear()
         UserDefaultHandler.clearAllData()
         UserDefaultsManager.currentUser = nil
@@ -70,7 +70,8 @@ extension SceneDelegate {
             case .success(let result):
                 guard let data = try? result.map(RenewResponse.self) else { return }
                 KeychainManager.set(data.accessToken, for: .accessToken)
-    //            KeychainManager.set(data.refreshToken, for: .refreshToken)
+                KeychainManager.set(data.refreshToken, for: .refreshToken)
+                print(data.accessToken)
             case .failure(let err):
                 print(err.localizedDescription)
             }

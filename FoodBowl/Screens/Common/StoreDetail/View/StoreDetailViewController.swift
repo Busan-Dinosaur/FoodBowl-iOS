@@ -123,7 +123,7 @@ extension StoreDetailViewController: UICollectionViewDataSource, UICollectionVie
         }
 
         cell.userButtonTapAction = { [weak self] _ in
-            let profileViewController = ProfileViewController(isOwn: false)
+            let profileViewController = ProfileViewController(isOwn: false, memberId: 123)
             self?.navigationController?.pushViewController(profileViewController, animated: true)
         }
 
@@ -139,7 +139,7 @@ extension StoreDetailViewController: UICollectionViewDataSource, UICollectionVie
                 }
             })
             let report = UIAlertAction(title: "신고", style: .destructive, handler: { _ in
-                self?.sendReportMail()
+                self?.presentBlameViewController()
             })
             let cancel = UIAlertAction(title: "취소", style: .cancel, handler: nil)
 

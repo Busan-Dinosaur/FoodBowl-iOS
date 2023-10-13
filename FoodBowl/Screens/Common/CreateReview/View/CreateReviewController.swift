@@ -206,7 +206,7 @@ final class CreateReviewController: BaseViewController {
             return
         }
 
-        if viewModel.request.reviewContent == "" {
+        if viewModel.reviewRequest.reviewContent == "" {
             showAlert(message: "한줄평을 작성하지 않았습니다.")
             return
         }
@@ -234,7 +234,7 @@ extension CreateReviewController: UITextViewDelegate {
     }
 
     func textViewDidChange(_ textView: UITextView) {
-        viewModel.request.reviewContent = textView.text
+        viewModel.reviewRequest.reviewContent = textView.text
     }
 }
 
@@ -270,7 +270,7 @@ extension CreateReviewController {
                         return nil
                     }
                 }
-                self.viewModel.images = images
+                self.viewModel.reviewImages = images
                 self.listCollectionView.reloadData()
             }
             picker.dismiss(animated: true, completion: nil)
@@ -281,7 +281,7 @@ extension CreateReviewController {
 
 extension CreateReviewController: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_: UICollectionView, numberOfItemsInSection _: Int) -> Int {
-        return viewModel.images.count + 1
+        return viewModel.reviewImages.count + 1
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -302,7 +302,7 @@ extension CreateReviewController: UICollectionViewDataSource, UICollectionViewDe
                 return UICollectionViewCell()
             }
 
-            cell.foodImageView.image = viewModel.images[indexPath.item - 1]
+            cell.foodImageView.image = viewModel.reviewImages[indexPath.item - 1]
 
             return cell
         }

@@ -11,6 +11,7 @@ import Moya
 
 enum ServiceAPI {
     case signIn(request: SignRequest)
+    case logOut
     case renew
     case checkNickname(nickname: String)
     case createBookmark(storeId: Int)
@@ -31,6 +32,8 @@ extension ServiceAPI: TargetType {
         switch self {
         case .signIn:
             return "/v1/auth/login/oauth/apple"
+        case .logOut:
+            return "/v1/auth/logout"
         case .renew:
             return "/v1/auth/token/renew"
         case .checkNickname:
@@ -48,7 +51,7 @@ extension ServiceAPI: TargetType {
 
     var method: Moya.Method {
         switch self {
-        case .signIn, .renew, .createBookmark, .createBlame:
+        case .signIn, .logOut, .renew, .createBookmark, .createBlame:
             return .post
         case .removeBookmark:
             return .delete
@@ -62,11 +65,11 @@ extension ServiceAPI: TargetType {
         case .signIn(let request):
             return .requestJSONEncodable(request)
         case .renew:
-            let form = RenewRequest(
+            let request = RenewRequest(
                 accessToken: KeychainManager.get(.accessToken),
                 refreshToken: KeychainManager.get(.refreshToken)
             )
-            return .requestJSONEncodable(form)
+            return .requestJSONEncodable(request)
         case .checkNickname(let nickname):
             let params: [String: String] = [
                 "nickname": nickname

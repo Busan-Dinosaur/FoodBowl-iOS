@@ -82,7 +82,7 @@ extension FeedListView: UICollectionViewDataSource, UICollectionViewDelegate {
         }
 
         cell.userButtonTapAction = { [weak self] _ in
-            let profileViewController = ProfileViewController(isOwn: false)
+            let profileViewController = ProfileViewController(isOwn: false, memberId: 123)
             self?.parentViewController?.navigationController?.pushViewController(profileViewController, animated: true)
         }
 
@@ -99,7 +99,7 @@ extension FeedListView: UICollectionViewDataSource, UICollectionViewDelegate {
             })
 
             let report = UIAlertAction(title: "신고", style: .destructive, handler: { _ in
-                self?.parentViewController?.sendReportMail()
+                self?.parentViewController?.presentBlameViewController()
             })
             let cancel = UIAlertAction(title: "취소", style: .cancel, handler: nil)
 

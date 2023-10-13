@@ -10,9 +10,9 @@ import Foundation
 import Moya
 
 enum MemberAPI {
-    case updateProfile(request: UpdateProfileRequest)
+    case updateMemberProfile(request: UpdateMemberProfileRequest)
     case removeProfileImage
-    case updateProfileImage(request: UpdateProfileRequest)
+    case updateProfileImage(request: UpdateMemberProfileRequest)
     case getMemberProfile(id: Int)
     case getMemberBySearch(form: SearchMembersRequest)
     case getMyProfile
@@ -27,7 +27,7 @@ extension MemberAPI: TargetType {
 
     var path: String {
         switch self {
-        case .updateProfile:
+        case .updateMemberProfile:
             return "/v1/members/profile"
         case .removeProfileImage, .updateProfileImage:
             return "/v1/members/profile/image"
@@ -42,7 +42,7 @@ extension MemberAPI: TargetType {
 
     var method: Moya.Method {
         switch self {
-        case .updateProfile, .updateProfileImage:
+        case .updateMemberProfile, .updateProfileImage:
             return .patch
         case .removeProfileImage:
             return .delete
@@ -53,7 +53,7 @@ extension MemberAPI: TargetType {
 
     var task: Task {
         switch self {
-        case .updateProfile(let request):
+        case .updateMemberProfile(let request):
             return .requestJSONEncodable(request)
         case .updateProfileImage(let request):
             return .requestJSONEncodable(request) // 수정 예정

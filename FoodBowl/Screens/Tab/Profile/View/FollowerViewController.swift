@@ -61,7 +61,7 @@ extension FollowerViewController: UITableViewDataSource, UITableViewDelegate {
     }
 
     func tableView(_: UITableView, didSelectRowAt _: IndexPath) {
-        let profileViewController = ProfileViewController(isOwn: false)
+        let profileViewController = ProfileViewController(isOwn: false, memberId: 123)
         navigationController?.pushViewController(profileViewController, animated: true)
     }
 }

@@ -18,17 +18,12 @@ final class FriendViewModel {
 
 // MARK: - Get reviews and stores
 extension FriendViewModel {
-    func getReviews() async -> [Review] {
+    func getReviews(location: CustomLocation) async -> [Review] {
         let response = await providerReview.request(
             .getReviewsByFollowing(
-                form: GetReviewsRequest(
-                    x: 1,
-                    y: 1,
-                    deltaX: 1,
-                    deltaY: 1,
-                    deviceX: 1,
-                    deviceY: 1
-                )
+                form: location,
+                lastReviewId: nil,
+                pageSize: nil
             )
         )
         switch response {
@@ -41,17 +36,8 @@ extension FriendViewModel {
         }
     }
 
-    func getStores() async -> [Store] {
-        let response = await providerStore.request(
-            .getStoresByFollowing(
-                form: GetStoresRequest(
-                    x: 1,
-                    y: 1,
-                    deltaX: 1,
-                    deltaY: 1
-                )
-            )
-        )
+    func getStores(location: CustomLocation) async -> [Store] {
+        let response = await providerStore.request(.getStoresByFollowing(form: location))
         switch response {
         case .success(let result):
             guard let data = try? result.map(StoreResponse.self) else { return [Store]() }

@@ -14,11 +14,14 @@ import Then
 
 final class ProfileViewController: MapViewController {
     private var isOwn: Bool
+    private var memberId: Int
+    private var member: MemberProfileResponse?
 
     private var viewModel = ProfileViewModel()
 
-    init(isOwn: Bool) {
+    init(isOwn: Bool, memberId: Int = UserDefaultsManager.currentUser?.id ?? 0) {
         self.isOwn = isOwn
+        self.memberId = memberId
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -64,34 +67,9 @@ final class ProfileViewController: MapViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.isNavigationBarHidden = false
-
         Task {
-            if isOwn {
-                guard let user = UserDefaultsManager.currentUser else { return }
-                setupProfile(user: user)
-                await viewModel.getProfile(id: user.id)
-            } else {
-                await viewModel.getProfile(id: 1)
-            }
-            setupData()
+            await setMemberProfile()
         }
-    }
-
-    private func setupProfile(user: MemberProfileResponse) {
-        profileHeaderView.userInfoLabel.text = user.introduction
-        profileHeaderView.followerInfoButton.numberLabel.text = "\(user.followerCount)"
-        profileHeaderView.followingInfoButton.numberLabel.text = "\(user.followingCount)"
-
-        if isOwn {
-            userNicknameLabel.text = user.nickname
-        } else {
-            title = user.nickname
-        }
-    }
-
-    private func setupData() {
-        guard let user = viewModel.userProfile else { return }
-        setupProfile(user: user)
     }
 
     override func setupLayout() {
@@ -141,7 +119,52 @@ final class ProfileViewController: MapViewController {
         }
     }
 
+    override func loadData() {
+        Task {
+            await setReviews()
+            await setStores()
+        }
+    }
+
+    private func setMemberProfile() async {
+        if isOwn {
+            member = UserDefaultsManager.currentUser
+        } else {
+            member = await viewModel.getMemberProfile(id: memberId)
+        }
+        guard let member = member else { return }
+        profileHeaderView.userInfoLabel.text = member.introduction
+        profileHeaderView.followerInfoButton.numberLabel.text = "\(member.followerCount)"
+        profileHeaderView.followingInfoButton.numberLabel.text = "\(member.followingCount)"
+
+        if isOwn {
+            userNicknameLabel.text = member.nickname
+        } else {
+            title = member.nickname
+        }
+    }
+
+    private func setReviews() async {
+        guard let location = customLocation else { return }
+        feedListView.reviews = await viewModel.getReviews(location: location, memberId: memberId)
+        feedListView.listCollectionView.reloadData()
+    }
+
+    private func setStores() async {
+        guard let location = customLocation else { return }
+        stores = await viewModel.getStores(location: location, memberId: memberId)
+        setMarkers()
+    }
+
     private func followUser() {
         profileHeaderView.followButton.isSelected.toggle()
+    }
+
+    override func presentBlameViewController() {
+        let createReviewController = BlameViewController(targetId: 123, blameTarget: "Member")
+        let navigationController = UINavigationController(rootViewController: createReviewController)
+        DispatchQueue.main.async {
+            self.present(navigationController, animated: true)
+        }
     }
 }

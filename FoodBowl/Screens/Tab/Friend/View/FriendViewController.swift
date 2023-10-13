@@ -21,10 +21,6 @@ final class FriendViewController: MapViewController {
         $0.frame = CGRect(x: 0, y: 0, width: 150, height: 0)
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-    }
-
     override func configureUI() {
         super.configureUI()
         bookmarkButton.isHidden = false
@@ -39,10 +35,22 @@ final class FriendViewController: MapViewController {
         navigationItem.rightBarButtonItem = plusButton
     }
 
-    override func getReviews() {
+    override func loadData() {
         Task {
-            reviews = await viewModel.getReviews()
-            super.getReviews()
+            await setReviews()
+            await setStores()
         }
+    }
+
+    private func setReviews() async {
+        guard let location = customLocation else { return }
+        feedListView.reviews = await viewModel.getReviews(location: location)
+        feedListView.listCollectionView.reloadData()
+    }
+
+    private func setStores() async {
+        guard let location = customLocation else { return }
+        stores = await viewModel.getStores(location: location)
+        setMarkers()
     }
 }

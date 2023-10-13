@@ -85,12 +85,7 @@ final class UpdateProfileViewController: BaseViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        setupData()
-    }
-
-    private func setupData() {
-        nicknameField.text = UserDefaultsManager.currentUser?.nickname
-        userInfoField.text = UserDefaultsManager.currentUser?.introduction
+        setProfile()
     }
 
     override func setupLayout() {
@@ -130,6 +125,11 @@ final class UpdateProfileViewController: BaseViewController {
         let completeButton = makeBarButtonItem(with: completeButton)
         navigationItem.rightBarButtonItem = completeButton
         title = "프로필 수정"
+    }
+
+    private func setProfile() {
+        nicknameField.text = UserDefaultsManager.currentUser?.nickname
+        userInfoField.text = UserDefaultsManager.currentUser?.introduction
     }
 
     @objc
@@ -174,9 +174,9 @@ final class UpdateProfileViewController: BaseViewController {
     private func tappedCompleteButton() {
         if let nickname = nicknameField.text, let introduction = userInfoField.text {
             if nickname.count != 0 && introduction.count != 0 {
-                let updatedProfile = UpdateProfileRequest(nickname: nickname, introduction: introduction)
+                let updatedProfile = UpdateMemberProfileRequest(nickname: nickname, introduction: introduction)
                 Task {
-                    await viewModel.updateProfile(profile: updatedProfile)
+                    await viewModel.updateMembeProfile(profile: updatedProfile)
                     navigationController?.popViewController(animated: true)
                 }
             } else {
