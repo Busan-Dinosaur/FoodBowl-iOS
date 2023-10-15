@@ -44,6 +44,17 @@ extension ProfileViewModel {
             print(err.localizedDescription)
         }
     }
+
+    func updateMembeProfileImage(image: UIImage) async {
+        guard let imageData = image.jpegData(compressionQuality: 0.5) else { return }
+        let response = await providerMember.request(.updateMemberProfileImage(image: imageData))
+        switch response {
+        case .success:
+            print("success")
+        case .failure(let err):
+            print(err.localizedDescription)
+        }
+    }
 }
 
 // MARK: - Get Member's Reviews and Stores

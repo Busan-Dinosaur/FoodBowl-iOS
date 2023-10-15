@@ -11,8 +11,8 @@ import Moya
 
 enum MemberAPI {
     case updateMemberProfile(request: UpdateMemberProfileRequest)
-    case removeProfileImage
-    case updateProfileImage(request: UpdateMemberProfileRequest)
+    case removeMemberProfileImage
+    case updateMemberProfileImage(image: Data)
     case getMemberProfile(id: Int)
     case getMemberBySearch(form: SearchMembersRequest)
     case getMyProfile
@@ -29,7 +29,7 @@ extension MemberAPI: TargetType {
         switch self {
         case .updateMemberProfile:
             return "/v1/members/profile"
-        case .removeProfileImage, .updateProfileImage:
+        case .removeMemberProfileImage, .updateMemberProfileImage:
             return "/v1/members/profile/image"
         case .getMemberProfile(let id):
             return "/v1/members/\(id)/profile"
@@ -42,9 +42,9 @@ extension MemberAPI: TargetType {
 
     var method: Moya.Method {
         switch self {
-        case .updateMemberProfile, .updateProfileImage:
+        case .updateMemberProfile, .updateMemberProfileImage:
             return .patch
-        case .removeProfileImage:
+        case .removeMemberProfileImage:
             return .delete
         default:
             return .get
@@ -55,8 +55,15 @@ extension MemberAPI: TargetType {
         switch self {
         case .updateMemberProfile(let request):
             return .requestJSONEncodable(request)
-        case .updateProfileImage(let request):
-            return .requestJSONEncodable(request) // 수정 예정
+        case .updateMemberProfileImage(let image):
+            let id = String(describing: UserDefaultsManager.currentUser?.id)
+            let imageData = MultipartFormData(
+                provider: .data(image),
+                name: "image",
+                fileName: "\(id).jpg",
+                mimeType: "image/jpeg"
+            )
+            return .uploadMultipart([imageData])
         case .getMemberBySearch(let form):
             let params: [String: Any?] = [
                 "name": form.name,

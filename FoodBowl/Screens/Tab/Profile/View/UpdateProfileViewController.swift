@@ -7,18 +7,16 @@
 
 import UIKit
 
+import Kingfisher
 import SnapKit
 import Then
 import YPImagePicker
 
 final class UpdateProfileViewController: BaseViewController {
-    private var profileImage: UIImage = ImageLiteral.defaultProfile
-
     private var viewModel = ProfileViewModel()
 
     // MARK: - property
     private lazy var profileImageView = UIImageView().then {
-        $0.image = profileImage
         $0.layer.cornerRadius = 50
         $0.layer.masksToBounds = true
         $0.layer.borderColor = UIColor.grey002.cgColor
@@ -81,10 +79,14 @@ final class UpdateProfileViewController: BaseViewController {
         $0.addAction(action, for: .touchUpInside)
     }
 
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setProfile()
+    }
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         tabBarController?.tabBar.isHidden = true
-        setProfile()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -138,6 +140,12 @@ final class UpdateProfileViewController: BaseViewController {
     private func setProfile() {
         nicknameField.text = UserDefaultsManager.currentUser?.nickname
         userInfoField.text = UserDefaultsManager.currentUser?.introduction
+
+        if let url = UserDefaultsManager.currentUser?.profileImageUrl {
+            profileImageView.kf.setImage(with: URL(string: url))
+        } else {
+            profileImageView.image = ImageLiteral.defaultProfile
+        }
     }
 
     @objc
@@ -171,7 +179,6 @@ final class UpdateProfileViewController: BaseViewController {
                         return nil
                     }
                 }
-                self.profileImage = images[0]
                 self.profileImageView.image = images[0]
             }
             picker.dismiss(animated: true, completion: nil)
@@ -186,8 +193,11 @@ final class UpdateProfileViewController: BaseViewController {
                 Task {
                     animationView!.isHidden = false
                     await viewModel.updateMembeProfile(profile: updatedProfile)
-                    navigationController?.popViewController(animated: true)
+                    if let image = profileImageView.image {
+                        await viewModel.updateMembeProfileImage(image: image)
+                    }
                     animationView!.isHidden = true
+                    navigationController?.popViewController(animated: true)
                 }
             } else {
                 let alert = UIAlertController(title: nil, message: "닉네임과 한줄 소개를 입력해주세요", preferredStyle: .alert)

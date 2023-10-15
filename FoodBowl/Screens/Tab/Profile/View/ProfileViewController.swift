@@ -9,6 +9,7 @@ import MapKit
 import MessageUI
 import UIKit
 
+import Kingfisher
 import SnapKit
 import Then
 
@@ -136,9 +137,18 @@ final class ProfileViewController: MapViewController {
         profileHeaderView.userInfoLabel.text = member.introduction
         profileHeaderView.followerInfoButton.numberLabel.text = "\(member.followerCount)"
         profileHeaderView.followingInfoButton.numberLabel.text = "\(member.followingCount)"
+        if let url = member.profileImageUrl {
+            profileHeaderView.userImageView.kf.setImage(with: URL(string: url))
+        }
 
         if isOwn {
             userNicknameLabel.text = member.nickname
+            guard let member = await viewModel.getMemberProfile(id: memberId) else { return }
+            profileHeaderView.followerInfoButton.numberLabel.text = "\(member.followerCount)"
+            profileHeaderView.followingInfoButton.numberLabel.text = "\(member.followingCount)"
+            if let url = member.profileImageUrl {
+                profileHeaderView.userImageView.kf.setImage(with: URL(string: url))
+            }
         } else {
             title = member.nickname
         }
