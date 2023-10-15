@@ -52,7 +52,9 @@ final class FeedListView: ModalView {
 
     override func setupRefreshControl() {
         let action = UIAction { [weak self] _ in
-            self?.loadData!()
+            if let loadData = self?.loadData {
+                loadData()
+            }
         }
         refreshControl.addAction(action, for: .valueChanged)
         refreshControl.tintColor = .grey002
@@ -71,7 +73,9 @@ extension FeedListView {
     }
 
     private func didScrollToBottom() {
-        reloadData!()
+        if let reloadData = reloadData {
+            reloadData()
+        }
     }
 }
 
