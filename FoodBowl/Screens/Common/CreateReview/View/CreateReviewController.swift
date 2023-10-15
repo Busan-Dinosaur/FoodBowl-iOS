@@ -35,6 +35,16 @@ final class CreateReviewController: BaseViewController {
         $0.frame = CGRect(x: 0, y: 0, width: 150, height: 0)
     }
 
+    private lazy var closeButton = UIButton().then {
+        $0.setTitle("닫기", for: .normal)
+        $0.setTitleColor(.mainPink, for: .normal)
+        $0.titleLabel?.font = UIFont.preferredFont(forTextStyle: .headline, weight: .regular)
+        let action = UIAction { [weak self] _ in
+            self?.dismiss(animated: true)
+        }
+        $0.addAction(action, for: .touchUpInside)
+    }
+
     private lazy var selectedStoreView = SelectedStoreView().then {
         $0.isHidden = true
     }
@@ -163,7 +173,9 @@ final class CreateReviewController: BaseViewController {
     override func setupNavigationBar() {
         super.setupNavigationBar()
         let newFeedGuideLabel = makeBarButtonItem(with: newFeedGuideLabel)
+        let closeButton = makeBarButtonItem(with: closeButton)
         navigationItem.leftBarButtonItem = newFeedGuideLabel
+        navigationItem.rightBarButtonItem = closeButton
     }
 
     private func setStore() {

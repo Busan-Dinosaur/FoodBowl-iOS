@@ -29,6 +29,7 @@ class BaseViewController: UIViewController {
         let action = UIAction { [weak self] _ in
             let createReviewController = CreateReviewController()
             let navigationController = UINavigationController(rootViewController: createReviewController)
+            navigationController.modalPresentationStyle = .fullScreen
             DispatchQueue.main.async {
                 self?.present(navigationController, animated: true)
             }
@@ -40,7 +41,7 @@ class BaseViewController: UIViewController {
         let optionButtonAction = UIAction { [weak self] _ in
             let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
 
-            let report = UIAlertAction(title: "신고하기", style: .destructive, handler: { _ in
+            let report = UIAlertAction(title: "신고", style: .destructive, handler: { _ in
                 self?.presentBlameViewController()
             })
             let cancel = UIAlertAction(title: "취소", style: .cancel, handler: nil)

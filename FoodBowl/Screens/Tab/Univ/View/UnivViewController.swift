@@ -21,6 +21,7 @@ final class UnivViewController: MapViewController {
             let searchUnivViewController = SearchUnivViewController()
             searchUnivViewController.delegate = self
             let navigationController = UINavigationController(rootViewController: searchUnivViewController)
+            navigationController.modalPresentationStyle = .fullScreen
             DispatchQueue.main.async {
                 self?.present(navigationController, animated: true)
             }
@@ -74,6 +75,7 @@ final class UnivViewController: MapViewController {
     override func presentBlameViewController() {
         let createReviewController = BlameViewController(targetId: 123, blameTarget: "Member")
         let navigationController = UINavigationController(rootViewController: createReviewController)
+        navigationController.modalPresentationStyle = .fullScreen
         DispatchQueue.main.async {
             self.present(navigationController, animated: true)
         }

@@ -73,23 +73,27 @@ final class UpdateProfileViewController: BaseViewController {
         $0.makeBorderLayer(color: .grey002)
     }
 
-    private lazy var completeButton = UIButton().then {
-        $0.setTitle("완료", for: .normal)
-        $0.setTitleColor(.mainPink, for: .normal)
-        $0.titleLabel?.font = UIFont.preferredFont(forTextStyle: .headline, weight: .regular)
-        let buttonAction = UIAction { [weak self] _ in
+    private lazy var completeButton = MainButton().then {
+        $0.label.text = "완료"
+        let action = UIAction { [weak self] _ in
             self?.tappedCompleteButton()
         }
-        $0.addAction(buttonAction, for: .touchUpInside)
+        $0.addAction(action, for: .touchUpInside)
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        tabBarController?.tabBar.isHidden = true
         setProfile()
     }
 
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        tabBarController?.tabBar.isHidden = false
+    }
+
     override func setupLayout() {
-        view.addSubviews(profileImageView, nicknameLabel, nicknameField, userInfoLabel, userInfoField)
+        view.addSubviews(profileImageView, nicknameLabel, nicknameField, userInfoLabel, userInfoField, completeButton)
 
         profileImageView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).inset(20)
@@ -118,12 +122,16 @@ final class UpdateProfileViewController: BaseViewController {
             $0.leading.trailing.equalToSuperview().inset(BaseSize.horizantalPadding)
             $0.height.equalTo(50)
         }
+
+        completeButton.snp.makeConstraints {
+            $0.leading.trailing.equalToSuperview().inset(BaseSize.horizantalPadding)
+            $0.bottom.equalToSuperview().inset(BaseSize.bottomPadding)
+            $0.height.equalTo(60)
+        }
     }
 
     override func setupNavigationBar() {
         super.setupNavigationBar()
-        let completeButton = makeBarButtonItem(with: completeButton)
-        navigationItem.rightBarButtonItem = completeButton
         title = "프로필 수정"
     }
 

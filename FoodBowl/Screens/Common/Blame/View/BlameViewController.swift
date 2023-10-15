@@ -47,6 +47,16 @@ final class BlameViewController: BaseViewController {
         $0.frame = CGRect(x: 0, y: 0, width: 150, height: 0)
     }
 
+    private lazy var closeButton = UIButton().then {
+        $0.setTitle("닫기", for: .normal)
+        $0.setTitleColor(.mainPink, for: .normal)
+        $0.titleLabel?.font = UIFont.preferredFont(forTextStyle: .headline, weight: .regular)
+        let action = UIAction { [weak self] _ in
+            self?.dismiss(animated: true)
+        }
+        $0.addAction(action, for: .touchUpInside)
+    }
+
     lazy var commentTextView = UITextView().then {
         $0.textContainerInset = UIEdgeInsets(top: 12, left: 10, bottom: 12, right: 10)
         $0.font = UIFont.preferredFont(forTextStyle: .subheadline, weight: .light)
@@ -92,7 +102,9 @@ final class BlameViewController: BaseViewController {
 
     override func setupNavigationBar() {
         let blameGuideLabel = makeBarButtonItem(with: blameGuideLabel)
+        let closeButton = makeBarButtonItem(with: closeButton)
         navigationItem.leftBarButtonItem = blameGuideLabel
+        navigationItem.rightBarButtonItem = closeButton
     }
 
     private func showAlert(message: String) {

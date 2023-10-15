@@ -114,6 +114,9 @@ final class ProfileViewController: MapViewController {
         } else {
             let optionButton = makeBarButtonItem(with: optionButton)
             navigationItem.rightBarButtonItem = optionButton
+            if UserDefaultsManager.currentUser?.id ?? 0 == memberId {
+                profileHeaderView.followButton.isHidden = true
+            }
             profileHeaderView.editButton.isHidden = true
         }
     }
@@ -163,6 +166,7 @@ final class ProfileViewController: MapViewController {
     override func presentBlameViewController() {
         let createReviewController = BlameViewController(targetId: 123, blameTarget: "Member")
         let navigationController = UINavigationController(rootViewController: createReviewController)
+        navigationController.modalPresentationStyle = .fullScreen
         DispatchQueue.main.async {
             self.present(navigationController, animated: true)
         }

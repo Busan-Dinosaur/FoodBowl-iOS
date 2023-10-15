@@ -45,6 +45,16 @@ final class UpdateReviewViewController: BaseViewController {
         $0.frame = CGRect(x: 0, y: 0, width: 150, height: 0)
     }
 
+    private lazy var closeButton = UIButton().then {
+        $0.setTitle("닫기", for: .normal)
+        $0.setTitleColor(.mainPink, for: .normal)
+        $0.titleLabel?.font = UIFont.preferredFont(forTextStyle: .headline, weight: .regular)
+        let action = UIAction { [weak self] _ in
+            self?.dismiss(animated: true)
+        }
+        $0.addAction(action, for: .touchUpInside)
+    }
+
     private let selectedStoreView = SelectedStoreView()
 
     private let guideCommentLabel = UILabel().then {
@@ -147,7 +157,9 @@ final class UpdateReviewViewController: BaseViewController {
 
     override func setupNavigationBar() {
         let editFeedGuideLabel = makeBarButtonItem(with: editFeedGuideLabel)
+        let closeButton = makeBarButtonItem(with: closeButton)
         navigationItem.leftBarButtonItem = editFeedGuideLabel
+        navigationItem.rightBarButtonItem = closeButton
     }
 
     private func showAlert(message: String) {

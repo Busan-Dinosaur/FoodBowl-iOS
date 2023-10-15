@@ -134,6 +134,7 @@ extension StoreDetailViewController: UICollectionViewDataSource, UICollectionVie
                 let viewModel = UpdateReviewViewModel()
                 let updateReviewViewController = UpdateReviewViewController(viewModel: viewModel)
                 let navigationController = UINavigationController(rootViewController: updateReviewViewController)
+                navigationController.modalPresentationStyle = .fullScreen
                 DispatchQueue.main.async {
                     self?.present(navigationController, animated: true)
                 }

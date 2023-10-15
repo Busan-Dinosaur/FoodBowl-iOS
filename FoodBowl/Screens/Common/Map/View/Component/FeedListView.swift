@@ -88,6 +88,7 @@ extension FeedListView: UICollectionViewDataSource, UICollectionViewDelegate {
         let member = reviews[indexPath.item].writer
         let review = reviews[indexPath.item].review
         let store = reviews[indexPath.item].store
+        let isOwn = UserDefaultsManager.currentUser?.id ?? 0 == member.id
 
         cell.userInfoView.setupData(member)
         cell.setupData(review)
@@ -101,23 +102,26 @@ extension FeedListView: UICollectionViewDataSource, UICollectionViewDelegate {
         cell.optionButtonTapAction = { [weak self] _ in
             let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
 
-            let edit = UIAlertAction(title: "수정", style: .default, handler: { _ in
-                let viewModel = UpdateReviewViewModel()
-                let updateReviewViewController = UpdateReviewViewController(viewModel: viewModel)
-                let navigationController = UINavigationController(rootViewController: updateReviewViewController)
-                DispatchQueue.main.async {
-                    self?.parentViewController?.present(navigationController, animated: true)
-                }
-            })
+            if isOwn {
+                let edit = UIAlertAction(title: "수정", style: .default, handler: { _ in
+                    let viewModel = UpdateReviewViewModel()
+                    let updateReviewViewController = UpdateReviewViewController(viewModel: viewModel)
+                    let navigationController = UINavigationController(rootViewController: updateReviewViewController)
+                    navigationController.modalPresentationStyle = .fullScreen
+                    DispatchQueue.main.async {
+                        self?.parentViewController?.present(navigationController, animated: true)
+                    }
+                })
+                alert.addAction(edit)
+            } else {
+                let report = UIAlertAction(title: "신고", style: .destructive, handler: { _ in
+                    self?.parentViewController?.presentBlameViewController()
+                })
+                alert.addAction(report)
+            }
 
-            let report = UIAlertAction(title: "신고", style: .destructive, handler: { _ in
-                self?.parentViewController?.presentBlameViewController()
-            })
             let cancel = UIAlertAction(title: "취소", style: .cancel, handler: nil)
-
-            alert.addAction(edit)
             alert.addAction(cancel)
-            alert.addAction(report)
 
             self?.parentViewController?.present(alert, animated: true, completion: nil)
         }
