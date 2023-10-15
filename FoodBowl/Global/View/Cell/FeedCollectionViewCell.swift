@@ -74,7 +74,6 @@ final class FeedCollectionViewCell: BaseCollectionViewCell {
             withHorizontalFittingPriority: .required,
             verticalFittingPriority: .fittingSizeLevel
         )
-        print(layoutAttributes)
         return layoutAttributes
     }
 
@@ -98,7 +97,7 @@ final class FeedCollectionViewCell: BaseCollectionViewCell {
                 $0.height.equalTo(54)
             }
         } else {
-            photoListView.setupData(review.imagePaths)
+            photoListView.photos = review.imagePaths
         }
     }
 }

@@ -23,7 +23,11 @@ final class PhotoListView: UIView {
         )
     }
 
-    private var photos = [String]()
+    var photos: [String] = [] {
+        didSet {
+            listCollectionView.reloadData()
+        }
+    }
 
     // MARK: - property
     private let collectionViewFlowLayout = UICollectionViewFlowLayout().then {
@@ -61,11 +65,6 @@ final class PhotoListView: UIView {
             $0.edges.equalToSuperview()
             $0.height.equalTo(100)
         }
-    }
-
-    func setupData(_ photos: [String]) {
-        self.photos = photos
-        listCollectionView.reloadData()
     }
 }
 

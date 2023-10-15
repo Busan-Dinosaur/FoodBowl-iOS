@@ -157,7 +157,6 @@ final class ProfileViewController: MapViewController {
     private func setupReviews() async {
         guard let location = customLocation else { return }
         feedListView.reviews = await viewModel.getReviews(location: location, memberId: memberId)
-        feedListView.listCollectionView.reloadData()
     }
 
     private func setupStores() async {

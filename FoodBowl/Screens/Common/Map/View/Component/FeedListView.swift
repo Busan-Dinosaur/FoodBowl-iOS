@@ -20,7 +20,11 @@ final class FeedListView: ModalView {
         )
     }
 
-    var reviews = [Review]()
+    var reviews: [Review] = [] {
+        didSet {
+            listCollectionView.reloadData()
+        }
+    }
 
     private var refreshControl = UIRefreshControl()
 
