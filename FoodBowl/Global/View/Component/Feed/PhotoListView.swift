@@ -25,8 +25,9 @@ final class PhotoListView: UIView {
 
     var photos: [String] = [] {
         didSet {
-            print(photos)
-            listCollectionView.reloadData()
+            DispatchQueue.main.async {
+                self.listCollectionView.reloadData()
+            }
         }
     }
 

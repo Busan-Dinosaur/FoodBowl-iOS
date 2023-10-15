@@ -22,9 +22,15 @@ final class FeedListView: ModalView {
 
     var reviews: [Review] = [] {
         didSet {
-            listCollectionView.reloadData()
+            DispatchQueue.main.async {
+                self.listCollectionView.reloadData()
+                self.refreshControl.endRefreshing()
+            }
         }
     }
+
+    var loadData: (() -> Void)?
+    var reloadData: (() -> Void)?
 
     private var refreshControl = UIRefreshControl()
 
@@ -46,15 +52,11 @@ final class FeedListView: ModalView {
 
     override func setupRefreshControl() {
         let action = UIAction { [weak self] _ in
-            self?.loadData()
+            self?.loadData!()
         }
         refreshControl.addAction(action, for: .valueChanged)
         refreshControl.tintColor = .grey002
         listCollectionView.refreshControl = refreshControl
-    }
-
-    func loadData() {
-        print("새로고침중")
     }
 }
 
@@ -69,7 +71,7 @@ extension FeedListView {
     }
 
     private func didScrollToBottom() {
-        print("바닥")
+        reloadData!()
     }
 }
 

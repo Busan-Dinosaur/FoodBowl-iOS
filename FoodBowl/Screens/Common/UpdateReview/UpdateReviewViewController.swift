@@ -265,7 +265,7 @@ extension UpdateReviewViewController: UICollectionViewDataSource, UICollectionVi
                 return UICollectionViewCell()
             }
 
-            cell.foodImageView.image = images[indexPath.item - 1]
+//            cell.foodImageView.image = images[indexPath.item - 1]
 
             return cell
         }

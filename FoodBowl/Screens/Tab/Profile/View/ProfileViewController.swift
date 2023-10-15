@@ -100,6 +100,16 @@ final class ProfileViewController: MapViewController {
     override func configureUI() {
         super.configureUI()
         modalMaxHeight = UIScreen.main.bounds.height - BaseSize.topAreaPadding - navBarHeight - 180
+        feedListView.loadData = {
+            Task {
+                await self.setupReviews()
+            }
+        }
+        feedListView.reloadData = {
+            Task {
+                print("추가 데이터")
+            }
+        }
     }
 
     override func setupNavigationBar() {
