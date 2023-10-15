@@ -24,7 +24,6 @@ final class FriendViewController: MapViewController {
     override func configureUI() {
         super.configureUI()
         bookmarkButton.isHidden = false
-        grabbarView.modalResultLabel.text = "4개의 맛집"
     }
 
     override func setupNavigationBar() {
@@ -37,20 +36,21 @@ final class FriendViewController: MapViewController {
 
     override func loadData() {
         Task {
-            await setReviews()
-            await setStores()
+            await setupReviews()
+            await setupStores()
         }
     }
 
-    private func setReviews() async {
+    private func setupReviews() async {
         guard let location = customLocation else { return }
         feedListView.reviews = await viewModel.getReviews(location: location)
         feedListView.listCollectionView.reloadData()
     }
 
-    private func setStores() async {
+    private func setupStores() async {
         guard let location = customLocation else { return }
         stores = await viewModel.getStores(location: location)
+        grabbarView.modalResultLabel.text = "\(stores.count)개의 맛집"
         setMarkers()
     }
 }

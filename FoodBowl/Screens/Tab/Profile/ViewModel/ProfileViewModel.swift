@@ -10,8 +10,6 @@ import UIKit
 import Moya
 
 final class ProfileViewModel {
-    var userProfile: MemberProfileResponse?
-
     private let providerService = MoyaProvider<ServiceAPI>()
     private let providerReview = MoyaProvider<ReviewAPI>()
     private let providerStore = MoyaProvider<StoreAPI>()

@@ -99,7 +99,6 @@ final class ProfileViewController: MapViewController {
     override func configureUI() {
         super.configureUI()
         modalMaxHeight = UIScreen.main.bounds.height - BaseSize.topAreaPadding - navBarHeight - 180
-        grabbarView.modalResultLabel.text = "4개의 맛집"
     }
 
     override func setupNavigationBar() {
@@ -153,6 +152,7 @@ final class ProfileViewController: MapViewController {
     private func setupStores() async {
         guard let location = customLocation else { return }
         stores = await viewModel.getStores(location: location, memberId: memberId)
+        grabbarView.modalResultLabel.text = "\(stores.count)개의 맛집"
         setMarkers()
     }
 

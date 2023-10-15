@@ -5,6 +5,7 @@
 //  Created by COBY_PRO on 2023/07/18.
 //
 
+import MapKit
 import UIKit
 
 import SnapKit
@@ -29,11 +30,6 @@ final class UnivViewController: MapViewController {
         $0.label.text = "대학가"
     }
 
-    override func configureUI() {
-        super.configureUI()
-        grabbarView.modalResultLabel.text = "4개의 맛집"
-    }
-
     override func setupNavigationBar() {
         super.setupNavigationBar()
         let leftOffsetUnivTitleButton = removeBarButtonItemOffset(with: univTitleButton, offsetX: 10)
@@ -54,6 +50,46 @@ final class UnivViewController: MapViewController {
         super.viewWillAppear(animated)
         univTitleButton.label.text = univ?.name ?? "대학가"
     }
+
+    override func loadData() {
+        Task {
+            await setupReviews()
+            await setupStores()
+        }
+    }
+
+    private func setupReviews() async {
+        guard let location = customLocation else { return }
+        feedListView.reviews = await viewModel.getReviews(location: location)
+        feedListView.listCollectionView.reloadData()
+    }
+
+    private func setupStores() async {
+        guard let location = customLocation else { return }
+        stores = await viewModel.getStores(location: location)
+        grabbarView.modalResultLabel.text = "\(stores.count)개의 맛집"
+        setMarkers()
+    }
+
+    override func presentBlameViewController() {
+        let createReviewController = BlameViewController(targetId: 123, blameTarget: "Member")
+        let navigationController = UINavigationController(rootViewController: createReviewController)
+        DispatchQueue.main.async {
+            self.present(navigationController, animated: true)
+        }
+    }
+
+    override func currentLocation() {
+        guard let univ = UserDefaultsManager.currentUniv else { return }
+
+        mapView.setRegion(
+            MKCoordinateRegion(
+                center: CLLocationCoordinate2D(latitude: univ.y, longitude: univ.x),
+                span: MKCoordinateSpan(latitudeDelta: 0.02, longitudeDelta: 0.02)
+            ),
+            animated: true
+        )
+    }
 }
 
 extension UnivViewController: SearchUnivViewControllerDelegate {
@@ -61,5 +97,7 @@ extension UnivViewController: SearchUnivViewControllerDelegate {
         self.univ = univ
         univTitleButton.label.text = univ.name
         UserDefaultsManager.currentUniv = univ
+        currentLocation()
+        loadData()
     }
 }

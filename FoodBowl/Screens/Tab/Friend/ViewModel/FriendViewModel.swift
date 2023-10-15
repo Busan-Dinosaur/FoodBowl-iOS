@@ -16,7 +16,7 @@ final class FriendViewModel {
     private let providerFollow = MoyaProvider<FollowAPI>()
 }
 
-// MARK: - Get reviews and stores
+// MARK: - Get Friends's Reviews and Stores
 extension FriendViewModel {
     func getReviews(location: CustomLocation) async -> [Review] {
         let response = await providerReview.request(
