@@ -18,7 +18,7 @@ final class CreateReviewViewModel {
     private let providerReview = MoyaProvider<ReviewAPI>()
 
     func createReview() async {
-        let imagesData = reviewImages.map { $0.jpegData(compressionQuality: 0.5)! }
+        let imagesData = reviewImages.map { $0.jpegData(compressionQuality: 0.3)! }
         let response = await providerReview.request(.createReview(request: reviewRequest, images: imagesData))
         switch response {
         case .success:

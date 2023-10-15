@@ -46,7 +46,7 @@ extension ProfileViewModel {
     }
 
     func updateMembeProfileImage(image: UIImage) async {
-        guard let imageData = image.jpegData(compressionQuality: 0.5) else { return }
+        guard let imageData = image.jpegData(compressionQuality: 0.1) else { return }
         let response = await providerMember.request(.updateMemberProfileImage(image: imageData))
         switch response {
         case .success:
