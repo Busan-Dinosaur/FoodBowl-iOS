@@ -79,6 +79,6 @@ final class UserInfoView: UIButton {
             userImageView.kf.setImage(with: URL(string: url))
         }
         userNameLabel.text = member.nickname
-        userFollowerLabel.text = "\(member.followerCount)"
+        userFollowerLabel.text = "팔로워 \(member.followerCount.prettyNumber)"
     }
 }

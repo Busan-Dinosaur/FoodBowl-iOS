@@ -146,6 +146,8 @@
 		CBE6190F296C6435005295AF /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBE6190E296C6435005295AF /* MapViewController.swift */; };
 		CBE61911296C6804005295AF /* OptionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBE61910296C6804005295AF /* OptionButton.swift */; };
 		CBE61913296C68D9005295AF /* PlusButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBE61912296C68D9005295AF /* PlusButton.swift */; };
+		CBEB005E2ADC2F8200F6EFED /* Double+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBEB005D2ADC2F8200F6EFED /* Double+Extension.swift */; };
+		CBEB00602ADC30AC00F6EFED /* Int+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBEB005F2ADC30AC00F6EFED /* Int+Extension.swift */; };
 		CBF617622A6FD94900452B7B /* GrabbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF617612A6FD94900452B7B /* GrabbarView.swift */; };
 		CBFB52552977B9240049E8BA /* StoreDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBFB52542977B9240049E8BA /* StoreDetailViewController.swift */; };
 		CBFB52612977C9AB0049E8BA /* FindResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBFB52602977C9AB0049E8BA /* FindResultViewController.swift */; };
@@ -284,6 +286,8 @@
 		CBE6190E296C6435005295AF /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		CBE61910296C6804005295AF /* OptionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionButton.swift; sourceTree = "<group>"; };
 		CBE61912296C68D9005295AF /* PlusButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlusButton.swift; sourceTree = "<group>"; };
+		CBEB005D2ADC2F8200F6EFED /* Double+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Extension.swift"; sourceTree = "<group>"; };
+		CBEB005F2ADC30AC00F6EFED /* Int+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Extension.swift"; sourceTree = "<group>"; };
 		CBF617612A6FD94900452B7B /* GrabbarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrabbarView.swift; sourceTree = "<group>"; };
 		CBFB52542977B9240049E8BA /* StoreDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreDetailViewController.swift; sourceTree = "<group>"; };
 		CBFB52602977C9AB0049E8BA /* FindResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindResultViewController.swift; sourceTree = "<group>"; };
@@ -658,6 +662,8 @@
 				CBD1B5FD2982F19300B0AD51 /* UIButton+Extension.swift */,
 				CBA7F183297DBB01006088A0 /* YPImagePicker+Extension.swift */,
 				CBB12B132985845900AC0EF2 /* String+Extension.swift */,
+				CBEB005F2ADC30AC00F6EFED /* Int+Extension.swift */,
+				CBEB005D2ADC2F8200F6EFED /* Double+Extension.swift */,
 				CB40C6F92A83E916003E3F06 /* MoyaProvider+Extensions.swift */,
 			);
 			path = Extensions;
@@ -1168,6 +1174,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CB1579092AACCFCB00007183 /* CreateReviewRequest.swift in Sources */,
+				CBEB00602ADC30AC00F6EFED /* Int+Extension.swift in Sources */,
 				CB73E00E2AB5F6BF005B6BF1 /* SearchStoreViewController.swift in Sources */,
 				CBC1586E2AD81A8400FD263B /* FriendViewModel.swift in Sources */,
 				CBFB52612977C9AB0049E8BA /* FindResultViewController.swift in Sources */,
@@ -1281,6 +1288,7 @@
 				CBC747B32A83D9F600F171F5 /* MemberAPI.swift in Sources */,
 				CB2E82432AA74DE30016820E /* MemberProfileResponse.swift in Sources */,
 				CBADC2D82955AC5900E56C93 /* FeedCollectionViewCell.swift in Sources */,
+				CBEB005E2ADC2F8200F6EFED /* Double+Extension.swift in Sources */,
 				CB5DD42F2AB587CD009FCB43 /* UserDefaultWrapper.swift in Sources */,
 				CBADC2AD2955A0FF00E56C93 /* ProfileViewController.swift in Sources */,
 				CBBA9F1B2AB5691900BE37AE /* DownButton.swift in Sources */,

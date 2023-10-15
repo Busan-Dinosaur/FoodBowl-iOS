@@ -76,7 +76,7 @@ final class StoreInfoView: UIView {
     func setupData(_ store: StoreByReview) {
         storeNameButton.setTitle(store.name, for: .normal)
         categoryLabel.text = store.categoryName
-        distanceLabel.text = "\(store.distance)"
+        distanceLabel.text = store.distance.prettyDistance
         bookmarkButton.isSelected = store.isBookmarked
     }
 }

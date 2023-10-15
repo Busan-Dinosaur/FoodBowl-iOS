@@ -67,7 +67,7 @@ final class UnivViewController: MapViewController {
     private func setupStores() async {
         guard let location = customLocation else { return }
         stores = await viewModel.getStores(location: location)
-        grabbarView.modalResultLabel.text = "\(stores.count)개의 맛집"
+        grabbarView.modalResultLabel.text = "\(stores.count.prettyNumber)개의 맛집"
         setMarkers()
     }
 
