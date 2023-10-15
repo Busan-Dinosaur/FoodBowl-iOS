@@ -18,6 +18,7 @@ struct CreateReviewRequest: Encodable {
     var category: String = ""
     var reviewContent: String = ""
     var schoolName: String?
+    var schoolAddress: String?
     var schoolX: Double?
     var schoolY: Double?
 }

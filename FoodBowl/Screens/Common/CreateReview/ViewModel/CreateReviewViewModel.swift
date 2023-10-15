@@ -48,21 +48,18 @@ final class CreateReviewViewModel {
     }
 
     private func searchUniv(store: Place) async -> Place? {
-        var univ: Place?
-
         let response = await providerKakao.request(.searchUniv(x: store.longitude, y: store.latitude))
-
         switch response {
         case .success(let result):
-            guard let data = try? result.map(PlaceResponse.self) else { return univ }
+            guard let data = try? result.map(PlaceResponse.self) else { return nil }
             if data.documents.count > 0 {
-                univ = data.documents[0]
+                return data.documents[0]
             }
+            return nil
         case .failure(let err):
             print(err.localizedDescription)
+            return nil
         }
-
-        return univ
     }
 
     private func getCategory(categoryName: String) -> String {
@@ -93,9 +90,11 @@ final class CreateReviewViewModel {
         reviewRequest.phone = store.phone
         reviewRequest.category = getCategory(categoryName: store.categoryName)
 
-        guard let univ = await searchUniv(store: store) else { return }
-        reviewRequest.schoolName = univ.placeName
-        reviewRequest.schoolX = Double(univ.longitude) ?? 0.0
-        reviewRequest.schoolY = Double(univ.latitude) ?? 0.0
+        if let univ = await searchUniv(store: store) {
+            reviewRequest.schoolName = univ.placeName
+            reviewRequest.schoolAddress = univ.addressName
+            reviewRequest.schoolX = Double(univ.longitude) ?? 0.0
+            reviewRequest.schoolY = Double(univ.latitude) ?? 0.0
+        }
     }
 }
