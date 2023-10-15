@@ -59,14 +59,9 @@ extension ProfileViewModel {
                 pageSize: nil
             )
         )
-
-        print(response)
-
         switch response {
         case .success(let result):
-            print("데이터야")
             guard let data = try? result.map(ReviewResponse.self) else { return [Review]() }
-            print(data)
             return data.reviews
         case .failure(let err):
             print(err.localizedDescription)

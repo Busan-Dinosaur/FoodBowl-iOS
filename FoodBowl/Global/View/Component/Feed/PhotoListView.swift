@@ -7,6 +7,7 @@
 
 import UIKit
 
+import Kingfisher
 import SnapKit
 import Then
 
@@ -21,6 +22,8 @@ final class PhotoListView: UIView {
             right: 20
         )
     }
+
+    private var photos = [String]()
 
     // MARK: - property
     private let collectionViewFlowLayout = UICollectionViewFlowLayout().then {
@@ -59,11 +62,16 @@ final class PhotoListView: UIView {
             $0.height.equalTo(100)
         }
     }
+
+    func setupData(_ photos: [String]) {
+        self.photos = photos
+        listCollectionView.reloadData()
+    }
 }
 
 extension PhotoListView: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_: UICollectionView, numberOfItemsInSection _: Int) -> Int {
-        return 5
+        return photos.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -73,6 +81,9 @@ extension PhotoListView: UICollectionViewDataSource, UICollectionViewDelegate {
         ) as? PhotoCollectionViewCell else {
             return UICollectionViewCell()
         }
+
+        cell.foodImageView.kf.setImage(with: URL(string: photos[indexPath.item]))
+
         return cell
     }
 

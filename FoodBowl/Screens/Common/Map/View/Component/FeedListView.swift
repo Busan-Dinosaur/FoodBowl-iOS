@@ -51,7 +51,9 @@ final class FeedListView: ModalView {
         listCollectionView.refreshControl = refreshControl
     }
 
-    func loadData() {}
+    func loadData() {
+        print("새로고침중")
+    }
 }
 
 extension FeedListView {
@@ -64,7 +66,9 @@ extension FeedListView {
         }
     }
 
-    private func didScrollToBottom() {}
+    private func didScrollToBottom() {
+        print("바닥")
+    }
 }
 
 // MARK: - UICollectionViewDataSource, UICollectionViewDelegate
@@ -81,8 +85,16 @@ extension FeedListView: UICollectionViewDataSource, UICollectionViewDelegate {
             return UICollectionViewCell()
         }
 
+        let member = reviews[indexPath.item].writer
+        let review = reviews[indexPath.item].review
+        let store = reviews[indexPath.item].store
+
+        cell.userInfoView.setupData(member)
+        cell.setupData(review)
+        cell.storeInfoView.setupData(store)
+
         cell.userButtonTapAction = { [weak self] _ in
-            let profileViewController = ProfileViewController(isOwn: false, memberId: 123)
+            let profileViewController = ProfileViewController(isOwn: false, memberId: member.id)
             self?.parentViewController?.navigationController?.pushViewController(profileViewController, animated: true)
         }
 
@@ -116,7 +128,7 @@ extension FeedListView: UICollectionViewDataSource, UICollectionViewDelegate {
 
         cell.storeButtonTapAction = { [weak self] _ in
             let storeDetailViewController = StoreDetailViewController()
-            storeDetailViewController.title = "틈새라면"
+            storeDetailViewController.title = store.name
             self?.parentViewController?.navigationController?.pushViewController(storeDetailViewController, animated: true)
         }
 
@@ -125,8 +137,6 @@ extension FeedListView: UICollectionViewDataSource, UICollectionViewDelegate {
             cell.storeInfoView.bookmarkButton.isSelected.toggle()
         }
         cell.storeInfoView.bookmarkButton.isSelected = isBookmarked[indexPath.item]
-
-//        cell.commentLabel.text = reviews[indexPath.item].review.content
 
         return cell
     }

@@ -22,14 +22,17 @@ struct Page: Codable {
 // MARK: - Review
 struct Review: Codable {
     let writer: Writer
-//    let review: ReviewContent
+    let review: ReviewContent
     let store: StoreByReview
 }
 
 // MARK: - ReviewContent
 struct ReviewContent: Codable {
     let id: Int
-    let content, imagePaths, createdAt, updatedAt: String
+    let content: String
+    let imagePaths: [String]
+    let createdAt: String
+    let updatedAt: String
 }
 
 // MARK: - StoreByReview

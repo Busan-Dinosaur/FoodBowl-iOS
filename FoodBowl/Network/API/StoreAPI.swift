@@ -54,11 +54,11 @@ extension StoreAPI: TargetType {
                 "x": form.x,
                 "y": form.y
             ]
-            
+
             if let size = form.size {
                 params["size"] = size
             }
-            
+
             return .requestParameters(
                 parameters: params,
                 encoding: URLEncoding.default

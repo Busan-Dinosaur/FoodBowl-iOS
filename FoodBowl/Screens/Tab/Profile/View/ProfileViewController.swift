@@ -68,7 +68,7 @@ final class ProfileViewController: MapViewController {
         super.viewWillAppear(animated)
         navigationController?.isNavigationBarHidden = false
         Task {
-            await setMemberProfile()
+            await setupMember()
         }
     }
 
@@ -121,12 +121,12 @@ final class ProfileViewController: MapViewController {
 
     override func loadData() {
         Task {
-            await setReviews()
-            await setStores()
+            await setupReviews()
+            await setupStores()
         }
     }
 
-    private func setMemberProfile() async {
+    private func setupMember() async {
         if isOwn {
             member = UserDefaultsManager.currentUser
         } else {
@@ -144,13 +144,13 @@ final class ProfileViewController: MapViewController {
         }
     }
 
-    private func setReviews() async {
+    private func setupReviews() async {
         guard let location = customLocation else { return }
-        let reviews = await viewModel.getReviews(location: location, memberId: memberId)
-//        feedListView.listCollectionView.reloadData()
+        feedListView.reviews = await viewModel.getReviews(location: location, memberId: memberId)
+        feedListView.listCollectionView.reloadData()
     }
 
-    private func setStores() async {
+    private func setupStores() async {
         guard let location = customLocation else { return }
         stores = await viewModel.getStores(location: location, memberId: memberId)
         setMarkers()

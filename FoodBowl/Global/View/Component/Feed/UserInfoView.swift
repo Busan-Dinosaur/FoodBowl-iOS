@@ -73,4 +73,12 @@ final class UserInfoView: UIButton {
             $0.centerY.equalToSuperview()
         }
     }
+
+    func setupData(_ member: Writer) {
+        if let url = member.profileImageUrl {
+            userImageView.kf.setImage(with: URL(string: url))
+        }
+        userNameLabel.text = member.nickname
+        userFollowerLabel.text = "\(member.followerCount)"
+    }
 }

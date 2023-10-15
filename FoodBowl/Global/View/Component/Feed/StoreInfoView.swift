@@ -72,4 +72,11 @@ final class StoreInfoView: UIView {
     private func configureUI() {
         makeBorderLayer(color: .grey002)
     }
+
+    func setupData(_ store: StoreByReview) {
+        storeNameButton.setTitle(store.name, for: .normal)
+        categoryLabel.text = store.categoryName
+        distanceLabel.text = "\(store.distance)"
+        bookmarkButton.isSelected = store.isBookmarked
+    }
 }
