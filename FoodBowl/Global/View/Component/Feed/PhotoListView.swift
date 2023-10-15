@@ -25,6 +25,7 @@ final class PhotoListView: UIView {
 
     var photos: [String] = [] {
         didSet {
+            print(photos)
             listCollectionView.reloadData()
         }
     }
@@ -41,7 +42,6 @@ final class PhotoListView: UIView {
         $0.dataSource = self
         $0.delegate = self
         $0.showsVerticalScrollIndicator = false
-        $0.register(PhotoPlusCollectionViewCell.self, forCellWithReuseIdentifier: PhotoPlusCollectionViewCell.className)
         $0.register(PhotoCollectionViewCell.self, forCellWithReuseIdentifier: PhotoCollectionViewCell.className)
         $0.backgroundColor = .clear
         $0.showsHorizontalScrollIndicator = false
@@ -81,7 +81,9 @@ extension PhotoListView: UICollectionViewDataSource, UICollectionViewDelegate {
             return UICollectionViewCell()
         }
 
-        cell.foodImageView.kf.setImage(with: URL(string: photos[indexPath.item]))
+        if let url = URL(string: photos[indexPath.item]) {
+            cell.setupData(url)
+        }
 
         return cell
     }

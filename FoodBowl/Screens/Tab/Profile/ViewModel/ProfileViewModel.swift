@@ -70,15 +70,11 @@ extension ProfileViewModel {
         )
         switch response {
         case .success(let result):
-            guard let data = try? result.map(ReviewResponse.self) else { return [Review]() }
-            for review in data.reviews {
-                print("review-------------------------")
-                print(review.review.imagePaths)
-            }
+            guard let data = try? result.map(ReviewResponse.self) else { return [] }
             return data.reviews
         case .failure(let err):
             print(err.localizedDescription)
-            return [Review]()
+            return []
         }
     }
 
@@ -86,11 +82,11 @@ extension ProfileViewModel {
         let response = await providerStore.request(.getStoresByMember(form: location, memberId: memberId))
         switch response {
         case .success(let result):
-            guard let data = try? result.map(StoreResponse.self) else { return [Store]() }
+            guard let data = try? result.map(StoreResponse.self) else { return [] }
             return data.stores
         case .failure(let err):
             print(err.localizedDescription)
-            return [Store]()
+            return []
         }
     }
 }

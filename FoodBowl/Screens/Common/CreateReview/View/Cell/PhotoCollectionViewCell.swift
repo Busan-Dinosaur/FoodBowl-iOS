@@ -31,4 +31,13 @@ final class PhotoCollectionViewCell: BaseCollectionViewCell {
         clipsToBounds = true
         makeBorderLayer(color: .grey002)
     }
+
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        foodImageView.image = nil
+    }
+
+    func setupData(_ imageURL: URL) {
+        foodImageView.kf.setImage(with: imageURL)
+    }
 }
