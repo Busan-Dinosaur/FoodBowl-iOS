@@ -31,6 +31,20 @@ final class UnivViewController: MapViewController {
         $0.label.text = "대학가"
     }
 
+    override func configureUI() {
+        super.configureUI()
+        feedListView.loadData = {
+            Task {
+                await self.setupReviews()
+            }
+        }
+        feedListView.reloadData = {
+            Task {
+                print("추가 데이터")
+            }
+        }
+    }
+
     override func setupNavigationBar() {
         super.setupNavigationBar()
         let leftOffsetUnivTitleButton = removeBarButtonItemOffset(with: univTitleButton, offsetX: 10)

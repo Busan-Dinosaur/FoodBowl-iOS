@@ -24,6 +24,16 @@ final class FriendViewController: MapViewController {
     override func configureUI() {
         super.configureUI()
         bookmarkButton.isHidden = false
+        feedListView.loadData = {
+            Task {
+                await self.setupReviews()
+            }
+        }
+        feedListView.reloadData = {
+            Task {
+                print("추가 데이터")
+            }
+        }
     }
 
     override func setupNavigationBar() {
