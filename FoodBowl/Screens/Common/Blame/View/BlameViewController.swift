@@ -57,6 +57,12 @@ final class BlameViewController: BaseViewController {
         $0.addAction(action, for: .touchUpInside)
     }
 
+    private let guideCommentLabel = UILabel().then {
+        $0.text = "신고 내용"
+        $0.font = .font(.regular, ofSize: 17)
+        $0.textColor = .mainTextColor
+    }
+
     lazy var commentTextView = UITextView().then {
         $0.textContainerInset = UIEdgeInsets(top: 12, left: 10, bottom: 12, right: 10)
         $0.font = UIFont.preferredFont(forTextStyle: .subheadline, weight: .light)
@@ -83,12 +89,18 @@ final class BlameViewController: BaseViewController {
     // MARK: - life cycle
     override func setupLayout() {
         view.addSubviews(
+            guideCommentLabel,
             commentTextView,
             completeButton
         )
 
+        guideCommentLabel.snp.makeConstraints {
+            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(20)
+            $0.leading.equalToSuperview().inset(BaseSize.horizantalPadding)
+        }
+
         commentTextView.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide)
+            $0.top.equalTo(guideCommentLabel.snp.bottom).offset(10)
             $0.leading.trailing.equalToSuperview().inset(BaseSize.horizantalPadding)
             $0.height.equalTo(100)
         }

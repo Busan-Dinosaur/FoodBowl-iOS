@@ -57,8 +57,6 @@ final class UpdateReviewViewController: BaseViewController {
         $0.addAction(action, for: .touchUpInside)
     }
 
-    private let selectedStoreView = SelectedStoreView()
-
     private let guideCommentLabel = UILabel().then {
         $0.text = "한줄평"
         $0.font = .font(.regular, ofSize: 17)
@@ -114,7 +112,6 @@ final class UpdateReviewViewController: BaseViewController {
     // MARK: - life cycle
     override func setupLayout() {
         view.addSubviews(
-            selectedStoreView,
             commentTextView,
             completeButton,
             guidePhotoLabel,
@@ -122,14 +119,8 @@ final class UpdateReviewViewController: BaseViewController {
             guideCommentLabel
         )
 
-        selectedStoreView.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide)
-            $0.leading.trailing.equalToSuperview().inset(BaseSize.horizantalPadding)
-            $0.height.equalTo(60)
-        }
-
         guideCommentLabel.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(80)
+            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(20)
             $0.leading.equalToSuperview().inset(BaseSize.horizantalPadding)
         }
 

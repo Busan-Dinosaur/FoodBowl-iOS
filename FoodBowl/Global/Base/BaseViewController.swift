@@ -37,23 +37,6 @@ class BaseViewController: UIViewController {
         $0.addAction(action, for: .touchUpInside)
     }
 
-    lazy var optionButton = OptionButton().then {
-        let optionButtonAction = UIAction { [weak self] _ in
-            let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-
-            let report = UIAlertAction(title: "신고", style: .destructive, handler: { _ in
-                self?.presentBlameViewController()
-            })
-            let cancel = UIAlertAction(title: "취소", style: .cancel, handler: nil)
-
-            alert.addAction(cancel)
-            alert.addAction(report)
-
-            self?.present(alert, animated: true, completion: nil)
-        }
-        $0.addAction(optionButtonAction, for: .touchUpInside)
-    }
-
     // MARK: - life cycle
     override func viewDidLoad() {
         super.viewDidLoad()

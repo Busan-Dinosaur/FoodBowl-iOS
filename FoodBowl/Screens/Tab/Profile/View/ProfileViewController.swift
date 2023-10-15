@@ -112,8 +112,6 @@ final class ProfileViewController: MapViewController {
             navigationItem.rightBarButtonItems = [settingButton, plusButton]
             profileHeaderView.followButton.isHidden = true
         } else {
-            let optionButton = makeBarButtonItem(with: optionButton)
-            navigationItem.rightBarButtonItem = optionButton
             if UserDefaultsManager.currentUser?.id ?? 0 == memberId {
                 profileHeaderView.followButton.isHidden = true
             }
