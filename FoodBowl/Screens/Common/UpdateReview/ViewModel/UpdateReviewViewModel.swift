@@ -10,11 +10,13 @@ import UIKit
 import Moya
 
 final class UpdateReviewViewModel {
-    var request = CreateReviewRequest()
-    var images = [UIImage]()
+    var reviewContent: String
+    var images: [String]
 
-    private let providerKakao = MoyaProvider<KakaoAPI>()
-    private let providerStore = MoyaProvider<StoreAPI>()
+    init(reviewContent: String, images: [String]) {
+        self.reviewContent = reviewContent
+        self.images = images
+    }
 
     func updateReview() async {}
 }

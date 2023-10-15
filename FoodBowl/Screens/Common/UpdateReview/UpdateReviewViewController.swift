@@ -23,6 +23,8 @@ final class UpdateReviewViewController: BaseViewController {
         )
     }
 
+    private var images = [UIImage]()
+
     private let textViewPlaceHolder = "100자 이내"
 
     private var viewModel: UpdateReviewViewModel
@@ -155,6 +157,11 @@ final class UpdateReviewViewController: BaseViewController {
         }
     }
 
+    override func configureUI() {
+        super.configureUI()
+        commentTextView.text = viewModel.reviewContent
+    }
+
     override func setupNavigationBar() {
         let editFeedGuideLabel = makeBarButtonItem(with: editFeedGuideLabel)
         let closeButton = makeBarButtonItem(with: closeButton)
@@ -171,7 +178,7 @@ final class UpdateReviewViewController: BaseViewController {
     }
 
     private func tappedCompleteButton() {
-        if viewModel.request.reviewContent == "" {
+        if viewModel.reviewContent == "" {
             showAlert(message: "한줄평을 작성하지 않았습니다.")
             return
         }
@@ -199,7 +206,7 @@ extension UpdateReviewViewController: UITextViewDelegate {
     }
 
     func textViewDidChange(_ textView: UITextView) {
-        viewModel.request.reviewContent = textView.text
+        viewModel.reviewContent = textView.text
     }
 }
 
@@ -235,7 +242,7 @@ extension UpdateReviewViewController {
                         return nil
                     }
                 }
-                self.viewModel.images = images
+                self.images = images
                 self.listCollectionView.reloadData()
             }
             picker.dismiss(animated: true, completion: nil)
@@ -267,7 +274,7 @@ extension UpdateReviewViewController: UICollectionViewDataSource, UICollectionVi
                 return UICollectionViewCell()
             }
 
-            cell.foodImageView.image = viewModel.images[indexPath.item - 1]
+            cell.foodImageView.image = images[indexPath.item - 1]
 
             return cell
         }

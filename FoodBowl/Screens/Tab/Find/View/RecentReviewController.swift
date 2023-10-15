@@ -105,21 +105,21 @@ extension RecentReviewController: UICollectionViewDataSource, UICollectionViewDe
         cell.optionButtonTapAction = { [weak self] _ in
             let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
 
-            let edit = UIAlertAction(title: "수정", style: .default, handler: { _ in
-                let viewModel = UpdateReviewViewModel()
-                let updateReviewViewController = UpdateReviewViewController(viewModel: viewModel)
-                let navigationController = UINavigationController(rootViewController: updateReviewViewController)
-                navigationController.modalPresentationStyle = .fullScreen
-                DispatchQueue.main.async {
-                    self?.present(navigationController, animated: true)
-                }
-            })
+//            let edit = UIAlertAction(title: "수정", style: .default, handler: { _ in
+//                let viewModel = UpdateReviewViewModel(content: review.content, images: review.imagePaths)
+//                let updateReviewViewController = UpdateReviewViewController(viewModel: viewModel)
+//                let navigationController = UINavigationController(rootViewController: updateReviewViewController)
+//                navigationController.modalPresentationStyle = .fullScreen
+//                DispatchQueue.main.async {
+//                    self?.present(navigationController, animated: true)
+//                }
+//            })
             let report = UIAlertAction(title: "신고", style: .destructive, handler: { _ in
                 self?.presentBlameViewController()
             })
             let cancel = UIAlertAction(title: "취소", style: .cancel, handler: nil)
 
-            alert.addAction(edit)
+//            alert.addAction(edit)
             alert.addAction(cancel)
             alert.addAction(report)
 

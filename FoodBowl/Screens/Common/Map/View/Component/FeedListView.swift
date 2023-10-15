@@ -104,7 +104,7 @@ extension FeedListView: UICollectionViewDataSource, UICollectionViewDelegate {
 
             if isOwn {
                 let edit = UIAlertAction(title: "수정", style: .default, handler: { _ in
-                    let viewModel = UpdateReviewViewModel()
+                    let viewModel = UpdateReviewViewModel(reviewContent: review.content, images: review.imagePaths)
                     let updateReviewViewController = UpdateReviewViewController(viewModel: viewModel)
                     let navigationController = UINavigationController(rootViewController: updateReviewViewController)
                     navigationController.modalPresentationStyle = .fullScreen
