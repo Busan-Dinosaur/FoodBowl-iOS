@@ -87,65 +87,93 @@ extension ReviewAPI: TargetType {
                 encoding: URLEncoding.default
             )
         case .getReviewsBySchool(let form, let schoolId, let lastReviewId, let pageSize):
-            let params: [String: Any?] = [
+            var params: [String: Any] = [
                 "schoolId": schoolId,
-                "lastReviewId": lastReviewId,
                 "x": form.x,
                 "y": form.y,
                 "deltaX": form.deltaX,
                 "deltaY": form.deltaY,
                 "deviceX": form.deviceX,
-                "deviceY": form.deviceY,
-                "pageSize": pageSize
+                "deviceY": form.deviceY
             ]
+
+            if let lastReviewId = lastReviewId {
+                params["lastReviewId"] = lastReviewId
+            }
+
+            if let pageSize = pageSize {
+                params["pageSize"] = pageSize
+            }
+
             return .requestParameters(
-                parameters: params as [String: Any],
+                parameters: params,
                 encoding: URLEncoding.default
             )
         case .getReviewsByMember(let form, let memberId, let lastReviewId, let pageSize):
-            let params: [String: Any?] = [
+            var params: [String: Any] = [
                 "memberId": memberId,
-                "lastReviewId": lastReviewId,
                 "x": form.x,
                 "y": form.y,
                 "deltaX": form.deltaX,
                 "deltaY": form.deltaY,
                 "deviceX": form.deviceX,
-                "deviceY": form.deviceY,
-                "pageSize": pageSize
+                "deviceY": form.deviceY
             ]
+
+            if let lastReviewId = lastReviewId {
+                params["lastReviewId"] = lastReviewId
+            }
+
+            if let pageSize = pageSize {
+                params["pageSize"] = pageSize
+            }
+
             return .requestParameters(
-                parameters: params as [String: Any],
+                parameters: params,
                 encoding: URLEncoding.default
             )
         case .getReviewsByFollowing(let form, let lastReviewId, let pageSize):
-            let params: [String: Any?] = [
-                "lastReviewId": lastReviewId,
+            var params: [String: Any] = [
                 "x": form.x,
                 "y": form.y,
                 "deltaX": form.deltaX,
                 "deltaY": form.deltaY,
                 "deviceX": form.deviceX,
-                "deviceY": form.deviceY,
-                "pageSize": pageSize
+                "deviceY": form.deviceY
             ]
+
+            if let lastReviewId = lastReviewId {
+                params["lastReviewId"] = lastReviewId
+            }
+
+            if let pageSize = pageSize {
+                params["pageSize"] = pageSize
+            }
+
             return .requestParameters(
-                parameters: params as [String: Any],
+                parameters: params,
                 encoding: URLEncoding.default
             )
         case .getReviewsByBookmark(let form, let lastReviewId, let pageSize):
-            let params: [String: Any?] = [
-                "lastReviewId": lastReviewId,
+            var params: [String: Any] = [
                 "x": form.x,
                 "y": form.y,
                 "deltaX": form.deltaX,
                 "deltaY": form.deltaY,
                 "deviceX": form.deviceX,
-                "deviceY": form.deviceY,
-                "pageSize": pageSize
+                "deviceY": form.deviceY
             ]
+
+            if let lastReviewId = lastReviewId {
+                params["lastReviewId"] = lastReviewId
+            }
+
+            if let pageSize = pageSize {
+                params["pageSize"] = pageSize
+            }
+
             return .requestParameters(
-                parameters: params as [String: Any],
+                parameters: params,
                 encoding: URLEncoding.default
             )
         }

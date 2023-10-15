@@ -126,7 +126,7 @@ extension FeedListView: UICollectionViewDataSource, UICollectionViewDelegate {
         }
         cell.storeInfoView.bookmarkButton.isSelected = isBookmarked[indexPath.item]
 
-        cell.commentLabel.text = reviews[indexPath.item].review.content
+//        cell.commentLabel.text = reviews[indexPath.item].review.content
 
         return cell
     }
