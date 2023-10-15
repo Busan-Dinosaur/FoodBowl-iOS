@@ -70,7 +70,7 @@ extension ReviewAPI: TargetType {
                 multipartFormData.append(
                     MultipartFormData(
                         provider: .data(image),
-                        name: "images[]",
+                        name: "images",
                         fileName: "\(request.storeName)_\(UUID().uuidString).jpg",
                         mimeType: "image/jpeg"
                     )

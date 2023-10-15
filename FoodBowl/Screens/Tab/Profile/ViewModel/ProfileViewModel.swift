@@ -71,6 +71,10 @@ extension ProfileViewModel {
         switch response {
         case .success(let result):
             guard let data = try? result.map(ReviewResponse.self) else { return [Review]() }
+            for review in data.reviews {
+                print("review-------------------------")
+                print(review.review.imagePaths)
+            }
             return data.reviews
         case .failure(let err):
             print(err.localizedDescription)

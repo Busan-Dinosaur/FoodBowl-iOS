@@ -24,8 +24,6 @@ final class FeedListView: ModalView {
 
     private var refreshControl = UIRefreshControl()
 
-    private lazy var isBookmarked = [Bool](repeating: false, count: 10)
-
     override func setupProperty() {
         collectionViewFlowLayout = DynamicHeightCollectionViewFlowLayout().then {
             $0.sectionInset = Size.collectionInset
@@ -137,10 +135,8 @@ extension FeedListView: UICollectionViewDataSource, UICollectionViewDelegate {
         }
 
         cell.bookmarkButtonTapAction = { [weak self] _ in
-            self?.isBookmarked[indexPath.item].toggle()
             cell.storeInfoView.bookmarkButton.isSelected.toggle()
         }
-        cell.storeInfoView.bookmarkButton.isSelected = isBookmarked[indexPath.item]
 
         return cell
     }
