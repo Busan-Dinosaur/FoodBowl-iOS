@@ -72,15 +72,37 @@ final class FeedNSCollectionViewCell: BaseCollectionViewCell {
 
     override func prepareForReuse() {
         super.prepareForReuse()
-        photoListView.isHidden = false
+        createPhotoList()
     }
 
     func setupData(_ review: ReviewContent) {
         commentLabel.text = review.content
         if review.imagePaths.isEmpty {
-            photoListView.isHidden = true
+            removePhotoList()
         } else {
             photoListView.photos = review.imagePaths
+        }
+    }
+
+    func createPhotoList() {
+        photoListView.isHidden = false
+
+        photoListView.snp.remakeConstraints {
+            $0.top.equalTo(commentLabel.snp.bottom)
+            $0.leading.trailing.equalToSuperview()
+            $0.bottom.equalToSuperview().inset(14)
+            $0.height.equalTo(100)
+        }
+    }
+
+    func removePhotoList() {
+        photoListView.isHidden = true
+
+        photoListView.snp.makeConstraints {
+            $0.top.equalTo(commentLabel.snp.bottom)
+            $0.leading.trailing.equalToSuperview()
+            $0.bottom.equalToSuperview().inset(14)
+            $0.height.equalTo(0)
         }
     }
 }

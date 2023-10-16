@@ -76,14 +76,16 @@ final class UnivViewController: MapViewController {
     private func setupReviews() async {
         guard let location = customLocation else { return }
         feedListView.reviews = await viewModel.getReviews(location: location)
-        feedListView.listCollectionView.reloadData()
     }
 
     private func setupStores() async {
         guard let location = customLocation else { return }
         stores = await viewModel.getStores(location: location)
-        grabbarView.modalResultLabel.text = "\(stores.count.prettyNumber)개의 맛집"
-        setMarkers()
+
+        DispatchQueue.main.async {
+            self.grabbarView.modalResultLabel.text = "\(self.stores.count.prettyNumber)개의 맛집"
+            self.setMarkers()
+        }
     }
 
     override func presentBlameViewController() {

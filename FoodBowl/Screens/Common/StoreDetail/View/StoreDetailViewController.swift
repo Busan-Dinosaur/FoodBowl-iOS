@@ -106,6 +106,10 @@ final class StoreDetailViewController: BaseViewController {
         isFriend.toggle()
 
         title = isFriend ? "친구들의 후기" : "모두의 후기"
+
+        Task {
+            await setupReviews()
+        }
     }
 
     private func setupRefreshControl() {

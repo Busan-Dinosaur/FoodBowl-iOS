@@ -68,9 +68,7 @@ final class ProfileViewController: MapViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.isNavigationBarHidden = false
-        Task {
-            await setupMember()
-        }
+        setupMember()
     }
 
     override func setupLayout() {
@@ -137,30 +135,45 @@ final class ProfileViewController: MapViewController {
         }
     }
 
-    private func setupMember() async {
-        if isOwn {
-            member = UserDefaultsManager.currentUser
-        } else {
-            member = await viewModel.getMemberProfile(id: memberId)
+    private func setupMember() {
+        Task {
+            setUpMyProfile()
+            await setUpMemberProfile()
         }
-        guard let member = member else { return }
-        profileHeaderView.userInfoLabel.text = member.introduction
-        profileHeaderView.followerInfoButton.numberLabel.text = "\(member.followerCount)"
-        profileHeaderView.followingInfoButton.numberLabel.text = "\(member.followingCount)"
-        if let url = member.profileImageUrl {
-            profileHeaderView.userImageView.kf.setImage(with: URL(string: url))
-        }
+    }
 
+    private func setUpMyProfile() {
+        member = UserDefaultsManager.currentUser
         if isOwn {
-            userNicknameLabel.text = member.nickname
-            guard let member = await viewModel.getMemberProfile(id: memberId) else { return }
-            profileHeaderView.followerInfoButton.numberLabel.text = "\(member.followerCount)"
-            profileHeaderView.followingInfoButton.numberLabel.text = "\(member.followingCount)"
-            if let url = member.profileImageUrl {
-                profileHeaderView.userImageView.kf.setImage(with: URL(string: url))
+            DispatchQueue.main.async {
+                guard let member = self.member else { return }
+                self.userNicknameLabel.text = member.nickname
+                self.profileHeaderView.userInfoLabel.text = member.introduction
+                self.profileHeaderView.followerInfoButton.numberLabel.text = "\(member.followerCount)"
+                self.profileHeaderView.followingInfoButton.numberLabel.text = "\(member.followingCount)"
+                if let url = member.profileImageUrl {
+                    self.profileHeaderView.userImageView.kf.setImage(with: URL(string: url))
+                }
             }
-        } else {
-            title = member.nickname
+        }
+    }
+
+    private func setUpMemberProfile() async {
+        member = await viewModel.getMemberProfile(id: memberId)
+
+        DispatchQueue.main.async {
+            guard let member = self.member else { return }
+            self.userNicknameLabel.text = member.nickname
+            self.profileHeaderView.userInfoLabel.text = member.introduction
+            self.profileHeaderView.followerInfoButton.numberLabel.text = "\(member.followerCount)"
+            self.profileHeaderView.followingInfoButton.numberLabel.text = "\(member.followingCount)"
+            if let url = member.profileImageUrl {
+                self.profileHeaderView.userImageView.kf.setImage(with: URL(string: url))
+            }
+
+            if !self.isOwn {
+                self.title = member.nickname
+            }
         }
     }
 
@@ -172,8 +185,11 @@ final class ProfileViewController: MapViewController {
     private func setupStores() async {
         guard let location = customLocation else { return }
         stores = await viewModel.getStores(location: location, memberId: memberId)
-        grabbarView.modalResultLabel.text = "\(stores.count.prettyNumber)개의 맛집"
-        setMarkers()
+
+        DispatchQueue.main.async {
+            self.grabbarView.modalResultLabel.text = "\(self.stores.count.prettyNumber)개의 맛집"
+            self.setMarkers()
+        }
     }
 
     private func followUser() {

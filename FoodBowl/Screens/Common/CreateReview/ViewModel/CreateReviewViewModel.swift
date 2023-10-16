@@ -83,7 +83,7 @@ final class CreateReviewViewModel {
         self.store = store
         reviewRequest.locationId = store.id
         reviewRequest.storeName = store.placeName
-        reviewRequest.storeAddress = store.addressName
+        reviewRequest.storeAddress = store.roadAddressName
         reviewRequest.x = Double(store.longitude) ?? 0.0
         reviewRequest.y = Double(store.latitude) ?? 0.0
         reviewRequest.storeUrl = store.placeURL
@@ -92,7 +92,7 @@ final class CreateReviewViewModel {
 
         if let univ = await searchUniv(store: store) {
             reviewRequest.schoolName = univ.placeName
-            reviewRequest.schoolAddress = univ.addressName
+            reviewRequest.schoolAddress = univ.roadAddressName
             reviewRequest.schoolX = Double(univ.longitude) ?? 0.0
             reviewRequest.schoolY = Double(univ.latitude) ?? 0.0
         }
