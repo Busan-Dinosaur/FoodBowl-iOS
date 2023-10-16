@@ -11,11 +11,11 @@ final class ReviewToggleButton: UIButton {
     override var isSelected: Bool {
         didSet {
             if isSelected {
-                label.text = "친구만"
-                label.textColor = .mainPink
-            } else {
                 label.text = "모두"
                 label.textColor = .subTextColor
+            } else {
+                label.text = "친구만"
+                label.textColor = .mainPink
             }
         }
     }
@@ -23,8 +23,6 @@ final class ReviewToggleButton: UIButton {
     // MARK: - property
     private let label = UILabel().then {
         let label = UILabel()
-        $0.text = "친구만"
-        $0.textColor = .subTextColor
         $0.font = UIFont.preferredFont(forTextStyle: .subheadline, weight: .medium)
     }
 
@@ -57,7 +55,8 @@ final class ReviewToggleButton: UIButton {
     // MARK: - life cycle
     private func configureUI() {
         isSelected = true
-        label.textColor = .mainPink
+        label.text = "모두"
+        label.textColor = .subTextColor
         layer.cornerRadius = 4
         layer.borderColor = UIColor.grey002.cgColor
         layer.borderWidth = 1

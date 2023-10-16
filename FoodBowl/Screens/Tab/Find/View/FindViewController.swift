@@ -129,6 +129,10 @@ final class FindViewController: BaseViewController {
     }
 
     override func loadData() {
+        if searchText == "" {
+            return
+        }
+
         Task {
             if scope == 0 {
                 await self.searchStores(name: searchText)
