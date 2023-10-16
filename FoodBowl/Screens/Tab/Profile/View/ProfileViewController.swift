@@ -20,8 +20,8 @@ final class ProfileViewController: MapViewController {
 
     private var viewModel = ProfileViewModel()
 
-    init(memberId: Int = UserDefaultsManager.currentUser?.id ?? 0) {
-        self.isOwn = UserDefaultsManager.currentUser?.id ?? 0 == memberId
+    init(isOwn: Bool = false, memberId: Int = UserDefaultsManager.currentUser?.id ?? 0) {
+        self.isOwn = isOwn
         self.memberId = memberId
         super.init(nibName: nil, bundle: nil)
     }

@@ -91,10 +91,12 @@ final class CreateReviewViewModel {
         reviewRequest.category = getCategory(categoryName: store.categoryName)
 
         if let univ = await searchUniv(store: store) {
-            reviewRequest.schoolName = univ.placeName
-            reviewRequest.schoolAddress = univ.roadAddressName
-            reviewRequest.schoolX = Double(univ.longitude) ?? 0.0
-            reviewRequest.schoolY = Double(univ.latitude) ?? 0.0
+            if univ.placeName.contains("대학교") || univ.placeName.contains("캠퍼스") {
+                reviewRequest.schoolName = univ.placeName
+                reviewRequest.schoolAddress = univ.roadAddressName
+                reviewRequest.schoolX = Double(univ.longitude) ?? 0.0
+                reviewRequest.schoolY = Double(univ.latitude) ?? 0.0
+            }
         }
     }
 }
