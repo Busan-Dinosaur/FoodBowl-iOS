@@ -14,7 +14,7 @@ final class FindViewController: BaseViewController {
     private var viewModel = FindViewModel()
 
     private enum Size {
-        static let cellWidth: CGFloat = (UIScreen.main.bounds.size.width - 60) / 3
+        static let cellWidth: CGFloat = (BaseSize.fullWidth - 16) / 3
         static let cellHeight: CGFloat = cellWidth
         static let collectionInset = UIEdgeInsets(
             top: 0,
@@ -84,8 +84,8 @@ final class FindViewController: BaseViewController {
         $0.scrollDirection = .vertical
         $0.sectionInset = Size.collectionInset
         $0.itemSize = CGSize(width: Size.cellWidth, height: Size.cellHeight)
-        $0.minimumLineSpacing = 10
-        $0.minimumInteritemSpacing = 10
+        $0.minimumLineSpacing = 8
+        $0.minimumInteritemSpacing = 8
     }
 
     private lazy var listCollectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewFlowLayout).then {
