@@ -9,4 +9,5 @@ import Foundation
 
 struct RenewResponse: Decodable {
     let accessToken: String
+    let refreshToken: String
 }

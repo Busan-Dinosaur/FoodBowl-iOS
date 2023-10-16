@@ -10,10 +10,11 @@ import UIKit
 import Moya
 
 final class SignInViewModel {
-    private let provider = MoyaProvider<UserAPI>()
+    private let providerService = MoyaProvider<ServiceAPI>()
+    private let providerMember = MoyaProvider<MemberAPI>()
 
     func signIn(appleToken: String) async {
-        let response = await provider.request(.signIn(form: SignRequest(appleToken: appleToken)))
+        let response = await providerService.request(.signIn(request: SignRequest(appleToken: appleToken)))
         switch response {
         case .success(let result):
             guard let data = try? result.map(SignResponse.self) else { return }
@@ -26,7 +27,7 @@ final class SignInViewModel {
     }
 
     func getMyProfile() async {
-        let response = await provider.request(.getMyProfile)
+        let response = await providerMember.request(.getMyProfile)
         switch response {
         case .success(let result):
             guard let data = try? result.map(MemberProfileResponse.self) else { return }

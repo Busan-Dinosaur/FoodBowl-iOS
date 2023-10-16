@@ -9,24 +9,24 @@ import UIKit
 
 import Moya
 
-final class ProfileViewModel {
-    var userProfile: MemberProfileResponse?
+final class ProfileViewModel: BaseViewModel {}
 
-    private let provider = MoyaProvider<UserAPI>()
-
-    func getProfile(id: Int) async {
-        let response = await provider.request(.getMemberProfile(id: id))
+// MARK: - Get and Update Profile
+extension ProfileViewModel {
+    func getMemberProfile(id: Int) async -> MemberProfileResponse? {
+        let response = await providerMember.request(.getMemberProfile(id: id))
         switch response {
         case .success(let result):
-            guard let data = try? result.map(MemberProfileResponse.self) else { return }
-            userProfile = data
+            guard let data = try? result.map(MemberProfileResponse.self) else { return nil }
+            return data
         case .failure(let err):
             print(err.localizedDescription)
+            return nil
         }
     }
 
-    func updateProfile(profile: UpdateProfileRequest) async {
-        let response = await provider.request(.updateProfile(form: profile))
+    func updateMembeProfile(profile: UpdateMemberProfileRequest) async {
+        let response = await providerMember.request(.updateMemberProfile(request: profile))
         switch response {
         case .success:
             if var currentUser = UserDefaultsManager.currentUser {
@@ -36,6 +36,51 @@ final class ProfileViewModel {
             }
         case .failure(let err):
             print(err.localizedDescription)
+        }
+    }
+
+    func updateMembeProfileImage(image: UIImage) async {
+        guard let imageData = image.jpegData(compressionQuality: 0.1) else { return }
+        let response = await providerMember.request(.updateMemberProfileImage(image: imageData))
+        switch response {
+        case .success:
+            print("success")
+        case .failure(let err):
+            print(err.localizedDescription)
+        }
+    }
+}
+
+// MARK: - Get Reviews and Stores
+extension ProfileViewModel {
+    func getReviews(location: CustomLocation, memberId: Int) async -> [Review] {
+        let response = await providerReview.request(
+            .getReviewsByMember(
+                form: location,
+                memberId: memberId,
+                lastReviewId: nil,
+                pageSize: pageSize
+            )
+        )
+        switch response {
+        case .success(let result):
+            guard let data = try? result.map(ReviewResponse.self) else { return [] }
+            return data.reviews
+        case .failure(let err):
+            print(err.localizedDescription)
+            return []
+        }
+    }
+
+    func getStores(location: CustomLocation, memberId: Int) async -> [Store] {
+        let response = await providerStore.request(.getStoresByMember(form: location, memberId: memberId))
+        switch response {
+        case .success(let result):
+            guard let data = try? result.map(StoreResponse.self) else { return [] }
+            return data.stores
+        case .failure(let err):
+            print(err.localizedDescription)
+            return []
         }
     }
 }

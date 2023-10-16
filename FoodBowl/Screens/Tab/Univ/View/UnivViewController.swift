@@ -5,6 +5,7 @@
 //  Created by COBY_PRO on 2023/07/18.
 //
 
+import MapKit
 import UIKit
 
 import SnapKit
@@ -20,6 +21,7 @@ final class UnivViewController: MapViewController {
             let searchUnivViewController = SearchUnivViewController()
             searchUnivViewController.delegate = self
             let navigationController = UINavigationController(rootViewController: searchUnivViewController)
+            navigationController.modalPresentationStyle = .fullScreen
             DispatchQueue.main.async {
                 self?.present(navigationController, animated: true)
             }
@@ -29,18 +31,18 @@ final class UnivViewController: MapViewController {
         $0.label.text = "대학가"
     }
 
-    init() {
-        super.init(nibName: nil, bundle: nil)
-        self.modalView = FeedListView()
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
     override func configureUI() {
         super.configureUI()
-        grabbarView.modalResultLabel.text = "4개의 맛집"
+        feedListView.loadData = {
+            Task {
+                await self.setupReviews()
+            }
+        }
+        feedListView.reloadData = {
+            Task {
+                print("추가 데이터")
+            }
+        }
     }
 
     override func setupNavigationBar() {
@@ -63,6 +65,49 @@ final class UnivViewController: MapViewController {
         super.viewWillAppear(animated)
         univTitleButton.label.text = univ?.name ?? "대학가"
     }
+
+    override func loadData() {
+        Task {
+            await setupReviews()
+            await setupStores()
+        }
+    }
+
+    private func setupReviews() async {
+        guard let location = customLocation else { return }
+        feedListView.reviews = await viewModel.getReviews(location: location)
+    }
+
+    private func setupStores() async {
+        guard let location = customLocation else { return }
+        stores = await viewModel.getStores(location: location)
+
+        DispatchQueue.main.async {
+            self.grabbarView.modalResultLabel.text = "\(self.stores.count.prettyNumber)개의 맛집"
+            self.setMarkers()
+        }
+    }
+
+    override func presentBlameViewController() {
+        let createReviewController = BlameViewController(targetId: 123, blameTarget: "Member")
+        let navigationController = UINavigationController(rootViewController: createReviewController)
+        navigationController.modalPresentationStyle = .fullScreen
+        DispatchQueue.main.async {
+            self.present(navigationController, animated: true)
+        }
+    }
+
+    override func currentLocation() {
+        guard let univ = UserDefaultsManager.currentUniv else { return }
+
+        mapView.setRegion(
+            MKCoordinateRegion(
+                center: CLLocationCoordinate2D(latitude: univ.y, longitude: univ.x),
+                span: MKCoordinateSpan(latitudeDelta: 0.02, longitudeDelta: 0.02)
+            ),
+            animated: true
+        )
+    }
 }
 
 extension UnivViewController: SearchUnivViewControllerDelegate {
@@ -70,5 +115,7 @@ extension UnivViewController: SearchUnivViewControllerDelegate {
         self.univ = univ
         univTitleButton.label.text = univ.name
         UserDefaultsManager.currentUniv = univ
+        currentLocation()
+        loadData()
     }
 }

@@ -17,6 +17,7 @@ struct School: Codable {
     let name: String
     let x: Double
     let y: Double
+    let address: String
 
     var distance: String {
         guard let currentLoc = LocationManager.shared.manager.location else { return "" }

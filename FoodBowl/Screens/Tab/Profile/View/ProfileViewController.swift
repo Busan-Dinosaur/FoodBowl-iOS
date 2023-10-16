@@ -9,18 +9,21 @@ import MapKit
 import MessageUI
 import UIKit
 
+import Kingfisher
 import SnapKit
 import Then
 
 final class ProfileViewController: MapViewController {
     private var isOwn: Bool
+    private var memberId: Int
+    private var member: MemberProfileResponse?
 
     private var viewModel = ProfileViewModel()
 
-    init(isOwn: Bool) {
+    init(isOwn: Bool = false, memberId: Int = UserDefaultsManager.currentUser?.id ?? 0) {
         self.isOwn = isOwn
+        self.memberId = memberId
         super.init(nibName: nil, bundle: nil)
-        self.modalView = FeedListView()
     }
 
     required init?(coder _: NSCoder) {
@@ -37,15 +40,15 @@ final class ProfileViewController: MapViewController {
 
     private lazy var profileHeaderView = ProfileHeaderView().then {
         let followerAction = UIAction { [weak self] _ in
-            let followerViewController = FollowerViewController()
+            let followerViewController = FollowerViewController(memberId: self?.memberId ?? 0)
             self?.navigationController?.pushViewController(followerViewController, animated: true)
         }
         let followingAction = UIAction { [weak self] _ in
-            let followingViewController = FollowingViewController()
+            let followingViewController = FollowingViewController(memberId: self?.memberId ?? 0)
             self?.navigationController?.pushViewController(followingViewController, animated: true)
         }
         let followButtonAction = UIAction { [weak self] _ in
-            self?.followUser()
+            self?.followButtonTapped()
         }
         let editButtonAction = UIAction { [weak self] _ in
             let updateProfileViewController = UpdateProfileViewController()
@@ -65,34 +68,7 @@ final class ProfileViewController: MapViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.isNavigationBarHidden = false
-
-        Task {
-            if isOwn {
-                guard let user = UserDefaultsManager.currentUser else { return }
-                setupProfile(user: user)
-                await viewModel.getProfile(id: user.id)
-            } else {
-                await viewModel.getProfile(id: 1)
-            }
-            setupData()
-        }
-    }
-
-    private func setupProfile(user: MemberProfileResponse) {
-        profileHeaderView.userInfoLabel.text = user.introduction
-        profileHeaderView.followerInfoButton.numberLabel.text = "\(user.followerCount)"
-        profileHeaderView.followingInfoButton.numberLabel.text = "\(user.followingCount)"
-
-        if isOwn {
-            userNicknameLabel.text = user.nickname
-        } else {
-            title = user.nickname
-        }
-    }
-
-    private func setupData() {
-        guard let user = viewModel.userProfile else { return }
-        setupProfile(user: user)
+        setupMember()
     }
 
     override func setupLayout() {
@@ -121,8 +97,17 @@ final class ProfileViewController: MapViewController {
 
     override func configureUI() {
         super.configureUI()
-        modalMaxHeight = UIScreen.main.bounds.height - topPadding - navBarHeight - 180
-        grabbarView.modalResultLabel.text = "4개의 맛집"
+        modalMaxHeight = UIScreen.main.bounds.height - BaseSize.topAreaPadding - navBarHeight - 180
+        feedListView.loadData = {
+            Task {
+                await self.setupReviews()
+            }
+        }
+        feedListView.reloadData = {
+            Task {
+                print("추가 데이터")
+            }
+        }
     }
 
     override func setupNavigationBar() {
@@ -136,13 +121,94 @@ final class ProfileViewController: MapViewController {
             navigationItem.rightBarButtonItems = [settingButton, plusButton]
             profileHeaderView.followButton.isHidden = true
         } else {
-            let optionButton = makeBarButtonItem(with: optionButton)
-            navigationItem.rightBarButtonItem = optionButton
+            if UserDefaultsManager.currentUser?.id ?? 0 == memberId {
+                profileHeaderView.followButton.isHidden = true
+            }
             profileHeaderView.editButton.isHidden = true
         }
     }
 
-    private func followUser() {
-        profileHeaderView.followButton.isSelected.toggle()
+    override func loadData() {
+        Task {
+            await setupReviews()
+            await setupStores()
+        }
+    }
+
+    private func setupMember() {
+        Task {
+            setUpMyProfile()
+            await setUpMemberProfile()
+        }
+    }
+
+    private func setUpMyProfile() {
+        member = UserDefaultsManager.currentUser
+        if isOwn {
+            DispatchQueue.main.async {
+                guard let member = self.member else { return }
+                self.userNicknameLabel.text = member.nickname
+                self.profileHeaderView.userInfoLabel.text = member.introduction
+                self.profileHeaderView.followerInfoButton.numberLabel.text = "\(member.followerCount)"
+                self.profileHeaderView.followingInfoButton.numberLabel.text = "\(member.followingCount)"
+                if let url = member.profileImageUrl {
+                    self.profileHeaderView.userImageView.kf.setImage(with: URL(string: url))
+                }
+            }
+        }
+    }
+
+    private func setUpMemberProfile() async {
+        member = await viewModel.getMemberProfile(id: memberId)
+
+        DispatchQueue.main.async {
+            guard let member = self.member else { return }
+            self.userNicknameLabel.text = member.nickname
+            self.profileHeaderView.userInfoLabel.text = member.introduction
+            self.profileHeaderView.followerInfoButton.numberLabel.text = "\(member.followerCount)"
+            self.profileHeaderView.followingInfoButton.numberLabel.text = "\(member.followingCount)"
+            self.profileHeaderView.followButton.isSelected = member.isFollowing
+            if let url = member.profileImageUrl {
+                self.profileHeaderView.userImageView.kf.setImage(with: URL(string: url))
+            }
+
+            if !self.isOwn {
+                self.title = member.nickname
+            }
+        }
+    }
+
+    private func setupReviews() async {
+        guard let location = customLocation else { return }
+        feedListView.reviews = await viewModel.getReviews(location: location, memberId: memberId)
+    }
+
+    private func setupStores() async {
+        guard let location = customLocation else { return }
+        stores = await viewModel.getStores(location: location, memberId: memberId)
+
+        DispatchQueue.main.async {
+            self.grabbarView.modalResultLabel.text = "\(self.stores.count.prettyNumber)개의 맛집"
+            self.setMarkers()
+        }
+    }
+
+    private func followButtonTapped() {
+        Task {
+            if profileHeaderView.followButton.isSelected {
+                profileHeaderView.followButton.isSelected = await self.viewModel.unfollowMember(memberId: memberId)
+            } else {
+                profileHeaderView.followButton.isSelected = await self.viewModel.followMember(memberId: memberId)
+            }
+        }
+    }
+
+    override func presentBlameViewController() {
+        let createReviewController = BlameViewController(targetId: 123, blameTarget: "Member")
+        let navigationController = UINavigationController(rootViewController: createReviewController)
+        navigationController.modalPresentationStyle = .fullScreen
+        DispatchQueue.main.async {
+            self.present(navigationController, animated: true)
+        }
     }
 }

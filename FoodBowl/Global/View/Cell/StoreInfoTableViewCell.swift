@@ -50,4 +50,10 @@ final class StoreInfoTableViewCell: BaseTableViewCell {
     override func configureUI() {
         backgroundColor = .clear
     }
+
+    func setupData(_ store: StoreBySearch) {
+        storeNameLabel.text = store.storeName
+        storeFeedLabel.text = "\(store.reviewCount.prettyNumber)명이 후기를 남겼어요."
+        storeDistanceLabel.text = store.distance.prettyDistance
+    }
 }

@@ -12,8 +12,6 @@ import Moya
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
 
-    private let provider = MoyaProvider<UserAPI>()
-
     func scene(_ scene: UIScene, willConnectTo _: UISceneSession, options _: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
@@ -58,7 +56,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 }
 
 extension SceneDelegate {
-    func signOut() {
+    func logOut() {
         KeychainManager.clear()
         UserDefaultHandler.clearAllData()
         UserDefaultsManager.currentUser = nil
@@ -66,13 +64,14 @@ extension SceneDelegate {
     }
     
     func renewToken() {
-        let provider = MoyaProvider<UserAPI>()
-        provider.request(.renew) { response in
+        let providerService = MoyaProvider<ServiceAPI>()
+        providerService.request(.renew) { response in
             switch response {
             case .success(let result):
                 guard let data = try? result.map(RenewResponse.self) else { return }
                 KeychainManager.set(data.accessToken, for: .accessToken)
-    //            KeychainManager.set(data.refreshToken, for: .refreshToken)
+                KeychainManager.set(data.refreshToken, for: .refreshToken)
+                print(data.accessToken)
             case .failure(let err):
                 print(err.localizedDescription)
             }

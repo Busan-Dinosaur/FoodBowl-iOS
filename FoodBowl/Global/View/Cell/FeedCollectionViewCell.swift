@@ -12,7 +12,6 @@ import Then
 
 final class FeedCollectionViewCell: BaseCollectionViewCell {
     var userButtonTapAction: ((FeedCollectionViewCell) -> Void)?
-    var followButtonTapAction: ((FeedCollectionViewCell) -> Void)?
     var optionButtonTapAction: ((FeedCollectionViewCell) -> Void)?
     var storeButtonTapAction: ((FeedCollectionViewCell) -> Void)?
     var bookmarkButtonTapAction: ((FeedCollectionViewCell) -> Void)?
@@ -60,11 +59,7 @@ final class FeedCollectionViewCell: BaseCollectionViewCell {
     }
 
     override func configureUI() {
-        userInfoView.addAction(UIAction { _ in self.userButtonTapAction?(self) }, for: .touchUpInside)
-        userInfoView.followButton.addAction(UIAction { _ in self.followButtonTapAction?(self) }, for: .touchUpInside)
-        userInfoView.optionButton.addAction(UIAction { _ in self.optionButtonTapAction?(self) }, for: .touchUpInside)
-        storeInfoView.storeNameButton.addAction(UIAction { _ in self.storeButtonTapAction?(self) }, for: .touchUpInside)
-        storeInfoView.bookmarkButton.addAction(UIAction { _ in self.bookmarkButtonTapAction?(self) }, for: .touchUpInside)
+        setupAction()
     }
 
     override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes)
@@ -78,7 +73,49 @@ final class FeedCollectionViewCell: BaseCollectionViewCell {
             withHorizontalFittingPriority: .required,
             verticalFittingPriority: .fittingSizeLevel
         )
-        print(layoutAttributes)
         return layoutAttributes
+    }
+
+    private func setupAction() {
+        userInfoView.addAction(UIAction { _ in self.userButtonTapAction?(self) }, for: .touchUpInside)
+        userInfoView.optionButton.addAction(UIAction { _ in self.optionButtonTapAction?(self) }, for: .touchUpInside)
+        storeInfoView.storeNameButton.addAction(UIAction { _ in self.storeButtonTapAction?(self) }, for: .touchUpInside)
+        storeInfoView.bookmarkButton.addAction(UIAction { _ in self.bookmarkButtonTapAction?(self) }, for: .touchUpInside)
+    }
+
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        createPhotoList()
+    }
+
+    func setupData(_ review: ReviewContent) {
+        commentLabel.text = review.content
+        if review.imagePaths.isEmpty {
+            removePhotoList()
+        } else {
+            photoListView.photos = review.imagePaths
+        }
+    }
+
+    func createPhotoList() {
+        photoListView.isHidden = false
+
+        storeInfoView.snp.remakeConstraints {
+            $0.top.equalTo(photoListView.snp.bottom).offset(10)
+            $0.leading.trailing.equalToSuperview().inset(BaseSize.horizantalPadding)
+            $0.bottom.equalToSuperview().inset(14)
+            $0.height.equalTo(54)
+        }
+    }
+
+    func removePhotoList() {
+        photoListView.isHidden = true
+
+        storeInfoView.snp.remakeConstraints {
+            $0.top.equalTo(commentLabel.snp.bottom).offset(10)
+            $0.leading.trailing.equalToSuperview().inset(BaseSize.horizantalPadding)
+            $0.bottom.equalToSuperview().inset(14)
+            $0.height.equalTo(54)
+        }
     }
 }

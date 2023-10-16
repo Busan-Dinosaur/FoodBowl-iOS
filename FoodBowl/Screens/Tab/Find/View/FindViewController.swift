@@ -11,8 +11,10 @@ import SnapKit
 import Then
 
 final class FindViewController: BaseViewController {
+    private var viewModel = FindViewModel()
+
     private enum Size {
-        static let cellWidth: CGFloat = (UIScreen.main.bounds.size.width - 60) / 3
+        static let cellWidth: CGFloat = (BaseSize.fullWidth - 16) / 3
         static let cellHeight: CGFloat = cellWidth
         static let collectionInset = UIEdgeInsets(
             top: 0,
@@ -24,9 +26,33 @@ final class FindViewController: BaseViewController {
 
     private lazy var isBookmarked = [Bool](repeating: false, count: 10)
 
-    private var stores = [Place]()
-    private var users = [MemberProfileResponse]()
-    private var scope: Int = 0
+    private var stores: [StoreBySearch] = [] {
+        didSet {
+            DispatchQueue.main.async {
+                self.findResultViewController.searchResultTableView.reloadData()
+            }
+        }
+    }
+
+    private var members: [Member] = [] {
+        didSet {
+            DispatchQueue.main.async {
+                self.findResultViewController.searchResultTableView.reloadData()
+            }
+        }
+    }
+
+    private var scope: Int = 0 {
+        didSet {
+            loadData()
+        }
+    }
+
+    private var searchText: String = "" {
+        didSet {
+            loadData()
+        }
+    }
 
     // MARK: - property
     private var refreshControl = UIRefreshControl()
@@ -58,8 +84,8 @@ final class FindViewController: BaseViewController {
         $0.scrollDirection = .vertical
         $0.sectionInset = Size.collectionInset
         $0.itemSize = CGSize(width: Size.cellWidth, height: Size.cellHeight)
-        $0.minimumLineSpacing = 10
-        $0.minimumInteritemSpacing = 10
+        $0.minimumLineSpacing = 8
+        $0.minimumInteritemSpacing = 8
     }
 
     private lazy var listCollectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewFlowLayout).then {
@@ -102,7 +128,19 @@ final class FindViewController: BaseViewController {
         listCollectionView.refreshControl = refreshControl
     }
 
-    private func loadData() {}
+    override func loadData() {
+        if searchText == "" {
+            return
+        }
+
+        Task {
+            if scope == 0 {
+                stores = await viewModel.serachStores(name: searchText)
+            } else {
+                members = await viewModel.searchMembers(name: searchText)
+            }
+        }
+    }
 }
 
 extension FindViewController {
@@ -121,6 +159,7 @@ extension FindViewController {
 extension FindViewController: UISearchResultsUpdating, UISearchBarDelegate {
     func updateSearchResults(for searchController: UISearchController) {
         guard let text = searchController.searchBar.text?.lowercased() else { return }
+        searchText = text
     }
 
     func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
@@ -155,7 +194,11 @@ extension FindViewController: UICollectionViewDataSource, UICollectionViewDelega
 
 extension FindViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
-        return 5
+        if scope == 0 {
+            stores.count
+        } else {
+            members.count
+        }
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -167,10 +210,8 @@ extension FindViewController: UITableViewDataSource, UITableViewDelegate {
                 return UITableViewCell()
             }
 
-            cell.storeNameLabel.text = "가게이름"
-            cell.storeFeedLabel.text = "100명이 후기를 남겼습니다."
-            cell.storeDistanceLabel.text = "10km"
             cell.selectionStyle = .none
+            cell.setupData(stores[indexPath.item])
 
             return cell
         } else {
@@ -181,10 +222,27 @@ extension FindViewController: UITableViewDataSource, UITableViewDelegate {
                 return UITableViewCell()
             }
 
-            cell.followButtonTapAction = { _ in
-                cell.followButton.isSelected.toggle()
-            }
+            let member = members[indexPath.item]
+
             cell.selectionStyle = .none
+            cell.setupData(member)
+
+            if member.isMe {
+                cell.followButton.isHidden = true
+            } else {
+                cell.followButton.isHidden = false
+                cell.followButton.isSelected = member.isFollowing
+                cell.followButtonTapAction = { [weak self] _ in
+                    Task {
+                        guard let self = self else { return }
+                        if cell.followButton.isSelected {
+                            cell.followButton.isSelected = await self.viewModel.unfollowMember(memberId: member.memberId)
+                        } else {
+                            cell.followButton.isSelected = await self.viewModel.followMember(memberId: member.memberId)
+                        }
+                    }
+                }
+            }
 
             return cell
         }
@@ -194,16 +252,15 @@ extension FindViewController: UITableViewDataSource, UITableViewDelegate {
         return 64
     }
 
-    func tableView(_: UITableView, didSelectRowAt _: IndexPath) {
+    func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
         if scope == 0 {
-            let storeDetailViewController = StoreDetailViewController()
-            storeDetailViewController.title = "틈새라면"
+            let storeDetailViewController = StoreDetailViewController(storeId: stores[indexPath.item].storeId)
+            storeDetailViewController.title = stores[indexPath.item].storeName
             DispatchQueue.main.async { [weak self] in
                 self?.navigationController?.pushViewController(storeDetailViewController, animated: true)
             }
         } else {
-            let profileViewController = ProfileViewController(isOwn: false)
-            profileViewController.title = "초코비"
+            let profileViewController = ProfileViewController(memberId: members[indexPath.item].memberId)
             DispatchQueue.main.async { [weak self] in
                 self?.navigationController?.pushViewController(profileViewController, animated: true)
             }

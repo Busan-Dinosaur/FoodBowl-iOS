@@ -14,29 +14,29 @@ import SnapKit
 import Then
 
 class MapViewController: BaseViewController {
-    // 임시 마커 데이터
-    private var marks: [Marker]?
-
-    lazy var topPadding: CGFloat = {
-        let scenes = UIApplication.shared.connectedScenes
-        let windowScene = scenes.first as? UIWindowScene
-        let window = windowScene?.windows.first
-        let topPadding = window?.safeAreaInsets.top ?? 0
-        return topPadding
-    }()
+    var customLocation: CustomLocation?
+    var stores = [Store]()
+    var marks = [Marker]()
 
     let modalMinHeight: CGFloat = 40
     let modalMidHeight: CGFloat = UIScreen.main.bounds.height / 2 - 100
     lazy var tabBarHeight: CGFloat = tabBarController?.tabBar.frame.height ?? 0
     lazy var navBarHeight: CGFloat = navigationController?.navigationBar.frame.height ?? 0
-    lazy var modalMaxHeight: CGFloat = UIScreen.main.bounds.height - topPadding - navBarHeight - 120
+    lazy var modalMaxHeight: CGFloat = UIScreen.main.bounds.height - BaseSize.topAreaPadding - navBarHeight - 120
     var currentModalHeight: CGFloat = 0
-
     var categoryListHeight: CGFloat = 40
 
     private var panGesture = UIPanGestureRecognizer()
 
     // MARK: - property
+    lazy var settingButton = SettingButton().then {
+        let action = UIAction { [weak self] _ in
+            let settingViewController = SettingViewController()
+            self?.navigationController?.pushViewController(settingViewController, animated: true)
+        }
+        $0.addAction(action, for: .touchUpInside)
+    }
+
     lazy var mapView = MKMapView().then {
         $0.delegate = self
         $0.mapType = MKMapType.standard
@@ -69,7 +69,6 @@ class MapViewController: BaseViewController {
         $0.layer.borderWidth = 1
         $0.layer.cornerRadius = 10
         $0.layer.masksToBounds = true
-//        $0.tintColor = UIColor.mainPink
         let action = UIAction { [weak self] _ in
             self?.tappedBookMarkButton()
         }
@@ -80,7 +79,7 @@ class MapViewController: BaseViewController {
 
     let grabbarView = GrabbarView()
 
-    lazy var modalView: ModalView = .init()
+    lazy var feedListView: FeedListView = .init()
 
     // MARK: - life cycle
     override func viewDidLoad() {
@@ -88,11 +87,10 @@ class MapViewController: BaseViewController {
         configureUI()
         setupNavigationBar()
         currentLocation()
-        setMarkers()
     }
 
     override func setupLayout() {
-        view.addSubviews(mapView, categoryListView, trakingButton, bookmarkButton, grabbarView, modalView)
+        view.addSubviews(mapView, categoryListView, trakingButton, bookmarkButton, grabbarView, feedListView)
 
         mapView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide)
@@ -122,7 +120,7 @@ class MapViewController: BaseViewController {
             $0.height.equalTo(80)
         }
 
-        modalView.snp.makeConstraints {
+        feedListView.snp.makeConstraints {
             $0.top.equalTo(grabbarView.snp.bottom)
             $0.leading.trailing.bottom.equalToSuperview()
             $0.height.equalTo(modalMidHeight)
@@ -150,6 +148,69 @@ class MapViewController: BaseViewController {
         )
     }
 
+    func setMarkers() {
+        mapView.removeAnnotations(marks)
+
+        marks = stores.map { store in
+            Marker(
+                title: store.name,
+                subtitle: "\(store.reviewCount)개의 후기",
+                coordinate: CLLocationCoordinate2D(
+                    latitude: store.y,
+                    longitude: store.x
+                ),
+                glyphImage: ImageLiteral.korean,
+                handler: { [weak self] in
+                    let storeDetailViewController = StoreDetailViewController(storeId: store.id)
+                    storeDetailViewController.title = store.name
+                    self?.navigationController?.pushViewController(storeDetailViewController, animated: true)
+                }
+            )
+        }
+
+        mapView.addAnnotations(marks)
+    }
+
+    func tappedBookMarkButton() {
+        bookmarkButton.isSelected.toggle()
+    }
+}
+
+extension MapViewController: MKMapViewDelegate {
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        guard view is ClusterAnnotationView else { return }
+
+        let currentSpan = mapView.region.span
+        let zoomSpan = MKCoordinateSpan(
+            latitudeDelta: currentSpan.latitudeDelta / 3.0,
+            longitudeDelta: currentSpan.longitudeDelta / 3.0
+        )
+        let zoomCoordinate = view.annotation?.coordinate ?? mapView.region.center
+        let zoomed = MKCoordinateRegion(center: zoomCoordinate, span: zoomSpan)
+        mapView.setRegion(zoomed, animated: true)
+    }
+
+    func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
+        let center = mapView.centerCoordinate
+        let visibleMapRect = mapView.visibleMapRect
+        let topLeftCoordinate = MKMapPoint(x: visibleMapRect.minX, y: visibleMapRect.minY).coordinate
+        guard let currentLoc = LocationManager.shared.manager.location?.coordinate else { return }
+
+        customLocation = CustomLocation(
+            x: center.longitude,
+            y: center.latitude,
+            deltaX: abs(topLeftCoordinate.longitude - center.longitude),
+            deltaY: abs(topLeftCoordinate.latitude - center.latitude),
+            deviceX: currentLoc.longitude,
+            deviceY: currentLoc.latitude
+        )
+
+        loadData()
+    }
+}
+
+// MARK: - Control Modal
+extension MapViewController {
     @objc
     func handlePan(_ gesture: UIPanGestureRecognizer) {
         guard gesture.view != nil else { return }
@@ -165,7 +226,7 @@ class MapViewController: BaseViewController {
             modalMidState()
         }
 
-        modalView.snp.remakeConstraints {
+        feedListView.snp.remakeConstraints {
             $0.top.equalTo(grabbarView.snp.bottom)
             $0.leading.trailing.bottom.equalToSuperview()
             $0.height.equalTo(newModalHeight)
@@ -191,12 +252,12 @@ class MapViewController: BaseViewController {
                 initialSpringVelocity: 0.5,
                 options: .curveEaseInOut,
                 animations: {
-                    self.modalView.snp.updateConstraints {
+                    self.feedListView.snp.updateConstraints {
                         $0.top.equalTo(self.grabbarView.snp.bottom)
                         $0.leading.trailing.bottom.equalToSuperview()
                         $0.height.equalTo(self.currentModalHeight)
                     }
-                    self.modalView.superview?.layoutIfNeeded()
+                    self.feedListView.superview?.layoutIfNeeded()
                 }
             )
         }
@@ -204,79 +265,20 @@ class MapViewController: BaseViewController {
 
     func modalMinState() {
         grabbarView.showResult()
-        modalView.listCollectionView.isHidden = true
-        modalView.borderLineView.isHidden = true
+        feedListView.listCollectionView.isHidden = true
+        feedListView.borderLineView.isHidden = true
         tabBarController?.tabBar.frame.origin = CGPoint(x: 0, y: UIScreen.main.bounds.maxY)
     }
 
     func modalMidState() {
         grabbarView.showContent()
-        modalView.listCollectionView.isHidden = false
-        modalView.borderLineView.isHidden = false
+        feedListView.listCollectionView.isHidden = false
+        feedListView.borderLineView.isHidden = false
         tabBarController?.tabBar.frame.origin = CGPoint(x: 0, y: UIScreen.main.bounds.maxY - tabBarHeight)
         grabbarView.layer.cornerRadius = 15
     }
 
     func modalMaxState() {
         grabbarView.layer.cornerRadius = 0
-    }
-
-    func tappedBookMarkButton() {
-        bookmarkButton.isSelected.toggle()
-    }
-
-    // 임시 데이터
-    func setMarkers() {
-        guard let currentLoc = LocationManager.shared.manager.location else { return }
-
-        marks = [
-            Marker(
-                title: "홍대입구역 편의점",
-                subtitle: "3개의 후기",
-                coordinate: CLLocationCoordinate2D(
-                    latitude: currentLoc.coordinate.latitude + 0.001,
-                    longitude: currentLoc.coordinate.longitude + 0.001
-                ),
-                glyphImage: ImageLiteral.korean,
-                handler: { [weak self] in
-                    let storeDetailViewController = StoreDetailViewController()
-                    storeDetailViewController.title = "틈새라면"
-                    self?.navigationController?.pushViewController(storeDetailViewController, animated: true)
-                }
-            ),
-            Marker(
-                title: "홍대입구역 서점",
-                subtitle: "123개의 후기",
-                coordinate: CLLocationCoordinate2D(
-                    latitude: currentLoc.coordinate.latitude + 0.001,
-                    longitude: currentLoc.coordinate.longitude + 0.002
-                ),
-                glyphImage: ImageLiteral.salad,
-                handler: { [weak self] in
-                    let storeDetailViewController = StoreDetailViewController()
-                    storeDetailViewController.title = "틈새라면"
-                    self?.navigationController?.pushViewController(storeDetailViewController, animated: true)
-                }
-            )
-        ]
-
-        marks?.forEach { mark in
-            mapView.addAnnotation(mark)
-        }
-    }
-}
-
-extension MapViewController: MKMapViewDelegate {
-    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-        guard view is ClusterAnnotationView else { return }
-
-        let currentSpan = mapView.region.span
-        let zoomSpan = MKCoordinateSpan(
-            latitudeDelta: currentSpan.latitudeDelta / 3.0,
-            longitudeDelta: currentSpan.longitudeDelta / 3.0
-        )
-        let zoomCoordinate = view.annotation?.coordinate ?? mapView.region.center
-        let zoomed = MKCoordinateRegion(center: zoomCoordinate, span: zoomSpan)
-        mapView.setRegion(zoomed, animated: true)
     }
 }

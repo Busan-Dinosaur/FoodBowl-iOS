@@ -8,11 +8,14 @@
 import MessageUI
 import UIKit
 
+import Lottie
 import SnapKit
 import Then
 
 class BaseViewController: UIViewController {
     // MARK: - property
+    var animationView: LottieAnimationView?
+
     private var activeTextField: UITextField?
 
     private lazy var backButton = BackButton().then {
@@ -25,37 +28,14 @@ class BaseViewController: UIViewController {
     lazy var plusButton = PlusButton().then {
         let action = UIAction { [weak self] _ in
             let createReviewController = CreateReviewController()
+            createReviewController.delegate = self
             let navigationController = UINavigationController(rootViewController: createReviewController)
+            navigationController.modalPresentationStyle = .fullScreen
             DispatchQueue.main.async {
                 self?.present(navigationController, animated: true)
             }
         }
         $0.addAction(action, for: .touchUpInside)
-    }
-
-    lazy var settingButton = SettingButton().then {
-        let action = UIAction { [weak self] _ in
-            let settingViewController = SettingViewController()
-            self?.navigationController?.pushViewController(settingViewController, animated: true)
-        }
-        $0.addAction(action, for: .touchUpInside)
-    }
-
-    lazy var optionButton = OptionButton().then {
-        let optionButtonAction = UIAction { [weak self] _ in
-            let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-
-            let report = UIAlertAction(title: "신고하기", style: .destructive, handler: { _ in
-                self?.sendReportMail()
-            })
-            let cancel = UIAlertAction(title: "취소", style: .cancel, handler: nil)
-
-            alert.addAction(cancel)
-            alert.addAction(report)
-
-            self?.present(alert, animated: true, completion: nil)
-        }
-        $0.addAction(optionButtonAction, for: .touchUpInside)
     }
 
     // MARK: - life cycle
@@ -66,6 +46,7 @@ class BaseViewController: UIViewController {
         setupBackButton()
         hidekeyboardWhenTappedAround()
         setupNavigationBar()
+        setupLottie()
 
         // Do any additional setup after loading the view.
         NotificationCenter.default.addObserver(
@@ -139,6 +120,35 @@ class BaseViewController: UIViewController {
         navigationController?.interactivePopGestureRecognizer?.delegate = self
     }
 
+    func loadData() {}
+
+    func setupLottie() {
+        animationView = .init(name: "loading")
+        animationView!.frame = view.bounds
+        animationView!.center = view.center
+        animationView!.contentMode = .scaleAspectFit
+        animationView!.loopMode = .loop
+        animationView!.play()
+        animationView!.isHidden = true
+
+        view.addSubview(animationView!)
+    }
+
+    func showDeleteAlert(completion: @escaping () -> Void) {
+        let alertController = UIAlertController(title: "삭제 여부", message: "정말로 삭제하시겠습니까?", preferredStyle: .alert)
+
+        let cancelAction = UIAlertAction(title: "취소", style: .cancel)
+
+        let deleteAction = UIAlertAction(title: "삭제", style: .destructive) { _ in
+            completion()
+        }
+
+        alertController.addAction(cancelAction)
+        alertController.addAction(deleteAction)
+
+        present(alertController, animated: true, completion: nil)
+    }
+
     // MARK: - func
     @objc
     func keyboardWillShow(notification: NSNotification) {
@@ -175,6 +185,8 @@ class BaseViewController: UIViewController {
         // ie. it will trigger a keyboardWillHide notification
         view.endEditing(true)
     }
+
+    func presentBlameViewController() {}
 }
 
 extension BaseViewController: UITextFieldDelegate {
@@ -199,35 +211,8 @@ extension BaseViewController: UIGestureRecognizerDelegate {
     }
 }
 
-extension BaseViewController: MFMailComposeViewControllerDelegate {
-    func sendReportMail() {
-        if MFMailComposeViewController.canSendMail() {
-            let composeVC = MFMailComposeViewController()
-            let emailAdress = "foodbowl5502@gmail.com"
-            let messageBody = """
-                내용을 작성해주세요.
-                """
-            guard let nickname = UserDefaultsManager.currentUser?.nickname else { return }
-
-            composeVC.mailComposeDelegate = self
-            composeVC.setToRecipients([emailAdress])
-            composeVC.setSubject("[풋볼] \(nickname)")
-            composeVC.setMessageBody(messageBody, isHTML: false)
-
-            present(composeVC, animated: true, completion: nil)
-        } else {
-            showSendMailErrorAlert()
-        }
-    }
-
-    private func showSendMailErrorAlert() {
-        let sendMailErrorAlert = UIAlertController(title: "메일 전송 실패", message: "이메일 설정을 확인하고 다시 시도해주세요.", preferredStyle: .alert)
-        let confirmAction = UIAlertAction(title: "확인", style: .default)
-        sendMailErrorAlert.addAction(confirmAction)
-        present(sendMailErrorAlert, animated: true, completion: nil)
-    }
-
-    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith _: MFMailComposeResult, error _: Error?) {
-        controller.dismiss(animated: true, completion: nil)
+extension BaseViewController: CreateReviewControllerDelegate {
+    func updateData() {
+        loadData()
     }
 }

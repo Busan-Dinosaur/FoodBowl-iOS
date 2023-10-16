@@ -7,6 +7,7 @@
 
 import UIKit
 
+import Kingfisher
 import SnapKit
 import Then
 
@@ -22,19 +23,26 @@ final class PhotoListView: UIView {
         )
     }
 
+    var photos: [String] = [] {
+        didSet {
+            DispatchQueue.main.async {
+                self.listCollectionView.reloadData()
+            }
+        }
+    }
+
     // MARK: - property
     private let collectionViewFlowLayout = UICollectionViewFlowLayout().then {
         $0.scrollDirection = .horizontal
         $0.sectionInset = Size.collectionInset
         $0.itemSize = CGSize(width: Size.cellWidth, height: Size.cellHeight)
-        $0.minimumInteritemSpacing = 4
+        $0.minimumLineSpacing = 4
     }
 
     private lazy var listCollectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewFlowLayout).then {
         $0.dataSource = self
         $0.delegate = self
         $0.showsVerticalScrollIndicator = false
-        $0.register(PhotoPlusCollectionViewCell.self, forCellWithReuseIdentifier: PhotoPlusCollectionViewCell.className)
         $0.register(PhotoCollectionViewCell.self, forCellWithReuseIdentifier: PhotoCollectionViewCell.className)
         $0.backgroundColor = .clear
         $0.showsHorizontalScrollIndicator = false
@@ -63,7 +71,7 @@ final class PhotoListView: UIView {
 
 extension PhotoListView: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_: UICollectionView, numberOfItemsInSection _: Int) -> Int {
-        return 5
+        return photos.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -73,6 +81,11 @@ extension PhotoListView: UICollectionViewDataSource, UICollectionViewDelegate {
         ) as? PhotoCollectionViewCell else {
             return UICollectionViewCell()
         }
+
+        if let url = URL(string: photos[indexPath.item]) {
+            cell.setupData(url)
+        }
+
         return cell
     }
 

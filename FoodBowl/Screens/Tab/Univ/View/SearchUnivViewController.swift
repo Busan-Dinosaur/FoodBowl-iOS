@@ -25,8 +25,8 @@ final class SearchUnivViewController: BaseViewController {
         $0.delegate = self
     }
 
-    private lazy var cancelButton = UIButton().then {
-        $0.setTitle("취소", for: .normal)
+    private lazy var closeButton = UIButton().then {
+        $0.setTitle("닫기", for: .normal)
         $0.setTitleColor(.mainPink, for: .normal)
         $0.titleLabel?.font = UIFont.preferredFont(forTextStyle: .headline, weight: .regular)
         let action = UIAction { [weak self] _ in
@@ -62,8 +62,8 @@ final class SearchUnivViewController: BaseViewController {
     }
 
     override func setupNavigationBar() {
-        let cancelButton = makeBarButtonItem(with: cancelButton)
-        navigationItem.rightBarButtonItem = cancelButton
+        let closeButton = makeBarButtonItem(with: closeButton)
+        navigationItem.rightBarButtonItem = closeButton
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: searchBar)
     }
 
@@ -85,7 +85,7 @@ extension SearchUnivViewController: UITableViewDataSource, UITableViewDelegate {
 
         cell.selectionStyle = .none
         cell.storeNameLabel.text = filteredSchools[indexPath.item].name
-        cell.storeAdressLabel.text = "어딘가"
+        cell.storeAdressLabel.text = filteredSchools[indexPath.item].address
         cell.storeDistanceLabel.text = filteredSchools[indexPath.item].distance
 
         return cell

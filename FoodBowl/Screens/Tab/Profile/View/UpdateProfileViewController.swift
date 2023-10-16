@@ -7,18 +7,16 @@
 
 import UIKit
 
+import Kingfisher
 import SnapKit
 import Then
 import YPImagePicker
 
 final class UpdateProfileViewController: BaseViewController {
-    private var profileImage: UIImage = ImageLiteral.defaultProfile
-
     private var viewModel = ProfileViewModel()
 
     // MARK: - property
     private lazy var profileImageView = UIImageView().then {
-        $0.image = profileImage
         $0.layer.cornerRadius = 50
         $0.layer.masksToBounds = true
         $0.layer.borderColor = UIColor.grey002.cgColor
@@ -73,28 +71,31 @@ final class UpdateProfileViewController: BaseViewController {
         $0.makeBorderLayer(color: .grey002)
     }
 
-    private lazy var completeButton = UIButton().then {
-        $0.setTitle("완료", for: .normal)
-        $0.setTitleColor(.mainPink, for: .normal)
-        $0.titleLabel?.font = UIFont.preferredFont(forTextStyle: .headline, weight: .regular)
-        let buttonAction = UIAction { [weak self] _ in
+    private lazy var completeButton = MainButton().then {
+        $0.label.text = "완료"
+        let action = UIAction { [weak self] _ in
             self?.tappedCompleteButton()
         }
-        $0.addAction(buttonAction, for: .touchUpInside)
+        $0.addAction(action, for: .touchUpInside)
+    }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setProfile()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        setupData()
+        tabBarController?.tabBar.isHidden = true
     }
 
-    private func setupData() {
-        nicknameField.text = UserDefaultsManager.currentUser?.nickname
-        userInfoField.text = UserDefaultsManager.currentUser?.introduction
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        tabBarController?.tabBar.isHidden = false
     }
 
     override func setupLayout() {
-        view.addSubviews(profileImageView, nicknameLabel, nicknameField, userInfoLabel, userInfoField)
+        view.addSubviews(profileImageView, nicknameLabel, nicknameField, userInfoLabel, userInfoField, completeButton)
 
         profileImageView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).inset(20)
@@ -123,13 +124,28 @@ final class UpdateProfileViewController: BaseViewController {
             $0.leading.trailing.equalToSuperview().inset(BaseSize.horizantalPadding)
             $0.height.equalTo(50)
         }
+
+        completeButton.snp.makeConstraints {
+            $0.leading.trailing.equalToSuperview().inset(BaseSize.horizantalPadding)
+            $0.bottom.equalToSuperview().inset(BaseSize.bottomPadding)
+            $0.height.equalTo(60)
+        }
     }
 
     override func setupNavigationBar() {
         super.setupNavigationBar()
-        let completeButton = makeBarButtonItem(with: completeButton)
-        navigationItem.rightBarButtonItem = completeButton
         title = "프로필 수정"
+    }
+
+    private func setProfile() {
+        nicknameField.text = UserDefaultsManager.currentUser?.nickname
+        userInfoField.text = UserDefaultsManager.currentUser?.introduction
+
+        if let url = UserDefaultsManager.currentUser?.profileImageUrl {
+            profileImageView.kf.setImage(with: URL(string: url))
+        } else {
+            profileImageView.image = ImageLiteral.defaultProfile
+        }
     }
 
     @objc
@@ -163,7 +179,6 @@ final class UpdateProfileViewController: BaseViewController {
                         return nil
                     }
                 }
-                self.profileImage = images[0]
                 self.profileImageView.image = images[0]
             }
             picker.dismiss(animated: true, completion: nil)
@@ -174,9 +189,14 @@ final class UpdateProfileViewController: BaseViewController {
     private func tappedCompleteButton() {
         if let nickname = nicknameField.text, let introduction = userInfoField.text {
             if nickname.count != 0 && introduction.count != 0 {
-                let updatedProfile = UpdateProfileRequest(nickname: nickname, introduction: introduction)
+                let updatedProfile = UpdateMemberProfileRequest(nickname: nickname, introduction: introduction)
                 Task {
-                    await viewModel.updateProfile(profile: updatedProfile)
+                    animationView!.isHidden = false
+                    await viewModel.updateMembeProfile(profile: updatedProfile)
+                    if let image = profileImageView.image {
+                        await viewModel.updateMembeProfileImage(image: image)
+                    }
+                    animationView!.isHidden = true
                     navigationController?.popViewController(animated: true)
                 }
             } else {

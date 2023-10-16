@@ -23,6 +23,8 @@ final class CreateReviewController: BaseViewController {
         )
     }
 
+    var delegate: CreateReviewControllerDelegate?
+
     private var viewModel = CreateReviewViewModel()
 
     private let textViewPlaceHolder = "100자 이내"
@@ -33,6 +35,16 @@ final class CreateReviewController: BaseViewController {
         $0.textColor = .mainTextColor
         $0.padding = UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 0)
         $0.frame = CGRect(x: 0, y: 0, width: 150, height: 0)
+    }
+
+    private lazy var closeButton = UIButton().then {
+        $0.setTitle("닫기", for: .normal)
+        $0.setTitleColor(.mainPink, for: .normal)
+        $0.titleLabel?.font = UIFont.preferredFont(forTextStyle: .headline, weight: .regular)
+        let action = UIAction { [weak self] _ in
+            self?.dismiss(animated: true)
+        }
+        $0.addAction(action, for: .touchUpInside)
     }
 
     private lazy var selectedStoreView = SelectedStoreView().then {
@@ -163,7 +175,9 @@ final class CreateReviewController: BaseViewController {
     override func setupNavigationBar() {
         super.setupNavigationBar()
         let newFeedGuideLabel = makeBarButtonItem(with: newFeedGuideLabel)
+        let closeButton = makeBarButtonItem(with: closeButton)
         navigationItem.leftBarButtonItem = newFeedGuideLabel
+        navigationItem.rightBarButtonItem = closeButton
     }
 
     private func setStore() {
@@ -206,14 +220,18 @@ final class CreateReviewController: BaseViewController {
             return
         }
 
-        if viewModel.request.reviewContent == "" {
+        if viewModel.reviewRequest.reviewContent == "" {
             showAlert(message: "한줄평을 작성하지 않았습니다.")
             return
         }
 
         Task {
+            animationView!.isHidden = false
             await viewModel.createReview()
-            dismiss(animated: true, completion: nil)
+            animationView!.isHidden = true
+
+            delegate?.updateData()
+            dismiss(animated: true)
         }
     }
 }
@@ -234,7 +252,7 @@ extension CreateReviewController: UITextViewDelegate {
     }
 
     func textViewDidChange(_ textView: UITextView) {
-        viewModel.request.reviewContent = textView.text
+        viewModel.reviewRequest.reviewContent = textView.text
     }
 }
 
@@ -270,7 +288,7 @@ extension CreateReviewController {
                         return nil
                     }
                 }
-                self.viewModel.images = images
+                self.viewModel.reviewImages = images
                 self.listCollectionView.reloadData()
             }
             picker.dismiss(animated: true, completion: nil)
@@ -281,7 +299,7 @@ extension CreateReviewController {
 
 extension CreateReviewController: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_: UICollectionView, numberOfItemsInSection _: Int) -> Int {
-        return viewModel.images.count + 1
+        return viewModel.reviewImages.count + 1
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -302,7 +320,7 @@ extension CreateReviewController: UICollectionViewDataSource, UICollectionViewDe
                 return UICollectionViewCell()
             }
 
-            cell.foodImageView.image = viewModel.images[indexPath.item - 1]
+            cell.foodImageView.image = viewModel.reviewImages[indexPath.item - 1]
 
             return cell
         }
@@ -313,4 +331,8 @@ extension CreateReviewController: UICollectionViewDataSource, UICollectionViewDe
             photoAddButtonDidTap()
         }
     }
+}
+
+protocol CreateReviewControllerDelegate: AnyObject {
+    func updateData()
 }

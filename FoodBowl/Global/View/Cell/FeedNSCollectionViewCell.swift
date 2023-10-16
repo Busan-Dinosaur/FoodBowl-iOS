@@ -12,7 +12,6 @@ import Then
 
 final class FeedNSCollectionViewCell: BaseCollectionViewCell {
     var userButtonTapAction: ((FeedNSCollectionViewCell) -> Void)?
-    var followButtonTapAction: ((FeedNSCollectionViewCell) -> Void)?
     var optionButtonTapAction: ((FeedNSCollectionViewCell) -> Void)?
 
     // MARK: - property
@@ -51,7 +50,6 @@ final class FeedNSCollectionViewCell: BaseCollectionViewCell {
 
     override func configureUI() {
         userInfoView.addAction(UIAction { _ in self.userButtonTapAction?(self) }, for: .touchUpInside)
-        userInfoView.followButton.addAction(UIAction { _ in self.followButtonTapAction?(self) }, for: .touchUpInside)
         userInfoView.optionButton.addAction(UIAction { _ in self.optionButtonTapAction?(self) }, for: .touchUpInside)
     }
 
@@ -68,5 +66,41 @@ final class FeedNSCollectionViewCell: BaseCollectionViewCell {
         )
         print(layoutAttributes)
         return layoutAttributes
+    }
+
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        createPhotoList()
+    }
+
+    func setupData(_ review: ReviewContent) {
+        commentLabel.text = review.content
+        if review.imagePaths.isEmpty {
+            removePhotoList()
+        } else {
+            photoListView.photos = review.imagePaths
+        }
+    }
+
+    func createPhotoList() {
+        photoListView.isHidden = false
+
+        photoListView.snp.remakeConstraints {
+            $0.top.equalTo(commentLabel.snp.bottom)
+            $0.leading.trailing.equalToSuperview()
+            $0.bottom.equalToSuperview().inset(14)
+            $0.height.equalTo(100)
+        }
+    }
+
+    func removePhotoList() {
+        photoListView.isHidden = true
+
+        photoListView.snp.makeConstraints {
+            $0.top.equalTo(commentLabel.snp.bottom)
+            $0.leading.trailing.equalToSuperview()
+            $0.bottom.equalToSuperview().inset(14)
+            $0.height.equalTo(0)
+        }
     }
 }

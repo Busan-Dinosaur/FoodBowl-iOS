@@ -10,20 +10,19 @@ import UIKit
 import Moya
 
 final class CreateReviewViewModel {
-    var request = Request()
-    var images = [UIImage]()
+    var reviewRequest = CreateReviewRequest()
+    var reviewImages = [UIImage]()
     var store: Place?
 
     private let providerKakao = MoyaProvider<KakaoAPI>()
-    private let provider = MoyaProvider<StoreAPI>()
+    private let providerReview = MoyaProvider<ReviewAPI>()
 
     func createReview() async {
-        let imagesData = images.map { $0.jpegData(compressionQuality: 0.5)! }
-        let request = CreateReviewRequest(request: request, images: imagesData)
-        let response = await provider.request(.createReview(request: request))
+        let imagesData = reviewImages.map { $0.jpegData(compressionQuality: 0.3)! }
+        let response = await providerReview.request(.createReview(request: reviewRequest, images: imagesData))
         switch response {
         case .success:
-            print("success to create review")
+            print("Success to create Review")
         case .failure(let err):
             print(err.localizedDescription)
         }
@@ -49,21 +48,18 @@ final class CreateReviewViewModel {
     }
 
     private func searchUniv(store: Place) async -> Place? {
-        var univ: Place?
-
         let response = await providerKakao.request(.searchUniv(x: store.longitude, y: store.latitude))
-
         switch response {
         case .success(let result):
-            guard let data = try? result.map(PlaceResponse.self) else { return univ }
+            guard let data = try? result.map(PlaceResponse.self) else { return nil }
             if data.documents.count > 0 {
-                univ = data.documents[0]
+                return data.documents[0]
             }
+            return nil
         case .failure(let err):
             print(err.localizedDescription)
+            return nil
         }
-
-        return univ
     }
 
     private func getCategory(categoryName: String) -> String {
@@ -85,18 +81,22 @@ final class CreateReviewViewModel {
 
     func setStore(store: Place) async {
         self.store = store
-        request.locationId = store.id
-        request.storeName = store.placeName
-        request.storeAddress = store.addressName
-        request.x = Double(store.longitude) ?? 0.0
-        request.y = Double(store.latitude) ?? 0.0
-        request.storeUrl = store.placeURL
-        request.phone = store.phone
-        request.category = getCategory(categoryName: store.categoryName)
+        reviewRequest.locationId = store.id
+        reviewRequest.storeName = store.placeName
+        reviewRequest.storeAddress = store.roadAddressName
+        reviewRequest.x = Double(store.longitude) ?? 0.0
+        reviewRequest.y = Double(store.latitude) ?? 0.0
+        reviewRequest.storeUrl = store.placeURL
+        reviewRequest.phone = store.phone
+        reviewRequest.category = getCategory(categoryName: store.categoryName)
 
-        guard let univ = await searchUniv(store: store) else { return }
-        request.schoolName = univ.placeName
-        request.schoolX = Double(univ.longitude) ?? 0.0
-        request.schoolY = Double(univ.latitude) ?? 0.0
+        if let univ = await searchUniv(store: store) {
+            if univ.placeName.contains("대학교") || univ.placeName.contains("캠퍼스") {
+                reviewRequest.schoolName = univ.placeName
+                reviewRequest.schoolAddress = univ.roadAddressName
+                reviewRequest.schoolX = Double(univ.longitude) ?? 0.0
+                reviewRequest.schoolY = Double(univ.latitude) ?? 0.0
+            }
+        }
     }
 }

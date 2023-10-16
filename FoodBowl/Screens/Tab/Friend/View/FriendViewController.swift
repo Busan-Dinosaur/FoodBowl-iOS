@@ -11,6 +11,8 @@ import SnapKit
 import Then
 
 final class FriendViewController: MapViewController {
+    private var viewModel = FriendViewModel()
+
     let logoLabel = PaddingLabel().then {
         $0.font = .font(.regular, ofSize: 22)
         $0.textColor = .mainTextColor
@@ -19,19 +21,19 @@ final class FriendViewController: MapViewController {
         $0.frame = CGRect(x: 0, y: 0, width: 150, height: 0)
     }
 
-    init() {
-        super.init(nibName: nil, bundle: nil)
-        self.modalView = FeedListView()
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
     override func configureUI() {
         super.configureUI()
         bookmarkButton.isHidden = false
-        grabbarView.modalResultLabel.text = "4개의 맛집"
+        feedListView.loadData = {
+            Task {
+                await self.setupReviews()
+            }
+        }
+        feedListView.reloadData = {
+            Task {
+                print("추가 데이터")
+            }
+        }
     }
 
     override func setupNavigationBar() {
@@ -40,5 +42,27 @@ final class FriendViewController: MapViewController {
         let plusButton = makeBarButtonItem(with: plusButton)
         navigationItem.leftBarButtonItem = logoLabel
         navigationItem.rightBarButtonItem = plusButton
+    }
+
+    override func loadData() {
+        Task {
+            await setupReviews()
+            await setupStores()
+        }
+    }
+
+    private func setupReviews() async {
+        guard let location = customLocation else { return }
+        feedListView.reviews = await viewModel.getReviews(location: location)
+    }
+
+    private func setupStores() async {
+        guard let location = customLocation else { return }
+        stores = await viewModel.getStores(location: location)
+
+        DispatchQueue.main.async {
+            self.grabbarView.modalResultLabel.text = "\(self.stores.count.prettyNumber)개의 맛집"
+            self.setMarkers()
+        }
     }
 }

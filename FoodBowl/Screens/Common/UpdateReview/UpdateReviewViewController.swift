@@ -23,9 +23,14 @@ final class UpdateReviewViewController: BaseViewController {
         )
     }
 
-    private let textViewPlaceHolder = "100자 이내"
+    var delegate: CreateReviewControllerDelegate?
 
     private var viewModel: UpdateReviewViewModel
+
+    private var images = [UIImage]()
+
+    private let textViewPlaceHolder = "100자 이내"
+
 
     init(viewModel: UpdateReviewViewModel) {
         self.viewModel = viewModel
@@ -45,7 +50,15 @@ final class UpdateReviewViewController: BaseViewController {
         $0.frame = CGRect(x: 0, y: 0, width: 150, height: 0)
     }
 
-    private let selectedStoreView = SelectedStoreView()
+    private lazy var closeButton = UIButton().then {
+        $0.setTitle("닫기", for: .normal)
+        $0.setTitleColor(.mainPink, for: .normal)
+        $0.titleLabel?.font = UIFont.preferredFont(forTextStyle: .headline, weight: .regular)
+        let action = UIAction { [weak self] _ in
+            self?.dismiss(animated: true)
+        }
+        $0.addAction(action, for: .touchUpInside)
+    }
 
     private let guideCommentLabel = UILabel().then {
         $0.text = "한줄평"
@@ -102,7 +115,6 @@ final class UpdateReviewViewController: BaseViewController {
     // MARK: - life cycle
     override func setupLayout() {
         view.addSubviews(
-            selectedStoreView,
             commentTextView,
             completeButton,
             guidePhotoLabel,
@@ -110,14 +122,8 @@ final class UpdateReviewViewController: BaseViewController {
             guideCommentLabel
         )
 
-        selectedStoreView.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide)
-            $0.leading.trailing.equalToSuperview().inset(BaseSize.horizantalPadding)
-            $0.height.equalTo(60)
-        }
-
         guideCommentLabel.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(80)
+            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(20)
             $0.leading.equalToSuperview().inset(BaseSize.horizantalPadding)
         }
 
@@ -145,9 +151,16 @@ final class UpdateReviewViewController: BaseViewController {
         }
     }
 
+    override func configureUI() {
+        super.configureUI()
+        commentTextView.text = viewModel.reviewContent
+    }
+
     override func setupNavigationBar() {
         let editFeedGuideLabel = makeBarButtonItem(with: editFeedGuideLabel)
+        let closeButton = makeBarButtonItem(with: closeButton)
         navigationItem.leftBarButtonItem = editFeedGuideLabel
+        navigationItem.rightBarButtonItem = closeButton
     }
 
     private func showAlert(message: String) {
@@ -159,13 +172,17 @@ final class UpdateReviewViewController: BaseViewController {
     }
 
     private func tappedCompleteButton() {
-        if viewModel.request.reviewContent == "" {
+        if viewModel.reviewContent == "" {
             showAlert(message: "한줄평을 작성하지 않았습니다.")
             return
         }
 
         Task {
+            animationView!.isHidden = false
             await viewModel.updateReview()
+            animationView!.isHidden = true
+
+            delegate?.updateData()
             dismiss(animated: true, completion: nil)
         }
     }
@@ -187,7 +204,7 @@ extension UpdateReviewViewController: UITextViewDelegate {
     }
 
     func textViewDidChange(_ textView: UITextView) {
-        viewModel.request.reviewContent = textView.text
+        viewModel.reviewContent = textView.text
     }
 }
 
@@ -223,7 +240,7 @@ extension UpdateReviewViewController {
                         return nil
                     }
                 }
-                self.viewModel.images = images
+                self.images = images
                 self.listCollectionView.reloadData()
             }
             picker.dismiss(animated: true, completion: nil)
@@ -255,7 +272,7 @@ extension UpdateReviewViewController: UICollectionViewDataSource, UICollectionVi
                 return UICollectionViewCell()
             }
 
-            cell.foodImageView.image = viewModel.images[indexPath.item - 1]
+//            cell.foodImageView.image = images[indexPath.item - 1]
 
             return cell
         }

@@ -16,7 +16,6 @@ final class PhotoCollectionViewCell: BaseCollectionViewCell {
     lazy var foodImageView = UIImageView().then {
         $0.backgroundColor = .grey002
         $0.contentMode = .scaleAspectFill
-        $0.kf.setImage(with: URL(string: "https://source.unsplash.com/random/300×300?food"))
     }
 
     override func setupLayout() {
@@ -31,5 +30,14 @@ final class PhotoCollectionViewCell: BaseCollectionViewCell {
         backgroundColor = .grey002
         clipsToBounds = true
         makeBorderLayer(color: .grey002)
+    }
+
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        foodImageView.image = nil
+    }
+
+    func setupData(_ imageURL: URL) {
+        foodImageView.kf.setImage(with: imageURL)
     }
 }

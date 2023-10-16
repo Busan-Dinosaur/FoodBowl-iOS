@@ -32,8 +32,6 @@ final class UserInfoView: UIButton {
         $0.text = "팔로워 100명"
     }
 
-    let followButton = FollowButton()
-
     let optionButton = OptionButton()
 
     // MARK: - init
@@ -72,5 +70,13 @@ final class UserInfoView: UIButton {
             $0.trailing.equalToSuperview().inset(BaseSize.horizantalPadding)
             $0.centerY.equalToSuperview()
         }
+    }
+
+    func setupData(_ member: Writer) {
+        if let url = member.profileImageUrl {
+            userImageView.kf.setImage(with: URL(string: url))
+        }
+        userNameLabel.text = member.nickname
+        userFollowerLabel.text = "팔로워 \(member.followerCount.prettyNumber)명"
     }
 }
