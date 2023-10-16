@@ -23,6 +23,8 @@ final class CreateReviewController: BaseViewController {
         )
     }
 
+    var delegate: CreateReviewControllerDelegate?
+
     private var viewModel = CreateReviewViewModel()
 
     private let textViewPlaceHolder = "100자 이내"
@@ -227,7 +229,9 @@ final class CreateReviewController: BaseViewController {
             animationView!.isHidden = false
             await viewModel.createReview()
             animationView!.isHidden = true
-            dismiss(animated: true, completion: nil)
+
+            delegate?.updateData()
+            dismiss(animated: true)
         }
     }
 }
@@ -327,4 +331,8 @@ extension CreateReviewController: UICollectionViewDataSource, UICollectionViewDe
             photoAddButtonDidTap()
         }
     }
+}
+
+protocol CreateReviewControllerDelegate: AnyObject {
+    func updateData()
 }

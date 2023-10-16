@@ -104,7 +104,7 @@ final class FindViewController: BaseViewController {
         listCollectionView.refreshControl = refreshControl
     }
 
-    private func loadData() {}
+    override func loadData() {}
 
     private func searchStores(name: String) async {
         stores = await viewModel.serachStores(name: name)

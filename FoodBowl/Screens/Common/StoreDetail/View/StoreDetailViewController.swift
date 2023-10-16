@@ -121,7 +121,7 @@ final class StoreDetailViewController: BaseViewController {
         listCollectionView.refreshControl = refreshControl
     }
 
-    private func loadData() {
+    override func loadData() {
         Task {
             await setupReviews()
         }

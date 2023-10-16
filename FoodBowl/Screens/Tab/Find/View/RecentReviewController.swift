@@ -67,7 +67,7 @@ final class RecentReviewController: BaseViewController {
         listCollectionView.refreshControl = refreshControl
     }
 
-    private func loadData() {}
+    override func loadData() {}
 }
 
 extension RecentReviewController {

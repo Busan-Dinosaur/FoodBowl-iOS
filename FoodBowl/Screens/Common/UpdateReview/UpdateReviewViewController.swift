@@ -23,11 +23,14 @@ final class UpdateReviewViewController: BaseViewController {
         )
     }
 
+    var delegate: CreateReviewControllerDelegate?
+
+    private var viewModel: UpdateReviewViewModel
+
     private var images = [UIImage]()
 
     private let textViewPlaceHolder = "100자 이내"
 
-    private var viewModel: UpdateReviewViewModel
 
     init(viewModel: UpdateReviewViewModel) {
         self.viewModel = viewModel
@@ -175,7 +178,11 @@ final class UpdateReviewViewController: BaseViewController {
         }
 
         Task {
+            animationView!.isHidden = false
             await viewModel.updateReview()
+            animationView!.isHidden = true
+
+            delegate?.updateData()
             dismiss(animated: true, completion: nil)
         }
     }

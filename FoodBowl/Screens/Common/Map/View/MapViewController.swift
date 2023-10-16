@@ -148,8 +148,6 @@ class MapViewController: BaseViewController {
         )
     }
 
-    func loadData() {}
-
     func setMarkers() {
         mapView.removeAnnotations(marks)
 

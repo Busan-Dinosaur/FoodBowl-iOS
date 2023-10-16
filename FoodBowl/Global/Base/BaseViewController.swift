@@ -28,6 +28,7 @@ class BaseViewController: UIViewController {
     lazy var plusButton = PlusButton().then {
         let action = UIAction { [weak self] _ in
             let createReviewController = CreateReviewController()
+            createReviewController.delegate = self
             let navigationController = UINavigationController(rootViewController: createReviewController)
             navigationController.modalPresentationStyle = .fullScreen
             DispatchQueue.main.async {
@@ -119,6 +120,8 @@ class BaseViewController: UIViewController {
         navigationController?.interactivePopGestureRecognizer?.delegate = self
     }
 
+    func loadData() {}
+
     func setupLottie() {
         animationView = .init(name: "loading")
         animationView!.frame = view.bounds
@@ -190,5 +193,11 @@ extension BaseViewController: UIGestureRecognizerDelegate {
     func gestureRecognizerShouldBegin(_: UIGestureRecognizer) -> Bool {
         guard let count = navigationController?.viewControllers.count else { return false }
         return count > 1
+    }
+}
+
+extension BaseViewController: CreateReviewControllerDelegate {
+    func updateData() {
+        loadData()
     }
 }
