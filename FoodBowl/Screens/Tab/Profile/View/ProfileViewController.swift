@@ -193,7 +193,13 @@ final class ProfileViewController: MapViewController {
     }
 
     private func followUser() {
-        profileHeaderView.followButton.isSelected.toggle()
+        Task {
+            if profileHeaderView.followButton.isSelected {
+                profileHeaderView.followButton.isSelected = await self.viewModel.unfollowMember(memberId: memberId)
+            } else {
+                profileHeaderView.followButton.isSelected = await self.viewModel.followMember(memberId: memberId)
+            }
+        }
     }
 
     override func presentBlameViewController() {

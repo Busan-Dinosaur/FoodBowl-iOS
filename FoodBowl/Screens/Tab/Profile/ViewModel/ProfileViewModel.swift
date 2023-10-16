@@ -92,3 +92,30 @@ extension ProfileViewModel {
         }
     }
 }
+
+// MARK: - Follow Method
+extension ProfileViewModel {
+    func followMember(memberId: Int) async -> Bool {
+        let response = await providerFollow.request(.followMember(memberId: memberId))
+        switch response {
+        case .success:
+            print("Success to Follow")
+            return true
+        case .failure(let err):
+            print(err.localizedDescription)
+            return false
+        }
+    }
+
+    func unfollowMember(memberId: Int) async -> Bool {
+        let response = await providerFollow.request(.unfollowMember(memberId: memberId))
+        switch response {
+        case .success:
+            print("Success to Unfollow")
+            return false
+        case .failure(let err):
+            print(err.localizedDescription)
+            return true
+        }
+    }
+}
