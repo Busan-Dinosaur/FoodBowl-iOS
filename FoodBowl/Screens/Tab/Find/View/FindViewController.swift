@@ -26,9 +26,33 @@ final class FindViewController: BaseViewController {
 
     private lazy var isBookmarked = [Bool](repeating: false, count: 10)
 
-    private var stores = [StoreBySearch]()
-    private var members = [MemberBySearch]()
-    private var scope: Int = 0
+    private var stores = [StoreBySearch]() {
+        didSet {
+            DispatchQueue.main.async {
+                self.listCollectionView.reloadData()
+            }
+        }
+    }
+
+    private var members = [MemberBySearch]() {
+        didSet {
+            DispatchQueue.main.async {
+                self.listCollectionView.reloadData()
+            }
+        }
+    }
+
+    private var scope: Int = 0 {
+        didSet {
+            loadData()
+        }
+    }
+
+    private var searchText: String = "" {
+        didSet {
+            loadData()
+        }
+    }
 
     // MARK: - property
     private var refreshControl = UIRefreshControl()
@@ -104,20 +128,22 @@ final class FindViewController: BaseViewController {
         listCollectionView.refreshControl = refreshControl
     }
 
-    override func loadData() {}
+    override func loadData() {
+        Task {
+            if scope == 0 {
+                await self.searchStores(name: searchText)
+            } else {
+                await self.searchMembers(name: searchText)
+            }
+        }
+    }
 
     private func searchStores(name: String) async {
         stores = await viewModel.serachStores(name: name)
-        DispatchQueue.main.async {
-            self.listCollectionView.reloadData()
-        }
     }
 
     private func searchMembers(name: String) async {
         members = await viewModel.searchMembers(name: name)
-        DispatchQueue.main.async {
-            self.listCollectionView.reloadData()
-        }
     }
 }
 
@@ -137,13 +163,7 @@ extension FindViewController {
 extension FindViewController: UISearchResultsUpdating, UISearchBarDelegate {
     func updateSearchResults(for searchController: UISearchController) {
         guard let text = searchController.searchBar.text?.lowercased() else { return }
-        Task {
-            if scope == 0 {
-                await searchStores(name: text)
-            } else {
-                await searchMembers(name: text)
-            }
-        }
+        searchText = text
     }
 
     func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
