@@ -12,7 +12,6 @@ import Then
 
 final class FeedNSCollectionViewCell: BaseCollectionViewCell {
     var userButtonTapAction: ((FeedNSCollectionViewCell) -> Void)?
-    var followButtonTapAction: ((FeedNSCollectionViewCell) -> Void)?
     var optionButtonTapAction: ((FeedNSCollectionViewCell) -> Void)?
 
     // MARK: - property
@@ -51,7 +50,6 @@ final class FeedNSCollectionViewCell: BaseCollectionViewCell {
 
     override func configureUI() {
         userInfoView.addAction(UIAction { _ in self.userButtonTapAction?(self) }, for: .touchUpInside)
-        userInfoView.followButton.addAction(UIAction { _ in self.followButtonTapAction?(self) }, for: .touchUpInside)
         userInfoView.optionButton.addAction(UIAction { _ in self.optionButtonTapAction?(self) }, for: .touchUpInside)
     }
 

@@ -204,10 +204,6 @@ extension StoreDetailViewController: UICollectionViewDataSource, UICollectionVie
             }
         }
 
-        cell.followButtonTapAction = { _ in
-            cell.userInfoView.followButton.isSelected.toggle()
-        }
-
         return cell
     }
 }

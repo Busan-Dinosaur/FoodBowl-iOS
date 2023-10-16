@@ -12,7 +12,6 @@ import Then
 
 final class FeedCollectionViewCell: BaseCollectionViewCell {
     var userButtonTapAction: ((FeedCollectionViewCell) -> Void)?
-    var followButtonTapAction: ((FeedCollectionViewCell) -> Void)?
     var optionButtonTapAction: ((FeedCollectionViewCell) -> Void)?
     var storeButtonTapAction: ((FeedCollectionViewCell) -> Void)?
     var bookmarkButtonTapAction: ((FeedCollectionViewCell) -> Void)?
@@ -79,7 +78,6 @@ final class FeedCollectionViewCell: BaseCollectionViewCell {
 
     private func setupAction() {
         userInfoView.addAction(UIAction { _ in self.userButtonTapAction?(self) }, for: .touchUpInside)
-        userInfoView.followButton.addAction(UIAction { _ in self.followButtonTapAction?(self) }, for: .touchUpInside)
         userInfoView.optionButton.addAction(UIAction { _ in self.optionButtonTapAction?(self) }, for: .touchUpInside)
         storeInfoView.storeNameButton.addAction(UIAction { _ in self.storeButtonTapAction?(self) }, for: .touchUpInside)
         storeInfoView.bookmarkButton.addAction(UIAction { _ in self.bookmarkButtonTapAction?(self) }, for: .touchUpInside)

@@ -139,10 +139,6 @@ extension FeedListView: UICollectionViewDataSource, UICollectionViewDelegate {
             }
         }
 
-        cell.followButtonTapAction = { _ in
-            cell.userInfoView.followButton.isSelected.toggle()
-        }
-
         cell.storeButtonTapAction = { [weak self] _ in
             let storeDetailViewController = StoreDetailViewController(storeId: store.id)
             storeDetailViewController.title = store.name

@@ -32,8 +32,6 @@ final class UserInfoView: UIButton {
         $0.text = "팔로워 100명"
     }
 
-    let followButton = FollowButton()
-
     let optionButton = OptionButton()
 
     // MARK: - init

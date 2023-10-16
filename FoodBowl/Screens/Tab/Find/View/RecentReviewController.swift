@@ -126,10 +126,6 @@ extension RecentReviewController: UICollectionViewDataSource, UICollectionViewDe
             self?.present(alert, animated: true, completion: nil)
         }
 
-        cell.followButtonTapAction = { _ in
-            cell.userInfoView.followButton.isSelected.toggle()
-        }
-
         return cell
     }
 }

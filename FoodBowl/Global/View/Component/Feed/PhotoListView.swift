@@ -36,7 +36,7 @@ final class PhotoListView: UIView {
         $0.scrollDirection = .horizontal
         $0.sectionInset = Size.collectionInset
         $0.itemSize = CGSize(width: Size.cellWidth, height: Size.cellHeight)
-        $0.minimumLineSpacing = 8
+        $0.minimumLineSpacing = 4
     }
 
     private lazy var listCollectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewFlowLayout).then {
