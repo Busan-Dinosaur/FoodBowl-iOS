@@ -12,10 +12,11 @@ import Moya
 enum ReviewAPI {
     case createReview(request: CreateReviewRequest, images: [Data])
     case removeReview(id: Int)
-    case getReviewsBySchool(form: CustomLocation, schoolId: Int, lastReviewId: Int?, pageSize: Int?)
-    case getReviewsByMember(form: CustomLocation, memberId: Int, lastReviewId: Int?, pageSize: Int?)
-    case getReviewsByFollowing(form: CustomLocation, lastReviewId: Int?, pageSize: Int?)
-    case getReviewsByBookmark(form: CustomLocation, lastReviewId: Int?, pageSize: Int?)
+    case getReviewsByStore(form: GetReviewByStoreRequest, lastReviewId: Int?, pageSize: Int)
+    case getReviewsBySchool(form: CustomLocation, schoolId: Int, lastReviewId: Int?, pageSize: Int)
+    case getReviewsByMember(form: CustomLocation, memberId: Int, lastReviewId: Int?, pageSize: Int)
+    case getReviewsByFollowing(form: CustomLocation, lastReviewId: Int?, pageSize: Int)
+    case getReviewsByBookmark(form: CustomLocation, lastReviewId: Int?, pageSize: Int)
 }
 
 extension ReviewAPI: TargetType {
@@ -29,6 +30,8 @@ extension ReviewAPI: TargetType {
         switch self {
         case .createReview, .removeReview:
             return "/v1/reviews"
+        case .getReviewsByStore:
+            return "/v1/reviews/stores"
         case .getReviewsBySchool:
             return "/v1/reviews/schools"
         case .getReviewsByMember:
@@ -86,6 +89,21 @@ extension ReviewAPI: TargetType {
                 parameters: params,
                 encoding: URLEncoding.default
             )
+        case .getReviewsByStore(let form, let lastReviewId, let pageSize):
+            var params: [String: Any] = [
+                "storeId": form.storeId,
+                "filter": form.filter,
+                "pageSize": pageSize
+            ]
+
+            if let lastReviewId = lastReviewId {
+                params["lastReviewId"] = lastReviewId
+            }
+
+            return .requestParameters(
+                parameters: params,
+                encoding: URLEncoding.default
+            )
         case .getReviewsBySchool(let form, let schoolId, let lastReviewId, let pageSize):
             var params: [String: Any] = [
                 "schoolId": schoolId,
@@ -94,15 +112,12 @@ extension ReviewAPI: TargetType {
                 "deltaX": form.deltaX,
                 "deltaY": form.deltaY,
                 "deviceX": form.deviceX,
-                "deviceY": form.deviceY
+                "deviceY": form.deviceY,
+                "pageSize": pageSize
             ]
 
             if let lastReviewId = lastReviewId {
                 params["lastReviewId"] = lastReviewId
-            }
-
-            if let pageSize = pageSize {
-                params["pageSize"] = pageSize
             }
 
             return .requestParameters(
@@ -117,15 +132,12 @@ extension ReviewAPI: TargetType {
                 "deltaX": form.deltaX,
                 "deltaY": form.deltaY,
                 "deviceX": form.deviceX,
-                "deviceY": form.deviceY
+                "deviceY": form.deviceY,
+                "pageSize": pageSize
             ]
 
             if let lastReviewId = lastReviewId {
                 params["lastReviewId"] = lastReviewId
-            }
-
-            if let pageSize = pageSize {
-                params["pageSize"] = pageSize
             }
 
             return .requestParameters(
@@ -139,15 +151,12 @@ extension ReviewAPI: TargetType {
                 "deltaX": form.deltaX,
                 "deltaY": form.deltaY,
                 "deviceX": form.deviceX,
-                "deviceY": form.deviceY
+                "deviceY": form.deviceY,
+                "pageSize": pageSize
             ]
 
             if let lastReviewId = lastReviewId {
                 params["lastReviewId"] = lastReviewId
-            }
-
-            if let pageSize = pageSize {
-                params["pageSize"] = pageSize
             }
 
             return .requestParameters(
@@ -161,15 +170,12 @@ extension ReviewAPI: TargetType {
                 "deltaX": form.deltaX,
                 "deltaY": form.deltaY,
                 "deviceX": form.deviceX,
-                "deviceY": form.deviceY
+                "deviceY": form.deviceY,
+                "pageSize": pageSize
             ]
 
             if let lastReviewId = lastReviewId {
                 params["lastReviewId"] = lastReviewId
-            }
-
-            if let pageSize = pageSize {
-                params["pageSize"] = pageSize
             }
 
             return .requestParameters(

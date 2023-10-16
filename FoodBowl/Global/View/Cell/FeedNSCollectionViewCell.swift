@@ -69,4 +69,18 @@ final class FeedNSCollectionViewCell: BaseCollectionViewCell {
         print(layoutAttributes)
         return layoutAttributes
     }
+
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        photoListView.isHidden = false
+    }
+
+    func setupData(_ review: ReviewContent) {
+        commentLabel.text = review.content
+        if review.imagePaths.isEmpty {
+            photoListView.isHidden = true
+        } else {
+            photoListView.photos = review.imagePaths
+        }
+    }
 }

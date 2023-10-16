@@ -52,12 +52,9 @@ extension StoreAPI: TargetType {
             var params: [String: Any] = [
                 "name": form.name,
                 "x": form.x,
-                "y": form.y
+                "y": form.y,
+                "size": form.size
             ]
-
-            if let size = form.size {
-                params["size"] = size
-            }
 
             return .requestParameters(
                 parameters: params,

@@ -8,6 +8,6 @@
 import Foundation
 
 struct SearchMembersRequest: Encodable {
-    var name: String
-    var size: Int?
+    let name: String
+    let size: Int
 }

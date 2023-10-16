@@ -5,7 +5,7 @@
 //  Created by COBY_PRO on 2023/09/10.
 //
 
-import UIKit
+import Foundation
 
 struct CreateReviewRequest: Encodable {
     var locationId: String = ""

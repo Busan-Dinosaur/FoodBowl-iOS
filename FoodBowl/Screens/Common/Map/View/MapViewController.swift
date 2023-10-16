@@ -163,7 +163,7 @@ class MapViewController: BaseViewController {
                 ),
                 glyphImage: ImageLiteral.korean,
                 handler: { [weak self] in
-                    let storeDetailViewController = StoreDetailViewController()
+                    let storeDetailViewController = StoreDetailViewController(storeId: store.id)
                     storeDetailViewController.title = store.name
                     self?.navigationController?.pushViewController(storeDetailViewController, animated: true)
                 }

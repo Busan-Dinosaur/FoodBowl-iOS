@@ -10,6 +10,8 @@ import UIKit
 import Moya
 
 final class FriendViewModel {
+    private let pageSize = 10
+
     private let providerService = MoyaProvider<ServiceAPI>()
     private let providerReview = MoyaProvider<ReviewAPI>()
     private let providerStore = MoyaProvider<StoreAPI>()
@@ -23,7 +25,7 @@ extension FriendViewModel {
             .getReviewsByFollowing(
                 form: location,
                 lastReviewId: nil,
-                pageSize: nil
+                pageSize: pageSize
             )
         )
         switch response {

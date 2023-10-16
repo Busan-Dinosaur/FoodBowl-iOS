@@ -16,7 +16,7 @@ struct SearchMembersResponse: Codable {
 struct MemberBySearch: Codable {
     let memberId: Int
     let nickname: String
-    let profileImageUrl: String
+    let profileImageUrl: String?
     let followerCount: Int
     let isFollowing, isMe: Bool
 }

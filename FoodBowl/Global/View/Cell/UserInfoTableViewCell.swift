@@ -7,6 +7,7 @@
 
 import UIKit
 
+import Kingfisher
 import SnapKit
 import Then
 
@@ -69,5 +70,15 @@ final class UserInfoTableViewCell: BaseTableViewCell {
         followButton.addAction(UIAction { _ in self.followButtonTapAction?(self) }, for: .touchUpInside)
 
         backgroundColor = .clear
+    }
+
+    func setupData(_ member: MemberBySearch) {
+        userNameLabel.text = member.nickname
+        userFollowerLabel.text = member.followerCount.prettyNumber
+        followButton.isSelected = member.isFollowing
+
+        if let url = member.profileImageUrl {
+            userImageView.kf.setImage(with: URL(string: url))
+        }
     }
 }

@@ -104,7 +104,10 @@ extension FeedListView: UICollectionViewDataSource, UICollectionViewDelegate {
 
         cell.userButtonTapAction = { [weak self] _ in
             let profileViewController = ProfileViewController(isOwn: false, memberId: member.id)
-            self?.parentViewController?.navigationController?.pushViewController(profileViewController, animated: true)
+
+            DispatchQueue.main.async { [weak self] in
+                self?.parentViewController?.navigationController?.pushViewController(profileViewController, animated: true)
+            }
         }
 
         cell.optionButtonTapAction = { [weak self] _ in
@@ -131,7 +134,9 @@ extension FeedListView: UICollectionViewDataSource, UICollectionViewDelegate {
             let cancel = UIAlertAction(title: "취소", style: .cancel, handler: nil)
             alert.addAction(cancel)
 
-            self?.parentViewController?.present(alert, animated: true, completion: nil)
+            DispatchQueue.main.async { [weak self] in
+                self?.parentViewController?.present(alert, animated: true, completion: nil)
+            }
         }
 
         cell.followButtonTapAction = { _ in
@@ -139,9 +144,12 @@ extension FeedListView: UICollectionViewDataSource, UICollectionViewDelegate {
         }
 
         cell.storeButtonTapAction = { [weak self] _ in
-            let storeDetailViewController = StoreDetailViewController()
+            let storeDetailViewController = StoreDetailViewController(storeId: store.id)
             storeDetailViewController.title = store.name
-            self?.parentViewController?.navigationController?.pushViewController(storeDetailViewController, animated: true)
+
+            DispatchQueue.main.async { [weak self] in
+                self?.parentViewController?.navigationController?.pushViewController(storeDetailViewController, animated: true)
+            }
         }
 
         cell.bookmarkButtonTapAction = { [weak self] _ in

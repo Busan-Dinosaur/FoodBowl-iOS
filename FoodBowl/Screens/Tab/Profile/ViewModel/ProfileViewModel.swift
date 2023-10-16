@@ -10,6 +10,8 @@ import UIKit
 import Moya
 
 final class ProfileViewModel {
+    private let pageSize = 10
+
     private let providerService = MoyaProvider<ServiceAPI>()
     private let providerReview = MoyaProvider<ReviewAPI>()
     private let providerStore = MoyaProvider<StoreAPI>()
@@ -65,7 +67,7 @@ extension ProfileViewModel {
                 form: location,
                 memberId: memberId,
                 lastReviewId: nil,
-                pageSize: nil
+                pageSize: pageSize
             )
         )
         switch response {

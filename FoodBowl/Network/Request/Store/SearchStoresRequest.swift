@@ -8,8 +8,8 @@
 import Foundation
 
 struct SearchStoresRequest: Encodable {
-    var name: String
-    var x: Double
-    var y: Double
-    var size: Int?
+    let name: String
+    let x: Double
+    let y: Double
+    let size: Int
 }

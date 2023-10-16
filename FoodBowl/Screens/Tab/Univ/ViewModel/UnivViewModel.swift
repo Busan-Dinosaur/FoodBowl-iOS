@@ -10,6 +10,8 @@ import UIKit
 import Moya
 
 final class UnivViewModel {
+    private let pageSize = 10
+
     private let providerService = MoyaProvider<ServiceAPI>()
     private let providerReview = MoyaProvider<ReviewAPI>()
     private let providerStore = MoyaProvider<StoreAPI>()
@@ -39,7 +41,7 @@ extension UnivViewModel {
                 form: location,
                 schoolId: schoolId,
                 lastReviewId: nil,
-                pageSize: nil
+                pageSize: pageSize
             )
         )
         switch response {

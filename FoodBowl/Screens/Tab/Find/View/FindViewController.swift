@@ -26,8 +26,8 @@ final class FindViewController: BaseViewController {
 
     private lazy var isBookmarked = [Bool](repeating: false, count: 10)
 
-    private var stores = [Place]()
-    private var users = [MemberProfileResponse]()
+    private var stores = [StoreBySearch]()
+    private var members = [MemberBySearch]()
     private var scope: Int = 0
 
     // MARK: - property
@@ -105,6 +105,20 @@ final class FindViewController: BaseViewController {
     }
 
     private func loadData() {}
+
+    private func searchStores(name: String) async {
+        stores = await viewModel.serachStores(name: name)
+        DispatchQueue.main.async {
+            self.listCollectionView.reloadData()
+        }
+    }
+
+    private func searchMembers(name: String) async {
+        members = await viewModel.searchMembers(name: name)
+        DispatchQueue.main.async {
+            self.listCollectionView.reloadData()
+        }
+    }
 }
 
 extension FindViewController {
@@ -123,6 +137,13 @@ extension FindViewController {
 extension FindViewController: UISearchResultsUpdating, UISearchBarDelegate {
     func updateSearchResults(for searchController: UISearchController) {
         guard let text = searchController.searchBar.text?.lowercased() else { return }
+        Task {
+            if scope == 0 {
+                await searchStores(name: text)
+            } else {
+                await searchMembers(name: text)
+            }
+        }
     }
 
     func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
@@ -157,7 +178,11 @@ extension FindViewController: UICollectionViewDataSource, UICollectionViewDelega
 
 extension FindViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
-        return 5
+        if scope == 0 {
+            stores.count
+        } else {
+            members.count
+        }
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -169,9 +194,7 @@ extension FindViewController: UITableViewDataSource, UITableViewDelegate {
                 return UITableViewCell()
             }
 
-            cell.storeNameLabel.text = "가게이름"
-            cell.storeFeedLabel.text = "100명이 후기를 남겼습니다."
-            cell.storeDistanceLabel.text = "10km"
+            cell.setupData(stores[indexPath.item])
             cell.selectionStyle = .none
 
             return cell
@@ -183,9 +206,7 @@ extension FindViewController: UITableViewDataSource, UITableViewDelegate {
                 return UITableViewCell()
             }
 
-            cell.followButtonTapAction = { _ in
-                cell.followButton.isSelected.toggle()
-            }
+            cell.setupData(members[indexPath.item])
             cell.selectionStyle = .none
 
             return cell
@@ -196,16 +217,15 @@ extension FindViewController: UITableViewDataSource, UITableViewDelegate {
         return 64
     }
 
-    func tableView(_: UITableView, didSelectRowAt _: IndexPath) {
+    func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
         if scope == 0 {
-            let storeDetailViewController = StoreDetailViewController()
-            storeDetailViewController.title = "틈새라면"
+            let storeDetailViewController = StoreDetailViewController(storeId: stores[indexPath.item].storeId)
+            storeDetailViewController.title = stores[indexPath.item].storeName
             DispatchQueue.main.async { [weak self] in
                 self?.navigationController?.pushViewController(storeDetailViewController, animated: true)
             }
         } else {
-            let profileViewController = ProfileViewController(isOwn: false, memberId: 123)
-            profileViewController.title = "초코비"
+            let profileViewController = ProfileViewController(isOwn: false, memberId: members[indexPath.item].memberId)
             DispatchQueue.main.async { [weak self] in
                 self?.navigationController?.pushViewController(profileViewController, animated: true)
             }

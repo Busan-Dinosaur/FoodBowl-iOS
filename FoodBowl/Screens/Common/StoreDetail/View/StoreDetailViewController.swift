@@ -21,7 +21,27 @@ final class StoreDetailViewController: BaseViewController {
         )
     }
 
+    private var storeId: Int
     private var isFriend: Bool = true
+    private var reviews = [ReviewByStore]() {
+        didSet {
+            DispatchQueue.main.async {
+                self.listCollectionView.reloadData()
+                self.refreshControl.endRefreshing()
+            }
+        }
+    }
+
+    private var viewModel = StoreDetailViewModel()
+
+    init(storeId: Int) {
+        self.storeId = storeId
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder _: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     // MARK: - property
     private var refreshControl = UIRefreshControl()
@@ -52,6 +72,11 @@ final class StoreDetailViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupRefreshControl()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        loadData()
     }
 
     override func setupLayout() {
@@ -92,7 +117,16 @@ final class StoreDetailViewController: BaseViewController {
         listCollectionView.refreshControl = refreshControl
     }
 
-    private func loadData() {}
+    private func loadData() {
+        Task {
+            await setupReviews()
+        }
+    }
+
+    private func setupReviews() async {
+        let filter = isFriend ? "FRIEND" : "ALL"
+        reviews = await viewModel.getReviews(storeId: storeId, filter: filter)
+    }
 }
 
 extension StoreDetailViewController {
@@ -111,7 +145,7 @@ extension StoreDetailViewController {
 // MARK: - UICollectionViewDataSource, UICollectionViewDelegate
 extension StoreDetailViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_: UICollectionView, numberOfItemsInSection _: Int) -> Int {
-        return 10
+        return reviews.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -122,33 +156,48 @@ extension StoreDetailViewController: UICollectionViewDataSource, UICollectionVie
             return UICollectionViewCell()
         }
 
+        let member = reviews[indexPath.item].writer
+        let review = reviews[indexPath.item].review
+        let isOwn = UserDefaultsManager.currentUser?.id ?? 0 == member.id
+
+        cell.userInfoView.setupData(member)
+        cell.setupData(review)
+
         cell.userButtonTapAction = { [weak self] _ in
-            let profileViewController = ProfileViewController(isOwn: false, memberId: 123)
-            self?.navigationController?.pushViewController(profileViewController, animated: true)
+            let profileViewController = ProfileViewController(isOwn: false, memberId: member.id)
+
+            DispatchQueue.main.async { [weak self] in
+                self?.navigationController?.pushViewController(profileViewController, animated: true)
+            }
         }
 
         cell.optionButtonTapAction = { [weak self] _ in
             let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
 
-//            let edit = UIAlertAction(title: "수정", style: .default, handler: { _ in
-//                let viewModel = UpdateReviewViewModel()
-//                let updateReviewViewController = UpdateReviewViewController(viewModel: viewModel)
-//                let navigationController = UINavigationController(rootViewController: updateReviewViewController)
-//                navigationController.modalPresentationStyle = .fullScreen
-//                DispatchQueue.main.async {
-//                    self?.present(navigationController, animated: true)
-//                }
-//            })
-            let report = UIAlertAction(title: "신고", style: .destructive, handler: { _ in
-                self?.presentBlameViewController()
-            })
+            if isOwn {
+                let edit = UIAlertAction(title: "수정", style: .default, handler: { _ in
+                    let viewModel = UpdateReviewViewModel(reviewContent: review.content, images: review.imagePaths)
+                    let updateReviewViewController = UpdateReviewViewController(viewModel: viewModel)
+                    let navigationController = UINavigationController(rootViewController: updateReviewViewController)
+                    navigationController.modalPresentationStyle = .fullScreen
+                    DispatchQueue.main.async {
+                        self?.present(navigationController, animated: true)
+                    }
+                })
+                alert.addAction(edit)
+            } else {
+                let report = UIAlertAction(title: "신고", style: .destructive, handler: { _ in
+                    self?.presentBlameViewController()
+                })
+                alert.addAction(report)
+            }
+
             let cancel = UIAlertAction(title: "취소", style: .cancel, handler: nil)
-
-//            alert.addAction(edit)
             alert.addAction(cancel)
-            alert.addAction(report)
 
-            self?.present(alert, animated: true, completion: nil)
+            DispatchQueue.main.async { [weak self] in
+                self?.present(alert, animated: true, completion: nil)
+            }
         }
 
         cell.followButtonTapAction = { _ in
