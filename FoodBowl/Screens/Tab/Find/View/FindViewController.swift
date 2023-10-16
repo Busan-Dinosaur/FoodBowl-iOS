@@ -26,18 +26,18 @@ final class FindViewController: BaseViewController {
 
     private lazy var isBookmarked = [Bool](repeating: false, count: 10)
 
-    private var stores = [StoreBySearch]() {
+    private var stores: [StoreBySearch] = [] {
         didSet {
             DispatchQueue.main.async {
-                self.listCollectionView.reloadData()
+                self.findResultViewController.searchResultTableView.reloadData()
             }
         }
     }
 
-    private var members = [MemberBySearch]() {
+    private var members: [MemberBySearch] = [] {
         didSet {
             DispatchQueue.main.async {
-                self.listCollectionView.reloadData()
+                self.findResultViewController.searchResultTableView.reloadData()
             }
         }
     }
@@ -135,19 +135,11 @@ final class FindViewController: BaseViewController {
 
         Task {
             if scope == 0 {
-                await self.searchStores(name: searchText)
+                stores = await viewModel.serachStores(name: searchText)
             } else {
-                await self.searchMembers(name: searchText)
+                members = await viewModel.searchMembers(name: searchText)
             }
         }
-    }
-
-    private func searchStores(name: String) async {
-        stores = await viewModel.serachStores(name: name)
-    }
-
-    private func searchMembers(name: String) async {
-        members = await viewModel.searchMembers(name: name)
     }
 }
 

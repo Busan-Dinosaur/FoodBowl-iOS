@@ -22,7 +22,6 @@ final class FindViewModel {
 // MARK: - Get Stores and Users
 extension FindViewModel {
     func serachStores(name: String) async -> [StoreBySearch] {
-        print("stores--------------")
         guard let currentLoc = LocationManager.shared.manager.location?.coordinate else { return [] }
         let response = await providerStore.request(
             .getStoresBySearch(
@@ -46,7 +45,6 @@ extension FindViewModel {
 
     func searchMembers(name: String) async -> [MemberBySearch] {
         print("members--------------")
-        print(name)
         let response = await providerMember.request(
             .getMemberBySearch(
                 form: SearchMembersRequest(
@@ -58,7 +56,6 @@ extension FindViewModel {
         switch response {
         case .success(let result):
             guard let data = try? result.map(SearchMembersResponse.self) else { return [] }
-            print("성공")
             print(data)
             return data.memberSearchResponses
         case .failure(let err):

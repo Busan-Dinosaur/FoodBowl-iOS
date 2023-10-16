@@ -53,7 +53,7 @@ final class StoreInfoTableViewCell: BaseTableViewCell {
 
     func setupData(_ store: StoreBySearch) {
         storeNameLabel.text = store.storeName
-        storeFeedLabel.text = "\(store.reviewCount.prettyNumber)명이 후기를 남겼습니다."
+        storeFeedLabel.text = "\(store.reviewCount.prettyNumber)명이 후기를 남겼어요."
         storeDistanceLabel.text = store.distance.prettyDistance
     }
 }
