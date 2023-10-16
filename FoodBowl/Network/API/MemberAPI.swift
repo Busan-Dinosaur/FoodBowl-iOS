@@ -65,12 +65,12 @@ extension MemberAPI: TargetType {
             )
             return .uploadMultipart([imageData])
         case .getMemberBySearch(let form):
-            let params: [String: Any?] = [
+            let params: [String: Any] = [
                 "name": form.name,
                 "size": form.size
             ]
             return .requestParameters(
-                parameters: params as [String: Any],
+                parameters: params,
                 encoding: URLEncoding.default
             )
         default:
