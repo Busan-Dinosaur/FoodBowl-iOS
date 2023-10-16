@@ -11,24 +11,24 @@ extension UIColor {
     static var mainBackgroundColor: UIColor {
         return UIColor { traits -> UIColor in
             traits.userInterfaceStyle == .dark
-                ? UIColor(hex: "#222222")
-                : UIColor(hex: "#ffffff")
+                ? UIColor(hex: "#212529")
+                : UIColor(hex: "#F8F9FA")
         }
     }
 
     static var mainTextColor: UIColor {
         return UIColor { traits -> UIColor in
             traits.userInterfaceStyle == .dark
-                ? UIColor(hex: "#ffffff")
-                : UIColor(hex: "#000000")
+                ? UIColor(hex: "#F8F9FA")
+                : UIColor(hex: "#343A40")
         }
     }
 
     static var subTextColor: UIColor {
         return UIColor { traits -> UIColor in
             traits.userInterfaceStyle == .dark
-                ? UIColor(hex: "#E2E2E2")
-                : UIColor(hex: "#494949")
+                ? UIColor(hex: "#E9ECEF")
+                : UIColor(hex: "#495057")
         }
     }
 
@@ -48,7 +48,7 @@ extension UIColor {
         return UIColor { traits -> UIColor in
             traits.userInterfaceStyle == .dark
                 ? UIColor(hex: "#495057")
-                : UIColor(hex: "#E9ECEF")
+                : UIColor(hex: "#DEE2E6")
         }
     }
 
