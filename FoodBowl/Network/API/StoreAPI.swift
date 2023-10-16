@@ -49,7 +49,7 @@ extension StoreAPI: TargetType {
     var task: Task {
         switch self {
         case .getStoresBySearch(let form):
-            var params: [String: Any] = [
+            let params: [String: Any] = [
                 "name": form.name,
                 "x": form.x,
                 "y": form.y,

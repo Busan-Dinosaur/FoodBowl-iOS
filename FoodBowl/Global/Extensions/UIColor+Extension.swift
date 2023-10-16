@@ -45,7 +45,11 @@ extension UIColor {
     }
 
     static var grey002: UIColor {
-        return UIColor(hex: "#E2E4E4")
+        return UIColor { traits -> UIColor in
+            traits.userInterfaceStyle == .dark
+                ? UIColor(hex: "#495057")
+                : UIColor(hex: "#E9ECEF")
+        }
     }
 
     static var grey003: UIColor {

@@ -31,7 +31,6 @@ final class UpdateReviewViewController: BaseViewController {
 
     private let textViewPlaceHolder = "100자 이내"
 
-
     init(viewModel: UpdateReviewViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
