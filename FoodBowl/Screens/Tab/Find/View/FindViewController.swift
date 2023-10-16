@@ -210,8 +210,8 @@ extension FindViewController: UITableViewDataSource, UITableViewDelegate {
                 return UITableViewCell()
             }
 
-            cell.setupData(stores[indexPath.item])
             cell.selectionStyle = .none
+            cell.setupData(stores[indexPath.item])
 
             return cell
         } else {
@@ -222,8 +222,27 @@ extension FindViewController: UITableViewDataSource, UITableViewDelegate {
                 return UITableViewCell()
             }
 
-            cell.setupData(members[indexPath.item])
+            let member = members[indexPath.item]
+
             cell.selectionStyle = .none
+            cell.setupData(member)
+
+            if member.isMe {
+                cell.followButton.isHidden = true
+            } else {
+                cell.followButton.isHidden = false
+                cell.followButton.isSelected = member.isFollowing
+                cell.followButtonTapAction = { [weak self] _ in
+                    Task {
+                        guard let self = self else { return }
+                        if cell.followButton.isSelected {
+                            cell.followButton.isSelected = await self.viewModel.unfollowMember(memberId: member.memberId)
+                        } else {
+                            cell.followButton.isSelected = await self.viewModel.followMember(memberId: member.memberId)
+                        }
+                    }
+                }
+            }
 
             return cell
         }

@@ -22,7 +22,7 @@ final class CreateReviewViewModel {
         let response = await providerReview.request(.createReview(request: reviewRequest, images: imagesData))
         switch response {
         case .success:
-            print("success to create review")
+            print("Success to create Review")
         case .failure(let err):
             print(err.localizedDescription)
         }

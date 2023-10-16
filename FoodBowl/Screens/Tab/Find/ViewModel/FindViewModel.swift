@@ -44,7 +44,6 @@ extension FindViewModel {
     }
 
     func searchMembers(name: String) async -> [MemberBySearch] {
-        print("members--------------")
         let response = await providerMember.request(
             .getMemberBySearch(
                 form: SearchMembersRequest(
@@ -56,11 +55,37 @@ extension FindViewModel {
         switch response {
         case .success(let result):
             guard let data = try? result.map(SearchMembersResponse.self) else { return [] }
-            print(data)
             return data.memberSearchResponses
         case .failure(let err):
             print(err.localizedDescription)
             return []
+        }
+    }
+}
+
+// MARK: - Follow Method
+extension FindViewModel {
+    func followMember(memberId: Int) async -> Bool {
+        let response = await providerFollow.request(.followMember(memberId: memberId))
+        switch response {
+        case .success:
+            print("Success to Follow")
+            return true
+        case .failure(let err):
+            print(err.localizedDescription)
+            return false
+        }
+    }
+
+    func unfollowMember(memberId: Int) async -> Bool {
+        let response = await providerFollow.request(.unfollowMember(memberId: memberId))
+        switch response {
+        case .success:
+            print("Success to Unfollow")
+            return false
+        case .failure(let err):
+            print(err.localizedDescription)
+            return true
         }
     }
 }

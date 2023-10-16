@@ -73,7 +73,6 @@ final class UserInfoTableViewCell: BaseTableViewCell {
 
     override func prepareForReuse() {
         super.prepareForReuse()
-        followButton.isHidden = false
         userImageView.image = nil
     }
 
@@ -82,11 +81,6 @@ final class UserInfoTableViewCell: BaseTableViewCell {
         userFollowerLabel.text = "팔로워 \(member.followerCount.prettyNumber)명"
         if let url = member.profileImageUrl {
             userImageView.kf.setImage(with: URL(string: url))
-        }
-        
-        followButton.isSelected = member.isFollowing
-        if member.isMe {
-            followButton.isHidden = true
         }
     }
 }
