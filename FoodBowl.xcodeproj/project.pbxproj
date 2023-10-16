@@ -982,8 +982,8 @@
 				CBD1B5F22982D38300B0AD51 /* Cell */,
 				CBADC2AC2955A0FF00E56C93 /* ProfileViewController.swift */,
 				CBD1B5EE2982A5AD00B0AD51 /* UpdateProfileViewController.swift */,
-				CB4FBBF32978CFE40052D371 /* FollowingViewController.swift */,
 				CB4FBBF12978CFA90052D371 /* FollowerViewController.swift */,
+				CB4FBBF32978CFE40052D371 /* FollowingViewController.swift */,
 				CBD1B5F02982B0A300B0AD51 /* SettingViewController.swift */,
 			);
 			path = View;

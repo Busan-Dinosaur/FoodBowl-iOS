@@ -98,7 +98,7 @@ extension RecentReviewController: UICollectionViewDataSource, UICollectionViewDe
         }
 
         cell.userButtonTapAction = { [weak self] _ in
-            let profileViewController = ProfileViewController(isOwn: false, memberId: 123)
+            let profileViewController = ProfileViewController(memberId: 123)
             self?.navigationController?.pushViewController(profileViewController, animated: true)
         }
 

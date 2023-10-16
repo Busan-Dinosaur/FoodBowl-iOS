@@ -105,7 +105,7 @@ extension FeedListView: UICollectionViewDataSource, UICollectionViewDelegate {
         cell.storeInfoView.setupData(store)
 
         cell.userButtonTapAction = { [weak self] _ in
-            let profileViewController = ProfileViewController(isOwn: false, memberId: member.id)
+            let profileViewController = ProfileViewController(memberId: member.id)
 
             DispatchQueue.main.async { [weak self] in
                 self?.parentViewController?.navigationController?.pushViewController(profileViewController, animated: true)

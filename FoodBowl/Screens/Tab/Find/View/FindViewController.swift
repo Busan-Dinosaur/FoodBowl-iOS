@@ -260,7 +260,7 @@ extension FindViewController: UITableViewDataSource, UITableViewDelegate {
                 self?.navigationController?.pushViewController(storeDetailViewController, animated: true)
             }
         } else {
-            let profileViewController = ProfileViewController(isOwn: false, memberId: members[indexPath.item].memberId)
+            let profileViewController = ProfileViewController(memberId: members[indexPath.item].memberId)
             DispatchQueue.main.async { [weak self] in
                 self?.navigationController?.pushViewController(profileViewController, animated: true)
             }

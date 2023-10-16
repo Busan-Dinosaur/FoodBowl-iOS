@@ -168,7 +168,7 @@ extension StoreDetailViewController: UICollectionViewDataSource, UICollectionVie
         cell.setupData(review)
 
         cell.userButtonTapAction = { [weak self] _ in
-            let profileViewController = ProfileViewController(isOwn: false, memberId: member.id)
+            let profileViewController = ProfileViewController(memberId: member.id)
 
             DispatchQueue.main.async { [weak self] in
                 self?.navigationController?.pushViewController(profileViewController, animated: true)

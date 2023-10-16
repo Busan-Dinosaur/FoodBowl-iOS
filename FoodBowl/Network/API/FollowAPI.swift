@@ -53,7 +53,7 @@ extension FollowAPI: TargetType {
     var task: Task {
         switch self {
         case .getFollowingMember(_, let page, let size):
-            let params: [String: Any] = [
+            let params: [String: Int] = [
                 "page": page,
                 "size": size
             ]
@@ -62,7 +62,7 @@ extension FollowAPI: TargetType {
                 encoding: URLEncoding.default
             )
         case .getFollowerMember(_, let page, let size):
-            let params: [String: Any] = [
+            let params: [String: Int] = [
                 "page": page,
                 "size": size
             ]

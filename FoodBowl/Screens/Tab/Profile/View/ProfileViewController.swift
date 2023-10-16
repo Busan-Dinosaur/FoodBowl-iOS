@@ -20,8 +20,8 @@ final class ProfileViewController: MapViewController {
 
     private var viewModel = ProfileViewModel()
 
-    init(isOwn: Bool, memberId: Int = UserDefaultsManager.currentUser?.id ?? 0) {
-        self.isOwn = isOwn
+    init(memberId: Int = UserDefaultsManager.currentUser?.id ?? 0) {
+        self.isOwn = UserDefaultsManager.currentUser?.id ?? 0 == memberId
         self.memberId = memberId
         super.init(nibName: nil, bundle: nil)
     }
@@ -40,11 +40,11 @@ final class ProfileViewController: MapViewController {
 
     private lazy var profileHeaderView = ProfileHeaderView().then {
         let followerAction = UIAction { [weak self] _ in
-            let followerViewController = FollowerViewController()
+            let followerViewController = FollowerViewController(memberId: self?.memberId ?? 0)
             self?.navigationController?.pushViewController(followerViewController, animated: true)
         }
         let followingAction = UIAction { [weak self] _ in
-            let followingViewController = FollowingViewController()
+            let followingViewController = FollowingViewController(memberId: self?.memberId ?? 0)
             self?.navigationController?.pushViewController(followingViewController, animated: true)
         }
         let followButtonAction = UIAction { [weak self] _ in
