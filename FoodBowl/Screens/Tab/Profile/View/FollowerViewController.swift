@@ -102,7 +102,7 @@ extension FollowerViewController: UITableViewDataSource, UITableViewDelegate {
                         guard let self = self else { return }
                         if await self.viewModel.removeFollowingMember(memberId: member.memberId) {
                             DispatchQueue.main.async {
-                                self.userResultTableView.reloadData()
+                                self.loadData()
                             }
                         }
                     }
