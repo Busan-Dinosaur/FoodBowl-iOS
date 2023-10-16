@@ -9,15 +9,7 @@ import UIKit
 
 import Moya
 
-final class ProfileViewModel {
-    private let pageSize = 10
-
-    private let providerService = MoyaProvider<ServiceAPI>()
-    private let providerReview = MoyaProvider<ReviewAPI>()
-    private let providerStore = MoyaProvider<StoreAPI>()
-    private let providerMember = MoyaProvider<MemberAPI>()
-    private let providerFollow = MoyaProvider<FollowAPI>()
-}
+final class ProfileViewModel: BaseViewModel {}
 
 // MARK: - Get and Update Profile
 extension ProfileViewModel {
@@ -59,7 +51,7 @@ extension ProfileViewModel {
     }
 }
 
-// MARK: - Get Member's Reviews and Stores
+// MARK: - Get Reviews and Stores
 extension ProfileViewModel {
     func getReviews(location: CustomLocation, memberId: Int) async -> [Review] {
         let response = await providerReview.request(
@@ -89,33 +81,6 @@ extension ProfileViewModel {
         case .failure(let err):
             print(err.localizedDescription)
             return []
-        }
-    }
-}
-
-// MARK: - Follow Method
-extension ProfileViewModel {
-    func followMember(memberId: Int) async -> Bool {
-        let response = await providerFollow.request(.followMember(memberId: memberId))
-        switch response {
-        case .success:
-            print("Success to Follow")
-            return true
-        case .failure(let err):
-            print(err.localizedDescription)
-            return false
-        }
-    }
-
-    func unfollowMember(memberId: Int) async -> Bool {
-        let response = await providerFollow.request(.unfollowMember(memberId: memberId))
-        switch response {
-        case .success:
-            print("Success to Unfollow")
-            return false
-        case .failure(let err):
-            print(err.localizedDescription)
-            return true
         }
     }
 }

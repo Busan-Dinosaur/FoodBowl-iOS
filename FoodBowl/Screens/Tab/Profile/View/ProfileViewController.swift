@@ -48,7 +48,7 @@ final class ProfileViewController: MapViewController {
             self?.navigationController?.pushViewController(followingViewController, animated: true)
         }
         let followButtonAction = UIAction { [weak self] _ in
-            self?.followUser()
+            self?.followButtonTapped()
         }
         let editButtonAction = UIAction { [weak self] _ in
             let updateProfileViewController = UpdateProfileViewController()
@@ -167,6 +167,7 @@ final class ProfileViewController: MapViewController {
             self.profileHeaderView.userInfoLabel.text = member.introduction
             self.profileHeaderView.followerInfoButton.numberLabel.text = "\(member.followerCount)"
             self.profileHeaderView.followingInfoButton.numberLabel.text = "\(member.followingCount)"
+            self.profileHeaderView.followButton.isSelected = member.isFollowing
             if let url = member.profileImageUrl {
                 self.profileHeaderView.userImageView.kf.setImage(with: URL(string: url))
             }
@@ -192,7 +193,7 @@ final class ProfileViewController: MapViewController {
         }
     }
 
-    private func followUser() {
+    private func followButtonTapped() {
         Task {
             if profileHeaderView.followButton.isSelected {
                 profileHeaderView.followButton.isSelected = await self.viewModel.unfollowMember(memberId: memberId)

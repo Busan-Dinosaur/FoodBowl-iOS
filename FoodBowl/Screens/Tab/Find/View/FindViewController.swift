@@ -34,7 +34,7 @@ final class FindViewController: BaseViewController {
         }
     }
 
-    private var members: [MemberBySearch] = [] {
+    private var members: [Member] = [] {
         didSet {
             DispatchQueue.main.async {
                 self.findResultViewController.searchResultTableView.reloadData()

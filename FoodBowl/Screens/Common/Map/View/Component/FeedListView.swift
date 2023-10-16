@@ -32,6 +32,8 @@ final class FeedListView: ModalView {
     var loadData: (() -> Void)?
     var reloadData: (() -> Void)?
 
+    private var viewModel = BaseViewModel()
+
     private var refreshControl = UIRefreshControl()
 
     override func setupProperty() {
@@ -124,6 +126,20 @@ extension FeedListView: UICollectionViewDataSource, UICollectionViewDelegate {
                     }
                 })
                 alert.addAction(edit)
+
+                let del = UIAlertAction(title: "삭제", style: .destructive, handler: { _ in
+                    guard let self = self else { return }
+                    self.parentViewController?.showDeleteAlert {
+                        Task {
+                            if await self.viewModel.removeReview(id: member.id) {
+                                self.parentViewController?.loadData()
+                            } else {
+                                print("삭제 실패")
+                            }
+                        }
+                    }
+                })
+                alert.addAction(del)
             } else {
                 let report = UIAlertAction(title: "신고", style: .destructive, handler: { _ in
                     self?.parentViewController?.presentBlameViewController()

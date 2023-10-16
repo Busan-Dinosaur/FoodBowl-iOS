@@ -9,14 +9,7 @@ import UIKit
 
 import Moya
 
-final class FriendViewModel {
-    private let pageSize = 10
-
-    private let providerService = MoyaProvider<ServiceAPI>()
-    private let providerReview = MoyaProvider<ReviewAPI>()
-    private let providerStore = MoyaProvider<StoreAPI>()
-    private let providerFollow = MoyaProvider<FollowAPI>()
-}
+final class FriendViewModel: BaseViewModel {}
 
 // MARK: - Get Friends's Reviews and Stores
 extension FriendViewModel {

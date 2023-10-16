@@ -28,8 +28,10 @@ extension ReviewAPI: TargetType {
 
     var path: String {
         switch self {
-        case .createReview, .removeReview:
+        case .createReview:
             return "/v1/reviews"
+        case .removeReview(let id):
+            return "/v1/reviews/\(id)"
         case .getReviewsByStore:
             return "/v1/reviews/stores"
         case .getReviewsBySchool:
@@ -81,14 +83,8 @@ extension ReviewAPI: TargetType {
             }
 
             return .uploadMultipart(multipartFormData)
-        case .removeReview(let id):
-            let params: [String: Int] = [
-                "id": id
-            ]
-            return .requestParameters(
-                parameters: params,
-                encoding: URLEncoding.default
-            )
+        case .removeReview:
+            return .requestPlain
         case .getReviewsByStore(let form, let lastReviewId, let pageSize):
             var params: [String: Any] = [
                 "storeId": form.storeId,

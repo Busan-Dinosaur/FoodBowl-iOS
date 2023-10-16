@@ -9,13 +9,7 @@ import UIKit
 
 import Moya
 
-final class UnivViewModel {
-    private let pageSize = 10
-
-    private let providerService = MoyaProvider<ServiceAPI>()
-    private let providerReview = MoyaProvider<ReviewAPI>()
-    private let providerStore = MoyaProvider<StoreAPI>()
-}
+final class UnivViewModel: BaseViewModel {}
 
 // MARK: - Get Univs
 extension UnivViewModel {

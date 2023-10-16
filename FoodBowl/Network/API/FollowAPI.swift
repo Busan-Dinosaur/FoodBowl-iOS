@@ -13,8 +13,8 @@ enum FollowAPI {
     case followMember(memberId: Int)
     case unfollowMember(memberId: Int)
     case removeFollower(memberId: Int)
-    case getFollowingMember(memberId: Int)
-    case getFollowerMember(memberId: Int)
+    case getFollowingMember(memberId: Int, page: Int, size: Int)
+    case getFollowerMember(memberId: Int, page: Int, size: Int)
 }
 
 extension FollowAPI: TargetType {
@@ -32,9 +32,9 @@ extension FollowAPI: TargetType {
             return "/v1/follows/\(memberId)/unfollow"
         case .removeFollower(let memberId):
             return "/v1/follows/followers/\(memberId)"
-        case .getFollowingMember(let memberId):
+        case .getFollowingMember(let memberId, _, _):
             return "/v1/follows/\(memberId)/followings"
-        case .getFollowerMember(let memberId):
+        case .getFollowerMember(let memberId, _, _):
             return "/v1/follows/\(memberId)/followers"
         }
     }
@@ -52,6 +52,24 @@ extension FollowAPI: TargetType {
 
     var task: Task {
         switch self {
+        case .getFollowingMember(_, let page, let size):
+            let params: [String: Any] = [
+                "page": page,
+                "size": size
+            ]
+            return .requestParameters(
+                parameters: params,
+                encoding: URLEncoding.default
+            )
+        case .getFollowerMember(_, let page, let size):
+            let params: [String: Any] = [
+                "page": page,
+                "size": size
+            ]
+            return .requestParameters(
+                parameters: params,
+                encoding: URLEncoding.default
+            )
         default:
             return .requestPlain
         }

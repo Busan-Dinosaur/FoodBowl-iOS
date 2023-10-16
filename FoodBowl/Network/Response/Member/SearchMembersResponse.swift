@@ -9,11 +9,11 @@ import Foundation
 
 // MARK: - SearchMembersResponse
 struct SearchMembersResponse: Codable {
-    let memberSearchResponses: [MemberBySearch]
+    let memberSearchResponses: [Member]
 }
 
-// MARK: - MemberSearchResponse
-struct MemberBySearch: Codable {
+// MARK: - Member
+struct Member: Codable {
     let memberId: Int
     let nickname: String
     let profileImageUrl: String?

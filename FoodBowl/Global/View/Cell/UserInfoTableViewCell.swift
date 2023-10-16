@@ -76,7 +76,7 @@ final class UserInfoTableViewCell: BaseTableViewCell {
         userImageView.image = nil
     }
 
-    func setupData(_ member: MemberBySearch) {
+    func setupData(_ member: Member) {
         userNameLabel.text = member.nickname
         userFollowerLabel.text = "팔로워 \(member.followerCount.prettyNumber)명"
         if let url = member.profileImageUrl {
