@@ -88,7 +88,15 @@ class MapViewController: BaseViewController {
 
     let grabbarView = GrabbarView()
 
-    lazy var feedListView = FeedListView(loadData: { self.loadData() }, reloadData: { self.reloadData() })
+    lazy var feedListView = FeedListView(
+        loadData: { self.loadData() },
+        reloadData: { self.reloadData() },
+        presentBlameVC: self.presentBlameVC
+    )
+
+    lazy var presentBlameVC: (Int, String) -> Void = { targetId, blameTarget in
+        self.presentBlameViewController(targetId: targetId, blameTarget: blameTarget)
+    }
 
     // MARK: - life cycle
     override func viewDidLoad() {

@@ -31,15 +31,17 @@ final class FeedListView: ModalView {
 
     var loadData: () -> Void
     var reloadData: () -> Void
+    var presentBlameVC: (Int, String) -> Void
 
     private var viewModel = BaseViewModel()
 
     private var refreshControl = UIRefreshControl()
 
     // MARK: - init
-    init(loadData: @escaping (() -> Void), reloadData: @escaping (() -> Void)) {
+    init(loadData: @escaping (() -> Void), reloadData: @escaping (() -> Void), presentBlameVC: @escaping (Int, String) -> Void) {
         self.loadData = loadData
         self.reloadData = reloadData
+        self.presentBlameVC = presentBlameVC
         super.init(frame: .zero)
     }
 
@@ -146,7 +148,7 @@ extension FeedListView: UICollectionViewDataSource, UICollectionViewDelegate {
                 alert.addAction(del)
             } else {
                 let report = UIAlertAction(title: "신고", style: .destructive, handler: { _ in
-                    self?.parentViewController?.presentBlameViewController()
+                    self?.presentBlameVC(review.id, "REVIEW")
                 })
                 alert.addAction(report)
             }

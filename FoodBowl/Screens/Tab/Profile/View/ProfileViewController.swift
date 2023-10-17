@@ -38,6 +38,24 @@ final class ProfileViewController: MapViewController {
         $0.frame = CGRect(x: 0, y: 0, width: 200, height: 0)
     }
 
+    lazy var optionButton = OptionButton().then {
+        let optionButtonAction = UIAction { [weak self] _ in
+            let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+
+            let report = UIAlertAction(title: "신고하기", style: .destructive, handler: { _ in
+                guard let self else { return }
+                self.presentBlameViewController(targetId: self.memberId, blameTarget: "MEMBER")
+            })
+            let cancel = UIAlertAction(title: "취소", style: .cancel, handler: nil)
+
+            alert.addAction(cancel)
+            alert.addAction(report)
+
+            self?.present(alert, animated: true, completion: nil)
+        }
+        $0.addAction(optionButtonAction, for: .touchUpInside)
+    }
+
     private lazy var profileHeaderView = ProfileHeaderView().then {
         let followerAction = UIAction { [weak self] _ in
             let followerViewController = FollowerViewController(memberId: self?.memberId ?? 0)
@@ -98,16 +116,6 @@ final class ProfileViewController: MapViewController {
     override func configureUI() {
         super.configureUI()
         modalMaxHeight = UIScreen.main.bounds.height - BaseSize.topAreaPadding - navBarHeight - 180
-        feedListView.loadData = {
-            Task {
-                await self.loadReviews()
-            }
-        }
-        feedListView.reloadData = {
-            Task {
-                print("추가 데이터")
-            }
-        }
     }
 
     override func setupNavigationBar() {
@@ -123,6 +131,9 @@ final class ProfileViewController: MapViewController {
         } else {
             if UserDefaultsManager.currentUser?.id ?? 0 == memberId {
                 profileHeaderView.followButton.isHidden = true
+            } else {
+                let optionButton = makeBarButtonItem(with: optionButton)
+                navigationItem.rightBarButtonItem = optionButton
             }
             profileHeaderView.editButton.isHidden = true
         }
@@ -219,15 +230,6 @@ final class ProfileViewController: MapViewController {
             }
 
             await setUpMemberProfile()
-        }
-    }
-
-    override func presentBlameViewController() {
-        let createReviewController = BlameViewController(targetId: 123, blameTarget: "Member")
-        let navigationController = UINavigationController(rootViewController: createReviewController)
-        navigationController.modalPresentationStyle = .fullScreen
-        DispatchQueue.main.async {
-            self.present(navigationController, animated: true)
         }
     }
 }

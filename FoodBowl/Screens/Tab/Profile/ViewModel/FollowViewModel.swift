@@ -9,11 +9,11 @@ final class FollowViewModel: BaseViewModel {}
 
 // MARK: - Member Method
 extension FollowViewModel {
-    func getFollowerMembers(memberId: Int) async -> [MemberByFollow] {
+    func getFollowerMembers(memberId: Int, page: Int = 0) async -> [MemberByFollow] {
         let response = await providerFollow.request(
             .getFollowerMember(
                 memberId: memberId,
-                page: 0,
+                page: page,
                 size: size
             )
         )
@@ -27,11 +27,11 @@ extension FollowViewModel {
         }
     }
 
-    func getFollowingMembers(memberId: Int) async -> [MemberByFollow] {
+    func getFollowingMembers(memberId: Int, page: Int = 0) async -> [MemberByFollow] {
         let response = await providerFollow.request(
             .getFollowingMember(
                 memberId: memberId,
-                page: 0,
+                page: page,
                 size: size
             )
         )

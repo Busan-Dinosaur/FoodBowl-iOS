@@ -115,7 +115,7 @@ extension RecentReviewController: UICollectionViewDataSource, UICollectionViewDe
 //                }
 //            })
             let report = UIAlertAction(title: "신고", style: .destructive, handler: { _ in
-                self?.presentBlameViewController()
+//                self?.presentBlameVC(review.id, "REVIEW")
             })
             let cancel = UIAlertAction(title: "취소", style: .cancel, handler: nil)
 

@@ -212,7 +212,7 @@ extension StoreDetailViewController: UICollectionViewDataSource, UICollectionVie
                 alert.addAction(del)
             } else {
                 let report = UIAlertAction(title: "신고", style: .destructive, handler: { _ in
-                    self?.presentBlameViewController()
+                    self?.presentBlameViewController(targetId: review.id, blameTarget: "REVIEW")
                 })
                 alert.addAction(report)
             }

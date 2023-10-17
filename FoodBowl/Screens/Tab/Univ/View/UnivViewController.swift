@@ -80,16 +80,6 @@ final class UnivViewController: MapViewController {
         feedListView.reviews = await viewModel.getReviews(location: location, lastReviewId: viewModel.lastReviewId)
     }
 
-    override func presentBlameViewController() {
-        let createReviewController = BlameViewController(targetId: 123, blameTarget: "Member")
-        let navigationController = UINavigationController(rootViewController: createReviewController)
-        navigationController.modalPresentationStyle = .fullScreen
-
-        DispatchQueue.main.async {
-            self.present(navigationController, animated: true)
-        }
-    }
-
     override func currentLocation() {
         guard let univ = UserDefaultsManager.currentUniv else { return }
 
