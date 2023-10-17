@@ -119,17 +119,9 @@ final class BlameViewController: BaseViewController {
         navigationItem.rightBarButtonItem = closeButton
     }
 
-    private func showAlert(message: String) {
-        let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
-        let cancel = UIAlertAction(title: "닫기", style: .cancel, handler: nil)
-        alert.addAction(cancel)
-
-        present(alert, animated: true, completion: nil)
-    }
-
     private func tappedCompleteButton() {
         if commentTextView.text == "" {
-            showAlert(message: "내용을 작성하지 않았습니다.")
+            makeAlert(title: "신고 내용을 작성해주세요.")
             return
         }
 
@@ -155,6 +147,7 @@ final class BlameViewController: BaseViewController {
                 if let errorResponse = error.errorResponse {
                     print("에러 코드: \(errorResponse.errorCode)")
                     print("에러 메시지: \(errorResponse.message)")
+                    self.makeAlert(title: errorResponse.message)
                 } else {
                     print("네트워크 에러: \(error.localizedDescription)")
                 }

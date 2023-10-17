@@ -162,17 +162,9 @@ final class UpdateReviewViewController: BaseViewController {
         navigationItem.rightBarButtonItem = closeButton
     }
 
-    private func showAlert(message: String) {
-        let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
-        let cancel = UIAlertAction(title: "닫기", style: .cancel, handler: nil)
-        alert.addAction(cancel)
-
-        present(alert, animated: true, completion: nil)
-    }
-
     private func tappedCompleteButton() {
         if viewModel.reviewContent == "" {
-            showAlert(message: "한줄평을 작성하지 않았습니다.")
+            makeAlert(title: "한줄평을 남겨주세요.")
             return
         }
 
