@@ -24,16 +24,6 @@ final class FriendViewController: MapViewController {
     override func configureUI() {
         super.configureUI()
         bookmarkButton.isHidden = false
-        feedListView.loadData = {
-            Task {
-                await self.setupReviews()
-            }
-        }
-        feedListView.reloadData = {
-            Task {
-                print("추가 데이터")
-            }
-        }
     }
 
     override func setupNavigationBar() {
@@ -46,12 +36,18 @@ final class FriendViewController: MapViewController {
 
     override func loadData() {
         Task {
-            await setupReviews()
-            await setupStores()
+            await loadReviews()
+            await loadStores()
         }
     }
 
-    private func setupReviews() async {
+    override func reloadData() {
+        Task {
+            await reloadReviews()
+        }
+    }
+
+    private func loadReviews() async {
         guard let location = customLocation else { return }
         if bookmarkButton.isSelected {
             feedListView.reviews = await viewModel.getReviewsByBookmark(location: location)
@@ -60,12 +56,21 @@ final class FriendViewController: MapViewController {
         }
     }
 
-    private func setupStores() async {
+    private func loadStores() async {
         guard let location = customLocation else { return }
         if bookmarkButton.isSelected {
             stores = await viewModel.getStoresByBookmark(location: location)
         } else {
             stores = await viewModel.getStores(location: location)
+        }
+    }
+
+    private func reloadReviews() async {
+        guard let location = customLocation else { return }
+        if bookmarkButton.isSelected {
+            feedListView.reviews = await viewModel.getReviewsByBookmark(location: location, lastReviewId: viewModel.lastReviewId)
+        } else {
+            feedListView.reviews = await viewModel.getReviews(location: location, lastReviewId: viewModel.lastReviewId)
         }
     }
 }

@@ -107,9 +107,7 @@ final class StoreDetailViewController: BaseViewController {
 
         title = isFriend ? "친구들의 후기" : "모두의 후기"
 
-        Task {
-            await setupReviews()
-        }
+        loadData()
     }
 
     private func setupRefreshControl() {
@@ -123,13 +121,24 @@ final class StoreDetailViewController: BaseViewController {
 
     override func loadData() {
         Task {
-            await setupReviews()
+            await loadReviews()
         }
     }
 
-    private func setupReviews() async {
+    override func reloadData() {
+        Task {
+            await reloadReviews()
+        }
+    }
+
+    private func loadReviews() async {
         let filter = isFriend ? "FRIEND" : "ALL"
         reviews = await viewModel.getReviews(storeId: storeId, filter: filter)
+    }
+
+    private func reloadReviews() async {
+        let filter = isFriend ? "FRIEND" : "ALL"
+        reviews = await viewModel.getReviews(storeId: storeId, filter: filter, lastReviewId: viewModel.lastReviewId)
     }
 }
 

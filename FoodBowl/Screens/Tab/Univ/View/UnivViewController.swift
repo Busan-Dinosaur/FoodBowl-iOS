@@ -31,20 +31,6 @@ final class UnivViewController: MapViewController {
         $0.label.text = "대학가"
     }
 
-    override func configureUI() {
-        super.configureUI()
-        feedListView.loadData = {
-            Task {
-                await self.setupReviews()
-            }
-        }
-        feedListView.reloadData = {
-            Task {
-                print("추가 데이터")
-            }
-        }
-    }
-
     override func setupNavigationBar() {
         super.setupNavigationBar()
         let leftOffsetUnivTitleButton = removeBarButtonItemOffset(with: univTitleButton, offsetX: 10)
@@ -68,19 +54,30 @@ final class UnivViewController: MapViewController {
 
     override func loadData() {
         Task {
-            await setupReviews()
-            await setupStores()
+            await loadReviews()
+            await loadStores()
         }
     }
 
-    private func setupReviews() async {
+    override func reloadData() {
+        Task {
+            await reloadReviews()
+        }
+    }
+
+    private func loadReviews() async {
         guard let location = customLocation else { return }
         feedListView.reviews = await viewModel.getReviews(location: location)
     }
 
-    private func setupStores() async {
+    private func loadStores() async {
         guard let location = customLocation else { return }
         stores = await viewModel.getStores(location: location)
+    }
+
+    private func reloadReviews() async {
+        guard let location = customLocation else { return }
+        feedListView.reviews = await viewModel.getReviews(location: location, lastReviewId: viewModel.lastReviewId)
     }
 
     override func presentBlameViewController() {

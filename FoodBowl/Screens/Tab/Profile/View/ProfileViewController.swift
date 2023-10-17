@@ -137,7 +137,7 @@ final class ProfileViewController: MapViewController {
 
     override func reloadData() {
         Task {
-            await loadReviews()
+            await reloadReviews()
         }
     }
 
@@ -196,6 +196,11 @@ final class ProfileViewController: MapViewController {
         feedListView.reviews = await viewModel.getReviews(location: location, memberId: memberId)
     }
 
+    private func loadStores() async {
+        guard let location = customLocation else { return }
+        stores = await viewModel.getStores(location: location, memberId: memberId)
+    }
+
     private func reloadReviews() async {
         guard let location = customLocation else { return }
         feedListView.reviews += await viewModel.getReviews(
@@ -203,11 +208,6 @@ final class ProfileViewController: MapViewController {
             memberId: memberId,
             lastReviewId: viewModel.lastReviewId
         )
-    }
-
-    private func loadStores() async {
-        guard let location = customLocation else { return }
-        stores = await viewModel.getStores(location: location, memberId: memberId)
     }
 
     private func followButtonTapped() {

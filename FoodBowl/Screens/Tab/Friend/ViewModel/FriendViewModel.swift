@@ -13,17 +13,18 @@ final class FriendViewModel: BaseViewModel {}
 
 // MARK: - Get Friends's Reviews and Stores
 extension FriendViewModel {
-    func getReviews(location: CustomLocation) async -> [Review] {
+    func getReviews(location: CustomLocation, lastReviewId: Int? = nil) async -> [Review] {
         let response = await providerReview.request(
             .getReviewsByFollowing(
                 form: location,
-                lastReviewId: nil,
+                lastReviewId: lastReviewId,
                 pageSize: pageSize
             )
         )
         switch response {
         case .success(let result):
             guard let data = try? result.map(ReviewResponse.self) else { return [Review]() }
+            self.lastReviewId = data.page.lastId
             return data.reviews
         case .failure(let err):
             handleError(err)
@@ -43,17 +44,18 @@ extension FriendViewModel {
         }
     }
 
-    func getReviewsByBookmark(location: CustomLocation) async -> [Review] {
+    func getReviewsByBookmark(location: CustomLocation, lastReviewId: Int? = nil) async -> [Review] {
         let response = await providerReview.request(
             .getReviewsByBookmark(
                 form: location,
-                lastReviewId: nil,
+                lastReviewId: lastReviewId,
                 pageSize: pageSize
             )
         )
         switch response {
         case .success(let result):
             guard let data = try? result.map(ReviewResponse.self) else { return [Review]() }
+            self.lastReviewId = data.page.lastId
             return data.reviews
         case .failure(let err):
             handleError(err)

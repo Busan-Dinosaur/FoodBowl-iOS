@@ -28,19 +28,20 @@ extension UnivViewModel {
 
 // MARK: - Get Univ's Reviews and Stores
 extension UnivViewModel {
-    func getReviews(location: CustomLocation) async -> [Review] {
+    func getReviews(location: CustomLocation, lastReviewId: Int? = nil) async -> [Review] {
         guard let schoolId = UserDefaultsManager.currentUniv?.id else { return [] }
         let response = await providerReview.request(
             .getReviewsBySchool(
                 form: location,
                 schoolId: schoolId,
-                lastReviewId: nil,
+                lastReviewId: lastReviewId,
                 pageSize: pageSize
             )
         )
         switch response {
         case .success(let result):
             guard let data = try? result.map(ReviewResponse.self) else { return [] }
+            self.lastReviewId = data.page.lastId
             return data.reviews
         case .failure(let err):
             handleError(err)
