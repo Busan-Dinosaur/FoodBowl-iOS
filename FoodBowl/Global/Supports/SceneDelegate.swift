@@ -16,12 +16,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
         
-        renewToken()
         LocationManager.shared.checkLocationService()
-
-        let isLogin = UserDefaultStorage.isLogin
+        
         window?.rootViewController = UINavigationController(
-            rootViewController: isLogin ? TabBarController() : OnboardingViewController()
+            rootViewController: UserDefaultStorage.isLogin ? TabBarController() : OnboardingViewController()
         )
         window?.makeKeyAndVisible()
     }
@@ -61,20 +59,5 @@ extension SceneDelegate {
         UserDefaultHandler.clearAllData()
         UserDefaultsManager.currentUser = nil
         window?.rootViewController = OnboardingViewController()
-    }
-    
-    func renewToken() {
-        let providerService = MoyaProvider<ServiceAPI>()
-        providerService.request(.renew) { response in
-            switch response {
-            case .success(let result):
-                guard let data = try? result.map(RenewResponse.self) else { return }
-                KeychainManager.set(data.accessToken, for: .accessToken)
-                KeychainManager.set(data.refreshToken, for: .refreshToken)
-                print(data.accessToken)
-            case .failure(let err):
-                print(err.localizedDescription)
-            }
-        }
     }
 }
