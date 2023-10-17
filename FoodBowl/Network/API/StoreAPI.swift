@@ -119,7 +119,7 @@ extension StoreAPI: TargetType {
             ]
             return .requestParameters(
                 parameters: params,
-                encoding: URLEncoding.default
+                encoding: URLEncoding(destination: .queryString)
             )
         case .removeBookmark(let storeId):
             let params: [String: Int] = [
