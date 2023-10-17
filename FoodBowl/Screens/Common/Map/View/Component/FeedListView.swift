@@ -100,9 +100,7 @@ extension FeedListView: UICollectionViewDataSource, UICollectionViewDelegate {
         let store = reviews[indexPath.item].store
         let isOwn = UserDefaultsManager.currentUser?.id ?? 0 == member.id
 
-        cell.userInfoView.setupData(member)
-        cell.setupData(review)
-        cell.storeInfoView.setupData(store)
+        cell.setupData(reviews[indexPath.item])
 
         cell.userButtonTapAction = { [weak self] _ in
             let profileViewController = ProfileViewController(memberId: member.id)
@@ -131,7 +129,7 @@ extension FeedListView: UICollectionViewDataSource, UICollectionViewDelegate {
                     guard let self = self else { return }
                     self.parentViewController?.showDeleteAlert {
                         Task {
-                            if await self.viewModel.removeReview(id: member.id) {
+                            if await self.viewModel.removeReview(id: review.id) {
                                 self.parentViewController?.loadData()
                             } else {
                                 print("삭제 실패")
@@ -165,7 +163,14 @@ extension FeedListView: UICollectionViewDataSource, UICollectionViewDelegate {
         }
 
         cell.bookmarkButtonTapAction = { [weak self] _ in
-            cell.storeInfoView.bookmarkButton.isSelected.toggle()
+            guard let self = self else { return }
+            Task {
+                if cell.storeInfoView.bookmarkButton.isSelected {
+                    cell.storeInfoView.bookmarkButton.isSelected = await self.viewModel.removeBookmark(storeId: store.id)
+                } else {
+                    cell.storeInfoView.bookmarkButton.isSelected = await self.viewModel.createBookmark(storeId: store.id)
+                }
+            }
         }
 
         return cell

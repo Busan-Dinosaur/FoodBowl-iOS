@@ -17,19 +17,3 @@ struct Feed: Identifiable {
     var photoes: [UIImage]?
     var comment: String?
 }
-
-// MARK: - Categories
-
-enum Categories: String, CaseIterable {
-    case cafe = "카페"
-    case pub = "술집"
-    case korean = "한식"
-    case western = "양식"
-    case japanese = "일식"
-    case chinese = "중식"
-    case chicken = "치킨"
-    case snack = "분식"
-    case seafood = "해산물"
-    case salad = "샐러드"
-    case etc = "기타"
-}

@@ -81,6 +81,8 @@ final class UserInfoTableViewCell: BaseTableViewCell {
         userFollowerLabel.text = "팔로워 \(member.followerCount.prettyNumber)명"
         if let url = member.profileImageUrl {
             userImageView.kf.setImage(with: URL(string: url))
+        } else {
+            userImageView.image = ImageLiteral.defaultProfile
         }
     }
 
@@ -89,6 +91,8 @@ final class UserInfoTableViewCell: BaseTableViewCell {
         userFollowerLabel.text = "팔로워 \(member.followerCount.prettyNumber)명"
         if let url = member.profileImageUrl {
             userImageView.kf.setImage(with: URL(string: url))
+        } else {
+            userImageView.image = ImageLiteral.defaultProfile
         }
     }
 }

@@ -18,3 +18,8 @@ extension MoyaProvider {
         }
     }
 }
+
+struct ErrorResponse: Codable {
+    let errorCode: String
+    let message: String
+}

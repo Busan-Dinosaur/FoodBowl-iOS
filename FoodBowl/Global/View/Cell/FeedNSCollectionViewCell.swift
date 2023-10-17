@@ -96,7 +96,7 @@ final class FeedNSCollectionViewCell: BaseCollectionViewCell {
     func removePhotoList() {
         photoListView.isHidden = true
 
-        photoListView.snp.makeConstraints {
+        photoListView.snp.remakeConstraints {
             $0.top.equalTo(commentLabel.snp.bottom)
             $0.leading.trailing.equalToSuperview()
             $0.bottom.equalToSuperview().inset(14)

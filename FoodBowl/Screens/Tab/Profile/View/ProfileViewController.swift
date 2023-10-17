@@ -153,6 +153,8 @@ final class ProfileViewController: MapViewController {
                 self.profileHeaderView.followingInfoButton.numberLabel.text = "\(member.followingCount)"
                 if let url = member.profileImageUrl {
                     self.profileHeaderView.userImageView.kf.setImage(with: URL(string: url))
+                } else {
+                    self.profileHeaderView.userImageView.image = ImageLiteral.defaultProfile
                 }
             }
         }
@@ -170,6 +172,8 @@ final class ProfileViewController: MapViewController {
             self.profileHeaderView.followButton.isSelected = member.isFollowing
             if let url = member.profileImageUrl {
                 self.profileHeaderView.userImageView.kf.setImage(with: URL(string: url))
+            } else {
+                self.profileHeaderView.userImageView.image = ImageLiteral.defaultProfile
             }
 
             if !self.isOwn {
@@ -200,6 +204,8 @@ final class ProfileViewController: MapViewController {
             } else {
                 profileHeaderView.followButton.isSelected = await self.viewModel.followMember(memberId: memberId)
             }
+
+            await setUpMemberProfile()
         }
     }
 

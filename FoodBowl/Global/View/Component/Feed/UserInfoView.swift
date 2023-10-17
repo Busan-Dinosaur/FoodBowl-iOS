@@ -75,6 +75,8 @@ final class UserInfoView: UIButton {
     func setupData(_ member: Writer) {
         if let url = member.profileImageUrl {
             userImageView.kf.setImage(with: URL(string: url))
+        } else {
+            userImageView.image = ImageLiteral.defaultProfile
         }
         userNameLabel.text = member.nickname
         userFollowerLabel.text = "팔로워 \(member.followerCount.prettyNumber)명"

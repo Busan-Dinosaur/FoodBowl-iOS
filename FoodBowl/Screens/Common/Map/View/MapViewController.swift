@@ -159,7 +159,7 @@ class MapViewController: BaseViewController {
                     latitude: store.y,
                     longitude: store.x
                 ),
-                glyphImage: ImageLiteral.korean,
+                glyphImage: Categories(rawValue: store.categoryName)?.icon,
                 handler: { [weak self] in
                     let storeDetailViewController = StoreDetailViewController(storeId: store.id)
                     storeDetailViewController.title = store.name

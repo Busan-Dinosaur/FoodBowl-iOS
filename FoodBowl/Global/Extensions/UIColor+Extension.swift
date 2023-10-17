@@ -20,7 +20,7 @@ extension UIColor {
         return UIColor { traits -> UIColor in
             traits.userInterfaceStyle == .dark
                 ? UIColor(hex: "#F8F9FA")
-                : UIColor(hex: "#343A40")
+                : UIColor(hex: "#212529")
         }
     }
 

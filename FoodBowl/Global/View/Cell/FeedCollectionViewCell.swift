@@ -88,7 +88,14 @@ final class FeedCollectionViewCell: BaseCollectionViewCell {
         createPhotoList()
     }
 
-    func setupData(_ review: ReviewContent) {
+    func setupData(_ review: Review) {
+        let member = review.writer
+        let store = review.store
+        let review = review.review
+
+        userInfoView.setupData(member)
+        storeInfoView.setupData(store)
+
         commentLabel.text = review.content
         if review.imagePaths.isEmpty {
             removePhotoList()

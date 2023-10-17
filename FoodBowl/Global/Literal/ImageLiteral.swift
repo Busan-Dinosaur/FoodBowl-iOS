@@ -31,6 +31,7 @@ enum ImageLiteral {
 
     static var vegan: UIImage { .load(name: "vegan") }
     static var cafe: UIImage { .load(name: "cafe") }
+    static var pub: UIImage { .load(name: "pub") }
     static var korean: UIImage { .load(name: "korean") }
     static var western: UIImage { .load(name: "western") }
     static var japanese: UIImage { .load(name: "japanese") }
@@ -39,6 +40,7 @@ enum ImageLiteral {
     static var snack: UIImage { .load(name: "snack") }
     static var seafood: UIImage { .load(name: "seafood") }
     static var salad: UIImage { .load(name: "salad") }
+    static var etc: UIImage { .load(name: "etc") }
 }
 
 extension UIImage {
