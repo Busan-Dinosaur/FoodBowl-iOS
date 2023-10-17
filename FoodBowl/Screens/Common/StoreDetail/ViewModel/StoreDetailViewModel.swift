@@ -34,8 +34,17 @@ extension StoreDetailViewModel {
             guard let data = try? result.map(ReviewByStoreResponse.self) else { return [] }
             return data.storeReviewContentResponses
         case .failure(let err):
-            print(err.localizedDescription)
+            handleError(err)
             return []
+        }
+    }
+
+    func handleError(_ error: MoyaError) {
+        if let errorResponse = error.errorResponse {
+            print("에러 코드: \(errorResponse.errorCode)")
+            print("에러 메시지: \(errorResponse.message)")
+        } else {
+            print("네트워크 에러: \(error.localizedDescription)")
         }
     }
 }

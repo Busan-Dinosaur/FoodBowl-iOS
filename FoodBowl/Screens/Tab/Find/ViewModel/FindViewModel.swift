@@ -30,7 +30,7 @@ extension FindViewModel {
             guard let data = try? result.map(SearchStoresResponse.self) else { return [] }
             return data.searchResponses
         case .failure(let err):
-            print(err.localizedDescription)
+            handleError(err)
             return []
         }
     }
@@ -49,7 +49,7 @@ extension FindViewModel {
             guard let data = try? result.map(SearchMembersResponse.self) else { return [] }
             return data.memberSearchResponses
         case .failure(let err):
-            print(err.localizedDescription)
+            handleError(err)
             return []
         }
     }

@@ -20,7 +20,7 @@ extension ProfileViewModel {
             guard let data = try? result.map(MemberProfileResponse.self) else { return nil }
             return data
         case .failure(let err):
-            print(err.localizedDescription)
+            handleError(err)
             return nil
         }
     }
@@ -35,7 +35,7 @@ extension ProfileViewModel {
                 UserDefaultsManager.currentUser = currentUser
             }
         case .failure(let err):
-            print(err.localizedDescription)
+            handleError(err)
         }
     }
 
@@ -44,9 +44,9 @@ extension ProfileViewModel {
         let response = await providerMember.request(.updateMemberProfileImage(image: imageData))
         switch response {
         case .success:
-            print("success")
+            return
         case .failure(let err):
-            print(err.localizedDescription)
+            handleError(err)
         }
     }
 }
@@ -67,7 +67,7 @@ extension ProfileViewModel {
             guard let data = try? result.map(ReviewResponse.self) else { return [] }
             return data.reviews
         case .failure(let err):
-            print(err.localizedDescription)
+            handleError(err)
             return []
         }
     }
@@ -79,7 +79,7 @@ extension ProfileViewModel {
             guard let data = try? result.map(StoreResponse.self) else { return [] }
             return data.stores
         case .failure(let err):
-            print(err.localizedDescription)
+            handleError(err)
             return []
         }
     }

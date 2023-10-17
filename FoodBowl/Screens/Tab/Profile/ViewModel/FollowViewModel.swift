@@ -20,10 +20,9 @@ extension FollowViewModel {
         switch response {
         case .success(let result):
             guard let data = try? result.map(FollowMemberResponse.self) else { return [] }
-            print(data)
             return data.content
         case .failure(let err):
-            print(err.localizedDescription)
+            handleError(err)
             return []
         }
     }
@@ -39,10 +38,9 @@ extension FollowViewModel {
         switch response {
         case .success(let result):
             guard let data = try? result.map(FollowMemberResponse.self) else { return [] }
-            print(data)
             return data.content
         case .failure(let err):
-            print(err.localizedDescription)
+            handleError(err)
             return []
         }
     }
@@ -51,10 +49,9 @@ extension FollowViewModel {
         let response = await providerFollow.request(.removeFollower(memberId: memberId))
         switch response {
         case .success:
-            print("Remove Following Member")
             return true
         case .failure(let err):
-            print(err.localizedDescription)
+            handleError(err)
             return false
         }
     }

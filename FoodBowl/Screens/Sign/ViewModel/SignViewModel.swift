@@ -22,7 +22,7 @@ final class SignInViewModel {
             KeychainManager.set(data.refreshToken, for: .refreshToken)
             UserDefaultHandler.setIsLogin(isLogin: true)
         case .failure(let err):
-            print(err.localizedDescription)
+            handleError(err)
         }
     }
 
@@ -33,7 +33,16 @@ final class SignInViewModel {
             guard let data = try? result.map(MemberProfileResponse.self) else { return }
             UserDefaultsManager.currentUser = data
         case .failure(let err):
-            print(err.localizedDescription)
+            handleError(err)
+        }
+    }
+
+    func handleError(_ error: MoyaError) {
+        if let errorResponse = error.errorResponse {
+            print("에러 코드: \(errorResponse.errorCode)")
+            print("에러 메시지: \(errorResponse.message)")
+        } else {
+            print("네트워크 에러: \(error.localizedDescription)")
         }
     }
 }

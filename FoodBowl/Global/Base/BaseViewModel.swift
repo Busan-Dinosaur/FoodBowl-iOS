@@ -26,10 +26,9 @@ extension BaseViewModel {
         let response = await providerReview.request(.removeReview(id: id))
         switch response {
         case .success:
-            print("Success to Remove Review")
             return true
         case .failure(let err):
-            print(err.localizedDescription)
+            handleError(err)
             return false
         }
     }
@@ -38,15 +37,9 @@ extension BaseViewModel {
         let response = await providerStore.request(.createBookmark(storeId: storeId))
         switch response {
         case .success:
-            print("Success to Create Bookmark")
             return true
-        case .failure(let error):
-            if let errorResponse = error.errorResponse {
-                print("에러 코드: \(errorResponse.errorCode)")
-                print("에러 메시지: \(errorResponse.message)")
-            } else {
-                print("네트워크 에러: \(error.localizedDescription)")
-            }
+        case .failure(let err):
+            handleError(err)
             return false
         }
     }
@@ -55,10 +48,9 @@ extension BaseViewModel {
         let response = await providerStore.request(.removeBookmark(storeId: storeId))
         switch response {
         case .success:
-            print("Success to Remove Bookmark")
             return false
         case .failure(let err):
-            print(err.localizedDescription)
+            handleError(err)
             return true
         }
     }
@@ -70,10 +62,9 @@ extension BaseViewModel {
         let response = await providerFollow.request(.followMember(memberId: memberId))
         switch response {
         case .success:
-            print("Success to Follow")
             return true
         case .failure(let err):
-            print(err.localizedDescription)
+            handleError(err)
             return false
         }
     }
@@ -82,11 +73,21 @@ extension BaseViewModel {
         let response = await providerFollow.request(.unfollowMember(memberId: memberId))
         switch response {
         case .success:
-            print("Success to Unfollow")
             return false
         case .failure(let err):
-            print(err.localizedDescription)
+            handleError(err)
             return true
+        }
+    }
+}
+
+extension BaseViewModel {
+    func handleError(_ error: MoyaError) {
+        if let errorResponse = error.errorResponse {
+            print("에러 코드: \(errorResponse.errorCode)")
+            print("에러 메시지: \(errorResponse.message)")
+        } else {
+            print("네트워크 에러: \(error.localizedDescription)")
         }
     }
 }

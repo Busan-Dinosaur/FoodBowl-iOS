@@ -20,7 +20,7 @@ extension UnivViewModel {
             guard let data = try? result.map(SchoolResponse.self) else { return [School]() }
             return data.schools
         case .failure(let err):
-            print(err.localizedDescription)
+            handleError(err)
             return [School]()
         }
     }
@@ -43,7 +43,7 @@ extension UnivViewModel {
             guard let data = try? result.map(ReviewResponse.self) else { return [] }
             return data.reviews
         case .failure(let err):
-            print(err.localizedDescription)
+            handleError(err)
             return []
         }
     }
@@ -56,7 +56,7 @@ extension UnivViewModel {
             guard let data = try? result.map(StoreResponse.self) else { return [Store]() }
             return data.stores
         case .failure(let err):
-            print(err.localizedDescription)
+            handleError(err)
             return [Store]()
         }
     }

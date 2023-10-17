@@ -22,9 +22,9 @@ final class CreateReviewViewModel {
         let response = await providerReview.request(.createReview(request: reviewRequest, images: imagesData))
         switch response {
         case .success:
-            print("Success to create Review")
+            return
         case .failure(let err):
-            print(err.localizedDescription)
+            handleError(err)
         }
     }
 
@@ -42,7 +42,7 @@ final class CreateReviewViewModel {
             guard let data = try? result.map(PlaceResponse.self) else { return [Place]() }
             return data.documents
         case .failure(let err):
-            print(err.localizedDescription)
+            handleError(err)
             return [Place]()
         }
     }
@@ -57,7 +57,7 @@ final class CreateReviewViewModel {
             }
             return nil
         case .failure(let err):
-            print(err.localizedDescription)
+            handleError(err)
             return nil
         }
     }
@@ -97,6 +97,15 @@ final class CreateReviewViewModel {
                 reviewRequest.schoolX = Double(univ.longitude) ?? 0.0
                 reviewRequest.schoolY = Double(univ.latitude) ?? 0.0
             }
+        }
+    }
+
+    func handleError(_ error: MoyaError) {
+        if let errorResponse = error.errorResponse {
+            print("에러 코드: \(errorResponse.errorCode)")
+            print("에러 메시지: \(errorResponse.message)")
+        } else {
+            print("네트워크 에러: \(error.localizedDescription)")
         }
     }
 }
