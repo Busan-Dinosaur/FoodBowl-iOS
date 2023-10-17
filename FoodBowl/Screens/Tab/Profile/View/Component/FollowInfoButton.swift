@@ -14,7 +14,7 @@ final class FollowInfoButton: UIButton {
     // MARK: - property
     let infoLabel = UILabel().then {
         $0.font = UIFont.preferredFont(forTextStyle: .subheadline, weight: .medium)
-        $0.textColor = .subTextColor
+        $0.textColor = .mainTextColor
     }
 
     let numberLabel = UILabel().then {

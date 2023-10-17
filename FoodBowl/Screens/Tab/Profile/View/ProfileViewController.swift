@@ -137,25 +137,26 @@ final class ProfileViewController: MapViewController {
 
     private func setupMember() {
         Task {
-            setUpMyProfile()
+            if isOwn {
+                setUpMyProfile()
+            }
             await setUpMemberProfile()
         }
     }
 
     private func setUpMyProfile() {
         member = UserDefaultsManager.currentUser
-        if isOwn {
-            DispatchQueue.main.async {
-                guard let member = self.member else { return }
-                self.userNicknameLabel.text = member.nickname
-                self.profileHeaderView.userInfoLabel.text = member.introduction
-                self.profileHeaderView.followerInfoButton.numberLabel.text = "\(member.followerCount)"
-                self.profileHeaderView.followingInfoButton.numberLabel.text = "\(member.followingCount)"
-                if let url = member.profileImageUrl {
-                    self.profileHeaderView.userImageView.kf.setImage(with: URL(string: url))
-                } else {
-                    self.profileHeaderView.userImageView.image = ImageLiteral.defaultProfile
-                }
+
+        DispatchQueue.main.async {
+            guard let member = self.member else { return }
+            self.userNicknameLabel.text = member.nickname
+            self.profileHeaderView.userInfoLabel.text = member.introduction
+            self.profileHeaderView.followerInfoButton.numberLabel.text = "\(member.followerCount)명"
+            self.profileHeaderView.followingInfoButton.numberLabel.text = "\(member.followingCount)명"
+            if let url = member.profileImageUrl {
+                self.profileHeaderView.userImageView.kf.setImage(with: URL(string: url))
+            } else {
+                self.profileHeaderView.userImageView.image = ImageLiteral.defaultProfile
             }
         }
     }
@@ -167,8 +168,8 @@ final class ProfileViewController: MapViewController {
             guard let member = self.member else { return }
             self.userNicknameLabel.text = member.nickname
             self.profileHeaderView.userInfoLabel.text = member.introduction
-            self.profileHeaderView.followerInfoButton.numberLabel.text = "\(member.followerCount)"
-            self.profileHeaderView.followingInfoButton.numberLabel.text = "\(member.followingCount)"
+            self.profileHeaderView.followerInfoButton.numberLabel.text = "\(member.followerCount)명"
+            self.profileHeaderView.followingInfoButton.numberLabel.text = "\(member.followingCount)명"
             self.profileHeaderView.followButton.isSelected = member.isFollowing
             if let url = member.profileImageUrl {
                 self.profileHeaderView.userImageView.kf.setImage(with: URL(string: url))
@@ -176,7 +177,9 @@ final class ProfileViewController: MapViewController {
                 self.profileHeaderView.userImageView.image = ImageLiteral.defaultProfile
             }
 
-            if !self.isOwn {
+            if self.isOwn {
+                UserDefaultsManager.currentUser = member
+            } else {
                 self.title = member.nickname
             }
         }
