@@ -141,6 +141,7 @@ final class ProfileViewController: MapViewController {
 
     override func loadData() {
         Task {
+            viewModel.lastReviewId = nil
             await loadReviews()
             await loadStores()
         }
@@ -213,12 +214,9 @@ final class ProfileViewController: MapViewController {
     }
 
     private func reloadReviews() async {
-        guard let location = customLocation else { return }
-        feedListView.reviews += await viewModel.getReviews(
-            location: location,
-            memberId: memberId,
-            lastReviewId: viewModel.lastReviewId
-        )
+        if let lastReviewId = viewModel.lastReviewId, let location = customLocation {
+            feedListView.reviews += await viewModel.getReviews(location: location, memberId: memberId, lastReviewId: lastReviewId)
+        }
     }
 
     private func followButtonTapped() {
