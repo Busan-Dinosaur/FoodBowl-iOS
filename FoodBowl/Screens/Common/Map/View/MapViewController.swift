@@ -15,8 +15,17 @@ import Then
 
 class MapViewController: BaseViewController {
     var customLocation: CustomLocation?
-    var stores = [Store]()
-    var marks = [Marker]()
+
+    var stores = [Store]() {
+        didSet {
+            DispatchQueue.main.async {
+                self.grabbarView.modalResultLabel.text = "\(self.stores.count.prettyNumber)개의 맛집"
+                self.setMarkers()
+            }
+        }
+    }
+
+    var markers = [Marker]()
 
     let modalMinHeight: CGFloat = 40
     let modalMidHeight: CGFloat = UIScreen.main.bounds.height / 2 - 100
@@ -149,9 +158,9 @@ class MapViewController: BaseViewController {
     }
 
     func setMarkers() {
-        mapView.removeAnnotations(marks)
+        mapView.removeAnnotations(markers)
 
-        marks = stores.map { store in
+        markers = stores.map { store in
             Marker(
                 title: store.name,
                 subtitle: "\(store.reviewCount)개의 후기",
@@ -168,11 +177,12 @@ class MapViewController: BaseViewController {
             )
         }
 
-        mapView.addAnnotations(marks)
+        mapView.addAnnotations(markers)
     }
 
     func tappedBookMarkButton() {
         bookmarkButton.isSelected.toggle()
+        loadData()
     }
 }
 

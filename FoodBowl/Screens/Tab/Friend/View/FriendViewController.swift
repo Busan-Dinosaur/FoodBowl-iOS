@@ -67,15 +67,5 @@ final class FriendViewController: MapViewController {
         } else {
             stores = await viewModel.getStores(location: location)
         }
-
-        DispatchQueue.main.async {
-            self.grabbarView.modalResultLabel.text = "\(self.stores.count.prettyNumber)개의 맛집"
-            self.setMarkers()
-        }
-    }
-
-    override func tappedBookMarkButton() {
-        super.tappedBookMarkButton()
-        loadData()
     }
 }

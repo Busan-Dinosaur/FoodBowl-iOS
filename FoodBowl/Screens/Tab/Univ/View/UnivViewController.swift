@@ -81,17 +81,13 @@ final class UnivViewController: MapViewController {
     private func setupStores() async {
         guard let location = customLocation else { return }
         stores = await viewModel.getStores(location: location)
-
-        DispatchQueue.main.async {
-            self.grabbarView.modalResultLabel.text = "\(self.stores.count.prettyNumber)개의 맛집"
-            self.setMarkers()
-        }
     }
 
     override func presentBlameViewController() {
         let createReviewController = BlameViewController(targetId: 123, blameTarget: "Member")
         let navigationController = UINavigationController(rootViewController: createReviewController)
         navigationController.modalPresentationStyle = .fullScreen
+
         DispatchQueue.main.async {
             self.present(navigationController, animated: true)
         }
