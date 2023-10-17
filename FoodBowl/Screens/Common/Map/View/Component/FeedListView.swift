@@ -29,12 +29,24 @@ final class FeedListView: ModalView {
         }
     }
 
-    var loadData: (() -> Void)?
-    var reloadData: (() -> Void)?
+    var loadData: () -> Void
+    var reloadData: () -> Void
 
     private var viewModel = BaseViewModel()
 
     private var refreshControl = UIRefreshControl()
+
+    // MARK: - init
+    init(loadData: @escaping (() -> Void), reloadData: @escaping (() -> Void)) {
+        self.loadData = loadData
+        self.reloadData = reloadData
+        super.init(frame: .zero)
+    }
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     override func setupProperty() {
         collectionViewFlowLayout = DynamicHeightCollectionViewFlowLayout().then {
@@ -54,9 +66,7 @@ final class FeedListView: ModalView {
 
     override func setupRefreshControl() {
         let action = UIAction { [weak self] _ in
-            if let loadData = self?.loadData {
-                loadData()
-            }
+            self?.loadData()
         }
         refreshControl.addAction(action, for: .valueChanged)
         refreshControl.tintColor = .grey002
@@ -75,9 +85,7 @@ extension FeedListView {
     }
 
     private func didScrollToBottom() {
-        if let reloadData = reloadData {
-            reloadData()
-        }
+        reloadData()
     }
 }
 
@@ -130,7 +138,7 @@ extension FeedListView: UICollectionViewDataSource, UICollectionViewDelegate {
                     self.parentViewController?.showDeleteAlert {
                         Task {
                             if await self.viewModel.removeReview(id: review.id) {
-                                self.parentViewController?.loadData()
+                                self.loadData()
                             }
                         }
                     }
@@ -166,12 +174,12 @@ extension FeedListView: UICollectionViewDataSource, UICollectionViewDelegate {
                 if cell.storeInfoView.bookmarkButton.isSelected {
                     if await self.viewModel.removeBookmark(storeId: store.id) {
                         cell.storeInfoView.bookmarkButton.isSelected.toggle()
-                        self.parentViewController?.loadData()
+                        self.loadData()
                     }
                 } else {
                     if await self.viewModel.createBookmark(storeId: store.id) {
                         cell.storeInfoView.bookmarkButton.isSelected.toggle()
-                        self.parentViewController?.loadData()
+                        self.loadData()
                     }
                 }
             }
