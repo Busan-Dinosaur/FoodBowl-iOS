@@ -99,9 +99,13 @@ extension FollowingViewController: UITableViewDataSource, UITableViewDelegate {
                 Task {
                     guard let self = self else { return }
                     if cell.followButton.isSelected {
-                        cell.followButton.isSelected = await self.viewModel.unfollowMember(memberId: member.memberId)
+                        if await self.viewModel.unfollowMember(memberId: member.memberId) {
+                            self.loadData()
+                        }
                     } else {
-                        cell.followButton.isSelected = await self.viewModel.followMember(memberId: member.memberId)
+                        if await self.viewModel.followMember(memberId: member.memberId) {
+                            self.loadData()
+                        }
                     }
                 }
             }

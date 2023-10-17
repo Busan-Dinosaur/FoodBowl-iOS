@@ -73,10 +73,10 @@ extension BaseViewModel {
         let response = await providerFollow.request(.unfollowMember(memberId: memberId))
         switch response {
         case .success:
-            return false
+            return true
         case .failure(let err):
             handleError(err)
-            return true
+            return false
         }
     }
 }
