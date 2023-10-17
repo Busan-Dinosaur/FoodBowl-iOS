@@ -14,6 +14,8 @@ import SnapKit
 import Then
 
 class BaseViewController: UIViewController {
+    private var viewModel = BaseViewModel()
+
     // MARK: - property
     var animationView: LottieAnimationView?
 
@@ -48,6 +50,12 @@ class BaseViewController: UIViewController {
         hidekeyboardWhenTappedAround()
         setupNavigationBar()
         setupLottie()
+
+        viewModel.showAlertClosure = { [weak self] message in
+            DispatchQueue.main.async {
+                self?.makeAlert(title: message)
+            }
+        }
 
         // Do any additional setup after loading the view.
         NotificationCenter.default.addObserver(
