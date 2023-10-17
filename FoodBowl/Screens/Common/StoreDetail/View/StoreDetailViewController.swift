@@ -189,6 +189,18 @@ extension StoreDetailViewController: UICollectionViewDataSource, UICollectionVie
                     }
                 })
                 alert.addAction(edit)
+
+                let del = UIAlertAction(title: "삭제", style: .destructive, handler: { _ in
+                    guard let self = self else { return }
+                    self.showDeleteAlert {
+                        Task {
+                            if await self.viewModel.removeReview(id: review.id) {
+                                self.loadData()
+                            }
+                        }
+                    }
+                })
+                alert.addAction(del)
             } else {
                 let report = UIAlertAction(title: "신고", style: .destructive, handler: { _ in
                     self?.presentBlameViewController()

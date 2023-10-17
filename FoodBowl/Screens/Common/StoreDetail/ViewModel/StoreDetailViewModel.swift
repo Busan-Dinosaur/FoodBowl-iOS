@@ -9,15 +9,7 @@ import UIKit
 
 import Moya
 
-final class StoreDetailViewModel {
-    private let pageSize = 10
-
-    private let providerService = MoyaProvider<ServiceAPI>()
-    private let providerReview = MoyaProvider<ReviewAPI>()
-    private let providerStore = MoyaProvider<StoreAPI>()
-    private let providerMember = MoyaProvider<MemberAPI>()
-    private let providerFollow = MoyaProvider<FollowAPI>()
-}
+final class StoreDetailViewModel: BaseViewModel {}
 
 // MARK: - Get Member's Reviews and Stores
 extension StoreDetailViewModel {
@@ -36,15 +28,6 @@ extension StoreDetailViewModel {
         case .failure(let err):
             handleError(err)
             return []
-        }
-    }
-
-    func handleError(_ error: MoyaError) {
-        if let errorResponse = error.errorResponse {
-            print("에러 코드: \(errorResponse.errorCode)")
-            print("에러 메시지: \(errorResponse.message)")
-        } else {
-            print("네트워크 에러: \(error.localizedDescription)")
         }
     }
 }

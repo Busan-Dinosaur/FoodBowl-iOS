@@ -131,8 +131,6 @@ extension FeedListView: UICollectionViewDataSource, UICollectionViewDelegate {
                         Task {
                             if await self.viewModel.removeReview(id: review.id) {
                                 self.parentViewController?.loadData()
-                            } else {
-                                print("삭제 실패")
                             }
                         }
                     }
