@@ -42,4 +42,34 @@ extension FriendViewModel {
             return [Store]()
         }
     }
+
+    func getReviewsByBookmark(location: CustomLocation) async -> [Review] {
+        let response = await providerReview.request(
+            .getReviewsByBookmark(
+                form: location,
+                lastReviewId: nil,
+                pageSize: pageSize
+            )
+        )
+        switch response {
+        case .success(let result):
+            guard let data = try? result.map(ReviewResponse.self) else { return [Review]() }
+            return data.reviews
+        case .failure(let err):
+            handleError(err)
+            return [Review]()
+        }
+    }
+
+    func getStoresByBookmark(location: CustomLocation) async -> [Store] {
+        let response = await providerStore.request(.getStoresByBookmark(form: location))
+        switch response {
+        case .success(let result):
+            guard let data = try? result.map(StoreResponse.self) else { return [Store]() }
+            return data.stores
+        case .failure(let err):
+            handleError(err)
+            return [Store]()
+        }
+    }
 }
