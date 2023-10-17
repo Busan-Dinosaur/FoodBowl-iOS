@@ -100,7 +100,7 @@ final class ProfileViewController: MapViewController {
         modalMaxHeight = UIScreen.main.bounds.height - BaseSize.topAreaPadding - navBarHeight - 180
         feedListView.loadData = {
             Task {
-                await self.setupReviews()
+                await self.loadReviews()
             }
         }
         feedListView.reloadData = {
@@ -130,8 +130,14 @@ final class ProfileViewController: MapViewController {
 
     override func loadData() {
         Task {
-            await setupReviews()
-            await setupStores()
+            await loadReviews()
+            await loadStores()
+        }
+    }
+
+    override func reloadData() {
+        Task {
+            await loadReviews()
         }
     }
 
@@ -185,12 +191,21 @@ final class ProfileViewController: MapViewController {
         }
     }
 
-    private func setupReviews() async {
+    private func loadReviews() async {
         guard let location = customLocation else { return }
         feedListView.reviews = await viewModel.getReviews(location: location, memberId: memberId)
     }
 
-    private func setupStores() async {
+    private func reloadReviews() async {
+        guard let location = customLocation else { return }
+        feedListView.reviews += await viewModel.getReviews(
+            location: location,
+            memberId: memberId,
+            lastReviewId: viewModel.lastReviewId
+        )
+    }
+
+    private func loadStores() async {
         guard let location = customLocation else { return }
         stores = await viewModel.getStores(location: location, memberId: memberId)
     }

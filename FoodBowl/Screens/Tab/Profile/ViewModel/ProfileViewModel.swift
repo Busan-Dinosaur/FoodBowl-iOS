@@ -53,18 +53,19 @@ extension ProfileViewModel {
 
 // MARK: - Get Reviews and Stores
 extension ProfileViewModel {
-    func getReviews(location: CustomLocation, memberId: Int) async -> [Review] {
+    func getReviews(location: CustomLocation, memberId: Int, lastReviewId: Int? = nil) async -> [Review] {
         let response = await providerReview.request(
             .getReviewsByMember(
                 form: location,
                 memberId: memberId,
-                lastReviewId: nil,
+                lastReviewId: lastReviewId,
                 pageSize: pageSize
             )
         )
         switch response {
         case .success(let result):
             guard let data = try? result.map(ReviewResponse.self) else { return [] }
+            self.lastReviewId = data.page.lastId
             return data.reviews
         case .failure(let err):
             handleError(err)
