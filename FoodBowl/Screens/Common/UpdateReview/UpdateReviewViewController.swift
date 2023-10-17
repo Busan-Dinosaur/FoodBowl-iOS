@@ -33,7 +33,7 @@ final class UpdateReviewViewController: BaseViewController {
 
     init(viewModel: UpdateReviewViewModel) {
         self.viewModel = viewModel
-        super.init(nibName: nil, bundle: nil)
+        super.init()
     }
 
     required init?(coder: NSCoder) {

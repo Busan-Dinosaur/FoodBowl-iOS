@@ -31,7 +31,7 @@ final class BlameViewController: BaseViewController {
     init(targetId: Int, blameTarget: String) {
         self.targetId = targetId
         self.blameTarget = blameTarget
-        super.init(nibName: nil, bundle: nil)
+        super.init()
     }
 
     required init?(coder: NSCoder) {

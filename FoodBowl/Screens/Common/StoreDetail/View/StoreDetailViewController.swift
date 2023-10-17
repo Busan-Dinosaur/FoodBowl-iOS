@@ -36,7 +36,7 @@ final class StoreDetailViewController: BaseViewController {
 
     init(storeId: Int) {
         self.storeId = storeId
-        super.init(nibName: nil, bundle: nil)
+        super.init()
     }
 
     required init?(coder _: NSCoder) {

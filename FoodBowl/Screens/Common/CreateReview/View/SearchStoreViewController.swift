@@ -15,7 +15,7 @@ final class SearchStoreViewController: BaseViewController {
 
     init(viewModel: CreateReviewViewModel) {
         self.viewModel = viewModel
-        super.init(nibName: nil, bundle: nil)
+        super.init()
     }
 
     required init?(coder: NSCoder) {

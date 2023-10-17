@@ -9,6 +9,7 @@ import MessageUI
 import UIKit
 
 import Lottie
+import Moya
 import SnapKit
 import Then
 
@@ -62,6 +63,15 @@ class BaseViewController: UIViewController {
             name: UIResponder.keyboardWillHideNotification,
             object: nil
         )
+    }
+
+    init() {
+        super.init(nibName: nil, bundle: nil)
+        renewToken()
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 
     deinit {
@@ -188,6 +198,21 @@ class BaseViewController: UIViewController {
     }
 
     func presentBlameViewController() {}
+
+    func renewToken() {
+        let providerService = MoyaProvider<ServiceAPI>()
+        providerService.request(.renew) { response in
+            switch response {
+            case .success(let result):
+                guard let data = try? result.map(RenewResponse.self) else { return }
+                KeychainManager.set(data.accessToken, for: .accessToken)
+                KeychainManager.set(data.refreshToken, for: .refreshToken)
+                print(data.accessToken)
+            case .failure(let err):
+                print(err.localizedDescription)
+            }
+        }
+    }
 }
 
 extension BaseViewController: UITextFieldDelegate {

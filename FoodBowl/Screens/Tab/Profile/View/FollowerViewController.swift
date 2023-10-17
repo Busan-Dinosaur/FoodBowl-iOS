@@ -28,7 +28,7 @@ final class FollowerViewController: BaseViewController {
     init(memberId: Int = UserDefaultsManager.currentUser?.id ?? 0) {
         self.isOwn = UserDefaultsManager.currentUser?.id ?? 0 == memberId
         self.memberId = memberId
-        super.init(nibName: nil, bundle: nil)
+        super.init()
     }
 
     required init?(coder _: NSCoder) {
