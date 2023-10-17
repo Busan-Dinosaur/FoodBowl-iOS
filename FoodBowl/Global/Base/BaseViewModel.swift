@@ -90,7 +90,6 @@ extension BaseViewModel {
             showAlert(title: errorResponse.message)
         } else {
             print("네트워크 에러: \(error.localizedDescription)")
-            showAlert(title: error.localizedDescription)
         }
     }
 

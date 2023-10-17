@@ -150,7 +150,6 @@ final class BlameViewController: BaseViewController {
                     self.makeAlert(title: errorResponse.message)
                 } else {
                     print("네트워크 에러: \(error.localizedDescription)")
-                    self.makeAlert(title: error.localizedDescription)
                 }
             }
         }
