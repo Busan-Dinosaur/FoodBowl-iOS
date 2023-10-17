@@ -14,8 +14,6 @@ class BaseViewModel {
     let size: Int = 10
     var lastReviewId: Int?
 
-    var showAlertClosure: ((String) -> Void)?
-
     let providerService = MoyaProvider<ServiceAPI>()
     let providerReview = MoyaProvider<ReviewAPI>()
     let providerStore = MoyaProvider<StoreAPI>()
@@ -89,9 +87,18 @@ extension BaseViewModel {
         if let errorResponse = error.errorResponse {
             print("에러 코드: \(errorResponse.errorCode)")
             print("에러 메시지: \(errorResponse.message)")
-            showAlertClosure?(errorResponse.message)
+            showAlert(title: errorResponse.message)
         } else {
             print("네트워크 에러: \(error.localizedDescription)")
+            showAlert(title: error.localizedDescription)
+        }
+    }
+
+    func showAlert(title: String) {
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now()) {
+            guard let rootVC = (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.windows.first?.rootViewController
+            else { return }
+            rootVC.makeAlert(title: title)
         }
     }
 }
