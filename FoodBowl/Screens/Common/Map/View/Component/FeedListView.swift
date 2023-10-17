@@ -166,9 +166,15 @@ extension FeedListView: UICollectionViewDataSource, UICollectionViewDelegate {
             guard let self = self else { return }
             Task {
                 if cell.storeInfoView.bookmarkButton.isSelected {
-                    cell.storeInfoView.bookmarkButton.isSelected = await self.viewModel.removeBookmark(storeId: store.id)
+                    if await self.viewModel.removeBookmark(storeId: store.id) {
+                        cell.storeInfoView.bookmarkButton.isSelected.toggle()
+                        self.parentViewController?.loadData()
+                    }
                 } else {
-                    cell.storeInfoView.bookmarkButton.isSelected = await self.viewModel.createBookmark(storeId: store.id)
+                    if await self.viewModel.createBookmark(storeId: store.id) {
+                        cell.storeInfoView.bookmarkButton.isSelected.toggle()
+                        self.parentViewController?.loadData()
+                    }
                 }
             }
         }

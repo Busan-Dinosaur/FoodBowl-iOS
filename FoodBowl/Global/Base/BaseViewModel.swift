@@ -48,10 +48,10 @@ extension BaseViewModel {
         let response = await providerStore.request(.removeBookmark(storeId: storeId))
         switch response {
         case .success:
-            return false
+            return true
         case .failure(let err):
             handleError(err)
-            return true
+            return false
         }
     }
 }
