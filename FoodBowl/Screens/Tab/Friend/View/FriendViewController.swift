@@ -36,7 +36,6 @@ final class FriendViewController: MapViewController {
 
     override func loadData() {
         Task {
-            viewModel.lastReviewId = nil
             await loadReviews()
             await loadStores()
         }
@@ -69,9 +68,9 @@ final class FriendViewController: MapViewController {
     private func reloadReviews() async {
         if let lastReviewId = viewModel.lastReviewId, let location = customLocation {
             if bookmarkButton.isSelected {
-                feedListView.reviews = await viewModel.getReviewsByBookmark(location: location, lastReviewId: lastReviewId)
+                feedListView.reviews += await viewModel.getReviewsByBookmark(location: location, lastReviewId: lastReviewId)
             } else {
-                feedListView.reviews = await viewModel.getReviews(location: location, lastReviewId: lastReviewId)
+                feedListView.reviews += await viewModel.getReviews(location: location, lastReviewId: lastReviewId)
             }
         }
     }

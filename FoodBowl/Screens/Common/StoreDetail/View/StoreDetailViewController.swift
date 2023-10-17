@@ -121,7 +121,6 @@ final class StoreDetailViewController: BaseViewController {
 
     override func loadData() {
         Task {
-            viewModel.lastReviewId = nil
             await loadReviews()
         }
     }
@@ -140,7 +139,7 @@ final class StoreDetailViewController: BaseViewController {
     private func reloadReviews() async {
         if let lastReviewId = viewModel.lastReviewId {
             let filter = isFriend ? "FRIEND" : "ALL"
-            reviews = await viewModel.getReviews(storeId: storeId, filter: filter, lastReviewId: lastReviewId)
+            reviews += await viewModel.getReviews(storeId: storeId, filter: filter, lastReviewId: lastReviewId)
         }
     }
 }

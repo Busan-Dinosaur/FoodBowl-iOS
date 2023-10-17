@@ -141,7 +141,6 @@ final class ProfileViewController: MapViewController {
 
     override func loadData() {
         Task {
-            viewModel.lastReviewId = nil
             await loadReviews()
             await loadStores()
         }

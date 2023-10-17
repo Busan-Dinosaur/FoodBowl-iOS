@@ -134,8 +134,6 @@ final class FindViewController: BaseViewController {
         }
 
         Task {
-            viewModel.lastReviewId = nil
-
             if scope == 0 {
                 stores = await viewModel.serachStores(name: searchText)
             } else {
