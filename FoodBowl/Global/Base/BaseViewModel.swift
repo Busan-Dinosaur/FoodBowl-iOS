@@ -41,15 +41,9 @@ extension BaseViewModel {
             print("Success to Create Bookmark")
             return true
         case .failure(let error):
-            if let response = error.response {
-                do {
-                    // 서버에서 받은 데이터를 ErrorResponse 모델로 매핑
-                    let errorResponse = try response.map(ErrorResponse.self)
-                    print("에러 코드: \(errorResponse.errorCode)")
-                    print("에러 메시지: \(errorResponse.message)")
-                } catch {
-                    print("에러 데이터 매핑에 실패했습니다.")
-                }
+            if let errorResponse = error.errorResponse {
+                print("에러 코드: \(errorResponse.errorCode)")
+                print("에러 메시지: \(errorResponse.message)")
             } else {
                 print("네트워크 에러: \(error.localizedDescription)")
             }
