@@ -29,9 +29,9 @@ final class FeedListView: ModalView {
         }
     }
 
-    var loadData: () -> Void
-    var reloadData: () -> Void
-    var presentBlameVC: (Int, String) -> Void
+    private var loadData: () -> Void
+    private var reloadData: () -> Void
+    private var presentBlameVC: (Int, String) -> Void
 
     private var viewModel = BaseViewModel()
 

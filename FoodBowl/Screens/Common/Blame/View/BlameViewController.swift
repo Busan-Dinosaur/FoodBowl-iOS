@@ -23,8 +23,8 @@ final class BlameViewController: BaseViewController {
         )
     }
 
-    let targetId: Int
-    let blameTarget: String
+    private let targetId: Int
+    private let blameTarget: String
 
     private let textViewPlaceHolder = "100자 이내"
 
@@ -57,13 +57,13 @@ final class BlameViewController: BaseViewController {
         $0.addAction(action, for: .touchUpInside)
     }
 
-    private let guideCommentLabel = UILabel().then {
-        $0.text = "신고 내용"
+    private lazy var guideCommentLabel = UILabel().then {
+        $0.text = "신고 내용 작성 - \(self.blameTarget == "MEMBER" ? "사용자" : "후기")"
         $0.font = .font(.regular, ofSize: 17)
         $0.textColor = .mainTextColor
     }
 
-    lazy var commentTextView = UITextView().then {
+    private lazy var commentTextView = UITextView().then {
         $0.textContainerInset = UIEdgeInsets(top: 12, left: 10, bottom: 12, right: 10)
         $0.font = UIFont.preferredFont(forTextStyle: .subheadline, weight: .light)
         $0.textAlignment = NSTextAlignment.left
@@ -133,15 +133,13 @@ final class BlameViewController: BaseViewController {
             return
         }
 
-        async {
-            await createBlame()
-        }
+        createBlame()
     }
 
-    private func createBlame() async {
+    private func createBlame() {
         let providerService = MoyaProvider<ServiceAPI>()
 
-        let response = await providerService.request(
+        providerService.request(
             .createBlame(
                 request: CreateBlameRequest(
                     targetId: targetId,
@@ -149,12 +147,18 @@ final class BlameViewController: BaseViewController {
                     description: commentTextView.text
                 )
             )
-        )
-        switch response {
-        case .success:
-            print("Success to create blame")
-        case .failure(let err):
-            print(err.localizedDescription)
+        ) { response in
+            switch response {
+            case .success:
+                self.dismiss(animated: true)
+            case .failure(let error):
+                if let errorResponse = error.errorResponse {
+                    print("에러 코드: \(errorResponse.errorCode)")
+                    print("에러 메시지: \(errorResponse.message)")
+                } else {
+                    print("네트워크 에러: \(error.localizedDescription)")
+                }
+            }
         }
     }
 }
