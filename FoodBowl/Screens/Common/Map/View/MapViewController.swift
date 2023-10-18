@@ -16,14 +16,7 @@ import Then
 class MapViewController: BaseViewController {
     var customLocation: CustomLocation?
 
-    var stores = [Store]() {
-        didSet {
-            DispatchQueue.main.async {
-                self.grabbarView.modalResultLabel.text = "\(self.stores.count.prettyNumber)개의 맛집"
-                self.setMarkers()
-            }
-        }
-    }
+    var stores = [Store]()
 
     var markers = [Marker]()
 
@@ -154,6 +147,18 @@ class MapViewController: BaseViewController {
         bookmarkButton.isHidden = true
     }
 
+    override func loadData() {
+        Task {
+            feedListView.reviews = await loadReviews()
+            feedListView.listCollectionView.reloadData()
+            stores = await loadStores()
+            DispatchQueue.main.async {
+                self.grabbarView.modalResultLabel.text = "\(self.stores.count.prettyNumber)개의 맛집"
+                self.setMarkers(stores: self.stores)
+            }
+        }
+    }
+
     func loadReviews() async -> [Review] { return [] }
 
     func loadStores() async -> [Store] { return [] }
@@ -172,7 +177,7 @@ class MapViewController: BaseViewController {
         )
     }
 
-    func setMarkers() {
+    func setMarkers(stores: [Store]) {
         mapView.removeAnnotations(markers)
 
         markers = stores.map { store in
