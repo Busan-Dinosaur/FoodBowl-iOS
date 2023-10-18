@@ -31,6 +31,7 @@ final class StoreDetailViewController: BaseViewController {
         self.storeId = storeId
         self.isFriend = isFriend
         super.init()
+        self.title = isFriend ? "친구들의 후기" : "모두의 후기"
     }
 
     required init?(coder _: NSCoder) {
@@ -39,6 +40,7 @@ final class StoreDetailViewController: BaseViewController {
 
     // MARK: - property
     private var refreshControl = UIRefreshControl()
+    private var isLoadingData = false
 
     private lazy var reviewToggleButton = ReviewToggleButton().then {
         let action = UIAction { [weak self] _ in
@@ -115,47 +117,70 @@ final class StoreDetailViewController: BaseViewController {
     }
 
     override func loadData() {
+        loadReviews()
+    }
+
+    private func loadReviews() {
         Task {
-            reviews = await loadReviews()
+            let filter = isFriend ? "FRIEND" : "ALL"
+            reviews = await viewModel.getReviews(storeId: storeId, filter: filter)
 
             DispatchQueue.main.async {
                 self.listCollectionView.reloadData()
                 self.refreshControl.endRefreshing()
+                self.scrollToTop()
             }
         }
     }
 
-    private func reloadData() {
+    private func reloadReviews() {
         Task {
-            let reviews = await loadReviews()
-        }
-    }
+            if let lastReviewId = viewModel.lastReviewId, let currentpageSize = viewModel.currentpageSize,
+               currentpageSize >= viewModel.pageSize {
+                let filter = isFriend ? "FRIEND" : "ALL"
+                let newReviews = await viewModel.getReviews(storeId: storeId, filter: filter, lastReviewId: lastReviewId)
 
-    private func loadReviews() async -> [ReviewByStore] {
-        let filter = isFriend ? "FRIEND" : "ALL"
-        return await viewModel.getReviews(storeId: storeId, filter: filter)
-    }
+                if newReviews.isEmpty {
+                    isLoadingData = false
+                    return
+                }
 
-    private func reloadReviews() async -> [ReviewByStore] {
-        if let lastReviewId = viewModel.lastReviewId {
-            let filter = isFriend ? "FRIEND" : "ALL"
-            return await viewModel.getReviews(storeId: storeId, filter: filter, lastReviewId: lastReviewId)
+                reviews += newReviews
+                let startIndex = reviews.count - newReviews.count
+                let indexPaths = (startIndex..<reviews.count).map { IndexPath(item: $0, section: 0) }
+
+                DispatchQueue.main.async {
+                    self.listCollectionView.performBatchUpdates {
+                        self.listCollectionView.insertItems(at: indexPaths)
+                    }
+                }
+
+                isLoadingData = false
+            }
         }
-        return []
     }
 }
 
 extension StoreDetailViewController {
-    // Standard scroll-view delegate
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let contentSize = scrollView.contentSize.height
+        guard !isLoadingData else {
+            return
+        }
 
-        if contentSize - scrollView.contentOffset.y <= scrollView.bounds.height {
-            didScrollToBottom()
+        let offsetY = scrollView.contentOffset.y
+        let contentHeight = scrollView.contentSize.height
+        let height = scrollView.frame.size.height
+
+        if offsetY > contentHeight - height {
+            isLoadingData = true
+            reloadReviews()
         }
     }
 
-    private func didScrollToBottom() {}
+    func scrollToTop() {
+        let topOffset = CGPoint(x: 0, y: -listCollectionView.contentInset.top)
+        listCollectionView.setContentOffset(topOffset, animated: true)
+    }
 }
 
 // MARK: - UICollectionViewDataSource, UICollectionViewDelegate
@@ -210,7 +235,7 @@ extension StoreDetailViewController: UICollectionViewDataSource, UICollectionVie
                         okAction: { _ in
                             Task {
                                 if await self.viewModel.removeReview(id: review.id) {
-                                    //                                self.loadReviews()
+                                    self.loadReviews()
                                 }
                             }
                         }

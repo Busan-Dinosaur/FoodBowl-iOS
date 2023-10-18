@@ -25,6 +25,7 @@ extension StoreDetailViewModel {
         case .success(let result):
             guard let data = try? result.map(ReviewByStoreResponse.self) else { return [] }
             self.lastReviewId = data.page.lastId
+            currentpageSize = data.page.size
             return data.storeReviewContentResponses
         case .failure(let err):
             handleError(err)
