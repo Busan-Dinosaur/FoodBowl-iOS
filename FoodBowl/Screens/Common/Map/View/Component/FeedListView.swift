@@ -86,6 +86,8 @@ final class FeedListView: ModalView {
     private func setupReloadReviews() {
         Task {
             let newReviews = await self.reloadReviews()
+            if newReviews.isEmpty { return }
+
             reviews += newReviews
             let startIndex = reviews.count - newReviews.count
             let indexPaths = (startIndex..<reviews.count).map { IndexPath(item: $0, section: 0) }
