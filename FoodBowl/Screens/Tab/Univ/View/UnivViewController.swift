@@ -31,6 +31,11 @@ final class UnivViewController: MapViewController {
         $0.label.text = "대학가"
     }
 
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        currentUniv()
+    }
+
     override func setupNavigationBar() {
         super.setupNavigationBar()
         let leftOffsetUnivTitleButton = removeBarButtonItemOffset(with: univTitleButton, offsetX: 10)
@@ -52,19 +57,6 @@ final class UnivViewController: MapViewController {
         univTitleButton.label.text = univ?.name ?? "대학가"
     }
 
-    override func loadData() {
-        Task {
-            feedListView.reviews = await loadReviews()
-            feedListView.listCollectionView.reloadData()
-            stores = await loadStores()
-
-            DispatchQueue.main.async {
-                self.grabbarView.modalResultLabel.text = "\(self.stores.count.prettyNumber)개의 맛집"
-                self.setMarkers()
-            }
-        }
-    }
-
     override func loadReviews() async -> [Review] {
         guard let location = customLocation else { return [] }
         return await viewModel.getReviews(location: location)
@@ -82,7 +74,7 @@ final class UnivViewController: MapViewController {
         return []
     }
 
-    override func currentLocation() {
+    private func currentUniv() {
         guard let univ = UserDefaultsManager.currentUniv else { return }
 
         mapView.setRegion(
@@ -100,7 +92,7 @@ extension UnivViewController: SearchUnivViewControllerDelegate {
         self.univ = univ
         univTitleButton.label.text = univ.name
         UserDefaultsManager.currentUniv = univ
-        currentLocation()
+        currentUniv()
         loadData()
     }
 }

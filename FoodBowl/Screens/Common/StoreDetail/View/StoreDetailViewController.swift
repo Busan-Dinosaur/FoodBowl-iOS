@@ -123,7 +123,7 @@ final class StoreDetailViewController: BaseViewController {
         }
     }
 
-    override func reloadData() {
+    private func reloadData() {
         Task {
             let reviews = await loadReviews()
         }

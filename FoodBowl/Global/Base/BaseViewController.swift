@@ -132,8 +132,6 @@ class BaseViewController: UIViewController {
 
     func loadData() {}
 
-    func reloadData() {}
-
     func setupLottie() {
         animationView = .init(name: "loading")
         animationView!.frame = view.bounds

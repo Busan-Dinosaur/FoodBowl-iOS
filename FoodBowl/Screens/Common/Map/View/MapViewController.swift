@@ -91,12 +91,6 @@ class MapViewController: BaseViewController {
         self.presentBlameViewController(targetId: targetId, blameTarget: blameTarget)
     }
 
-    // MARK: - life cycle
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        currentLocation()
-    }
-
     override func setupLayout() {
         view.addSubviews(mapView, categoryListView, trakingButton, bookmarkButton, grabbarView, feedListView)
 
@@ -144,25 +138,24 @@ class MapViewController: BaseViewController {
         bookmarkButton.isHidden = true
     }
 
+    override func loadData() {
+        Task {
+            feedListView.reviews = await loadReviews()
+            feedListView.listCollectionView.reloadData()
+            stores = await loadStores()
+
+            DispatchQueue.main.async {
+                self.grabbarView.modalResultLabel.text = "\(self.stores.count.prettyNumber)개의 맛집"
+                self.setMarkers()
+            }
+        }
+    }
+
     func loadReviews() async -> [Review] { return [] }
 
     func loadStores() async -> [Store] { return [] }
 
     func reloadReviews() async -> [Review] { return [] }
-
-    func currentLocation() {
-        guard let currentLoc = LocationManager.shared.manager.location?.coordinate else { return }
-
-        mapView.setRegion(
-            MKCoordinateRegion(
-                center: currentLoc,
-                span: MKCoordinateSpan(latitudeDelta: 0.02, longitudeDelta: 0.02)
-            ),
-            animated: true
-        )
-
-        print("지도가 움직였냐?")
-    }
 
     func setMarkers() {
         mapView.removeAnnotations(markers)
