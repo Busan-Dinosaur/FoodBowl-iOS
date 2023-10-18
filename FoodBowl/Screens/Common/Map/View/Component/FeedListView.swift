@@ -78,6 +78,8 @@ final class FeedListView: ModalView {
 
             DispatchQueue.main.async {
                 self.listCollectionView.reloadData()
+                self.refreshControl.endRefreshing()
+                self.scrollToTop()
             }
         }
     }
@@ -128,6 +130,11 @@ extension FeedListView {
         if offsetY > contentHeight - height {
             setupReloadReviews()
         }
+    }
+
+    func scrollToTop() {
+        let topOffset = CGPoint(x: 0, y: -listCollectionView.contentInset.top)
+        listCollectionView.setContentOffset(topOffset, animated: true)
     }
 }
 

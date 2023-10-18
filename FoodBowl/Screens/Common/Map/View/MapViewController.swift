@@ -141,10 +141,11 @@ class MapViewController: BaseViewController {
     override func loadData() {
         Task {
             feedListView.reviews = await loadReviews()
-            feedListView.listCollectionView.reloadData()
             stores = await loadStores()
 
             DispatchQueue.main.async {
+                self.feedListView.listCollectionView.reloadData()
+                self.feedListView.scrollToTop()
                 self.grabbarView.modalResultLabel.text = "\(self.stores.count.prettyNumber)개의 맛집"
                 self.setMarkers()
             }
