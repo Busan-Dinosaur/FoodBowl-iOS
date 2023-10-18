@@ -144,19 +144,6 @@ class MapViewController: BaseViewController {
         bookmarkButton.isHidden = true
     }
 
-    override func loadData() {
-        Task {
-            feedListView.reviews = await loadReviews()
-            feedListView.listCollectionView.reloadData()
-            stores = await loadStores()
-
-            DispatchQueue.main.async {
-                self.grabbarView.modalResultLabel.text = "\(self.stores.count.prettyNumber)개의 맛집"
-                self.setMarkers()
-            }
-        }
-    }
-
     func loadReviews() async -> [Review] { return [] }
 
     func loadStores() async -> [Store] { return [] }

@@ -52,6 +52,19 @@ final class UnivViewController: MapViewController {
         univTitleButton.label.text = univ?.name ?? "대학가"
     }
 
+    override func loadData() {
+        Task {
+            feedListView.reviews = await loadReviews()
+            feedListView.listCollectionView.reloadData()
+            stores = await loadStores()
+
+            DispatchQueue.main.async {
+                self.grabbarView.modalResultLabel.text = "\(self.stores.count.prettyNumber)개의 맛집"
+                self.setMarkers()
+            }
+        }
+    }
+
     override func loadReviews() async -> [Review] {
         guard let location = customLocation else { return [] }
         return await viewModel.getReviews(location: location)

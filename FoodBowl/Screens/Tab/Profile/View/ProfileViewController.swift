@@ -185,6 +185,19 @@ final class ProfileViewController: MapViewController {
         }
     }
 
+    override func loadData() {
+        Task {
+            feedListView.reviews = await loadReviews()
+            feedListView.listCollectionView.reloadData()
+            stores = await loadStores()
+
+            DispatchQueue.main.async {
+                self.grabbarView.modalResultLabel.text = "\(self.stores.count.prettyNumber)개의 맛집"
+                self.setMarkers()
+            }
+        }
+    }
+
     override func loadReviews() async -> [Review] {
         guard let location = customLocation else { return [] }
         return await viewModel.getReviews(location: location, memberId: memberId)

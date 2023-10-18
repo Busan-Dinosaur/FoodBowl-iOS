@@ -46,11 +46,7 @@ final class SearchUnivViewController: BaseViewController {
     // MARK: - life cycle
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        Task {
-            await schools = viewModel.getSchools()
-            filteredSchools = schools
-            univTableView.reloadData()
-        }
+        setupSchools()
     }
 
     override func setupLayout() {
@@ -65,6 +61,14 @@ final class SearchUnivViewController: BaseViewController {
         let closeButton = makeBarButtonItem(with: closeButton)
         navigationItem.rightBarButtonItem = closeButton
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: searchBar)
+    }
+
+    private func setupSchools() {
+        Task {
+            await schools = viewModel.getSchools()
+            filteredSchools = schools
+            univTableView.reloadData()
+        }
     }
 
     private func setUniv(univ: School) {

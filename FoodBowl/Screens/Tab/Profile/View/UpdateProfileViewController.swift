@@ -81,7 +81,7 @@ final class UpdateProfileViewController: BaseViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        setProfile()
+        setupProfile()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -137,7 +137,7 @@ final class UpdateProfileViewController: BaseViewController {
         title = "프로필 수정"
     }
 
-    private func setProfile() {
+    private func setupProfile() {
         nicknameField.text = UserDefaultsManager.currentUser?.nickname
         userInfoField.text = UserDefaultsManager.currentUser?.introduction
 
