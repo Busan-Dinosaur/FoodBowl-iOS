@@ -78,6 +78,8 @@ final class FindViewController: BaseViewController {
         $0.searchBar.tintColor = .mainPink
         $0.searchBar.scopeButtonTitles = ["맛집", "유저"]
         $0.obscuresBackgroundDuringPresentation = true
+        $0.searchBar.showsScopeBar = false
+        $0.searchBar.sizeToFit()
     }
 
     private let collectionViewFlowLayout = UICollectionViewFlowLayout().then {
@@ -160,6 +162,14 @@ extension FindViewController: UISearchResultsUpdating, UISearchBarDelegate {
     func updateSearchResults(for searchController: UISearchController) {
         guard let text = searchController.searchBar.text?.lowercased() else { return }
         searchText = text
+    }
+
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        searchController.searchBar.showsScopeBar = true
+    }
+
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+        searchController.searchBar.showsScopeBar = false
     }
 
     func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
