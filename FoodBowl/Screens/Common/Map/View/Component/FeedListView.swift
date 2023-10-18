@@ -75,13 +75,24 @@ final class FeedListView: ModalView {
     private func setupLoadReviews() {
         Task {
             reviews = await loadReviews()
-            listCollectionView.reloadData()
+
+            DispatchQueue.main.async {
+                self.listCollectionView.reloadData()
+            }
         }
     }
 
     private func setupReloadReviews() {
         Task {
-            let newReviews = await reloadReviews()
+            let newReviews = await self.reloadReviews()
+            reviews += newReviews
+
+            let newIndex = reviews.count - 1
+            let indexSet = IndexSet(integer: newIndex)
+
+            DispatchQueue.main.async {
+                self.listCollectionView.insertSections(indexSet)
+            }
         }
     }
 
@@ -92,9 +103,14 @@ final class FeedListView: ModalView {
 
         for indexPath in indexPathsToUpdate {
             reviews[indexPath.item].store.isBookmarked.toggle()
-        }
 
-        listCollectionView.reloadItems(at: indexPathsToUpdate)
+            DispatchQueue.main.async {
+                if let cell = self.listCollectionView.cellForItem(at: indexPath) as? FeedCollectionViewCell {
+                    cell.storeInfoView.bookmarkButton.isSelected.toggle()
+                    cell.setNeedsLayout()
+                }
+            }
+        }
     }
 }
 

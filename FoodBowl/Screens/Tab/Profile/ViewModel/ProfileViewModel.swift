@@ -65,8 +65,6 @@ extension ProfileViewModel {
         switch response {
         case .success(let result):
             guard let data = try? result.map(ReviewResponse.self) else { return [] }
-            print("page----------")
-            print(data.page)
             self.lastReviewId = data.page.lastId
             return data.reviews
         case .failure(let err):
