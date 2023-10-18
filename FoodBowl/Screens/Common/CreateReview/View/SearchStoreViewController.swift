@@ -11,7 +11,7 @@ import SnapKit
 import Then
 
 final class SearchStoreViewController: BaseViewController {
-    private var viewModel: CreateReviewViewModel
+    private let viewModel: CreateReviewViewModel
 
     init(viewModel: CreateReviewViewModel) {
         self.viewModel = viewModel

@@ -52,33 +52,21 @@ final class UnivViewController: MapViewController {
         univTitleButton.label.text = univ?.name ?? "대학가"
     }
 
-    override func loadData() {
-        Task {
-            await loadReviews()
-            await loadStores()
-        }
+    override func loadReviews() async -> [Review] {
+        guard let location = customLocation else { return [] }
+        return await viewModel.getReviews(location: location)
     }
 
-    override func reloadData() {
-        Task {
-            await reloadReviews()
-        }
+    override func loadStores() async -> [Store] {
+        guard let location = customLocation else { return [] }
+        return await viewModel.getStores(location: location)
     }
 
-    private func loadReviews() async {
-        guard let location = customLocation else { return }
-        feedListView.reviews = await viewModel.getReviews(location: location)
-    }
-
-    private func loadStores() async {
-        guard let location = customLocation else { return }
-        stores = await viewModel.getStores(location: location)
-    }
-
-    private func reloadReviews() async {
+    override func reloadReviews() async -> [Review] {
         if let lastReviewId = viewModel.lastReviewId, let location = customLocation {
-            feedListView.reviews += await viewModel.getReviews(location: location, lastReviewId: lastReviewId)
+            return await viewModel.getReviews(location: location, lastReviewId: lastReviewId)
         }
+        return []
     }
 
     override func currentLocation() {

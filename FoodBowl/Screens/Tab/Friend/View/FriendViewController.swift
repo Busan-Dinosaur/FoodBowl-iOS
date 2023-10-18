@@ -11,9 +11,9 @@ import SnapKit
 import Then
 
 final class FriendViewController: MapViewController {
-    private var viewModel = FriendViewModel()
+    private let viewModel = FriendViewModel()
 
-    let logoLabel = PaddingLabel().then {
+    private let logoLabel = PaddingLabel().then {
         $0.font = .font(.regular, ofSize: 22)
         $0.textColor = .mainTextColor
         $0.text = "친구들"
@@ -34,44 +34,32 @@ final class FriendViewController: MapViewController {
         navigationItem.rightBarButtonItem = plusButton
     }
 
-    override func loadData() {
-        Task {
-            await loadReviews()
-            await loadStores()
-        }
-    }
-
-    override func reloadData() {
-        Task {
-            await reloadReviews()
-        }
-    }
-
-    private func loadReviews() async {
-        guard let location = customLocation else { return }
+    override func loadReviews() async -> [Review] {
+        guard let location = customLocation else { return [] }
         if bookmarkButton.isSelected {
-            feedListView.reviews = await viewModel.getReviewsByBookmark(location: location)
+            return await viewModel.getReviewsByBookmark(location: location)
         } else {
-            feedListView.reviews = await viewModel.getReviews(location: location)
+            return await viewModel.getReviews(location: location)
         }
     }
 
-    private func loadStores() async {
-        guard let location = customLocation else { return }
+    override func loadStores() async -> [Store] {
+        guard let location = customLocation else { return [] }
         if bookmarkButton.isSelected {
-            stores = await viewModel.getStoresByBookmark(location: location)
+            return await viewModel.getStoresByBookmark(location: location)
         } else {
-            stores = await viewModel.getStores(location: location)
+            return await viewModel.getStores(location: location)
         }
     }
 
-    private func reloadReviews() async {
+    override func reloadReviews() async -> [Review] {
         if let lastReviewId = viewModel.lastReviewId, let location = customLocation {
             if bookmarkButton.isSelected {
-                feedListView.reviews += await viewModel.getReviewsByBookmark(location: location, lastReviewId: lastReviewId)
+                return await viewModel.getReviewsByBookmark(location: location, lastReviewId: lastReviewId)
             } else {
-                feedListView.reviews += await viewModel.getReviews(location: location, lastReviewId: lastReviewId)
+                return await viewModel.getReviews(location: location, lastReviewId: lastReviewId)
             }
         }
+        return []
     }
 }

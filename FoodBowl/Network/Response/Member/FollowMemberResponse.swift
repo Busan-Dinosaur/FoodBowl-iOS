@@ -20,5 +20,5 @@ struct MemberByFollow: Codable {
     let profileImageUrl: String?
     let nickname: String
     let followerCount: Int
-    let isFollowing: Bool
+    var isFollowing: Bool
 }

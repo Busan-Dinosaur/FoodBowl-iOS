@@ -23,9 +23,9 @@ final class CreateReviewController: BaseViewController {
         )
     }
 
-    var delegate: CreateReviewControllerDelegate?
+    private let viewModel = CreateReviewViewModel()
 
-    private var viewModel = CreateReviewViewModel()
+    var delegate: CreateReviewControllerDelegate?
 
     private let textViewPlaceHolder = "100자 이내"
 

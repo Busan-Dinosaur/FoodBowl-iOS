@@ -13,7 +13,7 @@ import Then
 final class PhotoPlusCollectionViewCell: BaseCollectionViewCell {
     // MARK: - property
     private let plusImageView = UIImageView().then {
-        $0.image = UIImage(systemName: "plus.circle.fill")
+        $0.image = ImageLiteral.camera.withRenderingMode(.alwaysTemplate)
         $0.tintColor = .grey001
         $0.contentMode = .scaleAspectFill
     }

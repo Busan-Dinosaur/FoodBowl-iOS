@@ -139,19 +139,6 @@ final class ProfileViewController: MapViewController {
         }
     }
 
-    override func loadData() {
-        Task {
-            await loadReviews()
-            await loadStores()
-        }
-    }
-
-    override func reloadData() {
-        Task {
-            await reloadReviews()
-        }
-    }
-
     private func setupMember() {
         Task {
             if isOwn {
@@ -202,20 +189,25 @@ final class ProfileViewController: MapViewController {
         }
     }
 
-    private func loadReviews() async {
-        guard let location = customLocation else { return }
-        feedListView.reviews = await viewModel.getReviews(location: location, memberId: memberId)
+    override func loadReviews() async -> [Review] {
+        guard let location = customLocation else { return [] }
+        return await viewModel.getReviews(location: location, memberId: memberId)
     }
 
-    private func loadStores() async {
-        guard let location = customLocation else { return }
-        stores = await viewModel.getStores(location: location, memberId: memberId)
+    override func loadStores() async -> [Store] {
+        guard let location = customLocation else { return [] }
+        return await viewModel.getStores(location: location, memberId: memberId)
     }
 
-    private func reloadReviews() async {
+    override func reloadReviews() async -> [Review] {
         if let lastReviewId = viewModel.lastReviewId, let location = customLocation {
-            feedListView.reviews += await viewModel.getReviews(location: location, memberId: memberId, lastReviewId: lastReviewId)
+            feedListView.reviews += await viewModel.getReviews(
+                location: location,
+                memberId: memberId,
+                lastReviewId: lastReviewId
+            )
         }
+        return []
     }
 
     private func followButtonTapped() {

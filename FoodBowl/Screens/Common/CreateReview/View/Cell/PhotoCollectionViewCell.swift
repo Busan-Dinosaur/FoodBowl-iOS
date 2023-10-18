@@ -39,5 +39,22 @@ final class PhotoCollectionViewCell: BaseCollectionViewCell {
 
     func setupData(_ imageURL: URL) {
         foodImageView.kf.setImage(with: imageURL)
+        foodImageView.isUserInteractionEnabled = true
+
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(imageTapped))
+        foodImageView.addGestureRecognizer(tapGesture)
+    }
+
+    @objc
+    func imageTapped() {
+        let imageViewController = ImageViewController()
+        imageViewController.imageScrollView.imageView.image = foodImageView.image
+        imageViewController.modalPresentationStyle = .fullScreen
+
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now()) {
+            guard let rootVC = (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.windows.first?.rootViewController
+            else { return }
+            rootVC.present(imageViewController, animated: true)
+        }
     }
 }

@@ -23,14 +23,7 @@ final class StoreDetailViewController: BaseViewController {
 
     private var storeId: Int
     private var isFriend: Bool = true
-    private var reviews = [ReviewByStore]() {
-        didSet {
-            DispatchQueue.main.async {
-                self.listCollectionView.reloadData()
-                self.refreshControl.endRefreshing()
-            }
-        }
-    }
+    private var reviews = [ReviewByStore]()
 
     private var viewModel = StoreDetailViewModel()
 
@@ -121,26 +114,32 @@ final class StoreDetailViewController: BaseViewController {
 
     override func loadData() {
         Task {
-            await loadReviews()
+            reviews = await loadReviews()
+
+            DispatchQueue.main.async {
+                self.listCollectionView.reloadData()
+                self.refreshControl.endRefreshing()
+            }
         }
     }
 
     override func reloadData() {
         Task {
-            await reloadReviews()
+            let reviews = await loadReviews()
         }
     }
 
-    private func loadReviews() async {
+    private func loadReviews() async -> [ReviewByStore] {
         let filter = isFriend ? "FRIEND" : "ALL"
-        reviews = await viewModel.getReviews(storeId: storeId, filter: filter)
+        return await viewModel.getReviews(storeId: storeId, filter: filter)
     }
 
-    private func reloadReviews() async {
+    private func reloadReviews() async -> [ReviewByStore] {
         if let lastReviewId = viewModel.lastReviewId {
             let filter = isFriend ? "FRIEND" : "ALL"
-            reviews += await viewModel.getReviews(storeId: storeId, filter: filter, lastReviewId: lastReviewId)
+            return await viewModel.getReviews(storeId: storeId, filter: filter, lastReviewId: lastReviewId)
         }
+        return []
     }
 }
 

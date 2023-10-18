@@ -7,8 +7,6 @@
 
 import UIKit
 
-import Moya
-
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
 

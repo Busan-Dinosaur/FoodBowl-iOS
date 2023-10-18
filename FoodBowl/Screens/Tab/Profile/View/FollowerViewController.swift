@@ -101,6 +101,7 @@ extension FollowerViewController: UITableViewDataSource, UITableViewDelegate {
                     Task {
                         guard let self = self else { return }
                         if await self.viewModel.removeFollowingMember(memberId: member.memberId) {
+//                            self.members = self.members.filter { $0.memberId != member.memberId }
                             DispatchQueue.main.async {
                                 self.loadData()
                             }
@@ -119,11 +120,23 @@ extension FollowerViewController: UITableViewDataSource, UITableViewDelegate {
                         guard let self = self else { return }
                         if cell.followButton.isSelected {
                             if await self.viewModel.unfollowMember(memberId: member.memberId) {
-                                self.loadData()
+                                self.members = self.members.map {
+                                    var selectedMember = $0
+                                    if selectedMember.memberId == member.memberId {
+                                        selectedMember.isFollowing = false
+                                    }
+                                    return selectedMember
+                                }
                             }
                         } else {
                             if await self.viewModel.followMember(memberId: member.memberId) {
-                                self.loadData()
+                                self.members = self.members.map {
+                                    var selectedMember = $0
+                                    if selectedMember.memberId == member.memberId {
+                                        selectedMember.isFollowing = true
+                                    }
+                                    return selectedMember
+                                }
                             }
                         }
                     }

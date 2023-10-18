@@ -22,25 +22,29 @@ final class FeedListView: ModalView {
 
     var reviews: [Review] = [] {
         didSet {
-            DispatchQueue.main.async {
-                self.listCollectionView.reloadData()
-                self.refreshControl.endRefreshing()
-            }
+            setupListCollectionView()
         }
     }
 
-    private var loadData: () -> Void
-    private var reloadData: () -> Void
-    private var presentBlameVC: (Int, String) -> Void
+    private let viewModel = BaseViewModel()
 
-    private var viewModel = BaseViewModel()
+    var loadReviews: () async -> [Review]
+    var loadStores: () async -> [Store]
+    var reloadReviews: () async -> [Review]
+    var presentBlameVC: (Int, String) -> Void
 
-    private var refreshControl = UIRefreshControl()
+    private let refreshControl = UIRefreshControl()
 
     // MARK: - init
-    init(loadData: @escaping (() -> Void), reloadData: @escaping (() -> Void), presentBlameVC: @escaping (Int, String) -> Void) {
-        self.loadData = loadData
-        self.reloadData = reloadData
+    init(
+        loadReviews: @escaping (() async -> [Review]),
+        loadStores: @escaping (() async -> [Store]),
+        reloadReviews: @escaping (() async -> [Review]),
+        presentBlameVC: @escaping (Int, String) -> Void
+    ) {
+        self.loadReviews = loadReviews
+        self.loadStores = loadStores
+        self.reloadReviews = reloadReviews
         self.presentBlameVC = presentBlameVC
         super.init(frame: .zero)
     }
@@ -68,12 +72,14 @@ final class FeedListView: ModalView {
 
     override func setupRefreshControl() {
         let action = UIAction { [weak self] _ in
-            self?.loadData()
+//            self?.loadReviews()
         }
         refreshControl.addAction(action, for: .valueChanged)
         refreshControl.tintColor = .grey002
         listCollectionView.refreshControl = refreshControl
     }
+
+    private func setupListCollectionView() {}
 }
 
 extension FeedListView {
@@ -87,7 +93,7 @@ extension FeedListView {
     }
 
     private func didScrollToBottom() {
-        reloadData()
+//        reloadReviews()
     }
 }
 
@@ -140,7 +146,7 @@ extension FeedListView: UICollectionViewDataSource, UICollectionViewDelegate {
                     self.parentViewController?.showDeleteAlert {
                         Task {
                             if await self.viewModel.removeReview(id: review.id) {
-                                self.loadData()
+//                                self.loadReviews()
                             }
                         }
                     }
@@ -175,13 +181,25 @@ extension FeedListView: UICollectionViewDataSource, UICollectionViewDelegate {
             Task {
                 if cell.storeInfoView.bookmarkButton.isSelected {
                     if await self.viewModel.removeBookmark(storeId: store.id) {
-                        cell.storeInfoView.bookmarkButton.isSelected.toggle()
-                        self.loadData()
+                        self.reviews = self.reviews.map {
+                            var review = $0
+                            if $0.store.id == store.id {
+                                review.store.isBookmarked = false
+                                return review
+                            }
+                            return review
+                        }
                     }
                 } else {
                     if await self.viewModel.createBookmark(storeId: store.id) {
-                        cell.storeInfoView.bookmarkButton.isSelected.toggle()
-                        self.loadData()
+                        self.reviews = self.reviews.map {
+                            var review = $0
+                            if $0.store.id == store.id {
+                                review.store.isBookmarked = true
+                                return review
+                            }
+                            return review
+                        }
                     }
                 }
             }

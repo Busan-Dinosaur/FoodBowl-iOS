@@ -89,9 +89,10 @@ class MapViewController: BaseViewController {
     let grabbarView = GrabbarView()
 
     lazy var feedListView = FeedListView(
-        loadData: { self.loadData() },
-        reloadData: { self.reloadData() },
-        presentBlameVC: self.presentBlameVC
+        loadReviews: { await self.loadReviews() },
+        loadStores: { await self.loadStores() },
+        reloadReviews: { await self.reloadReviews() },
+        presentBlameVC: presentBlameVC
     )
 
     lazy var presentBlameVC: (Int, String) -> Void = { targetId, blameTarget in
@@ -152,6 +153,12 @@ class MapViewController: BaseViewController {
         currentModalHeight = modalMidHeight
         bookmarkButton.isHidden = true
     }
+
+    func loadReviews() async -> [Review] { return [] }
+
+    func loadStores() async -> [Store] { return [] }
+
+    func reloadReviews() async -> [Review] { return [] }
 
     func currentLocation() {
         guard let currentLoc = LocationManager.shared.manager.location else { return }
