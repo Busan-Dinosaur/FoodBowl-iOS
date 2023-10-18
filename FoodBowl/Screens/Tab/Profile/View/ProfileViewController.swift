@@ -197,7 +197,7 @@ final class ProfileViewController: MapViewController {
 
     override func reloadReviews() async -> [Review] {
         if let lastReviewId = viewModel.lastReviewId, let location = customLocation {
-            feedListView.reviews += await viewModel.getReviews(
+            return await viewModel.getReviews(
                 location: location,
                 memberId: memberId,
                 lastReviewId: lastReviewId
