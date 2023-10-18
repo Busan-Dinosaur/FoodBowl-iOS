@@ -86,7 +86,6 @@ final class FeedCollectionViewCell: BaseCollectionViewCell {
 
     override func prepareForReuse() {
         super.prepareForReuse()
-        createPhotoList()
     }
 
     func setupData(_ review: Review) {
@@ -102,6 +101,7 @@ final class FeedCollectionViewCell: BaseCollectionViewCell {
             removePhotoList()
         } else {
             photoListView.photos = review.imagePaths
+            createPhotoList()
         }
     }
 

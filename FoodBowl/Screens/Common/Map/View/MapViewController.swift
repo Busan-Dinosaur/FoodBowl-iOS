@@ -94,11 +94,7 @@ class MapViewController: BaseViewController {
 
     // MARK: - life cycle
     override func viewDidLoad() {
-        setupLayout()
-        configureUI()
-        hidekeyboardWhenTappedAround()
-        setupNavigationBar()
-        setupLottie()
+        super.viewDidLoad()
         currentLocation()
     }
 
@@ -154,9 +150,10 @@ class MapViewController: BaseViewController {
             feedListView.reviews = await loadReviews()
             feedListView.listCollectionView.reloadData()
             stores = await loadStores()
+
             DispatchQueue.main.async {
                 self.grabbarView.modalResultLabel.text = "\(self.stores.count.prettyNumber)개의 맛집"
-                self.setMarkers(stores: self.stores)
+                self.setMarkers()
             }
         }
     }
@@ -168,7 +165,11 @@ class MapViewController: BaseViewController {
     func reloadReviews() async -> [Review] { return [] }
 
     func currentLocation() {
+        print("지도---------------")
+        print(LocationManager.shared.manager.location)
         guard let currentLoc = LocationManager.shared.manager.location else { return }
+
+        print("카메라 이동하자---------")
 
         mapView.setRegion(
             MKCoordinateRegion(
@@ -179,7 +180,7 @@ class MapViewController: BaseViewController {
         )
     }
 
-    func setMarkers(stores: [Store]) {
+    func setMarkers() {
         mapView.removeAnnotations(markers)
 
         markers = stores.map { store in
