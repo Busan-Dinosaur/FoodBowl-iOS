@@ -85,13 +85,18 @@ final class FeedListView: ModalView {
     private func setupReloadReviews() {
         Task {
             let newReviews = await self.reloadReviews()
+            if newReviews.isEmpty {
+                return
+            }
             reviews += newReviews
 
-            let newIndex = reviews.count - 1
-            let indexSet = IndexSet(integer: newIndex)
+            let startIndex = reviews.count - newReviews.count
+            let indexPaths = (startIndex..<reviews.count).map { IndexPath(item: $0, section: 0) }
 
             DispatchQueue.main.async {
-                self.listCollectionView.insertSections(indexSet)
+                self.listCollectionView.performBatchUpdates {
+                    self.listCollectionView.insertItems(at: indexPaths)
+                }
             }
         }
     }
@@ -101,10 +106,10 @@ final class FeedListView: ModalView {
             review.store.id == storeId ? IndexPath(item: index, section: 0) : nil
         }
 
-        for indexPath in indexPathsToUpdate {
-            reviews[indexPath.item].store.isBookmarked.toggle()
+        DispatchQueue.main.async {
+            for indexPath in indexPathsToUpdate {
+                self.reviews[indexPath.item].store.isBookmarked.toggle()
 
-            DispatchQueue.main.async {
                 if let cell = self.listCollectionView.cellForItem(at: indexPath) as? FeedCollectionViewCell {
                     cell.storeInfoView.bookmarkButton.isSelected.toggle()
                     cell.setNeedsLayout()
@@ -115,17 +120,14 @@ final class FeedListView: ModalView {
 }
 
 extension FeedListView {
-    // Standard scroll-view delegate
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let contentSize = scrollView.contentSize.height
+        let offsetY = scrollView.contentOffset.y
+        let contentHeight = scrollView.contentSize.height
+        let height = scrollView.frame.size.height
 
-        if contentSize - scrollView.contentOffset.y <= scrollView.bounds.height {
-            didScrollToBottom()
+        if offsetY > contentHeight - height {
+            setupReloadReviews()
         }
-    }
-
-    private func didScrollToBottom() {
-        setupReloadReviews()
     }
 }
 
