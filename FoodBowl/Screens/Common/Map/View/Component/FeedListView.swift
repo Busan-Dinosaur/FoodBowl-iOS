@@ -20,16 +20,11 @@ final class FeedListView: ModalView {
         )
     }
 
-    var reviews: [Review] = [] {
-        didSet {
-            setupListCollectionView()
-        }
-    }
+    var reviews: [Review] = []
 
     private let viewModel = BaseViewModel()
 
     var loadReviews: () async -> [Review]
-    var loadStores: () async -> [Store]
     var reloadReviews: () async -> [Review]
     var presentBlameVC: (Int, String) -> Void
 
@@ -38,12 +33,10 @@ final class FeedListView: ModalView {
     // MARK: - init
     init(
         loadReviews: @escaping (() async -> [Review]),
-        loadStores: @escaping (() async -> [Store]),
         reloadReviews: @escaping (() async -> [Review]),
         presentBlameVC: @escaping (Int, String) -> Void
     ) {
         self.loadReviews = loadReviews
-        self.loadStores = loadStores
         self.reloadReviews = reloadReviews
         self.presentBlameVC = presentBlameVC
         super.init(frame: .zero)
@@ -72,14 +65,25 @@ final class FeedListView: ModalView {
 
     override func setupRefreshControl() {
         let action = UIAction { [weak self] _ in
-//            self?.loadReviews()
+            self?.setupLoadReviews()
         }
         refreshControl.addAction(action, for: .valueChanged)
         refreshControl.tintColor = .grey002
         listCollectionView.refreshControl = refreshControl
     }
 
-    private func setupListCollectionView() {}
+    private func setupLoadReviews() {
+        Task {
+            reviews = await loadReviews()
+            listCollectionView.reloadData()
+        }
+    }
+
+    private func setupReloadReviews() {
+        Task {
+            let newReviews = await reloadReviews()
+        }
+    }
 }
 
 extension FeedListView {
@@ -93,7 +97,7 @@ extension FeedListView {
     }
 
     private func didScrollToBottom() {
-//        reloadReviews()
+        setupReloadReviews()
     }
 }
 
@@ -149,7 +153,7 @@ extension FeedListView: UICollectionViewDataSource, UICollectionViewDelegate {
                         okAction: { _ in
                             Task {
                                 if await self.viewModel.removeReview(id: review.id) {
-                                    //                                self.loadReviews()
+                                    self.setupLoadReviews()
                                 }
                             }
                         }

@@ -83,7 +83,6 @@ class MapViewController: BaseViewController {
 
     lazy var feedListView = FeedListView(
         loadReviews: { await self.loadReviews() },
-        loadStores: { await self.loadStores() },
         reloadReviews: { await self.reloadReviews() },
         presentBlameVC: presentBlameVC
     )
@@ -165,19 +164,17 @@ class MapViewController: BaseViewController {
     func reloadReviews() async -> [Review] { return [] }
 
     func currentLocation() {
-        print("지도---------------")
-        print(LocationManager.shared.manager.location)
-        guard let currentLoc = LocationManager.shared.manager.location else { return }
-
-        print("카메라 이동하자---------")
+        guard let currentLoc = LocationManager.shared.manager.location?.coordinate else { return }
 
         mapView.setRegion(
             MKCoordinateRegion(
-                center: currentLoc.coordinate,
+                center: currentLoc,
                 span: MKCoordinateSpan(latitudeDelta: 0.02, longitudeDelta: 0.02)
             ),
             animated: true
         )
+
+        print("지도가 움직였냐?")
     }
 
     func setMarkers() {

@@ -84,8 +84,8 @@ final class CreateReviewViewModel {
         reviewRequest.locationId = store.id
         reviewRequest.storeName = store.placeName
         reviewRequest.storeAddress = store.roadAddressName
-        reviewRequest.x = Double(store.longitude) ?? 0.0
-        reviewRequest.y = Double(store.latitude) ?? 0.0
+        reviewRequest.x = Double(store.longitude)!
+        reviewRequest.y = Double(store.latitude)!
         reviewRequest.storeUrl = store.placeURL
         reviewRequest.phone = store.phone
         reviewRequest.category = getCategory(categoryName: store.categoryName)
@@ -94,8 +94,8 @@ final class CreateReviewViewModel {
             if univ.placeName.contains("대학교") || univ.placeName.contains("캠퍼스") {
                 reviewRequest.schoolName = univ.placeName
                 reviewRequest.schoolAddress = univ.roadAddressName
-                reviewRequest.schoolX = Double(univ.longitude) ?? 0.0
-                reviewRequest.schoolY = Double(univ.latitude) ?? 0.0
+                reviewRequest.schoolX = Double(univ.longitude)!
+                reviewRequest.schoolY = Double(univ.latitude)!
             }
         }
     }

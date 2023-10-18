@@ -11,8 +11,8 @@ struct CreateReviewRequest: Encodable {
     var locationId: String = ""
     var storeName: String = ""
     var storeAddress: String = ""
-    var x: Double = 0.0
-    var y: Double = 0.0
+    var x: Double = 37.5667
+    var y: Double = 126.9784
     var storeUrl: String = ""
     var phone: String?
     var category: String = ""
