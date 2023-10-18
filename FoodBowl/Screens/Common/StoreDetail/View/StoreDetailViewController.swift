@@ -27,8 +27,9 @@ final class StoreDetailViewController: BaseViewController {
 
     private var viewModel = StoreDetailViewModel()
 
-    init(storeId: Int) {
+    init(storeId: Int, isFriend: Bool = true) {
         self.storeId = storeId
+        self.isFriend = isFriend
         super.init()
     }
 
@@ -44,6 +45,7 @@ final class StoreDetailViewController: BaseViewController {
             self?.reviewToggleButtonTapped()
         }
         $0.addAction(action, for: .touchUpInside)
+        $0.isSelected = self.isFriend
     }
 
     private var storeHeaderView = StoreHeaderView()

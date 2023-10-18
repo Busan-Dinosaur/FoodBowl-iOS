@@ -268,7 +268,7 @@ extension FindViewController: UITableViewDataSource, UITableViewDelegate {
 
     func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
         if scope == 0 {
-            let storeDetailViewController = StoreDetailViewController(storeId: stores[indexPath.item].storeId)
+            let storeDetailViewController = StoreDetailViewController(storeId: stores[indexPath.item].storeId, isFriend: false)
             storeDetailViewController.title = stores[indexPath.item].storeName
             DispatchQueue.main.async { [weak self] in
                 self?.navigationController?.pushViewController(storeDetailViewController, animated: true)

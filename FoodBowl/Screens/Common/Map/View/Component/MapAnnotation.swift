@@ -10,7 +10,7 @@ import UIKit
 import MapKit
 import Then
 
-class MapItemAnnotationView: MKMarkerAnnotationView {
+final class MapItemAnnotationView: MKMarkerAnnotationView {
     override var annotation: MKAnnotation? {
         willSet {
             guard let marker = newValue as? Marker else { return }
