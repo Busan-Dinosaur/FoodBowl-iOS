@@ -147,21 +147,6 @@ class BaseViewController: UIViewController {
         view.addSubview(animationView!)
     }
 
-    func showDeleteAlert(completion: @escaping () -> Void) {
-        let alertController = UIAlertController(title: "삭제 여부", message: "정말로 삭제하시겠습니까?", preferredStyle: .alert)
-
-        let cancelAction = UIAlertAction(title: "취소", style: .cancel)
-
-        let deleteAction = UIAlertAction(title: "삭제", style: .destructive) { _ in
-            completion()
-        }
-
-        alertController.addAction(cancelAction)
-        alertController.addAction(deleteAction)
-
-        present(alertController, animated: true, completion: nil)
-    }
-
     // MARK: - func
     @objc
     func keyboardWillShow(notification: NSNotification) {

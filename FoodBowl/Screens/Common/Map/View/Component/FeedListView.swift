@@ -143,13 +143,17 @@ extension FeedListView: UICollectionViewDataSource, UICollectionViewDelegate {
 
                 let del = UIAlertAction(title: "삭제", style: .destructive, handler: { _ in
                     guard let self = self else { return }
-                    self.parentViewController?.showDeleteAlert {
-                        Task {
-                            if await self.viewModel.removeReview(id: review.id) {
-//                                self.loadReviews()
+                    self.parentViewController?.makeRequestAlert(
+                        title: "삭제 여부",
+                        message: "정말로 삭제하시겠습니까?",
+                        okAction: { _ in
+                            Task {
+                                if await self.viewModel.removeReview(id: review.id) {
+                                    //                                self.loadReviews()
+                                }
                             }
                         }
-                    }
+                    )
                 })
                 alert.addAction(del)
             } else {

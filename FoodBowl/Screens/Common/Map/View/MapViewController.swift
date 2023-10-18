@@ -96,7 +96,9 @@ class MapViewController: BaseViewController {
     override func viewDidLoad() {
         setupLayout()
         configureUI()
+        hidekeyboardWhenTappedAround()
         setupNavigationBar()
+        setupLottie()
         currentLocation()
     }
 
