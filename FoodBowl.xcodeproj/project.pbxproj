@@ -46,9 +46,8 @@
 		CB51C8D52AD7E896002D0BA5 /* StoreResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB51C8D42AD7E896002D0BA5 /* StoreResponse.swift */; };
 		CB51C8D72AD7EB58002D0BA5 /* ServiceAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB51C8D62AD7EB58002D0BA5 /* ServiceAPI.swift */; };
 		CB558E9A29746B5D00921943 /* PhotoPlusCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB558E9929746B5D00921943 /* PhotoPlusCollectionViewCell.swift */; };
-		CB558E9C2975B80B00921943 /* Feed.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB558E9B2975B80B00921943 /* Feed.swift */; };
 		CB56C3862AB9D9D000C65AF4 /* YPImagePicker in Frameworks */ = {isa = PBXBuildFile; productRef = CB56C3852AB9D9D000C65AF4 /* YPImagePicker */; };
-		CB5AF8A929854AA0003D16D4 /* MapItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5AF8A829854AA0003D16D4 /* MapItem.swift */; };
+		CB5AF8A929854AA0003D16D4 /* MapAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5AF8A829854AA0003D16D4 /* MapAnnotation.swift */; };
 		CB5DD42F2AB587CD009FCB43 /* UserDefaultWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5DD42E2AB587CD009FCB43 /* UserDefaultWrapper.swift */; };
 		CB5DD4312AB59130009FCB43 /* BookmarkMapButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5DD4302AB59130009FCB43 /* BookmarkMapButton.swift */; };
 		CB5DD4332AB5A175009FCB43 /* CreateReviewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5DD4322AB5A175009FCB43 /* CreateReviewController.swift */; };
@@ -202,8 +201,7 @@
 		CB51C8D42AD7E896002D0BA5 /* StoreResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreResponse.swift; sourceTree = "<group>"; };
 		CB51C8D62AD7EB58002D0BA5 /* ServiceAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceAPI.swift; sourceTree = "<group>"; };
 		CB558E9929746B5D00921943 /* PhotoPlusCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPlusCollectionViewCell.swift; sourceTree = "<group>"; };
-		CB558E9B2975B80B00921943 /* Feed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Feed.swift; sourceTree = "<group>"; };
-		CB5AF8A829854AA0003D16D4 /* MapItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapItem.swift; sourceTree = "<group>"; };
+		CB5AF8A829854AA0003D16D4 /* MapAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapAnnotation.swift; sourceTree = "<group>"; };
 		CB5DD42E2AB587CD009FCB43 /* UserDefaultWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultWrapper.swift; sourceTree = "<group>"; };
 		CB5DD4302AB59130009FCB43 /* BookmarkMapButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkMapButton.swift; sourceTree = "<group>"; };
 		CB5DD4322AB5A175009FCB43 /* CreateReviewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateReviewController.swift; sourceTree = "<group>"; };
@@ -505,7 +503,8 @@
 			children = (
 				CBDECAC72A6B2F0700259350 /* FeedListView.swift */,
 				CB63B75F2A698909000AD9C2 /* CategoryListView.swift */,
-				CB5AF8A829854AA0003D16D4 /* MapItem.swift */,
+				CB8A2D9A297844720018AC6E /* Marker.swift */,
+				CB5AF8A829854AA0003D16D4 /* MapAnnotation.swift */,
 			);
 			path = Component;
 			sourceTree = "<group>";
@@ -877,16 +876,6 @@
 			path = FoodBowl;
 			sourceTree = "<group>";
 		};
-		CBC747AC2A83D96E00F171F5 /* Map */ = {
-			isa = PBXGroup;
-			children = (
-				CB558E9B2975B80B00921943 /* Feed.swift */,
-				CB8A2D9A297844720018AC6E /* Marker.swift */,
-				CBC158722AD8E74900FD263B /* CustomLocation.swift */,
-			);
-			path = Map;
-			sourceTree = "<group>";
-		};
 		CBC747AD2A83D9BC00F171F5 /* Request */ = {
 			isa = PBXGroup;
 			children = (
@@ -1011,7 +1000,7 @@
 		CBDE390329719B8100DDE49A /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				CBC747AC2A83D96E00F171F5 /* Map */,
+				CBC158722AD8E74900FD263B /* CustomLocation.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1231,7 +1220,6 @@
 				CBA4C7DD2AB49B4900FC9DD8 /* ReviewToggleButton.swift in Sources */,
 				CB2E4F7F297702A800FD2566 /* StoreInfoTableViewCell.swift in Sources */,
 				CBDDF1422A6AF70500AE3C50 /* StoreHeaderView.swift in Sources */,
-				CB558E9C2975B80B00921943 /* Feed.swift in Sources */,
 				CB949A8A2ADD7C7900A3A78C /* FollowViewModel.swift in Sources */,
 				CBB94BF82ADD0C0C00F44245 /* ReviewByStoreResponse.swift in Sources */,
 				CB1A7C6829576D7900C6431D /* BaseScrollView.swift in Sources */,
@@ -1270,7 +1258,7 @@
 				CBB58284297440A600808B0B /* CategoryCollectionViewCell.swift in Sources */,
 				CBC73104295550A100C7F198 /* AppDelegate.swift in Sources */,
 				CBE6190C296C635D005295AF /* FollowButton.swift in Sources */,
-				CB5AF8A929854AA0003D16D4 /* MapItem.swift in Sources */,
+				CB5AF8A929854AA0003D16D4 /* MapAnnotation.swift in Sources */,
 				CBC158642AD80AF800FD263B /* SearchMembersRequest.swift in Sources */,
 				CB1790C8296DAB470083D3A4 /* DynamicHeightCollectionViewFlowLayout.swift in Sources */,
 				CBA7F184297DBB01006088A0 /* YPImagePicker+Extension.swift in Sources */,
