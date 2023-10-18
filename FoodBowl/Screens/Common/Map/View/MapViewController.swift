@@ -15,6 +15,7 @@ import Then
 
 class MapViewController: BaseViewController {
     var customLocation: CustomLocation?
+    var currentLoction: CLLocationCoordinate2D?
 
     var stores = [Store]()
 
@@ -188,6 +189,10 @@ class MapViewController: BaseViewController {
 }
 
 extension MapViewController: MKMapViewDelegate {
+    func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
+        currentLoction = userLocation.location?.coordinate
+    }
+
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         guard view is ClusterAnnotationView else { return }
 
@@ -205,7 +210,10 @@ extension MapViewController: MKMapViewDelegate {
         let center = mapView.centerCoordinate
         let visibleMapRect = mapView.visibleMapRect
         let topLeftCoordinate = MKMapPoint(x: visibleMapRect.minX, y: visibleMapRect.minY).coordinate
-        guard let currentLoc = LocationManager.shared.manager.location?.coordinate else { return }
+
+        guard let currentLoc = currentLoction else { return }
+
+        print(currentLoc)
 
         customLocation = CustomLocation(
             x: center.longitude,
