@@ -84,6 +84,18 @@ final class FeedListView: ModalView {
             let newReviews = await reloadReviews()
         }
     }
+
+    private func updateCellsByBookmark(storeId: Int) {
+        let indexPathsToUpdate = reviews.enumerated().compactMap { index, review in
+            review.store.id == storeId ? IndexPath(item: index, section: 0) : nil
+        }
+
+        for indexPath in indexPathsToUpdate {
+            reviews[indexPath.item].store.isBookmarked.toggle()
+        }
+
+        listCollectionView.reloadItems(at: indexPathsToUpdate)
+    }
 }
 
 extension FeedListView {
@@ -189,25 +201,11 @@ extension FeedListView: UICollectionViewDataSource, UICollectionViewDelegate {
             Task {
                 if cell.storeInfoView.bookmarkButton.isSelected {
                     if await self.viewModel.removeBookmark(storeId: store.id) {
-                        self.reviews = self.reviews.map {
-                            var review = $0
-                            if $0.store.id == store.id {
-                                review.store.isBookmarked = false
-                                return review
-                            }
-                            return review
-                        }
+                        self.updateCellsByBookmark(storeId: store.id)
                     }
                 } else {
                     if await self.viewModel.createBookmark(storeId: store.id) {
-                        self.reviews = self.reviews.map {
-                            var review = $0
-                            if $0.store.id == store.id {
-                                review.store.isBookmarked = true
-                                return review
-                            }
-                            return review
-                        }
+                        self.updateCellsByBookmark(storeId: store.id)
                     }
                 }
             }
