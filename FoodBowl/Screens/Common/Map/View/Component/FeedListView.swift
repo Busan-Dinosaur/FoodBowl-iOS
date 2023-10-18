@@ -75,23 +75,16 @@ final class FeedListView: ModalView {
 
     private func setupLoadReviews() {
         Task {
-            isLoadingData = true
-            reviews = await loadReviews()
-
             DispatchQueue.main.async {
                 self.listCollectionView.reloadData()
                 self.refreshControl.endRefreshing()
                 self.scrollToTop()
             }
-
-            isLoadingData = false
         }
     }
 
     private func setupReloadReviews() {
         Task {
-            isLoadingData = true
-
             let newReviews = await self.reloadReviews()
             reviews += newReviews
             let startIndex = reviews.count - newReviews.count
@@ -127,11 +120,16 @@ final class FeedListView: ModalView {
 
 extension FeedListView {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        guard !isLoadingData else {
+            return
+        }
+
         let offsetY = scrollView.contentOffset.y
         let contentHeight = scrollView.contentSize.height
         let height = scrollView.frame.size.height
 
-        if !isLoadingData, offsetY > contentHeight - height {
+        if offsetY > contentHeight - height {
+            isLoadingData = true
             setupReloadReviews()
         }
     }

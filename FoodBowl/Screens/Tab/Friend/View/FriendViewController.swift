@@ -53,7 +53,8 @@ final class FriendViewController: MapViewController {
     }
 
     override func reloadReviews() async -> [Review] {
-        if let lastReviewId = viewModel.lastReviewId, let location = customLocation {
+        if let location = customLocation, let lastReviewId = viewModel.lastReviewId,
+           let currentpageSize = viewModel.currentpageSize, currentpageSize >= viewModel.pageSize {
             if bookmarkButton.isSelected {
                 return await viewModel.getReviewsByBookmark(location: location, lastReviewId: lastReviewId)
             } else {

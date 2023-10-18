@@ -10,9 +10,11 @@ import UIKit
 import Moya
 
 class BaseViewModel {
-    let pageSize: Int = 4
-    let size: Int = 4
+    let pageSize: Int = 10
+    let size: Int = 15
+
     var lastReviewId: Int?
+    var currentpageSize: Int?
 
     let providerService = MoyaProvider<ServiceAPI>()
     let providerReview = MoyaProvider<ReviewAPI>()

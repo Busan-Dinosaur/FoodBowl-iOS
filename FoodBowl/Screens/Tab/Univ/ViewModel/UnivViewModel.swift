@@ -42,6 +42,7 @@ extension UnivViewModel {
         case .success(let result):
             guard let data = try? result.map(ReviewResponse.self) else { return [] }
             self.lastReviewId = data.page.lastId
+            currentpageSize = data.page.size
             return data.reviews
         case .failure(let err):
             handleError(err)
