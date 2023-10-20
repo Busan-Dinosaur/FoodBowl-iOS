@@ -21,7 +21,7 @@ final class OnboardingViewController: UIViewController, Navigationable, Keyboard
     // MARK: - property
     
     private var cancelBag: Set<AnyCancellable> = Set()
-    private let viewModel = SignViewModel()
+    private let viewModel = OnboardingViewModel()
     
     // MARK: - init
     
@@ -54,14 +54,14 @@ final class OnboardingViewController: UIViewController, Navigationable, Keyboard
         self.bindOutputToViewModel(output)
     }
     
-    private func transformedOutput() -> SignViewModel.Output {
-        let input = SignViewModel.Input(
+    private func transformedOutput() -> OnboardingViewModel.Output {
+        let input = OnboardingViewModel.Input(
             appleSignButtonDidTap: self.onboardingView.appleSignButtonDidTapPublisher.eraseToAnyPublisher()
         )
         return self.viewModel.transform(from: input)
     }
     
-    private func bindOutputToViewModel(_ output: SignViewModel.Output) {
+    private func bindOutputToViewModel(_ output: OnboardingViewModel.Output) {
         output.isLogin
             .receive(on: DispatchQueue.main)
             .sink { [weak self] result in

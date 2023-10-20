@@ -32,7 +32,7 @@
 		CB2E82412AA74A050016820E /* UpdateMemberProfileRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2E82402AA74A050016820E /* UpdateMemberProfileRequest.swift */; };
 		CB2E82432AA74DE30016820E /* MemberProfileResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2E82422AA74DE30016820E /* MemberProfileResponse.swift */; };
 		CB2E82472AA74FB60016820E /* NicknameExistResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2E82462AA74FB60016820E /* NicknameExistResponse.swift */; };
-		CB40C6F82A83E812003E3F06 /* SignViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB40C6F72A83E812003E3F06 /* SignViewModel.swift */; };
+		CB40C6F82A83E812003E3F06 /* OnboardingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB40C6F72A83E812003E3F06 /* OnboardingViewModel.swift */; };
 		CB40C6FA2A83E916003E3F06 /* MoyaProvider+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB40C6F92A83E916003E3F06 /* MoyaProvider+Extension.swift */; };
 		CB40C6FC2A83E9A0003E3F06 /* SignResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB40C6FB2A83E9A0003E3F06 /* SignResponse.swift */; };
 		CB40C6FE2A83EEF8003E3F06 /* SignRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB40C6FD2A83EEF8003E3F06 /* SignRequest.swift */; };
@@ -198,7 +198,7 @@
 		CB2E82402AA74A050016820E /* UpdateMemberProfileRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateMemberProfileRequest.swift; sourceTree = "<group>"; };
 		CB2E82422AA74DE30016820E /* MemberProfileResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberProfileResponse.swift; sourceTree = "<group>"; };
 		CB2E82462AA74FB60016820E /* NicknameExistResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameExistResponse.swift; sourceTree = "<group>"; };
-		CB40C6F72A83E812003E3F06 /* SignViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignViewModel.swift; sourceTree = "<group>"; };
+		CB40C6F72A83E812003E3F06 /* OnboardingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewModel.swift; sourceTree = "<group>"; };
 		CB40C6F92A83E916003E3F06 /* MoyaProvider+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MoyaProvider+Extension.swift"; sourceTree = "<group>"; };
 		CB40C6FB2A83E9A0003E3F06 /* SignResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignResponse.swift; sourceTree = "<group>"; };
 		CB40C6FD2A83EEF8003E3F06 /* SignRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignRequest.swift; sourceTree = "<group>"; };
@@ -434,7 +434,7 @@
 		CB40C6F62A83E804003E3F06 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				CB40C6F72A83E812003E3F06 /* SignViewModel.swift */,
+				CB40C6F72A83E812003E3F06 /* OnboardingViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -1426,7 +1426,7 @@
 				CB40C6FE2A83EEF8003E3F06 /* SignRequest.swift in Sources */,
 				CB617A382AE247E4000F7FFC /* BaseViewType.swift in Sources */,
 				CBDF6EA62AD9255200EB2481 /* BlameViewController.swift in Sources */,
-				CB40C6F82A83E812003E3F06 /* SignViewModel.swift in Sources */,
+				CB40C6F82A83E812003E3F06 /* OnboardingViewModel.swift in Sources */,
 				CBA4C7DB2AB4840100FC9DD8 /* PaddingLabel.swift in Sources */,
 				CBE61911296C6804005295AF /* OptionButton.swift in Sources */,
 				CBADC28E29559BC900E56C93 /* UIView+Extension.swift in Sources */,

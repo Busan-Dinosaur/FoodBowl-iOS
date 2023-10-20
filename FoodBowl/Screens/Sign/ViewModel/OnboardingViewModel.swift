@@ -1,5 +1,5 @@
 //
-//  SignViewModel.swift
+//  OnboardingViewModel.swift
 //  FoodBowl
 //
 //  Created by COBY_PRO on 2023/08/10.
@@ -12,7 +12,7 @@ import UIKit
 import CombineMoya
 import Moya
 
-final class SignViewModel: NSObject, BaseViewModelType {
+final class OnboardingViewModel: NSObject, BaseViewModelType {
     
     // MARK: - property
     
@@ -50,13 +50,33 @@ final class SignViewModel: NSObject, BaseViewModelType {
                 case let .failure(error) :
                     self.isLoginSubject.send(completion: .failure(error))
                 case .finished :
-                    self.isLoginSubject.send(true)
+                    self.getMyProfile()
                 }
             } receiveValue: { recievedValue in
                 guard let responseData = try? recievedValue.map(SignResponse.self) else { return }
                 KeychainManager.set(responseData.accessToken, for: .accessToken)
                 KeychainManager.set(responseData.refreshToken, for: .refreshToken)
                 UserDefaultHandler.setIsLogin(isLogin: true)
+                
+                print("토큰 성공")
+            }
+            .store(in : &cancellable)
+    }
+    
+    private func getMyProfile() {
+        providerMember.requestPublisher(.getMyProfile)
+            .sink { completion in
+                switch completion {
+                case let .failure(error) :
+                    self.isLoginSubject.send(completion: .failure(error))
+                case .finished :
+                    self.isLoginSubject.send(true)
+                }
+            } receiveValue: { recievedValue in
+                guard let responseData = try? recievedValue.map(MemberProfileResponse.self) else { return }
+                UserDefaultsManager.currentUser = responseData
+                
+                print("성공")
             }
             .store(in : &cancellable)
     }
@@ -77,7 +97,7 @@ final class SignViewModel: NSObject, BaseViewModelType {
     }
 }
 
-extension SignViewModel: ASAuthorizationControllerDelegate {
+extension OnboardingViewModel: ASAuthorizationControllerDelegate {
     func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
         guard let credential = authorization.credential as? ASAuthorizationAppleIDCredential else { return }
         guard let token = credential.identityToken else { return }
