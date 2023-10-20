@@ -96,7 +96,6 @@ final class OnboardingView: UIView, BaseViewType {
 
     private func setupAction() {
         let action = UIAction { [weak self] _ in
-//            self?.delegate?.didTapAppleSignButton()
             self?.appleSignButtonDidTapPublisher.send()
         }
         self.appleSignButton.addAction(action, for: .touchUpInside)

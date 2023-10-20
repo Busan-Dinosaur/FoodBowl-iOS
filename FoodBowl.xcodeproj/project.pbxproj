@@ -470,7 +470,6 @@
 		CB4925702AB44D7100B66B68 /* Common */ = {
 			isa = PBXGroup;
 			children = (
-				CB63B7592A6986B4000AD9C2 /* Map */,
 				CBADC2B02955A13800E56C93 /* CreateReview */,
 				CB73E00F2AB5FEA9005B6BF1 /* UpdateReview */,
 				CB73E0102AB5FEB4005B6BF1 /* StoreDetail */,
@@ -555,6 +554,7 @@
 		CB617A252AE23959000F7FFC /* Scene */ = {
 			isa = PBXGroup;
 			children = (
+				CB63B7592A6986B4000AD9C2 /* Map */,
 			);
 			path = Scene;
 			sourceTree = "<group>";
@@ -691,11 +691,12 @@
 			isa = PBXGroup;
 			children = (
 				CB63B75C2A698857000AD9C2 /* View */,
+				CBE6190E296C6435005295AF /* MapViewController.swift */,
 			);
 			path = Map;
 			sourceTree = "<group>";
 		};
-		CB63B75A2A6986BE000AD9C2 /* Component */ = {
+		CB63B75A2A6986BE000AD9C2 /* UIComponent */ = {
 			isa = PBXGroup;
 			children = (
 				CBDECAC72A6B2F0700259350 /* FeedListView.swift */,
@@ -703,7 +704,7 @@
 				CB8A2D9A297844720018AC6E /* Marker.swift */,
 				CB5AF8A829854AA0003D16D4 /* MapAnnotation.swift */,
 			);
-			path = Component;
+			path = UIComponent;
 			sourceTree = "<group>";
 		};
 		CB63B75B2A6986C8000AD9C2 /* Cell */ = {
@@ -717,9 +718,8 @@
 		CB63B75C2A698857000AD9C2 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				CB63B75A2A6986BE000AD9C2 /* Component */,
 				CB63B75B2A6986C8000AD9C2 /* Cell */,
-				CBE6190E296C6435005295AF /* MapViewController.swift */,
+				CB63B75A2A6986BE000AD9C2 /* UIComponent */,
 			);
 			path = View;
 			sourceTree = "<group>";
