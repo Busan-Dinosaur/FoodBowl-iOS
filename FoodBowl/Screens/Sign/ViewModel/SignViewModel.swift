@@ -20,24 +20,26 @@ final class SignViewModel: NSObject, BaseViewModelType {
     private let providerMember = MoyaProvider<MemberAPI>()
     
     private var cancellable = Set<AnyCancellable>()
-    private let getToken = PassthroughSubject<Void, Error>()
+    
+    private let isLoginSubject = PassthroughSubject<Bool, Error>()
     
     struct Input {
-        let appleSignButtonTap: AnyPublisher<Void, Never>
+        let appleSignButtonDidTap: AnyPublisher<Void, Never>
     }
     
     struct Output {
+        let isLogin: PassthroughSubject<Bool, Error>
     }
     
     func transform(from input: Input) -> Output {
-        input.appleSignButtonTap
+        input.appleSignButtonDidTap
             .sink(receiveValue: { [weak self] _ in
                 print("button tap")
                 self?.didTapAppleSignButton()
             })
             .store(in: &self.cancellable)
         
-        return Output()
+        return Output(isLogin: self.isLoginSubject)
     }
     
     // MARK: - network
@@ -47,14 +49,17 @@ final class SignViewModel: NSObject, BaseViewModelType {
             .sink { completion in
                 switch completion {
                 case let .failure(error) :
-                    print("LogIn Fail : " + error.localizedDescription)
+                    self.isLoginSubject.send(completion: .failure(error))
                 case .finished :
-                    print("LogIn Finished")
+                    self.isLoginSubject.send(true)
                 }
             } receiveValue: { recievedValue in
                 guard let responseData = try? recievedValue.map(SignResponse.self) else { return }
-                print(responseData)
-            }.store(in : &cancellable)
+                KeychainManager.set(responseData.accessToken, for: .accessToken)
+                KeychainManager.set(responseData.refreshToken, for: .refreshToken)
+                UserDefaultHandler.setIsLogin(isLogin: true)
+            }
+            .store(in : &cancellable)
     }
     
     private func didTapAppleSignButton() {

@@ -61,12 +61,27 @@ final class OnboardingViewController: UIViewController, Navigationable, Keyboard
     
     private func transformedOutput() -> SignViewModel.Output {
         let input = SignViewModel.Input(
-            appleSignButtonTap: self.onboardingView.appleSignButtonDidTapPublisher.eraseToAnyPublisher()
+            appleSignButtonDidTap: self.onboardingView.appleSignButtonDidTapPublisher.eraseToAnyPublisher()
         )
         return self.signViewModel.transform(from: input)
     }
     
     private func bindOutputToViewModel(_ output: SignViewModel.Output) {
+        output.isLogin
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] result in
+                switch result {
+                case .finished: return
+                case .failure(_):
+                    self?.makeAlert(title: "로그인에 실패하셨습니다.")
+                }
+            } receiveValue: { [weak self] roomInfo in
+                let tabbarViewController = UINavigationController(rootViewController: TabBarController())
+                tabbarViewController.modalPresentationStyle = .fullScreen
+                tabbarViewController.modalTransitionStyle = .crossDissolve
+                self?.present(tabbarViewController, animated: true)
+            }
+            .store(in: &self.cancellable)
     }
 }
 
