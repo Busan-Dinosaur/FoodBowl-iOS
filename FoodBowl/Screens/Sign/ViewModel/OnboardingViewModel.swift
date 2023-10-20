@@ -57,8 +57,6 @@ final class OnboardingViewModel: NSObject, BaseViewModelType {
                 KeychainManager.set(responseData.accessToken, for: .accessToken)
                 KeychainManager.set(responseData.refreshToken, for: .refreshToken)
                 UserDefaultHandler.setIsLogin(isLogin: true)
-                
-                print("토큰 성공")
             }
             .store(in : &cancellable)
     }
@@ -75,8 +73,6 @@ final class OnboardingViewModel: NSObject, BaseViewModelType {
             } receiveValue: { recievedValue in
                 guard let responseData = try? recievedValue.map(MemberProfileResponse.self) else { return }
                 UserDefaultsManager.currentUser = responseData
-                
-                print("성공")
             }
             .store(in : &cancellable)
     }

@@ -39,7 +39,7 @@ final class StoreDeatilView: UIView, BaseViewType {
         $0.isSelected = self.isFriend
     }
     private var storeHeaderView = StoreHeaderView()
-    private lazy var listCollectionView = UICollectionView().then {
+    private lazy var listCollectionView = UICollectionView(frame: .zero, collectionViewLayout: self.createLayout()).then {
         $0.showsVerticalScrollIndicator = false
         $0.register(FeedNSCollectionViewCell.self, forCellWithReuseIdentifier: FeedNSCollectionViewCell.className)
         $0.backgroundColor = .mainBackgroundColor
@@ -123,22 +123,26 @@ final class StoreDeatilView: UIView, BaseViewType {
 extension StoreDeatilView {
     private func createLayout() -> UICollectionViewLayout {
         let layout = UICollectionViewCompositionalLayout { [weak self] index, environment -> NSCollectionLayoutSection? in
-            let itemSize = NSCollectionLayoutSize(
-                widthDimension: .fractionalWidth(1.0),
-                heightDimension: .estimated(500)
+            let itmeSize = NSCollectionLayoutSize(
+                widthDimension: .fractionalWidth(1),
+                heightDimension: .fractionalHeight(1)
             )
-            let item = NSCollectionLayoutItem(layoutSize: itemSize)
-
+            
+            let item = NSCollectionLayoutItem(layoutSize: itmeSize)
+            item.contentInsets = ConstantSize.sectionContentInset
+            
             let groupSize = NSCollectionLayoutSize(
-                widthDimension: .fractionalWidth(1.0),
-                heightDimension: .fractionalHeight(1.0)
+                widthDimension: .fractionalWidth(1),
+                heightDimension: .fractionalHeight(1)
             )
-            let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-
+            
+            let group = NSCollectionLayoutGroup.horizontal(
+                layoutSize: groupSize,
+                subitems: [item]
+            )
+            
             let section = NSCollectionLayoutSection(group: group)
-            section.contentInsets = ConstantSize.sectionContentInset
-            section.interGroupSpacing = ConstantSize.groupInterItemSpacing
-
+            
             return section
         }
 
