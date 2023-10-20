@@ -27,7 +27,7 @@ struct Review: Codable {
 }
 
 // MARK: - ReviewContent
-struct ReviewContent: Codable {
+struct ReviewContent: Codable, Hashable {
     let id: Int
     let content: String
     let imagePaths: [String]
@@ -44,7 +44,7 @@ struct StoreByReview: Codable {
 }
 
 // MARK: - Writer
-struct Writer: Codable {
+struct Writer: Codable, Hashable {
     let id: Int
     let nickname: String
     let profileImageUrl: String?

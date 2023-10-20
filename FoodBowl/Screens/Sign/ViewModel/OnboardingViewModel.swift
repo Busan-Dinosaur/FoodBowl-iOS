@@ -65,14 +65,15 @@ final class OnboardingViewModel: NSObject, BaseViewModelType {
         providerMember.requestPublisher(.getMyProfile)
             .sink { completion in
                 switch completion {
-                case let .failure(error) :
+                case let .failure(error):
                     self.isLoginSubject.send(completion: .failure(error))
-                case .finished :
-                    self.isLoginSubject.send(true)
+                case .finished:
+                    self.isLoginSubject.send(completion: .finished)
                 }
             } receiveValue: { recievedValue in
                 guard let responseData = try? recievedValue.map(MemberProfileResponse.self) else { return }
                 UserDefaultsManager.currentUser = responseData
+                self.isLoginSubject.send(true)
             }
             .store(in : &cancellable)
     }

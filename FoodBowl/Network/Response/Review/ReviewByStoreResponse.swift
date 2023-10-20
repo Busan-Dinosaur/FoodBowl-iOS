@@ -14,7 +14,7 @@ struct ReviewByStoreResponse: Codable {
 }
 
 // MARK: - ReviewByStore
-struct ReviewByStore: Codable {
+struct ReviewByStore: Codable, Hashable {
     let writer: Writer
     let review: ReviewContent
 }

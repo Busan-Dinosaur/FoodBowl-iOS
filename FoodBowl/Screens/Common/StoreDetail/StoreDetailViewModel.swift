@@ -11,7 +11,7 @@ import UIKit
 import CombineMoya
 import Moya
 
-final class StoreDetailViewModel: NSObject, BaseViewModelType {
+final class StoreDetailViewModel: BaseViewModelType {
     
     // MARK: - property
 
@@ -27,12 +27,14 @@ final class StoreDetailViewModel: NSObject, BaseViewModelType {
     private var lastReviewId: Int?
     private var currentpageSize: Int?
     
+    private let reviewsSubject = PassthroughSubject<[ReviewByStore], Error>()
+    
     struct Input {
         let viewDidLoad: AnyPublisher<Void, Never>
     }
     
     struct Output {
-        let reviews: AnyPublisher<[ReviewByStore], Error>
+        let reviews: PassthroughSubject<[ReviewByStore], Error>
     }
     
     // MARK: - init
@@ -45,25 +47,36 @@ final class StoreDetailViewModel: NSObject, BaseViewModelType {
     // MARK: - Public - func
     
     func transform(from input: Input) -> Output {
+        self.getReviewsPublisher()
+        
         return Output(
-            reviews: getReviewsPublisher()
+            reviews: reviewsSubject
         )
     }
     
     // MARK: - network
     
-    private func getReviewsPublisher() -> AnyPublisher<[ReviewByStore], Error> {
+    private func getReviewsPublisher() {
         let filter = isFriend ? "FRIEND" : "ALL"
-        return providerReview.requestPublisher(
+        
+        providerReview.requestPublisher(
             .getReviewsByStore(
                 form: GetReviewByStoreRequest(storeId: storeId, filter: filter),
                 lastReviewId: lastReviewId,
                 pageSize: pageSize
             )
         )
-        .tryMap { result in
-            try result.map(ReviewByStoreResponse.self).storeReviewContentResponses
+        .sink { completion in
+            switch completion {
+            case let .failure(error):
+                self.reviewsSubject.send(completion: .failure(error))
+            case .finished:
+                self.reviewsSubject.send(completion: .finished)
+            }
+        } receiveValue: { recievedValue in
+            guard let responseData = try? recievedValue.map(ReviewByStoreResponse.self) else { return }
+            self.reviewsSubject.send(responseData.storeReviewContentResponses)
         }
-        .eraseToAnyPublisher()
+        .store(in : &cancellable)
     }
 }

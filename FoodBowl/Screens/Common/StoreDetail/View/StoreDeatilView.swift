@@ -47,10 +47,9 @@ final class StoreDeatilView: UIView, BaseViewType {
     
     // MARK: - property
     
-    private var storeId: Int
+    private let storeId: Int
     var isFriend: Bool
     var title: String
-    var reviews = [ReviewByStore]()
     
     private weak var delegate: StoreDetailViewDelegate?
     private var cancelBag: Set<AnyCancellable> = Set()
