@@ -70,4 +70,4 @@
 --rules trailingClosures
 
 # file options
---exclude Pods, FoodBowl/Global/Supports, FoodBowl/Global/Extensions
+--exclude Pods, FoodBowl/App, FoodBowl/Utils/Extension

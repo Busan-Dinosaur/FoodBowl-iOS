@@ -24,7 +24,7 @@ extension String {
 
         self.draw(in: textRect, withAttributes: attributes)
     }
-    
+
     var prettyDistance: String {
         guard let distance = Double(self) else { return "" }
         guard distance > -.infinity else { return "?" }
@@ -37,7 +37,7 @@ extension String {
             return formatter.string(fromValue: value, unit: LengthFormatter.Unit.meter)
         }
     }
-    
+
     var sha256: String {
         let inputData = Data(utf8)
         let hashedData = SHA256.hash(data: inputData)

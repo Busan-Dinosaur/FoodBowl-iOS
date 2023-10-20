@@ -21,7 +21,7 @@ extension MoyaProvider {
 //                    // 실패 시 URL 출력
 //                    print(error.response?.request?.url?.absoluteString ?? "URL not available")
 //                }
-                
+
                 // 원래의 결과를 반환
                 continuation.resume(returning: result)
             }
@@ -36,7 +36,7 @@ struct ErrorResponse: Codable {
 
 extension MoyaError {
     var errorResponse: ErrorResponse? {
-        if let response = self.response {
+        if let response = response {
             do {
                 return try response.map(ErrorResponse.self)
             } catch {

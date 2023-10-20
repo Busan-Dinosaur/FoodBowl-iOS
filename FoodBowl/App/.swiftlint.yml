@@ -19,8 +19,8 @@ type_name:
 included:
   - FoodBowl
 excluded:
-  - FoodBowl/Global/Supports/AppDelegate.swift
-  - FoodBowl/Global/Supports/SceneDelegate.swift
+  - FoodBowl/App/Supports/AppDelegate.swift
+  - FoodBowl/App/Supports/SceneDelegate.swift
 
 identifier_name:
   excluded:
