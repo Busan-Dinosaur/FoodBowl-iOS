@@ -105,29 +105,29 @@ final class UpdateProfileViewController: BaseViewController {
 
         nicknameLabel.snp.makeConstraints {
             $0.top.equalTo(profileImageView.snp.bottom).offset(40)
-            $0.leading.equalToSuperview().inset(BaseSize.horizantalPadding)
+            $0.leading.equalToSuperview().inset(SizeLiteral.horizantalPadding)
         }
 
         nicknameField.snp.makeConstraints {
             $0.top.equalTo(nicknameLabel.snp.bottom).offset(10)
-            $0.leading.trailing.equalToSuperview().inset(BaseSize.horizantalPadding)
+            $0.leading.trailing.equalToSuperview().inset(SizeLiteral.horizantalPadding)
             $0.height.equalTo(50)
         }
 
         userInfoLabel.snp.makeConstraints {
             $0.top.equalTo(nicknameField.snp.bottom).offset(30)
-            $0.leading.equalToSuperview().inset(BaseSize.horizantalPadding)
+            $0.leading.equalToSuperview().inset(SizeLiteral.horizantalPadding)
         }
 
         userInfoField.snp.makeConstraints {
             $0.top.equalTo(userInfoLabel.snp.bottom).offset(10)
-            $0.leading.trailing.equalToSuperview().inset(BaseSize.horizantalPadding)
+            $0.leading.trailing.equalToSuperview().inset(SizeLiteral.horizantalPadding)
             $0.height.equalTo(50)
         }
 
         completeButton.snp.makeConstraints {
-            $0.leading.trailing.equalToSuperview().inset(BaseSize.horizantalPadding)
-            $0.bottom.equalToSuperview().inset(BaseSize.bottomPadding)
+            $0.leading.trailing.equalToSuperview().inset(SizeLiteral.horizantalPadding)
+            $0.bottom.equalToSuperview().inset(SizeLiteral.bottomPadding)
             $0.height.equalTo(60)
         }
     }

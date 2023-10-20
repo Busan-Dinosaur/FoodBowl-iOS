@@ -34,7 +34,6 @@ final class SignViewModel: NSObject, BaseViewModelType {
     func transform(from input: Input) -> Output {
         input.appleSignButtonDidTap
             .sink(receiveValue: { [weak self] _ in
-                print("button tap")
                 self?.didTapAppleSignButton()
             })
             .store(in: &self.cancellable)

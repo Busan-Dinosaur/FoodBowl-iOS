@@ -42,7 +42,7 @@ final class UserInfoTableViewCell: BaseTableViewCell {
         contentView.addSubviews(userImageView, userNameLabel, userFollowerLabel, followButton)
 
         userImageView.snp.makeConstraints {
-            $0.leading.equalToSuperview().inset(BaseSize.horizantalPadding)
+            $0.leading.equalToSuperview().inset(SizeLiteral.horizantalPadding)
             $0.centerY.equalToSuperview()
             $0.width.height.equalTo(40)
         }
@@ -59,7 +59,7 @@ final class UserInfoTableViewCell: BaseTableViewCell {
         }
 
         followButton.snp.makeConstraints {
-            $0.trailing.equalToSuperview().inset(BaseSize.horizantalPadding)
+            $0.trailing.equalToSuperview().inset(SizeLiteral.horizantalPadding)
             $0.centerY.equalToSuperview()
             $0.width.equalTo(50)
             $0.height.equalTo(30)

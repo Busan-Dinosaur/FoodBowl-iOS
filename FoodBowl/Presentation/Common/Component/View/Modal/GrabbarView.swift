@@ -45,7 +45,7 @@ final class GrabbarView: UIView {
 
         modalResultLabel.snp.makeConstraints {
             $0.top.equalTo(grabbar.snp.bottom).offset(30)
-            $0.leading.equalToSuperview().inset(BaseSize.horizantalPadding)
+            $0.leading.equalToSuperview().inset(SizeLiteral.horizantalPadding)
         }
     }
 
@@ -58,7 +58,7 @@ final class GrabbarView: UIView {
     func showContent() {
         modalResultLabel.snp.remakeConstraints {
             $0.top.equalTo(grabbar.snp.bottom).offset(30)
-            $0.leading.equalToSuperview().inset(BaseSize.horizantalPadding)
+            $0.leading.equalToSuperview().inset(SizeLiteral.horizantalPadding)
         }
     }
 

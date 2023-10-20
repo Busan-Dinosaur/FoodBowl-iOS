@@ -20,8 +20,8 @@ final class OnboardingViewController: UIViewController, Navigationable, Keyboard
     
     // MARK: - property
     
-    private var cancellable = Set<AnyCancellable>()
-    private let signViewModel = SignViewModel()
+    private var cancelBag: Set<AnyCancellable> = Set()
+    private let viewModel = SignViewModel()
     
     // MARK: - init
     
@@ -38,7 +38,6 @@ final class OnboardingViewController: UIViewController, Navigationable, Keyboard
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setupNavigationBarHiddenState()
-        self.configureDelegation()
         self.bindViewModel()
         self.setupNavigation()
         self.setupKeyboardGesture()
@@ -50,10 +49,6 @@ final class OnboardingViewController: UIViewController, Navigationable, Keyboard
         self.navigationController?.navigationBar.isHidden = true
     }
     
-    private func configureDelegation() {
-        self.onboardingView.configureDelegate(self)
-    }
-    
     private func bindViewModel() {
         let output = self.transformedOutput()
         self.bindOutputToViewModel(output)
@@ -63,7 +58,7 @@ final class OnboardingViewController: UIViewController, Navigationable, Keyboard
         let input = SignViewModel.Input(
             appleSignButtonDidTap: self.onboardingView.appleSignButtonDidTapPublisher.eraseToAnyPublisher()
         )
-        return self.signViewModel.transform(from: input)
+        return self.viewModel.transform(from: input)
     }
     
     private func bindOutputToViewModel(_ output: SignViewModel.Output) {
@@ -71,22 +66,16 @@ final class OnboardingViewController: UIViewController, Navigationable, Keyboard
             .receive(on: DispatchQueue.main)
             .sink { [weak self] result in
                 switch result {
-                case .finished: return
                 case .failure(_):
                     self?.makeAlert(title: "로그인에 실패하셨습니다.")
+                case .finished: return
                 }
-            } receiveValue: { [weak self] roomInfo in
+            } receiveValue: { [weak self] _ in
                 let tabbarViewController = UINavigationController(rootViewController: TabBarController())
                 tabbarViewController.modalPresentationStyle = .fullScreen
                 tabbarViewController.modalTransitionStyle = .crossDissolve
                 self?.present(tabbarViewController, animated: true)
             }
-            .store(in: &self.cancellable)
-    }
-}
-
-extension OnboardingViewController: OnboardingViewDelegate {
-    func didTapAppleSignButton() {
-        print("버튼 누름")
+            .store(in: &self.cancelBag)
     }
 }

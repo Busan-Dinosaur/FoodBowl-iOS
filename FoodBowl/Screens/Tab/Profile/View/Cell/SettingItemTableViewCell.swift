@@ -24,12 +24,12 @@ final class SettingItemTableViewCell: BaseTableViewCell {
         contentView.addSubviews(menuLabel, forwardButton)
 
         menuLabel.snp.makeConstraints {
-            $0.leading.equalToSuperview().inset(BaseSize.horizantalPadding)
+            $0.leading.equalToSuperview().inset(SizeLiteral.horizantalPadding)
             $0.centerY.equalToSuperview()
         }
 
         forwardButton.snp.makeConstraints {
-            $0.trailing.equalToSuperview().inset(BaseSize.horizantalPadding)
+            $0.trailing.equalToSuperview().inset(SizeLiteral.horizantalPadding)
             $0.centerY.equalToSuperview()
         }
     }

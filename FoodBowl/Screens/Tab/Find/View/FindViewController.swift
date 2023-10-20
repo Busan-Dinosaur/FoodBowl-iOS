@@ -14,7 +14,7 @@ final class FindViewController: BaseViewController {
     private var viewModel = FindViewModel()
 
     private enum Size {
-        static let cellWidth: CGFloat = (BaseSize.fullWidth - 16) / 3
+        static let cellWidth: CGFloat = (SizeLiteral.fullWidth - 16) / 3
         static let cellHeight: CGFloat = cellWidth
         static let collectionInset = UIEdgeInsets(
             top: 0,
@@ -268,8 +268,12 @@ extension FindViewController: UITableViewDataSource, UITableViewDelegate {
 
     func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
         if scope == 0 {
-            let storeDetailViewController = StoreDetailViewController(storeId: stores[indexPath.item].storeId, isFriend: false)
-            storeDetailViewController.title = stores[indexPath.item].storeName
+            let storeDetailViewController = StoreDetailViewController(
+                viewModel: StoreDetailViewModel(
+                    storeId: stores[indexPath.item].storeId,
+                    isFriend: false
+                )
+            )
             DispatchQueue.main.async { [weak self] in
                 self?.navigationController?.pushViewController(storeDetailViewController, animated: true)
             }

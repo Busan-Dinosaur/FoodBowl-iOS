@@ -66,13 +66,13 @@ final class ProfileHeaderView: UICollectionReusableView {
         )
 
         userImageView.snp.makeConstraints {
-            $0.leading.equalToSuperview().inset(BaseSize.horizantalPadding)
+            $0.leading.equalToSuperview().inset(SizeLiteral.horizantalPadding)
             $0.top.equalToSuperview()
             $0.width.height.equalTo(50)
         }
 
         followerInfoButton.snp.makeConstraints {
-            $0.leading.equalTo(userImageView.snp.trailing).offset(BaseSize.horizantalPadding)
+            $0.leading.equalTo(userImageView.snp.trailing).offset(SizeLiteral.horizantalPadding)
             $0.top.equalToSuperview().inset(4)
             $0.height.equalTo(20)
         }
@@ -86,19 +86,19 @@ final class ProfileHeaderView: UICollectionReusableView {
         userInfoLabel.snp.makeConstraints {
             $0.leading.equalTo(userImageView.snp.trailing).offset(20)
             $0.top.equalTo(followerInfoButton.snp.bottom).offset(6)
-            $0.width.equalTo(BaseSize.fullWidth - 140)
+            $0.width.equalTo(SizeLiteral.fullWidth - 140)
         }
 
         followButton.snp.makeConstraints {
             $0.top.equalToSuperview().inset(10)
-            $0.trailing.equalToSuperview().inset(BaseSize.horizantalPadding)
+            $0.trailing.equalToSuperview().inset(SizeLiteral.horizantalPadding)
             $0.width.equalTo(50)
             $0.height.equalTo(30)
         }
 
         editButton.snp.makeConstraints {
             $0.top.equalToSuperview().inset(10)
-            $0.trailing.equalToSuperview().inset(BaseSize.horizantalPadding)
+            $0.trailing.equalToSuperview().inset(SizeLiteral.horizantalPadding)
             $0.width.equalTo(50)
             $0.height.equalTo(30)
         }

@@ -40,7 +40,7 @@ final class FeedCollectionViewCell: BaseCollectionViewCell {
 
         commentLabel.snp.makeConstraints {
             $0.top.equalTo(userInfoView.snp.bottom)
-            $0.leading.trailing.equalToSuperview().inset(BaseSize.horizantalPadding)
+            $0.leading.trailing.equalToSuperview().inset(SizeLiteral.horizantalPadding)
             $0.bottom.equalTo(photoListView.snp.top).offset(-10)
         }
 
@@ -52,7 +52,7 @@ final class FeedCollectionViewCell: BaseCollectionViewCell {
 
         storeInfoView.snp.makeConstraints {
             $0.top.equalTo(photoListView.snp.bottom).offset(10)
-            $0.leading.trailing.equalToSuperview().inset(BaseSize.horizantalPadding)
+            $0.leading.trailing.equalToSuperview().inset(SizeLiteral.horizantalPadding)
             $0.bottom.equalToSuperview().inset(14)
             $0.height.equalTo(54)
         }
@@ -110,7 +110,7 @@ final class FeedCollectionViewCell: BaseCollectionViewCell {
 
         storeInfoView.snp.remakeConstraints {
             $0.top.equalTo(photoListView.snp.bottom).offset(10)
-            $0.leading.trailing.equalToSuperview().inset(BaseSize.horizantalPadding)
+            $0.leading.trailing.equalToSuperview().inset(SizeLiteral.horizantalPadding)
             $0.bottom.equalToSuperview().inset(14)
             $0.height.equalTo(54)
         }
@@ -121,7 +121,7 @@ final class FeedCollectionViewCell: BaseCollectionViewCell {
 
         storeInfoView.snp.remakeConstraints {
             $0.top.equalTo(commentLabel.snp.bottom).offset(10)
-            $0.leading.trailing.equalToSuperview().inset(BaseSize.horizantalPadding)
+            $0.leading.trailing.equalToSuperview().inset(SizeLiteral.horizantalPadding)
             $0.bottom.equalToSuperview().inset(14)
             $0.height.equalTo(54)
         }

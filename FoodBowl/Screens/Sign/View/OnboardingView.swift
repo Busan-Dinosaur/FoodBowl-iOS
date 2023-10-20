@@ -12,10 +12,6 @@ import UIKit
 import SnapKit
 import Then
 
-protocol OnboardingViewDelegate: AnyObject {
-    func didTapAppleSignButton()
-}
-
 final class OnboardingView: UIView, BaseViewType {
     
     // MARK: - ui component
@@ -43,10 +39,6 @@ final class OnboardingView: UIView, BaseViewType {
     }
     
     let appleSignButtonDidTapPublisher = PassthroughSubject<Void, Never>()
-    
-    // MARK: - property
-    
-    private weak var delegate: OnboardingViewDelegate?
     
     // MARK: - init
     
@@ -82,8 +74,8 @@ final class OnboardingView: UIView, BaseViewType {
         }
 
         appleSignButton.snp.makeConstraints {
-            $0.leading.trailing.equalToSuperview().inset(BaseSize.horizantalPadding)
-            $0.bottom.equalToSuperview().inset(BaseSize.bottomPadding)
+            $0.leading.trailing.equalToSuperview().inset(SizeLiteral.horizantalPadding)
+            $0.bottom.equalToSuperview().inset(SizeLiteral.bottomPadding)
             $0.height.equalTo(60)
         }
     }
@@ -99,9 +91,5 @@ final class OnboardingView: UIView, BaseViewType {
             self?.appleSignButtonDidTapPublisher.send()
         }
         self.appleSignButton.addAction(action, for: .touchUpInside)
-    }
-    
-    func configureDelegate(_ delegate: OnboardingViewDelegate) {
-        self.delegate = delegate
     }
 }

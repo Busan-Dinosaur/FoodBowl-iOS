@@ -46,7 +46,7 @@ final class UserInfoView: UIView {
         addSubviews(userImageButton, userNameButton, userFollowerLabel, optionButton)
 
         userImageButton.snp.makeConstraints {
-            $0.leading.equalToSuperview().inset(BaseSize.horizantalPadding)
+            $0.leading.equalToSuperview().inset(SizeLiteral.horizantalPadding)
             $0.top.bottom.equalToSuperview().inset(12)
             $0.width.height.equalTo(40)
         }
@@ -63,7 +63,7 @@ final class UserInfoView: UIView {
         }
 
         optionButton.snp.makeConstraints {
-            $0.trailing.equalToSuperview().inset(BaseSize.horizantalPadding)
+            $0.trailing.equalToSuperview().inset(SizeLiteral.horizantalPadding)
             $0.centerY.equalToSuperview()
         }
     }

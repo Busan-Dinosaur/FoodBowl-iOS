@@ -220,8 +220,9 @@ extension FeedListView: UICollectionViewDataSource, UICollectionViewDelegate {
         }
 
         cell.storeButtonTapAction = { [weak self] _ in
-            let storeDetailViewController = StoreDetailViewController(storeId: store.id)
-            storeDetailViewController.title = store.name
+            let storeDetailViewController = StoreDetailViewController(
+                viewModel: StoreDetailViewModel(storeId: store.id, isFriend: true)
+            )
 
             DispatchQueue.main.async { [weak self] in
                 self?.parentViewController?.navigationController?.pushViewController(storeDetailViewController, animated: true)

@@ -14,9 +14,9 @@ final class CategoryListView: UIView {
     enum Size {
         static let collectionInset = UIEdgeInsets(
             top: 0,
-            left: BaseSize.horizantalPadding,
+            left: SizeLiteral.horizantalPadding,
             bottom: 10,
-            right: BaseSize.horizantalPadding
+            right: SizeLiteral.horizantalPadding
         )
     }
 

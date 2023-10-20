@@ -96,18 +96,18 @@ final class BlameViewController: BaseViewController {
 
         guideCommentLabel.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(20)
-            $0.leading.equalToSuperview().inset(BaseSize.horizantalPadding)
+            $0.leading.equalToSuperview().inset(SizeLiteral.horizantalPadding)
         }
 
         commentTextView.snp.makeConstraints {
             $0.top.equalTo(guideCommentLabel.snp.bottom).offset(10)
-            $0.leading.trailing.equalToSuperview().inset(BaseSize.horizantalPadding)
+            $0.leading.trailing.equalToSuperview().inset(SizeLiteral.horizantalPadding)
             $0.height.equalTo(100)
         }
 
         completeButton.snp.makeConstraints {
-            $0.leading.trailing.equalToSuperview().inset(BaseSize.horizantalPadding)
-            $0.bottom.equalToSuperview().inset(BaseSize.bottomPadding)
+            $0.leading.trailing.equalToSuperview().inset(SizeLiteral.horizantalPadding)
+            $0.bottom.equalToSuperview().inset(SizeLiteral.bottomPadding)
             $0.height.equalTo(60)
         }
     }

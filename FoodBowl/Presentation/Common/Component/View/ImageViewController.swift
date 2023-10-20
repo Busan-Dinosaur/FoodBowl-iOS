@@ -36,8 +36,8 @@ final class ImageViewController: UIViewController {
         }
 
         closeButton.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).inset(BaseSize.horizantalPadding)
-            $0.trailing.equalToSuperview().inset(BaseSize.horizantalPadding)
+            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).inset(SizeLiteral.horizantalPadding)
+            $0.trailing.equalToSuperview().inset(SizeLiteral.horizantalPadding)
         }
     }
 

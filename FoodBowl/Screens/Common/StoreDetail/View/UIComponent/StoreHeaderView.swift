@@ -60,7 +60,7 @@ final class StoreHeaderView: UIView {
 
         mapButton.snp.makeConstraints {
             $0.top.equalToSuperview()
-            $0.leading.equalToSuperview().inset(BaseSize.horizantalPadding)
+            $0.leading.equalToSuperview().inset(SizeLiteral.horizantalPadding)
         }
 
         storeNameLabel.snp.makeConstraints {
@@ -80,7 +80,7 @@ final class StoreHeaderView: UIView {
 
         bookmarkButton.snp.makeConstraints {
             $0.top.equalToSuperview().inset(10)
-            $0.trailing.equalToSuperview().inset(BaseSize.horizantalPadding)
+            $0.trailing.equalToSuperview().inset(SizeLiteral.horizantalPadding)
         }
 
         borderLineView.snp.makeConstraints {

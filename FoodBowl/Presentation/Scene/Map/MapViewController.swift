@@ -25,7 +25,7 @@ class MapViewController: BaseViewController {
     let modalMidHeight: CGFloat = UIScreen.main.bounds.height / 2 - 100
     lazy var tabBarHeight: CGFloat = tabBarController?.tabBar.frame.height ?? 0
     lazy var navBarHeight: CGFloat = navigationController?.navigationBar.frame.height ?? 0
-    lazy var modalMaxHeight: CGFloat = UIScreen.main.bounds.height - BaseSize.topAreaPadding - navBarHeight - 120
+    lazy var modalMaxHeight: CGFloat = UIScreen.main.bounds.height - SizeLiteral.topAreaPadding - navBarHeight - 120
     var currentModalHeight: CGFloat = 0
     var categoryListHeight: CGFloat = 40
 
@@ -172,8 +172,9 @@ class MapViewController: BaseViewController {
                 ),
                 glyphImage: Categories(rawValue: store.categoryName)?.icon,
                 handler: { [weak self] in
-                    let storeDetailViewController = StoreDetailViewController(storeId: store.id)
-                    storeDetailViewController.title = store.name
+                    let storeDetailViewController = StoreDetailViewController(
+                        viewModel: StoreDetailViewModel(storeId: store.id, isFriend: true)
+                    )
                     self?.navigationController?.pushViewController(storeDetailViewController, animated: true)
                 }
             )
