@@ -59,6 +59,7 @@ final class StoreDetailViewController: UIViewController, Navigationable, Keyboar
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.configureDataSource()
         self.bindViewModel()
         self.setupNavigation()
     }

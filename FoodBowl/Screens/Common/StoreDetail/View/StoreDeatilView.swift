@@ -124,7 +124,7 @@ extension StoreDeatilView {
         let layout = UICollectionViewCompositionalLayout { [weak self] index, environment -> NSCollectionLayoutSection? in
             let itmeSize = NSCollectionLayoutSize(
                 widthDimension: .fractionalWidth(1),
-                heightDimension: .fractionalHeight(1)
+                heightDimension: .estimated(200)
             )
             
             let item = NSCollectionLayoutItem(layoutSize: itmeSize)
@@ -132,7 +132,7 @@ extension StoreDeatilView {
             
             let groupSize = NSCollectionLayoutSize(
                 widthDimension: .fractionalWidth(1),
-                heightDimension: .fractionalHeight(1)
+                heightDimension: .estimated(200)
             )
             
             let group = NSCollectionLayoutGroup.horizontal(
@@ -141,6 +141,7 @@ extension StoreDeatilView {
             )
             
             let section = NSCollectionLayoutSection(group: group)
+            section.interGroupSpacing = ConstantSize.groupInterItemSpacing
             
             return section
         }
