@@ -1,5 +1,5 @@
 //
-//  MoyaProvider+Extensions.swift
+//  MoyaProvider+Extension.swift
 //  FoodBowl
 //
 //  Created by COBY_PRO on 2023/08/10.
@@ -27,11 +27,6 @@ extension MoyaProvider {
             }
         }
     }
-}
-
-struct ErrorResponse: Codable {
-    let errorCode: String
-    let message: String
 }
 
 extension MoyaError {

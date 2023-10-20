@@ -38,14 +38,14 @@ final class UnivViewController: MapViewController {
 
     override func setupNavigationBar() {
         super.setupNavigationBar()
-        let leftOffsetUnivTitleButton = removeBarButtonItemOffset(with: univTitleButton, offsetX: 10)
+        let leftOffsetUnivTitleButton = removeBarButtonItem(with: univTitleButton, offsetX: 10)
         let univTitleButton = makeBarButtonItem(with: leftOffsetUnivTitleButton)
         let plusButton = makeBarButtonItem(with: plusButton)
         navigationItem.leftBarButtonItem = univTitleButton
         navigationItem.rightBarButtonItem = plusButton
     }
 
-    override func removeBarButtonItemOffset(with button: UIButton, offsetX: CGFloat = 0, offsetY: CGFloat = 0) -> UIView {
+    private func removeBarButtonItem(with button: UIButton, offsetX: CGFloat = 0, offsetY: CGFloat = 0) -> UIView {
         let offsetView = UIView(frame: CGRect(x: 0, y: 0, width: 300, height: 45))
         offsetView.bounds = offsetView.bounds.offsetBy(dx: offsetX, dy: offsetY)
         offsetView.addSubview(button)

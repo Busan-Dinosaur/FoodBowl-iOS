@@ -5,44 +5,76 @@
 //  Created by COBY_PRO on 2023/08/10.
 //
 
+import AuthenticationServices
+import Combine
 import UIKit
 
 import Moya
 
-final class SignInViewModel {
-    private let providerService = MoyaProvider<ServiceAPI>()
-    private let providerMember = MoyaProvider<MemberAPI>()
+final class SignViewModel: NSObject, BaseViewModelType {
+    
+    // MARK: - property
+    
+    private let signService: SignSevicable
+    private var cancellable = Set<AnyCancellable>()
+    private let loginPublisher = PassthroughSubject<Void, Error>()
+    private let getToken = PassthroughSubject<Void, Error>()
+    
+    struct Input {
+        let appleSignButtonTap: AnyPublisher<Void, Never>
+    }
+    
+    struct Output {
+    }
+    
+    func transform(from input: Input) -> Output {
+        input.appleSignButtonTap
+            .sink(receiveValue: { [weak self] _ in
+                print("button tap")
+                self?.didTapAppleSignButton()
+            })
+            .store(in: &self.cancellable)
+        
+        return Output()
+    }
+    
+    // MARK: - init
+    
+    init(signService: SignSevicable) {
+        self.signService = signService
+    }
+    
+    // MARK: - network
+//    private func getToken(appleToken: String) {
+//        Task {
+//            await self.signService.getToken(appleToken: appleToken)
+//        }
+//    }
+    
+    private func didTapAppleSignButton() {
+        let provider = ASAuthorizationAppleIDProvider()
+        let request = provider.createRequest()
+        
+        @Configurations(key: ConfigurationsKey.nonce, defaultValue: "")
+        var nonce: String
 
-    func signIn(appleToken: String) async {
-        let response = await providerService.request(.signIn(request: SignRequest(appleToken: appleToken)))
-        switch response {
-        case .success(let result):
-            guard let data = try? result.map(SignResponse.self) else { return }
-            KeychainManager.set(data.accessToken, for: .accessToken)
-            KeychainManager.set(data.refreshToken, for: .refreshToken)
-            UserDefaultHandler.setIsLogin(isLogin: true)
-        case .failure(let err):
-            handleError(err)
-        }
+        request.requestedScopes = [.fullName, .email]
+        request.nonce = nonce.sha256
+
+        let controller = ASAuthorizationController(authorizationRequests: [request])
+        controller.delegate = self
+        controller.performRequests()
+    }
+}
+
+extension SignViewModel: ASAuthorizationControllerDelegate {
+    func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
+        guard let credential = authorization.credential as? ASAuthorizationAppleIDCredential else { return }
+        print(credential.user)
+        loginPublisher.send()
     }
 
-    func getMyProfile() async {
-        let response = await providerMember.request(.getMyProfile)
-        switch response {
-        case .success(let result):
-            guard let data = try? result.map(MemberProfileResponse.self) else { return }
-            UserDefaultsManager.currentUser = data
-        case .failure(let err):
-            handleError(err)
-        }
-    }
-
-    func handleError(_ error: MoyaError) {
-        if let errorResponse = error.errorResponse {
-            print("에러 코드: \(errorResponse.errorCode)")
-            print("에러 메시지: \(errorResponse.message)")
-        } else {
-            print("네트워크 에러: \(error.localizedDescription)")
-        }
+    func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
+        loginPublisher.send(completion: .failure(error))
     }
 }
