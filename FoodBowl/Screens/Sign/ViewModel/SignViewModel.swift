@@ -9,15 +9,17 @@ import AuthenticationServices
 import Combine
 import UIKit
 
+import CombineMoya
 import Moya
 
 final class SignViewModel: NSObject, BaseViewModelType {
     
     // MARK: - property
     
-    private let signService: SignSevicable
+    private let providerService = MoyaProvider<ServiceAPI>()
+    private let providerMember = MoyaProvider<MemberAPI>()
+    
     private var cancellable = Set<AnyCancellable>()
-    private let loginPublisher = PassthroughSubject<Void, Error>()
     private let getToken = PassthroughSubject<Void, Error>()
     
     struct Input {
@@ -38,18 +40,22 @@ final class SignViewModel: NSObject, BaseViewModelType {
         return Output()
     }
     
-    // MARK: - init
-    
-    init(signService: SignSevicable) {
-        self.signService = signService
-    }
-    
     // MARK: - network
-//    private func getToken(appleToken: String) {
-//        Task {
-//            await self.signService.getToken(appleToken: appleToken)
-//        }
-//    }
+    
+    private func getToken(appleToken: String) {
+        providerService.requestPublisher(.signIn(request: SignRequest(appleToken: appleToken)))
+            .sink { completion in
+                switch completion {
+                case let .failure(error) :
+                    print("LogIn Fail : " + error.localizedDescription)
+                case .finished :
+                    print("LogIn Finished")
+                }
+            } receiveValue: { recievedValue in
+                guard let responseData = try? recievedValue.map(SignResponse.self) else { return }
+                print(responseData)
+            }.store(in : &cancellable)
+    }
     
     private func didTapAppleSignButton() {
         let provider = ASAuthorizationAppleIDProvider()
@@ -70,11 +76,9 @@ final class SignViewModel: NSObject, BaseViewModelType {
 extension SignViewModel: ASAuthorizationControllerDelegate {
     func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
         guard let credential = authorization.credential as? ASAuthorizationAppleIDCredential else { return }
-        print(credential.user)
-        loginPublisher.send()
-    }
+        guard let token = credential.identityToken else { return }
+        guard let tokenToString = String(data: token, encoding: .utf8) else { return }
 
-    func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
-        loginPublisher.send(completion: .failure(error))
+        getToken(appleToken: tokenToString)
     }
 }

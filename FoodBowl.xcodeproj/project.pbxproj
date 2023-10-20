@@ -58,11 +58,12 @@
 		CB617A402AE248CF000F7FFC /* UIViewController+Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB617A3F2AE248CF000F7FFC /* UIViewController+Alert.swift */; };
 		CB617A442AE25950000F7FFC /* ErrorResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB617A432AE25950000F7FFC /* ErrorResponse.swift */; };
 		CB617A462AE25B1C000F7FFC /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB617A452AE25B1C000F7FFC /* OnboardingView.swift */; };
-		CB617A492AE25F3A000F7FFC /* SignService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB617A482AE25F3A000F7FFC /* SignService.swift */; };
 		CB617A4D2AE27F76000F7FFC /* UIControl+Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB617A4C2AE27F76000F7FFC /* UIControl+Combine.swift */; };
 		CB617A4F2AE27F88000F7FFC /* UIViewController+Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB617A4E2AE27F88000F7FFC /* UIViewController+Combine.swift */; };
 		CB617A512AE27F96000F7FFC /* UIScrollView+Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB617A502AE27F96000F7FFC /* UIScrollView+Combine.swift */; };
 		CB617A532AE27FC0000F7FFC /* Publisher+Async.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB617A522AE27FC0000F7FFC /* Publisher+Async.swift */; };
+		CB617A552AE28C71000F7FFC /* CombineMoya in Frameworks */ = {isa = PBXBuildFile; productRef = CB617A542AE28C71000F7FFC /* CombineMoya */; };
+		CB617A572AE28C71000F7FFC /* Moya in Frameworks */ = {isa = PBXBuildFile; productRef = CB617A562AE28C71000F7FFC /* Moya */; };
 		CB63B7602A698909000AD9C2 /* CategoryListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB63B75F2A698909000AD9C2 /* CategoryListView.swift */; };
 		CB63B7622A698D4E000AD9C2 /* BaseSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB63B7612A698D4E000AD9C2 /* BaseSize.swift */; };
 		CB73E00E2AB5F6BF005B6BF1 /* SearchStoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB73E00D2AB5F6BF005B6BF1 /* SearchStoreViewController.swift */; };
@@ -221,7 +222,6 @@
 		CB617A3F2AE248CF000F7FFC /* UIViewController+Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Alert.swift"; sourceTree = "<group>"; };
 		CB617A432AE25950000F7FFC /* ErrorResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorResponse.swift; sourceTree = "<group>"; };
 		CB617A452AE25B1C000F7FFC /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
-		CB617A482AE25F3A000F7FFC /* SignService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignService.swift; sourceTree = "<group>"; };
 		CB617A4C2AE27F76000F7FFC /* UIControl+Combine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIControl+Combine.swift"; sourceTree = "<group>"; };
 		CB617A4E2AE27F88000F7FFC /* UIViewController+Combine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Combine.swift"; sourceTree = "<group>"; };
 		CB617A502AE27F96000F7FFC /* UIScrollView+Combine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScrollView+Combine.swift"; sourceTree = "<group>"; };
@@ -334,9 +334,11 @@
 			files = (
 				CBADC2422955989400E56C93 /* SnapKit in Frameworks */,
 				CBC747A92A83D95200F171F5 /* Moya in Frameworks */,
+				CB617A572AE28C71000F7FFC /* Moya in Frameworks */,
 				CBB582802972C9C400808B0B /* Alamofire in Frameworks */,
 				CBD036322ABA163F00E1AE9A /* Kingfisher in Frameworks */,
 				CBC747AB2A83D95200F171F5 /* RxMoya in Frameworks */,
+				CB617A552AE28C71000F7FFC /* CombineMoya in Frameworks */,
 				CB84C9842AD98E9000A2E0F2 /* Lottie in Frameworks */,
 				CBADC2482955993A00E56C93 /* SkeletonUI in Frameworks */,
 				CBC747B82A83DC2000F171F5 /* KeychainSwift in Frameworks */,
@@ -685,14 +687,6 @@
 			path = Script;
 			sourceTree = "<group>";
 		};
-		CB617A472AE25F0E000F7FFC /* Services */ = {
-			isa = PBXGroup;
-			children = (
-				CB617A482AE25F3A000F7FFC /* SignService.swift */,
-			);
-			path = Services;
-			sourceTree = "<group>";
-		};
 		CB63B7592A6986B4000AD9C2 /* Map */ = {
 			isa = PBXGroup;
 			children = (
@@ -818,7 +812,6 @@
 		CB981C28297A5A2900AF0167 /* Sign */ = {
 			isa = PBXGroup;
 			children = (
-				CB617A472AE25F0E000F7FFC /* Services */,
 				CB40C6F62A83E804003E3F06 /* ViewModel */,
 				CB40C6F52A83E7F4003E3F06 /* View */,
 				CBA7F181297DB319006088A0 /* OnboardingViewController.swift */,
@@ -1247,6 +1240,8 @@
 				CB56C3852AB9D9D000C65AF4 /* YPImagePicker */,
 				CBD036312ABA163F00E1AE9A /* Kingfisher */,
 				CB84C9832AD98E9000A2E0F2 /* Lottie */,
+				CB617A542AE28C71000F7FFC /* CombineMoya */,
+				CB617A562AE28C71000F7FFC /* Moya */,
 			);
 			productName = FoodBowl;
 			productReference = CBC73100295550A100C7F198 /* FoodBowl.app */;
@@ -1373,7 +1368,6 @@
 				CBE6190C296C635D005295AF /* FollowButton.swift in Sources */,
 				CB5AF8A929854AA0003D16D4 /* MapAnnotation.swift in Sources */,
 				CBC158642AD80AF800FD263B /* SearchMembersRequest.swift in Sources */,
-				CB617A492AE25F3A000F7FFC /* SignService.swift in Sources */,
 				CB1790C8296DAB470083D3A4 /* DynamicHeightCollectionViewFlowLayout.swift in Sources */,
 				CBA7F184297DBB01006088A0 /* YPImagePicker+Extension.swift in Sources */,
 				CB617A512AE27F96000F7FFC /* UIScrollView+Combine.swift in Sources */,
@@ -1786,6 +1780,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = CB56C3842AB9D9D000C65AF4 /* XCRemoteSwiftPackageReference "YPImagePicker" */;
 			productName = YPImagePicker;
+		};
+		CB617A542AE28C71000F7FFC /* CombineMoya */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CBC747A72A83D95200F171F5 /* XCRemoteSwiftPackageReference "Moya" */;
+			productName = CombineMoya;
+		};
+		CB617A562AE28C71000F7FFC /* Moya */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CBC747A72A83D95200F171F5 /* XCRemoteSwiftPackageReference "Moya" */;
+			productName = Moya;
 		};
 		CB84C9832AD98E9000A2E0F2 /* Lottie */ = {
 			isa = XCSwiftPackageProductDependency;

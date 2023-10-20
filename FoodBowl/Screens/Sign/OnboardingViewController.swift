@@ -21,7 +21,7 @@ final class OnboardingViewController: UIViewController, Navigationable, Keyboard
     // MARK: - property
     
     private var cancellable = Set<AnyCancellable>()
-    private let signViewModel = SignViewModel(signService: SignService())
+    private let signViewModel = SignViewModel()
     
     // MARK: - init
     
