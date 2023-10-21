@@ -20,7 +20,6 @@ final class FeedNSCollectionViewCell: UICollectionViewCell, BaseViewType {
         $0.font = UIFont.preferredFont(forTextStyle: .subheadline, weight: .light)
         $0.textColor = .mainTextColor
         $0.numberOfLines = 0
-        $0.text = "맛있어요 정말로"
     }
     let photoListView = PhotoListView()
     
@@ -104,7 +103,7 @@ extension FeedNSCollectionViewCell {
         let review = data.review
         let writer = data.writer
         
-        userInfoView.configureView(writer)
+        userInfoView.comfigureUser(writer)
         commentLabel.text = review.content
         photoListView.photos = review.imagePaths
     }

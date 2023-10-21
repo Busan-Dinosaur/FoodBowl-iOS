@@ -14,7 +14,7 @@ import Then
 final class PhotoListView: UIView {
     private enum Size {
         static let cellWidth: CGFloat = 100
-        static let cellHeight: CGFloat = cellWidth
+        static let cellHeight: CGFloat = 100
         static let collectionInset = UIEdgeInsets(
             top: 0,
             left: 20,
@@ -25,9 +25,7 @@ final class PhotoListView: UIView {
 
     var photos: [String] = [] {
         didSet {
-            DispatchQueue.main.async {
-                self.listCollectionView.reloadData()
-            }
+            self.updateLayout()
         }
     }
 
@@ -65,6 +63,19 @@ final class PhotoListView: UIView {
         listCollectionView.snp.makeConstraints {
             $0.edges.equalToSuperview()
             $0.height.equalTo(100)
+        }
+    }
+    
+    private func updateLayout() {
+        DispatchQueue.main.async {
+            self.listCollectionView.reloadData()
+        }
+        
+        if photos.isEmpty {
+            listCollectionView.snp.remakeConstraints {
+                $0.edges.equalToSuperview()
+                $0.height.equalTo(0)
+            }
         }
     }
 }

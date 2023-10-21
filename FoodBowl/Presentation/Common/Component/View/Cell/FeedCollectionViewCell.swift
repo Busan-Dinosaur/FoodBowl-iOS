@@ -5,51 +5,67 @@
 //  Created by COBY_PRO on 2022/12/23.
 //
 
+import Combine
 import UIKit
 
 import SnapKit
 import Then
 
-final class FeedCollectionViewCell: BaseCollectionViewCell {
+final class FeedCollectionViewCell: UICollectionViewCell, BaseViewType {
     var userButtonTapAction: ((FeedCollectionViewCell) -> Void)?
     var optionButtonTapAction: ((FeedCollectionViewCell) -> Void)?
     var storeButtonTapAction: ((FeedCollectionViewCell) -> Void)?
     var bookmarkButtonTapAction: ((FeedCollectionViewCell) -> Void)?
-
-    // MARK: - property
+    
+    // MARK: - ui component
+    
     let userInfoView = UserInfoView()
-
     lazy var commentLabel = UILabel().then {
         $0.font = UIFont.preferredFont(forTextStyle: .subheadline, weight: .light)
         $0.textColor = .mainTextColor
         $0.numberOfLines = 0
-        $0.text = "맛있어요 정말로"
     }
-
     let photoListView = PhotoListView()
-
     let storeInfoView = StoreInfoView()
+    
+    // MARK: - property
+    
+    var userButtonDidTapPublisher: PassthroughSubject<Void, Never> = PassthroughSubject()
+    var optionButtonDidTapPublisher: PassthroughSubject<Void, Never> = PassthroughSubject()
+    
+    // MARK: - init
 
-    override func setupLayout() {
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        self.baseInit()
+        self.setupAction()
+    }
+    
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    func setupLayout() {
         contentView.addSubviews(userInfoView, commentLabel, photoListView, storeInfoView)
-
+        
         userInfoView.snp.makeConstraints {
             $0.top.leading.trailing.equalToSuperview()
             $0.height.equalTo(64)
         }
-
+        
         commentLabel.snp.makeConstraints {
             $0.top.equalTo(userInfoView.snp.bottom)
             $0.leading.trailing.equalToSuperview().inset(SizeLiteral.horizantalPadding)
             $0.bottom.equalTo(photoListView.snp.top).offset(-10)
         }
-
+        
         photoListView.snp.makeConstraints {
             $0.top.equalTo(commentLabel.snp.bottom)
             $0.leading.trailing.equalToSuperview()
             $0.height.equalTo(100)
         }
-
+        
         storeInfoView.snp.makeConstraints {
             $0.top.equalTo(photoListView.snp.bottom).offset(10)
             $0.leading.trailing.equalToSuperview().inset(SizeLiteral.horizantalPadding)
@@ -57,17 +73,17 @@ final class FeedCollectionViewCell: BaseCollectionViewCell {
             $0.height.equalTo(54)
         }
     }
-
-    override func configureUI() {
-        setupAction()
+    
+    func configureUI() {
+        self.backgroundColor = .mainBackgroundColor
     }
-
+    
     override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes)
-        -> UICollectionViewLayoutAttributes {
+    -> UICollectionViewLayoutAttributes {
         super.preferredLayoutAttributesFitting(layoutAttributes)
-
+        
         let targetSize = CGSize(width: layoutAttributes.frame.width, height: 0)
-
+        
         layoutAttributes.frame.size = contentView.systemLayoutSizeFitting(
             targetSize,
             withHorizontalFittingPriority: .required,
@@ -75,7 +91,9 @@ final class FeedCollectionViewCell: BaseCollectionViewCell {
         )
         return layoutAttributes
     }
-
+    
+    // MARK: - func
+    
     private func setupAction() {
         userInfoView.userImageButton.addAction(UIAction { _ in self.userButtonTapAction?(self) }, for: .touchUpInside)
         userInfoView.userNameButton.addAction(UIAction { _ in self.userButtonTapAction?(self) }, for: .touchUpInside)
@@ -83,47 +101,18 @@ final class FeedCollectionViewCell: BaseCollectionViewCell {
         storeInfoView.storeNameButton.addAction(UIAction { _ in self.storeButtonTapAction?(self) }, for: .touchUpInside)
         storeInfoView.bookmarkButton.addAction(UIAction { _ in self.bookmarkButtonTapAction?(self) }, for: .touchUpInside)
     }
+}
 
-    override func prepareForReuse() {
-        super.prepareForReuse()
-    }
-
-    func setupData(_ review: Review) {
+// MARK: - Public - func
+extension FeedCollectionViewCell {
+    func configureCell(_ review: Review) {
         let member = review.writer
         let store = review.store
         let review = review.review
 
-        userInfoView.configureView(member)
-        storeInfoView.setupData(store)
-
+        userInfoView.comfigureUser(member)
+        storeInfoView.configureStore(store)
         commentLabel.text = review.content
-        if review.imagePaths.isEmpty {
-            removePhotoList()
-        } else {
-            photoListView.photos = review.imagePaths
-            createPhotoList()
-        }
-    }
-
-    func createPhotoList() {
-        photoListView.isHidden = false
-
-        storeInfoView.snp.remakeConstraints {
-            $0.top.equalTo(photoListView.snp.bottom).offset(10)
-            $0.leading.trailing.equalToSuperview().inset(SizeLiteral.horizantalPadding)
-            $0.bottom.equalToSuperview().inset(14)
-            $0.height.equalTo(54)
-        }
-    }
-
-    func removePhotoList() {
-        photoListView.isHidden = true
-
-        storeInfoView.snp.remakeConstraints {
-            $0.top.equalTo(commentLabel.snp.bottom).offset(10)
-            $0.leading.trailing.equalToSuperview().inset(SizeLiteral.horizantalPadding)
-            $0.bottom.equalToSuperview().inset(14)
-            $0.height.equalTo(54)
-        }
+        photoListView.photos = review.imagePaths
     }
 }

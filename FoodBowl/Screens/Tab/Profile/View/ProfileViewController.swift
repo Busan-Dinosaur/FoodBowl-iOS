@@ -13,7 +13,7 @@ import Kingfisher
 import SnapKit
 import Then
 
-final class ProfileViewController: MapViewController {
+final class ProfileViewController: MapViewController, Optionable {
     private var isOwn: Bool
     private var memberId: Int
     private var member: MemberProfileResponse?
@@ -40,18 +40,8 @@ final class ProfileViewController: MapViewController {
 
     lazy var optionButton = OptionButton().then {
         let optionButtonAction = UIAction { [weak self] _ in
-            let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-
-            let report = UIAlertAction(title: "신고하기", style: .destructive, handler: { _ in
-                guard let self else { return }
-                self.presentBlameViewController(targetId: self.memberId, blameTarget: "MEMBER")
-            })
-            let cancel = UIAlertAction(title: "취소", style: .cancel, handler: nil)
-
-            alert.addAction(cancel)
-            alert.addAction(report)
-
-            self?.present(alert, animated: true, completion: nil)
+            guard let memberId = self?.memberId else { return }
+            self?.presentMemberOptionAlert(memberId: memberId)
         }
         $0.addAction(optionButtonAction, for: .touchUpInside)
     }

@@ -15,7 +15,6 @@ final class UserInfoView: UIView {
     }
     
     let userNameButton = UIButton().then {
-        $0.setTitle("홍길동", for: .normal)
         $0.setTitleColor(.mainTextColor, for: .normal)
         $0.titleLabel?.font = .preferredFont(forTextStyle: .subheadline, weight: .medium)
     }
@@ -70,7 +69,7 @@ final class UserInfoView: UIView {
 }
 
 extension UserInfoView {
-    func configureView(_ member: Writer) {
+    func comfigureUser(_ member: Writer) {
         if let url = member.profileImageUrl {
             userImageButton.kf.setImage(with: URL(string: url), for: .normal)
         } else {

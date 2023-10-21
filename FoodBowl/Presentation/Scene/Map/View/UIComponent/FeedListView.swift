@@ -164,7 +164,7 @@ extension FeedListView: UICollectionViewDataSource, UICollectionViewDelegate {
         let store = reviews[indexPath.item].store
         let isOwn = UserDefaultsManager.currentUser?.id ?? 0 == member.id
 
-        cell.setupData(reviews[indexPath.item])
+        cell.configureCell(reviews[indexPath.item])
 
         cell.userButtonTapAction = { [weak self] _ in
             let profileViewController = ProfileViewController(memberId: member.id)

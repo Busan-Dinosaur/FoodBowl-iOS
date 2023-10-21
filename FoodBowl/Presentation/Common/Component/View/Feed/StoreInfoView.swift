@@ -73,7 +73,7 @@ final class StoreInfoView: UIView {
         makeBorderLayer(color: .grey002)
     }
 
-    func setupData(_ store: StoreByReview) {
+    func configureStore(_ store: StoreByReview) {
         storeNameButton.setTitle(store.name, for: .normal)
         categoryLabel.text = store.categoryName
         distanceLabel.text = store.distance.prettyDistance
