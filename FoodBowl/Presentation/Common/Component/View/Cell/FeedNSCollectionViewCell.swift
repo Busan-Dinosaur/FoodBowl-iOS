@@ -76,7 +76,7 @@ extension FeedNSCollectionViewCell {
         let review = data.review
         let writer = data.writer
         
-        userInfoView.setupData(writer)
+        userInfoView.configureView(writer)
         commentLabel.text = review.content
         photoListView.photos = review.imagePaths
     }

@@ -20,17 +20,18 @@ final class StoreDetailViewModel: BaseViewModelType {
     
     private var cancellable = Set<AnyCancellable>()
     
-    private let pageSize: Int = 10
-    private let size: Int = 15
     var storeId: Int
     var isFriend: Bool
+    
+    private let pageSize: Int = 10
+    private var currentpageSize: Int = 10
     private var lastReviewId: Int?
-    private var currentpageSize: Int?
     
     private let reviewsSubject = PassthroughSubject<[ReviewByStore], Error>()
     
     struct Input {
         let viewDidLoad: AnyPublisher<Void, Never>
+        let reviewToggleButtonDidTap: AnyPublisher<Bool, Never>
     }
     
     struct Output {
@@ -57,6 +58,8 @@ final class StoreDetailViewModel: BaseViewModelType {
     // MARK: - network
     
     private func getReviewsPublisher() {
+        if currentpageSize < pageSize { return }
+        
         let filter = isFriend ? "FRIEND" : "ALL"
         
         providerReview.requestPublisher(
@@ -75,6 +78,8 @@ final class StoreDetailViewModel: BaseViewModelType {
             }
         } receiveValue: { recievedValue in
             guard let responseData = try? recievedValue.map(ReviewByStoreResponse.self) else { return }
+            self.lastReviewId = responseData.page.lastId
+            self.currentpageSize = responseData.page.size
             self.reviewsSubject.send(responseData.storeReviewContentResponses)
         }
         .store(in : &cancellable)

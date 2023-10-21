@@ -32,10 +32,6 @@ final class StoreDeatilView: UIView, BaseViewType {
     private var isLoadingData = false
 
     private lazy var reviewToggleButton = ReviewToggleButton().then {
-        let action = UIAction { [weak self] _ in
-//            self?.reviewToggleButtonTapped()
-        }
-        $0.addAction(action, for: .touchUpInside)
         $0.isSelected = self.isFriend
     }
     private var storeHeaderView = StoreHeaderView()
@@ -49,17 +45,17 @@ final class StoreDeatilView: UIView, BaseViewType {
     
     private let storeId: Int
     var isFriend: Bool
-    var title: String
     
     private weak var delegate: StoreDetailViewDelegate?
     private var cancelBag: Set<AnyCancellable> = Set()
+    
+    let reviewToggleButtonDidTapPublisher = PassthroughSubject<Bool, Never>()
     
     // MARK: - init
     
     init(storeId: Int, isFriend: Bool = true) {
         self.storeId = storeId
         self.isFriend = isFriend
-        self.title = isFriend ? "친구들의 후기" : "모두의 후기"
         super.init(frame: .zero)
         self.baseInit()
     }
@@ -70,10 +66,16 @@ final class StoreDeatilView: UIView, BaseViewType {
     }
     
     // MARK: - func
-
-    func configureNavigationBar(of viewController: UIViewController) {
-        self.setupNavigationTitle(in: viewController)
-        self.setupNavigationItem(in: viewController)
+    
+    func configureDelegate(_ delegate: StoreDetailViewDelegate) {
+        self.delegate = delegate
+    }
+    
+    func configureNavigationBarItem(_ navigationController: UINavigationController) {        
+        let navigationItem = navigationController.topViewController?.navigationItem
+        let reviewToggleButton = navigationController.makeBarButtonItem(with: reviewToggleButton)
+        navigationItem?.rightBarButtonItem = reviewToggleButton
+        navigationItem?.title = isFriend ? "친구들의 후기" : "모두의 후기"
     }
     
     func collectionView() -> UICollectionView {
@@ -100,21 +102,18 @@ final class StoreDeatilView: UIView, BaseViewType {
     func configureUI() {
         self.backgroundColor = .mainBackgroundColor
     }
-
+    
     // MARK: - func
 
-    private func bindUI() {
+    private func setupAction() {
+        let action = UIAction { [weak self] _ in
+            guard let self = self else { return }
+            self.reviewToggleButtonDidTapPublisher.send(self.isFriend)
+        }
+        self.reviewToggleButton.addAction(action, for: .touchUpInside)
     }
 
-    private func setupNavigationTitle(in viewController: UIViewController) {
-        guard let navigationController = viewController.navigationController else { return }
-        navigationController.title = title
-    }
-    
-    private func setupNavigationItem(in viewController: UIViewController) {
-        guard let navigationController = viewController.navigationController else { return }
-        let reviewToggleButton = navigationController.makeBarButtonItem(with: reviewToggleButton)
-        navigationController.navigationItem.rightBarButtonItem = reviewToggleButton
+    private func bindUI() {
     }
 }
 

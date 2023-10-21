@@ -11,9 +11,6 @@ import UIKit
 import SnapKit
 import Then
 
-protocol StoreDetailViewControllerDelegate: AnyObject {
-}
-
 final class StoreDetailViewController: UIViewController, Navigationable, Keyboardable {
     
     enum Section: CaseIterable {
@@ -33,7 +30,7 @@ final class StoreDetailViewController: UIViewController, Navigationable, Keyboar
 
     private let viewModel: StoreDetailViewModel
 
-    private weak var delegate: StoreDetailViewControllerDelegate?
+    private weak var delegate: StoreDetailViewDelegate?
 
     // MARK: - init
     
@@ -60,31 +57,21 @@ final class StoreDetailViewController: UIViewController, Navigationable, Keyboar
     override func viewDidLoad() {
         super.viewDidLoad()
         self.configureDataSource()
+        
         self.bindViewModel()
         self.setupNavigation()
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        self.storeDeatilView.configureNavigationBar(of: self)
     }
     
     // MARK: - func - bind
 
     private func bindViewModel() {
         let output = self.transformedOutput()
+        self.configureDelegation()
+        self.configureNavigation()
         self.bindOutputToViewModel(output)
     }
     
-    private func transformedOutput() -> StoreDetailViewModel.Output {
-        let input = StoreDetailViewModel.Input(
-            viewDidLoad: self.viewDidLoadPublisher
-        )
-
-        return self.viewModel.transform(from: input)
-    }
-
-    private func bindOutputToViewModel(_ output: StoreDetailViewModel.Output) {        
+    private func bindOutputToViewModel(_ output: StoreDetailViewModel.Output) {
         output.reviews
             .receive(on: DispatchQueue.main)
             .sink { [weak self] result in
@@ -101,6 +88,26 @@ final class StoreDetailViewController: UIViewController, Navigationable, Keyboar
     }
     
     private func bindCell(_ cell: FeedNSCollectionViewCell, with item: ReviewByStore) {
+    }
+    
+    // MARK: - func
+    
+    private func configureDelegation() {
+        self.storeDeatilView.configureDelegate(self)
+    }
+    
+    private func configureNavigation() {
+        guard let navigationController = self.navigationController else { return }
+        self.storeDeatilView.configureNavigationBarItem(navigationController)
+    }
+    
+    private func transformedOutput() -> StoreDetailViewModel.Output {
+        let input = StoreDetailViewModel.Input(
+            viewDidLoad: self.viewDidLoadPublisher,
+            reviewToggleButtonDidTap: self.storeDeatilView.reviewToggleButtonDidTapPublisher.eraseToAnyPublisher()
+        )
+
+        return self.viewModel.transform(from: input)
     }
 }
 
@@ -153,4 +160,7 @@ extension StoreDetailViewController {
         self.snapShot.appendItems(items, toSection: .main)
         self.dataSource.apply(self.snapShot, animatingDifferences: true)
     }
+}
+
+extension StoreDetailViewController: StoreDetailViewDelegate {
 }

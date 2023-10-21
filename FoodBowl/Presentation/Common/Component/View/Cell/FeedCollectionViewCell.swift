@@ -93,7 +93,7 @@ final class FeedCollectionViewCell: BaseCollectionViewCell {
         let store = review.store
         let review = review.review
 
-        userInfoView.setupData(member)
+        userInfoView.configureView(member)
         storeInfoView.setupData(store)
 
         commentLabel.text = review.content

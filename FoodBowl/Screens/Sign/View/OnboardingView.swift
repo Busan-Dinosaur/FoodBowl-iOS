@@ -38,6 +38,8 @@ final class OnboardingView: UIView, BaseViewType {
         $0.cornerRadius = 30
     }
     
+    // MARK: - property
+    
     let appleSignButtonDidTapPublisher = PassthroughSubject<Void, Never>()
     
     // MARK: - init
