@@ -11,7 +11,7 @@ import UIKit
 import SnapKit
 import Then
 
-final class StoreDetailViewController: UIViewController, Navigationable, Keyboardable {
+final class StoreDetailViewController: UIViewController, Navigationable, Keyboardable, Optionable {
     
     enum Section: CaseIterable {
         case main
@@ -97,6 +97,53 @@ final class StoreDetailViewController: UIViewController, Navigationable, Keyboar
     }
     
     private func bindCell(_ cell: FeedNSCollectionViewCell, with item: ReviewByStore) {
+        cell.userButtonDidTapPublisher
+            .sink(receiveValue: { [weak self] _ in
+                let viewController = ProfileViewController(memberId: item.writer.id)
+                
+                DispatchQueue.main.async { [weak self] in
+                    self?.navigationController?.pushViewController(viewController, animated: true)
+                }
+            })
+            .store(in: &self.cancelBag)
+        
+        cell.optionButtonDidTapPublisher
+            .sink(receiveValue: { [weak self] _ in
+                let isOwn = UserDefaultsManager.currentUser?.id ?? 0 == item.writer.id
+                let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+                
+                if isOwn {
+                    let edit = UIAlertAction(title: "수정", style: .default, handler: { _ in
+                        self?.presentEditViewController(reviewId: item.review.id)
+                    })
+                    alert.addAction(edit)
+                    
+                    let del = UIAlertAction(title: "삭제", style: .destructive, handler: { _ in
+                        guard let self = self else { return }
+                        self.makeRequestAlert(
+                            title: "삭제 여부",
+                            message: "정말로 삭제하시겠습니까?",
+                            okAction: { _ in
+                                // 삭제 로직
+                            }
+                        )
+                    })
+                    alert.addAction(del)
+                } else {
+                    let report = UIAlertAction(title: "신고", style: .destructive, handler: { _ in
+                        self?.presentBlameViewController(targetId: item.review.id, blameTarget: "REVIEW")
+                    })
+                    alert.addAction(report)
+                }
+                
+                let cancel = UIAlertAction(title: "취소", style: .cancel, handler: nil)
+                alert.addAction(cancel)
+                
+                DispatchQueue.main.async { [weak self] in
+                    self?.present(alert, animated: true, completion: nil)
+                }
+            })
+            .store(in: &self.cancelBag)
     }
     
     // MARK: - func

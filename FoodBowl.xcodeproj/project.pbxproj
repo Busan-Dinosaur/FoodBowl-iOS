@@ -24,6 +24,7 @@
 		CB1A7C6129561BCF00C6431D /* ProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1A7C6029561BCF00C6431D /* ProfileHeaderView.swift */; };
 		CB1A7C6829576D7900C6431D /* BaseScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1A7C6729576D7900C6431D /* BaseScrollView.swift */; };
 		CB1BCAF72958B15B0021617D /* StoreInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1BCAF62958B15B0021617D /* StoreInfoView.swift */; };
+		CB20BAD32AE39F11007535C8 /* Optionable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB20BAD22AE39F11007535C8 /* Optionable.swift */; };
 		CB2A44A62ADFC62D004A4126 /* PanZoomImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2A44A52ADFC62D004A4126 /* PanZoomImageView.swift */; };
 		CB2A44A82ADFC866004A4126 /* ImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2A44A72ADFC866004A4126 /* ImageViewController.swift */; };
 		CB2E4F7F297702A800FD2566 /* StoreInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2E4F7E297702A800FD2566 /* StoreInfoTableViewCell.swift */; };
@@ -190,6 +191,7 @@
 		CB1A7C6029561BCF00C6431D /* ProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderView.swift; sourceTree = "<group>"; };
 		CB1A7C6729576D7900C6431D /* BaseScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseScrollView.swift; sourceTree = "<group>"; };
 		CB1BCAF62958B15B0021617D /* StoreInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreInfoView.swift; sourceTree = "<group>"; };
+		CB20BAD22AE39F11007535C8 /* Optionable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Optionable.swift; sourceTree = "<group>"; };
 		CB2A44A52ADFC62D004A4126 /* PanZoomImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanZoomImageView.swift; sourceTree = "<group>"; };
 		CB2A44A72ADFC866004A4126 /* ImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewController.swift; sourceTree = "<group>"; };
 		CB2E4F7E297702A800FD2566 /* StoreInfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreInfoTableViewCell.swift; sourceTree = "<group>"; };
@@ -861,6 +863,7 @@
 				CB617A372AE247E4000F7FFC /* BaseViewType.swift */,
 				CB617A392AE24836000F7FFC /* Navigationable.swift */,
 				CB617A3B2AE2484F000F7FFC /* Keyboardable.swift */,
+				CB20BAD22AE39F11007535C8 /* Optionable.swift */,
 				CB0767D42ADD75460027BE8A /* BaseViewModel.swift */,
 				CBADC27529559BC900E56C93 /* BaseViewController.swift */,
 				CBADC27629559BC900E56C93 /* BaseTableViewCell.swift */,
@@ -1352,6 +1355,7 @@
 				CBC158732AD8E74900FD263B /* CustomLocation.swift in Sources */,
 				CB51C8D52AD7E896002D0BA5 /* StoreResponse.swift in Sources */,
 				CB617A362AE2474A000F7FFC /* BaseViewModelType.swift in Sources */,
+				CB20BAD32AE39F11007535C8 /* Optionable.swift in Sources */,
 				CBDE38FB2970774800DDE49A /* CloseButton.swift in Sources */,
 				CB7CA37F2A719054005EA993 /* ModalView.swift in Sources */,
 				CB2E4F81297702B800FD2566 /* UserInfoTableViewCell.swift in Sources */,

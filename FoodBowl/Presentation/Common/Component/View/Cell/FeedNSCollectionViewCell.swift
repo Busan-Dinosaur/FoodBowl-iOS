@@ -5,6 +5,7 @@
 //  Created by COBY_PRO on 2023/07/22.
 //
 
+import Combine
 import UIKit
 
 import SnapKit
@@ -14,18 +15,22 @@ final class FeedNSCollectionViewCell: BaseCollectionViewCell {
     var userButtonTapAction: ((FeedNSCollectionViewCell) -> Void)?
     var optionButtonTapAction: ((FeedNSCollectionViewCell) -> Void)?
 
-    // MARK: - property
+    // MARK: - ui component
+    
     let userInfoView = UserInfoView()
-
     lazy var commentLabel = UILabel().then {
         $0.font = UIFont.preferredFont(forTextStyle: .subheadline, weight: .light)
         $0.textColor = .mainTextColor
         $0.numberOfLines = 0
         $0.text = "맛있어요 정말로"
     }
-
     let photoListView = PhotoListView()
-
+    
+    // MARK: - property
+    
+    var userButtonDidTapPublisher: PassthroughSubject<Void, Never> = PassthroughSubject()
+    var optionButtonDidTapPublisher: PassthroughSubject<Void, Never> = PassthroughSubject()
+    
     override func setupLayout() {
         contentView.addSubviews(userInfoView, commentLabel, photoListView)
 
