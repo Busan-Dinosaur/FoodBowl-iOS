@@ -11,10 +11,8 @@ import UIKit
 import SnapKit
 import Then
 
-final class FeedNSCollectionViewCell: BaseCollectionViewCell {
-    var userButtonTapAction: ((FeedNSCollectionViewCell) -> Void)?
-    var optionButtonTapAction: ((FeedNSCollectionViewCell) -> Void)?
-
+final class FeedNSCollectionViewCell: UICollectionViewCell, BaseViewType {
+    
     // MARK: - ui component
     
     let userInfoView = UserInfoView()
@@ -31,7 +29,20 @@ final class FeedNSCollectionViewCell: BaseCollectionViewCell {
     var userButtonDidTapPublisher: PassthroughSubject<Void, Never> = PassthroughSubject()
     var optionButtonDidTapPublisher: PassthroughSubject<Void, Never> = PassthroughSubject()
     
-    override func setupLayout() {
+    // MARK: - init
+
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        self.baseInit()
+        self.setupAction()
+    }
+
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    func setupLayout() {
         contentView.addSubviews(userInfoView, commentLabel, photoListView)
 
         userInfoView.snp.makeConstraints {
@@ -53,10 +64,8 @@ final class FeedNSCollectionViewCell: BaseCollectionViewCell {
         }
     }
 
-    override func configureUI() {
-        userInfoView.userImageButton.addAction(UIAction { _ in self.userButtonTapAction?(self) }, for: .touchUpInside)
-        userInfoView.userNameButton.addAction(UIAction { _ in self.userButtonTapAction?(self) }, for: .touchUpInside)
-        userInfoView.optionButton.addAction(UIAction { _ in self.optionButtonTapAction?(self) }, for: .touchUpInside)
+    func configureUI() {
+        self.backgroundColor = .mainBackgroundColor
     }
 
     override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes)
@@ -70,8 +79,22 @@ final class FeedNSCollectionViewCell: BaseCollectionViewCell {
             withHorizontalFittingPriority: .required,
             verticalFittingPriority: .fittingSizeLevel
         )
-        print(layoutAttributes)
         return layoutAttributes
+    }
+    
+    // MARK: - func
+
+    private func setupAction() {
+        let userButtonTapAction = UIAction { [weak self] _ in
+            self?.userButtonDidTapPublisher.send()
+        }
+        self.userInfoView.userImageButton.addAction(userButtonTapAction, for: .touchUpInside)
+        self.userInfoView.userNameButton.addAction(userButtonTapAction, for: .touchUpInside)
+        
+        let optionButtonTapAction = UIAction { [weak self] _ in
+            self?.optionButtonDidTapPublisher.send()
+        }
+        self.userInfoView.optionButton.addAction(optionButtonTapAction, for: .touchUpInside)
     }
 }
 
