@@ -80,6 +80,10 @@ final class FeedCollectionViewCell: UICollectionViewCell, BaseViewType {
         self.backgroundColor = .mainBackgroundColor
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+    }
+    
     override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes)
     -> UICollectionViewLayoutAttributes {
         super.preferredLayoutAttributesFitting(layoutAttributes)
@@ -127,15 +131,27 @@ final class FeedCollectionViewCell: UICollectionViewCell, BaseViewType {
 }
 
 // MARK: - Public - func
-extension FeedCollectionViewCell {
-    func configureCell(_ review: Review) {
-        let member = review.writer
-        let store = review.store
-        let review = review.review
-
-        userInfoView.comfigureUser(member)
-        storeInfoView.configureStore(store)
-        commentLabel.text = review.content
-        photoListView.photos = review.imagePaths
+extension FeedCollectionViewCell {    
+    func configureCell(_ data: Review) {
+        let writer = data.writer
+        let store = data.store
+        let review = data.review
+        
+        self.userInfoView.comfigureUser(writer)
+        self.storeInfoView.configureStore(store)
+        self.commentLabel.text = review.content
+        self.photoListView.photos = review.imagePaths
+        
+        if review.imagePaths.isEmpty {
+            self.photoListView.isHidden = true
+            self.photoListView.snp.updateConstraints {
+                $0.height.equalTo(0)
+            }
+        } else {
+            self.photoListView.isHidden = false
+            self.photoListView.snp.updateConstraints {
+                $0.height.equalTo(100)
+            }
+        }
     }
 }

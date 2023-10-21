@@ -37,7 +37,7 @@ final class PhotoCollectionViewCell: BaseCollectionViewCell {
         foodImageView.image = nil
     }
 
-    func setupData(_ imageURL: URL) {
+    func configureCell(_ imageURL: URL) {
         foodImageView.kf.setImage(with: imageURL)
         foodImageView.isUserInteractionEnabled = true
 

@@ -12,16 +12,16 @@ import SnapKit
 import Then
 
 final class FeedNSCollectionViewCell: UICollectionViewCell, BaseViewType {
-    
+
     // MARK: - ui component
     
-    let userInfoView = UserInfoView()
-    lazy var commentLabel = UILabel().then {
+    private let userInfoView = UserInfoView()
+    private let commentLabel = UILabel().then {
         $0.font = UIFont.preferredFont(forTextStyle: .subheadline, weight: .light)
         $0.textColor = .mainTextColor
         $0.numberOfLines = 0
     }
-    let photoListView = PhotoListView()
+    private let photoListView = PhotoListView()
     
     // MARK: - property
     
@@ -43,28 +43,32 @@ final class FeedNSCollectionViewCell: UICollectionViewCell, BaseViewType {
     
     func setupLayout() {
         contentView.addSubviews(userInfoView, commentLabel, photoListView)
-
+        
         userInfoView.snp.makeConstraints {
             $0.top.leading.trailing.equalToSuperview()
             $0.height.equalTo(64)
         }
-
+        
         commentLabel.snp.makeConstraints {
             $0.top.equalTo(userInfoView.snp.bottom)
             $0.leading.trailing.equalToSuperview().inset(SizeLiteral.horizantalPadding)
             $0.bottom.equalTo(photoListView.snp.top).offset(-10)
         }
-
+        
         photoListView.snp.makeConstraints {
             $0.top.equalTo(commentLabel.snp.bottom)
-            $0.leading.trailing.equalToSuperview()
             $0.bottom.equalToSuperview().inset(14)
+            $0.leading.trailing.equalToSuperview()
             $0.height.equalTo(100)
         }
     }
 
     func configureUI() {
         self.backgroundColor = .mainBackgroundColor
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
     }
 
     override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes)
@@ -100,11 +104,23 @@ final class FeedNSCollectionViewCell: UICollectionViewCell, BaseViewType {
 // MARK: - Public - func
 extension FeedNSCollectionViewCell {
     func configureCell(_ data: ReviewByStore) {
-        let review = data.review
         let writer = data.writer
+        let review = data.review
         
-        userInfoView.comfigureUser(writer)
-        commentLabel.text = review.content
-        photoListView.photos = review.imagePaths
+        self.userInfoView.comfigureUser(writer)
+        self.commentLabel.text = review.content
+        
+        if review.imagePaths.isEmpty {
+            self.photoListView.isHidden = true
+            self.photoListView.snp.updateConstraints {
+                $0.height.equalTo(0)
+            }
+        } else {
+            self.photoListView.photos = review.imagePaths
+            self.photoListView.isHidden = false
+            self.photoListView.snp.updateConstraints {
+                $0.height.equalTo(100)
+            }
+        }
     }
 }

@@ -25,7 +25,9 @@ final class PhotoListView: UIView {
 
     var photos: [String] = [] {
         didSet {
-            self.updateLayout()
+            DispatchQueue.main.async {
+                self.listCollectionView.reloadData()
+            }
         }
     }
 
@@ -65,19 +67,6 @@ final class PhotoListView: UIView {
             $0.height.equalTo(100)
         }
     }
-    
-    private func updateLayout() {
-        DispatchQueue.main.async {
-            self.listCollectionView.reloadData()
-        }
-        
-        if photos.isEmpty {
-            listCollectionView.snp.remakeConstraints {
-                $0.edges.equalToSuperview()
-                $0.height.equalTo(0)
-            }
-        }
-    }
 }
 
 extension PhotoListView: UICollectionViewDataSource, UICollectionViewDelegate {
@@ -94,7 +83,7 @@ extension PhotoListView: UICollectionViewDataSource, UICollectionViewDelegate {
         }
 
         if let url = URL(string: photos[indexPath.item]) {
-            cell.setupData(url)
+            cell.configureCell(url)
         }
 
         return cell
