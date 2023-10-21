@@ -91,9 +91,6 @@ final class StoreDetailViewModel: BaseViewModelType {
             self.lastReviewId = responseData.page.lastId
             self.currentpageSize = responseData.page.size
             
-            print(filter)
-            print(lastReviewId)
-            
             if lastReviewId == nil {
                 self.reviews = responseData.storeReviewContentResponses
             } else {

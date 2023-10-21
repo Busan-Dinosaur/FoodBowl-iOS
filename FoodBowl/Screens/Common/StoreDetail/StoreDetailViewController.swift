@@ -57,8 +57,8 @@ final class StoreDetailViewController: UIViewController, Navigationable, Keyboar
     override func viewDidLoad() {
         super.viewDidLoad()
         self.configureDataSource()
-        
         self.bindViewModel()
+        self.bindUI()
         self.setupNavigation()
     }
     
@@ -84,6 +84,15 @@ final class StoreDetailViewController: UIViewController, Navigationable, Keyboar
             } receiveValue: { [weak self] reviews in
                 self?.handleReviews(reviews)
             }
+            .store(in: &self.cancelBag)
+    }
+    
+    private func bindUI() {
+        self.storeDeatilView.reviewToggleButtonDidTapPublisher
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] isFriend in
+                self?.title = isFriend ? "친구들의 후기" : "모두의 후기"
+            })
             .store(in: &self.cancelBag)
     }
     

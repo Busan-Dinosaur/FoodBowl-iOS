@@ -50,6 +50,7 @@ final class StoreDeatilView: UIView, BaseViewType {
     private var cancelBag: Set<AnyCancellable> = Set()
     
     let reviewToggleButtonDidTapPublisher = PassthroughSubject<Bool, Never>()
+    let refreshPublisher = PassthroughSubject<Void, Never>()
     
     // MARK: - init
     
@@ -111,23 +112,27 @@ final class StoreDeatilView: UIView, BaseViewType {
     // MARK: - func
 
     private func setupAction() {
-        let action = UIAction { [weak self] _ in
+        let toggleAction = UIAction { [weak self] _ in
             guard let self = self else { return }
             self.isFriend.toggle()
             self.reviewToggleButton.isSelected = self.isFriend
             self.reviewToggleButtonDidTapPublisher.send(self.isFriend)
         }
-        self.reviewToggleButton.addAction(action, for: .touchUpInside)
-    }
-
-    private func bindUI() {
+        self.reviewToggleButton.addAction(toggleAction, for: .touchUpInside)
+        
+        let refreshAction = UIAction { [weak self] _ in
+            self?.refreshPublisher.send()
+        }
+        self.refreshControl.addAction(refreshAction, for: .valueChanged)
+        self.refreshControl.tintColor = .grey002
+        self.listCollectionView.refreshControl = self.refreshControl
     }
 }
 
 // MARK: - UICollectionViewLayout
 extension StoreDeatilView {
     private func createLayout() -> UICollectionViewLayout {
-        let layout = UICollectionViewCompositionalLayout { [weak self] index, environment -> NSCollectionLayoutSection? in
+        let layout = UICollectionViewCompositionalLayout { index, environment -> NSCollectionLayoutSection? in
             let itmeSize = NSCollectionLayoutSize(
                 widthDimension: .fractionalWidth(1),
                 heightDimension: .estimated(200)
