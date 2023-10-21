@@ -32,6 +32,8 @@ final class FeedCollectionViewCell: UICollectionViewCell, BaseViewType {
     
     var userButtonDidTapPublisher: PassthroughSubject<Void, Never> = PassthroughSubject()
     var optionButtonDidTapPublisher: PassthroughSubject<Void, Never> = PassthroughSubject()
+    var storeButtonDidTapPublisher: PassthroughSubject<Void, Never> = PassthroughSubject()
+    var bookmarkButtonDidTapPublisher: PassthroughSubject<Void, Never> = PassthroughSubject()
     
     // MARK: - init
 
@@ -100,6 +102,27 @@ final class FeedCollectionViewCell: UICollectionViewCell, BaseViewType {
         userInfoView.optionButton.addAction(UIAction { _ in self.optionButtonTapAction?(self) }, for: .touchUpInside)
         storeInfoView.storeNameButton.addAction(UIAction { _ in self.storeButtonTapAction?(self) }, for: .touchUpInside)
         storeInfoView.bookmarkButton.addAction(UIAction { _ in self.bookmarkButtonTapAction?(self) }, for: .touchUpInside)
+        
+        let userButtonTapAction = UIAction { [weak self] _ in
+            self?.userButtonDidTapPublisher.send()
+        }
+        self.userInfoView.userImageButton.addAction(userButtonTapAction, for: .touchUpInside)
+        self.userInfoView.userNameButton.addAction(userButtonTapAction, for: .touchUpInside)
+        
+        let optionButtonTapAction = UIAction { [weak self] _ in
+            self?.optionButtonDidTapPublisher.send()
+        }
+        self.userInfoView.optionButton.addAction(optionButtonTapAction, for: .touchUpInside)
+        
+        let storeButtonTapAction = UIAction { [weak self] _ in
+            self?.storeButtonDidTapPublisher.send()
+        }
+        self.storeInfoView.storeNameButton.addAction(storeButtonTapAction, for: .touchUpInside)
+        
+        let bookmarkButtonTapAction = UIAction { [weak self] _ in
+            self?.bookmarkButtonDidTapPublisher.send()
+        }
+        self.storeInfoView.bookmarkButton.addAction(bookmarkButtonTapAction, for: .touchUpInside)
     }
 }
 
