@@ -18,7 +18,7 @@ final class StoreDetailViewModel: BaseViewModelType {
     let providerReview = MoyaProvider<ReviewAPI>()
     let providerFollow = MoyaProvider<FollowAPI>()
     
-    private var cancellable = Set<AnyCancellable>()
+    private var cancelBag = Set<AnyCancellable>()
     
     var storeId: Int
     var isFriend: Bool
@@ -26,6 +26,7 @@ final class StoreDetailViewModel: BaseViewModelType {
     private let pageSize: Int = 10
     private var currentpageSize: Int = 10
     private var lastReviewId: Int?
+    private var reviews = [ReviewByStore]()
     
     private let reviewsSubject = PassthroughSubject<[ReviewByStore], Error>()
     
@@ -48,7 +49,17 @@ final class StoreDetailViewModel: BaseViewModelType {
     // MARK: - Public - func
     
     func transform(from input: Input) -> Output {
-        self.getReviewsPublisher()
+        self.getReviewsPublisher(isFriend: self.isFriend)
+        
+        input.reviewToggleButtonDidTap
+            .sink(receiveValue: { [weak self] isFriend in
+                guard let self = self else { return }
+                self.currentpageSize = self.pageSize
+                self.lastReviewId = nil
+                self.isFriend = isFriend
+                self.getReviewsPublisher(isFriend: isFriend)
+            })
+            .store(in: &self.cancelBag)
         
         return Output(
             reviews: reviewsSubject
@@ -57,16 +68,15 @@ final class StoreDetailViewModel: BaseViewModelType {
     
     // MARK: - network
     
-    private func getReviewsPublisher() {
+    private func getReviewsPublisher(isFriend: Bool, lastReviewId: Int? = nil) {
         if currentpageSize < pageSize { return }
-        
         let filter = isFriend ? "FRIEND" : "ALL"
         
         providerReview.requestPublisher(
             .getReviewsByStore(
-                form: GetReviewByStoreRequest(storeId: storeId, filter: filter),
+                form: GetReviewByStoreRequest(storeId: self.storeId, filter: filter),
                 lastReviewId: lastReviewId,
-                pageSize: pageSize
+                pageSize: self.pageSize
             )
         )
         .sink { completion in
@@ -74,14 +84,23 @@ final class StoreDetailViewModel: BaseViewModelType {
             case let .failure(error):
                 self.reviewsSubject.send(completion: .failure(error))
             case .finished:
-                self.reviewsSubject.send(completion: .finished)
+                return
             }
         } receiveValue: { recievedValue in
             guard let responseData = try? recievedValue.map(ReviewByStoreResponse.self) else { return }
             self.lastReviewId = responseData.page.lastId
             self.currentpageSize = responseData.page.size
-            self.reviewsSubject.send(responseData.storeReviewContentResponses)
+            
+            print(filter)
+            print(lastReviewId)
+            
+            if lastReviewId == nil {
+                self.reviews = responseData.storeReviewContentResponses
+            } else {
+                self.reviews += responseData.storeReviewContentResponses
+            }
+            self.reviewsSubject.send(self.reviews)
         }
-        .store(in : &cancellable)
+        .store(in : &cancelBag)
     }
 }

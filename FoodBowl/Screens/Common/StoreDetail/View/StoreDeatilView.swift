@@ -44,7 +44,7 @@ final class StoreDeatilView: UIView, BaseViewType {
     // MARK: - property
     
     private let storeId: Int
-    var isFriend: Bool
+    private var isFriend: Bool
     
     private weak var delegate: StoreDetailViewDelegate?
     private var cancelBag: Set<AnyCancellable> = Set()
@@ -58,6 +58,7 @@ final class StoreDeatilView: UIView, BaseViewType {
         self.isFriend = isFriend
         super.init(frame: .zero)
         self.baseInit()
+        self.setupAction()
     }
     
     @available(*, unavailable)
@@ -75,6 +76,10 @@ final class StoreDeatilView: UIView, BaseViewType {
         let navigationItem = navigationController.topViewController?.navigationItem
         let reviewToggleButton = navigationController.makeBarButtonItem(with: reviewToggleButton)
         navigationItem?.rightBarButtonItem = reviewToggleButton
+    }
+    
+    func configureNavigationBarTitle(_ navigationController: UINavigationController) {
+        let navigationItem = navigationController.topViewController?.navigationItem
         navigationItem?.title = isFriend ? "친구들의 후기" : "모두의 후기"
     }
     
@@ -108,6 +113,8 @@ final class StoreDeatilView: UIView, BaseViewType {
     private func setupAction() {
         let action = UIAction { [weak self] _ in
             guard let self = self else { return }
+            self.isFriend.toggle()
+            self.reviewToggleButton.isSelected = self.isFriend
             self.reviewToggleButtonDidTapPublisher.send(self.isFriend)
         }
         self.reviewToggleButton.addAction(action, for: .touchUpInside)

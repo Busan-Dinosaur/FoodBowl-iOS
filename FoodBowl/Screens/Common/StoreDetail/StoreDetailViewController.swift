@@ -99,6 +99,7 @@ final class StoreDetailViewController: UIViewController, Navigationable, Keyboar
     private func configureNavigation() {
         guard let navigationController = self.navigationController else { return }
         self.storeDeatilView.configureNavigationBarItem(navigationController)
+        self.storeDeatilView.configureNavigationBarTitle(navigationController)
     }
     
     private func transformedOutput() -> StoreDetailViewModel.Output {

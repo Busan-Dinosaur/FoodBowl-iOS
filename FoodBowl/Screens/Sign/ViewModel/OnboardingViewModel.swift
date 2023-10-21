@@ -19,7 +19,7 @@ final class OnboardingViewModel: NSObject, BaseViewModelType {
     private let providerService = MoyaProvider<ServiceAPI>()
     private let providerMember = MoyaProvider<MemberAPI>()
     
-    private var cancellable = Set<AnyCancellable>()
+    private var cancelBag = Set<AnyCancellable>()
     
     private let isLoginSubject = PassthroughSubject<Bool, Error>()
     
@@ -36,7 +36,7 @@ final class OnboardingViewModel: NSObject, BaseViewModelType {
             .sink(receiveValue: { [weak self] _ in
                 self?.didTapAppleSignButton()
             })
-            .store(in: &self.cancellable)
+            .store(in: &self.cancelBag)
         
         return Output(isLogin: self.isLoginSubject)
     }
@@ -58,7 +58,7 @@ final class OnboardingViewModel: NSObject, BaseViewModelType {
                 KeychainManager.set(responseData.refreshToken, for: .refreshToken)
                 UserDefaultHandler.setIsLogin(isLogin: true)
             }
-            .store(in : &cancellable)
+            .store(in : &cancelBag)
     }
     
     private func getMyProfile() {
@@ -75,7 +75,7 @@ final class OnboardingViewModel: NSObject, BaseViewModelType {
                 UserDefaultsManager.currentUser = responseData
                 self.isLoginSubject.send(true)
             }
-            .store(in : &cancellable)
+            .store(in : &cancelBag)
     }
     
     private func didTapAppleSignButton() {
