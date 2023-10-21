@@ -52,11 +52,11 @@ final class FeedNSCollectionViewCell: UICollectionViewCell, BaseViewType {
         commentLabel.snp.makeConstraints {
             $0.top.equalTo(userInfoView.snp.bottom)
             $0.leading.trailing.equalToSuperview().inset(SizeLiteral.horizantalPadding)
-            $0.bottom.equalTo(photoListView.snp.top).offset(-10)
+            $0.bottom.equalTo(photoListView.snp.top).offset(-4)
         }
         
         photoListView.snp.makeConstraints {
-            $0.top.equalTo(commentLabel.snp.bottom)
+            $0.top.equalTo(commentLabel.snp.bottom).offset(6)
             $0.bottom.equalToSuperview().inset(14)
             $0.leading.trailing.equalToSuperview()
             $0.height.equalTo(100)
