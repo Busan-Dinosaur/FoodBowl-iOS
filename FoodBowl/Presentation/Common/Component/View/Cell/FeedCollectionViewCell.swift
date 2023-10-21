@@ -71,7 +71,7 @@ final class FeedCollectionViewCell: UICollectionViewCell, BaseViewType {
         storeInfoView.snp.makeConstraints {
             $0.top.equalTo(photoListView.snp.bottom).offset(10)
             $0.leading.trailing.equalToSuperview().inset(SizeLiteral.horizantalPadding)
-            $0.bottom.equalToSuperview().inset(14)
+            $0.bottom.equalToSuperview().inset(20)
             $0.height.equalTo(54)
         }
     }
