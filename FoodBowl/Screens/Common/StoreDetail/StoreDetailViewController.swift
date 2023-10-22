@@ -94,6 +94,12 @@ final class StoreDetailViewController: UIViewController, Navigationable, Keyboar
                 self?.title = isFriend ? "친구들의 후기" : "모두의 후기"
             })
             .store(in: &self.cancelBag)
+        
+        self.storeDeatilView.listCollectionView.scrolledToBottomPublisher
+            .sink { _ in
+                self.storeDeatilView.reloadReviewsPublisher.send()
+            }
+            .store(in: &self.cancelBag)
     }
     
     private func bindCell(_ cell: FeedNSCollectionViewCell, with item: ReviewByStore) {
@@ -129,8 +135,8 @@ final class StoreDetailViewController: UIViewController, Navigationable, Keyboar
     
     private func transformedOutput() -> StoreDetailViewModel.Output {
         let input = StoreDetailViewModel.Input(
-            viewDidLoad: self.viewDidLoadPublisher,
-            reviewToggleButtonDidTap: self.storeDeatilView.reviewToggleButtonDidTapPublisher.eraseToAnyPublisher()
+            reviewToggleButtonDidTap: self.storeDeatilView.reviewToggleButtonDidTapPublisher.eraseToAnyPublisher(),
+            reloadReviews: self.storeDeatilView.reloadReviewsPublisher.eraseToAnyPublisher()
         )
 
         return self.viewModel.transform(from: input)

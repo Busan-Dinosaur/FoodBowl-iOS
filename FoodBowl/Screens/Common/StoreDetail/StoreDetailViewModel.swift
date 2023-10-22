@@ -23,16 +23,16 @@ final class StoreDetailViewModel: BaseViewModelType {
     var storeId: Int
     var isFriend: Bool
     
-    private let pageSize: Int = 10
-    private var currentpageSize: Int = 10
+    private let pageSize: Int = 2
+    private var currentpageSize: Int = 2
     private var lastReviewId: Int?
     private var reviews = [ReviewByStore]()
     
     private let reviewsSubject = PassthroughSubject<[ReviewByStore], Error>()
     
     struct Input {
-        let viewDidLoad: AnyPublisher<Void, Never>
         let reviewToggleButtonDidTap: AnyPublisher<Bool, Never>
+        let reloadReviews: AnyPublisher<Void, Never>
     }
     
     struct Output {
@@ -58,6 +58,13 @@ final class StoreDetailViewModel: BaseViewModelType {
                 self.lastReviewId = nil
                 self.isFriend = isFriend
                 self.getReviewsPublisher(isFriend: isFriend)
+            })
+            .store(in: &self.cancelBag)
+        
+        input.reloadReviews
+            .sink(receiveValue: { [weak self] _ in
+                guard let self = self else { return }
+                self.getReviewsPublisher(isFriend: self.isFriend, lastReviewId: self.lastReviewId)
             })
             .store(in: &self.cancelBag)
         
