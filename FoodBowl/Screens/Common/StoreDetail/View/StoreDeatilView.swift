@@ -28,8 +28,7 @@ final class StoreDeatilView: UIView, BaseViewType {
     
     // MARK: - ui component
     
-    private var refreshControl = UIRefreshControl()
-    private var isLoadingData = false
+    var refreshControl = UIRefreshControl()
 
     private lazy var reviewToggleButton = ReviewToggleButton().then {
         $0.isSelected = self.isFriend
@@ -50,7 +49,6 @@ final class StoreDeatilView: UIView, BaseViewType {
     private var cancelBag: Set<AnyCancellable> = Set()
     
     let reviewToggleButtonDidTapPublisher = PassthroughSubject<Bool, Never>()
-    let reloadReviewsPublisher = PassthroughSubject<Void, Never>()
     let refreshPublisher = PassthroughSubject<Void, Never>()
     
     // MARK: - init

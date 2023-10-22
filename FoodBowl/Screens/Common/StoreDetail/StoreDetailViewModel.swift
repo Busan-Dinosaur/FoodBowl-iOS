@@ -29,14 +29,17 @@ final class StoreDetailViewModel: BaseViewModelType {
     private var reviews = [ReviewByStore]()
     
     private let reviewsSubject = PassthroughSubject<[ReviewByStore], Error>()
+    private let refreshControlSubject = PassthroughSubject<Void, Error>()
     
     struct Input {
         let reviewToggleButtonDidTap: AnyPublisher<Bool, Never>
-        let reloadReviews: AnyPublisher<Void, Never>
+        let scrolledToBottom: AnyPublisher<Void, Never>
+        let refreshControl: AnyPublisher<Void, Never>
     }
     
     struct Output {
         let reviews: PassthroughSubject<[ReviewByStore], Error>
+        let refreshControl: PassthroughSubject<Void, Error>
     }
     
     // MARK: - init
@@ -61,15 +64,25 @@ final class StoreDetailViewModel: BaseViewModelType {
             })
             .store(in: &self.cancelBag)
         
-        input.reloadReviews
+        input.scrolledToBottom
             .sink(receiveValue: { [weak self] _ in
                 guard let self = self else { return }
                 self.getReviewsPublisher(isFriend: self.isFriend, lastReviewId: self.lastReviewId)
             })
             .store(in: &self.cancelBag)
         
+        input.refreshControl
+            .sink(receiveValue: { [weak self] _ in
+                guard let self = self else { return }
+                self.currentpageSize = self.pageSize
+                self.lastReviewId = nil
+                self.getReviewsPublisher(isFriend: isFriend)
+            })
+            .store(in: &self.cancelBag)
+        
         return Output(
-            reviews: reviewsSubject
+            reviews: reviewsSubject,
+            refreshControl: refreshControlSubject
         )
     }
     
@@ -91,7 +104,7 @@ final class StoreDetailViewModel: BaseViewModelType {
             case let .failure(error):
                 self.reviewsSubject.send(completion: .failure(error))
             case .finished:
-                return
+                self.refreshControlSubject.send()
             }
         } receiveValue: { recievedValue in
             guard let responseData = try? recievedValue.map(ReviewByStoreResponse.self) else { return }

@@ -85,6 +85,14 @@ final class StoreDetailViewController: UIViewController, Navigationable, Keyboar
                 self?.handleReviews(reviews)
             }
             .store(in: &self.cancelBag)
+        
+        output.refreshControl
+            .receive(on: DispatchQueue.main)
+            .sink { _ in
+            } receiveValue: { [weak self] _ in
+                self?.storeDeatilView.refreshControl.endRefreshing()
+            }
+            .store(in: &self.cancelBag)
     }
     
     private func bindUI() {
@@ -93,12 +101,6 @@ final class StoreDetailViewController: UIViewController, Navigationable, Keyboar
             .sink(receiveValue: { [weak self] isFriend in
                 self?.title = isFriend ? "친구들의 후기" : "모두의 후기"
             })
-            .store(in: &self.cancelBag)
-        
-        self.storeDeatilView.listCollectionView.scrolledToBottomPublisher
-            .sink { _ in
-                self.storeDeatilView.reloadReviewsPublisher.send()
-            }
             .store(in: &self.cancelBag)
     }
     
@@ -136,7 +138,8 @@ final class StoreDetailViewController: UIViewController, Navigationable, Keyboar
     private func transformedOutput() -> StoreDetailViewModel.Output {
         let input = StoreDetailViewModel.Input(
             reviewToggleButtonDidTap: self.storeDeatilView.reviewToggleButtonDidTapPublisher.eraseToAnyPublisher(),
-            reloadReviews: self.storeDeatilView.reloadReviewsPublisher.eraseToAnyPublisher()
+            scrolledToBottom: self.storeDeatilView.listCollectionView.scrolledToBottomPublisher.eraseToAnyPublisher(),
+            refreshControl: self.storeDeatilView.refreshPublisher.eraseToAnyPublisher()
         )
 
         return self.viewModel.transform(from: input)
