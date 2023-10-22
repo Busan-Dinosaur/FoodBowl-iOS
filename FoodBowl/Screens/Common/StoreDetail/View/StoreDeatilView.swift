@@ -59,6 +59,7 @@ final class StoreDeatilView: UIView, BaseViewType {
         self.isFriend = isFriend
         super.init(frame: .zero)
         self.baseInit()
+        self.bindUI()
         self.setupAction()
     }
     
@@ -109,7 +110,22 @@ final class StoreDeatilView: UIView, BaseViewType {
         self.backgroundColor = .mainBackgroundColor
     }
     
-    // MARK: - func
+    // MARK: - Private - func
+
+    private func bindUI() {
+//        self.listCollectionView.scrollPublisher
+//            .sink(receiveValue: { [weak self] in
+//                print("스크롤 인식")
+//            })
+//            .store(in: &self.cancelBag)
+        
+        self.listCollectionView.scrolledToBottomPublisher
+            .sink { _ in
+                // Action to perform when scroll reaches the bottom
+                print("Reached bottom!")
+            }
+            .store(in: &self.cancelBag)
+    }
 
     private func setupAction() {
         let toggleAction = UIAction { [weak self] _ in

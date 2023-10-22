@@ -50,6 +50,7 @@ final class PhotoCollectionViewCell: BaseCollectionViewCell {
         let imageViewController = ImageViewController()
         imageViewController.imageScrollView.imageView.image = foodImageView.image
         imageViewController.modalPresentationStyle = .fullScreen
+        imageViewController.modalTransitionStyle = .crossDissolve
 
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now()) {
             guard let rootVC = (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.windows.first?.rootViewController

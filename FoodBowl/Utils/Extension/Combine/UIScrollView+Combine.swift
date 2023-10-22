@@ -60,3 +60,27 @@ extension UIScrollView {
     }
 }
 
+extension UIScrollView {    
+    var scrolledToBottomPublisher: AnyPublisher<Void, Never> {
+        return Publishers
+            .CombineLatest3(
+                self.publisher(for: \.contentOffset),
+                self.publisher(for: \.bounds),
+                self.publisher(for: \.contentSize)
+            )
+            .map { [weak self] (contentOffset, bounds, contentSize) -> Bool in
+                guard let self = self else { return false }
+                let offsetY = contentOffset.y
+                let scrollViewHeight = bounds.size.height
+                let contentHeight = contentSize.height
+                
+                return offsetY > 0 && offsetY + scrollViewHeight >= contentHeight
+            }
+            .removeDuplicates() // 중복 값을 방지하기 위해
+            .filter { $0 } // true일 때만 통과
+            .map { _ in () } // Void로 변환
+            .eraseToAnyPublisher()
+    }
+}
+
+

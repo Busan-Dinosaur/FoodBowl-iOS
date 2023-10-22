@@ -32,6 +32,7 @@ final class FeedListView: ModalView {
     private var isLoadingData = false
 
     // MARK: - init
+    
     init(
         loadReviews: @escaping (() async -> [Review]),
         reloadReviews: @escaping (() async -> [Review]),
