@@ -183,9 +183,7 @@ final class CreateReviewController: BaseViewController {
     private func setStore() {
         if let store = viewModel.store {
             let action = UIAction { [weak self] _ in
-                let showWebViewController = ShowWebViewController()
-                showWebViewController.url = store.placeURL
-
+                let showWebViewController = ShowWebViewController(url: store.placeURL)
                 let navigationController = UINavigationController(rootViewController: showWebViewController)
 
                 DispatchQueue.main.async {

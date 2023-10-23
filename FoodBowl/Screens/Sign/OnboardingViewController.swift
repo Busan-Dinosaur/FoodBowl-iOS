@@ -66,7 +66,7 @@ final class OnboardingViewController: UIViewController, Navigationable, Keyboard
             .receive(on: DispatchQueue.main)
             .sink { [weak self] result in
                 switch result {
-                case .failure(_):
+                case .failure:
                     self?.makeAlert(title: "로그인에 실패하셨습니다.")
                 case .finished: return
                 }

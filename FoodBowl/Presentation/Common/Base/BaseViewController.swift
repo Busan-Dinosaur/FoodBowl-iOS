@@ -14,9 +14,10 @@ import SnapKit
 import Then
 
 class BaseViewController: UIViewController {
+    
     // MARK: - property
+    
     var animationView: LottieAnimationView?
-
     private var activeTextField: UITextField?
 
     private lazy var backButton = BackButton().then {
