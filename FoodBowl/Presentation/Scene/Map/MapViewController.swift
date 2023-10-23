@@ -13,7 +13,7 @@ import UIKit
 import SnapKit
 import Then
 
-class MapViewController: UIViewController, Navigationable, Keyboardable, Optionable {
+class MapViewController: UIViewController, Navigationable, Optionable {
     
     enum Section: CaseIterable {
         case main
@@ -125,6 +125,7 @@ class MapViewController: UIViewController, Navigationable, Keyboardable, Optiona
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.configureDataSource()
         self.setupLayout()
         self.configureUI()
         self.bindViewModel()
@@ -178,16 +179,7 @@ class MapViewController: UIViewController, Navigationable, Keyboardable, Optiona
         bookmarkButton.isHidden = true
     }
 
-    func loadData() {
-        Task {
-            stores = await loadStores()
-
-            DispatchQueue.main.async {
-                self.grabbarView.modalResultLabel.text = "\(self.stores.count.prettyNumber)개의 맛집"
-                self.setMarkers()
-            }
-        }
-    }
+    func loadData() {}
 
     func loadReviews() async -> [Review] { return [] }
 
@@ -376,7 +368,6 @@ extension MapViewController: MKMapViewDelegate {
         )
         
         if let customLocation = customLocation {
-            print(customLocation)
             customLoacationPublisher.send(customLocation)
         }
 

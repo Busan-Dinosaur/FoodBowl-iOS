@@ -44,8 +44,6 @@ final class FriendViewModel: BaseViewModelType {
     // MARK: - Public - func
     
     func transform(from input: Input) -> Output {
-        self.getReviewsPublisher()
-        
         input.customLocation
             .sink(receiveValue: { [weak self] customLocation in
                 guard let self = self else { return }
@@ -108,7 +106,6 @@ final class FriendViewModel: BaseViewModelType {
             } else {
                 self.reviews += responseData.reviews
             }
-            print(self.reviews)
             
             self.reviewsSubject.send(self.reviews)
         }

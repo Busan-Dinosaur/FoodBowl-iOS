@@ -25,12 +25,13 @@ final class FeedListView: UIView, BaseViewType {
     // MARK: - ui component
     
     var refreshControl = UIRefreshControl()
+    
     let borderLineView = UIView().then {
         $0.backgroundColor = .grey002.withAlphaComponent(0.5)
     }
     lazy var listCollectionView = UICollectionView(frame: .zero, collectionViewLayout: self.createLayout()).then {
         $0.showsVerticalScrollIndicator = false
-        $0.register(FeedNSCollectionViewCell.self, forCellWithReuseIdentifier: FeedNSCollectionViewCell.className)
+        $0.register(FeedCollectionViewCell.self, forCellWithReuseIdentifier: FeedCollectionViewCell.className)
         $0.backgroundColor = .mainBackgroundColor
     }
     
@@ -44,8 +45,8 @@ final class FeedListView: UIView, BaseViewType {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setupLayout()
-        configureUI()
+        baseInit()
+        setupAction()
     }
 
     @available(*, unavailable)
@@ -95,12 +96,12 @@ final class FeedListView: UIView, BaseViewType {
 extension FeedListView {
     private func createLayout() -> UICollectionViewLayout {
         let layout = UICollectionViewCompositionalLayout { index, environment -> NSCollectionLayoutSection? in
-            let itmeSize = NSCollectionLayoutSize(
+            let itemSize = NSCollectionLayoutSize(
                 widthDimension: .fractionalWidth(1),
                 heightDimension: .estimated(250)
             )
             
-            let item = NSCollectionLayoutItem(layoutSize: itmeSize)
+            let item = NSCollectionLayoutItem(layoutSize: itemSize)
             item.contentInsets = ConstantSize.sectionContentInset
             
             let groupSize = NSCollectionLayoutSize(

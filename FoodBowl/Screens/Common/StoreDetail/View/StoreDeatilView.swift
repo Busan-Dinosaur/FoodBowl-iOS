@@ -123,12 +123,12 @@ final class StoreDeatilView: UIView, BaseViewType {
 extension StoreDeatilView {
     private func createLayout() -> UICollectionViewLayout {
         let layout = UICollectionViewCompositionalLayout { index, environment -> NSCollectionLayoutSection? in
-            let itmeSize = NSCollectionLayoutSize(
+            let itemSize = NSCollectionLayoutSize(
                 widthDimension: .fractionalWidth(1),
                 heightDimension: .estimated(200)
             )
             
-            let item = NSCollectionLayoutItem(layoutSize: itmeSize)
+            let item = NSCollectionLayoutItem(layoutSize: itemSize)
             item.contentInsets = ConstantSize.sectionContentInset
             
             let groupSize = NSCollectionLayoutSize(
