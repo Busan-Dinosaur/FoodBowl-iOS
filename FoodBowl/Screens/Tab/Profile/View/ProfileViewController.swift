@@ -67,6 +67,11 @@ final class ProfileViewController: MapViewController {
         $0.followButton.addAction(followButtonAction, for: .touchUpInside)
         $0.editButton.addAction(editButtonAction, for: .touchUpInside)
     }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.setupNavigationBar()
+    }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)

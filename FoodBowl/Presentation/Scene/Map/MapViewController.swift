@@ -7,7 +7,6 @@
 
 import CoreLocation
 import MapKit
-import MessageUI
 import UIKit
 
 import SnapKit

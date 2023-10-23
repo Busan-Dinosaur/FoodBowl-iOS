@@ -20,6 +20,11 @@ final class FriendViewController: MapViewController {
         $0.padding = UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 0)
         $0.frame = CGRect(x: 0, y: 0, width: 150, height: 0)
     }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.setupNavigationBar()
+    }
 
     override func configureUI() {
         super.configureUI()

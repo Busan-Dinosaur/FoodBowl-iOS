@@ -30,12 +30,13 @@ final class UnivViewController: MapViewController {
         $0.frame = CGRect(x: 0, y: 0, width: 300, height: 45)
         $0.label.text = "대학가"
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        currentUniv()
+        self.setupNavigationBar()
+        self.currentUniv()
     }
-
+    
     private func setupNavigationBar() {
         let leftOffsetUnivTitleButton = removeBarButtonItem(with: univTitleButton, offsetX: 10)
         let univTitleButton = makeBarButtonItem(with: leftOffsetUnivTitleButton)
