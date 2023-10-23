@@ -11,10 +11,6 @@ import UIKit
 import SnapKit
 import Then
 
-protocol StoreDetailViewDelegate: AnyObject {
-//    func didTapAppleSignButton()
-}
-
 final class StoreDeatilView: UIView, BaseViewType {
     private enum ConstantSize {
         static let sectionContentInset: NSDirectionalEdgeInsets = NSDirectionalEdgeInsets(
@@ -44,8 +40,7 @@ final class StoreDeatilView: UIView, BaseViewType {
     
     private let storeId: Int
     private var isFriend: Bool
-    
-    private weak var delegate: StoreDetailViewDelegate?
+
     private var cancelBag: Set<AnyCancellable> = Set()
     
     let reviewToggleButtonDidTapPublisher = PassthroughSubject<Bool, Never>()
@@ -67,10 +62,6 @@ final class StoreDeatilView: UIView, BaseViewType {
     }
     
     // MARK: - func
-    
-    func configureDelegate(_ delegate: StoreDetailViewDelegate) {
-        self.delegate = delegate
-    }
     
     func configureNavigationBarItem(_ navigationController: UINavigationController) {        
         let navigationItem = navigationController.topViewController?.navigationItem

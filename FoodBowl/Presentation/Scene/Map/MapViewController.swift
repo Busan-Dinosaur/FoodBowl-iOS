@@ -5,6 +5,7 @@
 //  Created by COBY_PRO on 2023/01/10.
 //
 
+import Combine
 import CoreLocation
 import MapKit
 import UIKit
@@ -13,6 +14,10 @@ import SnapKit
 import Then
 
 class MapViewController: UIViewController, Navigationable, Keyboardable, Optionable {
+    
+    enum Section: CaseIterable {
+        case main
+    }
     
     // MARK: - ui component
     
@@ -72,11 +77,7 @@ class MapViewController: UIViewController, Navigationable, Keyboardable, Optiona
     }
     let categoryListView = CategoryListView()
     let grabbarView = GrabbarView()
-    lazy var feedListView = FeedListView(
-        loadReviews: { await self.loadReviews() },
-        reloadReviews: { await self.reloadReviews() },
-        presentBlameVC: presentBlameVC
-    )
+    let feedListView = FeedListView()
 
     lazy var presentBlameVC: (Int, String) -> Void = { targetId, blameTarget in
         self.presentBlameViewController(targetId: targetId, blameTarget: blameTarget)
@@ -84,11 +85,18 @@ class MapViewController: UIViewController, Navigationable, Keyboardable, Optiona
     
     // MARK: - property
     
+    private var cancelBag: Set<AnyCancellable> = Set()
+    
+    private let customLoacationPublisher = PassthroughSubject<CustomLocation, Never>()
+    
+    private let viewModel = FriendViewModel()
+    
+    var dataSource: UICollectionViewDiffableDataSource<Section, Review>!
+    var snapShot: NSDiffableDataSourceSnapshot<Section, Review>!
+    
     var customLocation: CustomLocation?
-    var currentLoction: CLLocationCoordinate2D?
-
+    var currentLocation: CLLocationCoordinate2D?
     var stores = [Store]()
-
     var markers = [Marker]()
 
     let modalMinHeight: CGFloat = 40
@@ -119,6 +127,8 @@ class MapViewController: UIViewController, Navigationable, Keyboardable, Optiona
         super.viewDidLoad()
         self.setupLayout()
         self.configureUI()
+        self.bindViewModel()
+        self.bindUI()
         self.setupNavigation()
     }
 
@@ -170,12 +180,9 @@ class MapViewController: UIViewController, Navigationable, Keyboardable, Optiona
 
     func loadData() {
         Task {
-            feedListView.reviews = await loadReviews()
             stores = await loadStores()
 
             DispatchQueue.main.async {
-                self.feedListView.listCollectionView.reloadData()
-                self.feedListView.scrollToTop()
                 self.grabbarView.modalResultLabel.text = "\(self.stores.count.prettyNumber)개의 맛집"
                 self.setMarkers()
             }
@@ -216,11 +223,127 @@ class MapViewController: UIViewController, Navigationable, Keyboardable, Optiona
         bookmarkButton.isSelected.toggle()
         loadData()
     }
+    
+    // MARK: - func - bind
+
+    private func bindViewModel() {
+        let output = self.transformedOutput()
+        self.bindOutputToViewModel(output)
+    }
+    
+    private func bindOutputToViewModel(_ output: FriendViewModel.Output) {
+        output.reviews
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] result in
+                switch result {
+                case .failure:
+                    self?.handleReviews([])
+                case .finished:
+                    return
+                }
+            } receiveValue: { [weak self] reviews in
+                self?.handleReviews(reviews)
+            }
+            .store(in: &self.cancelBag)
+        
+        output.refreshControl
+            .receive(on: DispatchQueue.main)
+            .sink { _ in
+            } receiveValue: { [weak self] _ in
+                self?.feedListView.refreshControl.endRefreshing()
+            }
+            .store(in: &self.cancelBag)
+    }
+    
+    private func bindUI() {
+    }
+    
+    // MARK: - func
+    
+    private func transformedOutput() -> FriendViewModel.Output {
+        let input = FriendViewModel.Input(
+            customLocation: self.customLoacationPublisher.eraseToAnyPublisher(),
+            scrolledToBottom: self.feedListView.listCollectionView.scrolledToBottomPublisher.eraseToAnyPublisher(),
+            refreshControl: self.feedListView.refreshPublisher.eraseToAnyPublisher()
+        )
+
+        return self.viewModel.transform(from: input)
+    }
+    
+    private func bindCell(_ cell: FeedCollectionViewCell, with item: Review) {
+        cell.userButtonDidTapPublisher
+            .sink(receiveValue: { [weak self] _ in
+                let viewController = ProfileViewController(memberId: item.writer.id)
+                
+                DispatchQueue.main.async { [weak self] in
+                    self?.navigationController?.pushViewController(viewController, animated: true)
+                }
+            })
+            .store(in: &self.cancelBag)
+        
+        cell.optionButtonDidTapPublisher
+            .sink(receiveValue: { [weak self] _ in
+                let isOwn = UserDefaultsManager.currentUser?.id ?? 0 == item.writer.id
+                self?.presentReviewOptionAlert(isOwn: isOwn, reviewId: item.review.id)
+            })
+            .store(in: &self.cancelBag)
+    }
+}
+
+// MARK: - Helper
+extension MapViewController {
+    private func handleReviews(_ reviews: [Review]) {
+        self.reloadReviews(reviews)
+    }
+}
+
+// MARK: - DataSource
+extension MapViewController {
+    private func configureDataSource() {
+        self.dataSource = self.feedCollectionViewDataSource()
+        self.configureSnapshot()
+    }
+
+    private func feedCollectionViewDataSource() -> UICollectionViewDiffableDataSource<Section, Review> {
+        let reviewCellRegistration = UICollectionView.CellRegistration<FeedCollectionViewCell, Review> {
+            [weak self] cell, indexPath, item in
+            
+            cell.configureCell(item)
+            self?.bindCell(cell, with: item)
+        }
+
+        return UICollectionViewDiffableDataSource(
+            collectionView: self.feedListView.collectionView(),
+            cellProvider: { collectionView, indexPath, item in
+                return collectionView.dequeueConfiguredReusableCell(
+                    using: reviewCellRegistration,
+                    for: indexPath,
+                    item: item
+                )
+            }
+        )
+    }
+}
+
+// MARK: - Snapshot
+extension MapViewController {
+    private func configureSnapshot() {
+        self.snapShot = NSDiffableDataSourceSnapshot<Section, Review>()
+        self.snapShot.appendSections([.main])
+        self.dataSource.apply(self.snapShot, animatingDifferences: true)
+    }
+
+    private func reloadReviews(_ items: [Review]) {
+        let previousReviewsData = self.snapShot.itemIdentifiers(inSection: .main)
+        self.snapShot.deleteItems(previousReviewsData)
+        self.snapShot.appendItems(items, toSection: .main)
+        self.dataSource.apply(self.snapShot, animatingDifferences: true)
+    }
 }
 
 extension MapViewController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
-        currentLoction = userLocation.location?.coordinate
+        currentLocation = userLocation.location?.coordinate
     }
 
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
@@ -241,7 +364,7 @@ extension MapViewController: MKMapViewDelegate {
         let visibleMapRect = mapView.visibleMapRect
         let topLeftCoordinate = MKMapPoint(x: visibleMapRect.minX, y: visibleMapRect.minY).coordinate
 
-        guard let currentLoc = currentLoction else { return }
+        guard let currentLoc = currentLocation else { return }
 
         customLocation = CustomLocation(
             x: center.longitude,
@@ -251,6 +374,11 @@ extension MapViewController: MKMapViewDelegate {
             deviceX: currentLoc.longitude,
             deviceY: currentLoc.latitude
         )
+        
+        if let customLocation = customLocation {
+            print(customLocation)
+            customLoacationPublisher.send(customLocation)
+        }
 
         loadData()
     }

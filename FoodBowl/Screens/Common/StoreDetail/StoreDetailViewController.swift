@@ -30,8 +30,6 @@ final class StoreDetailViewController: UIViewController, Navigationable, Keyboar
 
     private let viewModel: StoreDetailViewModel
 
-    private weak var delegate: StoreDetailViewDelegate?
-
     // MARK: - init
     
     init(viewModel: StoreDetailViewModel) {
@@ -66,7 +64,6 @@ final class StoreDetailViewController: UIViewController, Navigationable, Keyboar
 
     private func bindViewModel() {
         let output = self.transformedOutput()
-        self.configureDelegation()
         self.configureNavigation()
         self.bindOutputToViewModel(output)
     }
@@ -124,10 +121,6 @@ final class StoreDetailViewController: UIViewController, Navigationable, Keyboar
     }
     
     // MARK: - func
-    
-    private func configureDelegation() {
-        self.storeDeatilView.configureDelegate(self)
-    }
     
     private func configureNavigation() {
         guard let navigationController = self.navigationController else { return }
@@ -195,7 +188,4 @@ extension StoreDetailViewController {
         self.snapShot.appendItems(items, toSection: .main)
         self.dataSource.apply(self.snapShot, animatingDifferences: true)
     }
-}
-
-extension StoreDetailViewController: StoreDetailViewDelegate {
 }

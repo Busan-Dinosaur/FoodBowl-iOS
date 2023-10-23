@@ -20,7 +20,7 @@ struct Page: Codable {
 }
 
 // MARK: - Review
-struct Review: Codable {
+struct Review: Codable, Hashable {
     let writer: Writer
     let review: ReviewContent
     var store: StoreByReview
@@ -36,7 +36,7 @@ struct ReviewContent: Codable, Hashable {
 }
 
 // MARK: - StoreByReview
-struct StoreByReview: Codable {
+struct StoreByReview: Codable, Hashable {
     let id: Int
     let categoryName, name, addressName: String
     let distance: Double
