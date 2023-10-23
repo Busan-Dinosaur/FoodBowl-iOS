@@ -13,7 +13,7 @@ import Kingfisher
 import SnapKit
 import Then
 
-final class ProfileViewController: MapViewController, Optionable {
+final class ProfileViewController: MapViewController {
     private var isOwn: Bool
     private var memberId: Int
     private var member: MemberProfileResponse?
@@ -103,9 +103,7 @@ final class ProfileViewController: MapViewController, Optionable {
         modalMaxHeight = UIScreen.main.bounds.height - SizeLiteral.topAreaPadding - navBarHeight - 180
     }
 
-    override func setupNavigationBar() {
-        super.setupNavigationBar()
-
+    private func setupNavigationBar() {
         if isOwn {
             let userNicknameLabel = makeBarButtonItem(with: userNicknameLabel)
             let plusButton = makeBarButtonItem(with: plusButton)

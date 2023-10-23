@@ -36,8 +36,7 @@ final class UnivViewController: MapViewController {
         currentUniv()
     }
 
-    override func setupNavigationBar() {
-        super.setupNavigationBar()
+    private func setupNavigationBar() {
         let leftOffsetUnivTitleButton = removeBarButtonItem(with: univTitleButton, offsetX: 10)
         let univTitleButton = makeBarButtonItem(with: leftOffsetUnivTitleButton)
         let plusButton = makeBarButtonItem(with: plusButton)

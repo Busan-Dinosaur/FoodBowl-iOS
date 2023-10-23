@@ -69,7 +69,6 @@
 		CB617A5E2AE2A386000F7FFC /* SizeLiteral.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB617A5D2AE2A386000F7FFC /* SizeLiteral.swift */; };
 		CB63B7602A698909000AD9C2 /* CategoryListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB63B75F2A698909000AD9C2 /* CategoryListView.swift */; };
 		CB73E00E2AB5F6BF005B6BF1 /* SearchStoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB73E00D2AB5F6BF005B6BF1 /* SearchStoreViewController.swift */; };
-		CB7CA37F2A719054005EA993 /* ModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB7CA37E2A719054005EA993 /* ModalView.swift */; };
 		CB7F3325298A51560000A6B4 /* UserDefaultStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB7F3324298A51560000A6B4 /* UserDefaultStorage.swift */; };
 		CB7F3327298A51610000A6B4 /* UserDefaultHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB7F3326298A51610000A6B4 /* UserDefaultHandler.swift */; };
 		CB84C9842AD98E9000A2E0F2 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = CB84C9832AD98E9000A2E0F2 /* Lottie */; };
@@ -233,7 +232,6 @@
 		CB617A5D2AE2A386000F7FFC /* SizeLiteral.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SizeLiteral.swift; sourceTree = "<group>"; };
 		CB63B75F2A698909000AD9C2 /* CategoryListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryListView.swift; sourceTree = "<group>"; };
 		CB73E00D2AB5F6BF005B6BF1 /* SearchStoreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchStoreViewController.swift; sourceTree = "<group>"; };
-		CB7CA37E2A719054005EA993 /* ModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalView.swift; sourceTree = "<group>"; };
 		CB7F3321298A4F1E0000A6B4 /* FoodBowl.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = FoodBowl.entitlements; sourceTree = "<group>"; };
 		CB7F3324298A51560000A6B4 /* UserDefaultStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultStorage.swift; sourceTree = "<group>"; };
 		CB7F3326298A51610000A6B4 /* UserDefaultHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultHandler.swift; sourceTree = "<group>"; };
@@ -527,7 +525,6 @@
 			children = (
 				CB73E0122AB5FF1E005B6BF1 /* Feed */,
 				CB49256D2AB44D0E00B66B68 /* Cell */,
-				CBC1586F2AD822DD00FD263B /* Modal */,
 				CB1790C7296DAB470083D3A4 /* DynamicHeightCollectionViewFlowLayout.swift */,
 				CBA4C7DA2AB4840100FC9DD8 /* PaddingLabel.swift */,
 				CB2A44A52ADFC62D004A4126 /* PanZoomImageView.swift */,
@@ -703,6 +700,7 @@
 		CB63B75A2A6986BE000AD9C2 /* UIComponent */ = {
 			isa = PBXGroup;
 			children = (
+				CBF617612A6FD94900452B7B /* GrabbarView.swift */,
 				CBDECAC72A6B2F0700259350 /* FeedListView.swift */,
 				CB63B75F2A698909000AD9C2 /* CategoryListView.swift */,
 				CB8A2D9A297844720018AC6E /* Marker.swift */,
@@ -987,15 +985,6 @@
 				CBC1586D2AD81A8400FD263B /* FriendViewModel.swift */,
 			);
 			path = ViewModel;
-			sourceTree = "<group>";
-		};
-		CBC1586F2AD822DD00FD263B /* Modal */ = {
-			isa = PBXGroup;
-			children = (
-				CBF617612A6FD94900452B7B /* GrabbarView.swift */,
-				CB7CA37E2A719054005EA993 /* ModalView.swift */,
-			);
-			path = Modal;
 			sourceTree = "<group>";
 		};
 		CBC730F7295550A100C7F198 = {
@@ -1357,7 +1346,6 @@
 				CB617A362AE2474A000F7FFC /* BaseViewModelType.swift in Sources */,
 				CB20BAD32AE39F11007535C8 /* Optionable.swift in Sources */,
 				CBDE38FB2970774800DDE49A /* CloseButton.swift in Sources */,
-				CB7CA37F2A719054005EA993 /* ModalView.swift in Sources */,
 				CB2E4F81297702B800FD2566 /* UserInfoTableViewCell.swift in Sources */,
 				CBCD0F7C2A66D9BC00A51B32 /* FriendViewController.swift in Sources */,
 				CBD1B5F82982D9E100B0AD51 /* ForwardButton.swift in Sources */,

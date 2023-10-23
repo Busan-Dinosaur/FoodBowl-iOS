@@ -26,8 +26,7 @@ final class FriendViewController: MapViewController {
         bookmarkButton.isHidden = false
     }
 
-    override func setupNavigationBar() {
-        super.setupNavigationBar()
+    private func setupNavigationBar() {
         let logoLabel = makeBarButtonItem(with: logoLabel)
         let plusButton = makeBarButtonItem(with: plusButton)
         navigationItem.leftBarButtonItem = logoLabel

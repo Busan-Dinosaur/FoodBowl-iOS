@@ -13,25 +13,22 @@ import UIKit
 import SnapKit
 import Then
 
-class MapViewController: BaseViewController {
-    var customLocation: CustomLocation?
-    var currentLoction: CLLocationCoordinate2D?
-
-    var stores = [Store]()
-
-    var markers = [Marker]()
-
-    let modalMinHeight: CGFloat = 40
-    let modalMidHeight: CGFloat = UIScreen.main.bounds.height / 2 - 100
-    lazy var tabBarHeight: CGFloat = tabBarController?.tabBar.frame.height ?? 0
-    lazy var navBarHeight: CGFloat = navigationController?.navigationBar.frame.height ?? 0
-    lazy var modalMaxHeight: CGFloat = UIScreen.main.bounds.height - SizeLiteral.topAreaPadding - navBarHeight - 120
-    var currentModalHeight: CGFloat = 0
-    var categoryListHeight: CGFloat = 40
-
-    private var panGesture = UIPanGestureRecognizer()
-
-    // MARK: - property
+class MapViewController: UIViewController, Navigationable, Keyboardable, Optionable {
+    
+    // MARK: - ui component
+    
+    lazy var plusButton = PlusButton().then {
+        let action = UIAction { [weak self] _ in
+            let createReviewController = CreateReviewController()
+            createReviewController.delegate = self
+            let navigationController = UINavigationController(rootViewController: createReviewController)
+            navigationController.modalPresentationStyle = .fullScreen
+            DispatchQueue.main.async {
+                self?.present(navigationController, animated: true)
+            }
+        }
+        $0.addAction(action, for: .touchUpInside)
+    }
     lazy var settingButton = SettingButton().then {
         let action = UIAction { [weak self] _ in
             let settingViewController = SettingViewController()
@@ -39,7 +36,6 @@ class MapViewController: BaseViewController {
         }
         $0.addAction(action, for: .touchUpInside)
     }
-
     lazy var mapView = MKMapView().then {
         $0.delegate = self
         $0.mapType = MKMapType.standard
@@ -56,7 +52,6 @@ class MapViewController: BaseViewController {
             forAnnotationViewWithReuseIdentifier: MKMapViewDefaultClusterAnnotationViewReuseIdentifier
         )
     }
-
     lazy var trakingButton = MKUserTrackingButton(mapView: mapView).then {
         $0.layer.backgroundColor = UIColor.mainBackgroundColor.cgColor
         $0.layer.borderColor = UIColor.grey002.cgColor
@@ -65,7 +60,6 @@ class MapViewController: BaseViewController {
         $0.layer.masksToBounds = true
         $0.tintColor = UIColor.mainPink
     }
-
     lazy var bookmarkButton = BookmarkMapButton().then {
         $0.layer.backgroundColor = UIColor.mainBackgroundColor.cgColor
         $0.layer.borderColor = UIColor.grey002.cgColor
@@ -77,11 +71,8 @@ class MapViewController: BaseViewController {
         }
         $0.addAction(action, for: .touchUpInside)
     }
-
     let categoryListView = CategoryListView()
-
     let grabbarView = GrabbarView()
-
     lazy var feedListView = FeedListView(
         loadReviews: { await self.loadReviews() },
         reloadReviews: { await self.reloadReviews() },
@@ -91,8 +82,48 @@ class MapViewController: BaseViewController {
     lazy var presentBlameVC: (Int, String) -> Void = { targetId, blameTarget in
         self.presentBlameViewController(targetId: targetId, blameTarget: blameTarget)
     }
+    
+    // MARK: - property
+    
+    var customLocation: CustomLocation?
+    var currentLoction: CLLocationCoordinate2D?
 
-    override func setupLayout() {
+    var stores = [Store]()
+
+    var markers = [Marker]()
+
+    let modalMinHeight: CGFloat = 40
+    let modalMidHeight: CGFloat = UIScreen.main.bounds.height / 2 - 100
+    lazy var tabBarHeight: CGFloat = tabBarController?.tabBar.frame.height ?? 0
+    lazy var navBarHeight: CGFloat = navigationController?.navigationBar.frame.height ?? 0
+    lazy var modalMaxHeight: CGFloat = UIScreen.main.bounds.height - SizeLiteral.topAreaPadding - navBarHeight - 120
+    var currentModalHeight: CGFloat = 0
+    var categoryListHeight: CGFloat = 40
+
+    private var panGesture = UIPanGestureRecognizer()
+    
+    init() {
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    // MARK: - life cycle
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.setupLayout()
+        self.configureUI()
+        self.setupNavigation()
+    }
+
+    func setupLayout() {
         view.addSubviews(mapView, categoryListView, trakingButton, bookmarkButton, grabbarView, feedListView)
 
         mapView.snp.makeConstraints {
@@ -130,8 +161,7 @@ class MapViewController: BaseViewController {
         }
     }
 
-    override func configureUI() {
-        super.configureUI()
+    func configureUI() {
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan(_:)))
         grabbarView.isUserInteractionEnabled = true
         grabbarView.addGestureRecognizer(panGesture)
@@ -139,7 +169,7 @@ class MapViewController: BaseViewController {
         bookmarkButton.isHidden = true
     }
 
-    override func loadData() {
+    func loadData() {
         Task {
             feedListView.reviews = await loadReviews()
             stores = await loadStores()
@@ -213,8 +243,6 @@ extension MapViewController: MKMapViewDelegate {
         let topLeftCoordinate = MKMapPoint(x: visibleMapRect.minX, y: visibleMapRect.minY).coordinate
 
         guard let currentLoc = currentLoction else { return }
-
-        print(currentLoc)
 
         customLocation = CustomLocation(
             x: center.longitude,
@@ -300,5 +328,11 @@ extension MapViewController {
 
     func modalMaxState() {
         grabbarView.layer.cornerRadius = 0
+    }
+}
+
+extension MapViewController: CreateReviewControllerDelegate {
+    func updateData() {
+        loadData()
     }
 }

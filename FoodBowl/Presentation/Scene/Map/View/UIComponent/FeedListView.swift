@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 import Then
 
-final class FeedListView: ModalView {
+final class FeedListView: UIView {
     private enum Size {
         static let collectionInset = UIEdgeInsets(
             top: 10,
@@ -30,6 +30,16 @@ final class FeedListView: ModalView {
 
     private let refreshControl = UIRefreshControl()
     private var isLoadingData = false
+    
+    // MARK: - property
+    
+    let borderLineView = UIView().then {
+        $0.backgroundColor = .grey002.withAlphaComponent(0.5)
+    }
+
+    var collectionViewFlowLayout: UICollectionViewFlowLayout = .init()
+
+    lazy var listCollectionView: UICollectionView = .init()
 
     // MARK: - init
     
@@ -42,6 +52,10 @@ final class FeedListView: ModalView {
         self.reloadReviews = reloadReviews
         self.presentBlameVC = presentBlameVC
         super.init(frame: .zero)
+        setupProperty()
+        setupLayout()
+        configureUI()
+        setupRefreshControl()
     }
 
     @available(*, unavailable)
@@ -49,7 +63,7 @@ final class FeedListView: ModalView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    override func setupProperty() {
+    private func setupProperty() {
         collectionViewFlowLayout = DynamicHeightCollectionViewFlowLayout().then {
             $0.sectionInset = Size.collectionInset
             $0.minimumLineSpacing = 20
@@ -64,8 +78,26 @@ final class FeedListView: ModalView {
             $0.backgroundColor = .mainBackgroundColor
         }
     }
+    
+    func setupLayout() {
+        addSubviews(borderLineView, listCollectionView)
 
-    override func setupRefreshControl() {
+        borderLineView.snp.makeConstraints {
+            $0.top.leading.trailing.equalToSuperview()
+            $0.height.equalTo(1)
+        }
+
+        listCollectionView.snp.makeConstraints {
+            $0.top.equalTo(borderLineView.snp.bottom)
+            $0.leading.trailing.bottom.equalToSuperview()
+        }
+    }
+
+    func configureUI() {
+        backgroundColor = .mainBackgroundColor
+    }
+
+    private func setupRefreshControl() {
         let action = UIAction { [weak self] _ in
             self?.setupLoadReviews()
         }
