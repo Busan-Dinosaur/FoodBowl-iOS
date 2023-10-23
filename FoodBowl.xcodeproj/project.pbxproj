@@ -122,7 +122,7 @@
 		CBC158662AD80BB600FD263B /* SearchMembersResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBC158652AD80BB600FD263B /* SearchMembersResponse.swift */; };
 		CBC158682AD80C3300FD263B /* CreateBlameRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBC158672AD80C3300FD263B /* CreateBlameRequest.swift */; };
 		CBC1586B2AD8183D00FD263B /* FindViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBC1586A2AD8183D00FD263B /* FindViewModel.swift */; };
-		CBC1586E2AD81A8400FD263B /* FriendViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBC1586D2AD81A8400FD263B /* FriendViewModel.swift */; };
+		CBC1586E2AD81A8400FD263B /* MapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBC1586D2AD81A8400FD263B /* MapViewModel.swift */; };
 		CBC158732AD8E74900FD263B /* CustomLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBC158722AD8E74900FD263B /* CustomLocation.swift */; };
 		CBC73104295550A100C7F198 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBC73103295550A100C7F198 /* AppDelegate.swift */; };
 		CBC73106295550A100C7F198 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBC73105295550A100C7F198 /* SceneDelegate.swift */; };
@@ -281,7 +281,7 @@
 		CBC158652AD80BB600FD263B /* SearchMembersResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchMembersResponse.swift; sourceTree = "<group>"; };
 		CBC158672AD80C3300FD263B /* CreateBlameRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateBlameRequest.swift; sourceTree = "<group>"; };
 		CBC1586A2AD8183D00FD263B /* FindViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindViewModel.swift; sourceTree = "<group>"; };
-		CBC1586D2AD81A8400FD263B /* FriendViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendViewModel.swift; sourceTree = "<group>"; };
+		CBC1586D2AD81A8400FD263B /* MapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewModel.swift; sourceTree = "<group>"; };
 		CBC158722AD8E74900FD263B /* CustomLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomLocation.swift; sourceTree = "<group>"; };
 		CBC73100295550A100C7F198 /* FoodBowl.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FoodBowl.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CBC73103295550A100C7F198 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -691,6 +691,7 @@
 		CB63B7592A6986B4000AD9C2 /* Map */ = {
 			isa = PBXGroup;
 			children = (
+				CBC1586C2AD81A7900FD263B /* ViewModel */,
 				CB63B75C2A698857000AD9C2 /* View */,
 				CBE6190E296C6435005295AF /* MapViewController.swift */,
 			);
@@ -982,7 +983,7 @@
 		CBC1586C2AD81A7900FD263B /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				CBC1586D2AD81A8400FD263B /* FriendViewModel.swift */,
+				CBC1586D2AD81A8400FD263B /* MapViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -1194,7 +1195,6 @@
 		CBE6190D296C6423005295AF /* Friend */ = {
 			isa = PBXGroup;
 			children = (
-				CBC1586C2AD81A7900FD263B /* ViewModel */,
 				CBCD0F7B2A66D9BC00A51B32 /* FriendViewController.swift */,
 			);
 			path = Friend;
@@ -1300,7 +1300,7 @@
 				CB1579092AACCFCB00007183 /* CreateReviewRequest.swift in Sources */,
 				CBEB00602ADC30AC00F6EFED /* Int+Extension.swift in Sources */,
 				CB73E00E2AB5F6BF005B6BF1 /* SearchStoreViewController.swift in Sources */,
-				CBC1586E2AD81A8400FD263B /* FriendViewModel.swift in Sources */,
+				CBC1586E2AD81A8400FD263B /* MapViewModel.swift in Sources */,
 				CBFB52612977C9AB0049E8BA /* FindResultViewController.swift in Sources */,
 				CBD1B6022984394A00B0AD51 /* FeedButton.swift in Sources */,
 				CBDECACA2A6B2F6800259350 /* FeedNSCollectionViewCell.swift in Sources */,

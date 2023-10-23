@@ -13,8 +13,11 @@ import UIKit
 import SnapKit
 import Then
 
+enum MapViewType {
+    case friend, univ, member
+}
+
 class MapViewController: UIViewController, Navigationable, Optionable {
-    
     enum Section: CaseIterable {
         case main
     }
@@ -89,7 +92,7 @@ class MapViewController: UIViewController, Navigationable, Optionable {
     
     private let customLoacationPublisher = PassthroughSubject<CustomLocation, Never>()
     
-    private let viewModel = FriendViewModel()
+    let viewModel = MapViewModel()
     
     var dataSource: UICollectionViewDiffableDataSource<Section, Review>!
     var snapShot: NSDiffableDataSourceSnapshot<Section, Review>!
@@ -223,7 +226,7 @@ class MapViewController: UIViewController, Navigationable, Optionable {
         self.bindOutputToViewModel(output)
     }
     
-    private func bindOutputToViewModel(_ output: FriendViewModel.Output) {
+    private func bindOutputToViewModel(_ output: MapViewModel.Output) {
         output.reviews
             .receive(on: DispatchQueue.main)
             .sink { [weak self] result in
@@ -252,8 +255,8 @@ class MapViewController: UIViewController, Navigationable, Optionable {
     
     // MARK: - func
     
-    private func transformedOutput() -> FriendViewModel.Output {
-        let input = FriendViewModel.Input(
+    private func transformedOutput() -> MapViewModel.Output {
+        let input = MapViewModel.Input(
             customLocation: self.customLoacationPublisher.eraseToAnyPublisher(),
             scrolledToBottom: self.feedListView.listCollectionView.scrolledToBottomPublisher.eraseToAnyPublisher(),
             refreshControl: self.feedListView.refreshPublisher.eraseToAnyPublisher()

@@ -1,5 +1,5 @@
 //
-//  FriendViewModel.swift
+//  MapViewModel.swift
 //  FoodBowl
 //
 //  Created by COBY_PRO on 10/12/23.
@@ -11,7 +11,7 @@ import UIKit
 import CombineMoya
 import Moya
 
-final class FriendViewModel: BaseViewModelType {
+final class MapViewModel: BaseViewModelType {
     
     // MARK: - property
 
@@ -22,9 +22,15 @@ final class FriendViewModel: BaseViewModelType {
     
     private var customLocation: CustomLocation?
     
+    var type: MapViewType = .friend
+    
     private let pageSize: Int = 2
     private var currentpageSize: Int = 2
+    
     private var lastReviewId: Int?
+    private var schoolId: Int?
+    private var memberId: Int?
+    
     private var reviews = [Review]()
     
     private let reviewsSubject = PassthroughSubject<[Review], Error>()
@@ -50,14 +56,30 @@ final class FriendViewModel: BaseViewModelType {
                 self.customLocation = customLocation
                 self.currentpageSize = self.pageSize
                 self.lastReviewId = nil
-                self.getReviewsPublisher()
+                
+                switch self.type {
+                case .friend:
+                    self.getReviewsByFollowing()
+                case .univ:
+                    self.getReviewsByFollowing()
+                case .member:
+                    self.getReviewsByFollowing()
+                }
             })
             .store(in: &self.cancelBag)
         
         input.scrolledToBottom
             .sink(receiveValue: { [weak self] _ in
                 guard let self = self else { return }
-                self.getReviewsPublisher(lastReviewId: self.lastReviewId)
+                
+                switch self.type {
+                case .friend:
+                    self.getReviewsByFollowing(lastReviewId: self.lastReviewId)
+                case .univ:
+                    self.getReviewsByFollowing(lastReviewId: self.lastReviewId)
+                case .member:
+                    self.getReviewsByFollowing(lastReviewId: self.lastReviewId)
+                }
             })
             .store(in: &self.cancelBag)
         
@@ -65,8 +87,16 @@ final class FriendViewModel: BaseViewModelType {
             .sink(receiveValue: { [weak self] _ in
                 guard let self = self else { return }
                 self.currentpageSize = self.pageSize
-                self.lastReviewId = nil
-                self.getReviewsPublisher()
+                self.lastReviewId = nil                
+                
+                switch self.type {
+                case .friend:
+                    self.getReviewsByFollowing()
+                case .univ:
+                    self.getReviewsByFollowing()
+                case .member:
+                    self.getReviewsByFollowing()
+                }
             })
             .store(in: &self.cancelBag)
         
@@ -75,10 +105,10 @@ final class FriendViewModel: BaseViewModelType {
             refreshControl: refreshControlSubject
         )
     }
-    
-    // MARK: - network
-    
-    private func getReviewsPublisher(lastReviewId: Int? = nil) {
+}
+
+extension MapViewModel {
+    private func getReviewsByFollowing(lastReviewId: Int? = nil) {
         if currentpageSize < pageSize { return }
         guard let customLocation = customLocation else { return }
         

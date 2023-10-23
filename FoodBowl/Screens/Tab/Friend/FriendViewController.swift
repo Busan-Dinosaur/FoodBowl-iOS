@@ -33,6 +33,7 @@ final class FriendViewController: MapViewController {
     override func configureUI() {
         super.configureUI()
         bookmarkButton.isHidden = false
+        viewModel.type = .friend
     }
 
     private func setupNavigationBar() {
