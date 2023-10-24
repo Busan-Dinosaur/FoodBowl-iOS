@@ -14,22 +14,9 @@ import SnapKit
 import Then
 
 final class ProfileViewController: MapViewController {
-    private var isOwn: Bool
-    private var memberId: Int
-    private var member: MemberProfileResponse?
-
-    private var viewModel = ProfileViewModel()
-
-    init(isOwn: Bool = false, memberId: Int = UserDefaultsManager.currentUser?.id ?? 0) {
-        self.isOwn = isOwn
-        self.memberId = memberId
-        super.init()
-    }
-
-    required init?(coder _: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
+    
+    // MARK: - ui component
+    
     let userNicknameLabel = PaddingLabel().then {
         $0.font = .font(.regular, ofSize: 22)
         $0.text = "그냥저냥"
@@ -37,7 +24,6 @@ final class ProfileViewController: MapViewController {
         $0.padding = UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 0)
         $0.frame = CGRect(x: 0, y: 0, width: 200, height: 0)
     }
-
     lazy var optionButton = OptionButton().then {
         let optionButtonAction = UIAction { [weak self] _ in
             guard let memberId = self?.memberId else { return }
@@ -45,7 +31,6 @@ final class ProfileViewController: MapViewController {
         }
         $0.addAction(optionButtonAction, for: .touchUpInside)
     }
-
     private lazy var profileHeaderView = ProfileHeaderView().then {
         let followerAction = UIAction { [weak self] _ in
             let followerViewController = FollowerViewController(memberId: self?.memberId ?? 0)
@@ -56,7 +41,7 @@ final class ProfileViewController: MapViewController {
             self?.navigationController?.pushViewController(followingViewController, animated: true)
         }
         let followButtonAction = UIAction { [weak self] _ in
-            self?.followButtonTapped()
+//            self?.followButtonTapped()
         }
         let editButtonAction = UIAction { [weak self] _ in
             let updateProfileViewController = UpdateProfileViewController()
@@ -68,15 +53,35 @@ final class ProfileViewController: MapViewController {
         $0.editButton.addAction(editButtonAction, for: .touchUpInside)
     }
     
+    // MARK: - property
+    
+    private var isOwn: Bool
+    private var memberId: Int
+    private var member: MemberProfileResponse?
+
+    init(isOwn: Bool = false, memberId: Int = UserDefaultsManager.currentUser?.id ?? 0) {
+        self.isOwn = isOwn
+        self.memberId = memberId
+        super.init()
+    }
+
+    required init?(coder _: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    // MARK: - life cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.setupLayout()
+        self.configureUI()
         self.setupNavigationBar()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationController?.isNavigationBarHidden = false
-        setupMember()
+        self.navigationController?.isNavigationBarHidden = false
+        self.setupMember()
     }
 
     override func setupLayout() {
@@ -106,6 +111,8 @@ final class ProfileViewController: MapViewController {
     override func configureUI() {
         super.configureUI()
         modalMaxHeight = UIScreen.main.bounds.height - SizeLiteral.topAreaPadding - navBarHeight - 180
+        viewModel.type = .member
+        viewModel.memberId = self.memberId
     }
 
     private func setupNavigationBar() {
@@ -155,60 +162,26 @@ final class ProfileViewController: MapViewController {
     }
 
     private func setUpMemberProfile() async {
-        member = await viewModel.getMemberProfile(id: memberId)
-
-        DispatchQueue.main.async {
-            guard let member = self.member else { return }
-            self.userNicknameLabel.text = member.nickname
-            self.profileHeaderView.userInfoLabel.text = member.introduction
-            self.profileHeaderView.followerInfoButton.numberLabel.text = "\(member.followerCount)명"
-            self.profileHeaderView.followingInfoButton.numberLabel.text = "\(member.followingCount)명"
-            self.profileHeaderView.followButton.isSelected = member.isFollowing
-            if let url = member.profileImageUrl {
-                self.profileHeaderView.userImageView.kf.setImage(with: URL(string: url))
-            } else {
-                self.profileHeaderView.userImageView.image = ImageLiteral.defaultProfile
-            }
-
-            if self.isOwn {
-                UserDefaultsManager.currentUser = member
-            } else {
-                self.title = member.nickname
-            }
-        }
-    }
-
-    override func loadReviews() async -> [Review] {
-        guard let location = customLocation else { return [] }
-        return await viewModel.getReviews(location: location, memberId: memberId)
-    }
-
-    override func loadStores() async -> [Store] {
-        guard let location = customLocation else { return [] }
-        return await viewModel.getStores(location: location, memberId: memberId)
-    }
-
-    override func reloadReviews() async -> [Review] {
-        if let location = customLocation, let lastReviewId = viewModel.lastReviewId,
-           let currentpageSize = viewModel.currentpageSize, currentpageSize >= viewModel.pageSize {
-            return await viewModel.getReviews(
-                location: location,
-                memberId: memberId,
-                lastReviewId: lastReviewId
-            )
-        }
-        return []
-    }
-
-    private func followButtonTapped() {
-        Task {
-            if profileHeaderView.followButton.isSelected {
-                profileHeaderView.followButton.isSelected = await self.viewModel.unfollowMember(memberId: memberId)
-            } else {
-                profileHeaderView.followButton.isSelected = await self.viewModel.followMember(memberId: memberId)
-            }
-
-            await setUpMemberProfile()
-        }
+//        member = await viewModel.getMemberProfile(id: memberId)
+//
+//        DispatchQueue.main.async {
+//            guard let member = self.member else { return }
+//            self.userNicknameLabel.text = member.nickname
+//            self.profileHeaderView.userInfoLabel.text = member.introduction
+//            self.profileHeaderView.followerInfoButton.numberLabel.text = "\(member.followerCount)명"
+//            self.profileHeaderView.followingInfoButton.numberLabel.text = "\(member.followingCount)명"
+//            self.profileHeaderView.followButton.isSelected = member.isFollowing
+//            if let url = member.profileImageUrl {
+//                self.profileHeaderView.userImageView.kf.setImage(with: URL(string: url))
+//            } else {
+//                self.profileHeaderView.userImageView.image = ImageLiteral.defaultProfile
+//            }
+//
+//            if self.isOwn {
+//                UserDefaultsManager.currentUser = member
+//            } else {
+//                self.title = member.nickname
+//            }
+//        }
     }
 }

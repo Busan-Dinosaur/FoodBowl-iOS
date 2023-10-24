@@ -90,7 +90,8 @@ class MapViewController: UIViewController, Navigationable, Optionable {
     
     private var cancelBag: Set<AnyCancellable> = Set()
     
-    private let customLoacationPublisher = PassthroughSubject<CustomLocation, Never>()
+    let customLocationPublisher = PassthroughSubject<CustomLocation, Never>()
+    let bookmarkButtonDidTapPublisher: PassthroughSubject<StoreByReview, Never> = PassthroughSubject()
     
     let viewModel = MapViewModel()
     
@@ -99,7 +100,6 @@ class MapViewController: UIViewController, Navigationable, Optionable {
     
     var customLocation: CustomLocation?
     var currentLocation: CLLocationCoordinate2D?
-    var stores = [Store]()
     var markers = [Marker]()
 
     let modalMinHeight: CGFloat = 40
@@ -182,41 +182,12 @@ class MapViewController: UIViewController, Navigationable, Optionable {
         bookmarkButton.isHidden = true
     }
 
-    func loadData() {}
-
-    func loadReviews() async -> [Review] { return [] }
-
-    func loadStores() async -> [Store] { return [] }
-
-    func reloadReviews() async -> [Review] { return [] }
-
-    func setMarkers() {
-        mapView.removeAnnotations(markers)
-
-        markers = stores.map { store in
-            Marker(
-                title: store.name,
-                subtitle: "\(store.reviewCount)개의 후기",
-                coordinate: CLLocationCoordinate2D(
-                    latitude: store.y,
-                    longitude: store.x
-                ),
-                glyphImage: Categories(rawValue: store.categoryName)?.icon,
-                handler: { [weak self] in
-                    let storeDetailViewController = StoreDetailViewController(
-                        viewModel: StoreDetailViewModel(storeId: store.id, isFriend: true)
-                    )
-                    self?.navigationController?.pushViewController(storeDetailViewController, animated: true)
-                }
-            )
-        }
-
-        mapView.addAnnotations(markers)
-    }
-
     func tappedBookMarkButton() {
         bookmarkButton.isSelected.toggle()
-        loadData()
+        viewModel.isBookmark = bookmarkButton.isSelected
+        if let customLocation = customLocation {
+            customLocationPublisher.send(customLocation)
+        }
     }
     
     // MARK: - func - bind
@@ -241,6 +212,20 @@ class MapViewController: UIViewController, Navigationable, Optionable {
             }
             .store(in: &self.cancelBag)
         
+        output.stores
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] result in
+                switch result {
+                case .failure:
+                    self?.handleStores([])
+                case .finished:
+                    return
+                }
+            } receiveValue: { [weak self] stores in
+                self?.handleStores(stores)
+            }
+            .store(in: &self.cancelBag)
+        
         output.refreshControl
             .receive(on: DispatchQueue.main)
             .sink { _ in
@@ -257,9 +242,10 @@ class MapViewController: UIViewController, Navigationable, Optionable {
     
     private func transformedOutput() -> MapViewModel.Output {
         let input = MapViewModel.Input(
-            customLocation: self.customLoacationPublisher.eraseToAnyPublisher(),
+            customLocation: self.customLocationPublisher.eraseToAnyPublisher(),
             scrolledToBottom: self.feedListView.listCollectionView.scrolledToBottomPublisher.eraseToAnyPublisher(),
-            refreshControl: self.feedListView.refreshPublisher.eraseToAnyPublisher()
+            refreshControl: self.feedListView.refreshPublisher.eraseToAnyPublisher(),
+            bookmarkButtonDidTap: self.bookmarkButtonDidTapPublisher.eraseToAnyPublisher()
         )
 
         return self.viewModel.transform(from: input)
@@ -279,7 +265,28 @@ class MapViewController: UIViewController, Navigationable, Optionable {
         cell.optionButtonDidTapPublisher
             .sink(receiveValue: { [weak self] _ in
                 let isOwn = UserDefaultsManager.currentUser?.id ?? 0 == item.writer.id
-                self?.presentReviewOptionAlert(isOwn: isOwn, reviewId: item.review.id)
+                
+                DispatchQueue.main.async { [weak self] in
+                    self?.presentReviewOptionAlert(isOwn: isOwn, reviewId: item.review.id)
+                }
+            })
+            .store(in: &self.cancelBag)
+        
+        cell.storeButtonDidTapPublisher
+            .sink(receiveValue: { [weak self] _ in
+                let storeDetailViewController = StoreDetailViewController(
+                    viewModel: StoreDetailViewModel(storeId: item.store.id, isFriend: true)
+                )
+                
+                DispatchQueue.main.async { [weak self] in
+                    self?.navigationController?.pushViewController(storeDetailViewController, animated: true)
+                }
+            })
+            .store(in: &self.cancelBag)
+        
+        cell.bookmarkButtonDidTapPublisher
+            .sink(receiveValue: { [weak self] _ in
+                self?.bookmarkButtonDidTapPublisher.send(item.store)
             })
             .store(in: &self.cancelBag)
     }
@@ -289,6 +296,36 @@ class MapViewController: UIViewController, Navigationable, Optionable {
 extension MapViewController {
     private func handleReviews(_ reviews: [Review]) {
         self.reloadReviews(reviews)
+    }
+    
+    private func handleStores(_ stores: [Store]) {
+        mapView.removeAnnotations(markers)
+
+        markers = stores.map { store in
+            Marker(
+                title: store.name,
+                subtitle: "\(store.reviewCount.prettyNumber)개의 후기",
+                coordinate: CLLocationCoordinate2D(
+                    latitude: store.y,
+                    longitude: store.x
+                ),
+                glyphImage: Categories(rawValue: store.categoryName)?.icon,
+                handler: { [weak self] in
+                    let storeDetailViewController = StoreDetailViewController(
+                        viewModel: StoreDetailViewModel(storeId: store.id, isFriend: true)
+                    )
+                    
+                    DispatchQueue.main.async { [weak self] in
+                        self?.navigationController?.pushViewController(storeDetailViewController, animated: true)
+                    }
+                }
+            )
+        }
+
+        mapView.addAnnotations(markers)
+        
+        let reviewsCount = stores.reduce(0) { $0 + $1.reviewCount }
+        grabbarView.modalResultLabel.text = "\(stores.count.prettyNumber)개의 맛집, \(reviewsCount.prettyNumber)개의 후기"
     }
 }
 
@@ -371,10 +408,8 @@ extension MapViewController: MKMapViewDelegate {
         )
         
         if let customLocation = customLocation {
-            customLoacationPublisher.send(customLocation)
+            customLocationPublisher.send(customLocation)
         }
-
-        loadData()
     }
 }
 
@@ -454,6 +489,8 @@ extension MapViewController {
 
 extension MapViewController: CreateReviewControllerDelegate {
     func updateData() {
-        loadData()
+        if let customLocation = customLocation {
+            customLocationPublisher.send(customLocation)
+        }
     }
 }

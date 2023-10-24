@@ -12,9 +12,8 @@ import SnapKit
 import Then
 
 final class UnivViewController: MapViewController {
-    private var viewModel = UnivViewModel()
-
-    private var univ = UserDefaultsManager.currentUniv
+    
+    // MARK: - ui component
 
     private lazy var univTitleButton = UnivTitleButton().then {
         let action = UIAction { [weak self] _ in
@@ -31,10 +30,20 @@ final class UnivViewController: MapViewController {
         $0.label.text = "대학가"
     }
     
+    private var univ = UserDefaultsManager.currentUniv
+    
+    // MARK: - life cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.configureUI()
         self.setupNavigationBar()
         self.currentUniv()
+    }
+    override func configureUI() {
+        super.configureUI()
+        viewModel.type = .univ
+        viewModel.schoolId = univ?.id
     }
     
     private func setupNavigationBar() {
@@ -57,26 +66,8 @@ final class UnivViewController: MapViewController {
         univTitleButton.label.text = univ?.name ?? "대학가"
     }
 
-    override func loadReviews() async -> [Review] {
-        guard let location = customLocation else { return [] }
-        return await viewModel.getReviews(location: location)
-    }
-
-    override func loadStores() async -> [Store] {
-        guard let location = customLocation else { return [] }
-        return await viewModel.getStores(location: location)
-    }
-
-    override func reloadReviews() async -> [Review] {
-        if let location = customLocation, let lastReviewId = viewModel.lastReviewId,
-           let currentpageSize = viewModel.currentpageSize, currentpageSize >= viewModel.pageSize {
-            return await viewModel.getReviews(location: location, lastReviewId: lastReviewId)
-        }
-        return []
-    }
-
     private func currentUniv() {
-        guard let univ = UserDefaultsManager.currentUniv else { return }
+        guard let univ = self.univ else { return }
 
         mapView.setRegion(
             MKCoordinateRegion(
@@ -91,9 +82,12 @@ final class UnivViewController: MapViewController {
 extension UnivViewController: SearchUnivViewControllerDelegate {
     func setUniv(univ: School) {
         self.univ = univ
-        univTitleButton.label.text = univ.name
         UserDefaultsManager.currentUniv = univ
-        currentUniv()
-        loadData()
+        univTitleButton.label.text = univ.name
+        viewModel.schoolId = univ.id
+        self.currentUniv()
+        if let customLocation = customLocation {
+            customLocationPublisher.send(customLocation)
+        }
     }
 }
