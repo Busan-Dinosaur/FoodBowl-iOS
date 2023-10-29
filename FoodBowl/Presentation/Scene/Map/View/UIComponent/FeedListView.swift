@@ -12,14 +12,13 @@ import SnapKit
 import Then
 
 final class FeedListView: UIView, BaseViewType {
-    private enum ConstantSize {
-        static let sectionContentInset: NSDirectionalEdgeInsets = NSDirectionalEdgeInsets(
-            top: 0,
-            leading: 0,
-            bottom: SizeLiteral.verticalPadding,
-            trailing: 0
+    private enum Size {
+        static let collectionInset = UIEdgeInsets(
+            top: 10,
+            left: 0,
+            bottom: 10,
+            right: 0
         )
-        static let groupInterItemSpacing: CGFloat = 20
     }
     
     // MARK: - ui component
@@ -29,7 +28,12 @@ final class FeedListView: UIView, BaseViewType {
     let borderLineView = UIView().then {
         $0.backgroundColor = .grey002.withAlphaComponent(0.5)
     }
-    lazy var listCollectionView = UICollectionView(frame: .zero, collectionViewLayout: self.createLayout()).then {
+    lazy var collectionViewFlowLayout = DynamicHeightCollectionViewFlowLayout().then {
+        $0.sectionInset = Size.collectionInset
+        $0.minimumLineSpacing = 20
+        $0.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
+    }
+    lazy var listCollectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewFlowLayout).then {
         $0.showsVerticalScrollIndicator = false
         $0.register(FeedCollectionViewCell.self, forCellWithReuseIdentifier: FeedCollectionViewCell.className)
         $0.backgroundColor = .mainBackgroundColor
@@ -89,37 +93,5 @@ final class FeedListView: UIView, BaseViewType {
         self.refreshControl.addAction(refreshAction, for: .valueChanged)
         self.refreshControl.tintColor = .grey002
         self.listCollectionView.refreshControl = self.refreshControl
-    }
-}
-
-// MARK: - UICollectionViewLayout
-extension FeedListView {
-    private func createLayout() -> UICollectionViewLayout {
-        let layout = UICollectionViewCompositionalLayout { index, environment -> NSCollectionLayoutSection? in
-            let itemSize = NSCollectionLayoutSize(
-                widthDimension: .fractionalWidth(1),
-                heightDimension: .estimated(250)
-            )
-            
-            let item = NSCollectionLayoutItem(layoutSize: itemSize)
-            item.contentInsets = ConstantSize.sectionContentInset
-            
-            let groupSize = NSCollectionLayoutSize(
-                widthDimension: .fractionalWidth(1),
-                heightDimension: .estimated(250)
-            )
-            
-            let group = NSCollectionLayoutGroup.horizontal(
-                layoutSize: groupSize,
-                subitems: [item]
-            )
-            
-            let section = NSCollectionLayoutSection(group: group)
-            section.interGroupSpacing = ConstantSize.groupInterItemSpacing
-            
-            return section
-        }
-
-        return layout
     }
 }

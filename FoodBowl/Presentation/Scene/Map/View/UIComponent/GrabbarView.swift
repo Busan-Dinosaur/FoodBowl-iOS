@@ -19,7 +19,6 @@ final class GrabbarView: UIView {
     let modalResultLabel = UILabel().then {
         $0.font = UIFont.preferredFont(forTextStyle: .subheadline, weight: .regular)
         $0.textColor = .subTextColor
-        $0.text = "0개의 맛집"
     }
 
     // MARK: - init

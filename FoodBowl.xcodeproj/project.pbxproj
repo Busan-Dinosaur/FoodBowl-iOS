@@ -46,7 +46,6 @@
 		CB51C8D52AD7E896002D0BA5 /* StoreResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB51C8D42AD7E896002D0BA5 /* StoreResponse.swift */; };
 		CB51C8D72AD7EB58002D0BA5 /* ServiceAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB51C8D62AD7EB58002D0BA5 /* ServiceAPI.swift */; };
 		CB558E9A29746B5D00921943 /* PhotoPlusCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB558E9929746B5D00921943 /* PhotoPlusCollectionViewCell.swift */; };
-		CB56C3862AB9D9D000C65AF4 /* YPImagePicker in Frameworks */ = {isa = PBXBuildFile; productRef = CB56C3852AB9D9D000C65AF4 /* YPImagePicker */; };
 		CB5AF8A929854AA0003D16D4 /* MapAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5AF8A829854AA0003D16D4 /* MapAnnotation.swift */; };
 		CB5DD42F2AB587CD009FCB43 /* UserDefaultWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5DD42E2AB587CD009FCB43 /* UserDefaultWrapper.swift */; };
 		CB5DD4312AB59130009FCB43 /* BookmarkMapButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5DD4302AB59130009FCB43 /* BookmarkMapButton.swift */; };
@@ -158,6 +157,7 @@
 		CBDECAC62A6B2B5900259350 /* MapButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDECAC52A6B2B5900259350 /* MapButton.swift */; };
 		CBDECAC82A6B2F0700259350 /* FeedListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDECAC72A6B2F0700259350 /* FeedListView.swift */; };
 		CBDECACA2A6B2F6800259350 /* FeedNSCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDECAC92A6B2F6800259350 /* FeedNSCollectionViewCell.swift */; };
+		CBDF0D062AE8E6B600177D38 /* YPImagePicker in Frameworks */ = {isa = PBXBuildFile; productRef = CBDF0D052AE8E6B600177D38 /* YPImagePicker */; };
 		CBDF6EA62AD9255200EB2481 /* BlameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDF6EA52AD9255200EB2481 /* BlameViewController.swift */; };
 		CBE32D0E2ADE7648004CCCBE /* Categories.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBE32D0D2ADE7648004CCCBE /* Categories.swift */; };
 		CBE6190C296C635D005295AF /* FollowButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBE6190B296C635D005295AF /* FollowButton.swift */; };
@@ -341,11 +341,11 @@
 				CBD036322ABA163F00E1AE9A /* Kingfisher in Frameworks */,
 				CBC747AB2A83D95200F171F5 /* RxMoya in Frameworks */,
 				CB617A552AE28C71000F7FFC /* CombineMoya in Frameworks */,
+				CBDF0D062AE8E6B600177D38 /* YPImagePicker in Frameworks */,
 				CB84C9842AD98E9000A2E0F2 /* Lottie in Frameworks */,
 				CBADC2482955993A00E56C93 /* SkeletonUI in Frameworks */,
 				CBC747B82A83DC2000F171F5 /* KeychainSwift in Frameworks */,
 				CBADC245295598A200E56C93 /* Then in Frameworks */,
-				CB56C3862AB9D9D000C65AF4 /* YPImagePicker in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1224,11 +1224,11 @@
 				CBC747A82A83D95200F171F5 /* Moya */,
 				CBC747AA2A83D95200F171F5 /* RxMoya */,
 				CBC747B72A83DC2000F171F5 /* KeychainSwift */,
-				CB56C3852AB9D9D000C65AF4 /* YPImagePicker */,
 				CBD036312ABA163F00E1AE9A /* Kingfisher */,
 				CB84C9832AD98E9000A2E0F2 /* Lottie */,
 				CB617A542AE28C71000F7FFC /* CombineMoya */,
 				CB617A562AE28C71000F7FFC /* Moya */,
+				CBDF0D052AE8E6B600177D38 /* YPImagePicker */,
 			);
 			productName = FoodBowl;
 			productReference = CBC73100295550A100C7F198 /* FoodBowl.app */;
@@ -1265,9 +1265,9 @@
 				CBB5827E2972C9C400808B0B /* XCRemoteSwiftPackageReference "Alamofire" */,
 				CBC747A72A83D95200F171F5 /* XCRemoteSwiftPackageReference "Moya" */,
 				CBC747B62A83DC2000F171F5 /* XCRemoteSwiftPackageReference "keychain-swift" */,
-				CB56C3842AB9D9D000C65AF4 /* XCRemoteSwiftPackageReference "YPImagePicker" */,
 				CBD036302ABA163E00E1AE9A /* XCRemoteSwiftPackageReference "Kingfisher" */,
 				CB84C9822AD98E9000A2E0F2 /* XCRemoteSwiftPackageReference "lottie-ios" */,
+				CBDF0D042AE8E6B500177D38 /* XCRemoteSwiftPackageReference "YPImagePicker" */,
 			);
 			productRefGroup = CBC73101295550A100C7F198 /* Products */;
 			projectDirPath = "";
@@ -1689,14 +1689,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		CB56C3842AB9D9D000C65AF4 /* XCRemoteSwiftPackageReference "YPImagePicker" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/coby5502/YPImagePicker.git";
-			requirement = {
-				kind = exactVersion;
-				version = 5.2.2;
-			};
-		};
 		CB84C9822AD98E9000A2E0F2 /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/airbnb/lottie-ios.git";
@@ -1761,14 +1753,17 @@
 				minimumVersion = 7.9.1;
 			};
 		};
+		CBDF0D042AE8E6B500177D38 /* XCRemoteSwiftPackageReference "YPImagePicker" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Yummypets/YPImagePicker.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.2.2;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		CB56C3852AB9D9D000C65AF4 /* YPImagePicker */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = CB56C3842AB9D9D000C65AF4 /* XCRemoteSwiftPackageReference "YPImagePicker" */;
-			productName = YPImagePicker;
-		};
 		CB617A542AE28C71000F7FFC /* CombineMoya */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = CBC747A72A83D95200F171F5 /* XCRemoteSwiftPackageReference "Moya" */;
@@ -1823,6 +1818,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = CBD036302ABA163E00E1AE9A /* XCRemoteSwiftPackageReference "Kingfisher" */;
 			productName = Kingfisher;
+		};
+		CBDF0D052AE8E6B600177D38 /* YPImagePicker */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CBDF0D042AE8E6B500177D38 /* XCRemoteSwiftPackageReference "YPImagePicker" */;
+			productName = YPImagePicker;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

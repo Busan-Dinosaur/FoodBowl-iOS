@@ -13,6 +13,8 @@ import Moya
 
 final class MapViewModel: BaseViewModelType {
     
+    typealias Task = _Concurrency.Task
+    
     // MARK: - property
 
     let providerReview = MoyaProvider<ReviewAPI>()
@@ -32,12 +34,11 @@ final class MapViewModel: BaseViewModelType {
     var schoolId: Int?
     var memberId: Int?
     
-    private var reviews = [Review]()
-    private var stores = [Store]()
-    
     private let reviewsSubject = PassthroughSubject<[Review], Error>()
+    private let moreReviewsSubject = PassthroughSubject<[Review], Error>()
     private let storesSubject = PassthroughSubject<[Store], Error>()
     private let refreshControlSubject = PassthroughSubject<Void, Error>()
+    private let bookmarkStoreSubject = PassthroughSubject<Int, Error>()
     
     struct Input {
         let customLocation: AnyPublisher<CustomLocation, Never>
@@ -48,8 +49,10 @@ final class MapViewModel: BaseViewModelType {
     
     struct Output {
         let reviews: PassthroughSubject<[Review], Error>
+        let moreReviews: PassthroughSubject<[Review], Error>
         let stores: PassthroughSubject<[Store], Error>
         let refreshControl: PassthroughSubject<Void, Error>
+        let bookmarkStore: PassthroughSubject<Int, Error>
     }
     
     // MARK: - Public - func
@@ -117,8 +120,10 @@ final class MapViewModel: BaseViewModelType {
         
         return Output(
             reviews: reviewsSubject,
+            moreReviews: moreReviewsSubject,
             stores: storesSubject,
-            refreshControl: refreshControlSubject
+            refreshControl: refreshControlSubject,
+            bookmarkStore: bookmarkStoreSubject
         )
     }
 }
@@ -126,366 +131,278 @@ final class MapViewModel: BaseViewModelType {
 // MARK: - Review Method
 extension MapViewModel {
     private func getReviewsByFollowing(lastReviewId: Int? = nil) {
-        if currentpageSize < pageSize { return }
-        guard let customLocation = customLocation else { return }
-        
-        providerReview.requestPublisher(
-            .getReviewsByFollowing(
-                form: customLocation,
-                lastReviewId: lastReviewId,
-                pageSize: self.pageSize
+        Task {
+            if currentpageSize < pageSize { return }
+            guard let customLocation = customLocation else { return }
+            
+            let response = await self.providerReview.request(
+                .getReviewsByFollowing(
+                    form: customLocation,
+                    lastReviewId: lastReviewId,
+                    pageSize: self.pageSize
+                )
             )
-        )
-        .sink { completion in
-            switch completion {
-            case .failure:
-                self.reviews = []
-                self.reviewsSubject.send([])
-            case .finished:
-                self.refreshControlSubject.send()
+            switch response {
+            case .success(let result):
+                guard let data = try? result.map(ReviewResponse.self) else { return }
+                self.lastReviewId = data.page.lastId
+                self.currentpageSize = data.page.size
+                
+                lastReviewId == nil ? self.reviewsSubject.send(data.reviews) : self.moreReviewsSubject.send(data.reviews)
+            case .failure(let err):
+                handleError(err)
             }
-        } receiveValue: { recievedValue in
-            guard let responseData = try? recievedValue.map(ReviewResponse.self) else { return }
-            self.lastReviewId = responseData.page.lastId
-            self.currentpageSize = responseData.page.size
-            
-            if lastReviewId == nil {
-                self.reviews = responseData.reviews
-            } else {
-                self.reviews += responseData.reviews
-            }
-            
-            self.reviewsSubject.send(self.reviews)
         }
-        .store(in : &cancelBag)
     }
     
     private func getReviewsByBookmark(lastReviewId: Int? = nil) {
-        if currentpageSize < pageSize { return }
-        guard let customLocation = customLocation else { return }
-        
-        providerReview.requestPublisher(
-            .getReviewsByBookmark(
-                form: customLocation,
-                lastReviewId: lastReviewId,
-                pageSize: self.pageSize
+        Task {
+            if currentpageSize < pageSize { return }
+            guard let customLocation = customLocation else { return }
+            
+            let response = await self.providerReview.request(
+                .getReviewsByBookmark(
+                    form: customLocation,
+                    lastReviewId: lastReviewId,
+                    pageSize: self.pageSize
+                )
             )
-        )
-        .sink { completion in
-            switch completion {
-            case .failure:
-                self.reviews = []
-                self.reviewsSubject.send([])
-            case .finished:
-                self.refreshControlSubject.send()
+            switch response {
+            case .success(let result):
+                guard let data = try? result.map(ReviewResponse.self) else { return }
+                self.lastReviewId = data.page.lastId
+                self.currentpageSize = data.page.size
+                
+                lastReviewId == nil ? self.reviewsSubject.send(data.reviews) : self.moreReviewsSubject.send(data.reviews)
+            case .failure(let err):
+                handleError(err)
             }
-        } receiveValue: { recievedValue in
-            guard let responseData = try? recievedValue.map(ReviewResponse.self) else { return }
-            self.lastReviewId = responseData.page.lastId
-            self.currentpageSize = responseData.page.size
-            
-            if lastReviewId == nil {
-                self.reviews = responseData.reviews
-            } else {
-                self.reviews += responseData.reviews
-            }
-            
-            self.reviewsSubject.send(self.reviews)
+            self.refreshControlSubject.send()
         }
-        .store(in : &cancelBag)
     }
     
     private func getReviewsBySchool(lastReviewId: Int? = nil) {
-        if currentpageSize < pageSize { return }
-        guard let customLocation = customLocation, let schoolId = schoolId else { return }
-        
-        providerReview.requestPublisher(
-            .getReviewsBySchool(
-                form: customLocation,
-                schoolId: schoolId,
-                lastReviewId: lastReviewId,
-                pageSize: self.pageSize
+        Task {
+            if currentpageSize < pageSize { return }
+            guard let customLocation = customLocation, let schoolId = schoolId else { return }
+            
+            let response = await self.providerReview.request(
+                .getReviewsBySchool(
+                    form: customLocation,
+                    schoolId: schoolId,
+                    lastReviewId: lastReviewId,
+                    pageSize: self.pageSize
+                )
             )
-        )
-        .sink { completion in
-            switch completion {
-            case .failure:
-                self.reviews = []
-                self.reviewsSubject.send([])
-            case .finished:
-                self.refreshControlSubject.send()
+            switch response {
+            case .success(let result):
+                guard let data = try? result.map(ReviewResponse.self) else { return }
+                self.lastReviewId = data.page.lastId
+                self.currentpageSize = data.page.size
+                
+                lastReviewId == nil ? self.reviewsSubject.send(data.reviews) : self.moreReviewsSubject.send(data.reviews)
+            case .failure(let err):
+                handleError(err)
             }
-        } receiveValue: { recievedValue in
-            guard let responseData = try? recievedValue.map(ReviewResponse.self) else { return }
-            self.lastReviewId = responseData.page.lastId
-            self.currentpageSize = responseData.page.size
-            
-            if lastReviewId == nil {
-                self.reviews = responseData.reviews
-            } else {
-                self.reviews += responseData.reviews
-            }
-            
-            self.reviewsSubject.send(self.reviews)
+            self.refreshControlSubject.send()
         }
-        .store(in : &cancelBag)
     }
     
     private func getReviewsByMember(lastReviewId: Int? = nil) {
-        if currentpageSize < pageSize { return }
-        guard let customLocation = customLocation, let memberId = memberId else { return }
-        
-        providerReview.requestPublisher(
-            .getReviewsByMember(
-                form: customLocation,
-                memberId: memberId,
-                lastReviewId: lastReviewId,
-                pageSize: self.pageSize
+        Task {
+            if currentpageSize < pageSize { return }
+            guard let customLocation = customLocation, let memberId = memberId else { return }
+            
+            let response = await self.providerReview.request(
+                .getReviewsByMember(
+                    form: customLocation,
+                    memberId: memberId,
+                    lastReviewId: lastReviewId,
+                    pageSize: self.pageSize
+                )
             )
-        )
-        .sink { completion in
-            switch completion {
-            case .failure:
-                self.reviews = []
-                self.reviewsSubject.send([])
-            case .finished:
-                self.refreshControlSubject.send()
+            switch response {
+            case .success(let result):
+                guard let data = try? result.map(ReviewResponse.self) else { return }
+                self.lastReviewId = data.page.lastId
+                self.currentpageSize = data.page.size
+                
+                lastReviewId == nil ? self.reviewsSubject.send(data.reviews) : self.moreReviewsSubject.send(data.reviews)
+            case .failure(let err):
+                handleError(err)
             }
-        } receiveValue: { recievedValue in
-            guard let responseData = try? recievedValue.map(ReviewResponse.self) else { return }
-            self.lastReviewId = responseData.page.lastId
-            self.currentpageSize = responseData.page.size
-            
-            if lastReviewId == nil {
-                self.reviews = responseData.reviews
-            } else {
-                self.reviews += responseData.reviews
-            }
-            
-            self.reviewsSubject.send(self.reviews)
+            self.refreshControlSubject.send()
         }
-        .store(in : &cancelBag)
     }
     
-    func removeReview(id: Int) {
-        providerReview.requestPublisher(.removeReview(id: id))
-            .sink { completion in
-                switch completion {
-                case let .failure(error):
-                    print("")
-                case .finished:
-                    print("")
-                }
-            } receiveValue: { _ in
+    private func removeReview(id: Int) {
+        Task {
+            let response = await providerReview.request(.removeReview(id: id))
+            switch response {
+            case .success:
+                return
+            case .failure(let err):
+                handleError(err)
             }
-            .store(in : &cancelBag)
+        }
     }
 }
 
 // MARK: - Store Method
 extension MapViewModel {
     func getStoresByFollowing() {
-        guard let customLocation = customLocation else { return }
-        providerStore.requestPublisher(.getStoresByFollowing(form: customLocation))
-            .sink { completion in
-                switch completion {
-                case .failure:
-                    self.stores = []
-                    self.storesSubject.send([])
-                case .finished:
-                    print("스토어")
-                }
-            } receiveValue: { recievedValue in
-                guard let responseData = try? recievedValue.map(StoreResponse.self) else { return }
-                self.stores = responseData.stores
-                self.storesSubject.send(responseData.stores)
+        Task {
+            guard let customLocation = customLocation else { return }
+            
+            let response = await providerStore.request(.getStoresByFollowing(form: customLocation))
+            switch response {
+            case .success(let result):
+                guard let data = try? result.map(StoreResponse.self) else { return }
+                self.storesSubject.send(data.stores)
+            case .failure(let err):
+                handleError(err)
             }
-            .store(in : &cancelBag)
+        }
     }
     
     func getStoresByBookmark() {
-        guard let customLocation = customLocation else { return }
-        providerStore.requestPublisher(.getStoresByBookmark(form: customLocation))
-            .sink { completion in
-                switch completion {
-                case .failure:
-                    self.stores = []
-                    self.storesSubject.send([])
-                case .finished:
-                    print("스토어")
-                }
-            } receiveValue: { recievedValue in
-                guard let responseData = try? recievedValue.map(StoreResponse.self) else { return }
-                self.stores = responseData.stores
-                self.storesSubject.send(responseData.stores)
+        Task {
+            guard let customLocation = customLocation else { return }
+            
+            let response = await providerStore.request(.getStoresByBookmark(form: customLocation))
+            switch response {
+            case .success(let result):
+                guard let data = try? result.map(StoreResponse.self) else { return }
+                self.storesSubject.send(data.stores)
+            case .failure(let err):
+                handleError(err)
             }
-            .store(in : &cancelBag)
+        }
     }
     
     func getStoresBySchool() {
-        guard let customLocation = customLocation, let schoolId = schoolId else { return }
-        providerStore.requestPublisher(.getStoresBySchool(form: customLocation, schoolId: schoolId))
-            .sink { completion in
-                switch completion {
-                case .failure:
-                    self.stores = []
-                    self.storesSubject.send([])
-                case .finished:
-                    print("스토어")
-                }
-            } receiveValue: { recievedValue in
-                guard let responseData = try? recievedValue.map(StoreResponse.self) else { return }
-                self.stores = responseData.stores
-                self.storesSubject.send(responseData.stores)
+        Task {
+            guard let customLocation = customLocation, let schoolId = schoolId else { return }
+            
+            let response = await providerStore.request(.getStoresBySchool(form: customLocation, schoolId: schoolId))
+            switch response {
+            case .success(let result):
+                guard let data = try? result.map(StoreResponse.self) else { return }
+                self.storesSubject.send(data.stores)
+            case .failure(let err):
+                handleError(err)
             }
-            .store(in : &cancelBag)
+        }
     }
     
     func getStoresByMember() {
-        guard let customLocation = customLocation, let memberId = memberId else { return }
-        providerStore.requestPublisher(.getStoresByMember(form: customLocation, memberId: memberId))
-            .sink { completion in
-                switch completion {
-                case .failure:
-                    self.stores = []
-                    self.storesSubject.send([])
-                case .finished:
-                    print("스토어")
-                }
-            } receiveValue: { recievedValue in
-                guard let responseData = try? recievedValue.map(StoreResponse.self) else { return }
-                self.stores = responseData.stores
-                self.storesSubject.send(responseData.stores)
+        Task {
+            guard let customLocation = customLocation, let memberId = memberId else { return }
+            
+            let response = await providerStore.request(.getStoresByMember(form: customLocation, memberId: memberId))
+            switch response {
+            case .success(let result):
+                guard let data = try? result.map(StoreResponse.self) else { return }
+                self.storesSubject.send(data.stores)
+            case .failure(let err):
+                handleError(err)
             }
-            .store(in : &cancelBag)
+        }
     }
     
     func createBookmark(storeId: Int) {
-        providerStore.requestPublisher(.createBookmark(storeId: storeId))
-            .sink { completion in
-                switch completion {
-                case .failure:
-                    print("")
-                case .finished:
-                    self.reviewsSubject.send(self.reviews)
-                }
-            } receiveValue: { _ in
-                self.reviews = self.reviews.map {
-                    var review = $0
-                    if review.store.id == storeId {
-                        review.store.isBookmarked.toggle()
-                    }
-                    return review
-                }
+        Task {
+            let response = await providerStore.request(.createBookmark(storeId: storeId))
+            switch response {
+            case .success:
+                self.bookmarkStoreSubject.send(storeId)
+            case .failure(let err):
+                handleError(err)
             }
-            .store(in : &cancelBag)
+        }
     }
-
+    
     func removeBookmark(storeId: Int) {
-        providerStore.requestPublisher(.removeBookmark(storeId: storeId))
-            .sink { completion in
-                switch completion {
-                case .failure:
-                    print("")
-                case .finished:
-                    self.reviewsSubject.send(self.reviews)
-                }
-            } receiveValue: { _ in
-                self.reviews = self.reviews.map {
-                    var review = $0
-                    if review.store.id == storeId {
-                        review.store.isBookmarked.toggle()
-                    }
-                    return review
-                }
+        Task {
+            let response = await providerStore.request(.removeBookmark(storeId: storeId))
+            switch response {
+            case .success:
+                self.bookmarkStoreSubject.send(storeId)
+            case .failure(let err):
+                handleError(err)
             }
-            .store(in : &cancelBag)
+        }
     }
 }
 
 // MARK: - Follow Method
 extension MapViewModel {
-    func followMember(memberId: Int) {
-        providerFollow.requestPublisher(.followMember(memberId: memberId))
-            .sink { completion in
-                switch completion {
-                case let .failure(error):
-                    print("")
-                case .finished:
-                    print("")
-                }
-            } receiveValue: { _ in
-            }
-            .store(in : &cancelBag)
+    func followMember(memberId: Int) async -> Bool {
+        let response = await providerFollow.request(.followMember(memberId: memberId))
+        switch response {
+        case .success:
+            return true
+        case .failure(let err):
+            handleError(err)
+            return false
+        }
     }
 
-    func unfollowMember(memberId: Int) {
-        providerFollow.requestPublisher(.unfollowMember(memberId: memberId))
-            .sink { completion in
-                switch completion {
-                case let .failure(error):
-                    print("")
-                case .finished:
-                    print("")
-                }
-            } receiveValue: { _ in
-            }
-            .store(in : &cancelBag)
+    func unfollowMember(memberId: Int) async -> Bool {
+        let response = await providerFollow.request(.unfollowMember(memberId: memberId))
+        switch response {
+        case .success:
+            return true
+        case .failure(let err):
+            handleError(err)
+            return false
+        }
     }
 
-    func getFollowerMembers(memberId: Int, page: Int = 0) {
-        providerFollow.requestPublisher(
+    func getFollowerMembers(memberId: Int, page: Int = 0) async -> [MemberByFollow] {
+        let response = await providerFollow.request(
             .getFollowerMember(
                 memberId: memberId,
                 page: page,
                 size: size
             )
         )
-        .sink { completion in
-            switch completion {
-            case let .failure(error):
-                print("")
-            case .finished:
-                print("")
-            }
-        } receiveValue: { recievedValue in
-            guard let responseData = try? recievedValue.map(FollowMemberResponse.self) else { return }
+        switch response {
+        case .success(let result):
+            guard let data = try? result.map(FollowMemberResponse.self) else { return [] }
+            return data.content
+        case .failure(let err):
+            handleError(err)
+            return []
         }
-        .store(in : &cancelBag)
     }
-    
-    func getFollowingMembers(memberId: Int, page: Int = 0) {
-        providerFollow.requestPublisher(
+
+    func getFollowingMembers(memberId: Int, page: Int = 0) async -> [MemberByFollow] {
+        let response = await providerFollow.request(
             .getFollowingMember(
                 memberId: memberId,
                 page: page,
                 size: size
             )
         )
-        .sink { completion in
-            switch completion {
-            case let .failure(error):
-                print("")
-            case .finished:
-                print("")
-            }
-        } receiveValue: { recievedValue in
-            guard let responseData = try? recievedValue.map(FollowMemberResponse.self) else { return }
+        switch response {
+        case .success(let result):
+            guard let data = try? result.map(FollowMemberResponse.self) else { return [] }
+            return data.content
+        case .failure(let err):
+            handleError(err)
+            return []
         }
-        .store(in : &cancelBag)
     }
 
-    func removeFollowingMember(memberId: Int) {
-        providerFollow.requestPublisher(.removeFollower(memberId: memberId))
-            .sink { completion in
-                switch completion {
-                case let .failure(error):
-                    print("")
-                case .finished:
-                    print("")
-                }
-            } receiveValue: { _ in
-            }
-            .store(in : &cancelBag)
+    func removeFollowingMember(memberId: Int) async -> Bool {
+        let response = await providerFollow.request(.removeFollower(memberId: memberId))
+        switch response {
+        case .success:
+            return true
+        case .failure(let err):
+            handleError(err)
+            return false
+        }
     }
 }

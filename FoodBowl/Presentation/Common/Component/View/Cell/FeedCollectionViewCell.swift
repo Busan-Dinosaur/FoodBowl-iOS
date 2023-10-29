@@ -12,10 +12,6 @@ import SnapKit
 import Then
 
 final class FeedCollectionViewCell: UICollectionViewCell, BaseViewType {
-    var userButtonTapAction: ((FeedCollectionViewCell) -> Void)?
-    var optionButtonTapAction: ((FeedCollectionViewCell) -> Void)?
-    var storeButtonTapAction: ((FeedCollectionViewCell) -> Void)?
-    var bookmarkButtonTapAction: ((FeedCollectionViewCell) -> Void)?
     
     // MARK: - ui component
     
@@ -30,10 +26,10 @@ final class FeedCollectionViewCell: UICollectionViewCell, BaseViewType {
     
     // MARK: - property
     
-    var userButtonDidTapPublisher: PassthroughSubject<Void, Never> = PassthroughSubject()
-    var optionButtonDidTapPublisher: PassthroughSubject<Void, Never> = PassthroughSubject()
-    var storeButtonDidTapPublisher: PassthroughSubject<Void, Never> = PassthroughSubject()
-    var bookmarkButtonDidTapPublisher: PassthroughSubject<Void, Never> = PassthroughSubject()
+    let userButtonDidTapPublisher: PassthroughSubject<Void, Never> = PassthroughSubject()
+    let optionButtonDidTapPublisher: PassthroughSubject<Void, Never> = PassthroughSubject()
+    let storeButtonDidTapPublisher: PassthroughSubject<Void, Never> = PassthroughSubject()
+    let bookmarkButtonDidTapPublisher: PassthroughSubject<Void, Never> = PassthroughSubject()
     
     // MARK: - init
 
@@ -59,11 +55,11 @@ final class FeedCollectionViewCell: UICollectionViewCell, BaseViewType {
         commentLabel.snp.makeConstraints {
             $0.top.equalTo(userInfoView.snp.bottom)
             $0.leading.trailing.equalToSuperview().inset(SizeLiteral.horizantalPadding)
-            $0.bottom.equalTo(photoListView.snp.top).offset(-4)
+            $0.bottom.equalTo(photoListView.snp.top).offset(-10)
         }
         
         photoListView.snp.makeConstraints {
-            $0.top.equalTo(commentLabel.snp.bottom).offset(6)
+            $0.top.equalTo(commentLabel.snp.bottom)
             $0.leading.trailing.equalToSuperview()
             $0.height.equalTo(100)
         }
@@ -101,12 +97,6 @@ final class FeedCollectionViewCell: UICollectionViewCell, BaseViewType {
     // MARK: - func
     
     private func setupAction() {
-//        userInfoView.userImageButton.addAction(UIAction { _ in self.userButtonTapAction?(self) }, for: .touchUpInside)
-//        userInfoView.userNameButton.addAction(UIAction { _ in self.userButtonTapAction?(self) }, for: .touchUpInside)
-//        userInfoView.optionButton.addAction(UIAction { _ in self.optionButtonTapAction?(self) }, for: .touchUpInside)
-//        storeInfoView.storeNameButton.addAction(UIAction { _ in self.storeButtonTapAction?(self) }, for: .touchUpInside)
-//        storeInfoView.bookmarkButton.addAction(UIAction { _ in self.bookmarkButtonTapAction?(self) }, for: .touchUpInside)
-        
         let userButtonTapAction = UIAction { [weak self] _ in
             self?.userButtonDidTapPublisher.send()
         }
@@ -144,13 +134,20 @@ extension FeedCollectionViewCell {
         
         if review.imagePaths.isEmpty {
             self.photoListView.isHidden = true
-            self.photoListView.snp.updateConstraints {
-                $0.height.equalTo(0)
+            
+            self.storeInfoView.snp.remakeConstraints {
+                $0.top.equalTo(self.commentLabel.snp.bottom).offset(10)
+                $0.leading.trailing.equalToSuperview().inset(SizeLiteral.horizantalPadding)
+                $0.bottom.equalToSuperview().inset(14)
+                $0.height.equalTo(54)
             }
         } else {
             self.photoListView.isHidden = false
-            self.photoListView.snp.updateConstraints {
-                $0.height.equalTo(100)
+            self.storeInfoView.snp.remakeConstraints {
+                $0.top.equalTo(self.photoListView.snp.bottom).offset(10)
+                $0.leading.trailing.equalToSuperview().inset(SizeLiteral.horizantalPadding)
+                $0.bottom.equalToSuperview().inset(14)
+                $0.height.equalTo(54)
             }
         }
     }

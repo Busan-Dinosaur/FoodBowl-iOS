@@ -96,7 +96,7 @@ class MapViewController: UIViewController, Navigationable, Optionable {
     let viewModel = MapViewModel()
     
     var dataSource: UICollectionViewDiffableDataSource<Section, Review>!
-    var snapShot: NSDiffableDataSourceSnapshot<Section, Review>!
+    var snapshot: NSDiffableDataSourceSnapshot<Section, Review>!
     
     var customLocation: CustomLocation?
     var currentLocation: CLLocationCoordinate2D?
@@ -203,12 +203,26 @@ class MapViewController: UIViewController, Navigationable, Optionable {
             .sink { [weak self] result in
                 switch result {
                 case .failure:
-                    self?.handleReviews([])
+                    self?.reloadReviews([])
                 case .finished:
                     return
                 }
             } receiveValue: { [weak self] reviews in
-                self?.handleReviews(reviews)
+                self?.reloadReviews(reviews)
+            }
+            .store(in: &self.cancelBag)
+        
+        output.moreReviews
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] result in
+                switch result {
+                case .failure:
+                    self?.loadMoreReviews([])
+                case .finished:
+                    return
+                }
+            } receiveValue: { [weak self] reviews in
+                self?.loadMoreReviews(reviews)
             }
             .store(in: &self.cancelBag)
         
@@ -233,6 +247,14 @@ class MapViewController: UIViewController, Navigationable, Optionable {
                 self?.feedListView.refreshControl.endRefreshing()
             }
             .store(in: &self.cancelBag)
+        
+        output.bookmarkStore
+            .receive(on: DispatchQueue.main)
+            .sink { _ in
+            } receiveValue: { [weak self] storeId in
+                self?.updateBookmark(storeId)
+            }
+            .store(in: &self.cancelBag)
     }
     
     private func bindUI() {
@@ -253,38 +275,33 @@ class MapViewController: UIViewController, Navigationable, Optionable {
     
     private func bindCell(_ cell: FeedCollectionViewCell, with item: Review) {
         cell.userButtonDidTapPublisher
+            .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] _ in
                 let viewController = ProfileViewController(memberId: item.writer.id)
-                
-                DispatchQueue.main.async { [weak self] in
-                    self?.navigationController?.pushViewController(viewController, animated: true)
-                }
+                self?.navigationController?.pushViewController(viewController, animated: true)
             })
             .store(in: &self.cancelBag)
         
         cell.optionButtonDidTapPublisher
+            .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] _ in
                 let isOwn = UserDefaultsManager.currentUser?.id ?? 0 == item.writer.id
-                
-                DispatchQueue.main.async { [weak self] in
-                    self?.presentReviewOptionAlert(isOwn: isOwn, reviewId: item.review.id)
-                }
+                self?.presentReviewOptionAlert(isOwn: isOwn, reviewId: item.review.id)
             })
             .store(in: &self.cancelBag)
         
         cell.storeButtonDidTapPublisher
+            .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] _ in
                 let storeDetailViewController = StoreDetailViewController(
                     viewModel: StoreDetailViewModel(storeId: item.store.id, isFriend: true)
                 )
-                
-                DispatchQueue.main.async { [weak self] in
-                    self?.navigationController?.pushViewController(storeDetailViewController, animated: true)
-                }
+                self?.navigationController?.pushViewController(storeDetailViewController, animated: true)
             })
             .store(in: &self.cancelBag)
         
         cell.bookmarkButtonDidTapPublisher
+            .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] _ in
                 self?.bookmarkButtonDidTapPublisher.send(item.store)
             })
@@ -294,10 +311,6 @@ class MapViewController: UIViewController, Navigationable, Optionable {
 
 // MARK: - Helper
 extension MapViewController {
-    private func handleReviews(_ reviews: [Review]) {
-        self.reloadReviews(reviews)
-    }
-    
     private func handleStores(_ stores: [Store]) {
         mapView.removeAnnotations(markers)
 
@@ -360,16 +373,35 @@ extension MapViewController {
 // MARK: - Snapshot
 extension MapViewController {
     private func configureSnapshot() {
-        self.snapShot = NSDiffableDataSourceSnapshot<Section, Review>()
-        self.snapShot.appendSections([.main])
-        self.dataSource.apply(self.snapShot, animatingDifferences: true)
+        self.snapshot = NSDiffableDataSourceSnapshot<Section, Review>()
+        self.snapshot.appendSections([.main])
+        self.dataSource.apply(self.snapshot, animatingDifferences: true)
     }
 
     private func reloadReviews(_ items: [Review]) {
-        let previousReviewsData = self.snapShot.itemIdentifiers(inSection: .main)
-        self.snapShot.deleteItems(previousReviewsData)
-        self.snapShot.appendItems(items, toSection: .main)
-        self.dataSource.apply(self.snapShot, animatingDifferences: true)
+        let previousReviewsData = self.snapshot.itemIdentifiers(inSection: .main)
+        self.snapshot.deleteItems(previousReviewsData)
+        self.snapshot.appendItems(items, toSection: .main)
+        self.dataSource.apply(self.snapshot, animatingDifferences: true)
+    }
+    
+    private func loadMoreReviews(_ items: [Review]) {
+        self.snapshot.appendItems(items, toSection: .main)
+        self.dataSource.apply(self.snapshot, animatingDifferences: true)
+    }
+    
+    private func updateBookmark(_ storeId: Int) {
+        for item in snapshot.itemIdentifiers {
+            if item.store.id == storeId {
+                var customItem = item
+                customItem.store.isBookmarked.toggle()
+                
+                var newSnapshot = dataSource.snapshot()
+                newSnapshot.reloadItems([customItem])
+                
+                self.dataSource.apply(newSnapshot)
+            }
+        }
     }
 }
 
