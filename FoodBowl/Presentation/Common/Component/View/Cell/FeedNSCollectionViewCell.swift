@@ -23,11 +23,17 @@ final class FeedNSCollectionViewCell: UICollectionViewCell, BaseViewType {
     }
     private let photoListView = PhotoListView()
     
+    // MARK: - property
+    
+    var userButtonTapAction: ((FeedCollectionViewCell) -> Void)?
+    var optionButtonTapAction: ((FeedCollectionViewCell) -> Void)?
+    
     // MARK: - init
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.baseInit()
+        self.setupAction()
     }
     
     @available(*, unavailable)
@@ -73,6 +79,12 @@ final class FeedNSCollectionViewCell: UICollectionViewCell, BaseViewType {
             verticalFittingPriority: .fittingSizeLevel
         )
         return layoutAttributes
+    }
+    
+    private func setupAction() {
+        userInfoView.userImageButton.addAction(UIAction { _ in self.userButtonTapAction?(self) }, for: .touchUpInside)
+        userInfoView.userNameButton.addAction(UIAction { _ in self.userButtonTapAction?(self) }, for: .touchUpInside)
+        userInfoView.optionButton.addAction(UIAction { _ in self.optionButtonTapAction?(self) }, for: .touchUpInside)
     }
 }
 

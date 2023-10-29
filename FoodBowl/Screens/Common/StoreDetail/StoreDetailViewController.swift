@@ -101,27 +101,22 @@ final class StoreDetailViewController: UIViewController, Navigationable, Keyboar
             .store(in: &self.cancelBag)
     }
     
-    private func bindCell(_ cell: FeedNSCollectionViewCell, with item: ReviewByStore) {
-        cell.userInfoView.userNameButton.tapPublisher
-            .sink(receiveValue: { [weak self] _ in
-                let viewController = ProfileViewController(memberId: item.writer.id)
-                self?.navigationController?.pushViewController(viewController, animated: true)
-            })
-            .store(in: &self.cancelBag)
+    private func bindCell(_ cell: FeedNSCollectionViewCell, with item: Review) {
+        cell.userButtonTapAction = { [weak self] _ in
+            let profileViewController = ProfileViewController(memberId: item.writer.id)
+            
+            DispatchQueue.main.async { [weak self] in
+                self?.navigationController?.pushViewController(profileViewController, animated: true)
+            }
+        }
         
-        cell.userInfoView.userImageButton.tapPublisher
-            .sink(receiveValue: { [weak self] _ in
-                let viewController = ProfileViewController(memberId: item.writer.id)
-                self?.navigationController?.pushViewController(viewController, animated: true)
-            })
-            .store(in: &self.cancelBag)
-        
-        cell.userInfoView.optionButton.tapPublisher
-            .sink(receiveValue: { [weak self] _ in
-                let isOwn = UserDefaultsManager.currentUser?.id ?? 0 == item.writer.id
+        cell.optionButtonTapAction = { [weak self] _ in
+            let isOwn = UserDefaultsManager.currentUser?.id ?? 0 == item.writer.id
+            
+            DispatchQueue.main.async { [weak self] in
                 self?.presentReviewOptionAlert(isOwn: isOwn, reviewId: item.review.id)
-            })
-            .store(in: &self.cancelBag)
+            }
+        }
     }
     
     // MARK: - func
@@ -143,7 +138,11 @@ final class StoreDetailViewController: UIViewController, Navigationable, Keyboar
     }
     
     func removeReview(reviewId: Int) {
-        print("삭제 동작")
+        Task {
+            if await self.viewModel.removeReview(id: reviewId) {
+                
+            }
+        }
     }
 }
 
