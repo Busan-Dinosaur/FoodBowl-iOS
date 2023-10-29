@@ -247,14 +247,6 @@ class MapViewController: UIViewController, Navigationable, Optionable {
                 self?.feedListView.refreshControl.endRefreshing()
             }
             .store(in: &self.cancelBag)
-        
-        output.bookmarkStore
-            .receive(on: DispatchQueue.main)
-            .sink { _ in
-            } receiveValue: { [weak self] storeId in
-                self?.updateBookmark(storeId)
-            }
-            .store(in: &self.cancelBag)
     }
     
     private func bindUI() {
@@ -266,55 +258,62 @@ class MapViewController: UIViewController, Navigationable, Optionable {
         let input = MapViewModel.Input(
             customLocation: self.customLocationPublisher.eraseToAnyPublisher(),
             scrolledToBottom: self.feedListView.listCollectionView.scrolledToBottomPublisher.eraseToAnyPublisher(),
-            refreshControl: self.feedListView.refreshPublisher.eraseToAnyPublisher(),
-            bookmarkButtonDidTap: self.bookmarkButtonDidTapPublisher.eraseToAnyPublisher()
+            refreshControl: self.feedListView.refreshPublisher.eraseToAnyPublisher()
         )
 
         return self.viewModel.transform(from: input)
     }
     
     private func bindCell(_ cell: FeedCollectionViewCell, with item: Review) {
-        cell.userInfoView.userNameButton.tapPublisher
-            .sink(receiveValue: { [weak self] _ in
-                print("-------터치------")
-                let viewController = ProfileViewController(memberId: item.writer.id)
-                self?.navigationController?.pushViewController(viewController, animated: true)
-            })
-            .store(in: &self.cancelBag)
+        cell.userButtonTapAction = { [weak self] _ in
+            let profileViewController = ProfileViewController(memberId: item.writer.id)
+            
+            DispatchQueue.main.async { [weak self] in
+                self?.navigationController?.pushViewController(profileViewController, animated: true)
+            }
+        }
         
-        cell.userInfoView.userImageButton.tapPublisher
-            .sink(receiveValue: { [weak self] _ in
-                print("-------터치------")
-                let viewController = ProfileViewController(memberId: item.writer.id)
-                self?.navigationController?.pushViewController(viewController, animated: true)
-            })
-            .store(in: &self.cancelBag)
-        
-        cell.userInfoView.optionButton.tapPublisher
-            .sink(receiveValue: { [weak self] _ in
-                let isOwn = UserDefaultsManager.currentUser?.id ?? 0 == item.writer.id
+        cell.optionButtonTapAction = { [weak self] _ in
+            let isOwn = UserDefaultsManager.currentUser?.id ?? 0 == item.writer.id
+            
+            DispatchQueue.main.async { [weak self] in
                 self?.presentReviewOptionAlert(isOwn: isOwn, reviewId: item.review.id)
-            })
-            .store(in: &self.cancelBag)
+            }
+        }
         
-        cell.storeInfoView.storeNameButton.tapPublisher
-            .sink(receiveValue: { [weak self] _ in
-                let storeDetailViewController = StoreDetailViewController(
-                    viewModel: StoreDetailViewModel(storeId: item.store.id, isFriend: true)
-                )
+        cell.storeButtonTapAction = { [weak self] _ in
+            let storeDetailViewController = StoreDetailViewController(
+                viewModel: StoreDetailViewModel(storeId: item.store.id, isFriend: true)
+            )
+            
+            DispatchQueue.main.async { [weak self] in
                 self?.navigationController?.pushViewController(storeDetailViewController, animated: true)
-            })
-            .store(in: &self.cancelBag)
+            }
+        }
         
-        cell.storeInfoView.bookmarkButton.tapPublisher
-            .sink(receiveValue: { [weak self] _ in
-                self?.bookmarkButtonDidTapPublisher.send(item.store)
-            })
-            .store(in: &self.cancelBag)
+        cell.bookmarkButtonTapAction = { [weak self] _ in
+            guard let self = self else { return }
+            
+            Task {
+                if cell.storeInfoView.bookmarkButton.isSelected {
+                    if await self.viewModel.removeBookmark(storeId: item.store.id) {
+                        self.updateBookmark(item.store.id)
+                    }
+                } else {
+                    if await self.viewModel.createBookmark(storeId: item.store.id) {
+                        self.updateBookmark(item.store.id)
+                    }
+                }
+            }
+        }
     }
     
     func removeReview(reviewId: Int) {
-        print("삭제 동작")
+        Task {
+            if await self.viewModel.removeReview(id: reviewId) {
+                
+            }
+        }
     }
 }
 

@@ -24,11 +24,19 @@ final class FeedCollectionViewCell: UICollectionViewCell, BaseViewType {
     let photoListView = PhotoListView()
     let storeInfoView = StoreInfoView()
     
+    // MARK: - property
+    
+    var userButtonTapAction: ((FeedCollectionViewCell) -> Void)?
+    var optionButtonTapAction: ((FeedCollectionViewCell) -> Void)?
+    var storeButtonTapAction: ((FeedCollectionViewCell) -> Void)?
+    var bookmarkButtonTapAction: ((FeedCollectionViewCell) -> Void)?
+    
     // MARK: - init
 
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.baseInit()
+        self.setupAction()
     }
     
     @available(*, unavailable)
@@ -80,6 +88,14 @@ final class FeedCollectionViewCell: UICollectionViewCell, BaseViewType {
             verticalFittingPriority: .fittingSizeLevel
         )
         return layoutAttributes
+    }
+    
+    private func setupAction() {
+        userInfoView.userImageButton.addAction(UIAction { _ in self.userButtonTapAction?(self) }, for: .touchUpInside)
+        userInfoView.userNameButton.addAction(UIAction { _ in self.userButtonTapAction?(self) }, for: .touchUpInside)
+        userInfoView.optionButton.addAction(UIAction { _ in self.optionButtonTapAction?(self) }, for: .touchUpInside)
+        storeInfoView.storeNameButton.addAction(UIAction { _ in self.storeButtonTapAction?(self) }, for: .touchUpInside)
+        storeInfoView.bookmarkButton.addAction(UIAction { _ in self.bookmarkButtonTapAction?(self) }, for: .touchUpInside)
     }
 }
 

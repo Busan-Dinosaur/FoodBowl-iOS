@@ -45,7 +45,6 @@ final class MapViewModel: BaseViewModelType {
         let customLocation: AnyPublisher<CustomLocation, Never>
         let scrolledToBottom: AnyPublisher<Void, Never>
         let refreshControl: AnyPublisher<Void, Never>
-        let bookmarkButtonDidTap: AnyPublisher<StoreByReview, Never>
     }
     
     struct Output {
@@ -53,7 +52,6 @@ final class MapViewModel: BaseViewModelType {
         let moreReviews: PassthroughSubject<[Review], Error>
         let stores: PassthroughSubject<[Store], Error>
         let refreshControl: PassthroughSubject<Void, Error>
-        let bookmarkStore: PassthroughSubject<Int, Error>
     }
     
     // MARK: - Public - func
@@ -112,19 +110,11 @@ final class MapViewModel: BaseViewModelType {
             })
             .store(in: &self.cancelBag)
         
-        input.bookmarkButtonDidTap
-            .sink(receiveValue: { [weak self] store in
-                guard let self = self else { return }
-                store.isBookmarked ? self.removeBookmark(storeId: store.id) : self.createBookmark(storeId: store.id)
-            })
-            .store(in: &self.cancelBag)
-        
         return Output(
             reviews: reviewsSubject,
             moreReviews: moreReviewsSubject,
             stores: storesSubject,
-            refreshControl: refreshControlSubject,
-            bookmarkStore: bookmarkStoreSubject
+            refreshControl: refreshControlSubject
         )
     }
 }
@@ -236,15 +226,14 @@ extension MapViewModel {
         }
     }
     
-    private func removeReview(id: Int) {
-        Task {
-            let response = await providerReview.request(.removeReview(id: id))
-            switch response {
-            case .success:
-                return
-            case .failure(let err):
-                handleError(err)
-            }
+    func removeReview(id: Int) async -> Bool {
+        let response = await providerReview.request(.removeReview(id: id))
+        switch response {
+        case .success:
+            return true
+        case .failure(let err):
+            handleError(err)
+            return false
         }
     }
 }
@@ -310,28 +299,26 @@ extension MapViewModel {
             }
         }
     }
-    
-    func createBookmark(storeId: Int) {
-        Task {
-            let response = await providerStore.request(.createBookmark(storeId: storeId))
-            switch response {
-            case .success:
-                self.bookmarkStoreSubject.send(storeId)
-            case .failure(let err):
-                handleError(err)
-            }
+
+    func createBookmark(storeId: Int) async -> Bool {
+        let response = await providerStore.request(.createBookmark(storeId: storeId))
+        switch response {
+        case .success:
+            return true
+        case .failure(let err):
+            handleError(err)
+            return false
         }
     }
-    
-    func removeBookmark(storeId: Int) {
-        Task {
-            let response = await providerStore.request(.removeBookmark(storeId: storeId))
-            switch response {
-            case .success:
-                self.bookmarkStoreSubject.send(storeId)
-            case .failure(let err):
-                handleError(err)
-            }
+
+    func removeBookmark(storeId: Int) async -> Bool {
+        let response = await providerStore.request(.removeBookmark(storeId: storeId))
+        switch response {
+        case .success:
+            return true
+        case .failure(let err):
+            handleError(err)
+            return false
         }
     }
 }
