@@ -24,19 +24,11 @@ final class FeedCollectionViewCell: UICollectionViewCell, BaseViewType {
     let photoListView = PhotoListView()
     let storeInfoView = StoreInfoView()
     
-    // MARK: - property
-    
-    let userButtonDidTapPublisher: PassthroughSubject<Void, Never> = PassthroughSubject()
-    let optionButtonDidTapPublisher: PassthroughSubject<Void, Never> = PassthroughSubject()
-    let storeButtonDidTapPublisher: PassthroughSubject<Void, Never> = PassthroughSubject()
-    let bookmarkButtonDidTapPublisher: PassthroughSubject<Void, Never> = PassthroughSubject()
-    
     // MARK: - init
 
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.baseInit()
-        self.setupAction()
     }
     
     @available(*, unavailable)
@@ -76,10 +68,6 @@ final class FeedCollectionViewCell: UICollectionViewCell, BaseViewType {
         self.backgroundColor = .mainBackgroundColor
     }
     
-    override func prepareForReuse() {
-        super.prepareForReuse()
-    }
-    
     override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes)
     -> UICollectionViewLayoutAttributes {
         super.preferredLayoutAttributesFitting(layoutAttributes)
@@ -92,31 +80,6 @@ final class FeedCollectionViewCell: UICollectionViewCell, BaseViewType {
             verticalFittingPriority: .fittingSizeLevel
         )
         return layoutAttributes
-    }
-    
-    // MARK: - func
-    
-    private func setupAction() {
-        let userButtonTapAction = UIAction { [weak self] _ in
-            self?.userButtonDidTapPublisher.send()
-        }
-        self.userInfoView.userImageButton.addAction(userButtonTapAction, for: .touchUpInside)
-        self.userInfoView.userNameButton.addAction(userButtonTapAction, for: .touchUpInside)
-        
-        let optionButtonTapAction = UIAction { [weak self] _ in
-            self?.optionButtonDidTapPublisher.send()
-        }
-        self.userInfoView.optionButton.addAction(optionButtonTapAction, for: .touchUpInside)
-        
-        let storeButtonTapAction = UIAction { [weak self] _ in
-            self?.storeButtonDidTapPublisher.send()
-        }
-        self.storeInfoView.storeNameButton.addAction(storeButtonTapAction, for: .touchUpInside)
-        
-        let bookmarkButtonTapAction = UIAction { [weak self] _ in
-            self?.bookmarkButtonDidTapPublisher.send()
-        }
-        self.storeInfoView.bookmarkButton.addAction(bookmarkButtonTapAction, for: .touchUpInside)
     }
 }
 

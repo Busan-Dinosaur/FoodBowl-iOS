@@ -102,17 +102,21 @@ final class StoreDetailViewController: UIViewController, Navigationable, Keyboar
     }
     
     private func bindCell(_ cell: FeedNSCollectionViewCell, with item: ReviewByStore) {
-        cell.userButtonDidTapPublisher
+        cell.userInfoView.userNameButton.tapPublisher
             .sink(receiveValue: { [weak self] _ in
                 let viewController = ProfileViewController(memberId: item.writer.id)
-                
-                DispatchQueue.main.async { [weak self] in
-                    self?.navigationController?.pushViewController(viewController, animated: true)
-                }
+                self?.navigationController?.pushViewController(viewController, animated: true)
             })
             .store(in: &self.cancelBag)
         
-        cell.optionButtonDidTapPublisher
+        cell.userInfoView.userImageButton.tapPublisher
+            .sink(receiveValue: { [weak self] _ in
+                let viewController = ProfileViewController(memberId: item.writer.id)
+                self?.navigationController?.pushViewController(viewController, animated: true)
+            })
+            .store(in: &self.cancelBag)
+        
+        cell.userInfoView.optionButton.tapPublisher
             .sink(receiveValue: { [weak self] _ in
                 let isOwn = UserDefaultsManager.currentUser?.id ?? 0 == item.writer.id
                 self?.presentReviewOptionAlert(isOwn: isOwn, reviewId: item.review.id)

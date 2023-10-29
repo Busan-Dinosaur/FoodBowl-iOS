@@ -15,7 +15,7 @@ final class FeedNSCollectionViewCell: UICollectionViewCell, BaseViewType {
     
     // MARK: - ui component
     
-    private let userInfoView = UserInfoView()
+    let userInfoView = UserInfoView()
     private let commentLabel = UILabel().then {
         $0.font = UIFont.preferredFont(forTextStyle: .subheadline, weight: .light)
         $0.textColor = .mainTextColor
@@ -23,17 +23,11 @@ final class FeedNSCollectionViewCell: UICollectionViewCell, BaseViewType {
     }
     private let photoListView = PhotoListView()
     
-    // MARK: - property
-    
-    var userButtonDidTapPublisher: PassthroughSubject<Void, Never> = PassthroughSubject()
-    var optionButtonDidTapPublisher: PassthroughSubject<Void, Never> = PassthroughSubject()
-    
     // MARK: - init
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.baseInit()
-        self.setupAction()
     }
     
     @available(*, unavailable)
@@ -67,10 +61,6 @@ final class FeedNSCollectionViewCell: UICollectionViewCell, BaseViewType {
         self.backgroundColor = .mainBackgroundColor
     }
     
-    override func prepareForReuse() {
-        super.prepareForReuse()
-    }
-    
     override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes)
     -> UICollectionViewLayoutAttributes {
         super.preferredLayoutAttributesFitting(layoutAttributes)
@@ -83,21 +73,6 @@ final class FeedNSCollectionViewCell: UICollectionViewCell, BaseViewType {
             verticalFittingPriority: .fittingSizeLevel
         )
         return layoutAttributes
-    }
-    
-    // MARK: - func
-    
-    private func setupAction() {
-        let userButtonTapAction = UIAction { [weak self] _ in
-            self?.userButtonDidTapPublisher.send()
-        }
-        self.userInfoView.userImageButton.addAction(userButtonTapAction, for: .touchUpInside)
-        self.userInfoView.userNameButton.addAction(userButtonTapAction, for: .touchUpInside)
-        
-        let optionButtonTapAction = UIAction { [weak self] _ in
-            self?.optionButtonDidTapPublisher.send()
-        }
-        self.userInfoView.optionButton.addAction(optionButtonTapAction, for: .touchUpInside)
     }
 }
 

@@ -274,24 +274,28 @@ class MapViewController: UIViewController, Navigationable, Optionable {
     }
     
     private func bindCell(_ cell: FeedCollectionViewCell, with item: Review) {
-        cell.userButtonDidTapPublisher
-            .receive(on: DispatchQueue.main)
+        cell.userInfoView.userNameButton.tapPublisher
             .sink(receiveValue: { [weak self] _ in
                 let viewController = ProfileViewController(memberId: item.writer.id)
                 self?.navigationController?.pushViewController(viewController, animated: true)
             })
             .store(in: &self.cancelBag)
         
-        cell.optionButtonDidTapPublisher
-            .receive(on: DispatchQueue.main)
+        cell.userInfoView.userImageButton.tapPublisher
+            .sink(receiveValue: { [weak self] _ in
+                let viewController = ProfileViewController(memberId: item.writer.id)
+                self?.navigationController?.pushViewController(viewController, animated: true)
+            })
+            .store(in: &self.cancelBag)
+        
+        cell.userInfoView.optionButton.tapPublisher
             .sink(receiveValue: { [weak self] _ in
                 let isOwn = UserDefaultsManager.currentUser?.id ?? 0 == item.writer.id
                 self?.presentReviewOptionAlert(isOwn: isOwn, reviewId: item.review.id)
             })
             .store(in: &self.cancelBag)
         
-        cell.storeButtonDidTapPublisher
-            .receive(on: DispatchQueue.main)
+        cell.storeInfoView.storeNameButton.tapPublisher
             .sink(receiveValue: { [weak self] _ in
                 let storeDetailViewController = StoreDetailViewController(
                     viewModel: StoreDetailViewModel(storeId: item.store.id, isFriend: true)
@@ -300,8 +304,7 @@ class MapViewController: UIViewController, Navigationable, Optionable {
             })
             .store(in: &self.cancelBag)
         
-        cell.bookmarkButtonDidTapPublisher
-            .receive(on: DispatchQueue.main)
+        cell.storeInfoView.bookmarkButton.tapPublisher
             .sink(receiveValue: { [weak self] _ in
                 self?.bookmarkButtonDidTapPublisher.send(item.store)
             })
