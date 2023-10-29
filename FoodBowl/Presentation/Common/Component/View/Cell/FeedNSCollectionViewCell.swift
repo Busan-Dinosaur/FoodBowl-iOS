@@ -25,8 +25,8 @@ final class FeedNSCollectionViewCell: UICollectionViewCell, BaseViewType {
     
     // MARK: - property
     
-    var userButtonTapAction: ((FeedCollectionViewCell) -> Void)?
-    var optionButtonTapAction: ((FeedCollectionViewCell) -> Void)?
+    var userButtonTapAction: ((FeedNSCollectionViewCell) -> Void)?
+    var optionButtonTapAction: ((FeedNSCollectionViewCell) -> Void)?
     
     // MARK: - init
     

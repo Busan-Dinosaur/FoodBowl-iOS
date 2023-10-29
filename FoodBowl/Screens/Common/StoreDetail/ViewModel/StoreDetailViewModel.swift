@@ -120,4 +120,15 @@ final class StoreDetailViewModel: BaseViewModelType {
         }
         .store(in : &cancelBag)
     }
+    
+    func removeReview(id: Int) async -> Bool {
+        let response = await providerReview.request(.removeReview(id: id))
+        switch response {
+        case .success:
+            return true
+        case .failure(let err):
+            handleError(err)
+            return false
+        }
+    }
 }

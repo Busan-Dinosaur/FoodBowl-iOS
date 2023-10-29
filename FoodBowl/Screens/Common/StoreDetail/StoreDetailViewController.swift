@@ -101,7 +101,7 @@ final class StoreDetailViewController: UIViewController, Navigationable, Keyboar
             .store(in: &self.cancelBag)
     }
     
-    private func bindCell(_ cell: FeedNSCollectionViewCell, with item: Review) {
+    private func bindCell(_ cell: FeedNSCollectionViewCell, with item: ReviewByStore) {
         cell.userButtonTapAction = { [weak self] _ in
             let profileViewController = ProfileViewController(memberId: item.writer.id)
             
