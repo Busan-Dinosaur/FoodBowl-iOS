@@ -384,12 +384,11 @@ extension MapViewController {
                 var customItem = item
                 customItem.store.isBookmarked.toggle()
                 
-                var newSnapshot = dataSource.snapshot()
-                newSnapshot.reloadItems([customItem])
-                
-                self.dataSource.apply(newSnapshot)
+                self.snapshot.deleteItems([item])
+                self.snapshot.appendItems([customItem])
             }
         }
+        self.dataSource.apply(self.snapshot, animatingDifferences: true)
     }
     
     private func deleteReview(_ reviewId: Int) {
