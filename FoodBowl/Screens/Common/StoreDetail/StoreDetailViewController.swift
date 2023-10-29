@@ -141,6 +141,10 @@ final class StoreDetailViewController: UIViewController, Navigationable, Keyboar
 
         return self.viewModel.transform(from: input)
     }
+    
+    func removeReview(reviewId: Int) {
+        print("삭제 동작")
+    }
 }
 
 // MARK: - Helper

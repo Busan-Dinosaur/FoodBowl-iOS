@@ -310,6 +310,10 @@ class MapViewController: UIViewController, Navigationable, Optionable {
             })
             .store(in: &self.cancelBag)
     }
+    
+    func removeReview(reviewId: Int) {
+        print("삭제 동작")
+    }
 }
 
 // MARK: - Helper

@@ -7,7 +7,11 @@
 
 import UIKit
 
-protocol Optionable: UIGestureRecognizerDelegate {}
+import Moya
+
+protocol Optionable: UIGestureRecognizerDelegate {
+    func removeReview(reviewId: Int)
+}
 
 extension Optionable where Self: UIViewController {
     func presentReviewOptionAlert(isOwn: Bool, reviewId: Int) {
@@ -24,7 +28,7 @@ extension Optionable where Self: UIViewController {
                     title: "삭제 여부",
                     message: "정말로 삭제하시겠습니까?",
                     okAction: { _ in
-                        // 삭제 로직
+                        self.removeReview(reviewId: reviewId)
                     }
                 )
             })
@@ -80,4 +84,6 @@ extension Optionable where Self: UIViewController {
             self?.present(navigationController, animated: true)
         }
     }
+    
+    func removeReview(reviewId: Int) {}
 }
