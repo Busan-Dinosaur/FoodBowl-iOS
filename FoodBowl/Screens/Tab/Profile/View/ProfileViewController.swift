@@ -162,26 +162,26 @@ final class ProfileViewController: MapViewController {
     }
 
     private func setUpMemberProfile() async {
-//        member = await viewModel.getMemberProfile(id: memberId)
-//
-//        DispatchQueue.main.async {
-//            guard let member = self.member else { return }
-//            self.userNicknameLabel.text = member.nickname
-//            self.profileHeaderView.userInfoLabel.text = member.introduction
-//            self.profileHeaderView.followerInfoButton.numberLabel.text = "\(member.followerCount)명"
-//            self.profileHeaderView.followingInfoButton.numberLabel.text = "\(member.followingCount)명"
-//            self.profileHeaderView.followButton.isSelected = member.isFollowing
-//            if let url = member.profileImageUrl {
-//                self.profileHeaderView.userImageView.kf.setImage(with: URL(string: url))
-//            } else {
-//                self.profileHeaderView.userImageView.image = ImageLiteral.defaultProfile
-//            }
-//
-//            if self.isOwn {
-//                UserDefaultsManager.currentUser = member
-//            } else {
-//                self.title = member.nickname
-//            }
-//        }
+        member = await viewModel.getMemberProfile(id: memberId)
+
+        DispatchQueue.main.async {
+            guard let member = self.member else { return }
+            self.userNicknameLabel.text = member.nickname
+            self.profileHeaderView.userInfoLabel.text = member.introduction
+            self.profileHeaderView.followerInfoButton.numberLabel.text = "\(member.followerCount)명"
+            self.profileHeaderView.followingInfoButton.numberLabel.text = "\(member.followingCount)명"
+            self.profileHeaderView.followButton.isSelected = member.isFollowing
+            if let url = member.profileImageUrl {
+                self.profileHeaderView.userImageView.kf.setImage(with: URL(string: url))
+            } else {
+                self.profileHeaderView.userImageView.image = ImageLiteral.defaultProfile
+            }
+
+            if self.isOwn {
+                UserDefaultsManager.currentUser = member
+            } else {
+                self.title = member.nickname
+            }
+        }
     }
 }

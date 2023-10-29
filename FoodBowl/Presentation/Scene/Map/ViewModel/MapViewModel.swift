@@ -20,6 +20,7 @@ final class MapViewModel: BaseViewModelType {
     let providerReview = MoyaProvider<ReviewAPI>()
     let providerStore = MoyaProvider<StoreAPI>()
     let providerFollow = MoyaProvider<FollowAPI>()
+    let providerMember = MoyaProvider<MemberAPI>()
     
     private var cancelBag = Set<AnyCancellable>()
     
@@ -403,6 +404,46 @@ extension MapViewModel {
         case .failure(let err):
             handleError(err)
             return false
+        }
+    }
+}
+
+// MARK: - Get and Update Profile
+extension MapViewModel {
+    func getMemberProfile(id: Int) async -> MemberProfileResponse? {
+        let response = await providerMember.request(.getMemberProfile(id: id))
+        switch response {
+        case .success(let result):
+            guard let data = try? result.map(MemberProfileResponse.self) else { return nil }
+            return data
+        case .failure(let err):
+            handleError(err)
+            return nil
+        }
+    }
+
+    func updateMembeProfile(profile: UpdateMemberProfileRequest) async {
+        let response = await providerMember.request(.updateMemberProfile(request: profile))
+        switch response {
+        case .success:
+            if var currentUser = UserDefaultsManager.currentUser {
+                currentUser.nickname = profile.nickname
+                currentUser.introduction = profile.introduction
+                UserDefaultsManager.currentUser = currentUser
+            }
+        case .failure(let err):
+            handleError(err)
+        }
+    }
+
+    func updateMembeProfileImage(image: UIImage) async {
+        guard let imageData = image.jpegData(compressionQuality: 0.1) else { return }
+        let response = await providerMember.request(.updateMemberProfileImage(image: imageData))
+        switch response {
+        case .success:
+            return
+        case .failure(let err):
+            handleError(err)
         }
     }
 }

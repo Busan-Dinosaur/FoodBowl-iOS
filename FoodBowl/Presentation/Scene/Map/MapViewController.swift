@@ -276,6 +276,7 @@ class MapViewController: UIViewController, Navigationable, Optionable {
     private func bindCell(_ cell: FeedCollectionViewCell, with item: Review) {
         cell.userInfoView.userNameButton.tapPublisher
             .sink(receiveValue: { [weak self] _ in
+                print("-------터치------")
                 let viewController = ProfileViewController(memberId: item.writer.id)
                 self?.navigationController?.pushViewController(viewController, animated: true)
             })
@@ -283,6 +284,7 @@ class MapViewController: UIViewController, Navigationable, Optionable {
         
         cell.userInfoView.userImageButton.tapPublisher
             .sink(receiveValue: { [weak self] _ in
+                print("-------터치------")
                 let viewController = ProfileViewController(memberId: item.writer.id)
                 self?.navigationController?.pushViewController(viewController, animated: true)
             })
@@ -359,7 +361,6 @@ extension MapViewController {
     private func feedCollectionViewDataSource() -> UICollectionViewDiffableDataSource<Section, Review> {
         let reviewCellRegistration = UICollectionView.CellRegistration<FeedCollectionViewCell, Review> {
             [weak self] cell, indexPath, item in
-            
             cell.configureCell(item)
             self?.bindCell(cell, with: item)
         }
