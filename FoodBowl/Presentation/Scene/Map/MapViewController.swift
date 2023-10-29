@@ -200,13 +200,7 @@ class MapViewController: UIViewController, Navigationable, Optionable {
     private func bindOutputToViewModel(_ output: MapViewModel.Output) {
         output.reviews
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] result in
-                switch result {
-                case .failure:
-                    self?.reloadReviews([])
-                case .finished:
-                    return
-                }
+            .sink { _ in
             } receiveValue: { [weak self] reviews in
                 self?.reloadReviews(reviews)
             }
@@ -214,13 +208,7 @@ class MapViewController: UIViewController, Navigationable, Optionable {
         
         output.moreReviews
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] result in
-                switch result {
-                case .failure:
-                    self?.loadMoreReviews([])
-                case .finished:
-                    return
-                }
+            .sink { _ in
             } receiveValue: { [weak self] reviews in
                 self?.loadMoreReviews(reviews)
             }
@@ -228,13 +216,7 @@ class MapViewController: UIViewController, Navigationable, Optionable {
         
         output.stores
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] result in
-                switch result {
-                case .failure:
-                    self?.handleStores([])
-                case .finished:
-                    return
-                }
+            .sink { _ in
             } receiveValue: { [weak self] stores in
                 self?.handleStores(stores)
             }
@@ -242,10 +224,9 @@ class MapViewController: UIViewController, Navigationable, Optionable {
         
         output.refreshControl
             .receive(on: DispatchQueue.main)
-            .sink { _ in
-            } receiveValue: { [weak self] _ in
+            .sink(receiveValue: { [weak self] _ in
                 self?.feedListView.refreshControl.endRefreshing()
-            }
+            })
             .store(in: &self.cancelBag)
     }
     

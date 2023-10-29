@@ -38,8 +38,7 @@ final class MapViewModel: BaseViewModelType {
     private let reviewsSubject = PassthroughSubject<[Review], Error>()
     private let moreReviewsSubject = PassthroughSubject<[Review], Error>()
     private let storesSubject = PassthroughSubject<[Store], Error>()
-    private let refreshControlSubject = PassthroughSubject<Void, Error>()
-    private let bookmarkStoreSubject = PassthroughSubject<Int, Error>()
+    private let refreshControlSubject = PassthroughSubject<Void, Never>()
     
     struct Input {
         let customLocation: AnyPublisher<CustomLocation, Never>
@@ -51,7 +50,7 @@ final class MapViewModel: BaseViewModelType {
         let reviews: PassthroughSubject<[Review], Error>
         let moreReviews: PassthroughSubject<[Review], Error>
         let stores: PassthroughSubject<[Store], Error>
-        let refreshControl: PassthroughSubject<Void, Error>
+        let refreshControl: PassthroughSubject<Void, Never>
     }
     
     // MARK: - Public - func
@@ -143,6 +142,7 @@ extension MapViewModel {
             case .failure(let err):
                 handleError(err)
             }
+            self.refreshControlSubject.send()
         }
     }
     
