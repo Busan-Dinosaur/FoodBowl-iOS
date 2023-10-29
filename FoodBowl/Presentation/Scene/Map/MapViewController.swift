@@ -292,7 +292,7 @@ class MapViewController: UIViewController, Navigationable, Optionable {
     func removeReview(reviewId: Int) {
         Task {
             if await self.viewModel.removeReview(id: reviewId) {
-                
+                self.deleteReview(reviewId)
             }
         }
     }
@@ -388,6 +388,16 @@ extension MapViewController {
                 newSnapshot.reloadItems([customItem])
                 
                 self.dataSource.apply(newSnapshot)
+            }
+        }
+    }
+    
+    private func deleteReview(_ reviewId: Int) {
+        for item in snapshot.itemIdentifiers {
+            if item.review.id == reviewId {
+                self.snapshot.deleteItems([item])
+                self.dataSource.apply(self.snapshot)
+                return
             }
         }
     }
