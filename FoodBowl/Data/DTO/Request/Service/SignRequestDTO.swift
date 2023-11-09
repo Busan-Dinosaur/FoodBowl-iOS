@@ -7,6 +7,6 @@
 
 import Foundation
 
-struct SignRequest: Encodable {
+struct SignRequestDTO: Encodable {
     let appleToken: String
 }

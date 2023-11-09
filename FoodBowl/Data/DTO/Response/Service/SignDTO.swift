@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct SignResponse: Decodable {
+struct SignDTO: Decodable {
     let accessToken: String
     let refreshToken: String
 }

@@ -10,7 +10,7 @@ import Foundation
 import Moya
 
 enum ServiceAPI {
-    case signIn(request: SignRequest)
+    case signIn(request: SignRequestDTO)
     case logOut
     case renew
     case checkNickname(nickname: String)

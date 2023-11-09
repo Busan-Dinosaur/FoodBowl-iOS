@@ -12,7 +12,7 @@ import UIKit
 import SnapKit
 import Then
 
-final class OnboardingViewController: UIViewController, Navigationable, Keyboardable {
+final class OnboardingViewController: UIViewController {
     
     // MARK: - ui component
     
@@ -37,17 +37,10 @@ final class OnboardingViewController: UIViewController, Navigationable, Keyboard
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.setupNavigationBarHiddenState()
         self.bindViewModel()
-        self.setupNavigation()
-        self.setupKeyboardGesture()
     }
 
     // MARK: - func
-
-    private func setupNavigationBarHiddenState() {
-        self.navigationController?.navigationBar.isHidden = true
-    }
     
     private func bindViewModel() {
         let output = self.transformedOutput()
@@ -56,7 +49,7 @@ final class OnboardingViewController: UIViewController, Navigationable, Keyboard
     
     private func transformedOutput() -> OnboardingViewModel.Output {
         let input = OnboardingViewModel.Input(
-            appleSignButtonDidTap: self.onboardingView.appleSignButtonDidTapPublisher.eraseToAnyPublisher()
+            appleSignButtonDidTap: self.onboardingView.appleSignButtonTapPublisher.eraseToAnyPublisher()
         )
         return self.viewModel.transform(from: input)
     }

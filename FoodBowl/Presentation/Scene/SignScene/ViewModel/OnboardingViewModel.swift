@@ -43,8 +43,8 @@ final class OnboardingViewModel: NSObject, BaseViewModelType {
     
     // MARK: - network
     
-    private func getToken(appleToken: String) {
-        providerService.requestPublisher(.signIn(request: SignRequest(appleToken: appleToken)))
+    private func getToken(sign: SignRequestDTO) {
+        providerService.requestPublisher(.signIn(request: sign))
             .sink { completion in
                 switch completion {
                 case let .failure(error) :
@@ -53,7 +53,7 @@ final class OnboardingViewModel: NSObject, BaseViewModelType {
                     self.getMyProfile()
                 }
             } receiveValue: { recievedValue in
-                guard let responseData = try? recievedValue.map(SignResponse.self) else { return }
+                guard let responseData = try? recievedValue.map(SignDTO.self) else { return }
                 KeychainManager.set(responseData.accessToken, for: .accessToken)
                 KeychainManager.set(responseData.refreshToken, for: .refreshToken)
                 UserDefaultHandler.setIsLogin(isLogin: true)
@@ -100,6 +100,6 @@ extension OnboardingViewModel: ASAuthorizationControllerDelegate {
         guard let token = credential.identityToken else { return }
         guard let tokenToString = String(data: token, encoding: .utf8) else { return }
 
-        getToken(appleToken: tokenToString)
+        self.getToken(sign: SignRequestDTO(appleToken: tokenToString))
     }
 }
