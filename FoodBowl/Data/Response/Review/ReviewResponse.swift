@@ -24,10 +24,18 @@ struct Review: Codable, Hashable {
     let writer: Writer
     let review: ReviewContent
     var store: StoreByReview
+    
+    static func == (lhs: Review, rhs: Review) -> Bool {
+        lhs.review.id == rhs.review.id
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(review.id)
+    }
 }
 
 // MARK: - ReviewContent
-struct ReviewContent: Codable, Hashable {
+struct ReviewContent: Codable {
     let id: Int
     let content: String
     let imagePaths: [String]
@@ -36,7 +44,7 @@ struct ReviewContent: Codable, Hashable {
 }
 
 // MARK: - StoreByReview
-struct StoreByReview: Codable, Hashable {
+struct StoreByReview: Codable {
     let id: Int
     let categoryName, name, addressName: String
     let distance: Double
@@ -44,7 +52,7 @@ struct StoreByReview: Codable, Hashable {
 }
 
 // MARK: - Writer
-struct Writer: Codable, Hashable {
+struct Writer: Codable {
     let id: Int
     let nickname: String
     let profileImageUrl: String?

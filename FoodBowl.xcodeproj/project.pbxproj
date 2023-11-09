@@ -72,6 +72,8 @@
 		CB7F3327298A51610000A6B4 /* UserDefaultHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB7F3326298A51610000A6B4 /* UserDefaultHandler.swift */; };
 		CB84C9842AD98E9000A2E0F2 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = CB84C9832AD98E9000A2E0F2 /* Lottie */; };
 		CB8A2D9B297844720018AC6E /* Marker.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB8A2D9A297844720018AC6E /* Marker.swift */; };
+		CB9332632AFCC26800B7F87A /* PhotoPickerable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB9332622AFCC26800B7F87A /* PhotoPickerable.swift */; };
+		CB93326F2AFCCCEA00B7F87A /* SignUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB93326E2AFCCCEA00B7F87A /* SignUsecase.swift */; };
 		CB949A8A2ADD7C7900A3A78C /* FollowViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB949A892ADD7C7900A3A78C /* FollowViewModel.swift */; };
 		CB949A8C2ADD7EA700A3A78C /* FollowMemberResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB949A8B2ADD7EA700A3A78C /* FollowMemberResponse.swift */; };
 		CBA4C7DB2AB4840100FC9DD8 /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA4C7DA2AB4840100FC9DD8 /* PaddingLabel.swift */; };
@@ -81,7 +83,6 @@
 		CBA7F184297DBB01006088A0 /* YPImagePicker+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA7F183297DBB01006088A0 /* YPImagePicker+Extension.swift */; };
 		CBADC2422955989400E56C93 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = CBADC2412955989400E56C93 /* SnapKit */; };
 		CBADC245295598A200E56C93 /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = CBADC244295598A200E56C93 /* Then */; };
-		CBADC2482955993A00E56C93 /* SkeletonUI in Frameworks */ = {isa = PBXBuildFile; productRef = CBADC2472955993A00E56C93 /* SkeletonUI */; };
 		CBADC28329559BC900E56C93 /* ImageLiteral.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADC25929559BC900E56C93 /* ImageLiteral.swift */; };
 		CBADC28629559BC900E56C93 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADC25D29559BC900E56C93 /* Logger.swift */; };
 		CBADC28A29559BC900E56C93 /* UIFont+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADC26229559BC900E56C93 /* UIFont+Extension.swift */; };
@@ -128,7 +129,6 @@
 		CBC7310D295550A200C7F198 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CBC7310C295550A200C7F198 /* Assets.xcassets */; };
 		CBC73110295550A200C7F198 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CBC7310E295550A200C7F198 /* LaunchScreen.storyboard */; };
 		CBC747A92A83D95200F171F5 /* Moya in Frameworks */ = {isa = PBXBuildFile; productRef = CBC747A82A83D95200F171F5 /* Moya */; };
-		CBC747AB2A83D95200F171F5 /* RxMoya in Frameworks */ = {isa = PBXBuildFile; productRef = CBC747AA2A83D95200F171F5 /* RxMoya */; };
 		CBC747B32A83D9F600F171F5 /* MemberAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBC747B22A83D9F600F171F5 /* MemberAPI.swift */; };
 		CBC747B52A83DBE300F171F5 /* KeychainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBC747B42A83DBE300F171F5 /* KeychainManager.swift */; };
 		CBC747B82A83DC2000F171F5 /* KeychainSwift in Frameworks */ = {isa = PBXBuildFile; productRef = CBC747B72A83DC2000F171F5 /* KeychainSwift */; };
@@ -236,6 +236,8 @@
 		CB7F3324298A51560000A6B4 /* UserDefaultStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultStorage.swift; sourceTree = "<group>"; };
 		CB7F3326298A51610000A6B4 /* UserDefaultHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultHandler.swift; sourceTree = "<group>"; };
 		CB8A2D9A297844720018AC6E /* Marker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Marker.swift; sourceTree = "<group>"; };
+		CB9332622AFCC26800B7F87A /* PhotoPickerable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPickerable.swift; sourceTree = "<group>"; };
+		CB93326E2AFCCCEA00B7F87A /* SignUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUsecase.swift; sourceTree = "<group>"; };
 		CB949A892ADD7C7900A3A78C /* FollowViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowViewModel.swift; sourceTree = "<group>"; };
 		CB949A8B2ADD7EA700A3A78C /* FollowMemberResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowMemberResponse.swift; sourceTree = "<group>"; };
 		CBA4C7DA2AB4840100FC9DD8 /* PaddingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddingLabel.swift; sourceTree = "<group>"; };
@@ -339,11 +341,9 @@
 				CB617A572AE28C71000F7FFC /* Moya in Frameworks */,
 				CBB582802972C9C400808B0B /* Alamofire in Frameworks */,
 				CBD036322ABA163F00E1AE9A /* Kingfisher in Frameworks */,
-				CBC747AB2A83D95200F171F5 /* RxMoya in Frameworks */,
 				CB617A552AE28C71000F7FFC /* CombineMoya in Frameworks */,
 				CBDF0D062AE8E6B600177D38 /* YPImagePicker in Frameworks */,
 				CB84C9842AD98E9000A2E0F2 /* Lottie in Frameworks */,
-				CBADC2482955993A00E56C93 /* SkeletonUI in Frameworks */,
 				CBC747B82A83DC2000F171F5 /* KeychainSwift in Frameworks */,
 				CBADC245295598A200E56C93 /* Then in Frameworks */,
 			);
@@ -396,22 +396,22 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
-		CB1A7C5F29561B8400C6431D /* Component */ = {
+		CB1A7C5F29561B8400C6431D /* UIComponent */ = {
 			isa = PBXGroup;
 			children = (
 				CB1A7C6029561BCF00C6431D /* ProfileHeaderView.swift */,
 				CB2E4F882977393700FD2566 /* FollowInfoButton.swift */,
 				CBDDF13F2A6ADA3800AE3C50 /* EditButton.swift */,
 			);
-			path = Component;
+			path = UIComponent;
 			sourceTree = "<group>";
 		};
-		CB1A7C66295767F000C6431D /* Component */ = {
+		CB1A7C66295767F000C6431D /* UIComponent */ = {
 			isa = PBXGroup;
 			children = (
 				CBDE390629719CB400DDE49A /* SelectedStoreView.swift */,
 			);
-			path = Component;
+			path = UIComponent;
 			sourceTree = "<group>";
 		};
 		CB2E823D2AA749340016820E /* Member */ = {
@@ -454,41 +454,9 @@
 			isa = PBXGroup;
 			children = (
 				CBC158692AD8182800FD263B /* ViewModel */,
-				CB49256F2AB44D5500B66B68 /* View */,
+				CB9332682AFCCB6100B7F87A /* ViewController */,
 			);
 			path = Find;
-			sourceTree = "<group>";
-		};
-		CB49256F2AB44D5500B66B68 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				CBA62D3E2A6EC7B800AA0830 /* FindViewController.swift */,
-				CBFB52602977C9AB0049E8BA /* FindResultViewController.swift */,
-				CBD0362E2ABA150600E1AE9A /* RecentReviewController.swift */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		CB4925702AB44D7100B66B68 /* Common */ = {
-			isa = PBXGroup;
-			children = (
-				CBADC2B02955A13800E56C93 /* CreateReview */,
-				CB73E00F2AB5FEA9005B6BF1 /* UpdateReview */,
-				CB73E0102AB5FEB4005B6BF1 /* StoreDetail */,
-				CBDF6EA42AD9253A00EB2481 /* Blame */,
-			);
-			path = Common;
-			sourceTree = "<group>";
-		};
-		CB4925712AB44D9E00B66B68 /* Tab */ = {
-			isa = PBXGroup;
-			children = (
-				CBE6190D296C6423005295AF /* Friend */,
-				CB49256E2AB44D4400B66B68 /* Find */,
-				CBCD0F7D2A66DA0B00A51B32 /* Univ */,
-				CBADC2A52955A07B00E56C93 /* Profile */,
-			);
-			path = Tab;
 			sourceTree = "<group>";
 		};
 		CB617A1E2AE2387C000F7FFC /* App */ = {
@@ -505,7 +473,6 @@
 			isa = PBXGroup;
 			children = (
 				CB617A202AE238BB000F7FFC /* Common */,
-				CB617A242AE23933000F7FFC /* Error */,
 				CB617A252AE23959000F7FFC /* Scene */,
 			);
 			path = Presentation;
@@ -555,7 +522,16 @@
 		CB617A252AE23959000F7FFC /* Scene */ = {
 			isa = PBXGroup;
 			children = (
+				CB981C28297A5A2900AF0167 /* Sign */,
 				CB63B7592A6986B4000AD9C2 /* Map */,
+				CBADC2B02955A13800E56C93 /* CreateReview */,
+				CB73E00F2AB5FEA9005B6BF1 /* UpdateReview */,
+				CB73E0102AB5FEB4005B6BF1 /* StoreDetail */,
+				CBDF6EA42AD9253A00EB2481 /* Blame */,
+				CBE6190D296C6423005295AF /* Friend */,
+				CB49256E2AB44D4400B66B68 /* Find */,
+				CBCD0F7D2A66DA0B00A51B32 /* Univ */,
+				CBADC2A52955A07B00E56C93 /* Profile */,
 			);
 			path = Scene;
 			sourceTree = "<group>";
@@ -590,8 +566,10 @@
 		CB617A2A2AE23B01000F7FFC /* Domain */ = {
 			isa = PBXGroup;
 			children = (
+				CB93326C2AFCCCB700B7F87A /* Repository */,
+				CB617A242AE23933000F7FFC /* Error */,
+				CB93326D2AFCCCC600B7F87A /* Usecase */,
 				CBDE390329719B8100DDE49A /* Entity */,
-				CBE32D0F2ADE7677004CCCBE /* Type */,
 			);
 			path = Domain;
 			sourceTree = "<group>";
@@ -602,7 +580,6 @@
 				CB617A2C2AE23B9E000F7FFC /* Logger */,
 				CBADC26129559BC900E56C93 /* Extension */,
 				CBADC25829559BC900E56C93 /* Literal */,
-				CB617A342AE23DA3000F7FFC /* Script */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -681,19 +658,12 @@
 			path = Moya;
 			sourceTree = "<group>";
 		};
-		CB617A342AE23DA3000F7FFC /* Script */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Script;
-			sourceTree = "<group>";
-		};
 		CB63B7592A6986B4000AD9C2 /* Map */ = {
 			isa = PBXGroup;
 			children = (
 				CBC1586C2AD81A7900FD263B /* ViewModel */,
 				CB63B75C2A698857000AD9C2 /* View */,
-				CBE6190E296C6435005295AF /* MapViewController.swift */,
+				CB9332642AFCCA5700B7F87A /* ViewController */,
 			);
 			path = Map;
 			sourceTree = "<group>";
@@ -743,7 +713,7 @@
 			isa = PBXGroup;
 			children = (
 				CBBB97EF2AB0831B00272CCE /* ViewModel */,
-				CB73E0132AB5FF8A005B6BF1 /* View */,
+				CB73E0132AB5FF8A005B6BF1 /* ViewController */,
 			);
 			path = UpdateReview;
 			sourceTree = "<group>";
@@ -753,7 +723,7 @@
 			children = (
 				CBB94BF42ADD0A3D00F44245 /* ViewModel */,
 				CBDF6EA72AD9256300EB2481 /* View */,
-				CBFB52542977B9240049E8BA /* StoreDetailViewController.swift */,
+				CB9332662AFCCAEF00B7F87A /* ViewController */,
 			);
 			path = StoreDetail;
 			sourceTree = "<group>";
@@ -761,7 +731,7 @@
 		CB73E0112AB5FEDF005B6BF1 /* UIComponent */ = {
 			isa = PBXGroup;
 			children = (
-				CBDDF1412A6AF70500AE3C50 /* StoreHeaderView.swift */,
+				CB617A5B2AE29FBA000F7FFC /* StoreDeatilView.swift */,
 			);
 			path = UIComponent;
 			sourceTree = "<group>";
@@ -777,22 +747,22 @@
 			path = Feed;
 			sourceTree = "<group>";
 		};
-		CB73E0132AB5FF8A005B6BF1 /* View */ = {
+		CB73E0132AB5FF8A005B6BF1 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
 				CBBB97ED2AB0828600272CCE /* UpdateReviewViewController.swift */,
 			);
-			name = View;
+			name = ViewController;
 			sourceTree = "<group>";
 		};
-		CB7F3322298A51330000A6B4 /* Network */ = {
+		CB7F3322298A51330000A6B4 /* Data */ = {
 			isa = PBXGroup;
 			children = (
 				CBC747B12A83D9E900F171F5 /* API */,
 				CBC747AD2A83D9BC00F171F5 /* Request */,
 				CBC747AE2A83D9C400F171F5 /* Response */,
 			);
-			path = Network;
+			path = Data;
 			sourceTree = "<group>";
 		};
 		CB7F3323298A51430000A6B4 /* UserDefaultService */ = {
@@ -811,6 +781,84 @@
 				CBEB00652ADC35E000F6EFED /* loading.json */,
 			);
 			path = Lottie;
+			sourceTree = "<group>";
+		};
+		CB9332642AFCCA5700B7F87A /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				CBE6190E296C6435005295AF /* MapViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		CB9332652AFCCAB200B7F87A /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				CB5DD4322AB5A175009FCB43 /* CreateReviewController.swift */,
+				CB73E00D2AB5F6BF005B6BF1 /* SearchStoreViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		CB9332662AFCCAEF00B7F87A /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				CBFB52542977B9240049E8BA /* StoreDetailViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		CB9332672AFCCB5A00B7F87A /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				CBCD0F7B2A66D9BC00A51B32 /* FriendViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		CB9332682AFCCB6100B7F87A /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				CBA62D3E2A6EC7B800AA0830 /* FindViewController.swift */,
+				CBFB52602977C9AB0049E8BA /* FindResultViewController.swift */,
+				CBD0362E2ABA150600E1AE9A /* RecentReviewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		CB9332692AFCCB7C00B7F87A /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				CBADC2AC2955A0FF00E56C93 /* ProfileViewController.swift */,
+				CBD1B5EE2982A5AD00B0AD51 /* UpdateProfileViewController.swift */,
+				CB4FBBF12978CFA90052D371 /* FollowerViewController.swift */,
+				CB4FBBF32978CFE40052D371 /* FollowingViewController.swift */,
+				CBD1B5F02982B0A300B0AD51 /* SettingViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		CB93326C2AFCCCB700B7F87A /* Repository */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Repository;
+			sourceTree = "<group>";
+		};
+		CB93326D2AFCCCC600B7F87A /* Usecase */ = {
+			isa = PBXGroup;
+			children = (
+				CB9332702AFCCCF100B7F87A /* SignScene */,
+			);
+			path = Usecase;
+			sourceTree = "<group>";
+		};
+		CB9332702AFCCCF100B7F87A /* SignScene */ = {
+			isa = PBXGroup;
+			children = (
+				CB93326E2AFCCCEA00B7F87A /* SignUsecase.swift */,
+			);
+			path = SignScene;
 			sourceTree = "<group>";
 		};
 		CB981C28297A5A2900AF0167 /* Sign */ = {
@@ -862,6 +910,7 @@
 				CB617A392AE24836000F7FFC /* Navigationable.swift */,
 				CB617A3B2AE2484F000F7FFC /* Keyboardable.swift */,
 				CB20BAD22AE39F11007535C8 /* Optionable.swift */,
+				CB9332622AFCC26800B7F87A /* PhotoPickerable.swift */,
 				CB0767D42ADD75460027BE8A /* BaseViewModel.swift */,
 				CBADC27529559BC900E56C93 /* BaseViewController.swift */,
 				CBADC27629559BC900E56C93 /* BaseTableViewCell.swift */,
@@ -885,6 +934,7 @@
 			children = (
 				CB1578F92AAC5B2600007183 /* ViewModel */,
 				CBDDF13E2A6AD76E00AE3C50 /* View */,
+				CB9332692AFCCB7C00B7F87A /* ViewController */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -894,18 +944,9 @@
 			children = (
 				CB15790E2AACD97300007183 /* ViewModel */,
 				CBDDF13A2A6AD75700AE3C50 /* View */,
+				CB9332652AFCCAB200B7F87A /* ViewController */,
 			);
 			path = CreateReview;
-			sourceTree = "<group>";
-		};
-		CBADC2B12955A14C00E56C93 /* Screens */ = {
-			isa = PBXGroup;
-			children = (
-				CB981C28297A5A2900AF0167 /* Sign */,
-				CB4925702AB44D7100B66B68 /* Common */,
-				CB4925712AB44D9E00B66B68 /* Tab */,
-			);
-			path = Screens;
 			sourceTree = "<group>";
 		};
 		CBB94BF42ADD0A3D00F44245 /* ViewModel */ = {
@@ -1011,11 +1052,10 @@
 				CB617A1E2AE2387C000F7FFC /* App */,
 				CB617A1F2AE238AB000F7FFC /* Presentation */,
 				CB617A2A2AE23B01000F7FFC /* Domain */,
-				CB7F3322298A51330000A6B4 /* Network */,
+				CB7F3322298A51330000A6B4 /* Data */,
 				CB617A262AE23A5D000F7FFC /* Service */,
 				CB617A2B2AE23B89000F7FFC /* Utils */,
 				CBADC26F29559BC900E56C93 /* Resource */,
-				CBADC2B12955A14C00E56C93 /* Screens */,
 			);
 			path = FoodBowl;
 			sourceTree = "<group>";
@@ -1060,7 +1100,7 @@
 			isa = PBXGroup;
 			children = (
 				CBD6419F2AB82083009A05D8 /* ViewModel */,
-				CBDDF13D2A6AD76900AE3C50 /* View */,
+				CBDDF13D2A6AD76900AE3C50 /* ViewController */,
 			);
 			path = Univ;
 			sourceTree = "<group>";
@@ -1092,33 +1132,26 @@
 		CBDDF13A2A6AD75700AE3C50 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				CB1A7C66295767F000C6431D /* Component */,
 				CBDE39002971945300DDE49A /* Cell */,
-				CB5DD4322AB5A175009FCB43 /* CreateReviewController.swift */,
-				CB73E00D2AB5F6BF005B6BF1 /* SearchStoreViewController.swift */,
+				CB1A7C66295767F000C6431D /* UIComponent */,
 			);
 			path = View;
 			sourceTree = "<group>";
 		};
-		CBDDF13D2A6AD76900AE3C50 /* View */ = {
+		CBDDF13D2A6AD76900AE3C50 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
 				CBCD0F7E2A66DA1600A51B32 /* UnivViewController.swift */,
 				CBD641A22AB824A2009A05D8 /* SearchUnivViewController.swift */,
 			);
-			path = View;
+			path = ViewController;
 			sourceTree = "<group>";
 		};
 		CBDDF13E2A6AD76E00AE3C50 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				CB1A7C5F29561B8400C6431D /* Component */,
+				CB1A7C5F29561B8400C6431D /* UIComponent */,
 				CBD1B5F22982D38300B0AD51 /* Cell */,
-				CBADC2AC2955A0FF00E56C93 /* ProfileViewController.swift */,
-				CBD1B5EE2982A5AD00B0AD51 /* UpdateProfileViewController.swift */,
-				CB4FBBF12978CFA90052D371 /* FollowerViewController.swift */,
-				CB4FBBF32978CFE40052D371 /* FollowingViewController.swift */,
-				CBD1B5F02982B0A300B0AD51 /* SettingViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1137,6 +1170,7 @@
 			isa = PBXGroup;
 			children = (
 				CBC158722AD8E74900FD263B /* CustomLocation.swift */,
+				CBE32D0D2ADE7648004CCCBE /* Categories.swift */,
 			);
 			path = Entity;
 			sourceTree = "<group>";
@@ -1162,7 +1196,7 @@
 		CBDF6EA42AD9253A00EB2481 /* Blame */ = {
 			isa = PBXGroup;
 			children = (
-				CBDF6EA82AD9257F00EB2481 /* View */,
+				CBDF6EA82AD9257F00EB2481 /* ViewController */,
 			);
 			path = Blame;
 			sourceTree = "<group>";
@@ -1171,31 +1205,23 @@
 			isa = PBXGroup;
 			children = (
 				CB73E0112AB5FEDF005B6BF1 /* UIComponent */,
-				CB617A5B2AE29FBA000F7FFC /* StoreDeatilView.swift */,
+				CBDDF1412A6AF70500AE3C50 /* StoreHeaderView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
 		};
-		CBDF6EA82AD9257F00EB2481 /* View */ = {
+		CBDF6EA82AD9257F00EB2481 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
 				CBDF6EA52AD9255200EB2481 /* BlameViewController.swift */,
 			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		CBE32D0F2ADE7677004CCCBE /* Type */ = {
-			isa = PBXGroup;
-			children = (
-				CBE32D0D2ADE7648004CCCBE /* Categories.swift */,
-			);
-			path = Type;
+			path = ViewController;
 			sourceTree = "<group>";
 		};
 		CBE6190D296C6423005295AF /* Friend */ = {
 			isa = PBXGroup;
 			children = (
-				CBCD0F7B2A66D9BC00A51B32 /* FriendViewController.swift */,
+				CB9332672AFCCB5A00B7F87A /* ViewController */,
 			);
 			path = Friend;
 			sourceTree = "<group>";
@@ -1219,10 +1245,8 @@
 			packageProductDependencies = (
 				CBADC2412955989400E56C93 /* SnapKit */,
 				CBADC244295598A200E56C93 /* Then */,
-				CBADC2472955993A00E56C93 /* SkeletonUI */,
 				CBB5827F2972C9C400808B0B /* Alamofire */,
 				CBC747A82A83D95200F171F5 /* Moya */,
-				CBC747AA2A83D95200F171F5 /* RxMoya */,
 				CBC747B72A83DC2000F171F5 /* KeychainSwift */,
 				CBD036312ABA163F00E1AE9A /* Kingfisher */,
 				CB84C9832AD98E9000A2E0F2 /* Lottie */,
@@ -1261,7 +1285,6 @@
 			packageReferences = (
 				CBADC2402955989400E56C93 /* XCRemoteSwiftPackageReference "SnapKit" */,
 				CBADC243295598A200E56C93 /* XCRemoteSwiftPackageReference "Then" */,
-				CBADC2462955993A00E56C93 /* XCRemoteSwiftPackageReference "SkeletonUI" */,
 				CBB5827E2972C9C400808B0B /* XCRemoteSwiftPackageReference "Alamofire" */,
 				CBC747A72A83D95200F171F5 /* XCRemoteSwiftPackageReference "Moya" */,
 				CBC747B62A83DC2000F171F5 /* XCRemoteSwiftPackageReference "keychain-swift" */,
@@ -1317,6 +1340,7 @@
 				CBB94BF82ADD0C0C00F44245 /* ReviewByStoreResponse.swift in Sources */,
 				CB1A7C6829576D7900C6431D /* BaseScrollView.swift in Sources */,
 				CB1A7C6129561BCF00C6431D /* ProfileHeaderView.swift in Sources */,
+				CB9332632AFCC26800B7F87A /* PhotoPickerable.swift in Sources */,
 				CBADC2E22955C63300E56C93 /* PhotoCollectionViewCell.swift in Sources */,
 				CBD1B5EF2982A5AD00B0AD51 /* UpdateProfileViewController.swift in Sources */,
 				CB1579042AACCEAB00007183 /* StoreAPI.swift in Sources */,
@@ -1346,6 +1370,7 @@
 				CBC1586B2AD8183D00FD263B /* FindViewModel.swift in Sources */,
 				CB2E82412AA74A050016820E /* UpdateMemberProfileRequest.swift in Sources */,
 				CBADC2CF2955A41500E56C93 /* TabBarController.swift in Sources */,
+				CB93326F2AFCCCEA00B7F87A /* SignUsecase.swift in Sources */,
 				CBB12B142985845900AC0EF2 /* String+Extension.swift in Sources */,
 				CBC158682AD80C3300FD263B /* CreateBlameRequest.swift in Sources */,
 				CB15790D2AACD45400007183 /* CategoriesResponse.swift in Sources */,
@@ -1713,14 +1738,6 @@
 				kind = branch;
 			};
 		};
-		CBADC2462955993A00E56C93 /* XCRemoteSwiftPackageReference "SkeletonUI" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/CSolanaM/SkeletonUI.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.0;
-			};
-		};
 		CBB5827E2972C9C400808B0B /* XCRemoteSwiftPackageReference "Alamofire" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
@@ -1789,11 +1806,6 @@
 			package = CBADC243295598A200E56C93 /* XCRemoteSwiftPackageReference "Then" */;
 			productName = Then;
 		};
-		CBADC2472955993A00E56C93 /* SkeletonUI */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = CBADC2462955993A00E56C93 /* XCRemoteSwiftPackageReference "SkeletonUI" */;
-			productName = SkeletonUI;
-		};
 		CBB5827F2972C9C400808B0B /* Alamofire */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = CBB5827E2972C9C400808B0B /* XCRemoteSwiftPackageReference "Alamofire" */;
@@ -1803,11 +1815,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = CBC747A72A83D95200F171F5 /* XCRemoteSwiftPackageReference "Moya" */;
 			productName = Moya;
-		};
-		CBC747AA2A83D95200F171F5 /* RxMoya */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = CBC747A72A83D95200F171F5 /* XCRemoteSwiftPackageReference "Moya" */;
-			productName = RxMoya;
 		};
 		CBC747B72A83DC2000F171F5 /* KeychainSwift */ = {
 			isa = XCSwiftPackageProductDependency;

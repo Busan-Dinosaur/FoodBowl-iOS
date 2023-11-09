@@ -278,11 +278,15 @@ class MapViewController: UIViewController, Navigationable, Optionable {
             Task {
                 if cell.storeInfoView.bookmarkButton.isSelected {
                     if await self.viewModel.removeBookmark(storeId: item.store.id) {
-                        self.updateBookmark(item.store.id)
+                        DispatchQueue.main.async {
+                            self.updateBookmark(item.store.id)
+                        }
                     }
                 } else {
                     if await self.viewModel.createBookmark(storeId: item.store.id) {
-                        self.updateBookmark(item.store.id)
+                        DispatchQueue.main.async {
+                            self.updateBookmark(item.store.id)
+                        }
                     }
                 }
             }
@@ -325,9 +329,7 @@ extension MapViewController {
         }
 
         mapView.addAnnotations(markers)
-        
-        let reviewsCount = stores.reduce(0) { $0 + $1.reviewCount }
-        grabbarView.modalResultLabel.text = "\(stores.count.prettyNumber)개의 맛집, \(reviewsCount.prettyNumber)개의 후기"
+        grabbarView.modalResultLabel.text = "\(stores.count.prettyNumber)개의 맛집"
     }
 }
 
@@ -370,25 +372,30 @@ extension MapViewController {
         let previousReviewsData = self.snapshot.itemIdentifiers(inSection: .main)
         self.snapshot.deleteItems(previousReviewsData)
         self.snapshot.appendItems(items, toSection: .main)
-        self.dataSource.apply(self.snapshot, animatingDifferences: true)
+        self.dataSource.applySnapshotUsingReloadData(self.snapshot)
     }
     
     private func loadMoreReviews(_ items: [Review]) {
         self.snapshot.appendItems(items, toSection: .main)
-        self.dataSource.apply(self.snapshot, animatingDifferences: true)
+        self.dataSource.applySnapshotUsingReloadData(self.snapshot)
     }
     
     private func updateBookmark(_ storeId: Int) {
-        for item in snapshot.itemIdentifiers {
-            if item.store.id == storeId {
-                var customItem = item
-                customItem.store.isBookmarked.toggle()
-                
-                self.snapshot.deleteItems([item])
-                self.snapshot.appendItems([customItem])
+        let previousReviewsData = self.snapshot.itemIdentifiers(inSection: .main)
+        let items = previousReviewsData
+//            .filter { customItem in
+//                return customItem.store.id == storeId
+//            }
+            .map { customItem in
+                var updatedItem = customItem
+                if customItem.store.id == storeId {
+                    updatedItem.store.isBookmarked.toggle()
+                }
+                return updatedItem
             }
-        }
-        self.dataSource.apply(self.snapshot, animatingDifferences: true)
+        self.snapshot.deleteItems(previousReviewsData)
+        self.snapshot.appendItems(items)
+        self.dataSource.applySnapshotUsingReloadData(self.snapshot)
     }
     
     private func deleteReview(_ reviewId: Int) {
@@ -425,9 +432,9 @@ extension MapViewController: MKMapViewDelegate {
         let visibleMapRect = mapView.visibleMapRect
         let topLeftCoordinate = MKMapPoint(x: visibleMapRect.minX, y: visibleMapRect.minY).coordinate
 
-        guard let currentLoc = currentLocation else { return }
+        guard let currentLoc = self.currentLocation else { return }
 
-        customLocation = CustomLocation(
+        self.customLocation = CustomLocation(
             x: center.longitude,
             y: center.latitude,
             deltaX: abs(topLeftCoordinate.longitude - center.longitude),
@@ -436,7 +443,7 @@ extension MapViewController: MKMapViewDelegate {
             deviceY: currentLoc.latitude
         )
         
-        if let customLocation = customLocation {
+        if let customLocation = self.customLocation {
             customLocationPublisher.send(customLocation)
         }
     }

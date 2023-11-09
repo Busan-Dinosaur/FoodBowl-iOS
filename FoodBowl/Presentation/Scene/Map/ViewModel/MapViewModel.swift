@@ -24,9 +24,9 @@ final class MapViewModel: BaseViewModelType {
     
     private var cancelBag = Set<AnyCancellable>()
     
-    private let pageSize: Int = 2
-    private let size: Int = 2
-    private var currentpageSize: Int = 2
+    private let pageSize: Int = 20
+    private let size: Int = 20
+    private var currentpageSize: Int = 20
     private var lastReviewId: Int?
 
     var customLocation: CustomLocation?
