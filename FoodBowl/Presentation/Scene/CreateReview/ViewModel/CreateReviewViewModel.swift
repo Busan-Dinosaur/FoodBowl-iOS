@@ -15,11 +15,11 @@ final class CreateReviewViewModel {
     var store: Place?
 
     private let providerKakao = MoyaProvider<KakaoAPI>()
-    private let providerReview = MoyaProvider<ReviewAPI>()
+    private let provider = MoyaProvider<ServiceAPI>()
 
     func createReview() async {
         let imagesData = reviewImages.map { $0.jpegData(compressionQuality: 0.3)! }
-        let response = await providerReview.request(.createReview(request: reviewRequest, images: imagesData))
+        let response = await provider.request(.createReview(request: reviewRequest, images: imagesData))
         switch response {
         case .success:
             return

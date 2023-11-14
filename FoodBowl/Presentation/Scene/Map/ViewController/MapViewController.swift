@@ -373,6 +373,7 @@ extension MapViewController {
         self.snapshot.deleteItems(previousReviewsData)
         self.snapshot.appendItems(items, toSection: .main)
         self.dataSource.applySnapshotUsingReloadData(self.snapshot)
+        self.feedListView.emptyView.isHidden = !items.isEmpty
     }
     
     private func loadMoreReviews(_ items: [Review]) {
@@ -507,6 +508,7 @@ extension MapViewController {
         grabbarView.showResult()
         feedListView.listCollectionView.isHidden = true
         feedListView.borderLineView.isHidden = true
+        feedListView.emptyView.isHidden = true
         tabBarController?.tabBar.frame.origin = CGPoint(x: 0, y: UIScreen.main.bounds.maxY)
     }
 
@@ -514,6 +516,7 @@ extension MapViewController {
         grabbarView.showContent()
         feedListView.listCollectionView.isHidden = false
         feedListView.borderLineView.isHidden = false
+        feedListView.emptyView.isHidden = !self.snapshot.itemIdentifiers(inSection: .main).isEmpty
         tabBarController?.tabBar.frame.origin = CGPoint(x: 0, y: UIScreen.main.bounds.maxY - tabBarHeight)
         grabbarView.layer.cornerRadius = 15
     }

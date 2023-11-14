@@ -27,19 +27,6 @@ class BaseViewController: UIViewController {
         $0.addAction(buttonAction, for: .touchUpInside)
     }
 
-    lazy var plusButton = PlusButton().then {
-        let action = UIAction { [weak self] _ in
-            let createReviewController = CreateReviewController()
-            createReviewController.delegate = self
-            let navigationController = UINavigationController(rootViewController: createReviewController)
-            navigationController.modalPresentationStyle = .fullScreen
-            DispatchQueue.main.async {
-                self?.present(navigationController, animated: true)
-            }
-        }
-        $0.addAction(action, for: .touchUpInside)
-    }
-
     // MARK: - life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -65,10 +52,9 @@ class BaseViewController: UIViewController {
             object: nil
         )
     }
-
+    
     init() {
         super.init(nibName: nil, bundle: nil)
-        renewToken()
     }
 
     required init?(coder: NSCoder) {
@@ -119,8 +105,6 @@ class BaseViewController: UIViewController {
     func setupInteractivePopGestureRecognizer() {
         navigationController?.interactivePopGestureRecognizer?.delegate = self
     }
-
-    func loadData() {}
 
     func setupLottie() {
         animationView = .init(name: "loading")
@@ -180,47 +164,11 @@ class BaseViewController: UIViewController {
             self.present(navigationController, animated: true)
         }
     }
-
-    func renewToken() {
-        let providerService = MoyaProvider<ServiceAPI>()
-        providerService.request(.renew) { response in
-            switch response {
-            case .success(let result):
-                guard let data = try? result.map(RenewResponse.self) else { return }
-                KeychainManager.set(data.accessToken, for: .accessToken)
-                KeychainManager.set(data.refreshToken, for: .refreshToken)
-                print(data.accessToken)
-            case .failure(let err):
-                print(err.localizedDescription)
-            }
-        }
-    }
-}
-
-extension BaseViewController: UITextFieldDelegate {
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        return true
-    }
-
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        activeTextField = textField
-    }
-
-    func textFieldDidEndEditing(_: UITextField) {
-        activeTextField = nil
-    }
 }
 
 extension BaseViewController: UIGestureRecognizerDelegate {
     func gestureRecognizerShouldBegin(_: UIGestureRecognizer) -> Bool {
         guard let count = navigationController?.viewControllers.count else { return false }
         return count > 1
-    }
-}
-
-extension BaseViewController: CreateReviewControllerDelegate {
-    func updateData() {
-        loadData()
     }
 }

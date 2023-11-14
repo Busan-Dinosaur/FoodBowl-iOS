@@ -1,5 +1,5 @@
 //
-//  StoreDeatilView.swift
+//  StoreDetailView.swift
 //  FoodBowl
 //
 //  Created by COBY_PRO on 10/20/23.
@@ -11,7 +11,7 @@ import UIKit
 import SnapKit
 import Then
 
-final class StoreDeatilView: UIView, BaseViewType {
+final class StoreDetailView: UIView, BaseViewType {
     private enum ConstantSize {
         static let sectionContentInset: NSDirectionalEdgeInsets = NSDirectionalEdgeInsets(
             top: 0,
@@ -120,7 +120,7 @@ final class StoreDeatilView: UIView, BaseViewType {
 }
 
 // MARK: - UICollectionViewLayout
-extension StoreDeatilView {
+extension StoreDetailView {
     private func createLayout() -> UICollectionViewLayout {
         let layout = UICollectionViewCompositionalLayout { index, environment -> NSCollectionLayoutSection? in
             let itemSize = NSCollectionLayoutSize(

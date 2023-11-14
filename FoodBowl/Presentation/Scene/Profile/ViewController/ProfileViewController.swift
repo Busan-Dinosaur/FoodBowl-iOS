@@ -41,7 +41,7 @@ final class ProfileViewController: MapViewController {
             self?.navigationController?.pushViewController(followingViewController, animated: true)
         }
         let followButtonAction = UIAction { [weak self] _ in
-//            self?.followButtonTapped()
+            self?.followButtonTapped()
         }
         let editButtonAction = UIAction { [weak self] _ in
             let updateProfileViewController = UpdateProfileViewController()
@@ -181,6 +181,16 @@ final class ProfileViewController: MapViewController {
                 UserDefaultsManager.currentUser = member
             } else {
                 self.title = member.nickname
+            }
+        }
+    }
+    
+    private func followButtonTapped() {
+        Task {
+            if profileHeaderView.followButton.isSelected {
+                profileHeaderView.followButton.isSelected = await self.viewModel.unfollowMember(memberId: memberId)
+            } else {
+                profileHeaderView.followButton.isSelected = await self.viewModel.followMember(memberId: memberId)
             }
         }
     }

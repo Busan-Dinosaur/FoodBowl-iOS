@@ -15,8 +15,7 @@ final class StoreDetailViewModel: BaseViewModelType {
     
     // MARK: - property
 
-    let providerReview = MoyaProvider<ReviewAPI>()
-    let providerFollow = MoyaProvider<FollowAPI>()
+    let provider = MoyaProvider<ServiceAPI>()
     
     private var cancelBag = Set<AnyCancellable>()
     
@@ -92,7 +91,7 @@ final class StoreDetailViewModel: BaseViewModelType {
         if currentpageSize < pageSize { return }
         let filter = isFriend ? "FRIEND" : "ALL"
         
-        providerReview.requestPublisher(
+        provider.requestPublisher(
             .getReviewsByStore(
                 form: GetReviewByStoreRequest(storeId: self.storeId, filter: filter),
                 lastReviewId: lastReviewId,
@@ -122,7 +121,7 @@ final class StoreDetailViewModel: BaseViewModelType {
     }
     
     func removeReview(id: Int) async -> Bool {
-        let response = await providerReview.request(.removeReview(id: id))
+        let response = await provider.request(.removeReview(id: id))
         switch response {
         case .success:
             return true

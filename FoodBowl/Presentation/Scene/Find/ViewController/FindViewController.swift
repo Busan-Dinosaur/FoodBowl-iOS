@@ -10,9 +10,8 @@ import UIKit
 import SnapKit
 import Then
 
-final class FindViewController: BaseViewController {
-    private var viewModel = FindViewModel()
-
+final class FindViewController: UIViewController, Navigationable, Keyboardable {
+    
     private enum Size {
         static let cellWidth: CGFloat = (SizeLiteral.fullWidth - 16) / 3
         static let cellHeight: CGFloat = cellWidth
@@ -23,40 +22,21 @@ final class FindViewController: BaseViewController {
             right: 20
         )
     }
-
-    private lazy var isBookmarked = [Bool](repeating: false, count: 10)
-
-    private var stores: [StoreBySearch] = [] {
-        didSet {
+    
+    // MARK: - ui component
+    
+    lazy var plusButton = PlusButton().then {
+        let action = UIAction { [weak self] _ in
+            let createReviewController = CreateReviewController()
+            createReviewController.delegate = self
+            let navigationController = UINavigationController(rootViewController: createReviewController)
+            navigationController.modalPresentationStyle = .fullScreen
             DispatchQueue.main.async {
-                self.findResultViewController.searchResultTableView.reloadData()
+                self?.present(navigationController, animated: true)
             }
         }
+        $0.addAction(action, for: .touchUpInside)
     }
-
-    private var members: [Member] = [] {
-        didSet {
-            DispatchQueue.main.async {
-                self.findResultViewController.searchResultTableView.reloadData()
-            }
-        }
-    }
-
-    private var scope: Int = 0 {
-        didSet {
-            loadData()
-        }
-    }
-
-    private var searchText: String = "" {
-        didSet {
-            loadData()
-        }
-    }
-
-    // MARK: - property
-    private var refreshControl = UIRefreshControl()
-
     private let findGuideLabel = PaddingLabel().then {
         $0.font = .font(.regular, ofSize: 22)
         $0.text = "찾기"
@@ -64,12 +44,10 @@ final class FindViewController: BaseViewController {
         $0.padding = UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 0)
         $0.frame = CGRect(x: 0, y: 0, width: 150, height: 0)
     }
-
     private lazy var findResultViewController = FindResultViewController().then {
         $0.searchResultTableView.delegate = self
         $0.searchResultTableView.dataSource = self
     }
-
     private lazy var searchController = UISearchController(searchResultsController: findResultViewController).then {
         $0.searchResultsUpdater = self
         $0.searchBar.delegate = self
@@ -81,7 +59,6 @@ final class FindViewController: BaseViewController {
         $0.searchBar.showsScopeBar = false
         $0.searchBar.sizeToFit()
     }
-
     private let collectionViewFlowLayout = UICollectionViewFlowLayout().then {
         $0.scrollDirection = .vertical
         $0.sectionInset = Size.collectionInset
@@ -89,7 +66,6 @@ final class FindViewController: BaseViewController {
         $0.minimumLineSpacing = 8
         $0.minimumInteritemSpacing = 8
     }
-
     private lazy var listCollectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewFlowLayout).then {
         $0.backgroundColor = .clear
         $0.dataSource = self
@@ -97,22 +73,60 @@ final class FindViewController: BaseViewController {
         $0.showsVerticalScrollIndicator = false
         $0.register(PhotoCollectionViewCell.self, forCellWithReuseIdentifier: PhotoCollectionViewCell.className)
     }
-
+    
+    // MARK: - property
+    
+    private var viewModel = MapViewModel()
+    private lazy var isBookmarked = [Bool](repeating: false, count: 10)
+    private var stores: [StoreBySearch] = [] {
+        didSet {
+            DispatchQueue.main.async {
+                self.findResultViewController.searchResultTableView.reloadData()
+            }
+        }
+    }
+    private var members: [Member] = [] {
+        didSet {
+            DispatchQueue.main.async {
+                self.findResultViewController.searchResultTableView.reloadData()
+            }
+        }
+    }
+    private var scope: Int = 0 {
+        didSet {
+            loadData()
+        }
+    }
+    private var searchText: String = "" {
+        didSet {
+            loadData()
+        }
+    }    
+    private var refreshControl = UIRefreshControl()
+    
+    // MARK: - life cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupRefreshControl()
+        self.setupNavigation()
+        self.setupLayout()
+        self.configureUI()
+        self.setupRefreshControl()
     }
 
-    override func setupLayout() {
+    func setupLayout() {
         view.addSubviews(listCollectionView)
 
         listCollectionView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
     }
+    
+    func configureUI() {
+        view.backgroundColor = .mainBackgroundColor
+    }
 
-    override func setupNavigationBar() {
-        super.setupNavigationBar()
+    func setupNavigation() {
         let findGuideLabel = makeBarButtonItem(with: findGuideLabel)
         let plusButton = makeBarButtonItem(with: plusButton)
         navigationItem.leftBarButtonItem = findGuideLabel
@@ -130,7 +144,7 @@ final class FindViewController: BaseViewController {
         listCollectionView.refreshControl = refreshControl
     }
 
-    override func loadData() {
+    func loadData() {
         if searchText == "" {
             return
         }
@@ -205,9 +219,19 @@ extension FindViewController: UICollectionViewDataSource, UICollectionViewDelega
 extension FindViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
         if scope == 0 {
-            stores.count
+            if stores.isEmpty {
+                self.findResultViewController.emptyView.isHidden = false
+            } else {
+                self.findResultViewController.emptyView.isHidden = true
+            }
+            return stores.count
         } else {
-            members.count
+            if members.isEmpty {
+                self.findResultViewController.emptyView.isHidden = false
+            } else {
+                self.findResultViewController.emptyView.isHidden = true
+            }
+            return members.count
         }
     }
 
@@ -245,13 +269,11 @@ extension FindViewController: UITableViewDataSource, UITableViewDelegate {
                 cell.followButtonTapAction = { [weak self] _ in
                     Task {
                         guard let self = self else { return }
-                        if cell.followButton.isSelected {
-                            if await self.viewModel.unfollowMember(memberId: member.memberId) {
-                                self.loadData()
-                            }
-                        } else {
-                            if await self.viewModel.followMember(memberId: member.memberId) {
-                                self.loadData()
+                        Task {
+                            if cell.followButton.isSelected {
+                                cell.followButton.isSelected = await self.viewModel.unfollowMember(memberId: member.memberId)
+                            } else {
+                                cell.followButton.isSelected = await self.viewModel.followMember(memberId: member.memberId)
                             }
                         }
                     }
@@ -283,5 +305,11 @@ extension FindViewController: UITableViewDataSource, UITableViewDelegate {
                 self?.navigationController?.pushViewController(profileViewController, animated: true)
             }
         }
+    }
+}
+
+extension FindViewController: CreateReviewControllerDelegate {
+    func updateData() {
+        loadData()
     }
 }

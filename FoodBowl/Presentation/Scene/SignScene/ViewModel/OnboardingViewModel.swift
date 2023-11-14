@@ -16,11 +16,8 @@ final class OnboardingViewModel: NSObject, BaseViewModelType {
     
     // MARK: - property
     
-    private let providerService = MoyaProvider<ServiceAPI>()
-    private let providerMember = MoyaProvider<MemberAPI>()
-    
-    private var cancelBag = Set<AnyCancellable>()
-    
+    private let provider = MoyaProvider<ServiceAPI>()
+    private var cancelBag = Set<AnyCancellable>()    
     private let isLoginSubject = PassthroughSubject<Bool, Error>()
     
     struct Input {
@@ -44,7 +41,7 @@ final class OnboardingViewModel: NSObject, BaseViewModelType {
     // MARK: - network
     
     private func getToken(sign: SignRequestDTO) {
-        providerService.requestPublisher(.signIn(request: sign))
+        provider.requestPublisher(.signIn(request: sign))
             .sink { completion in
                 switch completion {
                 case let .failure(error) :
@@ -62,7 +59,7 @@ final class OnboardingViewModel: NSObject, BaseViewModelType {
     }
     
     private func getMyProfile() {
-        providerMember.requestPublisher(.getMyProfile)
+        provider.requestPublisher(.getMyProfile)
             .sink { completion in
                 switch completion {
                 case let .failure(error):

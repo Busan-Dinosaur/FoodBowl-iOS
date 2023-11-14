@@ -1,3 +1,10 @@
+//
+//  UserInfoView.swift
+//  FoodBowl
+//
+//  Created by COBY_PRO on 2023/11/14.
+//
+
 import UIKit
 
 import Kingfisher

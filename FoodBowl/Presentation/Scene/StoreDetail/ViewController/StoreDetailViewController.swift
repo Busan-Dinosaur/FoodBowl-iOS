@@ -11,7 +11,7 @@ import UIKit
 import SnapKit
 import Then
 
-final class StoreDetailViewController: UIViewController, Navigationable, Keyboardable, Optionable {
+final class StoreDetailViewController: UIViewController, Navigationable, Optionable {
     
     enum Section: CaseIterable {
         case main
@@ -19,7 +19,7 @@ final class StoreDetailViewController: UIViewController, Navigationable, Keyboar
     
     // MARK: - ui component
     
-    private lazy var storeDeatilView: StoreDeatilView = StoreDeatilView(storeId: self.viewModel.storeId, isFriend: self.viewModel.isFriend)
+    private lazy var storeDeatilView: StoreDetailView = StoreDetailView(storeId: self.viewModel.storeId, isFriend: self.viewModel.isFriend)
     
     private var dataSource: UICollectionViewDiffableDataSource<Section, ReviewByStore>!
     private var snapShot: NSDiffableDataSourceSnapshot<Section, ReviewByStore>!

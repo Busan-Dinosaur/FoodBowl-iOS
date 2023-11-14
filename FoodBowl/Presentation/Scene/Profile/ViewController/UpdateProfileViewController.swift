@@ -13,9 +13,18 @@ import Then
 import YPImagePicker
 
 final class UpdateProfileViewController: BaseViewController {
-    private var viewModel = ProfileViewModel()
-
+    
     // MARK: - property
+    
+    private var viewModel = MapViewModel()
+    
+    // MARK: - ui component
+    
+    private let scrollView = UIScrollView().then {
+        $0.isScrollEnabled = true
+        $0.showsVerticalScrollIndicator = false
+    }
+    private let contentView = UIView()
     private lazy var profileImageView = UIImageView().then {
         $0.layer.cornerRadius = 50
         $0.layer.masksToBounds = true
@@ -24,14 +33,12 @@ final class UpdateProfileViewController: BaseViewController {
         $0.isUserInteractionEnabled = true
         $0.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tappedProfileImageView)))
     }
-
     private let nicknameLabel = UILabel().then {
         $0.text = "닉네임"
         $0.font = .font(.regular, ofSize: 17)
         $0.textColor = .mainTextColor
     }
-
-    private let nicknameField = UITextField().then {
+    private lazy var nicknameField = UITextField().then {
         let attributes = [
             NSAttributedString.Key.foregroundColor: UIColor.grey001,
             NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .subheadline, weight: .regular)
@@ -45,16 +52,15 @@ final class UpdateProfileViewController: BaseViewController {
         $0.clearButtonMode = .always
         $0.font = UIFont.preferredFont(forTextStyle: .subheadline, weight: .regular)
         $0.textColor = .mainTextColor
+        $0.delegate = self
         $0.makeBorderLayer(color: .grey002)
     }
-
     private let userInfoLabel = UILabel().then {
         $0.text = "한줄 소개"
         $0.font = .font(.regular, ofSize: 17)
         $0.textColor = .mainTextColor
     }
-
-    private let userInfoField = UITextField().then {
+    private lazy var userInfoField = UITextField().then {
         let attributes = [
             NSAttributedString.Key.foregroundColor: UIColor.grey001,
             NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .subheadline, weight: .regular)
@@ -68,9 +74,9 @@ final class UpdateProfileViewController: BaseViewController {
         $0.clearButtonMode = .always
         $0.font = UIFont.preferredFont(forTextStyle: .subheadline, weight: .regular)
         $0.textColor = .mainTextColor
+        $0.delegate = self
         $0.makeBorderLayer(color: .grey002)
     }
-
     private lazy var completeButton = MainButton().then {
         $0.label.text = "완료"
         let action = UIAction { [weak self] _ in
@@ -78,7 +84,9 @@ final class UpdateProfileViewController: BaseViewController {
         }
         $0.addAction(action, for: .touchUpInside)
     }
-
+    
+    // MARK: - life cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupProfile()
@@ -95,10 +103,25 @@ final class UpdateProfileViewController: BaseViewController {
     }
 
     override func setupLayout() {
-        view.addSubviews(profileImageView, nicknameLabel, nicknameField, userInfoLabel, userInfoField, completeButton)
+        view.addSubviews(scrollView, completeButton)
+        
+        scrollView.snp.makeConstraints {
+            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+            $0.bottom.equalTo(completeButton.snp.top).offset(-20)
+            $0.leading.trailing.equalToSuperview()
+        }
+        
+        scrollView.addSubview(contentView)
+        
+        contentView.snp.makeConstraints {
+            $0.width.equalToSuperview()
+            $0.top.bottom.equalToSuperview()
+        }
+        
+        contentView.addSubviews(profileImageView, nicknameLabel, nicknameField, userInfoLabel, userInfoField)
 
         profileImageView.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).inset(20)
+            $0.top.equalToSuperview().inset(20)
             $0.centerX.equalToSuperview()
             $0.width.height.equalTo(100)
         }
@@ -123,6 +146,7 @@ final class UpdateProfileViewController: BaseViewController {
             $0.top.equalTo(userInfoLabel.snp.bottom).offset(10)
             $0.leading.trailing.equalToSuperview().inset(SizeLiteral.horizantalPadding)
             $0.height.equalTo(50)
+            $0.bottom.equalToSuperview()
         }
 
         completeButton.snp.makeConstraints {
@@ -208,5 +232,30 @@ final class UpdateProfileViewController: BaseViewController {
                 present(alert, animated: true, completion: nil)
             }
         }
+    }
+}
+
+extension UpdateProfileViewController: UITextFieldDelegate {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        var maxLength = 0
+        
+        // 길이 제한을 설정
+        if textField == nicknameField {
+            maxLength = 10
+        } else if textField == userInfoField {
+            maxLength = 20
+        }
+        
+        // 새로운 텍스트와 길이 제한 검사
+        let currentText = textField.text ?? ""
+        let newText = (currentText as NSString).replacingCharacters(in: range, with: string)
+        
+        if newText.count > maxLength {
+            // 최대 길이에 도달했을 때 알림 표시
+            makeAlert(title: "최대 \(maxLength)자까지 입력 가능합니다.")
+            return false
+        }
+        
+        return true
     }
 }

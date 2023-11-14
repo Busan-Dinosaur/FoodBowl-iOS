@@ -17,11 +17,16 @@ final class FindResultViewController: BaseViewController {
         $0.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 20, right: 0)
         $0.backgroundColor = .mainBackgroundColor
     }
+    let emptyView = EmptyView()
 
     override func setupLayout() {
-        view.addSubviews(searchResultTableView)
+        view.addSubviews(searchResultTableView, emptyView)
 
         searchResultTableView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
+        
+        emptyView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
     }

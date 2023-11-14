@@ -21,6 +21,7 @@ final class CategoryListView: UIView {
     }
 
     private let categories = Categories.allCases
+    var selectedCategory: Categories? = nil
 
     // MARK: - property
     private let collectionViewFlowLayout = UICollectionViewFlowLayout().then {
@@ -35,7 +36,6 @@ final class CategoryListView: UIView {
         $0.dataSource = self
         $0.delegate = self
         $0.showsHorizontalScrollIndicator = false
-        $0.allowsMultipleSelection = true
         $0.register(CategoryCollectionViewCell.self, forCellWithReuseIdentifier: CategoryCollectionViewCell.className)
     }
 
@@ -79,12 +79,23 @@ extension CategoryListView: UICollectionViewDataSource, UICollectionViewDelegate
         ) as? CategoryCollectionViewCell else {
             return UICollectionViewCell()
         }
-        cell.categoryLabel.text = categories[indexPath.item].rawValue
+        cell.categoryLabel.text = self.categories[indexPath.item].rawValue
 
         return cell
     }
 
-    func collectionView(_: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print(categories[indexPath.item].rawValue)
+    func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
+        guard let cell = collectionView.cellForItem(at: indexPath) as? CategoryCollectionViewCell else {
+            return true
+        }
+        
+        if cell.isSelected {
+            collectionView.deselectItem(at: indexPath, animated: true)
+            self.selectedCategory = nil
+            return false
+        } else {
+            self.selectedCategory = self.categories[indexPath.item]
+            return true
+        }
     }
 }

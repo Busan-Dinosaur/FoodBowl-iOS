@@ -27,7 +27,14 @@ final class CreateReviewController: BaseViewController, PhotoPickerable {
     var delegate: CreateReviewControllerDelegate?
 
     private let textViewPlaceHolder = "100자 이내"
-
+    
+    // MARK: - ui component
+    
+    private let scrollView = UIScrollView().then {
+        $0.isScrollEnabled = true
+        $0.showsVerticalScrollIndicator = false
+    }
+    private let contentView = UIView()
     private let newFeedGuideLabel = PaddingLabel().then {
         $0.font = .font(.regular, ofSize: 22)
         $0.text = "후기 작성"
@@ -35,7 +42,6 @@ final class CreateReviewController: BaseViewController, PhotoPickerable {
         $0.padding = UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 0)
         $0.frame = CGRect(x: 0, y: 0, width: 150, height: 0)
     }
-
     private lazy var closeButton = UIButton().then {
         $0.setTitle("닫기", for: .normal)
         $0.setTitleColor(.mainPink, for: .normal)
@@ -45,11 +51,9 @@ final class CreateReviewController: BaseViewController, PhotoPickerable {
         }
         $0.addAction(action, for: .touchUpInside)
     }
-
     private lazy var selectedStoreView = SelectedStoreView().then {
         $0.isHidden = true
     }
-
     private lazy var searchBarButton = SearchBarButton().then {
         $0.placeholderLabel.text = "가게 검색"
         let action = UIAction { [weak self] _ in
@@ -61,13 +65,11 @@ final class CreateReviewController: BaseViewController, PhotoPickerable {
         }
         $0.addAction(action, for: .touchUpInside)
     }
-
     private let guideCommentLabel = UILabel().then {
         $0.text = "한줄평"
         $0.font = .font(.regular, ofSize: 17)
         $0.textColor = .mainTextColor
     }
-
     lazy var commentTextView = UITextView().then {
         $0.textContainerInset = UIEdgeInsets(top: 12, left: 10, bottom: 12, right: 10)
         $0.font = UIFont.preferredFont(forTextStyle: .subheadline, weight: .light)
@@ -82,20 +84,17 @@ final class CreateReviewController: BaseViewController, PhotoPickerable {
         $0.makeBorderLayer(color: .grey002)
         $0.backgroundColor = .clear
     }
-
     private let guidePhotoLabel = UILabel().then {
         $0.text = "사진"
         $0.font = .font(.regular, ofSize: 17)
         $0.textColor = .mainTextColor
     }
-
     private let collectionViewFlowLayout = UICollectionViewFlowLayout().then {
         $0.scrollDirection = .horizontal
         $0.sectionInset = Size.collectionInset
         $0.itemSize = CGSize(width: Size.cellWidth, height: Size.cellHeight)
         $0.minimumInteritemSpacing = 4
     }
-
     private lazy var listCollectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewFlowLayout).then {
         $0.dataSource = self
         $0.delegate = self
@@ -105,7 +104,6 @@ final class CreateReviewController: BaseViewController, PhotoPickerable {
         $0.backgroundColor = .clear
         $0.showsHorizontalScrollIndicator = false
     }
-
     private lazy var completeButton = MainButton().then {
         $0.label.text = "완료"
         let action = UIAction { [weak self] _ in
@@ -120,18 +118,32 @@ final class CreateReviewController: BaseViewController, PhotoPickerable {
     }
 
     override func setupLayout() {
-        view.addSubviews(
+        view.addSubviews(scrollView, completeButton)
+        
+        scrollView.snp.makeConstraints {
+            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+            $0.bottom.equalTo(completeButton.snp.top).offset(-20)
+            $0.leading.trailing.equalToSuperview()
+        }
+        
+        scrollView.addSubview(contentView)
+        
+        contentView.snp.makeConstraints {
+            $0.width.equalToSuperview()
+            $0.top.bottom.equalToSuperview()
+        }
+        
+        contentView.addSubviews(
             searchBarButton,
             selectedStoreView,
+            guideCommentLabel,
             commentTextView,
-            completeButton,
             guidePhotoLabel,
-            listCollectionView,
-            guideCommentLabel
+            listCollectionView
         )
 
         searchBarButton.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide)
+            $0.top.equalToSuperview()
             $0.leading.trailing.equalToSuperview().inset(SizeLiteral.horizantalPadding)
             $0.height.equalTo(40)
         }
@@ -162,6 +174,7 @@ final class CreateReviewController: BaseViewController, PhotoPickerable {
             $0.top.equalTo(guidePhotoLabel.snp.bottom).offset(10)
             $0.leading.trailing.equalToSuperview()
             $0.height.equalTo(100)
+            $0.bottom.equalToSuperview()
         }
 
         completeButton.snp.makeConstraints {
@@ -226,6 +239,24 @@ final class CreateReviewController: BaseViewController, PhotoPickerable {
 }
 
 extension CreateReviewController: UITextViewDelegate {
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        let maxLength = 100
+        
+        // 현재 텍스트
+        let currentText = textView.text as NSString
+        
+        // 새로운 텍스트
+        let newText = currentText.replacingCharacters(in: range, with: text)
+        
+        if newText.count > maxLength {
+            // 최대 길이에 도달했을 때 알림 표시
+            makeAlert(title: "최대 \(maxLength)자까지 입력 가능합니다.")
+            return false
+        }
+        
+        return true
+    }
+    
     func textViewDidBeginEditing(_ textView: UITextView) {
         if textView.text == textViewPlaceHolder {
             textView.text = nil

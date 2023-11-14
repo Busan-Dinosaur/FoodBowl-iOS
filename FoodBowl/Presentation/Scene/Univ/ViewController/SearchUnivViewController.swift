@@ -13,7 +13,7 @@ import Then
 final class SearchUnivViewController: BaseViewController {
     var delegate: SearchUnivViewControllerDelegate?
 
-    private var viewModel = UnivViewModel()
+    private var viewModel = MapViewModel()
 
     private var schools = [School]()
     private var filteredSchools = [School]()

@@ -17,11 +17,7 @@ final class MapViewModel: BaseViewModelType {
     
     // MARK: - property
 
-    let providerReview = MoyaProvider<ReviewAPI>()
-    let providerStore = MoyaProvider<StoreAPI>()
-    let providerFollow = MoyaProvider<FollowAPI>()
-    let providerMember = MoyaProvider<MemberAPI>()
-    
+    private let provider = MoyaProvider<ServiceAPI>()    
     private var cancelBag = Set<AnyCancellable>()
     
     private let pageSize: Int = 20
@@ -74,6 +70,8 @@ final class MapViewModel: BaseViewModelType {
                     self.getReviewsByMember()
                     self.getStoresByMember()
                 }
+                
+                self.renewToken()
             })
             .store(in: &self.cancelBag)
         
@@ -125,7 +123,7 @@ extension MapViewModel {
             if currentpageSize < pageSize { return }
             guard let customLocation = customLocation else { return }
             
-            let response = await self.providerReview.request(
+            let response = await self.provider.request(
                 .getReviewsByFollowing(
                     form: customLocation,
                     lastReviewId: lastReviewId,
@@ -151,7 +149,7 @@ extension MapViewModel {
             if currentpageSize < pageSize { return }
             guard let customLocation = customLocation else { return }
             
-            let response = await self.providerReview.request(
+            let response = await self.provider.request(
                 .getReviewsByBookmark(
                     form: customLocation,
                     lastReviewId: lastReviewId,
@@ -177,7 +175,7 @@ extension MapViewModel {
             if currentpageSize < pageSize { return }
             guard let customLocation = customLocation, let schoolId = schoolId else { return }
             
-            let response = await self.providerReview.request(
+            let response = await self.provider.request(
                 .getReviewsBySchool(
                     form: customLocation,
                     schoolId: schoolId,
@@ -204,7 +202,7 @@ extension MapViewModel {
             if currentpageSize < pageSize { return }
             guard let customLocation = customLocation, let memberId = memberId else { return }
             
-            let response = await self.providerReview.request(
+            let response = await self.provider.request(
                 .getReviewsByMember(
                     form: customLocation,
                     memberId: memberId,
@@ -227,7 +225,7 @@ extension MapViewModel {
     }
     
     func removeReview(id: Int) async -> Bool {
-        let response = await providerReview.request(.removeReview(id: id))
+        let response = await provider.request(.removeReview(id: id))
         switch response {
         case .success:
             return true
@@ -244,7 +242,7 @@ extension MapViewModel {
         Task {
             guard let customLocation = customLocation else { return }
             
-            let response = await providerStore.request(.getStoresByFollowing(form: customLocation))
+            let response = await provider.request(.getStoresByFollowing(form: customLocation))
             switch response {
             case .success(let result):
                 guard let data = try? result.map(StoreResponse.self) else { return }
@@ -259,7 +257,7 @@ extension MapViewModel {
         Task {
             guard let customLocation = customLocation else { return }
             
-            let response = await providerStore.request(.getStoresByBookmark(form: customLocation))
+            let response = await provider.request(.getStoresByBookmark(form: customLocation))
             switch response {
             case .success(let result):
                 guard let data = try? result.map(StoreResponse.self) else { return }
@@ -274,7 +272,7 @@ extension MapViewModel {
         Task {
             guard let customLocation = customLocation, let schoolId = schoolId else { return }
             
-            let response = await providerStore.request(.getStoresBySchool(form: customLocation, schoolId: schoolId))
+            let response = await provider.request(.getStoresBySchool(form: customLocation, schoolId: schoolId))
             switch response {
             case .success(let result):
                 guard let data = try? result.map(StoreResponse.self) else { return }
@@ -289,7 +287,7 @@ extension MapViewModel {
         Task {
             guard let customLocation = customLocation, let memberId = memberId else { return }
             
-            let response = await providerStore.request(.getStoresByMember(form: customLocation, memberId: memberId))
+            let response = await provider.request(.getStoresByMember(form: customLocation, memberId: memberId))
             switch response {
             case .success(let result):
                 guard let data = try? result.map(StoreResponse.self) else { return }
@@ -301,7 +299,7 @@ extension MapViewModel {
     }
 
     func createBookmark(storeId: Int) async -> Bool {
-        let response = await providerStore.request(.createBookmark(storeId: storeId))
+        let response = await provider.request(.createBookmark(storeId: storeId))
         switch response {
         case .success:
             return true
@@ -312,7 +310,7 @@ extension MapViewModel {
     }
 
     func removeBookmark(storeId: Int) async -> Bool {
-        let response = await providerStore.request(.removeBookmark(storeId: storeId))
+        let response = await provider.request(.removeBookmark(storeId: storeId))
         switch response {
         case .success:
             return true
@@ -326,7 +324,7 @@ extension MapViewModel {
 // MARK: - Follow Method
 extension MapViewModel {
     func followMember(memberId: Int) async -> Bool {
-        let response = await providerFollow.request(.followMember(memberId: memberId))
+        let response = await provider.request(.followMember(memberId: memberId))
         switch response {
         case .success:
             return true
@@ -337,18 +335,18 @@ extension MapViewModel {
     }
 
     func unfollowMember(memberId: Int) async -> Bool {
-        let response = await providerFollow.request(.unfollowMember(memberId: memberId))
+        let response = await provider.request(.unfollowMember(memberId: memberId))
         switch response {
         case .success:
-            return true
+            return false
         case .failure(let err):
             handleError(err)
-            return false
+            return true
         }
     }
 
     func getFollowerMembers(memberId: Int, page: Int = 0) async -> [MemberByFollow] {
-        let response = await providerFollow.request(
+        let response = await provider.request(
             .getFollowerMember(
                 memberId: memberId,
                 page: page,
@@ -366,7 +364,7 @@ extension MapViewModel {
     }
 
     func getFollowingMembers(memberId: Int, page: Int = 0) async -> [MemberByFollow] {
-        let response = await providerFollow.request(
+        let response = await provider.request(
             .getFollowingMember(
                 memberId: memberId,
                 page: page,
@@ -384,7 +382,7 @@ extension MapViewModel {
     }
 
     func removeFollowingMember(memberId: Int) async -> Bool {
-        let response = await providerFollow.request(.removeFollower(memberId: memberId))
+        let response = await provider.request(.removeFollower(memberId: memberId))
         switch response {
         case .success:
             return true
@@ -398,7 +396,7 @@ extension MapViewModel {
 // MARK: - Get and Update Profile
 extension MapViewModel {
     func getMemberProfile(id: Int) async -> MemberProfileResponse? {
-        let response = await providerMember.request(.getMemberProfile(id: id))
+        let response = await provider.request(.getMemberProfile(id: id))
         switch response {
         case .success(let result):
             guard let data = try? result.map(MemberProfileResponse.self) else { return nil }
@@ -410,7 +408,7 @@ extension MapViewModel {
     }
 
     func updateMembeProfile(profile: UpdateMemberProfileRequest) async {
-        let response = await providerMember.request(.updateMemberProfile(request: profile))
+        let response = await provider.request(.updateMemberProfile(request: profile))
         switch response {
         case .success:
             if var currentUser = UserDefaultsManager.currentUser {
@@ -425,12 +423,84 @@ extension MapViewModel {
 
     func updateMembeProfileImage(image: UIImage) async {
         guard let imageData = image.jpegData(compressionQuality: 0.1) else { return }
-        let response = await providerMember.request(.updateMemberProfileImage(image: imageData))
+        let response = await provider.request(.updateMemberProfileImage(image: imageData))
         switch response {
         case .success:
             return
         case .failure(let err):
             handleError(err)
+        }
+    }
+}
+
+// MARK: - Get Stores and Members
+extension MapViewModel {
+    func serachStores(name: String) async -> [StoreBySearch] {
+        guard let currentLoc = LocationManager.shared.manager.location?.coordinate else { return [] }
+        let response = await provider.request(
+            .getStoresBySearch(
+                form: SearchStoresRequest(
+                    name: name,
+                    x: currentLoc.longitude,
+                    y: currentLoc.latitude,
+                    size: size
+                )
+            )
+        )
+        switch response {
+        case .success(let result):
+            guard let data = try? result.map(SearchStoresResponse.self) else { return [] }
+            return data.searchResponses
+        case .failure(let err):
+            handleError(err)
+            return []
+        }
+    }
+
+    func searchMembers(name: String) async -> [Member] {
+        let response = await provider.request(
+            .getMemberBySearch(
+                form: SearchMembersRequest(
+                    name: name,
+                    size: size
+                )
+            )
+        )
+        switch response {
+        case .success(let result):
+            guard let data = try? result.map(SearchMembersResponse.self) else { return [] }
+            return data.memberSearchResponses
+        case .failure(let err):
+            handleError(err)
+            return []
+        }
+    }
+}
+
+// MARK: - ETC
+extension MapViewModel {
+    func getSchools() async -> [School] {
+        let response = await provider.request(.getSchools)
+        switch response {
+        case .success(let result):
+            guard let data = try? result.map(SchoolResponse.self) else { return [School]() }
+            return data.schools
+        case .failure(let err):
+            handleError(err)
+            return [School]()
+        }
+    }
+    
+    func renewToken() {
+        provider.request(.renew) { response in
+            switch response {
+            case .success(let result):
+                guard let data = try? result.map(RenewResponse.self) else { return }
+                KeychainManager.set(data.accessToken, for: .accessToken)
+                KeychainManager.set(data.refreshToken, for: .refreshToken)
+            case .failure(let err):
+                print(err.localizedDescription)
+            }
         }
     }
 }

@@ -1,5 +1,5 @@
 //
-//  EmptyFeedView.swift
+//  EmptyView.swift
 //  FoodBowl
 //
 //  Created by COBY_PRO on 2022/12/23.
@@ -10,16 +10,14 @@ import UIKit
 import SnapKit
 import Then
 
-final class EmptyFeedView: UIView {
+final class EmptyView: UIView {
     // MARK: - property
-
-    private let emptyImage = UIImageView(image: ImageLiteral.profile)
-
+    
     private let emptyLabel = UILabel().then {
-        $0.font = UIFont.preferredFont(forTextStyle: .title2, weight: .bold)
-        $0.textColor = .mainPink
+        $0.font = UIFont.preferredFont(forTextStyle: .callout)
+        $0.textColor = .subTextColor
         $0.textAlignment = .center
-        $0.text = "피드가 없습니다."
+        $0.text = "검색 결과가 없습니다."
     }
 
     // MARK: - init
@@ -34,17 +32,11 @@ final class EmptyFeedView: UIView {
     }
 
     private func setupLayout() {
-        addSubviews(emptyImage, emptyLabel)
-
-        emptyImage.snp.makeConstraints {
-            $0.centerX.equalToSuperview()
-            $0.centerY.equalToSuperview().offset(-100)
-            $0.width.height.equalTo(80)
-        }
+        addSubviews(emptyLabel)
 
         emptyLabel.snp.makeConstraints {
-            $0.top.equalTo(emptyImage.snp.bottom).offset(20)
             $0.centerX.equalToSuperview()
+            $0.centerY.equalToSuperview().offset(-100)
         }
     }
 }

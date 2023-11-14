@@ -23,7 +23,7 @@ final class FollowerViewController: BaseViewController {
         }
     }
 
-    private var viewModel = FollowViewModel()
+    private var viewModel = MapViewModel()
 
     init(memberId: Int = UserDefaultsManager.currentUser?.id ?? 0) {
         self.isOwn = UserDefaultsManager.currentUser?.id ?? 0 == memberId
@@ -65,7 +65,7 @@ final class FollowerViewController: BaseViewController {
         title = "팔로워"
     }
 
-    override func loadData() {
+    func loadData() {
         Task {
             await setupMembers()
         }
