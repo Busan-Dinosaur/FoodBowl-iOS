@@ -12,7 +12,9 @@ import SnapKit
 import Then
 
 final class UserInfoView: UIView {
-    // MARK: - property
+    
+    // MARK: - ui component
+    
     let userImageButton = UIButton().then {
         $0.backgroundColor = .grey003
         $0.layer.cornerRadius = 20
@@ -82,6 +84,7 @@ extension UserInfoView {
         } else {
             userImageButton.setImage(ImageLiteral.defaultProfile, for: .normal)
         }
+        
         userNameButton.setTitle(member.nickname, for: .normal)
         userFollowerLabel.text = "팔로워 \(member.followerCount.prettyNumber)명"
     }

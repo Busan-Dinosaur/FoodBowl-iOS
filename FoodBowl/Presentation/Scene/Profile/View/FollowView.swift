@@ -19,7 +19,7 @@ final class FollowView: UIView, BaseViewType {
             bottom: SizeLiteral.verticalPadding,
             trailing: 0
         )
-        static let groupInterItemSpacing: CGFloat = 20
+        static let groupInterItemSpacing: CGFloat = 8
     }
     
     // MARK: - ui component

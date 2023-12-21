@@ -50,6 +50,7 @@ final class FollowingViewController: UIViewController, Navigationable {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.configureDataSource()
         self.bindViewModel()
         self.setupNavigation()
         self.setupNavigationBar()
@@ -67,17 +68,37 @@ final class FollowingViewController: UIViewController, Navigationable {
     }
     
     private func bindCell(_ cell: UserInfoCollectionViewCell, with item: MemberByFollow) {
+        cell.userButtonTapAction = { [weak self] _ in
+            let profileViewController = ProfileViewController(memberId: item.memberId)
+            
+            DispatchQueue.main.async { [weak self] in
+                self?.navigationController?.pushViewController(profileViewController, animated: true)
+            }
+        }
+        
+        if UserDefaultsManager.currentUser?.id ?? 0 == item.memberId {
+            cell.followButton.isHidden = true
+        } else {
+            cell.followButton.isHidden = false
+        }
+        
+        cell.followButton.isSelected = item.isFollowing
+        
         cell.followButtonTapAction = { [weak self] _ in
             guard let self = self else { return }
             
             Task {
                 if cell.followButton.isSelected {
                     if await self.viewModel.unfollowMember(memberId: item.memberId) {
-                        self.updateFollowing(memberId: item.memberId)
+                        DispatchQueue.main.async {
+                            self.updateFollowing(memberId: item.memberId)
+                        }
                     }
                 } else {
                     if await self.viewModel.followMember(memberId: item.memberId) {
-                        self.updateFollowing(memberId: item.memberId)
+                        DispatchQueue.main.async {
+                            self.updateFollowing(memberId: item.memberId)
+                        }
                     }
                 }
             }

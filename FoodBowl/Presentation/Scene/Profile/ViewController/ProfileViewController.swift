@@ -59,10 +59,9 @@ final class ProfileViewController: MapViewController {
     
     private let isOwn: Bool
     private let memberId: Int
-    private var member: MemberProfileResponse?
 
-    init(memberId: Int = UserDefaultsManager.currentUser?.id ?? 0) {
-        self.isOwn = UserDefaultsManager.currentUser?.id ?? 0 == memberId
+    init(isOwn: Bool = false, memberId: Int = UserDefaultsManager.currentUser?.id ?? 0) {
+        self.isOwn = isOwn
         self.memberId = memberId
         super.init()
     }
@@ -75,14 +74,33 @@ final class ProfileViewController: MapViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.setupNavigationBar()
         self.setupLayout()
         self.configureUI()
-        self.setupNavigationBar()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.setupMember()
+        self.setUpMemberProfile()
+    }
+    
+    private func setupNavigationBar() {
+        if isOwn {
+            let userNicknameLabel = makeBarButtonItem(with: userNicknameLabel)
+            let plusButton = makeBarButtonItem(with: plusButton)
+            let settingButton = makeBarButtonItem(with: settingButton)
+            navigationItem.leftBarButtonItem = userNicknameLabel
+            navigationItem.rightBarButtonItems = [settingButton, plusButton]
+            profileHeaderView.followButton.isHidden = true
+        } else {
+            if UserDefaultsManager.currentUser?.id ?? 0 == memberId {
+                profileHeaderView.followButton.isHidden = true
+            } else {
+                let optionButton = makeBarButtonItem(with: optionButton)
+                navigationItem.rightBarButtonItem = optionButton
+            }
+            profileHeaderView.editButton.isHidden = true
+        }
     }
 
     override func setupLayout() {
@@ -116,40 +134,10 @@ final class ProfileViewController: MapViewController {
         viewModel.memberId = self.memberId
     }
 
-    private func setupNavigationBar() {
-        if isOwn {
-            let userNicknameLabel = makeBarButtonItem(with: userNicknameLabel)
-            let plusButton = makeBarButtonItem(with: plusButton)
-            let settingButton = makeBarButtonItem(with: settingButton)
-            navigationItem.leftBarButtonItem = userNicknameLabel
-            navigationItem.rightBarButtonItems = [settingButton, plusButton]
-            profileHeaderView.followButton.isHidden = true
-        } else {
-            if UserDefaultsManager.currentUser?.id ?? 0 == memberId {
-                profileHeaderView.followButton.isHidden = true
-            } else {
-                let optionButton = makeBarButtonItem(with: optionButton)
-                navigationItem.rightBarButtonItem = optionButton
-            }
-            profileHeaderView.editButton.isHidden = true
-        }
-    }
-
-    private func setupMember() {
-        Task {
-            if isOwn {
-                setUpMyProfile()
-                await setUpMemberProfile()
-            }
-            await setUpMemberProfile()
-        }
-    }
-
     private func setUpMyProfile() {
-        self.member = UserDefaultsManager.currentUser
-
         DispatchQueue.main.async {
-            guard let member = self.member else { return }
+            guard let member = UserDefaultsManager.currentUser else { return }
+            
             self.userNicknameLabel.text = member.nickname
             self.profileHeaderView.followerInfoButton.numberLabel.text = "\(member.followerCount)명"
             self.profileHeaderView.followingInfoButton.numberLabel.text = "\(member.followingCount)명"
@@ -168,32 +156,33 @@ final class ProfileViewController: MapViewController {
         }
     }
 
-    private func setUpMemberProfile() async {
-        self.member = await viewModel.getMemberProfile(id: memberId)
-
-        DispatchQueue.main.async {
-            guard let member = self.member else { return }
-            self.userNicknameLabel.text = member.nickname
-            self.profileHeaderView.followerInfoButton.numberLabel.text = "\(member.followerCount)명"
-            self.profileHeaderView.followingInfoButton.numberLabel.text = "\(member.followingCount)명"
-            self.profileHeaderView.followButton.isSelected = member.isFollowing
+    private func setUpMemberProfile() {
+        Task {
+            guard let member = await viewModel.getMemberProfile(id: memberId) else { return }
             
-            if let url = member.profileImageUrl {
-                self.profileHeaderView.userImageView.kf.setImage(with: URL(string: url))
-            } else {
-                self.profileHeaderView.userImageView.image = ImageLiteral.defaultProfile
-            }
-            
-            if member.introduction != nil {
-                self.profileHeaderView.userInfoLabel.text = member.introduction
-            } else {
-                self.profileHeaderView.userInfoLabel.text = "소개를 작성해주세요"
-            }
-
-            if self.isOwn {
-                UserDefaultsManager.currentUser = member
-            } else {
-                self.title = member.nickname
+            DispatchQueue.main.async {
+                self.userNicknameLabel.text = member.nickname
+                self.profileHeaderView.followerInfoButton.numberLabel.text = "\(member.followerCount)명"
+                self.profileHeaderView.followingInfoButton.numberLabel.text = "\(member.followingCount)명"
+                self.profileHeaderView.followButton.isSelected = member.isFollowing
+                
+                if let url = member.profileImageUrl {
+                    self.profileHeaderView.userImageView.kf.setImage(with: URL(string: url))
+                } else {
+                    self.profileHeaderView.userImageView.image = ImageLiteral.defaultProfile
+                }
+                
+                if member.introduction != nil {
+                    self.profileHeaderView.userInfoLabel.text = member.introduction
+                } else {
+                    self.profileHeaderView.userInfoLabel.text = "소개를 작성해주세요"
+                }
+                
+                if self.isOwn {
+                    UserDefaultsManager.currentUser = member
+                } else {
+                    self.title = member.nickname
+                }
             }
         }
     }

@@ -50,6 +50,7 @@ final class FollowerViewController: UIViewController, Navigationable {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.configureDataSource()
         self.bindViewModel()
         self.setupNavigation()
         self.setupNavigationBar()
@@ -67,6 +68,14 @@ final class FollowerViewController: UIViewController, Navigationable {
     }
     
     private func bindCell(_ cell: UserInfoCollectionViewCell, with item: MemberByFollow) {
+        cell.userButtonTapAction = { [weak self] _ in
+            let profileViewController = ProfileViewController(memberId: item.memberId)
+            
+            DispatchQueue.main.async { [weak self] in
+                self?.navigationController?.pushViewController(profileViewController, animated: true)
+            }
+        }
+        
         if UserDefaultsManager.currentUser?.id ?? 0 == item.memberId {
             cell.followButton.isHidden = true
         } else {
@@ -84,18 +93,24 @@ final class FollowerViewController: UIViewController, Navigationable {
             
             Task {
                 if self.viewModel.isOwn {
-                    if cell.followButton.isSelected {
-                        if await self.viewModel.unfollowMember(memberId: item.memberId) {
-                            self.updateFollower(memberId: item.memberId)
-                        }
-                    } else {
-                        if await self.viewModel.followMember(memberId: item.memberId) {
-                            self.updateFollower(memberId: item.memberId)
+                    if await self.viewModel.removeFollowingMember(memberId: item.memberId) {
+                        DispatchQueue.main.async {
+                            self.deleteFollower(memberId: item.memberId)
                         }
                     }
                 } else {
-                    if await self.viewModel.removeFollowingMember(memberId: item.memberId) {
-                        self.deleteFollower(memberId: item.memberId)
+                    if cell.followButton.isSelected {
+                        if await self.viewModel.unfollowMember(memberId: item.memberId) {
+                            DispatchQueue.main.async {
+                                self.updateFollower(memberId: item.memberId)
+                            }
+                        }
+                    } else {
+                        if await self.viewModel.followMember(memberId: item.memberId) {
+                            DispatchQueue.main.async {
+                                self.updateFollower(memberId: item.memberId)
+                            }
+                        }
                     }
                 }
             }

@@ -19,7 +19,7 @@ final class FollowingViewModel: NSObject, BaseViewModelType {
     private let provider = MoyaProvider<ServiceAPI>()
     private var cancelBag = Set<AnyCancellable>()
     
-    private let isOwn: Bool
+    let isOwn: Bool
     private let memberId: Int
     
     private let size: Int = 20
@@ -87,10 +87,10 @@ extension FollowingViewModel {
         let response = await provider.request(.unfollowMember(memberId: memberId))
         switch response {
         case .success:
-            return false
+            return true
         case .failure(let err):
             handleError(err)
-            return true
+            return false
         }
     }
     
