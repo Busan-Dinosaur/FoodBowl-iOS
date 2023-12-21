@@ -165,8 +165,6 @@ extension FollowerViewController {
     }
 
     private func loadFollowers(_ items: [MemberByFollow]) {
-        let previousData = self.snapshot.itemIdentifiers(inSection: .main)
-        self.snapshot.deleteItems(previousData)
         self.snapshot.appendItems(items, toSection: .main)
         self.dataSource.applySnapshotUsingReloadData(self.snapshot)
     }

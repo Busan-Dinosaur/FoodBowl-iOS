@@ -8,10 +8,11 @@
 import Combine
 import UIKit
 
-import CombineMoya
 import Moya
 
 final class FollowerViewModel: NSObject, BaseViewModelType {
+    
+    typealias Task = _Concurrency.Task
     
     // MARK: - property
     
@@ -48,14 +49,17 @@ final class FollowerViewModel: NSObject, BaseViewModelType {
     // MARK: - Public - func
     
     func transform(from input: Input) -> Output {
-        let viewDidLoad = input.viewDidLoad
-            .compactMap { [weak self] in self?.getFollowersPublisher() }
-            .eraseToAnyPublisher()
+        input.viewDidLoad
+            .sink(receiveValue: { [weak self] _ in
+                guard let self = self else { return }
+                self.getFollowers()
+            })
+            .store(in: &self.cancelBag)
         
         input.scrolledToBottom
             .sink(receiveValue: { [weak self] _ in
                 guard let self = self else { return }
-                self.getFollowersPublisher()
+                self.getFollowers()
             })
             .store(in: &self.cancelBag)
         
@@ -101,35 +105,31 @@ extension FollowerViewModel {
         }
     }
     
-    private func getFollowersPublisher() {
-        if currentSize < size { return }
-        
-        provider.requestPublisher(
-            .getFollowerMember(
-                memberId: memberId,
-                page: currentPage,
-                size: size
+    private func getFollowers() {
+        Task {
+            if currentSize < size { return }
+            
+            let response = await self.provider.request(
+                .getFollowerMember(
+                    memberId: memberId,
+                    page: currentPage,
+                    size: size
+                )
             )
-        )
-        .sink { completion in
-            switch completion {
-            case let .failure(error):
-                self.followersSubject.send(completion: .failure(error))
-            case .finished:
-                break
+            switch response {
+            case .success(let result):
+                guard let data = try? result.map(FollowMemberResponse.self) else { return }
+                self.currentPage = data.currentPage
+                self.currentSize = data.currentSize
+                
+                if self.currentPage == 0 {
+                    self.followersSubject.send(data.content)
+                } else {
+                    self.moreFollowersSubject.send(data.content)
+                }
+            case .failure(let err):
+                handleError(err)
             }
-        } receiveValue: { recievedValue in
-            guard let responseData = try? recievedValue.map(FollowMemberResponse.self) else { return }
-            self.currentPage = responseData.currentPage
-            self.currentSize = responseData.currentSize
-            
-            if self.currentPage == 0 {
-                self.followersSubject.send(responseData.content)
-            } else {
-                self.moreFollowersSubject.send(responseData.content)
-            }
-            
         }
-        .store(in : &cancelBag)
     }
 }
