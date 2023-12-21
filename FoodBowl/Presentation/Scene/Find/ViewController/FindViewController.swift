@@ -219,18 +219,8 @@ extension FindViewController: UICollectionViewDataSource, UICollectionViewDelega
 extension FindViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
         if scope == 0 {
-            if stores.isEmpty {
-                self.findResultViewController.emptyView.isHidden = false
-            } else {
-                self.findResultViewController.emptyView.isHidden = true
-            }
             return stores.count
         } else {
-            if members.isEmpty {
-                self.findResultViewController.emptyView.isHidden = false
-            } else {
-                self.findResultViewController.emptyView.isHidden = true
-            }
             return members.count
         }
     }

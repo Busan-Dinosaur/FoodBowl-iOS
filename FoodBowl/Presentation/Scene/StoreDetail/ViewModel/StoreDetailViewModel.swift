@@ -22,8 +22,8 @@ final class StoreDetailViewModel: BaseViewModelType {
     var storeId: Int
     var isFriend: Bool
     
-    private let pageSize: Int = 2
-    private var currentpageSize: Int = 2
+    private let pageSize: Int = 20
+    private var currentpageSize: Int = 20
     private var lastReviewId: Int?
     private var reviews = [ReviewByStore]()
     

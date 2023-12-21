@@ -5,130 +5,190 @@
 //  Created by COBY_PRO on 2023/01/19.
 //
 
+import Combine
 import UIKit
 
-import Kingfisher
 import SnapKit
 import Then
 
-final class FollowingViewController: BaseViewController {
-    private var isOwn: Bool
-    private var memberId: Int
-
-    var members = [MemberByFollow]() {
-        didSet {
-            DispatchQueue.main.async {
-                self.userResultTableView.reloadData()
-            }
-        }
+final class FollowingViewController: UIViewController, Navigationable {
+    
+    enum Section: CaseIterable {
+        case main
     }
-
-    private var viewModel = MapViewModel()
-
-    init(memberId: Int = UserDefaultsManager.currentUser?.id ?? 0) {
-        self.isOwn = UserDefaultsManager.currentUser?.id ?? 0 == memberId
-        self.memberId = memberId
-        super.init()
+    
+    // MARK: - ui component
+    
+    private let followView: FollowView = FollowView()
+    
+    private var dataSource: UICollectionViewDiffableDataSource<Section, MemberByFollow>!
+    private var snapshot: NSDiffableDataSourceSnapshot<Section, MemberByFollow>!
+    
+    // MARK: - property
+    
+    private var cancelBag: Set<AnyCancellable> = Set()
+    
+    private let viewModel: FollowingViewModel
+    
+    // MARK: - init
+    
+    init(viewModel: FollowingViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
     }
-
-    required init?(coder _: NSCoder) {
+    
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
-    // MARK: - property
-    private lazy var userResultTableView = UITableView().then {
-        $0.register(UserInfoTableViewCell.self, forCellReuseIdentifier: UserInfoTableViewCell.className)
-        $0.delegate = self
-        $0.dataSource = self
-        $0.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 20, right: 0)
-        $0.backgroundColor = .mainBackgroundColor
-    }
-
+    
     // MARK: - life cycle
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        loadData()
+    
+    override func loadView() {
+        self.view = self.followView
     }
-
-    override func setupLayout() {
-        view.addSubviews(userResultTableView)
-
-        userResultTableView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
-        }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.configureDataSource()
+        self.bindViewModel()
+        self.setupNavigation()
+        self.setupNavigationBar()
     }
-
-    override func setupNavigationBar() {
-        super.setupNavigationBar()
+    
+    // MARK: - func
+    
+    private func setupNavigationBar() {
         title = "팔로잉"
     }
-
-    func loadData() {
-        Task {
-            await setupMembers()
+    
+    private func bindViewModel() {
+        let output = self.transformedOutput()
+        self.bindOutputToViewModel(output)
+    }
+    
+    private func bindCell(_ cell: UserInfoCollectionViewCell, with item: MemberByFollow) {
+        cell.userButtonTapAction = { [weak self] _ in
+            let profileViewController = ProfileViewController(memberId: item.memberId)
+            
+            DispatchQueue.main.async { [weak self] in
+                self?.navigationController?.pushViewController(profileViewController, animated: true)
+            }
         }
-    }
-
-    private func setupMembers() async {
-        members = await viewModel.getFollowingMembers(memberId: memberId)
-    }
-}
-
-extension FollowingViewController: UITableViewDataSource, UITableViewDelegate {
-    func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
-        return members.count
-    }
-
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView
-            .dequeueReusableCell(withIdentifier: UserInfoTableViewCell.className, for: indexPath) as? UserInfoTableViewCell
-        else { return UITableViewCell() }
-
-        let member = members[indexPath.item]
-
-        cell.selectionStyle = .none
-        cell.setupDataByMemberByFollow(member)
-
-        if UserDefaultsManager.currentUser?.id ?? 0 == member.memberId {
+        
+        if UserDefaultsManager.currentUser?.id ?? 0 == item.memberId {
             cell.followButton.isHidden = true
         } else {
             cell.followButton.isHidden = false
-            cell.followButton.isSelected = member.isFollowing
-            cell.followButtonTapAction = { [weak self] _ in
-                Task {
-                    guard let self = self else { return }
-                    if cell.followButton.isSelected {
-                        if await self.viewModel.unfollowMember(memberId: member.memberId) {
-                            self.loadData()
+        }
+        
+        cell.followButton.isSelected = item.isFollowing
+        
+        cell.followButtonTapAction = { [weak self] _ in
+            guard let self = self else { return }
+            
+            Task {
+                if cell.followButton.isSelected {
+                    if await self.viewModel.unfollowMember(memberId: item.memberId) {
+                        DispatchQueue.main.async {
+                            self.updateFollowing(memberId: item.memberId)
                         }
-                    } else {
-                        if await self.viewModel.followMember(memberId: member.memberId) {
-                            self.loadData()
+                    }
+                } else {
+                    if await self.viewModel.followMember(memberId: item.memberId) {
+                        DispatchQueue.main.async {
+                            self.updateFollowing(memberId: item.memberId)
                         }
                     }
                 }
             }
         }
+    }
+    
+    private func bindOutputToViewModel(_ output: FollowingViewModel.Output) {
+        output.followings
+            .receive(on: DispatchQueue.main)
+            .sink { _ in
+            } receiveValue: { [weak self] followings in
+                self?.loadFollowings(followings)
+            }
+            .store(in: &self.cancelBag)
+        
+        output.moreFollowings
+            .receive(on: DispatchQueue.main)
+            .sink { _ in
+            } receiveValue: { [weak self] followings in
+                self?.loadMoreFollowings(followings)
+            }
+            .store(in: &self.cancelBag)
+    }
+    
+    private func transformedOutput() -> FollowingViewModel.Output {
+        let input = FollowingViewModel.Input(
+            viewDidLoad: self.viewDidLoadPublisher,
+            scrolledToBottom: self.followView.collectionView().scrolledToBottomPublisher.eraseToAnyPublisher()
+        )
+        return viewModel.transform(from: input)
+    }
+}
 
-        if let url = member.profileImageUrl {
-            cell.userImageView.kf.setImage(with: URL(string: url))
-        } else {
-            cell.userImageView.image = ImageLiteral.defaultProfile
-        }
-
-        return cell
+// MARK: - DataSource
+extension FollowingViewController {
+    private func configureDataSource() {
+        self.dataSource = self.userInfoCollectionViewDataSource()
+        self.configureSnapshot()
     }
 
-    func tableView(_: UITableView, heightForRowAt _: IndexPath) -> CGFloat {
-        return 64
+    private func userInfoCollectionViewDataSource() -> UICollectionViewDiffableDataSource<Section, MemberByFollow> {
+        let reviewCellRegistration = UICollectionView.CellRegistration<UserInfoCollectionViewCell, MemberByFollow> {
+            [weak self] cell, indexPath, item in
+            cell.setupDataByMemberByFollow(item)
+            self?.bindCell(cell, with: item)
+        }
+
+        return UICollectionViewDiffableDataSource(
+            collectionView: self.followView.collectionView(),
+            cellProvider: { collectionView, indexPath, item in
+                return collectionView.dequeueConfiguredReusableCell(
+                    using: reviewCellRegistration,
+                    for: indexPath,
+                    item: item
+                )
+            }
+        )
+    }
+}
+
+// MARK: - Snapshot
+extension FollowingViewController {
+    private func configureSnapshot() {
+        self.snapshot = NSDiffableDataSourceSnapshot<Section, MemberByFollow>()
+        self.snapshot.appendSections([.main])
+        self.dataSource.apply(self.snapshot, animatingDifferences: true)
     }
 
-    func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let profileViewController = ProfileViewController(memberId: members[indexPath.item].memberId)
-
-        DispatchQueue.main.async { [weak self] in
-            self?.navigationController?.pushViewController(profileViewController, animated: true)
-        }
+    private func loadFollowings(_ items: [MemberByFollow]) {
+        self.snapshot.appendItems(items, toSection: .main)
+        self.dataSource.applySnapshotUsingReloadData(self.snapshot)
+    }
+    
+    private func loadMoreFollowings(_ items: [MemberByFollow]) {
+        self.snapshot.appendItems(items, toSection: .main)
+        self.dataSource.applySnapshotUsingReloadData(self.snapshot)
+    }
+    
+    private func updateFollowing(memberId: Int) {
+        let previousData = self.snapshot.itemIdentifiers(inSection: .main)
+        let items = previousData
+            .map { customItem in
+                var updatedItem = customItem
+                if customItem.memberId == memberId {
+                    updatedItem.isFollowing.toggle()
+                }
+                return updatedItem
+            }
+        self.snapshot.deleteItems(previousData)
+        self.snapshot.appendItems(items)
+        self.dataSource.applySnapshotUsingReloadData(self.snapshot)
     }
 }

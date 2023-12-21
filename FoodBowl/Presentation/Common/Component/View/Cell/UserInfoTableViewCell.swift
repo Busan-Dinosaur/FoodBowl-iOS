@@ -12,6 +12,7 @@ import SnapKit
 import Then
 
 final class UserInfoTableViewCell: BaseTableViewCell {
+    
     var followButtonTapAction: ((UserInfoTableViewCell) -> Void)?
 
     // MARK: - property

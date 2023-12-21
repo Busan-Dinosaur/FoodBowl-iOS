@@ -40,6 +40,7 @@ final class UnivViewController: MapViewController {
         self.setupNavigationBar()
         self.currentUniv()
     }
+    
     override func configureUI() {
         super.configureUI()
         viewModel.type = .univ
