@@ -13,18 +13,26 @@ import Then
 
 final class FollowerViewController: UIViewController, Navigationable {
     
+    enum Section: CaseIterable {
+        case main
+    }
+    
     // MARK: - ui component
     
-    private let followerView: FollowerView = FollowerView()
+    private let followView: FollowView = FollowView()
+    
+    private var dataSource: UICollectionViewDiffableDataSource<Section, MemberByFollow>!
+    private var snapshot: NSDiffableDataSourceSnapshot<Section, MemberByFollow>!
     
     // MARK: - property
     
     private var cancelBag: Set<AnyCancellable> = Set()
-    private let viewModel: any BaseViewModelType
+    
+    private let viewModel: FollowerViewModel
     
     // MARK: - init
     
-    init(viewModel: any BaseViewModelType) {
+    init(viewModel: FollowerViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -37,7 +45,7 @@ final class FollowerViewController: UIViewController, Navigationable {
     // MARK: - life cycle
     
     override func loadView() {
-        self.view = self.followerView
+        self.view = self.followView
     }
     
     override func viewDidLoad() {
@@ -58,30 +66,138 @@ final class FollowerViewController: UIViewController, Navigationable {
         self.bindOutputToViewModel(output)
     }
     
-    private func bindOutputToViewModel(_ output: FollowerViewModel.Output?) {
-        guard let output else { return }
+    private func bindCell(_ cell: UserInfoCollectionViewCell, with item: MemberByFollow) {
+        if UserDefaultsManager.currentUser?.id ?? 0 == item.memberId {
+            cell.followButton.isHidden = true
+        } else {
+            cell.followButton.isHidden = false
+        }
         
+        if self.viewModel.isOwn {
+            cell.followButton.isSelected = true
+        } else {
+            cell.followButton.isSelected = item.isFollowing
+        }
+        
+        cell.followButtonTapAction = { [weak self] _ in
+            guard let self = self else { return }
+            
+            Task {
+                if self.viewModel.isOwn {
+                    if cell.followButton.isSelected {
+                        if await self.viewModel.unfollowMember(memberId: item.memberId) {
+                            self.updateFollower(memberId: item.memberId)
+                        }
+                    } else {
+                        if await self.viewModel.followMember(memberId: item.memberId) {
+                            self.updateFollower(memberId: item.memberId)
+                        }
+                    }
+                } else {
+                    if await self.viewModel.removeFollowingMember(memberId: item.memberId) {
+                        self.deleteFollower(memberId: item.memberId)
+                    }
+                }
+            }
+        }
+    }
+    
+    private func bindOutputToViewModel(_ output: FollowerViewModel.Output) {
         output.followers
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] result in
-                switch result {
-                case .failure:
-                    return
-                case .finished:
-                    return
-                }
+            .sink { _ in
             } receiveValue: { [weak self] followers in
-                self?.followerView.members = followers
+                self?.loadFollowers(followers)
+            }
+            .store(in: &self.cancelBag)
+        
+        output.moreFollowers
+            .receive(on: DispatchQueue.main)
+            .sink { _ in
+            } receiveValue: { [weak self] followers in
+                self?.loadMoreFollowers(followers)
             }
             .store(in: &self.cancelBag)
     }
     
-    private func transformedOutput() -> FollowerViewModel.Output? {
-        guard let viewModel = self.viewModel as? FollowerViewModel else { return nil }
-        
+    private func transformedOutput() -> FollowerViewModel.Output {
         let input = FollowerViewModel.Input(
-            scrolledToBottom: self.followerView.listTableView.scrolledToBottomPublisher.eraseToAnyPublisher()
+            viewDidLoad: self.viewDidLoadPublisher,
+            scrolledToBottom: self.followView.collectionView().scrolledToBottomPublisher.eraseToAnyPublisher()
         )
         return viewModel.transform(from: input)
+    }
+}
+
+// MARK: - DataSource
+extension FollowerViewController {
+    private func configureDataSource() {
+        self.dataSource = self.userInfoCollectionViewDataSource()
+        self.configureSnapshot()
+    }
+
+    private func userInfoCollectionViewDataSource() -> UICollectionViewDiffableDataSource<Section, MemberByFollow> {
+        let reviewCellRegistration = UICollectionView.CellRegistration<UserInfoCollectionViewCell, MemberByFollow> {
+            [weak self] cell, indexPath, item in
+            cell.setupDataByMemberByFollow(item)
+            self?.bindCell(cell, with: item)
+        }
+
+        return UICollectionViewDiffableDataSource(
+            collectionView: self.followView.collectionView(),
+            cellProvider: { collectionView, indexPath, item in
+                return collectionView.dequeueConfiguredReusableCell(
+                    using: reviewCellRegistration,
+                    for: indexPath,
+                    item: item
+                )
+            }
+        )
+    }
+}
+
+// MARK: - Snapshot
+extension FollowerViewController {
+    private func configureSnapshot() {
+        self.snapshot = NSDiffableDataSourceSnapshot<Section, MemberByFollow>()
+        self.snapshot.appendSections([.main])
+        self.dataSource.apply(self.snapshot, animatingDifferences: true)
+    }
+
+    private func loadFollowers(_ items: [MemberByFollow]) {
+        let previousData = self.snapshot.itemIdentifiers(inSection: .main)
+        self.snapshot.deleteItems(previousData)
+        self.snapshot.appendItems(items, toSection: .main)
+        self.dataSource.applySnapshotUsingReloadData(self.snapshot)
+    }
+    
+    private func loadMoreFollowers(_ items: [MemberByFollow]) {
+        self.snapshot.appendItems(items, toSection: .main)
+        self.dataSource.applySnapshotUsingReloadData(self.snapshot)
+    }
+    
+    private func updateFollower(memberId: Int) {
+        let previousData = self.snapshot.itemIdentifiers(inSection: .main)
+        let items = previousData
+            .map { customItem in
+                var updatedItem = customItem
+                if customItem.memberId == memberId {
+                    updatedItem.isFollowing.toggle()
+                }
+                return updatedItem
+            }
+        self.snapshot.deleteItems(previousData)
+        self.snapshot.appendItems(items)
+        self.dataSource.applySnapshotUsingReloadData(self.snapshot)
+    }
+    
+    private func deleteFollower(memberId: Int) {
+        for item in snapshot.itemIdentifiers {
+            if item.memberId == memberId {
+                self.snapshot.deleteItems([item])
+                self.dataSource.apply(self.snapshot)
+                return
+            }
+        }
     }
 }

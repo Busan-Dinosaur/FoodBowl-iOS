@@ -1,5 +1,5 @@
 //
-//  FollowerViewModel.swift
+//  FollowingViewModel.swift
 //  FoodBowl
 //
 //  Created by Coby on 12/21/23.
@@ -11,22 +11,22 @@ import UIKit
 import CombineMoya
 import Moya
 
-final class FollowerViewModel: NSObject, BaseViewModelType {
+final class FollowingViewModel: NSObject, BaseViewModelType {
     
     // MARK: - property
     
     private let provider = MoyaProvider<ServiceAPI>()
     private var cancelBag = Set<AnyCancellable>()
     
-    let isOwn: Bool
+    private let isOwn: Bool
     private let memberId: Int
     
     private let size: Int = 20
     private var currentPage: Int = 0
     private var currentSize: Int = 20
     
-    private let followersSubject = PassthroughSubject<[MemberByFollow], Error>()
-    private let moreFollowersSubject = PassthroughSubject<[MemberByFollow], Error>()
+    private let followingsSubject = PassthroughSubject<[MemberByFollow], Error>()
+    private let moreFollowingsSubject = PassthroughSubject<[MemberByFollow], Error>()
     
     struct Input {
         let viewDidLoad: AnyPublisher<Void, Never>
@@ -34,8 +34,8 @@ final class FollowerViewModel: NSObject, BaseViewModelType {
     }
     
     struct Output {
-        let followers: PassthroughSubject<[MemberByFollow], Error>
-        let moreFollowers: PassthroughSubject<[MemberByFollow], Error>
+        let followings: PassthroughSubject<[MemberByFollow], Error>
+        let moreFollowings: PassthroughSubject<[MemberByFollow], Error>
     }
     
     // MARK: - init
@@ -49,25 +49,25 @@ final class FollowerViewModel: NSObject, BaseViewModelType {
     
     func transform(from input: Input) -> Output {
         let viewDidLoad = input.viewDidLoad
-            .compactMap { [weak self] in self?.getFollowersPublisher() }
+            .compactMap { [weak self] in self?.getFollowingsPublisher() }
             .eraseToAnyPublisher()
         
         input.scrolledToBottom
             .sink(receiveValue: { [weak self] _ in
                 guard let self = self else { return }
-                self.getFollowersPublisher()
+                self.getFollowingsPublisher()
             })
             .store(in: &self.cancelBag)
         
         return Output(
-            followers: followersSubject,
-            moreFollowers: moreFollowersSubject
+            followings: followingsSubject,
+            moreFollowings: moreFollowingsSubject
         )
     }
 }
 
 // MARK: - network
-extension FollowerViewModel {
+extension FollowingViewModel {
     func followMember(memberId: Int) async -> Bool {
         let response = await provider.request(.followMember(memberId: memberId))
         switch response {
@@ -90,22 +90,11 @@ extension FollowerViewModel {
         }
     }
     
-    func removeFollowingMember(memberId: Int) async -> Bool {
-        let response = await provider.request(.removeFollower(memberId: memberId))
-        switch response {
-        case .success:
-            return true
-        case .failure(let err):
-            handleError(err)
-            return false
-        }
-    }
-    
-    private func getFollowersPublisher() {
+    private func getFollowingsPublisher() {
         if currentSize < size { return }
         
         provider.requestPublisher(
-            .getFollowerMember(
+            .getFollowingMember(
                 memberId: memberId,
                 page: currentPage,
                 size: size
@@ -114,7 +103,7 @@ extension FollowerViewModel {
         .sink { completion in
             switch completion {
             case let .failure(error):
-                self.followersSubject.send(completion: .failure(error))
+                self.followingsSubject.send(completion: .failure(error))
             case .finished:
                 break
             }
@@ -124,9 +113,9 @@ extension FollowerViewModel {
             self.currentSize = responseData.currentSize
             
             if self.currentPage == 0 {
-                self.followersSubject.send(responseData.content)
+                self.followingsSubject.send(responseData.content)
             } else {
-                self.moreFollowersSubject.send(responseData.content)
+                self.moreFollowingsSubject.send(responseData.content)
             }
             
         }

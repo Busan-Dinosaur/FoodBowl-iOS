@@ -238,7 +238,7 @@ class MapViewController: UIViewController, Navigationable, Optionable {
     private func transformedOutput() -> MapViewModel.Output {
         let input = MapViewModel.Input(
             customLocation: self.customLocationPublisher.eraseToAnyPublisher(),
-            scrolledToBottom: self.feedListView.listCollectionView.scrolledToBottomPublisher.eraseToAnyPublisher(),
+            scrolledToBottom: self.feedListView.collectionView().scrolledToBottomPublisher.eraseToAnyPublisher(),
             refreshControl: self.feedListView.refreshPublisher.eraseToAnyPublisher()
         )
 
@@ -373,7 +373,6 @@ extension MapViewController {
         self.snapshot.deleteItems(previousReviewsData)
         self.snapshot.appendItems(items, toSection: .main)
         self.dataSource.applySnapshotUsingReloadData(self.snapshot)
-        self.feedListView.emptyView.isHidden = !items.isEmpty
     }
     
     private func loadMoreReviews(_ items: [Review]) {
@@ -384,9 +383,6 @@ extension MapViewController {
     private func updateBookmark(_ storeId: Int) {
         let previousReviewsData = self.snapshot.itemIdentifiers(inSection: .main)
         let items = previousReviewsData
-//            .filter { customItem in
-//                return customItem.store.id == storeId
-//            }
             .map { customItem in
                 var updatedItem = customItem
                 if customItem.store.id == storeId {
@@ -508,7 +504,6 @@ extension MapViewController {
         grabbarView.showResult()
         feedListView.listCollectionView.isHidden = true
         feedListView.borderLineView.isHidden = true
-        feedListView.emptyView.isHidden = true
         tabBarController?.tabBar.frame.origin = CGPoint(x: 0, y: UIScreen.main.bounds.maxY)
     }
 
@@ -516,7 +511,6 @@ extension MapViewController {
         grabbarView.showContent()
         feedListView.listCollectionView.isHidden = false
         feedListView.borderLineView.isHidden = false
-        feedListView.emptyView.isHidden = !self.snapshot.itemIdentifiers(inSection: .main).isEmpty
         tabBarController?.tabBar.frame.origin = CGPoint(x: 0, y: UIScreen.main.bounds.maxY - tabBarHeight)
         grabbarView.layer.cornerRadius = 15
     }

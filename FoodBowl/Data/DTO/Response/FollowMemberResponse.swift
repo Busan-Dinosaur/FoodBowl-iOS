@@ -15,7 +15,7 @@ struct FollowMemberResponse: Codable {
 }
 
 // MARK: - Content
-struct MemberByFollow: Codable {
+struct MemberByFollow: Codable, Hashable {
     let memberId: Int
     let profileImageUrl: String?
     let nickname: String

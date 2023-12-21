@@ -1,20 +1,21 @@
 //
-//  UserInfoTableViewCell.swift
+//  UserInfoCollectionViewCell.swift
 //  FoodBowl
 //
 //  Created by COBY_PRO on 2023/01/18.
 //
 
+import Combine
 import UIKit
 
 import Kingfisher
 import SnapKit
 import Then
 
-final class UserInfoTableViewCell: BaseTableViewCell {
-    var followButtonTapAction: ((UserInfoTableViewCell) -> Void)?
+final class UserInfoCollectionViewCell: UICollectionViewCell, BaseViewType {
 
-    // MARK: - property
+    // MARK: - ui component
+    
     let userImageView = UIImageView().then {
         $0.image = ImageLiteral.defaultProfile
         $0.layer.cornerRadius = 20
@@ -22,21 +23,34 @@ final class UserInfoTableViewCell: BaseTableViewCell {
         $0.layer.borderColor = UIColor.grey002.cgColor
         $0.layer.borderWidth = 1
     }
-
     let userNameLabel = UILabel().then {
         $0.font = UIFont.preferredFont(forTextStyle: .subheadline, weight: .medium)
         $0.textColor = .mainTextColor
     }
-
     let userFollowerLabel = UILabel().then {
         $0.font = UIFont.preferredFont(forTextStyle: .footnote, weight: .light)
         $0.textColor = .subTextColor
     }
-
     let followButton = FollowButton()
+    
+    // MARK: - property
+    
+    var followButtonTapAction: ((UserInfoCollectionViewCell) -> Void)?
 
-    // MARK: - func
-    override func setupLayout() {
+    // MARK: - init
+
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        self.baseInit()
+        self.setupAction()
+    }
+    
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    func setupLayout() {
         contentView.addSubviews(userImageView, userNameLabel, userFollowerLabel, followButton)
 
         userImageView.snp.makeConstraints {
@@ -64,17 +78,23 @@ final class UserInfoTableViewCell: BaseTableViewCell {
         }
     }
 
-    override func configureUI() {
-        followButton.addAction(UIAction { _ in self.followButtonTapAction?(self) }, for: .touchUpInside)
-        backgroundColor = .clear
+    func configureUI() {
+        self.backgroundColor = .mainBackgroundColor
     }
 
     override func prepareForReuse() {
         super.prepareForReuse()
         userImageView.image = nil
     }
+    
+    private func setupAction() {
+        followButton.addAction(UIAction { _ in self.followButtonTapAction?(self) }, for: .touchUpInside)
+    }
+}
 
-    func setupData(_ member: Member) {
+// MARK: - Public - func
+extension UserInfoCollectionViewCell {
+    func func configureCell(_ data: ReviewByStore) {(_ member: Member) {
         userNameLabel.text = member.nickname
         userFollowerLabel.text = "팔로워 \(member.followerCount.prettyNumber)명"
         if let url = member.profileImageUrl {

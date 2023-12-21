@@ -12,6 +12,7 @@ import SnapKit
 import Then
 
 final class StoreDetailView: UIView, BaseViewType {
+    
     private enum ConstantSize {
         static let sectionContentInset: NSDirectionalEdgeInsets = NSDirectionalEdgeInsets(
             top: 0,
