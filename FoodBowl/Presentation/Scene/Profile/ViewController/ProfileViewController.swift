@@ -38,8 +38,9 @@ final class ProfileViewController: MapViewController {
             self?.navigationController?.pushViewController(viewController, animated: true)
         }
         let followingAction = UIAction { [weak self] _ in
-            let followingViewController = FollowingViewController(memberId: self?.memberId ?? 0)
-            self?.navigationController?.pushViewController(followingViewController, animated: true)
+            let viewModel = FollowingViewModel(memberId: self?.memberId ?? 0)
+            let viewController = FollowingViewController(viewModel: viewModel)
+            self?.navigationController?.pushViewController(viewController, animated: true)
         }
         let followButtonAction = UIAction { [weak self] _ in
             self?.followButtonTapped()

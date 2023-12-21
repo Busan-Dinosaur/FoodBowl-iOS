@@ -16,6 +16,7 @@
 		CB1579102AACD98600007183 /* CreateReviewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB15790F2AACD98600007183 /* CreateReviewViewModel.swift */; };
 		CB1579122AADB50600007183 /* KakaoAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1579112AADB50600007183 /* KakaoAPI.swift */; };
 		CB16FD4E2B347C31006D18D6 /* FollowingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB16FD4D2B347C31006D18D6 /* FollowingViewModel.swift */; };
+		CB16FD512B3491F9006D18D6 /* UserInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB16FD502B3491F9006D18D6 /* UserInfoTableViewCell.swift */; };
 		CB1790C8296DAB470083D3A4 /* DynamicHeightCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1790C7296DAB470083D3A4 /* DynamicHeightCollectionViewFlowLayout.swift */; };
 		CB1A7C5C29560C2300C6431D /* UserInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1A7C5B29560C2300C6431D /* UserInfoView.swift */; };
 		CB1A7C5E295618A900C6431D /* SettingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1A7C5D295618A900C6431D /* SettingButton.swift */; };
@@ -174,6 +175,7 @@
 		CB15790F2AACD98600007183 /* CreateReviewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateReviewViewModel.swift; sourceTree = "<group>"; };
 		CB1579112AADB50600007183 /* KakaoAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoAPI.swift; sourceTree = "<group>"; };
 		CB16FD4D2B347C31006D18D6 /* FollowingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowingViewModel.swift; sourceTree = "<group>"; };
+		CB16FD502B3491F9006D18D6 /* UserInfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoTableViewCell.swift; sourceTree = "<group>"; };
 		CB1790C7296DAB470083D3A4 /* DynamicHeightCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicHeightCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
 		CB1A7C5B29560C2300C6431D /* UserInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoView.swift; sourceTree = "<group>"; };
 		CB1A7C5D295618A900C6431D /* SettingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingButton.swift; sourceTree = "<group>"; };
@@ -391,6 +393,7 @@
 				CBDECAC92A6B2F6800259350 /* FeedNSCollectionViewCell.swift */,
 				CBADC2D72955AC5900E56C93 /* FeedCollectionViewCell.swift */,
 				CB2E4F80297702B800FD2566 /* UserInfoCollectionViewCell.swift */,
+				CB16FD502B3491F9006D18D6 /* UserInfoTableViewCell.swift */,
 				CB2E4F7E297702A800FD2566 /* StoreInfoTableViewCell.swift */,
 			);
 			path = Cell;
@@ -1344,6 +1347,7 @@
 				CBA4C7DB2AB4840100FC9DD8 /* PaddingLabel.swift in Sources */,
 				CBE61911296C6804005295AF /* OptionButton.swift in Sources */,
 				CBADC28E29559BC900E56C93 /* UIView+Extension.swift in Sources */,
+				CB16FD512B3491F9006D18D6 /* UserInfoTableViewCell.swift in Sources */,
 				CB7F3327298A51610000A6B4 /* UserDefaultHandler.swift in Sources */,
 				CBADC29C29559BC900E56C93 /* BaseCollectionViewCell.swift in Sources */,
 				CB1579002AAC61CD00007183 /* RenewRequest.swift in Sources */,
