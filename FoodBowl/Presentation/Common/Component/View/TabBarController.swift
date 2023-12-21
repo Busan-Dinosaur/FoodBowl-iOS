@@ -11,7 +11,7 @@ final class TabBarController: UITabBarController {
     private let vc1 = UINavigationController(rootViewController: FriendViewController())
     private let vc2 = UINavigationController(rootViewController: FindViewController())
     private let vc3 = UINavigationController(rootViewController: UnivViewController())
-    private let vc4 = UINavigationController(rootViewController: ProfileViewController(isOwn: true))
+    private let vc4 = UINavigationController(rootViewController: ProfileViewController())
 
     override func viewDidLoad() {
         super.viewDidLoad()

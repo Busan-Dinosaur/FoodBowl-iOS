@@ -42,6 +42,6 @@ final class ImageViewController: UIViewController {
     }
 
     func configureUI() {
-        view.backgroundColor = .black
+        view.backgroundColor = .mainBackgroundColor
     }
 }

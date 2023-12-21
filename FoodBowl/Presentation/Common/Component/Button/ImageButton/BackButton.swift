@@ -22,6 +22,6 @@ final class BackButton: UIButton {
     // MARK: - life cycle
     private func configureUI() {
         setImage(ImageLiteral.btnBack, for: .normal)
-        tintColor = .mainPink
+        tintColor = .mainTextColor
     }
 }

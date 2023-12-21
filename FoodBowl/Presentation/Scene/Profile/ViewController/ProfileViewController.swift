@@ -33,8 +33,9 @@ final class ProfileViewController: MapViewController {
     }
     private lazy var profileHeaderView = ProfileHeaderView().then {
         let followerAction = UIAction { [weak self] _ in
-            let followerViewController = FollowerViewController(memberId: self?.memberId ?? 0)
-            self?.navigationController?.pushViewController(followerViewController, animated: true)
+            let viewModel = FollowerViewModel(memberId: self?.memberId ?? 0)
+            let viewController = FollowerViewController(viewModel: viewModel)
+            self?.navigationController?.pushViewController(viewController, animated: true)
         }
         let followingAction = UIAction { [weak self] _ in
             let followingViewController = FollowingViewController(memberId: self?.memberId ?? 0)
@@ -55,12 +56,12 @@ final class ProfileViewController: MapViewController {
     
     // MARK: - property
     
-    private var isOwn: Bool
-    private var memberId: Int
+    private let isOwn: Bool
+    private let memberId: Int
     private var member: MemberProfileResponse?
 
-    init(isOwn: Bool = false, memberId: Int = UserDefaultsManager.currentUser?.id ?? 0) {
-        self.isOwn = isOwn
+    init(memberId: Int = UserDefaultsManager.currentUser?.id ?? 0) {
+        self.isOwn = UserDefaultsManager.currentUser?.id ?? 0 == memberId
         self.memberId = memberId
         super.init()
     }
@@ -80,7 +81,6 @@ final class ProfileViewController: MapViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.navigationController?.isNavigationBarHidden = false
         self.setupMember()
     }
 
@@ -145,14 +145,20 @@ final class ProfileViewController: MapViewController {
     }
 
     private func setUpMyProfile() {
-        member = UserDefaultsManager.currentUser
+        self.member = UserDefaultsManager.currentUser
 
         DispatchQueue.main.async {
             guard let member = self.member else { return }
             self.userNicknameLabel.text = member.nickname
-            self.profileHeaderView.userInfoLabel.text = member.introduction
             self.profileHeaderView.followerInfoButton.numberLabel.text = "\(member.followerCount)명"
             self.profileHeaderView.followingInfoButton.numberLabel.text = "\(member.followingCount)명"
+            
+            if member.introduction != nil {
+                self.profileHeaderView.userInfoLabel.text = member.introduction
+            } else {
+                self.profileHeaderView.userInfoLabel.text = "소개를 작성해주세요"
+            }
+            
             if let url = member.profileImageUrl {
                 self.profileHeaderView.userImageView.kf.setImage(with: URL(string: url))
             } else {
@@ -162,19 +168,25 @@ final class ProfileViewController: MapViewController {
     }
 
     private func setUpMemberProfile() async {
-        member = await viewModel.getMemberProfile(id: memberId)
+        self.member = await viewModel.getMemberProfile(id: memberId)
 
         DispatchQueue.main.async {
             guard let member = self.member else { return }
             self.userNicknameLabel.text = member.nickname
-            self.profileHeaderView.userInfoLabel.text = member.introduction
             self.profileHeaderView.followerInfoButton.numberLabel.text = "\(member.followerCount)명"
             self.profileHeaderView.followingInfoButton.numberLabel.text = "\(member.followingCount)명"
             self.profileHeaderView.followButton.isSelected = member.isFollowing
+            
             if let url = member.profileImageUrl {
                 self.profileHeaderView.userImageView.kf.setImage(with: URL(string: url))
             } else {
                 self.profileHeaderView.userImageView.image = ImageLiteral.defaultProfile
+            }
+            
+            if member.introduction != nil {
+                self.profileHeaderView.userInfoLabel.text = member.introduction
+            } else {
+                self.profileHeaderView.userInfoLabel.text = "소개를 작성해주세요"
             }
 
             if self.isOwn {

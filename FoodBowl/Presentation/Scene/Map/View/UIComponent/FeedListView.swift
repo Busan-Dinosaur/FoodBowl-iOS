@@ -38,7 +38,6 @@ final class FeedListView: UIView, BaseViewType {
         $0.register(FeedCollectionViewCell.self, forCellWithReuseIdentifier: FeedCollectionViewCell.className)
         $0.backgroundColor = .mainBackgroundColor
     }
-    let emptyView = EmptyView()
     
     // MARK: - property
     
@@ -68,7 +67,7 @@ final class FeedListView: UIView, BaseViewType {
     // MARK: - base func
     
     func setupLayout() {
-        addSubviews(borderLineView, listCollectionView, emptyView)
+        addSubviews(borderLineView, listCollectionView)
 
         borderLineView.snp.makeConstraints {
             $0.top.leading.trailing.equalToSuperview()
@@ -76,11 +75,6 @@ final class FeedListView: UIView, BaseViewType {
         }
 
         listCollectionView.snp.makeConstraints {
-            $0.top.equalTo(borderLineView.snp.bottom)
-            $0.leading.trailing.bottom.equalToSuperview()
-        }
-        
-        emptyView.snp.makeConstraints {
             $0.top.equalTo(borderLineView.snp.bottom)
             $0.leading.trailing.bottom.equalToSuperview()
         }

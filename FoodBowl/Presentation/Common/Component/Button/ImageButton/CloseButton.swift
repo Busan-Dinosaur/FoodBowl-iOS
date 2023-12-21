@@ -22,6 +22,6 @@ final class CloseButton: UIButton {
     // MARK: - life cycle
     private func configureUI() {
         setImage(ImageLiteral.btnClose, for: .normal)
-        tintColor = .mainPink
+        tintColor = .mainTextColor
     }
 }
