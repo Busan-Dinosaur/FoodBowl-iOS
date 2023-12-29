@@ -10,7 +10,7 @@ import UIKit
 import Moya
 
 final class CreateReviewViewModel {
-    var reviewRequest = CreateReviewRequestDTO()
+    var request = CreateReviewRequestDTO()
     var reviewImages = [UIImage]()
     var store: PlaceItemDTO?
 
@@ -19,7 +19,8 @@ final class CreateReviewViewModel {
 
     func createReview() async {
         let imagesData = reviewImages.map { $0.jpegData(compressionQuality: 0.3)! }
-        let response = await provider.request(.createReview(request: reviewRequest, images: imagesData))
+        request.images = imagesData
+        let response = await provider.request(.createReview(request: request))
         switch response {
         case .success:
             return
@@ -81,21 +82,21 @@ final class CreateReviewViewModel {
 
     func setStore(store: PlaceItemDTO) async {
         self.store = store
-        reviewRequest.locationId = store.id
-        reviewRequest.storeName = store.placeName
-        reviewRequest.storeAddress = store.roadAddressName
-        reviewRequest.x = Double(store.longitude)!
-        reviewRequest.y = Double(store.latitude)!
-        reviewRequest.storeUrl = store.placeURL
-        reviewRequest.phone = store.phone
-        reviewRequest.category = getCategory(categoryName: store.categoryName)
+        request.locationId = store.id
+        request.storeName = store.placeName
+        request.storeAddress = store.roadAddressName
+        request.x = Double(store.longitude)!
+        request.y = Double(store.latitude)!
+        request.storeUrl = store.placeURL
+        request.phone = store.phone
+        request.category = getCategory(categoryName: store.categoryName)
 
         if let univ = await searchUniv(store: store) {
             if univ.placeName.contains("대학교") || univ.placeName.contains("캠퍼스") {
-                reviewRequest.schoolName = univ.placeName
-                reviewRequest.schoolAddress = univ.roadAddressName
-                reviewRequest.schoolX = Double(univ.longitude)!
-                reviewRequest.schoolY = Double(univ.latitude)!
+                request.schoolName = univ.placeName
+                request.schoolAddress = univ.roadAddressName
+                request.schoolX = Double(univ.longitude)!
+                request.schoolY = Double(univ.latitude)!
             }
         }
     }

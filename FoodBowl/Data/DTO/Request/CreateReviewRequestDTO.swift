@@ -21,4 +21,5 @@ struct CreateReviewRequestDTO: Encodable {
     var schoolAddress: String?
     var schoolX: Double?
     var schoolY: Double?
+    var images: [Data] = []
 }

@@ -92,11 +92,12 @@ final class StoreDetailViewModel: BaseViewModelType {
         let filter = isFriend ? "FRIEND" : "ALL"
         
         provider.requestPublisher(
-            .getReviewsByStore(
-                form: GetReviewByStoreRequestDTO(storeId: self.storeId, filter: filter),
+            .getReviewsByStore(request: GetReviewsByStoreRequestDTO(
                 lastReviewId: lastReviewId,
-                pageSize: self.pageSize
-            )
+                pageSize: self.pageSize,
+                storeId: self.storeId,
+                filter: filter
+            ))
         )
         .sink { completion in
             switch completion {

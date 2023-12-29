@@ -222,7 +222,7 @@ final class CreateReviewController: BaseViewController, PhotoPickerable {
             return
         }
 
-        if viewModel.reviewRequest.reviewContent == "" {
+        if viewModel.request.reviewContent == "" {
             makeAlert(title: "한줄평을 남겨주세요.")
             return
         }
@@ -272,7 +272,7 @@ extension CreateReviewController: UITextViewDelegate {
     }
 
     func textViewDidChange(_ textView: UITextView) {
-        viewModel.reviewRequest.reviewContent = textView.text
+        viewModel.request.reviewContent = textView.text
     }
     
     func setPhotoes(images: [UIImage]) {

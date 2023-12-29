@@ -25,7 +25,7 @@ final class MapViewModel: BaseViewModelType {
     private var currentpageSize: Int = 20
     private var lastReviewId: Int?
 
-    var customLocation: CustomLocation?
+    var customLocation: CustomLocationRequestDTO?
     var type: MapViewType = .friend
     var isBookmark: Bool = false
     var schoolId: Int?
@@ -37,7 +37,7 @@ final class MapViewModel: BaseViewModelType {
     private let refreshControlSubject = PassthroughSubject<Void, Never>()
     
     struct Input {
-        let customLocation: AnyPublisher<CustomLocation, Never>
+        let customLocation: AnyPublisher<CustomLocationRequestDTO, Never>
         let scrolledToBottom: AnyPublisher<Void, Never>
         let refreshControl: AnyPublisher<Void, Never>
     }
@@ -124,12 +124,12 @@ extension MapViewModel {
             guard let customLocation = customLocation else { return }
             
             let response = await self.provider.request(
-                .getReviewsByFollowing(
-                    form: customLocation,
+                .getReviewsByFollowing(request: GetReviewsRequestDTO(
+                    location: customLocation,
                     lastReviewId: lastReviewId,
                     pageSize: self.pageSize
                 )
-            )
+            ))
             switch response {
             case .success(let result):
                 guard let data = try? result.map(ReviewDTO.self) else { return }
@@ -150,12 +150,13 @@ extension MapViewModel {
             guard let customLocation = customLocation else { return }
             
             let response = await self.provider.request(
-                .getReviewsByBookmark(
-                    form: customLocation,
+                .getReviewsByBookmark(request: GetReviewsRequestDTO(
+                    location: customLocation,
                     lastReviewId: lastReviewId,
                     pageSize: self.pageSize
                 )
-            )
+            ))
+            
             switch response {
             case .success(let result):
                 guard let data = try? result.map(ReviewDTO.self) else { return }
@@ -176,13 +177,14 @@ extension MapViewModel {
             guard let customLocation = customLocation, let schoolId = schoolId else { return }
             
             let response = await self.provider.request(
-                .getReviewsBySchool(
-                    form: customLocation,
-                    schoolId: schoolId,
+                .getReviewsBySchool(request: GetReviewsBySchoolRequestDTO(
+                    location: customLocation,
                     lastReviewId: lastReviewId,
-                    pageSize: self.pageSize
+                    pageSize: self.pageSize,
+                    schoolId: schoolId
                 )
-            )
+            ))
+            
             switch response {
             case .success(let result):
                 guard let data = try? result.map(ReviewDTO.self) else { return }
@@ -203,13 +205,14 @@ extension MapViewModel {
             guard let customLocation = customLocation, let memberId = memberId else { return }
             
             let response = await self.provider.request(
-                .getReviewsByMember(
-                    form: customLocation,
-                    memberId: memberId,
+                .getReviewsByMember(request: GetReviewsByMemberRequestDTO(
+                    location: customLocation,
                     lastReviewId: lastReviewId,
-                    pageSize: self.pageSize
+                    pageSize: self.pageSize,
+                    memberId: memberId
                 )
-            )
+            ))
+            
             switch response {
             case .success(let result):
                 guard let data = try? result.map(ReviewDTO.self) else { return }
@@ -242,7 +245,7 @@ extension MapViewModel {
         Task {
             guard let customLocation = customLocation else { return }
             
-            let response = await provider.request(.getStoresByFollowing(form: customLocation))
+            let response = await provider.request(.getStoresByFollowing(request: customLocation))
             switch response {
             case .success(let result):
                 guard let data = try? result.map(StoreDTO.self) else { return }
@@ -257,7 +260,7 @@ extension MapViewModel {
         Task {
             guard let customLocation = customLocation else { return }
             
-            let response = await provider.request(.getStoresByBookmark(form: customLocation))
+            let response = await provider.request(.getStoresByBookmark(request: customLocation))
             switch response {
             case .success(let result):
                 guard let data = try? result.map(StoreDTO.self) else { return }
@@ -272,7 +275,13 @@ extension MapViewModel {
         Task {
             guard let customLocation = customLocation, let schoolId = schoolId else { return }
             
-            let response = await provider.request(.getStoresBySchool(form: customLocation, schoolId: schoolId))
+            let response = await provider.request(.getStoresBySchool(
+                request: GetStoresBySchoolRequestDTO(
+                    location: customLocation,
+                    schoolId: schoolId
+                )
+            ))
+                
             switch response {
             case .success(let result):
                 guard let data = try? result.map(StoreDTO.self) else { return }
@@ -287,7 +296,13 @@ extension MapViewModel {
         Task {
             guard let customLocation = customLocation, let memberId = memberId else { return }
             
-            let response = await provider.request(.getStoresByMember(form: customLocation, memberId: memberId))
+            let response = await provider.request(.getStoresByMember(
+                request: GetStoresByMemberRequestDTO(
+                    location: customLocation,
+                    memberId: memberId
+                )
+            ))
+            
             switch response {
             case .success(let result):
                 guard let data = try? result.map(StoreDTO.self) else { return }
@@ -436,17 +451,17 @@ extension MapViewModel {
 // MARK: - Get Stores and Members
 extension MapViewModel {
     func serachStores(name: String) async -> [StoreItemBySearchDTO] {
-        guard let currentLoc = LocationManager.shared.manager.location?.coordinate else { return [] }
-        let response = await provider.request(
-            .getStoresBySearch(
-                form: SearchStoreRequestDTO(
-                    name: name,
-                    x: currentLoc.longitude,
-                    y: currentLoc.latitude,
-                    size: size
-                )
+        guard let customLocation = LocationManager.shared.manager.location?.coordinate else { return [] }
+        
+        let response = await provider.request(.getStoresBySearch(
+            request: SearchStoreRequestDTO(
+                name: name,
+                x: customLocation.longitude,
+                y: customLocation.latitude,
+                size: size
             )
-        )
+        ))
+        
         switch response {
         case .success(let result):
             guard let data = try? result.map(StoreBySearchDTO.self) else { return [] }

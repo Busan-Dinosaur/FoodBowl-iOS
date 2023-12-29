@@ -16,21 +16,25 @@ enum ServiceAPI {
     case checkNickname(nickname: String)
     case getSchools
     case getCategories
+    
     case createBlame(request: CreateBlameRequestDTO)
-    case createReview(request: CreateReviewRequestDTO, images: [Data])
+    case createReview(request: CreateReviewRequestDTO)
     case removeReview(id: Int)
-    case getReviewsByStore(form: GetReviewByStoreRequestDTO, lastReviewId: Int?, pageSize: Int)
-    case getReviewsBySchool(form: CustomLocation, schoolId: Int, lastReviewId: Int?, pageSize: Int)
-    case getReviewsByMember(form: CustomLocation, memberId: Int, lastReviewId: Int?, pageSize: Int)
-    case getReviewsByFollowing(form: CustomLocation, lastReviewId: Int?, pageSize: Int)
-    case getReviewsByBookmark(form: CustomLocation, lastReviewId: Int?, pageSize: Int)
-    case getStoresBySearch(form: SearchStoreRequestDTO)
-    case getStoresBySchool(form: CustomLocation, schoolId: Int)
-    case getStoresByMember(form: CustomLocation, memberId: Int)
-    case getStoresByFollowing(form: CustomLocation)
-    case getStoresByBookmark(form: CustomLocation)
+    
+    case getReviewsByFollowing(request: GetReviewsRequestDTO)
+    case getReviewsByBookmark(request: GetReviewsRequestDTO)
+    case getReviewsByStore(request: GetReviewsByStoreRequestDTO)
+    case getReviewsBySchool(request: GetReviewsBySchoolRequestDTO)
+    case getReviewsByMember(request: GetReviewsByMemberRequestDTO)
+    
+    case getStoresBySearch(request: SearchStoreRequestDTO)
+    case getStoresBySchool(request: GetStoresBySchoolRequestDTO)
+    case getStoresByMember(request: GetStoresByMemberRequestDTO)
+    case getStoresByFollowing(request: CustomLocationRequestDTO)
+    case getStoresByBookmark(request: CustomLocationRequestDTO)
     case createBookmark(storeId: Int)
     case removeBookmark(storeId: Int)
+    
     case updateMemberProfile(request: UpdateMemberProfileRequestDTO)
     case removeMemberProfileImage
     case updateMemberProfileImage(image: Data)
@@ -149,7 +153,7 @@ extension ServiceAPI: TargetType {
             )
         case .createBlame(let request):
             return .requestJSONEncodable(request)
-        case .createReview(let request, let images):
+        case .createReview(let request):
             var multipartFormData = [MultipartFormData]()
 
             if let reviewData = try? JSONEncoder().encode(request) {
@@ -162,7 +166,7 @@ extension ServiceAPI: TargetType {
                 )
             }
 
-            for image in images {
+            for image in request.images {
                 multipartFormData.append(
                     MultipartFormData(
                         provider: .data(image),
@@ -176,14 +180,14 @@ extension ServiceAPI: TargetType {
             return .uploadMultipart(multipartFormData)
         case .removeReview:
             return .requestPlain
-        case .getReviewsByStore(let form, let lastReviewId, let pageSize):
+        case .getReviewsByStore(let request):
             var params: [String: Any] = [
-                "storeId": form.storeId,
-                "filter": form.filter,
-                "pageSize": pageSize
+                "storeId": request.storeId,
+                "filter": request.filter,
+                "pageSize": request.pageSize
             ]
 
-            if let lastReviewId = lastReviewId {
+            if let lastReviewId = request.lastReviewId {
                 params["lastReviewId"] = lastReviewId
             }
 
@@ -191,19 +195,19 @@ extension ServiceAPI: TargetType {
                 parameters: params,
                 encoding: URLEncoding.default
             )
-        case .getReviewsBySchool(let form, let schoolId, let lastReviewId, let pageSize):
+        case .getReviewsBySchool(let request):
             var params: [String: Any] = [
-                "schoolId": schoolId,
-                "x": form.x,
-                "y": form.y,
-                "deltaX": form.deltaX,
-                "deltaY": form.deltaY,
-                "deviceX": form.deviceX,
-                "deviceY": form.deviceY,
-                "pageSize": pageSize
+                "schoolId": request.schoolId,
+                "x": request.location.x,
+                "y": request.location.y,
+                "deltaX": request.location.deltaX,
+                "deltaY": request.location.deltaY,
+                "deviceX": request.location.deviceX,
+                "deviceY": request.location.deviceY,
+                "pageSize": request.pageSize
             ]
 
-            if let lastReviewId = lastReviewId {
+            if let lastReviewId = request.lastReviewId {
                 params["lastReviewId"] = lastReviewId
             }
 
@@ -211,19 +215,19 @@ extension ServiceAPI: TargetType {
                 parameters: params,
                 encoding: URLEncoding.default
             )
-        case .getReviewsByMember(let form, let memberId, let lastReviewId, let pageSize):
+        case .getReviewsByMember(let request):
             var params: [String: Any] = [
-                "memberId": memberId,
-                "x": form.x,
-                "y": form.y,
-                "deltaX": form.deltaX,
-                "deltaY": form.deltaY,
-                "deviceX": form.deviceX,
-                "deviceY": form.deviceY,
-                "pageSize": pageSize
+                "memberId": request.memberId,
+                "x": request.location.x,
+                "y": request.location.y,
+                "deltaX": request.location.deltaX,
+                "deltaY": request.location.deltaY,
+                "deviceX": request.location.deviceX,
+                "deviceY": request.location.deviceY,
+                "pageSize": request.pageSize
             ]
 
-            if let lastReviewId = lastReviewId {
+            if let lastReviewId = request.lastReviewId {
                 params["lastReviewId"] = lastReviewId
             }
 
@@ -231,18 +235,18 @@ extension ServiceAPI: TargetType {
                 parameters: params,
                 encoding: URLEncoding.default
             )
-        case .getReviewsByFollowing(let form, let lastReviewId, let pageSize):
+        case .getReviewsByFollowing(let request):
             var params: [String: Any] = [
-                "x": form.x,
-                "y": form.y,
-                "deltaX": form.deltaX,
-                "deltaY": form.deltaY,
-                "deviceX": form.deviceX,
-                "deviceY": form.deviceY,
-                "pageSize": pageSize
+                "x": request.location.x,
+                "y": request.location.y,
+                "deltaX": request.location.deltaX,
+                "deltaY": request.location.deltaY,
+                "deviceX": request.location.deviceX,
+                "deviceY": request.location.deviceY,
+                "pageSize": request.pageSize
             ]
 
-            if let lastReviewId = lastReviewId {
+            if let lastReviewId = request.lastReviewId {
                 params["lastReviewId"] = lastReviewId
             }
 
@@ -250,18 +254,18 @@ extension ServiceAPI: TargetType {
                 parameters: params,
                 encoding: URLEncoding.default
             )
-        case .getReviewsByBookmark(let form, let lastReviewId, let pageSize):
+        case .getReviewsByBookmark(let request):
             var params: [String: Any] = [
-                "x": form.x,
-                "y": form.y,
-                "deltaX": form.deltaX,
-                "deltaY": form.deltaY,
-                "deviceX": form.deviceX,
-                "deviceY": form.deviceY,
-                "pageSize": pageSize
+                "x": request.location.x,
+                "y": request.location.y,
+                "deltaX": request.location.deltaX,
+                "deltaY": request.location.deltaY,
+                "deviceX": request.location.deviceX,
+                "deviceY": request.location.deviceY,
+                "pageSize": request.pageSize
             ]
 
-            if let lastReviewId = lastReviewId {
+            if let lastReviewId = request.lastReviewId {
                 params["lastReviewId"] = lastReviewId
             }
 
@@ -269,58 +273,58 @@ extension ServiceAPI: TargetType {
                 parameters: params,
                 encoding: URLEncoding.default
             )
-        case .getStoresBySearch(let form):
+        case .getStoresBySearch(let request):
             let params: [String: Any] = [
-                "name": form.name,
-                "x": form.x,
-                "y": form.y,
-                "size": form.size
+                "name": request.name,
+                "x": request.x,
+                "y": request.y,
+                "size": request.size
             ]
             return .requestParameters(
                 parameters: params,
                 encoding: URLEncoding.default
             )
-        case .getStoresBySchool(let form, let schoolId):
+        case .getStoresBySchool(let request):
             let params: [String: Any] = [
-                "schoolId": schoolId,
-                "x": form.x,
-                "y": form.y,
-                "deltaX": form.deltaX,
-                "deltaY": form.deltaY
+                "x": request.location.x,
+                "y": request.location.y,
+                "deltaX": request.location.deltaX,
+                "deltaY": request.location.deltaY,
+                "schoolId": request.schoolId
             ]
             return .requestParameters(
                 parameters: params,
                 encoding: URLEncoding.default
             )
-        case .getStoresByMember(let form, let memberId):
+        case .getStoresByMember(let request):
             let params: [String: Any] = [
-                "memberId": memberId,
-                "x": form.x,
-                "y": form.y,
-                "deltaX": form.deltaX,
-                "deltaY": form.deltaY
+                "x": request.location.x,
+                "y": request.location.y,
+                "deltaX": request.location.deltaX,
+                "deltaY": request.location.deltaY,
+                "memberId": request.memberId
             ]
             return .requestParameters(
                 parameters: params,
                 encoding: URLEncoding.default
             )
-        case .getStoresByFollowing(let form):
+        case .getStoresByFollowing(let request):
             let params: [String: Any] = [
-                "x": form.x,
-                "y": form.y,
-                "deltaX": form.deltaX,
-                "deltaY": form.deltaY
+                "x": request.x,
+                "y": request.y,
+                "deltaX": request.deltaX,
+                "deltaY": request.deltaY
             ]
             return .requestParameters(
                 parameters: params,
                 encoding: URLEncoding.default
             )
-        case .getStoresByBookmark(let form):
+        case .getStoresByBookmark(let request):
             let params: [String: Any] = [
-                "x": form.x,
-                "y": form.y,
-                "deltaX": form.deltaX,
-                "deltaY": form.deltaY
+                "x": request.x,
+                "y": request.y,
+                "deltaX": request.deltaX,
+                "deltaY": request.deltaY
             ]
             return .requestParameters(
                 parameters: params,

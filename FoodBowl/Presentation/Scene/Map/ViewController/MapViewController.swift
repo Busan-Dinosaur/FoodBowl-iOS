@@ -90,7 +90,7 @@ class MapViewController: UIViewController, Navigationable, Optionable {
     
     private var cancelBag: Set<AnyCancellable> = Set()
     
-    let customLocationPublisher = PassthroughSubject<CustomLocation, Never>()
+    let customLocationPublisher = PassthroughSubject<CustomLocationRequestDTO, Never>()
     let bookmarkButtonDidTapPublisher: PassthroughSubject<StoreByReviewDTO, Never> = PassthroughSubject()
     
     let viewModel = MapViewModel()
@@ -98,7 +98,7 @@ class MapViewController: UIViewController, Navigationable, Optionable {
     var dataSource: UICollectionViewDiffableDataSource<Section, ReviewItemDTO>!
     var snapshot: NSDiffableDataSourceSnapshot<Section, ReviewItemDTO>!
     
-    var customLocation: CustomLocation?
+    var customLocation: CustomLocationRequestDTO?
     var currentLocation: CLLocationCoordinate2D?
     var markers = [Marker]()
 
@@ -431,7 +431,7 @@ extension MapViewController: MKMapViewDelegate {
 
         guard let currentLoc = self.currentLocation else { return }
 
-        self.customLocation = CustomLocation(
+        self.customLocation = CustomLocationRequestDTO(
             x: center.longitude,
             y: center.latitude,
             deltaX: abs(topLeftCoordinate.longitude - center.longitude),
