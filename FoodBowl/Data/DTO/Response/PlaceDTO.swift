@@ -7,13 +7,13 @@
 
 import Foundation
 
-// MARK: - PlaceResponse
-struct PlaceResponse: Codable {
-    let documents: [Place]
+// MARK: - PlaceDTO
+struct PlaceDTO: Codable {
+    let documents: [PlaceItemDTO]
 }
 
-// MARK: - Document
-struct Place: Codable {
+// MARK: - PlaceItemDTO
+struct PlaceItemDTO: Codable {
     let addressName: String
     let categoryGroupCode: String
     let categoryGroupName: String

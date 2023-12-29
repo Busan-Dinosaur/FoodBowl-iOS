@@ -22,7 +22,7 @@ final class SearchStoreViewController: BaseViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
-    private var stores = [Place]()
+    private var stores = [PlaceItemDTO]()
 
     // MARK: - property
     private lazy var searchBar = UISearchBar().then {
@@ -79,7 +79,7 @@ final class SearchStoreViewController: BaseViewController {
         }
     }
 
-    private func setStore(store: Place) {
+    private func setStore(store: PlaceItemDTO) {
         Task {
             await viewModel.setStore(store: store)
             navigationController?.popViewController(animated: true)

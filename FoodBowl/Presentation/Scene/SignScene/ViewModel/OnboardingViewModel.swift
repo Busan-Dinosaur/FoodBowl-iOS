@@ -50,7 +50,7 @@ final class OnboardingViewModel: NSObject, BaseViewModelType {
                     self.getMyProfile()
                 }
             } receiveValue: { recievedValue in
-                guard let responseData = try? recievedValue.map(SignDTO.self) else { return }
+                guard let responseData = try? recievedValue.map(TokenDTO.self) else { return }
                 KeychainManager.set(responseData.accessToken, for: .accessToken)
                 KeychainManager.set(responseData.refreshToken, for: .refreshToken)
                 UserDefaultHandler.setIsLogin(isLogin: true)
@@ -68,7 +68,7 @@ final class OnboardingViewModel: NSObject, BaseViewModelType {
                     self.isLoginSubject.send(completion: .finished)
                 }
             } receiveValue: { recievedValue in
-                guard let responseData = try? recievedValue.map(MemberProfileResponse.self) else { return }
+                guard let responseData = try? recievedValue.map(MemberProfileDTO.self) else { return }
                 UserDefaultsManager.currentUser = responseData
                 self.isLoginSubject.send(true)
             }

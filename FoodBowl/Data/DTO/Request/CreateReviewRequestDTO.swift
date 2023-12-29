@@ -1,5 +1,5 @@
 //
-//  CreateReviewRequest.swift
+//  CreateReviewRequestDTO.swift
 //  FoodBowl
 //
 //  Created by COBY_PRO on 2023/09/10.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct CreateReviewRequest: Encodable {
+struct CreateReviewRequestDTO: Encodable {
     var locationId: String = ""
     var storeName: String = ""
     var storeAddress: String = ""

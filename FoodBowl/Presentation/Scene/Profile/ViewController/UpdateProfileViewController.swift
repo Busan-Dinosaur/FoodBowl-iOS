@@ -213,7 +213,7 @@ final class UpdateProfileViewController: BaseViewController {
     private func tappedCompleteButton() {
         if let nickname = nicknameField.text, let introduction = userInfoField.text {
             if nickname.count != 0 && introduction.count != 0 {
-                let updatedProfile = UpdateMemberProfileRequest(nickname: nickname, introduction: introduction)
+                let updatedProfile = UpdateMemberProfileRequestDTO(nickname: nickname, introduction: introduction)
                 Task {
                     animationView!.isHidden = false
                     await viewModel.updateMembeProfile(profile: updatedProfile)

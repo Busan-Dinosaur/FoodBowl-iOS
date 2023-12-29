@@ -133,7 +133,7 @@ final class BlameViewController: BaseViewController {
 
         providerService.request(
             .createBlame(
-                request: CreateBlameRequest(
+                request: CreateBlameRequestDTO(
                     targetId: targetId,
                     blameTarget: blameTarget,
                     description: commentTextView.text

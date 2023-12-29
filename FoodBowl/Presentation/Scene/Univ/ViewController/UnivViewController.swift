@@ -81,7 +81,7 @@ final class UnivViewController: MapViewController {
 }
 
 extension UnivViewController: SearchUnivViewControllerDelegate {
-    func setUniv(univ: School) {
+    func setUniv(univ: SchoolItemDTO) {
         self.univ = univ
         UserDefaultsManager.currentUniv = univ
         univTitleButton.label.text = univ.name

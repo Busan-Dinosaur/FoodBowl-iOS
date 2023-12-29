@@ -91,12 +91,12 @@ class MapViewController: UIViewController, Navigationable, Optionable {
     private var cancelBag: Set<AnyCancellable> = Set()
     
     let customLocationPublisher = PassthroughSubject<CustomLocation, Never>()
-    let bookmarkButtonDidTapPublisher: PassthroughSubject<StoreByReview, Never> = PassthroughSubject()
+    let bookmarkButtonDidTapPublisher: PassthroughSubject<StoreByReviewDTO, Never> = PassthroughSubject()
     
     let viewModel = MapViewModel()
     
-    var dataSource: UICollectionViewDiffableDataSource<Section, Review>!
-    var snapshot: NSDiffableDataSourceSnapshot<Section, Review>!
+    var dataSource: UICollectionViewDiffableDataSource<Section, ReviewItemDTO>!
+    var snapshot: NSDiffableDataSourceSnapshot<Section, ReviewItemDTO>!
     
     var customLocation: CustomLocation?
     var currentLocation: CLLocationCoordinate2D?
@@ -245,7 +245,7 @@ class MapViewController: UIViewController, Navigationable, Optionable {
         return self.viewModel.transform(from: input)
     }
     
-    private func bindCell(_ cell: FeedCollectionViewCell, with item: Review) {
+    private func bindCell(_ cell: FeedCollectionViewCell, with item: ReviewItemDTO) {
         cell.userButtonTapAction = { [weak self] _ in
             let profileViewController = ProfileViewController(memberId: item.writer.id)
             
@@ -304,7 +304,7 @@ class MapViewController: UIViewController, Navigationable, Optionable {
 
 // MARK: - Helper
 extension MapViewController {
-    private func handleStores(_ stores: [Store]) {
+    private func handleStores(_ stores: [StoreItemDTO]) {
         mapView.removeAnnotations(markers)
 
         markers = stores.map { store in
@@ -340,8 +340,8 @@ extension MapViewController {
         self.configureSnapshot()
     }
 
-    private func feedCollectionViewDataSource() -> UICollectionViewDiffableDataSource<Section, Review> {
-        let reviewCellRegistration = UICollectionView.CellRegistration<FeedCollectionViewCell, Review> {
+    private func feedCollectionViewDataSource() -> UICollectionViewDiffableDataSource<Section, ReviewItemDTO> {
+        let reviewCellRegistration = UICollectionView.CellRegistration<FeedCollectionViewCell, ReviewItemDTO> {
             [weak self] cell, indexPath, item in
             cell.configureCell(item)
             self?.bindCell(cell, with: item)
@@ -363,19 +363,19 @@ extension MapViewController {
 // MARK: - Snapshot
 extension MapViewController {
     private func configureSnapshot() {
-        self.snapshot = NSDiffableDataSourceSnapshot<Section, Review>()
+        self.snapshot = NSDiffableDataSourceSnapshot<Section, ReviewItemDTO>()
         self.snapshot.appendSections([.main])
         self.dataSource.apply(self.snapshot, animatingDifferences: true)
     }
 
-    private func reloadReviews(_ items: [Review]) {
+    private func reloadReviews(_ items: [ReviewItemDTO]) {
         let previousReviewsData = self.snapshot.itemIdentifiers(inSection: .main)
         self.snapshot.deleteItems(previousReviewsData)
         self.snapshot.appendItems(items, toSection: .main)
         self.dataSource.applySnapshotUsingReloadData(self.snapshot)
     }
     
-    private func loadMoreReviews(_ items: [Review]) {
+    private func loadMoreReviews(_ items: [ReviewItemDTO]) {
         self.snapshot.appendItems(items, toSection: .main)
         self.dataSource.applySnapshotUsingReloadData(self.snapshot)
     }

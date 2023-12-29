@@ -16,26 +16,26 @@ enum ServiceAPI {
     case checkNickname(nickname: String)
     case getSchools
     case getCategories
-    case createBlame(request: CreateBlameRequest)
-    case createReview(request: CreateReviewRequest, images: [Data])
+    case createBlame(request: CreateBlameRequestDTO)
+    case createReview(request: CreateReviewRequestDTO, images: [Data])
     case removeReview(id: Int)
-    case getReviewsByStore(form: GetReviewByStoreRequest, lastReviewId: Int?, pageSize: Int)
+    case getReviewsByStore(form: GetReviewByStoreRequestDTO, lastReviewId: Int?, pageSize: Int)
     case getReviewsBySchool(form: CustomLocation, schoolId: Int, lastReviewId: Int?, pageSize: Int)
     case getReviewsByMember(form: CustomLocation, memberId: Int, lastReviewId: Int?, pageSize: Int)
     case getReviewsByFollowing(form: CustomLocation, lastReviewId: Int?, pageSize: Int)
     case getReviewsByBookmark(form: CustomLocation, lastReviewId: Int?, pageSize: Int)
-    case getStoresBySearch(form: SearchStoresRequest)
+    case getStoresBySearch(form: SearchStoresRequestDTO)
     case getStoresBySchool(form: CustomLocation, schoolId: Int)
     case getStoresByMember(form: CustomLocation, memberId: Int)
     case getStoresByFollowing(form: CustomLocation)
     case getStoresByBookmark(form: CustomLocation)
     case createBookmark(storeId: Int)
     case removeBookmark(storeId: Int)
-    case updateMemberProfile(request: UpdateMemberProfileRequest)
+    case updateMemberProfile(request: UpdateMemberProfileRequestDTO)
     case removeMemberProfileImage
     case updateMemberProfileImage(image: Data)
     case getMemberProfile(id: Int)
-    case getMemberBySearch(form: SearchMembersRequest)
+    case getMemberBySearch(form: SearchMembersRequestDTO)
     case getMyProfile
     case followMember(memberId: Int)
     case unfollowMember(memberId: Int)
@@ -134,7 +134,7 @@ extension ServiceAPI: TargetType {
         case .signIn(let request):
             return .requestJSONEncodable(request)
         case .renew:
-            let request = RenewRequest(
+            let request = TokenDTO(
                 accessToken: KeychainManager.get(.accessToken),
                 refreshToken: KeychainManager.get(.refreshToken)
             )

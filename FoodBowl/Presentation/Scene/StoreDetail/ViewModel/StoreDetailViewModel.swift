@@ -25,9 +25,9 @@ final class StoreDetailViewModel: BaseViewModelType {
     private let pageSize: Int = 20
     private var currentpageSize: Int = 20
     private var lastReviewId: Int?
-    private var reviews = [ReviewByStore]()
+    private var reviews = [ReviewItemByStoreDTO]()
     
-    private let reviewsSubject = PassthroughSubject<[ReviewByStore], Error>()
+    private let reviewsSubject = PassthroughSubject<[ReviewItemByStoreDTO], Error>()
     private let refreshControlSubject = PassthroughSubject<Void, Error>()
     
     struct Input {
@@ -37,7 +37,7 @@ final class StoreDetailViewModel: BaseViewModelType {
     }
     
     struct Output {
-        let reviews: PassthroughSubject<[ReviewByStore], Error>
+        let reviews: PassthroughSubject<[ReviewItemByStoreDTO], Error>
         let refreshControl: PassthroughSubject<Void, Error>
     }
     
@@ -93,7 +93,7 @@ final class StoreDetailViewModel: BaseViewModelType {
         
         provider.requestPublisher(
             .getReviewsByStore(
-                form: GetReviewByStoreRequest(storeId: self.storeId, filter: filter),
+                form: GetReviewByStoreRequestDTO(storeId: self.storeId, filter: filter),
                 lastReviewId: lastReviewId,
                 pageSize: self.pageSize
             )
@@ -106,7 +106,7 @@ final class StoreDetailViewModel: BaseViewModelType {
                 self.refreshControlSubject.send()
             }
         } receiveValue: { recievedValue in
-            guard let responseData = try? recievedValue.map(ReviewByStoreResponse.self) else { return }
+            guard let responseData = try? recievedValue.map(ReviewByStoreDTO.self) else { return }
             self.lastReviewId = responseData.page.lastId
             self.currentpageSize = responseData.page.size
             

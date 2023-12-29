@@ -69,7 +69,7 @@ extension UIScrollView {
                 self.publisher(for: \.contentSize)
             )
             .map { [weak self] (contentOffset, bounds, contentSize) -> Bool in
-                guard let self = self else { return false }
+                guard self != nil else { return false }
                 let offsetY = contentOffset.y
                 let scrollViewHeight = bounds.size.height
                 let contentHeight = contentSize.height

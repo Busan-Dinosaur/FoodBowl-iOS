@@ -21,8 +21,8 @@ final class StoreDetailViewController: UIViewController, Navigationable, Optiona
     
     private lazy var storeDeatilView: StoreDetailView = StoreDetailView(storeId: self.viewModel.storeId, isFriend: self.viewModel.isFriend)
     
-    private var dataSource: UICollectionViewDiffableDataSource<Section, ReviewByStore>!
-    private var snapShot: NSDiffableDataSourceSnapshot<Section, ReviewByStore>!
+    private var dataSource: UICollectionViewDiffableDataSource<Section, ReviewItemByStoreDTO>!
+    private var snapShot: NSDiffableDataSourceSnapshot<Section, ReviewItemByStoreDTO>!
     
     // MARK: - property
     
@@ -101,7 +101,7 @@ final class StoreDetailViewController: UIViewController, Navigationable, Optiona
             .store(in: &self.cancelBag)
     }
     
-    private func bindCell(_ cell: FeedNSCollectionViewCell, with item: ReviewByStore) {
+    private func bindCell(_ cell: FeedNSCollectionViewCell, with item: ReviewItemByStoreDTO) {
         cell.userButtonTapAction = { [weak self] _ in
             let profileViewController = ProfileViewController(memberId: item.writer.id)
             
@@ -148,7 +148,7 @@ final class StoreDetailViewController: UIViewController, Navigationable, Optiona
 
 // MARK: - Helper
 extension StoreDetailViewController {
-    private func handleReviews(_ reviews: [ReviewByStore]) {
+    private func handleReviews(_ reviews: [ReviewItemByStoreDTO]) {
         self.reloadReviews(reviews)
     }
 }
@@ -160,8 +160,8 @@ extension StoreDetailViewController {
         self.configureSnapshot()
     }
 
-    private func feedNSCollectionViewDataSource() -> UICollectionViewDiffableDataSource<Section, ReviewByStore> {
-        let reviewCellRegistration = UICollectionView.CellRegistration<FeedNSCollectionViewCell, ReviewByStore> {
+    private func feedNSCollectionViewDataSource() -> UICollectionViewDiffableDataSource<Section, ReviewItemByStoreDTO> {
+        let reviewCellRegistration = UICollectionView.CellRegistration<FeedNSCollectionViewCell, ReviewItemByStoreDTO> {
             [weak self] cell, indexPath, item in
             
             cell.configureCell(item)
@@ -184,12 +184,12 @@ extension StoreDetailViewController {
 // MARK: - Snapshot
 extension StoreDetailViewController {
     private func configureSnapshot() {
-        self.snapShot = NSDiffableDataSourceSnapshot<Section, ReviewByStore>()
+        self.snapShot = NSDiffableDataSourceSnapshot<Section, ReviewItemByStoreDTO>()
         self.snapShot.appendSections([.main])
         self.dataSource.apply(self.snapShot, animatingDifferences: true)
     }
 
-    private func reloadReviews(_ items: [ReviewByStore]) {
+    private func reloadReviews(_ items: [ReviewItemByStoreDTO]) {
         let previousReviewsData = self.snapShot.itemIdentifiers(inSection: .main)
         self.snapShot.deleteItems(previousReviewsData)
         self.snapShot.appendItems(items, toSection: .main)

@@ -15,8 +15,8 @@ final class SearchUnivViewController: BaseViewController {
 
     private var viewModel = MapViewModel()
 
-    private var schools = [School]()
-    private var filteredSchools = [School]()
+    private var schools = [SchoolItemDTO]()
+    private var filteredSchools = [SchoolItemDTO]()
 
     // MARK: - property
     private lazy var searchBar = UISearchBar().then {
@@ -71,7 +71,7 @@ final class SearchUnivViewController: BaseViewController {
         }
     }
 
-    private func setUniv(univ: School) {
+    private func setUniv(univ: SchoolItemDTO) {
         delegate?.setUniv(univ: univ)
         dismiss(animated: true)
     }
@@ -124,5 +124,5 @@ extension SearchUnivViewController: UISearchBarDelegate {
 }
 
 protocol SearchUnivViewControllerDelegate: AnyObject {
-    func setUniv(univ: School)
+    func setUniv(univ: SchoolItemDTO)
 }

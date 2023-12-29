@@ -1,5 +1,5 @@
 //
-//  SchoolResponse.swift
+//  SchoolDTO.swift
 //  FoodBowl
 //
 //  Created by COBY_PRO on 2023/09/10.
@@ -8,11 +8,11 @@
 import CoreLocation
 import Foundation
 
-struct SchoolResponse: Codable {
-    let schools: [School]
+struct SchoolDTO: Codable {
+    let schools: [SchoolItemDTO]
 }
 
-struct School: Codable {
+struct SchoolItemDTO: Codable {
     let id: Int
     let name: String
     let x: Double

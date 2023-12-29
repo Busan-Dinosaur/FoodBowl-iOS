@@ -38,8 +38,8 @@ struct UserDefaultWrapper<T: Codable> {
 
 enum UserDefaultsManager {
     @UserDefaultWrapper(key: "currentUser", defaultValue: nil)
-    static var currentUser: MemberProfileResponse?
+    static var currentUser: MemberProfileDTO?
 
     @UserDefaultWrapper(key: "currentUniv", defaultValue: nil)
-    static var currentUniv: School?
+    static var currentUniv: SchoolItemDTO?
 }

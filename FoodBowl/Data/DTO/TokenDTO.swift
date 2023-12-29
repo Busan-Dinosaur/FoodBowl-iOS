@@ -1,13 +1,13 @@
 //
-//  SignResponse.swift
+//  TokenDTO.swift
 //  FoodBowl
 //
-//  Created by COBY_PRO on 2023/08/10.
+//  Created by COBY_PRO on 2023/09/09.
 //
 
 import Foundation
 
-struct SignDTO: Decodable {
+struct TokenDTO: Codable {
     let accessToken: String
     let refreshToken: String
 }

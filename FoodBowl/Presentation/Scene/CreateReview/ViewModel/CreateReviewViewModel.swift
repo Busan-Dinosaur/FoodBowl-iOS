@@ -10,9 +10,9 @@ import UIKit
 import Moya
 
 final class CreateReviewViewModel {
-    var reviewRequest = CreateReviewRequest()
+    var reviewRequest = CreateReviewRequestDTO()
     var reviewImages = [UIImage]()
-    var store: Place?
+    var store: PlaceItemDTO?
 
     private let providerKakao = MoyaProvider<KakaoAPI>()
     private let provider = MoyaProvider<ServiceAPI>()
@@ -28,8 +28,8 @@ final class CreateReviewViewModel {
         }
     }
 
-    func searchStores(keyword: String) async -> [Place] {
-        guard let currentLoc = LocationManager.shared.manager.location else { return [Place]() }
+    func searchStores(keyword: String) async -> [PlaceItemDTO] {
+        guard let currentLoc = LocationManager.shared.manager.location else { return [PlaceItemDTO]() }
 
         let response = await providerKakao.request(.searchStores(
             x: String(currentLoc.coordinate.longitude),
@@ -39,19 +39,19 @@ final class CreateReviewViewModel {
 
         switch response {
         case .success(let result):
-            guard let data = try? result.map(PlaceResponse.self) else { return [Place]() }
+            guard let data = try? result.map(PlaceDTO.self) else { return [PlaceItemDTO]() }
             return data.documents
         case .failure(let err):
             handleError(err)
-            return [Place]()
+            return [PlaceItemDTO]()
         }
     }
 
-    private func searchUniv(store: Place) async -> Place? {
+    private func searchUniv(store: PlaceItemDTO) async -> PlaceItemDTO? {
         let response = await providerKakao.request(.searchUniv(x: store.longitude, y: store.latitude))
         switch response {
         case .success(let result):
-            guard let data = try? result.map(PlaceResponse.self) else { return nil }
+            guard let data = try? result.map(PlaceDTO.self) else { return nil }
             if data.documents.count > 0 {
                 return data.documents[0]
             }
@@ -79,7 +79,7 @@ final class CreateReviewViewModel {
         return "기타"
     }
 
-    func setStore(store: Place) async {
+    func setStore(store: PlaceItemDTO) async {
         self.store = store
         reviewRequest.locationId = store.id
         reviewRequest.storeName = store.placeName

@@ -107,7 +107,7 @@ extension FollowingViewModel {
             )
             switch response {
             case .success(let result):
-                guard let data = try? result.map(FollowMemberResponse.self) else { return }
+                guard let data = try? result.map(MemberByFollowDTO.self) else { return }
                 self.currentPage = data.currentPage
                 self.currentSize = data.currentSize
                 

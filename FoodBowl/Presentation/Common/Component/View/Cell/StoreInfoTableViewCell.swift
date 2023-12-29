@@ -53,7 +53,7 @@ final class StoreInfoTableViewCell: BaseTableViewCell {
 }
 
 extension StoreInfoTableViewCell {
-    func setupData(_ store: StoreBySearch) {
+    func setupData(_ store: StoreItemBySearchDTO) {
         storeNameLabel.text = store.storeName
         storeFeedLabel.text = "\(store.reviewCount.prettyNumber)명이 후기를 남겼어요."
         storeDistanceLabel.text = store.distance.prettyDistance

@@ -78,14 +78,14 @@ final class FindViewController: UIViewController, Navigationable, Keyboardable {
     
     private var viewModel = MapViewModel()
     private lazy var isBookmarked = [Bool](repeating: false, count: 10)
-    private var stores: [StoreBySearch] = [] {
+    private var stores: [StoreItemBySearchDTO] = [] {
         didSet {
             DispatchQueue.main.async {
                 self.findResultViewController.searchResultTableView.reloadData()
             }
         }
     }
-    private var members: [Member] = [] {
+    private var members: [MemberDTO] = [] {
         didSet {
             DispatchQueue.main.async {
                 self.findResultViewController.searchResultTableView.reloadData()

@@ -90,7 +90,7 @@ final class FeedNSCollectionViewCell: UICollectionViewCell, BaseViewType {
 
 // MARK: - Public - func
 extension FeedNSCollectionViewCell {
-    func configureCell(_ data: ReviewByStore) {
+    func configureCell(_ data: ReviewItemByStoreDTO) {
         let writer = data.writer
         let review = data.review
         
