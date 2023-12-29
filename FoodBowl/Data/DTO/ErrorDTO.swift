@@ -1,13 +1,13 @@
 //
-//  ErrorResponse.swift
+//  ErrorDTO.swift
 //  FoodBowl
 //
-//  Created by COBY_PRO on 10/20/23.
+//  Created by Coby on 12/29/23.
 //
 
 import Foundation
 
-struct ErrorResponse: Codable {
+struct ErrorDTO: Codable {
     let errorCode: String
     let message: String
 }

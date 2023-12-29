@@ -17,7 +17,7 @@ final class MapViewModel: BaseViewModelType {
     
     // MARK: - property
 
-    private let provider = MoyaProvider<ServiceAPI>()    
+    private let provider = MoyaProvider<ServiceAPI>()
     private var cancelBag = Set<AnyCancellable>()
     
     private let pageSize: Int = 20
@@ -439,7 +439,7 @@ extension MapViewModel {
         guard let currentLoc = LocationManager.shared.manager.location?.coordinate else { return [] }
         let response = await provider.request(
             .getStoresBySearch(
-                form: SearchStoresRequestDTO(
+                form: SearchStoreRequestDTO(
                     name: name,
                     x: currentLoc.longitude,
                     y: currentLoc.latitude,
@@ -460,7 +460,7 @@ extension MapViewModel {
     func searchMembers(name: String) async -> [MemberDTO] {
         let response = await provider.request(
             .getMemberBySearch(
-                form: SearchMembersRequestDTO(
+                form: SearchMemberRequestDTO(
                     name: name,
                     size: size
                 )

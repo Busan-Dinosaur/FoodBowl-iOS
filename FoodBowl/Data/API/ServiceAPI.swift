@@ -12,7 +12,7 @@ import Moya
 enum ServiceAPI {
     case signIn(request: SignRequestDTO)
     case logOut
-    case renew
+    case patchRefreshToken(token: TokenDTO)
     case checkNickname(nickname: String)
     case getSchools
     case getCategories
@@ -24,7 +24,7 @@ enum ServiceAPI {
     case getReviewsByMember(form: CustomLocation, memberId: Int, lastReviewId: Int?, pageSize: Int)
     case getReviewsByFollowing(form: CustomLocation, lastReviewId: Int?, pageSize: Int)
     case getReviewsByBookmark(form: CustomLocation, lastReviewId: Int?, pageSize: Int)
-    case getStoresBySearch(form: SearchStoresRequestDTO)
+    case getStoresBySearch(form: SearchStoreRequestDTO)
     case getStoresBySchool(form: CustomLocation, schoolId: Int)
     case getStoresByMember(form: CustomLocation, memberId: Int)
     case getStoresByFollowing(form: CustomLocation)
@@ -35,7 +35,7 @@ enum ServiceAPI {
     case removeMemberProfileImage
     case updateMemberProfileImage(image: Data)
     case getMemberProfile(id: Int)
-    case getMemberBySearch(form: SearchMembersRequestDTO)
+    case getMemberBySearch(form: SearchMemberRequestDTO)
     case getMyProfile
     case followMember(memberId: Int)
     case unfollowMember(memberId: Int)
@@ -57,7 +57,7 @@ extension ServiceAPI: TargetType {
             return "/v1/auth/login/oauth/apple"
         case .logOut:
             return "/v1/auth/logout"
-        case .renew:
+        case .patchRefreshToken:
             return "/v1/auth/token/renew"
         case .checkNickname:
             return "/v1/members/nickname/exist"
@@ -118,7 +118,7 @@ extension ServiceAPI: TargetType {
 
     var method: Moya.Method {
         switch self {
-        case .signIn, .logOut, .renew, .createBlame, .createReview, .createBookmark, .followMember:
+        case .signIn, .logOut, .patchRefreshToken, .createBlame, .createReview, .createBookmark, .followMember:
             return .post
         case .updateMemberProfile, .updateMemberProfileImage:
             return .patch
@@ -133,10 +133,10 @@ extension ServiceAPI: TargetType {
         switch self {
         case .signIn(let request):
             return .requestJSONEncodable(request)
-        case .renew:
+        case .patchRefreshToken(let request):
             let request = TokenDTO(
-                accessToken: KeychainManager.get(.accessToken),
-                refreshToken: KeychainManager.get(.refreshToken)
+                accessToken: request.accessToken,
+                refreshToken: request.refreshToken
             )
             return .requestJSONEncodable(request)
         case .checkNickname(let nickname):
@@ -389,7 +389,7 @@ extension ServiceAPI: TargetType {
         let accessToken: String = KeychainManager.get(.accessToken)
         
         switch self {
-        case .signIn, .renew:
+        case .signIn, .patchRefreshToken:
             return [
                 "Content-Type": "application/json"
             ]

@@ -28,19 +28,22 @@
 		CB2E4F81297702B800FD2566 /* UserInfoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2E4F80297702B800FD2566 /* UserInfoCollectionViewCell.swift */; };
 		CB2E4F892977393700FD2566 /* FollowInfoButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2E4F882977393700FD2566 /* FollowInfoButton.swift */; };
 		CB2E82412AA74A050016820E /* UpdateMemberProfileRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2E82402AA74A050016820E /* UpdateMemberProfileRequestDTO.swift */; };
-		CB2E82472AA74FB60016820E /* NicknameExistDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2E82462AA74FB60016820E /* NicknameExistDTO.swift */; };
+		CB2E82472AA74FB60016820E /* NicknameIsExistDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2E82462AA74FB60016820E /* NicknameIsExistDTO.swift */; };
 		CB40C6F82A83E812003E3F06 /* OnboardingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB40C6F72A83E812003E3F06 /* OnboardingViewModel.swift */; };
 		CB40C6FA2A83E916003E3F06 /* MoyaProvider+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB40C6F92A83E916003E3F06 /* MoyaProvider+Extension.swift */; };
 		CB40C6FE2A83EEF8003E3F06 /* SignRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB40C6FD2A83EEF8003E3F06 /* SignRequestDTO.swift */; };
 		CB4FBBF22978CFA90052D371 /* FollowerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB4FBBF12978CFA90052D371 /* FollowerViewController.swift */; };
 		CB4FBBF42978CFE40052D371 /* FollowingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB4FBBF32978CFE40052D371 /* FollowingViewController.swift */; };
 		CB51C8C92AD7DFC9002D0BA5 /* ReviewDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB51C8C82AD7DFC9002D0BA5 /* ReviewDTO.swift */; };
-		CB51C8D12AD7E763002D0BA5 /* SearchStoresRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB51C8D02AD7E763002D0BA5 /* SearchStoresRequestDTO.swift */; };
+		CB51C8D12AD7E763002D0BA5 /* SearchStoreRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB51C8D02AD7E763002D0BA5 /* SearchStoreRequestDTO.swift */; };
 		CB51C8D52AD7E896002D0BA5 /* StoreDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB51C8D42AD7E896002D0BA5 /* StoreDTO.swift */; };
 		CB51C8D72AD7EB58002D0BA5 /* ServiceAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB51C8D62AD7EB58002D0BA5 /* ServiceAPI.swift */; };
 		CB558E9A29746B5D00921943 /* PhotoPlusCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB558E9929746B5D00921943 /* PhotoPlusCollectionViewCell.swift */; };
 		CB5AF8A929854AA0003D16D4 /* MapAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5AF8A829854AA0003D16D4 /* MapAnnotation.swift */; };
 		CB5BFB0C2B3EE37500B35062 /* TokenRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5BFB0B2B3EE37500B35062 /* TokenRepository.swift */; };
+		CB5BFB132B3EEA5800B35062 /* TokenRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5BFB122B3EEA5800B35062 /* TokenRepositoryImpl.swift */; };
+		CB5BFB172B3EF76E00B35062 /* ErrorDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5BFB162B3EF76E00B35062 /* ErrorDTO.swift */; };
+		CB5BFB192B3EF92700B35062 /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5BFB182B3EF92700B35062 /* NetworkError.swift */; };
 		CB5DD42F2AB587CD009FCB43 /* UserDefaultWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5DD42E2AB587CD009FCB43 /* UserDefaultWrapper.swift */; };
 		CB5DD4312AB59130009FCB43 /* BookmarkMapButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5DD4302AB59130009FCB43 /* BookmarkMapButton.swift */; };
 		CB5DD4332AB5A175009FCB43 /* CreateReviewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5DD4322AB5A175009FCB43 /* CreateReviewController.swift */; };
@@ -50,7 +53,6 @@
 		CB617A3C2AE2484F000F7FFC /* Keyboardable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB617A3B2AE2484F000F7FFC /* Keyboardable.swift */; };
 		CB617A3E2AE248BB000F7FFC /* UIViewController+Keyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB617A3D2AE248BB000F7FFC /* UIViewController+Keyboard.swift */; };
 		CB617A402AE248CF000F7FFC /* UIViewController+Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB617A3F2AE248CF000F7FFC /* UIViewController+Alert.swift */; };
-		CB617A442AE25950000F7FFC /* ErrorResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB617A432AE25950000F7FFC /* ErrorResponse.swift */; };
 		CB617A462AE25B1C000F7FFC /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB617A452AE25B1C000F7FFC /* OnboardingView.swift */; };
 		CB617A4D2AE27F76000F7FFC /* UIControl+Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB617A4C2AE27F76000F7FFC /* UIControl+Combine.swift */; };
 		CB617A4F2AE27F88000F7FFC /* UIViewController+Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB617A4E2AE27F88000F7FFC /* UIViewController+Combine.swift */; };
@@ -109,7 +111,7 @@
 		CBBB97EC2AB068DE00272CCE /* BMJUAOTF.otf in Resources */ = {isa = PBXBuildFile; fileRef = CBBB97EB2AB068AA00272CCE /* BMJUAOTF.otf */; };
 		CBBB97EE2AB0828600272CCE /* UpdateReviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBBB97ED2AB0828600272CCE /* UpdateReviewViewController.swift */; };
 		CBBB97F12AB0832F00272CCE /* UpdateReviewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBBB97F02AB0832F00272CCE /* UpdateReviewViewModel.swift */; };
-		CBC158642AD80AF800FD263B /* SearchMembersRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBC158632AD80AF800FD263B /* SearchMembersRequestDTO.swift */; };
+		CBC158642AD80AF800FD263B /* SearchMemberRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBC158632AD80AF800FD263B /* SearchMemberRequestDTO.swift */; };
 		CBC158662AD80BB600FD263B /* MemberDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBC158652AD80BB600FD263B /* MemberDTO.swift */; };
 		CBC158682AD80C3300FD263B /* CreateBlameRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBC158672AD80C3300FD263B /* CreateBlameRequestDTO.swift */; };
 		CBC1586E2AD81A8400FD263B /* MapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBC1586D2AD81A8400FD263B /* MapViewModel.swift */; };
@@ -182,19 +184,22 @@
 		CB2E4F80297702B800FD2566 /* UserInfoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoCollectionViewCell.swift; sourceTree = "<group>"; };
 		CB2E4F882977393700FD2566 /* FollowInfoButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowInfoButton.swift; sourceTree = "<group>"; };
 		CB2E82402AA74A050016820E /* UpdateMemberProfileRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateMemberProfileRequestDTO.swift; sourceTree = "<group>"; };
-		CB2E82462AA74FB60016820E /* NicknameExistDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameExistDTO.swift; sourceTree = "<group>"; };
+		CB2E82462AA74FB60016820E /* NicknameIsExistDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameIsExistDTO.swift; sourceTree = "<group>"; };
 		CB40C6F72A83E812003E3F06 /* OnboardingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewModel.swift; sourceTree = "<group>"; };
 		CB40C6F92A83E916003E3F06 /* MoyaProvider+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MoyaProvider+Extension.swift"; sourceTree = "<group>"; };
 		CB40C6FD2A83EEF8003E3F06 /* SignRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignRequestDTO.swift; sourceTree = "<group>"; };
 		CB4FBBF12978CFA90052D371 /* FollowerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowerViewController.swift; sourceTree = "<group>"; };
 		CB4FBBF32978CFE40052D371 /* FollowingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowingViewController.swift; sourceTree = "<group>"; };
 		CB51C8C82AD7DFC9002D0BA5 /* ReviewDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewDTO.swift; sourceTree = "<group>"; };
-		CB51C8D02AD7E763002D0BA5 /* SearchStoresRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchStoresRequestDTO.swift; sourceTree = "<group>"; };
+		CB51C8D02AD7E763002D0BA5 /* SearchStoreRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchStoreRequestDTO.swift; sourceTree = "<group>"; };
 		CB51C8D42AD7E896002D0BA5 /* StoreDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreDTO.swift; sourceTree = "<group>"; };
 		CB51C8D62AD7EB58002D0BA5 /* ServiceAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceAPI.swift; sourceTree = "<group>"; };
 		CB558E9929746B5D00921943 /* PhotoPlusCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPlusCollectionViewCell.swift; sourceTree = "<group>"; };
 		CB5AF8A829854AA0003D16D4 /* MapAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapAnnotation.swift; sourceTree = "<group>"; };
 		CB5BFB0B2B3EE37500B35062 /* TokenRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenRepository.swift; sourceTree = "<group>"; };
+		CB5BFB122B3EEA5800B35062 /* TokenRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenRepositoryImpl.swift; sourceTree = "<group>"; };
+		CB5BFB162B3EF76E00B35062 /* ErrorDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorDTO.swift; sourceTree = "<group>"; };
+		CB5BFB182B3EF92700B35062 /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
 		CB5DD42E2AB587CD009FCB43 /* UserDefaultWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultWrapper.swift; sourceTree = "<group>"; };
 		CB5DD4302AB59130009FCB43 /* BookmarkMapButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkMapButton.swift; sourceTree = "<group>"; };
 		CB5DD4322AB5A175009FCB43 /* CreateReviewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateReviewController.swift; sourceTree = "<group>"; };
@@ -204,7 +209,6 @@
 		CB617A3B2AE2484F000F7FFC /* Keyboardable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keyboardable.swift; sourceTree = "<group>"; };
 		CB617A3D2AE248BB000F7FFC /* UIViewController+Keyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Keyboard.swift"; sourceTree = "<group>"; };
 		CB617A3F2AE248CF000F7FFC /* UIViewController+Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Alert.swift"; sourceTree = "<group>"; };
-		CB617A432AE25950000F7FFC /* ErrorResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorResponse.swift; sourceTree = "<group>"; };
 		CB617A452AE25B1C000F7FFC /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		CB617A4C2AE27F76000F7FFC /* UIControl+Combine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIControl+Combine.swift"; sourceTree = "<group>"; };
 		CB617A4E2AE27F88000F7FFC /* UIViewController+Combine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Combine.swift"; sourceTree = "<group>"; };
@@ -258,7 +262,7 @@
 		CBBB97EB2AB068AA00272CCE /* BMJUAOTF.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = BMJUAOTF.otf; sourceTree = "<group>"; };
 		CBBB97ED2AB0828600272CCE /* UpdateReviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateReviewViewController.swift; sourceTree = "<group>"; };
 		CBBB97F02AB0832F00272CCE /* UpdateReviewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateReviewViewModel.swift; sourceTree = "<group>"; };
-		CBC158632AD80AF800FD263B /* SearchMembersRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchMembersRequestDTO.swift; sourceTree = "<group>"; };
+		CBC158632AD80AF800FD263B /* SearchMemberRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchMemberRequestDTO.swift; sourceTree = "<group>"; };
 		CBC158652AD80BB600FD263B /* MemberDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberDTO.swift; sourceTree = "<group>"; };
 		CBC158672AD80C3300FD263B /* CreateBlameRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateBlameRequestDTO.swift; sourceTree = "<group>"; };
 		CBC1586D2AD81A8400FD263B /* MapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewModel.swift; sourceTree = "<group>"; };
@@ -406,16 +410,10 @@
 			path = Repository;
 			sourceTree = "<group>";
 		};
-		CB5BFB0D2B3EE38900B35062 /* Error */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Error;
-			sourceTree = "<group>";
-		};
 		CB5BFB0E2B3EE39500B35062 /* Repository */ = {
 			isa = PBXGroup;
 			children = (
+				CB5BFB122B3EEA5800B35062 /* TokenRepositoryImpl.swift */,
 			);
 			path = Repository;
 			sourceTree = "<group>";
@@ -423,6 +421,7 @@
 		CB5BFB0F2B3EE3A800B35062 /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				CB5BFB182B3EF92700B35062 /* NetworkError.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -479,14 +478,6 @@
 			path = Button;
 			sourceTree = "<group>";
 		};
-		CB617A242AE23933000F7FFC /* Error */ = {
-			isa = PBXGroup;
-			children = (
-				CB617A432AE25950000F7FFC /* ErrorResponse.swift */,
-			);
-			path = Error;
-			sourceTree = "<group>";
-		};
 		CB617A252AE23959000F7FFC /* Scene */ = {
 			isa = PBXGroup;
 			children = (
@@ -535,7 +526,6 @@
 			isa = PBXGroup;
 			children = (
 				CB5BFB0A2B3EE36800B35062 /* Repository */,
-				CB617A242AE23933000F7FFC /* Error */,
 				CB93326D2AFCCCC600B7F87A /* Usecase */,
 				CBDE390329719B8100DDE49A /* Entity */,
 			);
@@ -734,7 +724,6 @@
 		CB7F3322298A51330000A6B4 /* Data */ = {
 			isa = PBXGroup;
 			children = (
-				CB5BFB0D2B3EE38900B35062 /* Error */,
 				CB9332742AFCDCA100B7F87A /* DTO */,
 				CB5BFB0E2B3EE39500B35062 /* Repository */,
 				CB5BFB0F2B3EE3A800B35062 /* Network */,
@@ -843,7 +832,9 @@
 		CB9332742AFCDCA100B7F87A /* DTO */ = {
 			isa = PBXGroup;
 			children = (
+				CB5BFB162B3EF76E00B35062 /* ErrorDTO.swift */,
 				CB1578FF2AAC61CD00007183 /* TokenDTO.swift */,
+				CB2E82462AA74FB60016820E /* NicknameIsExistDTO.swift */,
 				CBC747AD2A83D9BC00F171F5 /* Request */,
 				CBC747AE2A83D9C400F171F5 /* Response */,
 			);
@@ -998,9 +989,9 @@
 				CBC158672AD80C3300FD263B /* CreateBlameRequestDTO.swift */,
 				CB1579082AACCFCB00007183 /* CreateReviewRequestDTO.swift */,
 				CBB94BF92ADD0D6400F44245 /* GetReviewByStoreRequestDTO.swift */,
-				CB51C8D02AD7E763002D0BA5 /* SearchStoresRequestDTO.swift */,
+				CB51C8D02AD7E763002D0BA5 /* SearchStoreRequestDTO.swift */,
 				CB2E82402AA74A050016820E /* UpdateMemberProfileRequestDTO.swift */,
-				CBC158632AD80AF800FD263B /* SearchMembersRequestDTO.swift */,
+				CBC158632AD80AF800FD263B /* SearchMemberRequestDTO.swift */,
 			);
 			path = Request;
 			sourceTree = "<group>";
@@ -1008,7 +999,6 @@
 		CBC747AE2A83D9C400F171F5 /* Response */ = {
 			isa = PBXGroup;
 			children = (
-				CB2E82462AA74FB60016820E /* NicknameExistDTO.swift */,
 				CB15790A2AACD44700007183 /* SchoolDTO.swift */,
 				CB15790C2AACD45400007183 /* CategoryDTO.swift */,
 				CB51C8C82AD7DFC9002D0BA5 /* ReviewDTO.swift */,
@@ -1190,7 +1180,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1410;
-				LastUpgradeCheck = 1500;
+				LastUpgradeCheck = 1510;
 				TargetAttributes = {
 					CBC730FF295550A100C7F198 = {
 						CreatedOnToolsVersion = 14.1;
@@ -1272,9 +1262,9 @@
 				CBC747BA2A83DD6400F171F5 /* Configurations.swift in Sources */,
 				CB617A4F2AE27F88000F7FFC /* UIViewController+Combine.swift in Sources */,
 				CB63B7602A698909000AD9C2 /* CategoryListView.swift in Sources */,
-				CB2E82472AA74FB60016820E /* NicknameExistDTO.swift in Sources */,
+				CB2E82472AA74FB60016820E /* NicknameIsExistDTO.swift in Sources */,
 				CBBB97F12AB0832F00272CCE /* UpdateReviewViewModel.swift in Sources */,
-				CB51C8D12AD7E763002D0BA5 /* SearchStoresRequestDTO.swift in Sources */,
+				CB51C8D12AD7E763002D0BA5 /* SearchStoreRequestDTO.swift in Sources */,
 				CB8A2D9B297844720018AC6E /* Marker.swift in Sources */,
 				CBDDF1452A6AFB5800AE3C50 /* PhotoListView.swift in Sources */,
 				CBC158732AD8E74900FD263B /* CustomLocation.swift in Sources */,
@@ -1299,7 +1289,7 @@
 				CBC73104295550A100C7F198 /* AppDelegate.swift in Sources */,
 				CBE6190C296C635D005295AF /* FollowButton.swift in Sources */,
 				CB5AF8A929854AA0003D16D4 /* MapAnnotation.swift in Sources */,
-				CBC158642AD80AF800FD263B /* SearchMembersRequestDTO.swift in Sources */,
+				CBC158642AD80AF800FD263B /* SearchMemberRequestDTO.swift in Sources */,
 				CB1790C8296DAB470083D3A4 /* DynamicHeightCollectionViewFlowLayout.swift in Sources */,
 				CBA7F184297DBB01006088A0 /* YPImagePicker+Extension.swift in Sources */,
 				CB617A512AE27F96000F7FFC /* UIScrollView+Combine.swift in Sources */,
@@ -1308,7 +1298,6 @@
 				CB1A7C5E295618A900C6431D /* SettingButton.swift in Sources */,
 				CB2A44A62ADFC62D004A4126 /* PanZoomImageView.swift in Sources */,
 				CBDECAC82A6B2F0700259350 /* FeedListView.swift in Sources */,
-				CB617A442AE25950000F7FFC /* ErrorResponse.swift in Sources */,
 				CBADC29B29559BC900E56C93 /* BaseTableViewCell.swift in Sources */,
 				CB1566D9298D72FF0056B7D9 /* LocationManager.swift in Sources */,
 				CBE6190F296C6435005295AF /* MapViewController.swift in Sources */,
@@ -1318,6 +1307,7 @@
 				CB617A4D2AE27F76000F7FFC /* UIControl+Combine.swift in Sources */,
 				CB4FBBF42978CFE40052D371 /* FollowingViewController.swift in Sources */,
 				CBDDF1402A6ADA3800AE3C50 /* EditButton.swift in Sources */,
+				CB5BFB172B3EF76E00B35062 /* ErrorDTO.swift in Sources */,
 				CBADC2A129559BC900E56C93 /* BackButton.swift in Sources */,
 				CBADC29A29559BC900E56C93 /* BaseViewController.swift in Sources */,
 				CB40C6FA2A83E916003E3F06 /* MoyaProvider+Extension.swift in Sources */,
@@ -1333,8 +1323,10 @@
 				CBADC28329559BC900E56C93 /* ImageLiteral.swift in Sources */,
 				CBD1B5F12982B0A300B0AD51 /* SettingViewController.swift in Sources */,
 				CBDECABE2A6B07DE00259350 /* BookmarkButton.swift in Sources */,
+				CB5BFB132B3EEA5800B35062 /* TokenRepositoryImpl.swift in Sources */,
 				CB558E9A29746B5D00921943 /* PhotoPlusCollectionViewCell.swift in Sources */,
 				CB617A3E2AE248BB000F7FFC /* UIViewController+Keyboard.swift in Sources */,
+				CB5BFB192B3EF92700B35062 /* NetworkError.swift in Sources */,
 				CBA62D3F2A6EC7B800AA0830 /* FindViewController.swift in Sources */,
 				CB4FBBF22978CFA90052D371 /* FollowerViewController.swift in Sources */,
 				CBADC28B29559BC900E56C93 /* UIColor+Extension.swift in Sources */,
@@ -1402,6 +1394,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -1464,6 +1457,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
