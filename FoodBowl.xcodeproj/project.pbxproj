@@ -53,6 +53,10 @@
 		CB5BFB3D2B3F13ED00B35062 /* StoreRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5BFB3C2B3F13ED00B35062 /* StoreRepository.swift */; };
 		CB5BFB3F2B3F14EC00B35062 /* GetStoresRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5BFB3E2B3F14EC00B35062 /* GetStoresRequestDTO.swift */; };
 		CB5BFB412B3F168800B35062 /* StoreRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5BFB402B3F168800B35062 /* StoreRepositoryImpl.swift */; };
+		CB5BFB432B3F1A3600B35062 /* MemberRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5BFB422B3F1A3600B35062 /* MemberRepository.swift */; };
+		CB5BFB452B3F1CA300B35062 /* MemberRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5BFB442B3F1CA300B35062 /* MemberRepositoryImpl.swift */; };
+		CB5BFB472B3F1DBD00B35062 /* KakaoRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5BFB462B3F1DBD00B35062 /* KakaoRepository.swift */; };
+		CB5BFB492B3F1DFF00B35062 /* KakaoRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5BFB482B3F1DFF00B35062 /* KakaoRepositoryImpl.swift */; };
 		CB5DD42F2AB587CD009FCB43 /* UserDefaultWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5DD42E2AB587CD009FCB43 /* UserDefaultWrapper.swift */; };
 		CB5DD4312AB59130009FCB43 /* BookmarkMapButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5DD4302AB59130009FCB43 /* BookmarkMapButton.swift */; };
 		CB5DD4332AB5A175009FCB43 /* CreateReviewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5DD4322AB5A175009FCB43 /* CreateReviewController.swift */; };
@@ -216,6 +220,10 @@
 		CB5BFB3C2B3F13ED00B35062 /* StoreRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreRepository.swift; sourceTree = "<group>"; };
 		CB5BFB3E2B3F14EC00B35062 /* GetStoresRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetStoresRequestDTO.swift; sourceTree = "<group>"; };
 		CB5BFB402B3F168800B35062 /* StoreRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreRepositoryImpl.swift; sourceTree = "<group>"; };
+		CB5BFB422B3F1A3600B35062 /* MemberRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberRepository.swift; sourceTree = "<group>"; };
+		CB5BFB442B3F1CA300B35062 /* MemberRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberRepositoryImpl.swift; sourceTree = "<group>"; };
+		CB5BFB462B3F1DBD00B35062 /* KakaoRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoRepository.swift; sourceTree = "<group>"; };
+		CB5BFB482B3F1DFF00B35062 /* KakaoRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoRepositoryImpl.swift; sourceTree = "<group>"; };
 		CB5DD42E2AB587CD009FCB43 /* UserDefaultWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultWrapper.swift; sourceTree = "<group>"; };
 		CB5DD4302AB59130009FCB43 /* BookmarkMapButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkMapButton.swift; sourceTree = "<group>"; };
 		CB5DD4322AB5A175009FCB43 /* CreateReviewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateReviewController.swift; sourceTree = "<group>"; };
@@ -423,6 +431,8 @@
 				CB5BFB1E2B3F028F00B35062 /* SignRepository.swift */,
 				CB5BFB302B3F091B00B35062 /* ReviewRepository.swift */,
 				CB5BFB3C2B3F13ED00B35062 /* StoreRepository.swift */,
+				CB5BFB422B3F1A3600B35062 /* MemberRepository.swift */,
+				CB5BFB462B3F1DBD00B35062 /* KakaoRepository.swift */,
 			);
 			path = Repository;
 			sourceTree = "<group>";
@@ -434,6 +444,8 @@
 				CB5BFB1C2B3F025F00B35062 /* SignRepositoryImpl.swift */,
 				CB5BFB322B3F096500B35062 /* ReviewRepositoryImpl.swift */,
 				CB5BFB402B3F168800B35062 /* StoreRepositoryImpl.swift */,
+				CB5BFB442B3F1CA300B35062 /* MemberRepositoryImpl.swift */,
+				CB5BFB482B3F1DFF00B35062 /* KakaoRepositoryImpl.swift */,
 			);
 			path = Repository;
 			sourceTree = "<group>";
@@ -1266,6 +1278,7 @@
 				CBDECACA2A6B2F6800259350 /* FeedNSCollectionViewCell.swift in Sources */,
 				CBD1B5FE2982F19300B0AD51 /* UIButton+Extension.swift in Sources */,
 				CBD1B5F42982D39B00B0AD51 /* SettingItemTableViewCell.swift in Sources */,
+				CB5BFB452B3F1CA300B35062 /* MemberRepositoryImpl.swift in Sources */,
 				CB5DD4312AB59130009FCB43 /* BookmarkMapButton.swift in Sources */,
 				CB5BFB332B3F096500B35062 /* ReviewRepositoryImpl.swift in Sources */,
 				CBCD0F7F2A66DA1600A51B32 /* UnivViewController.swift in Sources */,
@@ -1286,6 +1299,7 @@
 				CBC747BA2A83DD6400F171F5 /* Configurations.swift in Sources */,
 				CB617A4F2AE27F88000F7FFC /* UIViewController+Combine.swift in Sources */,
 				CB63B7602A698909000AD9C2 /* CategoryListView.swift in Sources */,
+				CB5BFB472B3F1DBD00B35062 /* KakaoRepository.swift in Sources */,
 				CB2E82472AA74FB60016820E /* CheckNicknameDTO.swift in Sources */,
 				CBBB97F12AB0832F00272CCE /* UpdateReviewViewModel.swift in Sources */,
 				CB51C8D12AD7E763002D0BA5 /* SearchStoreRequestDTO.swift in Sources */,
@@ -1320,6 +1334,7 @@
 				CB5BFB0C2B3EE37500B35062 /* TokenRepository.swift in Sources */,
 				CBE61913296C68D9005295AF /* PlusButton.swift in Sources */,
 				CB1A7C5E295618A900C6431D /* SettingButton.swift in Sources */,
+				CB5BFB432B3F1A3600B35062 /* MemberRepository.swift in Sources */,
 				CB2A44A62ADFC62D004A4126 /* PanZoomImageView.swift in Sources */,
 				CBDECAC82A6B2F0700259350 /* FeedListView.swift in Sources */,
 				CBADC29B29559BC900E56C93 /* BaseTableViewCell.swift in Sources */,
@@ -1369,6 +1384,7 @@
 				CB40C6F82A83E812003E3F06 /* OnboardingViewModel.swift in Sources */,
 				CBA4C7DB2AB4840100FC9DD8 /* PaddingLabel.swift in Sources */,
 				CBE61911296C6804005295AF /* OptionButton.swift in Sources */,
+				CB5BFB492B3F1DFF00B35062 /* KakaoRepositoryImpl.swift in Sources */,
 				CBADC28E29559BC900E56C93 /* UIView+Extension.swift in Sources */,
 				CB16FD512B3491F9006D18D6 /* UserInfoTableViewCell.swift in Sources */,
 				CB5BFB1F2B3F028F00B35062 /* SignRepository.swift in Sources */,

@@ -39,10 +39,10 @@ final class StoreRepositoryImpl: StoreRepository {
     }
     
     func createBookmark(storeId: Int) async throws {
-        let response = await provider.request(.createBookmark(storeId: storeId))
+        let _ = await provider.request(.createBookmark(storeId: storeId))
     }
     
     func removeBookmark(storeId: Int) async throws {
-        let response = await provider.request(.removeBookmark(storeId: storeId))
+        let _ = await provider.request(.removeBookmark(storeId: storeId))
     }
 }

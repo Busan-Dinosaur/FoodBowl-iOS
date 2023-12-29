@@ -39,7 +39,7 @@ enum ServiceAPI {
     case removeMemberProfileImage
     case updateMemberProfileImage(image: Data)
     case getMemberProfile(id: Int)
-    case getMemberBySearch(form: SearchMemberRequestDTO)
+    case getMemberBySearch(request: SearchMemberRequestDTO)
     case getMyProfile
     case followMember(memberId: Int)
     case unfollowMember(memberId: Int)

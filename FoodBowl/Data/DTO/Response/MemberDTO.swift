@@ -35,13 +35,13 @@ struct MemberProfileDTO: Codable {
 
 // MARK: - MemberByFollowDTO
 struct MemberByFollowDTO: Codable {
-    let content: [MemberByFollow]
+    let content: [MemberByFollowItemDTO]
     let isFirst, isLast, hasNext: Bool
     let currentPage, currentSize: Int
 }
 
-// MARK: - Content
-struct MemberByFollow: Codable, Hashable {
+// MARK: - MemberByFollowItemDTO
+struct MemberByFollowItemDTO: Codable, Hashable {
     let memberId: Int
     let profileImageUrl: String?
     let nickname: String

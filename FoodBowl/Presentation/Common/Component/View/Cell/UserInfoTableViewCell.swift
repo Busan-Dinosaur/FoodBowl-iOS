@@ -85,7 +85,7 @@ final class UserInfoTableViewCell: BaseTableViewCell {
         }
     }
 
-    func setupDataByMemberByFollow(_ member: MemberByFollow) {
+    func setupDataByMemberByFollow(_ member: MemberByFollowItemDTO) {
         userNameLabel.text = member.nickname
         userFollowerLabel.text = "팔로워 \(member.followerCount.prettyNumber)명"
         if let url = member.profileImageUrl {

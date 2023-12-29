@@ -21,8 +21,8 @@ final class FollowingViewController: UIViewController, Navigationable {
     
     private let followView: FollowView = FollowView()
     
-    private var dataSource: UICollectionViewDiffableDataSource<Section, MemberByFollow>!
-    private var snapshot: NSDiffableDataSourceSnapshot<Section, MemberByFollow>!
+    private var dataSource: UICollectionViewDiffableDataSource<Section, MemberByFollowItemDTO>!
+    private var snapshot: NSDiffableDataSourceSnapshot<Section, MemberByFollowItemDTO>!
     
     // MARK: - property
     
@@ -67,7 +67,7 @@ final class FollowingViewController: UIViewController, Navigationable {
         self.bindOutputToViewModel(output)
     }
     
-    private func bindCell(_ cell: UserInfoCollectionViewCell, with item: MemberByFollow) {
+    private func bindCell(_ cell: UserInfoCollectionViewCell, with item: MemberByFollowItemDTO) {
         cell.userButtonTapAction = { [weak self] _ in
             let profileViewController = ProfileViewController(memberId: item.memberId)
             
@@ -139,8 +139,8 @@ extension FollowingViewController {
         self.configureSnapshot()
     }
 
-    private func userInfoCollectionViewDataSource() -> UICollectionViewDiffableDataSource<Section, MemberByFollow> {
-        let reviewCellRegistration = UICollectionView.CellRegistration<UserInfoCollectionViewCell, MemberByFollow> {
+    private func userInfoCollectionViewDataSource() -> UICollectionViewDiffableDataSource<Section, MemberByFollowItemDTO> {
+        let reviewCellRegistration = UICollectionView.CellRegistration<UserInfoCollectionViewCell, MemberByFollowItemDTO> {
             [weak self] cell, indexPath, item in
             cell.setupDataByMemberByFollow(item)
             self?.bindCell(cell, with: item)
@@ -162,17 +162,17 @@ extension FollowingViewController {
 // MARK: - Snapshot
 extension FollowingViewController {
     private func configureSnapshot() {
-        self.snapshot = NSDiffableDataSourceSnapshot<Section, MemberByFollow>()
+        self.snapshot = NSDiffableDataSourceSnapshot<Section, MemberByFollowItemDTO>()
         self.snapshot.appendSections([.main])
         self.dataSource.apply(self.snapshot, animatingDifferences: true)
     }
 
-    private func loadFollowings(_ items: [MemberByFollow]) {
+    private func loadFollowings(_ items: [MemberByFollowItemDTO]) {
         self.snapshot.appendItems(items, toSection: .main)
         self.dataSource.applySnapshotUsingReloadData(self.snapshot)
     }
     
-    private func loadMoreFollowings(_ items: [MemberByFollow]) {
+    private func loadMoreFollowings(_ items: [MemberByFollowItemDTO]) {
         self.snapshot.appendItems(items, toSection: .main)
         self.dataSource.applySnapshotUsingReloadData(self.snapshot)
     }

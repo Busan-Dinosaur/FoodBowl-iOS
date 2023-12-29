@@ -360,7 +360,7 @@ extension MapViewModel {
         }
     }
 
-    func getFollowerMembers(memberId: Int, page: Int = 0) async -> [MemberByFollow] {
+    func getFollowerMembers(memberId: Int, page: Int = 0) async -> [MemberByFollowItemDTO] {
         let response = await provider.request(
             .getFollowerMember(
                 memberId: memberId,
@@ -378,7 +378,7 @@ extension MapViewModel {
         }
     }
 
-    func getFollowingMembers(memberId: Int, page: Int = 0) async -> [MemberByFollow] {
+    func getFollowingMembers(memberId: Int, page: Int = 0) async -> [MemberByFollowItemDTO] {
         let response = await provider.request(
             .getFollowingMember(
                 memberId: memberId,
@@ -475,7 +475,7 @@ extension MapViewModel {
     func searchMembers(name: String) async -> [MemberDTO] {
         let response = await provider.request(
             .getMemberBySearch(
-                form: SearchMemberRequestDTO(
+                request: SearchMemberRequestDTO(
                     name: name,
                     size: size
                 )

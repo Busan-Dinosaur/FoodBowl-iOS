@@ -104,7 +104,7 @@ extension UserInfoCollectionViewCell {
         userFollowerLabel.text = "팔로워 \(member.followerCount.prettyNumber)명"
     }
     
-    func setupDataByMemberByFollow(_ member: MemberByFollow) {
+    func setupDataByMemberByFollow(_ member: MemberByFollowItemDTO) {
         if let url = member.profileImageUrl {
             userImageButton.kf.setImage(with: URL(string: url), for: .normal)
         } else {

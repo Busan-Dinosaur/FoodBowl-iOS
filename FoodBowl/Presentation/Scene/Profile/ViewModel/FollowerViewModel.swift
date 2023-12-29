@@ -26,8 +26,8 @@ final class FollowerViewModel: NSObject, BaseViewModelType {
     private var currentPage: Int = 0
     private var currentSize: Int = 20
     
-    private let followersSubject = PassthroughSubject<[MemberByFollow], Error>()
-    private let moreFollowersSubject = PassthroughSubject<[MemberByFollow], Error>()
+    private let followersSubject = PassthroughSubject<[MemberByFollowItemDTO], Error>()
+    private let moreFollowersSubject = PassthroughSubject<[MemberByFollowItemDTO], Error>()
     
     struct Input {
         let viewDidLoad: AnyPublisher<Void, Never>
@@ -35,8 +35,8 @@ final class FollowerViewModel: NSObject, BaseViewModelType {
     }
     
     struct Output {
-        let followers: PassthroughSubject<[MemberByFollow], Error>
-        let moreFollowers: PassthroughSubject<[MemberByFollow], Error>
+        let followers: PassthroughSubject<[MemberByFollowItemDTO], Error>
+        let moreFollowers: PassthroughSubject<[MemberByFollowItemDTO], Error>
     }
     
     // MARK: - init
