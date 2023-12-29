@@ -44,6 +44,7 @@
 		CB5BFB132B3EEA5800B35062 /* TokenRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5BFB122B3EEA5800B35062 /* TokenRepositoryImpl.swift */; };
 		CB5BFB172B3EF76E00B35062 /* ErrorDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5BFB162B3EF76E00B35062 /* ErrorDTO.swift */; };
 		CB5BFB192B3EF92700B35062 /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5BFB182B3EF92700B35062 /* NetworkError.swift */; };
+		CB5BFB1B2B3EFF8700B35062 /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5BFB1A2B3EFF8700B35062 /* Result.swift */; };
 		CB5DD42F2AB587CD009FCB43 /* UserDefaultWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5DD42E2AB587CD009FCB43 /* UserDefaultWrapper.swift */; };
 		CB5DD4312AB59130009FCB43 /* BookmarkMapButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5DD4302AB59130009FCB43 /* BookmarkMapButton.swift */; };
 		CB5DD4332AB5A175009FCB43 /* CreateReviewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5DD4322AB5A175009FCB43 /* CreateReviewController.swift */; };
@@ -200,6 +201,7 @@
 		CB5BFB122B3EEA5800B35062 /* TokenRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenRepositoryImpl.swift; sourceTree = "<group>"; };
 		CB5BFB162B3EF76E00B35062 /* ErrorDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorDTO.swift; sourceTree = "<group>"; };
 		CB5BFB182B3EF92700B35062 /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
+		CB5BFB1A2B3EFF8700B35062 /* Result.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
 		CB5DD42E2AB587CD009FCB43 /* UserDefaultWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultWrapper.swift; sourceTree = "<group>"; };
 		CB5DD4302AB59130009FCB43 /* BookmarkMapButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkMapButton.swift; sourceTree = "<group>"; };
 		CB5DD4322AB5A175009FCB43 /* CreateReviewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateReviewController.swift; sourceTree = "<group>"; };
@@ -612,6 +614,7 @@
 			isa = PBXGroup;
 			children = (
 				CB40C6F92A83E916003E3F06 /* MoyaProvider+Extension.swift */,
+				CB5BFB1A2B3EFF8700B35062 /* Result.swift */,
 			);
 			path = Moya;
 			sourceTree = "<group>";
@@ -1280,6 +1283,7 @@
 				CB2E82412AA74A050016820E /* UpdateMemberProfileRequestDTO.swift in Sources */,
 				CBADC2CF2955A41500E56C93 /* TabBarController.swift in Sources */,
 				CB93326F2AFCCCEA00B7F87A /* SignUsecase.swift in Sources */,
+				CB5BFB1B2B3EFF8700B35062 /* Result.swift in Sources */,
 				CBB12B142985845900AC0EF2 /* String+Extension.swift in Sources */,
 				CBC158682AD80C3300FD263B /* CreateBlameRequestDTO.swift in Sources */,
 				CB15790D2AACD45400007183 /* CategoryDTO.swift in Sources */,

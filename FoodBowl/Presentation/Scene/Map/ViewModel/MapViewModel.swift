@@ -492,7 +492,12 @@ extension MapViewModel {
     }
     
     func renewToken() {
-        provider.request(.renew) { response in
+        let tokenDTO = TokenDTO(
+            accessToken: KeychainManager.get(.accessToken),
+            refreshToken: KeychainManager.get(.refreshToken)
+        )
+        
+        provider.request(.patchRefreshToken(token: tokenDTO)) { response in
             switch response {
             case .success(let result):
                 guard let data = try? result.map(TokenDTO.self) else { return }
