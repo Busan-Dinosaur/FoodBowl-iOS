@@ -11,6 +11,7 @@ import SnapKit
 import Then
 
 final class CreateReviewController: BaseViewController, PhotoPickerable {
+    
     private enum Size {
         static let cellWidth: CGFloat = 100
         static let cellHeight: CGFloat = cellWidth

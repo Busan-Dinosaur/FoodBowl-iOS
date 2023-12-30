@@ -712,9 +712,9 @@
 		CB73E0102AB5FEB4005B6BF1 /* StoreDetail */ = {
 			isa = PBXGroup;
 			children = (
-				CBB94BF42ADD0A3D00F44245 /* ViewModel */,
 				CBDF6EA72AD9256300EB2481 /* View */,
 				CB9332662AFCCAEF00B7F87A /* ViewController */,
+				CBB94BF42ADD0A3D00F44245 /* ViewModel */,
 			);
 			path = StoreDetail;
 			sourceTree = "<group>";
@@ -952,9 +952,9 @@
 		CBADC2B02955A13800E56C93 /* CreateReview */ = {
 			isa = PBXGroup;
 			children = (
-				CB15790E2AACD97300007183 /* ViewModel */,
 				CBDDF13A2A6AD75700AE3C50 /* View */,
 				CB9332652AFCCAB200B7F87A /* ViewController */,
+				CB15790E2AACD97300007183 /* ViewModel */,
 			);
 			path = CreateReview;
 			sourceTree = "<group>";

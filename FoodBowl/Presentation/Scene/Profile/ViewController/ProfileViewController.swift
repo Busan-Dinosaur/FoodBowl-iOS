@@ -60,7 +60,7 @@ final class ProfileViewController: MapViewController {
     private let isOwn: Bool
     private let memberId: Int
 
-    init(isOwn: Bool = false, memberId: Int = UserDefaultsManager.currentUser?.id ?? 0) {
+    init(isOwn: Bool = false, memberId: Int = UserDefaultStorage.id) {
         self.isOwn = isOwn
         self.memberId = memberId
         super.init()
@@ -81,7 +81,7 @@ final class ProfileViewController: MapViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.setUpMemberProfile()
+        self.setUpProfile()
     }
     
     private func setupNavigationBar() {
@@ -134,29 +134,7 @@ final class ProfileViewController: MapViewController {
         viewModel.memberId = self.memberId
     }
 
-    private func setUpMyProfile() {
-        DispatchQueue.main.async {
-            guard let member = UserDefaultsManager.currentUser else { return }
-            
-            self.userNicknameLabel.text = member.nickname
-            self.profileHeaderView.followerInfoButton.numberLabel.text = "\(member.followerCount)명"
-            self.profileHeaderView.followingInfoButton.numberLabel.text = "\(member.followingCount)명"
-            
-            if member.introduction != nil {
-                self.profileHeaderView.userInfoLabel.text = member.introduction
-            } else {
-                self.profileHeaderView.userInfoLabel.text = "소개를 작성해주세요"
-            }
-            
-            if let url = member.profileImageUrl {
-                self.profileHeaderView.userImageView.kf.setImage(with: URL(string: url))
-            } else {
-                self.profileHeaderView.userImageView.image = ImageLiteral.defaultProfile
-            }
-        }
-    }
-
-    private func setUpMemberProfile() {
+    private func setUpProfile() {
         Task {
             guard let member = await viewModel.getMemberProfile(id: memberId) else { return }
             
@@ -178,10 +156,12 @@ final class ProfileViewController: MapViewController {
                     self.profileHeaderView.userInfoLabel.text = "소개를 작성해주세요"
                 }
                 
-                if self.isOwn {
-                    UserDefaultsManager.currentUser = member
-                } else {
+                if !self.isOwn {
                     self.title = member.nickname
+                }
+                
+                if self.memberId == UserDefaultStorage.id {
+                    self.profileHeaderView.followButton.isHidden = true
                 }
             }
         }

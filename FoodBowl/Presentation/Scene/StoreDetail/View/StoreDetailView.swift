@@ -25,34 +25,24 @@ final class StoreDetailView: UIView, BaseViewType {
     
     // MARK: - ui component
     
-    var refreshControl = UIRefreshControl()
-
-    private lazy var reviewToggleButton = ReviewToggleButton().then {
-        $0.isSelected = self.isFriend
-    }
-    private var storeHeaderView = StoreHeaderView()
-    lazy var listCollectionView = UICollectionView(frame: .zero, collectionViewLayout: self.createLayout()).then {
+    private let reviewToggleButton = ReviewToggleButton()
+    private let storeHeaderView = StoreHeaderView()
+    private lazy var listCollectionView = UICollectionView(frame: .zero, collectionViewLayout: self.createLayout()).then {
         $0.showsVerticalScrollIndicator = false
         $0.register(FeedNSCollectionViewCell.self, forCellWithReuseIdentifier: FeedNSCollectionViewCell.className)
         $0.backgroundColor = .mainBackgroundColor
     }
+    private var refresh = UIRefreshControl()
     
     // MARK: - property
-    
-    private let storeId: Int
-    private var isFriend: Bool
-
-    private var cancelBag: Set<AnyCancellable> = Set()
     
     let reviewToggleButtonDidTapPublisher = PassthroughSubject<Bool, Never>()
     let refreshPublisher = PassthroughSubject<Void, Never>()
     
     // MARK: - init
     
-    init(storeId: Int, isFriend: Bool = true) {
-        self.storeId = storeId
-        self.isFriend = isFriend
-        super.init(frame: .zero)
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         self.baseInit()
         self.setupAction()
     }
@@ -72,26 +62,30 @@ final class StoreDetailView: UIView, BaseViewType {
     
     func configureNavigationBarTitle(_ navigationController: UINavigationController) {
         let navigationItem = navigationController.topViewController?.navigationItem
-        navigationItem?.title = isFriend ? "친구들의 후기" : "모두의 후기"
+        navigationItem?.title = reviewToggleButton.isSelected ? "친구들의 후기" : "모두의 후기"
     }
     
     func collectionView() -> UICollectionView {
         return self.listCollectionView
     }
     
+    func refreshControl() -> UIRefreshControl {
+        return self.refresh
+    }
+    
     // MARK: - base func
     
     func setupLayout() {
-        self.addSubviews(storeHeaderView, listCollectionView)
+        self.addSubviews(self.storeHeaderView, self.listCollectionView)
 
-        storeHeaderView.snp.makeConstraints {
+        self.storeHeaderView.snp.makeConstraints {
             $0.top.equalTo(self.safeAreaLayoutGuide)
             $0.leading.trailing.equalToSuperview()
             $0.height.equalTo(50)
         }
 
-        listCollectionView.snp.makeConstraints {
-            $0.top.equalTo(storeHeaderView.snp.bottom)
+        self.listCollectionView.snp.makeConstraints {
+            $0.top.equalTo(self.storeHeaderView.snp.bottom)
             $0.leading.trailing.bottom.equalToSuperview()
         }
     }
@@ -105,18 +99,17 @@ final class StoreDetailView: UIView, BaseViewType {
     private func setupAction() {
         let toggleAction = UIAction { [weak self] _ in
             guard let self = self else { return }
-            self.isFriend.toggle()
-            self.reviewToggleButton.isSelected = self.isFriend
-            self.reviewToggleButtonDidTapPublisher.send(self.isFriend)
+            self.reviewToggleButton.isSelected.toggle()
+            self.reviewToggleButtonDidTapPublisher.send(self.reviewToggleButton.isSelected)
         }
         self.reviewToggleButton.addAction(toggleAction, for: .touchUpInside)
         
         let refreshAction = UIAction { [weak self] _ in
             self?.refreshPublisher.send()
         }
-        self.refreshControl.addAction(refreshAction, for: .valueChanged)
-        self.refreshControl.tintColor = .grey002
-        self.listCollectionView.refreshControl = self.refreshControl
+        self.refresh.addAction(refreshAction, for: .valueChanged)
+        self.refresh.tintColor = .grey002
+        self.listCollectionView.refreshControl = self.refresh
     }
 }
 

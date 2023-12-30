@@ -18,6 +18,7 @@ enum MapViewType {
 }
 
 class MapViewController: UIViewController, Navigationable, Optionable {
+    
     enum Section: CaseIterable {
         case main
     }

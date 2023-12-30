@@ -19,24 +19,23 @@ final class StoreDetailViewController: UIViewController, Navigationable, Optiona
     
     // MARK: - ui component
     
-    private lazy var storeDeatilView: StoreDetailView = StoreDetailView(storeId: self.viewModel.storeId, isFriend: self.viewModel.isFriend)
-    
-    private var dataSource: UICollectionViewDiffableDataSource<Section, ReviewItemByStoreDTO>!
-    private var snapShot: NSDiffableDataSourceSnapshot<Section, ReviewItemByStoreDTO>!
+    private let storeDeatilView: StoreDetailView = StoreDetailView()
     
     // MARK: - property
     
-    private var cancelBag: Set<AnyCancellable> = Set()
-
-    private let viewModel: StoreDetailViewModel
+    private let viewModel: any BaseViewModelType
+    private var cancellable: Set<AnyCancellable> = Set()
+    
+    private var dataSource: UICollectionViewDiffableDataSource<Section, ReviewItemByStoreDTO>!
+    private var snapShot: NSDiffableDataSourceSnapshot<Section, ReviewItemByStoreDTO>!
 
     // MARK: - init
     
-    init(viewModel: StoreDetailViewModel) {
+    init(viewModel: any BaseViewModelType) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
-
+    
     @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -68,7 +67,19 @@ final class StoreDetailViewController: UIViewController, Navigationable, Optiona
         self.bindOutputToViewModel(output)
     }
     
-    private func bindOutputToViewModel(_ output: StoreDetailViewModel.Output) {
+    private func transformedOutput() -> StoreDetailViewModel.Output? {
+        guard let viewModel = self.viewModel as? StoreDetailViewModel else { return nil }
+        let input = StoreDetailViewModel.Input(
+            reviewToggleButtonDidTap: self.storeDeatilView.reviewToggleButtonDidTapPublisher.eraseToAnyPublisher(),
+            scrolledToBottom: self.storeDeatilView.collectionView().scrolledToBottomPublisher.eraseToAnyPublisher(),
+            refreshControl: self.storeDeatilView.refreshPublisher.eraseToAnyPublisher()
+        )
+        return viewModel.transform(from: input)
+    }
+    
+    private func bindOutputToViewModel(_ output: StoreDetailViewModel.Output?) {
+        guard let output else { return }
+        
         output.reviews
             .receive(on: DispatchQueue.main)
             .sink { [weak self] result in
@@ -81,15 +92,15 @@ final class StoreDetailViewController: UIViewController, Navigationable, Optiona
             } receiveValue: { [weak self] reviews in
                 self?.handleReviews(reviews)
             }
-            .store(in: &self.cancelBag)
+            .store(in: &self.cancellable)
         
         output.refreshControl
             .receive(on: DispatchQueue.main)
             .sink { _ in
             } receiveValue: { [weak self] _ in
-                self?.storeDeatilView.refreshControl.endRefreshing()
+                self?.storeDeatilView.refreshControl().endRefreshing()
             }
-            .store(in: &self.cancelBag)
+            .store(in: &self.cancellable)
     }
     
     private func bindUI() {
@@ -98,7 +109,7 @@ final class StoreDetailViewController: UIViewController, Navigationable, Optiona
             .sink(receiveValue: { [weak self] isFriend in
                 self?.title = isFriend ? "친구들의 후기" : "모두의 후기"
             })
-            .store(in: &self.cancelBag)
+            .store(in: &self.cancellable)
     }
     
     private func bindCell(_ cell: FeedNSCollectionViewCell, with item: ReviewItemByStoreDTO) {
@@ -127,21 +138,8 @@ final class StoreDetailViewController: UIViewController, Navigationable, Optiona
         self.storeDeatilView.configureNavigationBarTitle(navigationController)
     }
     
-    private func transformedOutput() -> StoreDetailViewModel.Output {
-        let input = StoreDetailViewModel.Input(
-            reviewToggleButtonDidTap: self.storeDeatilView.reviewToggleButtonDidTapPublisher.eraseToAnyPublisher(),
-            scrolledToBottom: self.storeDeatilView.listCollectionView.scrolledToBottomPublisher.eraseToAnyPublisher(),
-            refreshControl: self.storeDeatilView.refreshPublisher.eraseToAnyPublisher()
-        )
-
-        return self.viewModel.transform(from: input)
-    }
-    
     func removeReview(reviewId: Int) {
         Task {
-            if await self.viewModel.removeReview(id: reviewId) {
-                
-            }
         }
     }
 }
@@ -190,8 +188,8 @@ extension StoreDetailViewController {
     }
 
     private func reloadReviews(_ items: [ReviewItemByStoreDTO]) {
-        let previousReviewsData = self.snapShot.itemIdentifiers(inSection: .main)
-        self.snapShot.deleteItems(previousReviewsData)
+        let previousData = self.snapShot.itemIdentifiers(inSection: .main)
+        self.snapShot.deleteItems(previousData)
         self.snapShot.appendItems(items, toSection: .main)
         self.dataSource.apply(self.snapShot, animatingDifferences: true)
     }

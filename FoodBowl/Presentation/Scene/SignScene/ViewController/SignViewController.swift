@@ -20,8 +20,8 @@ final class SignViewController: UIViewController {
     
     // MARK: - property
     
-    private var cancellable: Set<AnyCancellable> = Set()
     private let viewModel: any BaseViewModelType
+    private var cancellable: Set<AnyCancellable> = Set()
     
     // MARK: - init
     
