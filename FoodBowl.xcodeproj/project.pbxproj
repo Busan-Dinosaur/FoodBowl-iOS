@@ -168,6 +168,7 @@
 		CBEB00602ADC30AC00F6EFED /* Int+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBEB005F2ADC30AC00F6EFED /* Int+Extension.swift */; };
 		CBEB00662ADC35E000F6EFED /* loading.json in Resources */ = {isa = PBXBuildFile; fileRef = CBEB00652ADC35E000F6EFED /* loading.json */; };
 		CBF617622A6FD94900452B7B /* GrabbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF617612A6FD94900452B7B /* GrabbarView.swift */; };
+		CBF926462B3FED74005E251B /* UpdateProfileImageDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF926452B3FED74005E251B /* UpdateProfileImageDTO.swift */; };
 		CBFB52552977B9240049E8BA /* StoreDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBFB52542977B9240049E8BA /* StoreDetailViewController.swift */; };
 		CBFB52612977C9AB0049E8BA /* FindResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBFB52602977C9AB0049E8BA /* FindResultViewController.swift */; };
 /* End PBXBuildFile section */
@@ -327,6 +328,7 @@
 		CBEB005F2ADC30AC00F6EFED /* Int+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Extension.swift"; sourceTree = "<group>"; };
 		CBEB00652ADC35E000F6EFED /* loading.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = loading.json; sourceTree = "<group>"; };
 		CBF617612A6FD94900452B7B /* GrabbarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrabbarView.swift; sourceTree = "<group>"; };
+		CBF926452B3FED74005E251B /* UpdateProfileImageDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateProfileImageDTO.swift; sourceTree = "<group>"; };
 		CBFB52542977B9240049E8BA /* StoreDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreDetailViewController.swift; sourceTree = "<group>"; };
 		CBFB52602977C9AB0049E8BA /* FindResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindResultViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -1030,6 +1032,7 @@
 			isa = PBXGroup;
 			children = (
 				CB2E82462AA74FB60016820E /* CheckNicknameDTO.swift */,
+				CBF926452B3FED74005E251B /* UpdateProfileImageDTO.swift */,
 				CB15790A2AACD44700007183 /* SchoolDTO.swift */,
 				CB15790C2AACD45400007183 /* CategoryDTO.swift */,
 				CB51C8C82AD7DFC9002D0BA5 /* ReviewDTO.swift */,
@@ -1356,6 +1359,7 @@
 				CBADC29529559BC900E56C93 /* UITextView+Extension.swift in Sources */,
 				CB1579122AADB50600007183 /* KakaoAPI.swift in Sources */,
 				CBADC29029559BC900E56C93 /* UIViewController+Extension.swift in Sources */,
+				CBF926462B3FED74005E251B /* UpdateProfileImageDTO.swift in Sources */,
 				CBADC28C29559BC900E56C93 /* UILabel+Extension.swift in Sources */,
 				CBC747B52A83DBE300F171F5 /* KeychainManager.swift in Sources */,
 				CBADC28329559BC900E56C93 /* ImageLiteral.swift in Sources */,

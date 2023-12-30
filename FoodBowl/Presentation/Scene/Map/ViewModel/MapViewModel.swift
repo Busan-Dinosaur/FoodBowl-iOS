@@ -427,6 +427,7 @@ extension MapViewModel {
         switch response {
         case .success:
             UserDefaultHandler.setNickname(nickname: profile.nickname)
+            UserDefaultHandler.setIntroduction(introduction: profile.introduction)
         case .failure(let err):
             handleError(err)
         }
@@ -436,8 +437,9 @@ extension MapViewModel {
         guard let imageData = image.jpegData(compressionQuality: 0.1) else { return }
         let response = await provider.request(.updateMemberProfileImage(image: imageData))
         switch response {
-        case .success:
-            return
+        case .success(let result):
+            guard let data = try? result.map(UpdateProfileImageDTO.self) else { return }
+            UserDefaultHandler.setProfileImageUrl(profileImageUrl: data.profileImageUrl)
         case .failure(let err):
             handleError(err)
         }
