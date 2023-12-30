@@ -9,21 +9,21 @@ import Foundation
 
 enum DataKeys: String, CaseIterable {
     case isLogin
-    case accessToken
-    case refreshToken
+    case id
+    case nickname
 }
 
 enum UserDefaultStorage {
     static var isLogin: Bool {
         return UserData<Bool>.getValue(forKey: .isLogin) ?? false
     }
-
-    static var accessToken: String? {
-        return UserData<String>.getValue(forKey: .accessToken)
+    
+    static var id: Int {
+        return UserData<Int>.getValue(forKey: .id) ?? 0
     }
-
-    static var refreshToken: String? {
-        return UserData<String>.getValue(forKey: .refreshToken)
+    
+    static var nickname: String {
+        return UserData<String>.getValue(forKey: .nickname) ?? ""
     }
 }
 

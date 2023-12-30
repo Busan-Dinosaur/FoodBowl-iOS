@@ -1,5 +1,5 @@
 //
-//  OnboardingView.swift
+//  SignView.swift
 //  FoodBowl
 //
 //  Created by COBY_PRO on 10/20/23.
@@ -12,7 +12,7 @@ import UIKit
 import SnapKit
 import Then
 
-final class OnboardingView: UIView, BaseViewType {
+final class SignView: UIView, BaseViewType {
     
     // MARK: - ui component
     
@@ -59,24 +59,24 @@ final class OnboardingView: UIView, BaseViewType {
     // MARK: - base func
     
     func setupLayout() {
-        self.addSubviews(titleLabel, subTitleLabel, guideLabel, appleSignButton)
+        self.addSubviews(self.titleLabel, self.subTitleLabel, self.guideLabel, self.appleSignButton)
 
-        titleLabel.snp.makeConstraints {
+        self.titleLabel.snp.makeConstraints {
             $0.top.equalTo(self.safeAreaLayoutGuide.snp.top).inset(100)
             $0.centerX.equalToSuperview()
         }
 
-        subTitleLabel.snp.makeConstraints {
-            $0.top.equalTo(titleLabel.snp.bottom).offset(40)
+        self.subTitleLabel.snp.makeConstraints {
+            $0.top.equalTo(self.titleLabel.snp.bottom).offset(40)
             $0.centerX.equalToSuperview()
         }
 
-        guideLabel.snp.makeConstraints {
-            $0.top.equalTo(subTitleLabel.snp.bottom).offset(100)
+        self.guideLabel.snp.makeConstraints {
+            $0.top.equalTo(self.subTitleLabel.snp.bottom).offset(100)
             $0.centerX.equalToSuperview()
         }
 
-        appleSignButton.snp.makeConstraints {
+        self.appleSignButton.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview().inset(SizeLiteral.horizantalPadding)
             $0.bottom.equalToSuperview().inset(SizeLiteral.bottomPadding)
             $0.height.equalTo(60)

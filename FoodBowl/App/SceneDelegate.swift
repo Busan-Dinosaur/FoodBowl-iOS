@@ -15,9 +15,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(windowScene: windowScene)
 
         LocationManager.shared.checkLocationService()
+        
+        let repository = SignRepositoryImpl()
+        let usecase = SignUsecaseImpl(repository: repository)
+        let viewModel = SignViewModel(usecase: usecase)
+        let viewController = SignViewController(viewModel: viewModel)
 
         window?.rootViewController = UINavigationController(
-            rootViewController: UserDefaultStorage.isLogin ? TabBarController() : OnboardingViewController()
+            rootViewController: UserDefaultStorage.isLogin ? TabBarController() : viewController
         )
         window?.makeKeyAndVisible()
     }
@@ -56,6 +61,21 @@ extension SceneDelegate {
         KeychainManager.clear()
         UserDefaultHandler.clearAllData()
         UserDefaultsManager.currentUser = nil
-        window?.rootViewController = OnboardingViewController()
+        
+        let repository = SignRepositoryImpl()
+        let usecase = SignUsecaseImpl(repository: repository)
+        let viewModel = SignViewModel(usecase: usecase)
+        let viewController = SignViewController(viewModel: viewModel)
+        window?.rootViewController = viewController
+    }
+}
+
+extension SceneDelegate {
+    func moveToSignViewController() {
+        let repository = SignRepositoryImpl()
+        let usecase = SignUsecaseImpl(repository: repository)
+        let viewModel = SignViewModel(usecase: usecase)
+        let viewController = SignViewController(viewModel: viewModel)
+        window?.rootViewController = UINavigationController(rootViewController: viewController)
     }
 }

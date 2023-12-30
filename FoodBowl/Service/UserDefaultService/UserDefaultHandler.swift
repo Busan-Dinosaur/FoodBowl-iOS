@@ -15,12 +15,12 @@ struct UserDefaultHandler {
     static func setIsLogin(isLogin: Bool) {
         UserData.setValue(isLogin, forKey: .isLogin)
     }
-
-    static func setAccessToken(accessToken: String) {
-        UserData.setValue(accessToken, forKey: .accessToken)
+    
+    static func setId(id: Int) {
+        UserData.setValue(id, forKey: .id)
     }
-
-    static func setRefreshToken(refreshToken: String) {
-        UserData.setValue(refreshToken, forKey: .refreshToken)
+    
+    static func setNickname(nickname: String) {
+        UserData.setValue(nickname, forKey: .nickname)
     }
 }

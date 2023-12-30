@@ -29,7 +29,7 @@
 		CB2E4F892977393700FD2566 /* FollowInfoButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2E4F882977393700FD2566 /* FollowInfoButton.swift */; };
 		CB2E82412AA74A050016820E /* UpdateMemberProfileRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2E82402AA74A050016820E /* UpdateMemberProfileRequestDTO.swift */; };
 		CB2E82472AA74FB60016820E /* CheckNicknameDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2E82462AA74FB60016820E /* CheckNicknameDTO.swift */; };
-		CB40C6F82A83E812003E3F06 /* OnboardingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB40C6F72A83E812003E3F06 /* OnboardingViewModel.swift */; };
+		CB40C6F82A83E812003E3F06 /* SignViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB40C6F72A83E812003E3F06 /* SignViewModel.swift */; };
 		CB40C6FA2A83E916003E3F06 /* MoyaProvider+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB40C6F92A83E916003E3F06 /* MoyaProvider+Extension.swift */; };
 		CB40C6FE2A83EEF8003E3F06 /* SignRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB40C6FD2A83EEF8003E3F06 /* SignRequestDTO.swift */; };
 		CB4FBBF22978CFA90052D371 /* FollowerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB4FBBF12978CFA90052D371 /* FollowerViewController.swift */; };
@@ -66,7 +66,7 @@
 		CB617A3C2AE2484F000F7FFC /* Keyboardable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB617A3B2AE2484F000F7FFC /* Keyboardable.swift */; };
 		CB617A3E2AE248BB000F7FFC /* UIViewController+Keyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB617A3D2AE248BB000F7FFC /* UIViewController+Keyboard.swift */; };
 		CB617A402AE248CF000F7FFC /* UIViewController+Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB617A3F2AE248CF000F7FFC /* UIViewController+Alert.swift */; };
-		CB617A462AE25B1C000F7FFC /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB617A452AE25B1C000F7FFC /* OnboardingView.swift */; };
+		CB617A462AE25B1C000F7FFC /* SignView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB617A452AE25B1C000F7FFC /* SignView.swift */; };
 		CB617A4D2AE27F76000F7FFC /* UIControl+Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB617A4C2AE27F76000F7FFC /* UIControl+Combine.swift */; };
 		CB617A4F2AE27F88000F7FFC /* UIViewController+Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB617A4E2AE27F88000F7FFC /* UIViewController+Combine.swift */; };
 		CB617A512AE27F96000F7FFC /* UIScrollView+Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB617A502AE27F96000F7FFC /* UIScrollView+Combine.swift */; };
@@ -88,7 +88,7 @@
 		CBA4C7DB2AB4840100FC9DD8 /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA4C7DA2AB4840100FC9DD8 /* PaddingLabel.swift */; };
 		CBA4C7DD2AB49B4900FC9DD8 /* ReviewToggleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA4C7DC2AB49B4900FC9DD8 /* ReviewToggleButton.swift */; };
 		CBA62D3F2A6EC7B800AA0830 /* FindViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA62D3E2A6EC7B800AA0830 /* FindViewController.swift */; };
-		CBA7F182297DB319006088A0 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA7F181297DB319006088A0 /* OnboardingViewController.swift */; };
+		CBA7F182297DB319006088A0 /* SignViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA7F181297DB319006088A0 /* SignViewController.swift */; };
 		CBA7F184297DBB01006088A0 /* YPImagePicker+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA7F183297DBB01006088A0 /* YPImagePicker+Extension.swift */; };
 		CBADC2422955989400E56C93 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = CBADC2412955989400E56C93 /* SnapKit */; };
 		CBADC245295598A200E56C93 /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = CBADC244295598A200E56C93 /* Then */; };
@@ -196,7 +196,7 @@
 		CB2E4F882977393700FD2566 /* FollowInfoButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowInfoButton.swift; sourceTree = "<group>"; };
 		CB2E82402AA74A050016820E /* UpdateMemberProfileRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateMemberProfileRequestDTO.swift; sourceTree = "<group>"; };
 		CB2E82462AA74FB60016820E /* CheckNicknameDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckNicknameDTO.swift; sourceTree = "<group>"; };
-		CB40C6F72A83E812003E3F06 /* OnboardingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewModel.swift; sourceTree = "<group>"; };
+		CB40C6F72A83E812003E3F06 /* SignViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignViewModel.swift; sourceTree = "<group>"; };
 		CB40C6F92A83E916003E3F06 /* MoyaProvider+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MoyaProvider+Extension.swift"; sourceTree = "<group>"; };
 		CB40C6FD2A83EEF8003E3F06 /* SignRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignRequestDTO.swift; sourceTree = "<group>"; };
 		CB4FBBF12978CFA90052D371 /* FollowerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowerViewController.swift; sourceTree = "<group>"; };
@@ -233,7 +233,7 @@
 		CB617A3B2AE2484F000F7FFC /* Keyboardable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keyboardable.swift; sourceTree = "<group>"; };
 		CB617A3D2AE248BB000F7FFC /* UIViewController+Keyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Keyboard.swift"; sourceTree = "<group>"; };
 		CB617A3F2AE248CF000F7FFC /* UIViewController+Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Alert.swift"; sourceTree = "<group>"; };
-		CB617A452AE25B1C000F7FFC /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
+		CB617A452AE25B1C000F7FFC /* SignView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignView.swift; sourceTree = "<group>"; };
 		CB617A4C2AE27F76000F7FFC /* UIControl+Combine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIControl+Combine.swift"; sourceTree = "<group>"; };
 		CB617A4E2AE27F88000F7FFC /* UIViewController+Combine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Combine.swift"; sourceTree = "<group>"; };
 		CB617A502AE27F96000F7FFC /* UIScrollView+Combine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScrollView+Combine.swift"; sourceTree = "<group>"; };
@@ -253,7 +253,7 @@
 		CBA4C7DA2AB4840100FC9DD8 /* PaddingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddingLabel.swift; sourceTree = "<group>"; };
 		CBA4C7DC2AB49B4900FC9DD8 /* ReviewToggleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewToggleButton.swift; sourceTree = "<group>"; };
 		CBA62D3E2A6EC7B800AA0830 /* FindViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindViewController.swift; sourceTree = "<group>"; };
-		CBA7F181297DB319006088A0 /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
+		CBA7F181297DB319006088A0 /* SignViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignViewController.swift; sourceTree = "<group>"; };
 		CBA7F183297DBB01006088A0 /* YPImagePicker+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "YPImagePicker+Extension.swift"; sourceTree = "<group>"; };
 		CBADC25929559BC900E56C93 /* ImageLiteral.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageLiteral.swift; sourceTree = "<group>"; };
 		CBADC25D29559BC900E56C93 /* Logger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
@@ -390,7 +390,7 @@
 		CB40C6F52A83E7F4003E3F06 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				CB617A452AE25B1C000F7FFC /* OnboardingView.swift */,
+				CB617A452AE25B1C000F7FFC /* SignView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -398,7 +398,7 @@
 		CB40C6F62A83E804003E3F06 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				CB40C6F72A83E812003E3F06 /* OnboardingViewModel.swift */,
+				CB40C6F72A83E812003E3F06 /* SignViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -857,7 +857,7 @@
 		CB9332712AFCD94700B7F87A /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
-				CBA7F181297DB319006088A0 /* OnboardingViewController.swift */,
+				CBA7F181297DB319006088A0 /* SignViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -876,9 +876,9 @@
 		CB981C28297A5A2900AF0167 /* SignScene */ = {
 			isa = PBXGroup;
 			children = (
-				CB40C6F62A83E804003E3F06 /* ViewModel */,
 				CB40C6F52A83E7F4003E3F06 /* View */,
 				CB9332712AFCD94700B7F87A /* ViewController */,
+				CB40C6F62A83E804003E3F06 /* ViewModel */,
 			);
 			path = SignScene;
 			sourceTree = "<group>";
@@ -1282,7 +1282,7 @@
 				CB5DD4312AB59130009FCB43 /* BookmarkMapButton.swift in Sources */,
 				CB5BFB332B3F096500B35062 /* ReviewRepositoryImpl.swift in Sources */,
 				CBCD0F7F2A66DA1600A51B32 /* UnivViewController.swift in Sources */,
-				CB617A462AE25B1C000F7FFC /* OnboardingView.swift in Sources */,
+				CB617A462AE25B1C000F7FFC /* SignView.swift in Sources */,
 				CB1BCAF72958B15B0021617D /* StoreInfoView.swift in Sources */,
 				CBA4C7DD2AB49B4900FC9DD8 /* ReviewToggleButton.swift in Sources */,
 				CB2E4F7F297702A800FD2566 /* StoreInfoTableViewCell.swift in Sources */,
@@ -1375,13 +1375,13 @@
 				CB73E56E2B3417980026E4D7 /* FollowView.swift in Sources */,
 				CB617A3A2AE24836000F7FFC /* Navigationable.swift in Sources */,
 				CBADC29429559BC900E56C93 /* Notification+Extension.swift in Sources */,
-				CBA7F182297DB319006088A0 /* OnboardingViewController.swift in Sources */,
+				CBA7F182297DB319006088A0 /* SignViewController.swift in Sources */,
 				CBADC2E02955B92D00E56C93 /* MainButton.swift in Sources */,
 				CB617A532AE27FC0000F7FFC /* Publisher+Async.swift in Sources */,
 				CB40C6FE2A83EEF8003E3F06 /* SignRequestDTO.swift in Sources */,
 				CB617A382AE247E4000F7FFC /* BaseViewType.swift in Sources */,
 				CBDF6EA62AD9255200EB2481 /* BlameViewController.swift in Sources */,
-				CB40C6F82A83E812003E3F06 /* OnboardingViewModel.swift in Sources */,
+				CB40C6F82A83E812003E3F06 /* SignViewModel.swift in Sources */,
 				CBA4C7DB2AB4840100FC9DD8 /* PaddingLabel.swift in Sources */,
 				CBE61911296C6804005295AF /* OptionButton.swift in Sources */,
 				CB5BFB492B3F1DFF00B35062 /* KakaoRepositoryImpl.swift in Sources */,

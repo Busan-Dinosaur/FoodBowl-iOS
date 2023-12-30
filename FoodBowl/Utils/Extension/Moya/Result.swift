@@ -19,12 +19,12 @@ public extension Result<Response, MoyaError> {
                     let errorMessage = try result.map(ErrorDTO.self).message
                     throw NetworkError(errorMessage)
                 } catch {
-                    throw NetworkError("네트워크 통신에 실패하였습니다.")
+                    throw NetworkError()
                 }
             }
             return data
         case .failure:
-            throw NetworkError("네트워크 통신에 실패하였습니다.")
+            throw NetworkError()
         }
     }
 }
