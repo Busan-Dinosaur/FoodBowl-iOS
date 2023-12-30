@@ -162,10 +162,10 @@ final class UpdateProfileViewController: BaseViewController {
     }
 
     private func setupProfile() {
-        nicknameField.text = UserDefaultsManager.currentUser?.nickname
-        userInfoField.text = UserDefaultsManager.currentUser?.introduction
+        nicknameField.text = UserDefaultStorage.nickname
+        userInfoField.text = UserDefaultStorage.introduction
 
-        if let url = UserDefaultsManager.currentUser?.profileImageUrl {
+        if let url = UserDefaultStorage.profileImageUrl {
             profileImageView.kf.setImage(with: URL(string: url))
         } else {
             profileImageView.image = ImageLiteral.defaultProfile

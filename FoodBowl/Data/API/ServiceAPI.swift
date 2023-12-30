@@ -349,7 +349,7 @@ extension ServiceAPI: TargetType {
         case .updateMemberProfile(let request):
             return .requestJSONEncodable(request)
         case .updateMemberProfileImage(let image):
-            let id = String(describing: UserDefaultsManager.currentUser?.id)
+            let id = String(describing: UserDefaultStorage.id)
             let imageData = MultipartFormData(
                 provider: .data(image),
                 name: "image",

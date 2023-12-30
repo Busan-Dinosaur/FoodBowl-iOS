@@ -124,7 +124,7 @@ extension SettingViewController: MFMailComposeViewControllerDelegate {
             let messageBody = """
                 내용을 작성해주세요.
                 """
-            guard let nickname = UserDefaultsManager.currentUser?.nickname else { return }
+            let nickname = UserDefaultStorage.nickname
 
             composeVC.mailComposeDelegate = self
             composeVC.setToRecipients([emailAdress])

@@ -23,4 +23,28 @@ struct UserDefaultHandler {
     static func setNickname(nickname: String) {
         UserData.setValue(nickname, forKey: .nickname)
     }
+    
+    static func setIntroduction(introduction: String) {
+        UserData.setValue(introduction, forKey: .introduction)
+    }
+    
+    static func setProfileImageUrl(profileImageUrl: String) {
+        UserData.setValue(profileImageUrl, forKey: .profileImageUrl)
+    }
+    
+    static func setSchoolId(schoolId: Int) {
+        UserData.setValue(schoolId, forKey: .schoolId)
+    }
+    
+    static func setSchoolName(schoolName: String) {
+        UserData.setValue(schoolName, forKey: .schoolName)
+    }
+    
+    static func setSchoolX(schoolX: Double) {
+        UserData.setValue(schoolX, forKey: .schoolX)
+    }
+    
+    static func setSchoolY(schoolY: Double) {
+        UserData.setValue(schoolY, forKey: .schoolY)
+    }
 }

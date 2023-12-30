@@ -122,7 +122,7 @@ final class StoreDetailViewController: UIViewController, Navigationable, Optiona
         }
         
         cell.optionButtonTapAction = { [weak self] _ in
-            let isOwn = UserDefaultsManager.currentUser?.id ?? 0 == item.writer.id
+            let isOwn = UserDefaultStorage.id == item.writer.id
             
             DispatchQueue.main.async { [weak self] in
                 self?.presentReviewOptionAlert(isOwn: isOwn, reviewId: item.review.id)

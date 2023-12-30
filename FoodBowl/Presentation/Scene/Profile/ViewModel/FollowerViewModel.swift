@@ -43,7 +43,7 @@ final class FollowerViewModel: NSObject, BaseViewModelType {
 
     init(memberId: Int) {
         self.memberId = memberId
-        self.isOwn = UserDefaultsManager.currentUser?.id ?? 0 == memberId
+        self.isOwn = UserDefaultStorage.id == memberId
     }
     
     // MARK: - Public - func

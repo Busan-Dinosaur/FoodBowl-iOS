@@ -93,7 +93,7 @@ final class ProfileViewController: MapViewController {
             navigationItem.rightBarButtonItems = [settingButton, plusButton]
             profileHeaderView.followButton.isHidden = true
         } else {
-            if UserDefaultsManager.currentUser?.id ?? 0 == memberId {
+            if UserDefaultStorage.id == memberId {
                 profileHeaderView.followButton.isHidden = true
             } else {
                 let optionButton = makeBarButtonItem(with: optionButton)
@@ -136,6 +136,22 @@ final class ProfileViewController: MapViewController {
 
     private func setUpProfile() {
         Task {
+            if isOwn {
+                self.userNicknameLabel.text = UserDefaultStorage.nickname
+                
+                if let url = UserDefaultStorage.profileImageUrl {
+                    self.profileHeaderView.userImageView.kf.setImage(with: URL(string: url))
+                } else {
+                    self.profileHeaderView.userImageView.image = ImageLiteral.defaultProfile
+                }
+                
+                if let introduction = UserDefaultStorage.introduction {
+                    self.profileHeaderView.userInfoLabel.text = introduction
+                } else {
+                    self.profileHeaderView.userInfoLabel.text = "소개를 작성해주세요"
+                }
+            }
+            
             guard let member = await viewModel.getMemberProfile(id: memberId) else { return }
             
             DispatchQueue.main.async {
@@ -150,8 +166,8 @@ final class ProfileViewController: MapViewController {
                     self.profileHeaderView.userImageView.image = ImageLiteral.defaultProfile
                 }
                 
-                if member.introduction != nil {
-                    self.profileHeaderView.userInfoLabel.text = member.introduction
+                if let introduction = member.introduction {
+                    self.profileHeaderView.userInfoLabel.text = introduction
                 } else {
                     self.profileHeaderView.userInfoLabel.text = "소개를 작성해주세요"
                 }

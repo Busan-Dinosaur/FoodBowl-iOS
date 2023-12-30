@@ -60,7 +60,6 @@ extension SceneDelegate {
     func logOut() {
         KeychainManager.clear()
         UserDefaultHandler.clearAllData()
-        UserDefaultsManager.currentUser = nil
         
         let repository = SignRepositoryImpl()
         let usecase = SignUsecaseImpl(repository: repository)

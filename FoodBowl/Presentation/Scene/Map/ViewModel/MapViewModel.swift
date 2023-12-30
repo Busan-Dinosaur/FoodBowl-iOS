@@ -426,11 +426,7 @@ extension MapViewModel {
         let response = await provider.request(.updateMemberProfile(request: profile))
         switch response {
         case .success:
-            if var currentUser = UserDefaultsManager.currentUser {
-                currentUser.nickname = profile.nickname
-                currentUser.introduction = profile.introduction
-                UserDefaultsManager.currentUser = currentUser
-            }
+            UserDefaultHandler.setNickname(nickname: profile.nickname)
         case .failure(let err):
             handleError(err)
         }

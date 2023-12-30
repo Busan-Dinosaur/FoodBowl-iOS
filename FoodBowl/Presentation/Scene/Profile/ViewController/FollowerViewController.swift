@@ -76,7 +76,7 @@ final class FollowerViewController: UIViewController, Navigationable {
             }
         }
         
-        if UserDefaultsManager.currentUser?.id ?? 0 == item.memberId {
+        if UserDefaultStorage.id == item.memberId {
             cell.followButton.isHidden = true
         } else {
             cell.followButton.isHidden = false

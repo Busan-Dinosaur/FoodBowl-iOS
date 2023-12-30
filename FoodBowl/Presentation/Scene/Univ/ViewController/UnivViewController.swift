@@ -27,10 +27,8 @@ final class UnivViewController: MapViewController {
         }
         $0.downButton.addAction(action, for: .touchUpInside)
         $0.frame = CGRect(x: 0, y: 0, width: 300, height: 45)
-        $0.label.text = "대학가"
+        $0.label.text = UserDefaultStorage.schoolName ?? "대학가"
     }
-    
-    private var univ = UserDefaultsManager.currentUniv
     
     // MARK: - life cycle
     
@@ -44,7 +42,7 @@ final class UnivViewController: MapViewController {
     override func configureUI() {
         super.configureUI()
         viewModel.type = .univ
-        viewModel.schoolId = univ?.id
+        viewModel.schoolId = UserDefaultStorage.schoolId
     }
     
     private func setupNavigationBar() {
@@ -62,17 +60,12 @@ final class UnivViewController: MapViewController {
         return offsetView
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        univTitleButton.label.text = univ?.name ?? "대학가"
-    }
-
     private func currentUniv() {
-        guard let univ = self.univ else { return }
+        guard let schoolX = UserDefaultStorage.schoolX, let schoolY = UserDefaultStorage.schoolY else { return }
 
         mapView.setRegion(
             MKCoordinateRegion(
-                center: CLLocationCoordinate2D(latitude: univ.y, longitude: univ.x),
+                center: CLLocationCoordinate2D(latitude: schoolY, longitude: schoolX),
                 span: MKCoordinateSpan(latitudeDelta: 0.02, longitudeDelta: 0.02)
             ),
             animated: true
@@ -82,8 +75,11 @@ final class UnivViewController: MapViewController {
 
 extension UnivViewController: SearchUnivViewControllerDelegate {
     func setUniv(univ: SchoolItemDTO) {
-        self.univ = univ
-        UserDefaultsManager.currentUniv = univ
+        UserDefaultHandler.setSchoolId(schoolId: univ.id)
+        UserDefaultHandler.setSchoolName(schoolName: univ.name)
+        UserDefaultHandler.setSchoolX(schoolX: univ.x)
+        UserDefaultHandler.setSchoolY(schoolY: univ.y)
+        
         univTitleButton.label.text = univ.name
         viewModel.schoolId = univ.id
         self.currentUniv()
