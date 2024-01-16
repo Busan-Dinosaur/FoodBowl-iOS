@@ -28,7 +28,7 @@ final class BlameView: UIView, BaseViewType {
         $0.titleLabel?.font = UIFont.preferredFont(forTextStyle: .headline, weight: .regular)
     }
     private let guideCommentLabel = UILabel().then {
-        $0.text = "신고 내용 작성 - 사용자"
+        $0.text = "신고 내용"
         $0.font = .font(.regular, ofSize: 17)
         $0.textColor = .mainTextColor
     }
