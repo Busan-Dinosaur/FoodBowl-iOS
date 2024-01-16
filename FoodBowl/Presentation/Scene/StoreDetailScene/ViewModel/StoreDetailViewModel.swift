@@ -30,6 +30,7 @@ final class StoreDetailViewModel: BaseViewModelType {
     
     struct Input {
         let reviewToggleButtonDidTap: AnyPublisher<Bool, Never>
+        let bookmarkButtonDidTap: AnyPublisher<Bool, Never>
         let removeReview: AnyPublisher<Int, Never>
         let scrolledToBottom: AnyPublisher<Void, Never>
         let refreshControl: AnyPublisher<Void, Never>
@@ -62,6 +63,13 @@ final class StoreDetailViewModel: BaseViewModelType {
                 self.lastReviewId = nil
                 self.isFriend.toggle()
                 self.getReviews()
+            })
+            .store(in: &self.cancelBag)
+        
+        input.bookmarkButtonDidTap
+            .sink(receiveValue: { [weak self] isBookmark in
+                guard let self = self else { return }
+                isBookmark ? self.createBookmark() : self.removeBookmark()
             })
             .store(in: &self.cancelBag)
         
@@ -137,6 +145,26 @@ final class StoreDetailViewModel: BaseViewModelType {
                 self.isRemovedSubject.send(.success(id))
             } catch {
                 self.isRemovedSubject.send(.failure(NetworkError()))
+            }
+        }
+    }
+    
+    func createBookmark() {
+        Task {
+            do {
+                try await self.usecase.createBookmark(storeId: self.storeId)
+            } catch {
+                print("Failed to Create Bookmark")
+            }
+        }
+    }
+    
+    func removeBookmark() {
+        Task {
+            do {
+                try await self.usecase.removeBookmark(storeId: self.storeId)
+            } catch {
+                print("Failed to Remove Bookmark")
             }
         }
     }

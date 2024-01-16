@@ -73,6 +73,7 @@ final class StoreDetailViewController: UIViewController, Navigationable, Optiona
         guard let viewModel = self.viewModel as? StoreDetailViewModel else { return nil }
         let input = StoreDetailViewModel.Input(
             reviewToggleButtonDidTap: self.storeDetailView.reviewToggleButtonDidTapPublisher.eraseToAnyPublisher(),
+            bookmarkButtonDidTap: self.storeDetailView.bookmarkButtonDidTapPublisher.eraseToAnyPublisher(),
             removeReview: self.removeReviewPublisher.eraseToAnyPublisher(),
             scrolledToBottom: self.storeDetailView.collectionView().scrolledToBottomPublisher.eraseToAnyPublisher(),
             refreshControl: self.storeDetailView.refreshPublisher.eraseToAnyPublisher()

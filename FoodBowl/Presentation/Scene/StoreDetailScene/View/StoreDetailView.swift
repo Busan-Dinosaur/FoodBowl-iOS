@@ -37,6 +37,7 @@ final class StoreDetailView: UIView, BaseViewType {
     // MARK: - property
     
     let reviewToggleButtonDidTapPublisher = PassthroughSubject<Bool, Never>()
+    let bookmarkButtonDidTapPublisher = PassthroughSubject<Bool, Never>()
     let refreshPublisher = PassthroughSubject<Void, Never>()
     
     // MARK: - init
@@ -103,6 +104,13 @@ final class StoreDetailView: UIView, BaseViewType {
             self.reviewToggleButtonDidTapPublisher.send(self.reviewToggleButton.isSelected)
         }
         self.reviewToggleButton.addAction(toggleAction, for: .touchUpInside)
+        
+        let bookmarkAction = UIAction { [weak self] _ in
+            guard let self = self else { return }
+            self.storeHeaderView.bookmarkButton.isSelected.toggle()
+            self.bookmarkButtonDidTapPublisher.send(self.storeHeaderView.bookmarkButton.isSelected)
+        }
+        self.storeHeaderView.bookmarkButton.addAction(bookmarkAction, for: .touchUpInside)
         
         let refreshAction = UIAction { [weak self] _ in
             self?.refreshPublisher.send()
