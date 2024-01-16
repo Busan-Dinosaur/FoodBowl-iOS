@@ -59,7 +59,6 @@ final class StoreDetailViewController: UIViewController, Navigationable, Optiona
         self.bindViewModel()
         self.bindUI()
         self.setupNavigation()
-        self.configureHeader()
     }
     
     // MARK: - func - bind
@@ -84,11 +83,20 @@ final class StoreDetailViewController: UIViewController, Navigationable, Optiona
     private func bindOutputToViewModel(_ output: StoreDetailViewModel.Output?) {
         guard let output else { return }
         
+        output.store
+            .receive(on: DispatchQueue.main)
+            .sink { _ in
+            } receiveValue: { [weak self] store in
+                self?.storeDetailView.storeHeaderView.configureHeader(store)
+            }
+            .store(in: &self.cancellable)
+        
         output.reviews
             .receive(on: DispatchQueue.main)
             .sink { _ in
             } receiveValue: { [weak self] reviews in
                 self?.reloadReviews(reviews)
+                self?.storeDetailView.refreshControl().endRefreshing()
             }
             .store(in: &self.cancellable)
         
@@ -97,14 +105,6 @@ final class StoreDetailViewController: UIViewController, Navigationable, Optiona
             .sink { _ in
             } receiveValue: { [weak self] reviews in
                 self?.loadMoreReviews(reviews)
-            }
-            .store(in: &self.cancellable)
-        
-        output.refreshControl
-            .receive(on: DispatchQueue.main)
-            .sink { _ in
-            } receiveValue: { [weak self] _ in
-                self?.storeDetailView.refreshControl().endRefreshing()
             }
             .store(in: &self.cancellable)
         
@@ -154,14 +154,11 @@ final class StoreDetailViewController: UIViewController, Navigationable, Optiona
     // MARK: - func
     
     private func configureNavigation() {
+        guard let viewModel = self.viewModel as? StoreDetailViewModel else { return }
         guard let navigationController = self.navigationController else { return }
+        self.storeDetailView.reviewToggleButton.isSelected = viewModel.isFriend
         self.storeDetailView.configureNavigationBarItem(navigationController)
         self.storeDetailView.configureNavigationBarTitle(navigationController)
-    }
-    
-    private func configureHeader() {
-        guard let viewModel = self.viewModel as? StoreDetailViewModel else { return }
-        self.storeDetailView.storeHeaderView.configureHeader(viewModel.store)
     }
     
     func removeReview(reviewId: Int) {

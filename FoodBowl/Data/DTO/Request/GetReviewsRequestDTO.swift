@@ -14,9 +14,9 @@ struct GetReviewsRequestDTO: Encodable {
 struct GetReviewsByStoreRequestDTO: Encodable {
     let lastReviewId: Int?
     let pageSize: Int
-    
     let storeId: Int
     let filter: String
+    let deviceX, deviceY: Double
 }
 
 struct GetReviewsBySchoolRequestDTO: Encodable {

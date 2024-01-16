@@ -25,7 +25,7 @@ final class StoreDetailView: UIView, BaseViewType {
     
     // MARK: - ui component
     
-    private let reviewToggleButton = ReviewToggleButton()
+    let reviewToggleButton = ReviewToggleButton()
     let storeHeaderView = StoreHeaderView()
     private lazy var listCollectionView = UICollectionView(frame: .zero, collectionViewLayout: self.createLayout()).then {
         $0.showsVerticalScrollIndicator = false

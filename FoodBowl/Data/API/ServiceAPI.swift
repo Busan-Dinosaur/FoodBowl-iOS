@@ -184,7 +184,9 @@ extension ServiceAPI: TargetType {
             var params: [String: Any] = [
                 "storeId": request.storeId,
                 "filter": request.filter,
-                "pageSize": request.pageSize
+                "pageSize": request.pageSize,
+                "deviceX": request.deviceX,
+                "deviceY": request.deviceY
             ]
 
             if let lastReviewId = request.lastReviewId {

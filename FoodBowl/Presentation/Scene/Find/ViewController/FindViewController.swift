@@ -282,7 +282,7 @@ extension FindViewController: UITableViewDataSource, UITableViewDelegate {
         if scope == 0 {
             let repository = StoreDetailRepositoryImpl()
             let usecase = StoreDetailUsecaseImpl(repository: repository)
-            let viewModel = StoreDetailViewModel(store: stores[indexPath.item].toStore(), isFriend: false, usecase: usecase)
+            let viewModel = StoreDetailViewModel(storeId: stores[indexPath.item].storeId, isFriend: false, usecase: usecase)
             let viewController = StoreDetailViewController(viewModel: viewModel)
 
             DispatchQueue.main.async { [weak self] in

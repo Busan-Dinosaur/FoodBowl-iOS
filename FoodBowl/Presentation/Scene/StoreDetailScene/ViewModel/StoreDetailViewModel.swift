@@ -12,7 +12,7 @@ final class StoreDetailViewModel: BaseViewModelType {
     
     // MARK: - property
     
-    let store: Store
+    private let storeId: Int
     var isFriend: Bool
     
     private let usecase: StoreDetailUsecase
@@ -22,6 +22,7 @@ final class StoreDetailViewModel: BaseViewModelType {
     private var currentpageSize: Int = 20
     private var lastReviewId: Int?
     
+    private let storeSubject = PassthroughSubject<Store, Error>()
     private let reviewsSubject = PassthroughSubject<[ReviewItem], Error>()
     private let moreReviewsSubject = PassthroughSubject<[ReviewItem], Error>()
     private let refreshControlSubject = PassthroughSubject<Void, Error>()
@@ -35,16 +36,16 @@ final class StoreDetailViewModel: BaseViewModelType {
     }
     
     struct Output {
+        let store: PassthroughSubject<Store, Error>
         let reviews: PassthroughSubject<[ReviewItem], Error>
         let moreReviews: PassthroughSubject<[ReviewItem], Error>
-        let refreshControl: PassthroughSubject<Void, Error>
         let isRemoved: AnyPublisher<Result<Int, Error>, Never>
     }
     
     // MARK: - init
 
-    init(store: Store, isFriend: Bool, usecase: StoreDetailUsecase) {
-        self.store = store
+    init(storeId: Int, isFriend: Bool, usecase: StoreDetailUsecase) {
+        self.storeId = storeId
         self.isFriend = isFriend
         self.usecase = usecase
     }
@@ -59,6 +60,7 @@ final class StoreDetailViewModel: BaseViewModelType {
                 guard let self = self else { return }
                 self.currentpageSize = self.pageSize
                 self.lastReviewId = nil
+                self.isFriend.toggle()
                 self.getReviews()
             })
             .store(in: &self.cancelBag)
@@ -87,9 +89,9 @@ final class StoreDetailViewModel: BaseViewModelType {
             .store(in: &self.cancelBag)
         
         return Output(
+            store: storeSubject,
             reviews: reviewsSubject,
             moreReviews: moreReviewsSubject,
-            refreshControl: refreshControlSubject,
             isRemoved: isRemovedSubject.eraseToAnyPublisher()
         )
     }
@@ -101,13 +103,22 @@ final class StoreDetailViewModel: BaseViewModelType {
             do {
                 if currentpageSize < pageSize { return }
                 let filter = self.isFriend ? "FRIEND" : "ALL"
+                let deviceX = LocationManager.shared.manager.location?.coordinate.longitude ?? 0.0
+                let deviceY = LocationManager.shared.manager.location?.coordinate.latitude ?? 0.0
                 
-                let review = try await self.usecase.getReviewsByStore(request: GetReviewsByStoreRequestDTO(
+                let data = try await self.usecase.getReviewsByStore(request: GetReviewsByStoreRequestDTO(
                     lastReviewId: lastReviewId,
                     pageSize: self.pageSize,
-                    storeId: self.store.id,
-                    filter: filter
-                )).toReview()
+                    storeId: self.storeId,
+                    filter: filter,
+                    deviceX: deviceX,
+                    deviceY: deviceY
+                ))
+                
+                let store = data.reviewStoreResponse.toStore()
+                self.storeSubject.send(store)
+                
+                let review = data.toReview()
                 
                 self.lastReviewId = review.page.lastId
                 self.currentpageSize = review.page.size
