@@ -156,13 +156,13 @@ class BaseViewController: UIViewController {
     }
 
     func presentBlameViewController(targetId: Int, blameTarget: String) {
-        let createReviewController = BlameViewController(targetId: targetId, blameTarget: blameTarget)
-        let navigationController = UINavigationController(rootViewController: createReviewController)
-        navigationController.modalPresentationStyle = .fullScreen
-
-        DispatchQueue.main.async {
-            self.present(navigationController, animated: true)
-        }
+//        let createReviewController = BlameViewController(targetId: targetId, blameTarget: blameTarget)
+//        let navigationController = UINavigationController(rootViewController: createReviewController)
+//        navigationController.modalPresentationStyle = .fullScreen
+//
+//        DispatchQueue.main.async {
+//            self.present(navigationController, animated: true)
+//        }
     }
 }
 

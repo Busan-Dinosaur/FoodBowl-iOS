@@ -64,8 +64,11 @@ extension Optionable where Self: UIViewController {
         }
     }
     
-    func presentBlameViewController(targetId: Int, blameTarget: String) {
-        let viewController = BlameViewController(targetId: targetId, blameTarget: blameTarget)
+    func presentBlameViewController(targetId: Int, blameTarget: String) { 
+        let repository = BlameRepositoryImpl()
+        let usecase = BlameUsecaseImpl(repository: repository)
+        let viewModel = BlameViewModel(targetId: targetId, blameTarget: blameTarget, usecase: usecase)
+        let viewController = BlameViewController(viewModel: viewModel)
         let navigationController = UINavigationController(rootViewController: viewController)
         navigationController.modalPresentationStyle = .fullScreen
         

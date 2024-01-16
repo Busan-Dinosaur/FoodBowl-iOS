@@ -77,8 +77,7 @@ final class UpdateProfileViewController: BaseViewController {
         $0.delegate = self
         $0.makeBorderLayer(color: .grey002)
     }
-    private lazy var completeButton = MainButton().then {
-        $0.label.text = "완료"
+    private lazy var completeButton = CompleteButton().then {
         let action = UIAction { [weak self] _ in
             self?.tappedCompleteButton()
         }

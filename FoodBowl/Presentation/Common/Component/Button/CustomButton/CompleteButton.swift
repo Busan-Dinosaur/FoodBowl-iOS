@@ -1,5 +1,5 @@
 //
-//  MainButton.swift
+//  CompleteButton.swift
 //  FoodBowl
 //
 //  Created by COBY_PRO on 2022/12/23.
@@ -10,21 +10,23 @@ import UIKit
 import SnapKit
 import Then
 
-final class MainButton: UIButton {
-    // MARK: - property
+final class CompleteButton: UIButton {
+    
+    // MARK: - ui component
 
     let label = UILabel().then {
         let label = UILabel()
         $0.textColor = .mainBackgroundColor
         $0.font = UIFont.preferredFont(forTextStyle: .body, weight: .medium)
+        $0.text = "완료"
     }
 
     // MARK: - init
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setupLayout()
-        configureUI()
+        self.setupLayout()
+        self.configureUI()
     }
 
     @available(*, unavailable)
@@ -35,16 +37,16 @@ final class MainButton: UIButton {
     // MARK: - life cycle
 
     private func setupLayout() {
-        addSubview(label)
+        self.addSubview(self.label)
 
-        label.snp.makeConstraints {
+        self.label.snp.makeConstraints {
             $0.centerX.centerY.equalToSuperview()
         }
     }
 
     private func configureUI() {
-        backgroundColor = .mainTextColor
-        layer.cornerRadius = 30
-        layer.masksToBounds = false
+        self.backgroundColor = .mainTextColor
+        self.layer.cornerRadius = 30
+        self.layer.masksToBounds = false
     }
 }

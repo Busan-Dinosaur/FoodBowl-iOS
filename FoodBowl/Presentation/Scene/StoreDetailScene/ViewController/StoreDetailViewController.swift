@@ -19,7 +19,7 @@ final class StoreDetailViewController: UIViewController, Navigationable, Optiona
     
     // MARK: - ui component
     
-    private let storeDeatilView: StoreDetailView = StoreDetailView()
+    private let storeDetailView: StoreDetailView = StoreDetailView()
     
     // MARK: - property
     
@@ -48,7 +48,7 @@ final class StoreDetailViewController: UIViewController, Navigationable, Optiona
     // MARK: - life cycle
 
     override func loadView() {
-        self.view = self.storeDeatilView
+        self.view = self.storeDetailView
     }
 
     override func viewDidLoad() {
@@ -70,9 +70,9 @@ final class StoreDetailViewController: UIViewController, Navigationable, Optiona
     private func transformedOutput() -> StoreDetailViewModel.Output? {
         guard let viewModel = self.viewModel as? StoreDetailViewModel else { return nil }
         let input = StoreDetailViewModel.Input(
-            reviewToggleButtonDidTap: self.storeDeatilView.reviewToggleButtonDidTapPublisher.eraseToAnyPublisher(),
-            scrolledToBottom: self.storeDeatilView.collectionView().scrolledToBottomPublisher.eraseToAnyPublisher(),
-            refreshControl: self.storeDeatilView.refreshPublisher.eraseToAnyPublisher()
+            reviewToggleButtonDidTap: self.storeDetailView.reviewToggleButtonDidTapPublisher.eraseToAnyPublisher(),
+            scrolledToBottom: self.storeDetailView.collectionView().scrolledToBottomPublisher.eraseToAnyPublisher(),
+            refreshControl: self.storeDetailView.refreshPublisher.eraseToAnyPublisher()
         )
         return viewModel.transform(from: input)
     }
@@ -98,13 +98,13 @@ final class StoreDetailViewController: UIViewController, Navigationable, Optiona
             .receive(on: DispatchQueue.main)
             .sink { _ in
             } receiveValue: { [weak self] _ in
-                self?.storeDeatilView.refreshControl().endRefreshing()
+                self?.storeDetailView.refreshControl().endRefreshing()
             }
             .store(in: &self.cancellable)
     }
     
     private func bindUI() {
-        self.storeDeatilView.reviewToggleButtonDidTapPublisher
+        self.storeDetailView.reviewToggleButtonDidTapPublisher
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] isFriend in
                 self?.title = isFriend ? "친구들의 후기" : "모두의 후기"
@@ -134,8 +134,8 @@ final class StoreDetailViewController: UIViewController, Navigationable, Optiona
     
     private func configureNavigation() {
         guard let navigationController = self.navigationController else { return }
-        self.storeDeatilView.configureNavigationBarItem(navigationController)
-        self.storeDeatilView.configureNavigationBarTitle(navigationController)
+        self.storeDetailView.configureNavigationBarItem(navigationController)
+        self.storeDetailView.configureNavigationBarTitle(navigationController)
     }
     
     func removeReview(reviewId: Int) {
@@ -167,7 +167,7 @@ extension StoreDetailViewController {
         }
 
         return UICollectionViewDiffableDataSource(
-            collectionView: self.storeDeatilView.collectionView(),
+            collectionView: self.storeDetailView.collectionView(),
             cellProvider: { collectionView, indexPath, item in
                 return collectionView.dequeueConfiguredReusableCell(
                     using: reviewCellRegistration,

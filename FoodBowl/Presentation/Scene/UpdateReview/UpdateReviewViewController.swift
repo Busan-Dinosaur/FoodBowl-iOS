@@ -103,8 +103,7 @@ final class UpdateReviewViewController: BaseViewController {
         $0.showsHorizontalScrollIndicator = false
     }
 
-    private lazy var completeButton = MainButton().then {
-        $0.label.text = "완료"
+    private lazy var completeButton = CompleteButton().then {
         let action = UIAction { [weak self] _ in
             self?.tappedCompleteButton()
         }
