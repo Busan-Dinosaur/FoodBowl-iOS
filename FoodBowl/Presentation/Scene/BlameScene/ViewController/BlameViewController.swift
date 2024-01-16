@@ -11,7 +11,7 @@ import UIKit
 import SnapKit
 import Then
 
-final class BlameViewController: UIViewController, Navigationable {
+final class BlameViewController: UIViewController, Keyboardable {
     
     // MARK: - ui component
     
@@ -48,7 +48,7 @@ final class BlameViewController: UIViewController, Navigationable {
         super.viewDidLoad()
         self.bindViewModel()
         self.bindUI()
-        self.setupNavigation()
+        self.setupKeyboardGesture()
     }
     
     // MARK: - func - bind
