@@ -27,7 +27,9 @@ final class StoreDetailViewController: UIViewController, Navigationable, Optiona
     private var cancellable: Set<AnyCancellable> = Set()
     
     private var dataSource: UICollectionViewDiffableDataSource<Section, ReviewItem>!
-    private var snapShot: NSDiffableDataSourceSnapshot<Section, ReviewItem>!
+    private var snapshot: NSDiffableDataSourceSnapshot<Section, ReviewItem>!
+    
+    let removeReviewPublisher = PassthroughSubject<Int, Never>()
 
     // MARK: - init
     
@@ -57,6 +59,7 @@ final class StoreDetailViewController: UIViewController, Navigationable, Optiona
         self.bindViewModel()
         self.bindUI()
         self.setupNavigation()
+        self.configureHeader()
     }
     
     // MARK: - func - bind
@@ -71,6 +74,7 @@ final class StoreDetailViewController: UIViewController, Navigationable, Optiona
         guard let viewModel = self.viewModel as? StoreDetailViewModel else { return nil }
         let input = StoreDetailViewModel.Input(
             reviewToggleButtonDidTap: self.storeDetailView.reviewToggleButtonDidTapPublisher.eraseToAnyPublisher(),
+            removeReview: self.removeReviewPublisher.eraseToAnyPublisher(),
             scrolledToBottom: self.storeDetailView.collectionView().scrolledToBottomPublisher.eraseToAnyPublisher(),
             refreshControl: self.storeDetailView.refreshPublisher.eraseToAnyPublisher()
         )
@@ -82,15 +86,17 @@ final class StoreDetailViewController: UIViewController, Navigationable, Optiona
         
         output.reviews
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] result in
-                switch result {
-                case .failure:
-                    self?.handleReviews([])
-                case .finished:
-                    return
-                }
+            .sink { _ in
             } receiveValue: { [weak self] reviews in
-                self?.handleReviews(reviews)
+                self?.reloadReviews(reviews)
+            }
+            .store(in: &self.cancellable)
+        
+        output.moreReviews
+            .receive(on: DispatchQueue.main)
+            .sink { _ in
+            } receiveValue: { [weak self] reviews in
+                self?.loadMoreReviews(reviews)
             }
             .store(in: &self.cancellable)
         
@@ -100,6 +106,21 @@ final class StoreDetailViewController: UIViewController, Navigationable, Optiona
             } receiveValue: { [weak self] _ in
                 self?.storeDetailView.refreshControl().endRefreshing()
             }
+            .store(in: &self.cancellable)
+        
+        output.isRemoved
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] result in
+                switch result {
+                case .success(let id):
+                    self?.deleteReview(id)
+                case .failure(let error):
+                    self?.makeAlert(
+                        title: "에러",
+                        message: error.localizedDescription
+                    )
+                }
+            })
             .store(in: &self.cancellable)
     }
     
@@ -138,16 +159,13 @@ final class StoreDetailViewController: UIViewController, Navigationable, Optiona
         self.storeDetailView.configureNavigationBarTitle(navigationController)
     }
     
-    func removeReview(reviewId: Int) {
-        Task {
-        }
+    private func configureHeader() {
+        guard let viewModel = self.viewModel as? StoreDetailViewModel else { return }
+        self.storeDetailView.storeHeaderView.configureHeader(viewModel.store)
     }
-}
-
-// MARK: - Helper
-extension StoreDetailViewController {
-    private func handleReviews(_ reviews: [ReviewItem]) {
-        self.reloadReviews(reviews)
+    
+    func removeReview(reviewId: Int) {
+        removeReviewPublisher.send(reviewId)
     }
 }
 
@@ -182,15 +200,30 @@ extension StoreDetailViewController {
 // MARK: - Snapshot
 extension StoreDetailViewController {
     private func configureSnapshot() {
-        self.snapShot = NSDiffableDataSourceSnapshot<Section, ReviewItem>()
-        self.snapShot.appendSections([.main])
-        self.dataSource.apply(self.snapShot, animatingDifferences: true)
+        self.snapshot = NSDiffableDataSourceSnapshot<Section, ReviewItem>()
+        self.snapshot.appendSections([.main])
+        self.dataSource.apply(self.snapshot, animatingDifferences: true)
     }
 
     private func reloadReviews(_ items: [ReviewItem]) {
-        let previousData = self.snapShot.itemIdentifiers(inSection: .main)
-        self.snapShot.deleteItems(previousData)
-        self.snapShot.appendItems(items, toSection: .main)
-        self.dataSource.apply(self.snapShot, animatingDifferences: true)
+        let previousReviewsData = self.snapshot.itemIdentifiers(inSection: .main)
+        self.snapshot.deleteItems(previousReviewsData)
+        self.snapshot.appendItems(items, toSection: .main)
+        self.dataSource.applySnapshotUsingReloadData(self.snapshot)
+    }
+    
+    private func loadMoreReviews(_ items: [ReviewItem]) {
+        self.snapshot.appendItems(items, toSection: .main)
+        self.dataSource.applySnapshotUsingReloadData(self.snapshot)
+    }
+    
+    private func deleteReview(_ reviewId: Int) {
+        for item in snapshot.itemIdentifiers {
+            if item.comment.id == reviewId {
+                self.snapshot.deleteItems([item])
+                self.dataSource.apply(self.snapshot)
+                return
+            }
+        }
     }
 }

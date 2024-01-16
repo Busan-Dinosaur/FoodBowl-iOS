@@ -26,7 +26,7 @@ final class StoreDetailView: UIView, BaseViewType {
     // MARK: - ui component
     
     private let reviewToggleButton = ReviewToggleButton()
-    private let storeHeaderView = StoreHeaderView()
+    let storeHeaderView = StoreHeaderView()
     private lazy var listCollectionView = UICollectionView(frame: .zero, collectionViewLayout: self.createLayout()).then {
         $0.showsVerticalScrollIndicator = false
         $0.register(FeedNSCollectionViewCell.self, forCellWithReuseIdentifier: FeedNSCollectionViewCell.className)

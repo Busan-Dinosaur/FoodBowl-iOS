@@ -19,6 +19,21 @@ struct StoreItemDTO: Codable {
     let x, y: Double
     let reviewCount: Int
     let isBookmarked: Bool
+    
+    func toStore() -> Store {
+        return Store(
+            id: self.id,
+            categoryName: self.categoryName,
+            name: self.name,
+            addressName: self.addressName,
+            isBookmarked: self.isBookmarked,
+            distance: nil,
+            url: self.url,
+            x: self.x,
+            y: self.y,
+            reviewCount: self.reviewCount
+        )
+    }
 }
 
 // MARK: - StoreBySearchDTO
@@ -32,4 +47,19 @@ struct StoreItemBySearchDTO: Codable {
     let storeName: String
     let distance: Double
     let reviewCount: Int
+    
+    func toStore() -> Store {
+        return Store(
+            id: self.storeId,
+            categoryName: nil,
+            name: self.storeName,
+            addressName: nil,
+            isBookmarked: nil,
+            distance: self.distance,
+            url: nil,
+            x: nil,
+            y: nil,
+            reviewCount: self.reviewCount
+        )
+    }
 }

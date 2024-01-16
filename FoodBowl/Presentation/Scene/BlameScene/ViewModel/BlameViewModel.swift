@@ -35,7 +35,9 @@ final class BlameViewModel: NSObject, BaseViewModelType {
             })
             .store(in: &self.cancellable)
         
-        return Output(isCompleted: self.isCompletedSubject.eraseToAnyPublisher())
+        return Output(
+            isCompleted: self.isCompletedSubject.eraseToAnyPublisher()
+        )
     }
     
     // MARK: - init
@@ -56,6 +58,8 @@ final class BlameViewModel: NSObject, BaseViewModelType {
                     blameTarget: self.blameTarget,
                     description: description
                 ))
+                
+                self.isCompletedSubject.send(.success(true))
             } catch {
                 self.isCompletedSubject.send(.failure(NetworkError()))
             }

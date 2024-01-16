@@ -23,7 +23,7 @@ struct Page: Codable {
 struct ReviewItem: Codable, Hashable {
     let writer: Writer
     let comment: Comment
-    let store: StoreByReview?
+    let store: Store?
     
     static func == (lhs: ReviewItem, rhs: ReviewItem) -> Bool {
         lhs.comment.id == rhs.comment.id
@@ -49,12 +49,4 @@ struct Comment: Codable {
     let imagePaths: [String]
     let createdAt: String
     let updatedAt: String
-}
-
-// MARK: - StoreByReview
-struct StoreByReview: Codable {
-    let id: Int
-    let categoryName, name, addressName: String
-    let distance: Double
-    var isBookmarked: Bool
 }

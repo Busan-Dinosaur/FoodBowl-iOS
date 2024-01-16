@@ -87,6 +87,7 @@
 		CB91E2A82B56D8C9008A0E8E /* Review.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB91E2A72B56D8C9008A0E8E /* Review.swift */; };
 		CB91E2AA2B56DA7B008A0E8E /* ReviewByStoreDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB91E2A92B56DA7B008A0E8E /* ReviewByStoreDTO.swift */; };
 		CB91E2AC2B56DDE5008A0E8E /* StoreDetailRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB91E2AB2B56DDE5008A0E8E /* StoreDetailRepositoryImpl.swift */; };
+		CB91E2AE2B56E86B008A0E8E /* Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB91E2AD2B56E86B008A0E8E /* Store.swift */; };
 		CB9332632AFCC26800B7F87A /* PhotoPickerable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB9332622AFCC26800B7F87A /* PhotoPickerable.swift */; };
 		CB93326F2AFCCCEA00B7F87A /* SignUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB93326E2AFCCCEA00B7F87A /* SignUsecase.swift */; };
 		CBA4C7DB2AB4840100FC9DD8 /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA4C7DA2AB4840100FC9DD8 /* PaddingLabel.swift */; };
@@ -262,6 +263,7 @@
 		CB91E2A72B56D8C9008A0E8E /* Review.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Review.swift; sourceTree = "<group>"; };
 		CB91E2A92B56DA7B008A0E8E /* ReviewByStoreDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewByStoreDTO.swift; sourceTree = "<group>"; };
 		CB91E2AB2B56DDE5008A0E8E /* StoreDetailRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreDetailRepositoryImpl.swift; sourceTree = "<group>"; };
+		CB91E2AD2B56E86B008A0E8E /* Store.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Store.swift; sourceTree = "<group>"; };
 		CB9332622AFCC26800B7F87A /* PhotoPickerable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPickerable.swift; sourceTree = "<group>"; };
 		CB93326E2AFCCCEA00B7F87A /* SignUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUsecase.swift; sourceTree = "<group>"; };
 		CBA4C7DA2AB4840100FC9DD8 /* PaddingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddingLabel.swift; sourceTree = "<group>"; };
@@ -1154,6 +1156,7 @@
 			children = (
 				CBE32D0D2ADE7648004CCCBE /* Categories.swift */,
 				CB91E2A72B56D8C9008A0E8E /* Review.swift */,
+				CB91E2AD2B56E86B008A0E8E /* Store.swift */,
 			);
 			path = Entity;
 			sourceTree = "<group>";
@@ -1357,6 +1360,7 @@
 				CBFB52552977B9240049E8BA /* StoreDetailViewController.swift in Sources */,
 				CB5BFB1D2B3F025F00B35062 /* SignRepositoryImpl.swift in Sources */,
 				CBBB97EE2AB0828600272CCE /* UpdateReviewViewController.swift in Sources */,
+				CB91E2AE2B56E86B008A0E8E /* Store.swift in Sources */,
 				CB7F3325298A51560000A6B4 /* UserDefaultStorage.swift in Sources */,
 				CBC747BA2A83DD6400F171F5 /* Configurations.swift in Sources */,
 				CB617A4F2AE27F88000F7FFC /* UIViewController+Combine.swift in Sources */,

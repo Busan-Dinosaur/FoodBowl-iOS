@@ -52,7 +52,7 @@ struct ReviewItemDTO: Codable, Hashable {
         return ReviewItem(
             writer: self.writer.toWriter(),
             comment: self.review.toComment(),
-            store: self.store.toStoreByReview()
+            store: self.store.toStore()
         )
     }
 }
@@ -83,14 +83,18 @@ struct StoreByReviewDTO: Codable {
     let distance: Double
     var isBookmarked: Bool
     
-    func toStoreByReview() -> StoreByReview {
-        return StoreByReview(
+    func toStore() -> Store {
+        return Store(
             id: self.id,
             categoryName: self.categoryName,
             name: self.name,
             addressName: self.addressName,
+            isBookmarked: self.isBookmarked,
             distance: self.distance,
-            isBookmarked: self.isBookmarked
+            url: nil,
+            x: nil,
+            y: nil,
+            reviewCount: nil
         )
     }
 }

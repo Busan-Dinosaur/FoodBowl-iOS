@@ -17,25 +17,21 @@ final class StoreHeaderView: UIView {
     let storeNameLabel = UILabel().then {
         $0.font = UIFont.preferredFont(forTextStyle: .subheadline, weight: .medium)
         $0.textColor = .mainTextColor
-        $0.text = "틈새라면 홍대점"
     }
 
     let categoryLabel = UILabel().then {
         $0.font = UIFont.preferredFont(forTextStyle: .footnote, weight: .light)
         $0.textColor = .subTextColor
-        $0.text = "일식"
     }
 
     let storeAddressLabel = UILabel().then {
         $0.font = UIFont.preferredFont(forTextStyle: .footnote, weight: .regular)
         $0.textColor = .subTextColor
-        $0.text = "강원도 한섬로73 103동 1401호"
     }
 
     let distanceLabel = UILabel().then {
         $0.font = UIFont.preferredFont(forTextStyle: .footnote, weight: .light)
         $0.textColor = .subTextColor
-        $0.text = "10km"
     }
 
     let bookmarkButton = BookmarkButton()
@@ -86,6 +82,31 @@ final class StoreHeaderView: UIView {
         borderLineView.snp.makeConstraints {
             $0.leading.trailing.bottom.equalToSuperview()
             $0.height.equalTo(1)
+        }
+    }
+}
+
+// MARK: - Public - func
+extension StoreHeaderView {
+    func configureHeader(_ store: Store) {
+        self.storeNameLabel.text = store.name
+        self.categoryLabel.text = store.categoryName
+        self.storeAddressLabel.text = store.addressName
+        self.distanceLabel.text = store.distance?.prettyDistance
+        self.bookmarkButton.isSelected = store.isBookmarked ?? false
+        
+        if let url = store.url {
+            let action = UIAction { _ in
+                let showWebViewController = ShowWebViewController(url: url)
+                let navigationController = UINavigationController(rootViewController: showWebViewController)
+                
+                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now()) {
+                    guard let rootVC = (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.windows.first?.rootViewController
+                    else { return }
+                    rootVC.present(navigationController, animated: true)
+                }
+            }
+            self.mapButton.addAction(action, for: .touchUpInside)
         }
     }
 }

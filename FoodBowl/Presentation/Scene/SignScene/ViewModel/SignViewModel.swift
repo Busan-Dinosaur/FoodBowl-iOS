@@ -33,7 +33,9 @@ final class SignViewModel: NSObject, BaseViewModelType {
             })
             .store(in: &self.cancellable)
         
-        return Output(isLogin: self.isLoginSubject.eraseToAnyPublisher())
+        return Output(
+            isLogin: self.isLoginSubject.eraseToAnyPublisher()
+        )
     }
     
     // MARK: - init
