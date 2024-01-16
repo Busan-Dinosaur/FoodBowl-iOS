@@ -11,12 +11,27 @@ import Foundation
 struct ReviewDTO: Codable {
     let reviews: [ReviewItemDTO]
     let page: PageDTO
+    
+    func toReview() -> Review {
+        return Review(
+            reviews: self.reviews.map { $0.toReviewItem() },
+            page: self.page.toPage()
+        )
+    }
 }
 
 // MARK: - PageDTO
 struct PageDTO: Codable {
     let firstId, lastId: Int?
     let size: Int
+    
+    func toPage() -> Page {
+        return Page(
+            firstId: self.firstId,
+            lastId: self.lastId,
+            size: self.size
+        )
+    }
 }
 
 // MARK: - ReviewItemDTO
@@ -32,6 +47,14 @@ struct ReviewItemDTO: Codable, Hashable {
     func hash(into hasher: inout Hasher) {
         hasher.combine(review.id)
     }
+    
+    func toReviewItem() -> ReviewItem {
+        return ReviewItem(
+            writer: self.writer.toWriter(),
+            comment: self.review.toComment(),
+            store: self.store.toStoreByReview()
+        )
+    }
 }
 
 // MARK: - CommentDTO
@@ -41,6 +64,16 @@ struct CommentDTO: Codable {
     let imagePaths: [String]
     let createdAt: String
     let updatedAt: String
+    
+    func toComment() -> Comment {
+        return Comment(
+            id: self.id,
+            content: self.content,
+            imagePaths: self.imagePaths,
+            createdAt: self.createdAt,
+            updatedAt: self.updatedAt
+        )
+    }
 }
 
 // MARK: - StoreByReviewDTO
@@ -49,6 +82,17 @@ struct StoreByReviewDTO: Codable {
     let categoryName, name, addressName: String
     let distance: Double
     var isBookmarked: Bool
+    
+    func toStoreByReview() -> StoreByReview {
+        return StoreByReview(
+            id: self.id,
+            categoryName: self.categoryName,
+            name: self.name,
+            addressName: self.addressName,
+            distance: self.distance,
+            isBookmarked: self.isBookmarked
+        )
+    }
 }
 
 // MARK: - WriterItemDTO
@@ -57,24 +101,13 @@ struct WriterItemDTO: Codable {
     let nickname: String
     let profileImageUrl: String?
     let followerCount: Int
-}
-
-// MARK: - ReviewByStoreDTO
-struct ReviewByStoreDTO: Codable {
-    let storeReviewContentResponses: [ReviewItemByStoreDTO]
-    let page: PageDTO
-}
-
-// MARK: - ReviewItemByStoreDTO
-struct ReviewItemByStoreDTO: Codable, Hashable {
-    let writer: WriterItemDTO
-    let review: CommentDTO
     
-    static func == (lhs: ReviewItemByStoreDTO, rhs: ReviewItemByStoreDTO) -> Bool {
-        lhs.review.id == rhs.review.id
-    }
-    
-    func hash(into hasher: inout Hasher) {
-        hasher.combine(review.id)
+    func toWriter() -> Writer {
+        return Writer(
+            id: self.id,
+            nickname: self.nickname,
+            profileImageUrl: self.profileImageUrl,
+            followerCount: self.followerCount
+        )
     }
 }

@@ -26,8 +26,8 @@ final class StoreDetailViewController: UIViewController, Navigationable, Optiona
     private let viewModel: any BaseViewModelType
     private var cancellable: Set<AnyCancellable> = Set()
     
-    private var dataSource: UICollectionViewDiffableDataSource<Section, ReviewItemByStoreDTO>!
-    private var snapShot: NSDiffableDataSourceSnapshot<Section, ReviewItemByStoreDTO>!
+    private var dataSource: UICollectionViewDiffableDataSource<Section, ReviewItem>!
+    private var snapShot: NSDiffableDataSourceSnapshot<Section, ReviewItem>!
 
     // MARK: - init
     
@@ -112,7 +112,7 @@ final class StoreDetailViewController: UIViewController, Navigationable, Optiona
             .store(in: &self.cancellable)
     }
     
-    private func bindCell(_ cell: FeedNSCollectionViewCell, with item: ReviewItemByStoreDTO) {
+    private func bindCell(_ cell: FeedNSCollectionViewCell, with item: ReviewItem) {
         cell.userButtonTapAction = { [weak self] _ in
             let profileViewController = ProfileViewController(memberId: item.writer.id)
             
@@ -125,7 +125,7 @@ final class StoreDetailViewController: UIViewController, Navigationable, Optiona
             let isOwn = UserDefaultStorage.id == item.writer.id
             
             DispatchQueue.main.async { [weak self] in
-                self?.presentReviewOptionAlert(isOwn: isOwn, reviewId: item.review.id)
+                self?.presentReviewOptionAlert(isOwn: isOwn, reviewId: item.comment.id)
             }
         }
     }
@@ -146,7 +146,7 @@ final class StoreDetailViewController: UIViewController, Navigationable, Optiona
 
 // MARK: - Helper
 extension StoreDetailViewController {
-    private func handleReviews(_ reviews: [ReviewItemByStoreDTO]) {
+    private func handleReviews(_ reviews: [ReviewItem]) {
         self.reloadReviews(reviews)
     }
 }
@@ -158,8 +158,8 @@ extension StoreDetailViewController {
         self.configureSnapshot()
     }
 
-    private func feedNSCollectionViewDataSource() -> UICollectionViewDiffableDataSource<Section, ReviewItemByStoreDTO> {
-        let reviewCellRegistration = UICollectionView.CellRegistration<FeedNSCollectionViewCell, ReviewItemByStoreDTO> {
+    private func feedNSCollectionViewDataSource() -> UICollectionViewDiffableDataSource<Section, ReviewItem> {
+        let reviewCellRegistration = UICollectionView.CellRegistration<FeedNSCollectionViewCell, ReviewItem> {
             [weak self] cell, indexPath, item in
             
             cell.configureCell(item)
@@ -182,12 +182,12 @@ extension StoreDetailViewController {
 // MARK: - Snapshot
 extension StoreDetailViewController {
     private func configureSnapshot() {
-        self.snapShot = NSDiffableDataSourceSnapshot<Section, ReviewItemByStoreDTO>()
+        self.snapShot = NSDiffableDataSourceSnapshot<Section, ReviewItem>()
         self.snapShot.appendSections([.main])
         self.dataSource.apply(self.snapShot, animatingDifferences: true)
     }
 
-    private func reloadReviews(_ items: [ReviewItemByStoreDTO]) {
+    private func reloadReviews(_ items: [ReviewItem]) {
         let previousData = self.snapShot.itemIdentifiers(inSection: .main)
         self.snapShot.deleteItems(previousData)
         self.snapShot.appendItems(items, toSection: .main)

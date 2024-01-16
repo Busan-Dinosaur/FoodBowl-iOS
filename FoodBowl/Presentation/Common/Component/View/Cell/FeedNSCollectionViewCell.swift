@@ -90,15 +90,15 @@ final class FeedNSCollectionViewCell: UICollectionViewCell, BaseViewType {
 
 // MARK: - Public - func
 extension FeedNSCollectionViewCell {
-    func configureCell(_ data: ReviewItemByStoreDTO) {
+    func configureCell(_ data: ReviewItem) {
         let writer = data.writer
-        let review = data.review
+        let comment = data.comment
         
         self.userInfoView.comfigureUser(writer)
-        self.commentLabel.text = review.content
+        self.commentLabel.text = comment.content
         
-        if review.imagePaths.isEmpty {
-            self.photoListView.isHidden = true            
+        if comment.imagePaths.isEmpty {
+            self.photoListView.isHidden = true
             self.photoListView.snp.remakeConstraints {
                 $0.top.equalTo(self.commentLabel.snp.bottom)
                 $0.leading.trailing.equalToSuperview()
@@ -106,7 +106,7 @@ extension FeedNSCollectionViewCell {
                 $0.height.equalTo(0)
             }
         } else {
-            self.photoListView.photos = review.imagePaths
+            self.photoListView.photos = comment.imagePaths
             self.photoListView.isHidden = false
             
             self.photoListView.snp.remakeConstraints {

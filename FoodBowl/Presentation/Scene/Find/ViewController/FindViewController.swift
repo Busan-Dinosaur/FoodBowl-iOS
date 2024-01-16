@@ -280,14 +280,13 @@ extension FindViewController: UITableViewDataSource, UITableViewDelegate {
 
     func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
         if scope == 0 {
-            let storeDetailViewController = StoreDetailViewController(
-                viewModel: StoreDetailViewModel(
-                    storeId: stores[indexPath.item].storeId,
-                    isFriend: false
-                )
-            )
+            let repository = StoreDetailRepositoryImpl()
+            let usecase = StoreDetailUsecaseImpl(repository: repository)
+            let viewModel = StoreDetailViewModel(storeId: stores[indexPath.item].storeId, isFriend: false, usecase: usecase)
+            let viewController = StoreDetailViewController(viewModel: viewModel)
+
             DispatchQueue.main.async { [weak self] in
-                self?.navigationController?.pushViewController(storeDetailViewController, animated: true)
+                self?.navigationController?.pushViewController(viewController, animated: true)
             }
         } else {
             let profileViewController = ProfileViewController(memberId: members[indexPath.item].memberId)

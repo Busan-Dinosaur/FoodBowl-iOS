@@ -6,29 +6,26 @@
 //
 
 import Combine
-import UIKit
-
-import CombineMoya
-import Moya
+import Foundation
 
 final class StoreDetailViewModel: BaseViewModelType {
     
     // MARK: - property
-
-    let provider = MoyaProvider<ServiceAPI>()
-    
-    private var cancelBag = Set<AnyCancellable>()
     
     var storeId: Int
     var isFriend: Bool
     
+    private let usecase: StoreDetailUsecase
+    private var cancelBag = Set<AnyCancellable>()
+    
     private let pageSize: Int = 20
     private var currentpageSize: Int = 20
     private var lastReviewId: Int?
-    private var reviews = [ReviewItemByStoreDTO]()
+    private var reviews = [ReviewItem]()
     
-    private let reviewsSubject = PassthroughSubject<[ReviewItemByStoreDTO], Error>()
+    private let reviewsSubject = PassthroughSubject<[ReviewItem], Error>()
     private let refreshControlSubject = PassthroughSubject<Void, Error>()
+    private let isRemovedSubject: PassthroughSubject<Result<Bool, Error>, Never> = PassthroughSubject()
     
     struct Input {
         let reviewToggleButtonDidTap: AnyPublisher<Bool, Never>
@@ -37,15 +34,16 @@ final class StoreDetailViewModel: BaseViewModelType {
     }
     
     struct Output {
-        let reviews: PassthroughSubject<[ReviewItemByStoreDTO], Error>
+        let reviews: PassthroughSubject<[ReviewItem], Error>
         let refreshControl: PassthroughSubject<Void, Error>
     }
     
     // MARK: - init
 
-    init(storeId: Int, isFriend: Bool) {
+    init(storeId: Int, isFriend: Bool, usecase: StoreDetailUsecase) {
         self.storeId = storeId
         self.isFriend = isFriend
+        self.usecase = usecase
     }
     
     // MARK: - Public - func
@@ -88,47 +86,40 @@ final class StoreDetailViewModel: BaseViewModelType {
     // MARK: - network
     
     private func getReviewsPublisher(isFriend: Bool, lastReviewId: Int? = nil) {
-        if currentpageSize < pageSize { return }
-        let filter = isFriend ? "FRIEND" : "ALL"
-        
-        provider.requestPublisher(
-            .getReviewsByStore(request: GetReviewsByStoreRequestDTO(
-                lastReviewId: lastReviewId,
-                pageSize: self.pageSize,
-                storeId: self.storeId,
-                filter: filter
-            ))
-        )
-        .sink { completion in
-            switch completion {
-            case let .failure(error):
+        Task {
+            do {
+                if currentpageSize < pageSize { return }
+                let filter = isFriend ? "FRIEND" : "ALL"
+                
+                let review = try await self.usecase.getReviewsByStore(request: GetReviewsByStoreRequestDTO(
+                    lastReviewId: lastReviewId,
+                    pageSize: self.pageSize,
+                    storeId: self.storeId,
+                    filter: filter
+                )).toReview()
+                
+                self.lastReviewId = review.page.lastId
+                self.currentpageSize = review.page.size
+                
+                if lastReviewId == nil {
+                    self.reviews = review.reviews
+                } else {
+                    self.reviews += review.reviews
+                }
+                self.reviewsSubject.send(self.reviews)
+            } catch {
                 self.reviewsSubject.send(completion: .failure(error))
-            case .finished:
-                self.refreshControlSubject.send()
             }
-        } receiveValue: { recievedValue in
-            guard let responseData = try? recievedValue.map(ReviewByStoreDTO.self) else { return }
-            self.lastReviewId = responseData.page.lastId
-            self.currentpageSize = responseData.page.size
-            
-            if lastReviewId == nil {
-                self.reviews = responseData.storeReviewContentResponses
-            } else {
-                self.reviews += responseData.storeReviewContentResponses
-            }
-            self.reviewsSubject.send(self.reviews)
         }
-        .store(in : &cancelBag)
     }
     
-    func removeReview(id: Int) async -> Bool {
-        let response = await provider.request(.removeReview(id: id))
-        switch response {
-        case .success:
-            return true
-        case .failure(let err):
-            handleError(err)
-            return false
+    func removeReview(id: Int) {
+        Task {
+            do {
+                try await self.usecase.removeReview(id: id)
+            } catch {
+                self.isRemovedSubject.send(.failure(NetworkError()))
+            }
         }
     }
 }

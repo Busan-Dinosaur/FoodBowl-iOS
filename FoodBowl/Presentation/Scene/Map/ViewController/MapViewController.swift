@@ -264,12 +264,13 @@ class MapViewController: UIViewController, Navigationable, Optionable {
         }
         
         cell.storeButtonTapAction = { [weak self] _ in
-            let storeDetailViewController = StoreDetailViewController(
-                viewModel: StoreDetailViewModel(storeId: item.store.id, isFriend: true)
-            )
+            let repository = StoreDetailRepositoryImpl()
+            let usecase = StoreDetailUsecaseImpl(repository: repository)
+            let viewModel = StoreDetailViewModel(storeId: item.store.id, isFriend: true, usecase: usecase)
+            let viewController = StoreDetailViewController(viewModel: viewModel)
             
             DispatchQueue.main.async { [weak self] in
-                self?.navigationController?.pushViewController(storeDetailViewController, animated: true)
+                self?.navigationController?.pushViewController(viewController, animated: true)
             }
         }
         
@@ -318,12 +319,13 @@ extension MapViewController {
                 ),
                 glyphImage: Categories(rawValue: store.categoryName)?.icon,
                 handler: { [weak self] in
-                    let storeDetailViewController = StoreDetailViewController(
-                        viewModel: StoreDetailViewModel(storeId: store.id, isFriend: true)
-                    )
+                    let repository = StoreDetailRepositoryImpl()
+                    let usecase = StoreDetailUsecaseImpl(repository: repository)
+                    let viewModel = StoreDetailViewModel(storeId: store.id, isFriend: true, usecase: usecase)
+                    let viewController = StoreDetailViewController(viewModel: viewModel)
                     
                     DispatchQueue.main.async { [weak self] in
-                        self?.navigationController?.pushViewController(storeDetailViewController, animated: true)
+                        self?.navigationController?.pushViewController(viewController, animated: true)
                     }
                 }
             )

@@ -78,7 +78,7 @@ final class UserInfoView: UIView {
 }
 
 extension UserInfoView {
-    func comfigureUser(_ member: WriterItemDTO) {
+    func comfigureUser(_ member: Writer) {
         if let url = member.profileImageUrl {
             userImageButton.kf.setImage(with: URL(string: url), for: .normal)
         } else {
