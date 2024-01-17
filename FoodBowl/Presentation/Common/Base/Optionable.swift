@@ -7,8 +7,6 @@
 
 import UIKit
 
-import Moya
-
 protocol Optionable: UIGestureRecognizerDelegate {
     func removeReview(reviewId: Int)
 }

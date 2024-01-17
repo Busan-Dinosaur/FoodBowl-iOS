@@ -10,12 +10,12 @@ import Foundation
 // MARK: - StoreItem
 struct Store: Codable {
     let id: Int
-    let categoryName: String?
+    let categoryName: String
     let name: String
-    let addressName: String?
-    let isBookmarked: Bool?
-    let distance: Double?
-    let url: String?
-    let x, y: Double?
-    let reviewCount: Int?
+    let addressName: String
+    let isBookmarked: Bool
+    let distance: Double
+    let url: String
+    let x, y: Double
+    let reviewCount: Int
 }

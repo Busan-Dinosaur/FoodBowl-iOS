@@ -32,6 +32,12 @@
 		CB40C6F82A83E812003E3F06 /* SignViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB40C6F72A83E812003E3F06 /* SignViewModel.swift */; };
 		CB40C6FA2A83E916003E3F06 /* MoyaProvider+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB40C6F92A83E916003E3F06 /* MoyaProvider+Extension.swift */; };
 		CB40C6FE2A83EEF8003E3F06 /* SignRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB40C6FD2A83EEF8003E3F06 /* SignRequestDTO.swift */; };
+		CB4A789D2B581F8B0002136F /* CreateReviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB4A789C2B581F8B0002136F /* CreateReviewView.swift */; };
+		CB4A78A12B5830000002136F /* CreateReviewRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB4A78A02B5830000002136F /* CreateReviewRepository.swift */; };
+		CB4A78A42B58301A0002136F /* CreateReviewUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB4A78A32B58301A0002136F /* CreateReviewUsecase.swift */; };
+		CB4A78A62B5831570002136F /* CreateReviewRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB4A78A52B5831570002136F /* CreateReviewRepositoryImpl.swift */; };
+		CB4A78AE2B5848320002136F /* SearchStoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB4A78AD2B5848320002136F /* SearchStoreView.swift */; };
+		CB4A78B02B58483F0002136F /* SearchStoreViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB4A78AF2B58483F0002136F /* SearchStoreViewModel.swift */; };
 		CB4FBBF22978CFA90052D371 /* FollowerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB4FBBF12978CFA90052D371 /* FollowerViewController.swift */; };
 		CB4FBBF42978CFE40052D371 /* FollowingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB4FBBF32978CFE40052D371 /* FollowingViewController.swift */; };
 		CB51C8C92AD7DFC9002D0BA5 /* ReviewDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB51C8C82AD7DFC9002D0BA5 /* ReviewDTO.swift */; };
@@ -58,7 +64,7 @@
 		CB5BFB472B3F1DBD00B35062 /* KakaoRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5BFB462B3F1DBD00B35062 /* KakaoRepository.swift */; };
 		CB5BFB492B3F1DFF00B35062 /* KakaoRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5BFB482B3F1DFF00B35062 /* KakaoRepositoryImpl.swift */; };
 		CB5DD4312AB59130009FCB43 /* BookmarkMapButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5DD4302AB59130009FCB43 /* BookmarkMapButton.swift */; };
-		CB5DD4332AB5A175009FCB43 /* CreateReviewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5DD4322AB5A175009FCB43 /* CreateReviewController.swift */; };
+		CB5DD4332AB5A175009FCB43 /* CreateReviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5DD4322AB5A175009FCB43 /* CreateReviewViewController.swift */; };
 		CB617A362AE2474A000F7FFC /* BaseViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB617A352AE2474A000F7FFC /* BaseViewModelType.swift */; };
 		CB617A382AE247E4000F7FFC /* BaseViewType.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB617A372AE247E4000F7FFC /* BaseViewType.swift */; };
 		CB617A3A2AE24836000F7FFC /* Navigationable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB617A392AE24836000F7FFC /* Navigationable.swift */; };
@@ -210,6 +216,12 @@
 		CB40C6F72A83E812003E3F06 /* SignViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignViewModel.swift; sourceTree = "<group>"; };
 		CB40C6F92A83E916003E3F06 /* MoyaProvider+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MoyaProvider+Extension.swift"; sourceTree = "<group>"; };
 		CB40C6FD2A83EEF8003E3F06 /* SignRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignRequestDTO.swift; sourceTree = "<group>"; };
+		CB4A789C2B581F8B0002136F /* CreateReviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateReviewView.swift; sourceTree = "<group>"; };
+		CB4A78A02B5830000002136F /* CreateReviewRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateReviewRepository.swift; sourceTree = "<group>"; };
+		CB4A78A32B58301A0002136F /* CreateReviewUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateReviewUsecase.swift; sourceTree = "<group>"; };
+		CB4A78A52B5831570002136F /* CreateReviewRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateReviewRepositoryImpl.swift; sourceTree = "<group>"; };
+		CB4A78AD2B5848320002136F /* SearchStoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchStoreView.swift; sourceTree = "<group>"; };
+		CB4A78AF2B58483F0002136F /* SearchStoreViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchStoreViewModel.swift; sourceTree = "<group>"; };
 		CB4FBBF12978CFA90052D371 /* FollowerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowerViewController.swift; sourceTree = "<group>"; };
 		CB4FBBF32978CFE40052D371 /* FollowingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowingViewController.swift; sourceTree = "<group>"; };
 		CB51C8C82AD7DFC9002D0BA5 /* ReviewDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewDTO.swift; sourceTree = "<group>"; };
@@ -236,7 +248,7 @@
 		CB5BFB462B3F1DBD00B35062 /* KakaoRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoRepository.swift; sourceTree = "<group>"; };
 		CB5BFB482B3F1DFF00B35062 /* KakaoRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoRepositoryImpl.swift; sourceTree = "<group>"; };
 		CB5DD4302AB59130009FCB43 /* BookmarkMapButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkMapButton.swift; sourceTree = "<group>"; };
-		CB5DD4322AB5A175009FCB43 /* CreateReviewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateReviewController.swift; sourceTree = "<group>"; };
+		CB5DD4322AB5A175009FCB43 /* CreateReviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateReviewViewController.swift; sourceTree = "<group>"; };
 		CB617A352AE2474A000F7FFC /* BaseViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewModelType.swift; sourceTree = "<group>"; };
 		CB617A372AE247E4000F7FFC /* BaseViewType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewType.swift; sourceTree = "<group>"; };
 		CB617A392AE24836000F7FFC /* Navigationable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Navigationable.swift; sourceTree = "<group>"; };
@@ -380,6 +392,7 @@
 			isa = PBXGroup;
 			children = (
 				CB15790F2AACD98600007183 /* CreateReviewViewModel.swift */,
+				CB4A78AF2B58483F0002136F /* SearchStoreViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -446,11 +459,20 @@
 			path = Find;
 			sourceTree = "<group>";
 		};
+		CB4A78A22B5830090002136F /* CreateReviewScene */ = {
+			isa = PBXGroup;
+			children = (
+				CB4A78A32B58301A0002136F /* CreateReviewUsecase.swift */,
+			);
+			path = CreateReviewScene;
+			sourceTree = "<group>";
+		};
 		CB5BFB0A2B3EE36800B35062 /* Repository */ = {
 			isa = PBXGroup;
 			children = (
 				CB5BFB0B2B3EE37500B35062 /* TokenRepository.swift */,
 				CB5BFB1E2B3F028F00B35062 /* SignRepository.swift */,
+				CB4A78A02B5830000002136F /* CreateReviewRepository.swift */,
 				CB91E2A52B56D7D6008A0E8E /* StoreDetailRepository.swift */,
 				CBD8D4702B4645F400445C98 /* BlameRepository.swift */,
 				CB5BFB302B3F091B00B35062 /* ReviewRepository.swift */,
@@ -466,6 +488,7 @@
 			children = (
 				CB5BFB122B3EEA5800B35062 /* TokenRepositoryImpl.swift */,
 				CB5BFB1C2B3F025F00B35062 /* SignRepositoryImpl.swift */,
+				CB4A78A52B5831570002136F /* CreateReviewRepositoryImpl.swift */,
 				CB91E2AB2B56DDE5008A0E8E /* StoreDetailRepositoryImpl.swift */,
 				CBD8D4722B4646B900445C98 /* BlameRepositroyImpl.swift */,
 				CB5BFB322B3F096500B35062 /* ReviewRepositoryImpl.swift */,
@@ -541,7 +564,7 @@
 			children = (
 				CB981C28297A5A2900AF0167 /* SignScene */,
 				CB63B7592A6986B4000AD9C2 /* Map */,
-				CBADC2B02955A13800E56C93 /* CreateReview */,
+				CBADC2B02955A13800E56C93 /* CreateReviewScene */,
 				CB73E00F2AB5FEA9005B6BF1 /* UpdateReview */,
 				CB73E0102AB5FEB4005B6BF1 /* StoreDetailScene */,
 				CBDF6EA42AD9253A00EB2481 /* BlameScene */,
@@ -827,7 +850,7 @@
 		CB9332652AFCCAB200B7F87A /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
-				CB5DD4322AB5A175009FCB43 /* CreateReviewController.swift */,
+				CB5DD4322AB5A175009FCB43 /* CreateReviewViewController.swift */,
 				CB73E00D2AB5F6BF005B6BF1 /* SearchStoreViewController.swift */,
 			);
 			path = ViewController;
@@ -875,6 +898,7 @@
 			isa = PBXGroup;
 			children = (
 				CB9332702AFCCCF100B7F87A /* SignScene */,
+				CB4A78A22B5830090002136F /* CreateReviewScene */,
 				CB91E2A22B56D797008A0E8E /* StoreDetailScene */,
 				CBF926472B411C25005E251B /* BlameScene */,
 			);
@@ -982,14 +1006,14 @@
 			path = Profile;
 			sourceTree = "<group>";
 		};
-		CBADC2B02955A13800E56C93 /* CreateReview */ = {
+		CBADC2B02955A13800E56C93 /* CreateReviewScene */ = {
 			isa = PBXGroup;
 			children = (
 				CBDDF13A2A6AD75700AE3C50 /* View */,
 				CB9332652AFCCAB200B7F87A /* ViewController */,
 				CB15790E2AACD97300007183 /* ViewModel */,
 			);
-			path = CreateReview;
+			path = CreateReviewScene;
 			sourceTree = "<group>";
 		};
 		CBB94BF42ADD0A3D00F44245 /* ViewModel */ = {
@@ -1118,6 +1142,8 @@
 			children = (
 				CBDE39002971945300DDE49A /* Cell */,
 				CB1A7C66295767F000C6431D /* UIComponent */,
+				CB4A789C2B581F8B0002136F /* CreateReviewView.swift */,
+				CB4A78AD2B5848320002136F /* SearchStoreView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1339,6 +1365,7 @@
 				CB5BFB312B3F091B00B35062 /* ReviewRepository.swift in Sources */,
 				CBFB52612977C9AB0049E8BA /* FindResultViewController.swift in Sources */,
 				CB73E5732B341B3B0026E4D7 /* FollowerViewModel.swift in Sources */,
+				CB4A78A42B58301A0002136F /* CreateReviewUsecase.swift in Sources */,
 				CBD1B6022984394A00B0AD51 /* FeedButton.swift in Sources */,
 				CBDECACA2A6B2F6800259350 /* FeedNSCollectionViewCell.swift in Sources */,
 				CBD1B5FE2982F19300B0AD51 /* UIButton+Extension.swift in Sources */,
@@ -1363,6 +1390,7 @@
 				CB91E2AE2B56E86B008A0E8E /* Store.swift in Sources */,
 				CB7F3325298A51560000A6B4 /* UserDefaultStorage.swift in Sources */,
 				CBC747BA2A83DD6400F171F5 /* Configurations.swift in Sources */,
+				CB4A78AE2B5848320002136F /* SearchStoreView.swift in Sources */,
 				CB617A4F2AE27F88000F7FFC /* UIViewController+Combine.swift in Sources */,
 				CB63B7602A698909000AD9C2 /* CategoryListView.swift in Sources */,
 				CB5BFB472B3F1DBD00B35062 /* KakaoRepository.swift in Sources */,
@@ -1390,6 +1418,7 @@
 				CBC158682AD80C3300FD263B /* CreateBlameRequestDTO.swift in Sources */,
 				CB15790D2AACD45400007183 /* CategoryDTO.swift in Sources */,
 				CBDECAC62A6B2B5900259350 /* MapButton.swift in Sources */,
+				CB4A789D2B581F8B0002136F /* CreateReviewView.swift in Sources */,
 				CB617A5C2AE29FBA000F7FFC /* StoreDetailView.swift in Sources */,
 				CBB58284297440A600808B0B /* CategoryCollectionViewCell.swift in Sources */,
 				CBC73104295550A100C7F198 /* AppDelegate.swift in Sources */,
@@ -1400,6 +1429,7 @@
 				CBA7F184297DBB01006088A0 /* YPImagePicker+Extension.swift in Sources */,
 				CB91E2A62B56D7D6008A0E8E /* StoreDetailRepository.swift in Sources */,
 				CB617A512AE27F96000F7FFC /* UIScrollView+Combine.swift in Sources */,
+				CB4A78A12B5830000002136F /* CreateReviewRepository.swift in Sources */,
 				CB5BFB0C2B3EE37500B35062 /* TokenRepository.swift in Sources */,
 				CBE61913296C68D9005295AF /* PlusButton.swift in Sources */,
 				CB1A7C5E295618A900C6431D /* SettingButton.swift in Sources */,
@@ -1407,6 +1437,7 @@
 				CBD8D4732B4646B900445C98 /* BlameRepositroyImpl.swift in Sources */,
 				CB2A44A62ADFC62D004A4126 /* PanZoomImageView.swift in Sources */,
 				CBDECAC82A6B2F0700259350 /* FeedListView.swift in Sources */,
+				CB4A78B02B58483F0002136F /* SearchStoreViewModel.swift in Sources */,
 				CBADC29B29559BC900E56C93 /* BaseTableViewCell.swift in Sources */,
 				CB1566D9298D72FF0056B7D9 /* LocationManager.swift in Sources */,
 				CB91E2AC2B56DDE5008A0E8E /* StoreDetailRepositoryImpl.swift in Sources */,
@@ -1454,6 +1485,7 @@
 				CBADC2E02955B92D00E56C93 /* CompleteButton.swift in Sources */,
 				CB617A532AE27FC0000F7FFC /* Publisher+Async.swift in Sources */,
 				CB40C6FE2A83EEF8003E3F06 /* SignRequestDTO.swift in Sources */,
+				CB4A78A62B5831570002136F /* CreateReviewRepositoryImpl.swift in Sources */,
 				CB617A382AE247E4000F7FFC /* BaseViewType.swift in Sources */,
 				CBDF6EA62AD9255200EB2481 /* BlameViewController.swift in Sources */,
 				CB40C6F82A83E812003E3F06 /* SignViewModel.swift in Sources */,
@@ -1481,7 +1513,7 @@
 				CBADC2AD2955A0FF00E56C93 /* ProfileViewController.swift in Sources */,
 				CBBA9F1B2AB5691900BE37AE /* DownButton.swift in Sources */,
 				CBDE38FD29715C5F00DDE49A /* SearchBarButton.swift in Sources */,
-				CB5DD4332AB5A175009FCB43 /* CreateReviewController.swift in Sources */,
+				CB5DD4332AB5A175009FCB43 /* CreateReviewViewController.swift in Sources */,
 				CBADC28D29559BC900E56C93 /* NSObject+Extension.swift in Sources */,
 				CBDE390529719B9700DDE49A /* PlaceDTO.swift in Sources */,
 				CB617A402AE248CF000F7FFC /* UIViewController+Alert.swift in Sources */,

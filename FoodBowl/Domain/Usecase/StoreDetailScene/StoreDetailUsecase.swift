@@ -7,8 +7,6 @@
 
 import Foundation
 
-import Moya
-
 protocol StoreDetailUsecase {
     func getReviewsByStore(request: GetReviewsByStoreRequestDTO) async throws -> ReviewByStoreDTO
     func removeReview(id: Int) async throws

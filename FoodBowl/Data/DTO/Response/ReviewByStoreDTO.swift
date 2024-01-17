@@ -38,10 +38,10 @@ struct StoreDetailDTO: Codable {
             addressName: self.addressName,
             isBookmarked: self.isBookmarked,
             distance: self.distance,
-            url: nil,
-            x: nil,
-            y: nil,
-            reviewCount: nil
+            url: "",
+            x: 0.0,
+            y: 0.0,
+            reviewCount: 0
         )
     }
 }

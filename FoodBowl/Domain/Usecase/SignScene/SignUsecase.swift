@@ -7,8 +7,6 @@
 
 import Foundation
 
-import Moya
-
 protocol SignUsecase {
     func dispatchAppleLogin(login: SignRequestDTO) async throws -> TokenDTO
     func getMyProfile() async throws -> MemberProfileDTO

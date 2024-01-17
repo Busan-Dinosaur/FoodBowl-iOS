@@ -92,21 +92,19 @@ extension StoreHeaderView {
         self.storeNameLabel.text = store.name
         self.categoryLabel.text = store.categoryName
         self.storeAddressLabel.text = store.addressName
-        self.distanceLabel.text = store.distance?.prettyDistance
-        self.bookmarkButton.isSelected = store.isBookmarked ?? false
+        self.distanceLabel.text = store.distance.prettyDistance
+        self.bookmarkButton.isSelected = store.isBookmarked
         
-        if let url = store.url {
-            let action = UIAction { _ in
-                let showWebViewController = ShowWebViewController(url: url)
-                let navigationController = UINavigationController(rootViewController: showWebViewController)
-                
-                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now()) {
-                    guard let rootVC = (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.windows.first?.rootViewController
-                    else { return }
-                    rootVC.present(navigationController, animated: true)
-                }
+        let action = UIAction { _ in
+            let showWebViewController = ShowWebViewController(url: store.url)
+            let navigationController = UINavigationController(rootViewController: showWebViewController)
+            
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now()) {
+                guard let rootVC = (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.windows.first?.rootViewController
+                else { return }
+                rootVC.present(navigationController, animated: true)
             }
-            self.mapButton.addAction(action, for: .touchUpInside)
         }
+        self.mapButton.addAction(action, for: .touchUpInside)
     }
 }

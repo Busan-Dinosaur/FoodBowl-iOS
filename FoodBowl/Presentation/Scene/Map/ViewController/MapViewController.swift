@@ -27,13 +27,18 @@ class MapViewController: UIViewController, Navigationable, Optionable {
     
     lazy var plusButton = PlusButton().then {
         let action = UIAction { [weak self] _ in
-            let createReviewController = CreateReviewController()
-            createReviewController.delegate = self
-            let navigationController = UINavigationController(rootViewController: createReviewController)
+            let repository = CreateReviewRepositoryImpl()
+            let usecase = CreateReviewUsecaseImpl(repository: repository)
+            let viewModel = CreateReviewViewModel(usecase: usecase)
+            let viewController = CreateReviewViewController(viewModel: viewModel)
+            let navigationController = UINavigationController(rootViewController: viewController)
             navigationController.modalPresentationStyle = .fullScreen
+            
             DispatchQueue.main.async {
                 self?.present(navigationController, animated: true)
             }
+            
+            viewController.delegate = self
         }
         $0.addAction(action, for: .touchUpInside)
     }

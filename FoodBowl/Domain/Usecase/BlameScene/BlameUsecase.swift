@@ -7,8 +7,6 @@
 
 import Foundation
 
-import Moya
-
 protocol BlameUsecase {
     func createBlame(request: CreateBlameRequestDTO) async throws
 }

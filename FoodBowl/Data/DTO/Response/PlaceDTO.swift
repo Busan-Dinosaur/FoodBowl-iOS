@@ -35,3 +35,23 @@ struct PlaceItemDTO: Codable {
         case latitude = "y"
     }
 }
+
+extension PlaceItemDTO {
+    func getCategory() -> String {
+        let categoryName = self.categoryName
+        let categoryArray = categoryName
+            .components(separatedBy: ">").map { $0.trimmingCharacters(in: .whitespaces) }
+        let categories = Categories.allCases.map { $0.rawValue }
+
+        if categoryArray.count >= 2 && categories.contains(categoryArray[1]) == true {
+            if categoryArray.count >= 3 && categoryArray[2] == "해물,생선" {
+                return "해산물"
+            }
+            return categoryArray[1]
+        } else if categoryArray.count >= 3 && categoryArray[2] == "제과,베이커리" {
+            return "카페"
+        }
+
+        return "기타"
+    }
+}
