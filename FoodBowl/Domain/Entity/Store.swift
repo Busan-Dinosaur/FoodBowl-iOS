@@ -14,8 +14,8 @@ struct Store: Codable {
     let name: String
     let addressName: String
     let isBookmarked: Bool
-    let distance: Double
+    let distance: String
     let url: String
     let x, y: Double
-    let reviewCount: Int
+    let reviewCount: String
 }

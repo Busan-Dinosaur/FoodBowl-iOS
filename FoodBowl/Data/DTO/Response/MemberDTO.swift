@@ -21,8 +21,8 @@ struct MemberDTO: Codable {
             profileImageUrl: self.profileImageUrl,
             nickname: self.nickname,
             introduction: "",
-            followerCount: self.followerCount,
-            followingCount: 0,
+            followerCount: self.followerCount.prettyNumber,
+            followingCount: "",
             isMyProfile: self.isMe,
             isFollowing: self.isFollowing
         )
@@ -51,8 +51,8 @@ struct MemberProfileDTO: Codable {
             profileImageUrl: self.profileImageUrl,
             nickname: self.nickname,
             introduction: self.introduction ?? "",
-            followerCount: self.followerCount,
-            followingCount: self.followingCount,
+            followerCount: self.followerCount.prettyNumber,
+            followingCount: self.followingCount.prettyNumber,
             isMyProfile: self.isMyProfile,
             isFollowing: self.isFollowing
         )
@@ -80,8 +80,8 @@ struct MemberByFollowItemDTO: Codable, Hashable {
             profileImageUrl: self.profileImageUrl,
             nickname: self.nickname,
             introduction: "",
-            followerCount: self.followerCount,
-            followingCount: 0,
+            followerCount: self.followerCount.prettyNumber,
+            followingCount: "",
             isMyProfile: false,
             isFollowing: self.isFollowing
         )

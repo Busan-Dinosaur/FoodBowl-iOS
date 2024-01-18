@@ -10,7 +10,6 @@ import Foundation
 import Moya
 
 public extension Result<Response, MoyaError> {
-    
     func decode<T: Decodable>() throws -> T {
         switch self {
         case .success(let result):

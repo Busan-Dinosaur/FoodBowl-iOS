@@ -472,7 +472,7 @@ extension MapViewModel {
 
     func searchMembers(name: String) async -> [MemberDTO] {
         let response = await provider.request(
-            .getMemberBySearch(
+            .getMembersBySearch(
                 request: SearchMemberRequestDTO(
                     name: name,
                     size: size

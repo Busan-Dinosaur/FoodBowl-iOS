@@ -83,9 +83,7 @@ extension PhotoListView: UICollectionViewDataSource, UICollectionViewDelegate {
         }
 
         if indexPath.item < photos.count {
-            if let url = URL(string: photos[indexPath.item]) {
-                cell.configureCell(url)
-            }
+            cell.configureCell(photos[indexPath.item])
         }
 
         return cell

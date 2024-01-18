@@ -13,14 +13,18 @@ import Then
 
 final class FindView: UIView, BaseViewType {
     
-    private enum Size {
-        static let cellWidth: CGFloat = (SizeLiteral.fullWidth - 16) / 3
-        static let cellHeight: CGFloat = cellWidth
-        static let collectionInset = UIEdgeInsets(
+    private enum ConstantSize {
+        static let itemContentInset: NSDirectionalEdgeInsets = NSDirectionalEdgeInsets(
+            top: 4,
+            leading: 4,
+            bottom: 4,
+            trailing: 4
+        )
+        static let sectionContentInset: NSDirectionalEdgeInsets = NSDirectionalEdgeInsets(
             top: 0,
-            left: 20,
-            bottom: 20,
-            right: 20
+            leading: SizeLiteral.horizantalPadding - 4,
+            bottom: 0,
+            trailing: SizeLiteral.horizantalPadding - 4
         )
     }
     
@@ -34,8 +38,8 @@ final class FindView: UIView, BaseViewType {
         $0.padding = UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 0)
         $0.frame = CGRect(x: 0, y: 0, width: 150, height: 0)
     }
-    private let findResultViewController = FindResultViewController()
-    private lazy var searchController = UISearchController(searchResultsController: self.findResultViewController).then {
+    let findResultViewController = FindResultViewController()
+    lazy var searchController = UISearchController(searchResultsController: self.findResultViewController).then {
         $0.searchBar.placeholder = "검색"
         $0.searchBar.setValue("취소", forKey: "cancelButtonText")
         $0.searchBar.tintColor = .mainPink
@@ -44,37 +48,33 @@ final class FindView: UIView, BaseViewType {
         $0.searchBar.showsScopeBar = false
         $0.searchBar.sizeToFit()
     }
-    private let collectionViewFlowLayout = UICollectionViewFlowLayout().then {
-        $0.scrollDirection = .vertical
-        $0.sectionInset = Size.collectionInset
-        $0.itemSize = CGSize(width: Size.cellWidth, height: Size.cellHeight)
-        $0.minimumLineSpacing = 8
-        $0.minimumInteritemSpacing = 8
-    }
-    lazy var listCollectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewFlowLayout).then {
-        $0.backgroundColor = .clear
+    private lazy var listCollectionView = UICollectionView(frame: .zero, collectionViewLayout: self.createLayout()).then {
         $0.showsVerticalScrollIndicator = false
         $0.register(PhotoCollectionViewCell.self, forCellWithReuseIdentifier: PhotoCollectionViewCell.className)
+        $0.backgroundColor = .mainBackgroundColor
     }
+    private var refresh = UIRefreshControl()
     
     // MARK: - property
     
     var stores: [Store] = []
     var members: [Member] = []
-    private var scope: Int = 0
-    private var searchText: String = ""
-    private var refreshControl = UIRefreshControl()
+    var scope: Int = 0
+    var searchText: String = ""
     
     var plusButtonDidTapPublisher: AnyPublisher<Void, Never> {
         return self.plusButton.buttonTapPublisher
     }
     let searchStoresPublisher = PassthroughSubject<String, Never>()
+    let searchMembersPublisher = PassthroughSubject<String, Never>()
+    let refreshPublisher = PassthroughSubject<Void, Never>()
     
     // MARK: - init
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.baseInit()
+        self.setupAction()
     }
     
     @available(*, unavailable)
@@ -93,6 +93,14 @@ final class FindView: UIView, BaseViewType {
         navigationItem?.searchController = self.searchController
     }
     
+    func collectionView() -> UICollectionView {
+        return self.listCollectionView
+    }
+    
+    func refreshControl() -> UIRefreshControl {
+        return self.refresh
+    }
+    
     // MARK: - base func
     
     func setupLayout() {
@@ -106,24 +114,48 @@ final class FindView: UIView, BaseViewType {
     func configureUI() {
         self.backgroundColor = .mainBackgroundColor
     }
+    
+    // MARK: - Private - func
+
+    private func setupAction() {
+        let refreshAction = UIAction { [weak self] _ in
+            self?.refreshPublisher.send()
+        }
+        self.refresh.addAction(refreshAction, for: .valueChanged)
+        self.refresh.tintColor = .grey002
+        self.listCollectionView.refreshControl = self.refresh
+    }
 }
 
-extension FindView: UISearchResultsUpdating, UISearchBarDelegate {
-    func updateSearchResults(for searchController: UISearchController) {
-        guard let text = searchController.searchBar.text?.lowercased() else { return }
-        self.searchText = text
-    }
+// MARK: - UICollectionViewLayout
+extension FindView {
+    private func createLayout() -> UICollectionViewLayout {
+        let layout = UICollectionViewCompositionalLayout { index, environment -> NSCollectionLayoutSection? in
+            let itemSize = NSCollectionLayoutSize(
+                widthDimension: .fractionalWidth(1/3),
+                heightDimension: .fractionalWidth(1/3)
+            )
+            
+            let item = NSCollectionLayoutItem(layoutSize: itemSize)
+            item.contentInsets = ConstantSize.itemContentInset
+            
+            let groupSize = NSCollectionLayoutSize(
+                widthDimension: .fractionalWidth(1),
+                heightDimension: .fractionalWidth(1/3)
+            )
+            
+            let group = NSCollectionLayoutGroup.horizontal(
+                layoutSize: groupSize,
+                subitem: item,
+                count: 3
+            )
+            
+            let section = NSCollectionLayoutSection(group: group)
+            section.contentInsets = ConstantSize.sectionContentInset
+            
+            return section
+        }
 
-    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-        self.searchController.searchBar.showsScopeBar = true
-    }
-
-    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
-        self.searchController.searchBar.showsScopeBar = false
-    }
-
-    func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
-        self.scope = selectedScope
-        self.findResultViewController.searchResultTableView.reloadData()
+        return layout
     }
 }

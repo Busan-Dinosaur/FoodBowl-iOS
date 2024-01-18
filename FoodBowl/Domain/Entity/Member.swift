@@ -13,8 +13,8 @@ struct Member: Codable {
     let profileImageUrl: String?
     let nickname: String
     let introduction: String
-    let followerCount: Int
-    let followingCount: Int
+    let followerCount: String
+    let followingCount: String
     let isMyProfile: Bool
     let isFollowing: Bool
 }

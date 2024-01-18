@@ -5,233 +5,228 @@
 //  Created by COBY_PRO on 2023/07/24.
 //
 
+import Combine
 import UIKit
 
 import SnapKit
 import Then
 
-final class FindViewController: UIViewController, Navigationable, Keyboardable {
+final class FindViewController: UIViewController, Keyboardable {
     
-    private enum Size {
-        static let cellWidth: CGFloat = (SizeLiteral.fullWidth - 16) / 3
-        static let cellHeight: CGFloat = cellWidth
-        static let collectionInset = UIEdgeInsets(
-            top: 0,
-            left: 20,
-            bottom: 20,
-            right: 20
-        )
+    enum Section: CaseIterable {
+        case main
     }
     
     // MARK: - ui component
     
-    lazy var plusButton = PlusButton().then {
-        let action = UIAction { [weak self] _ in
-            let repository = CreateReviewRepositoryImpl()
-            let usecase = CreateReviewUsecaseImpl(repository: repository)
-            let viewModel = CreateReviewViewModel(usecase: usecase)
-            let viewController = CreateReviewViewController(viewModel: viewModel)
-            let navigationController = UINavigationController(rootViewController: viewController)
-            navigationController.modalPresentationStyle = .fullScreen
-            
-            DispatchQueue.main.async {
-                self?.present(navigationController, animated: true)
-            }
-            
-            viewController.delegate = self
-        }
-        $0.addAction(action, for: .touchUpInside)
-    }
-    private let findGuideLabel = PaddingLabel().then {
-        $0.font = .font(.regular, ofSize: 22)
-        $0.text = "찾기"
-        $0.textColor = .mainTextColor
-        $0.padding = UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 0)
-        $0.frame = CGRect(x: 0, y: 0, width: 150, height: 0)
-    }
-    private lazy var findResultViewController = FindResultViewController().then {
-        $0.searchResultTableView.delegate = self
-        $0.searchResultTableView.dataSource = self
-    }
-    private lazy var searchController = UISearchController(searchResultsController: findResultViewController).then {
-        $0.searchResultsUpdater = self
-        $0.searchBar.delegate = self
-        $0.searchBar.placeholder = "검색"
-        $0.searchBar.setValue("취소", forKey: "cancelButtonText")
-        $0.searchBar.tintColor = .mainPink
-        $0.searchBar.scopeButtonTitles = ["맛집", "유저"]
-        $0.obscuresBackgroundDuringPresentation = true
-        $0.searchBar.showsScopeBar = false
-        $0.searchBar.sizeToFit()
-    }
-    private let collectionViewFlowLayout = UICollectionViewFlowLayout().then {
-        $0.scrollDirection = .vertical
-        $0.sectionInset = Size.collectionInset
-        $0.itemSize = CGSize(width: Size.cellWidth, height: Size.cellHeight)
-        $0.minimumLineSpacing = 8
-        $0.minimumInteritemSpacing = 8
-    }
-    private lazy var listCollectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewFlowLayout).then {
-        $0.backgroundColor = .clear
-        $0.dataSource = self
-        $0.delegate = self
-        $0.showsVerticalScrollIndicator = false
-        $0.register(PhotoCollectionViewCell.self, forCellWithReuseIdentifier: PhotoCollectionViewCell.className)
-    }
+    private let findView: FindView = FindView()
     
     // MARK: - property
     
-    private var viewModel = MapViewModel()
-    private lazy var isBookmarked = [Bool](repeating: false, count: 10)
-    private var stores: [StoreItemBySearchDTO] = [] {
-        didSet {
-            DispatchQueue.main.async {
-                self.findResultViewController.searchResultTableView.reloadData()
-            }
-        }
+    private let viewModel: any BaseViewModelType
+    private var cancellable: Set<AnyCancellable> = Set()
+    
+    private var dataSource: UICollectionViewDiffableDataSource<Section, ReviewItem>!
+    private var snapshot: NSDiffableDataSourceSnapshot<Section, ReviewItem>!
+    private var reviewId: Int = 0
+    
+    let selectStorePublisher = PassthroughSubject<Place, Never>()
+    
+    // MARK: - init
+    
+    init(viewModel: any BaseViewModelType) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
     }
-    private var members: [MemberDTO] = [] {
-        didSet {
-            DispatchQueue.main.async {
-                self.findResultViewController.searchResultTableView.reloadData()
-            }
-        }
+    
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
-    private var scope: Int = 0 {
-        didSet {
-            loadData()
-        }
+    
+    deinit {
+        print("\(#file) is dead")
     }
-    private var searchText: String = "" {
-        didSet {
-            loadData()
-        }
-    }    
-    private var refreshControl = UIRefreshControl()
     
     // MARK: - life cycle
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        self.setupNavigation()
-        self.setupLayout()
-        self.configureUI()
-        self.setupRefreshControl()
-    }
-
-    func setupLayout() {
-        view.addSubviews(listCollectionView)
-
-        listCollectionView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
-        }
+    override func loadView() {
+        self.view = self.findView
     }
     
-    func configureUI() {
-        view.backgroundColor = .mainBackgroundColor
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.configureDataSource()
+        self.configureDelegation()
+        self.bindViewModel()
+        self.bindUI()
+        self.setupKeyboardGesture()
+    }
+    
+    // MARK: - func - bind
+    
+    private func bindViewModel() {
+        let output = self.transformedOutput()
+        self.configureNavigation()
+        self.bindOutputToViewModel(output)
     }
 
-    func setupNavigation() {
-        let findGuideLabel = makeBarButtonItem(with: findGuideLabel)
-        let plusButton = makeBarButtonItem(with: plusButton)
-        navigationItem.leftBarButtonItem = findGuideLabel
-        navigationItem.rightBarButtonItem = plusButton
-        navigationItem.searchController = searchController
-        navigationItem.hidesSearchBarWhenScrolling = false
+    private func transformedOutput() -> FindViewModel.Output? {
+        guard let viewModel = self.viewModel as? FindViewModel else { return nil }
+        let input = FindViewModel.Input(
+            scrolledToBottom: self.findView.collectionView().scrolledToBottomPublisher.eraseToAnyPublisher(),
+            refreshControl: self.findView.refreshPublisher.eraseToAnyPublisher()
+        )
+        return viewModel.transform(from: input)
     }
-
-    private func setupRefreshControl() {
-        let action = UIAction { [weak self] _ in
-            self?.loadData()
-        }
-        refreshControl.addAction(action, for: .valueChanged)
-        refreshControl.tintColor = .grey002
-        listCollectionView.refreshControl = refreshControl
-    }
-
-    func loadData() {
-        if searchText == "" {
-            return
-        }
-
-        Task {
-            if scope == 0 {
-                stores = await viewModel.serachStores(name: searchText)
-            } else {
-                members = await viewModel.searchMembers(name: searchText)
+    
+    private func bindOutputToViewModel(_ output: FindViewModel.Output?) {
+        guard let output else { return }
+        
+        output.reviews
+            .receive(on: DispatchQueue.main)
+            .sink { _ in
+            } receiveValue: { [weak self] reviews in
+                self?.reloadReviews(reviews)
+                self?.findView.refreshControl().endRefreshing()
             }
-        }
+            .store(in: &self.cancellable)
+        
+        output.moreReviews
+            .receive(on: DispatchQueue.main)
+            .sink { _ in
+            } receiveValue: { [weak self] reviews in
+                self?.loadMoreReviews(reviews)
+            }
+            .store(in: &self.cancellable)
+        
+        output.stores
+            .receive(on: DispatchQueue.main)
+            .sink { _ in
+            } receiveValue: { [weak self] stores in
+                print("success")
+            }
+            .store(in: &self.cancellable)
+        
+        output.members
+            .receive(on: DispatchQueue.main)
+            .sink { _ in
+            } receiveValue: { [weak self] members in
+                print("success")
+            }
+            .store(in: &self.cancellable)
     }
-}
-
-extension FindViewController {
-    // Standard scroll-view delegate
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let contentSize = scrollView.contentSize.height
-
-        if contentSize - scrollView.contentOffset.y <= scrollView.bounds.height {
-            didScrollToBottom()
-        }
+    
+    private func bindUI() {
+        self.findView.plusButtonDidTapPublisher
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] _ in
+                self?.navigationController?.popViewController(animated: true)
+            })
+            .store(in: &self.cancellable)
     }
-
-    private func didScrollToBottom() {}
+    
+    // MARK: - func
+    
+    private func configureDelegation() {
+        self.findView.findResultViewController.searchResultTableView.delegate = self
+        self.findView.findResultViewController.searchResultTableView.dataSource = self
+        self.findView.searchController.searchResultsUpdater = self
+        self.findView.searchController.searchBar.delegate = self
+    }
+    
+    private func configureNavigation() {
+        guard let navigationController = self.navigationController else { return }
+        self.findView.configureNavigationBarItem(navigationController)
+    }
 }
 
 extension FindViewController: UISearchResultsUpdating, UISearchBarDelegate {
     func updateSearchResults(for searchController: UISearchController) {
         guard let text = searchController.searchBar.text?.lowercased() else { return }
-        searchText = text
+        self.findView.searchText = text
     }
 
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-        searchController.searchBar.showsScopeBar = true
+        self.findView.searchController.searchBar.showsScopeBar = true
     }
 
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
-        searchController.searchBar.showsScopeBar = false
+        self.findView.searchController.searchBar.showsScopeBar = false
     }
 
     func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
-        scope = selectedScope
-        findResultViewController.searchResultTableView.reloadData()
+        self.findView.scope = selectedScope
+        self.findView.findResultViewController.searchResultTableView.reloadData()
     }
 }
 
-extension FindViewController: UICollectionViewDataSource, UICollectionViewDelegate {
-    func collectionView(_: UICollectionView, numberOfItemsInSection _: Int) -> Int {
-        return 20
+// MARK: - DataSource
+extension FindViewController {
+    private func configureDataSource() {
+        self.dataSource = self.feedCollectionViewDataSource()
+        self.configureSnapshot()
     }
 
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(
-            withReuseIdentifier: PhotoCollectionViewCell.className,
-            for: indexPath
-        ) as? PhotoCollectionViewCell else {
-            return UICollectionViewCell()
+    private func feedCollectionViewDataSource() -> UICollectionViewDiffableDataSource<Section, ReviewItem> {
+        let reviewCellRegistration = UICollectionView.CellRegistration<PhotoCollectionViewCell, ReviewItem> {
+            [weak self] cell, indexPath, item in
+            self?.reviewId = item.comment.id
+            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self?.feedDidTap))
+            cell.addGestureRecognizer(tapGesture)
+            cell.configureCell(item.thumbnail)
         }
 
-        return cell
+        return UICollectionViewDiffableDataSource(
+            collectionView: self.findView.collectionView(),
+            cellProvider: { collectionView, indexPath, item in
+                return collectionView.dequeueConfiguredReusableCell(
+                    using: reviewCellRegistration,
+                    for: indexPath,
+                    item: item
+                )
+            }
+        )
     }
+    
+    @objc
+    private func feedDidTap() {
+        print(self.reviewId)
+    }
+}
 
-    func collectionView(_: UICollectionView, didSelectItemAt _: IndexPath) {
-        let recentReviewController = RecentReviewController()
-        DispatchQueue.main.async { [weak self] in
-            self?.navigationController?.pushViewController(recentReviewController, animated: true)
-        }
+// MARK: - Snapshot
+extension FindViewController {
+    private func configureSnapshot() {
+        self.snapshot = NSDiffableDataSourceSnapshot<Section, ReviewItem>()
+        self.snapshot.appendSections([.main])
+        self.dataSource.apply(self.snapshot, animatingDifferences: true)
+    }
+    
+    private func reloadReviews(_ items: [ReviewItem]) {
+        let previousReviewsData = self.snapshot.itemIdentifiers(inSection: .main)
+        self.snapshot.deleteItems(previousReviewsData)
+        self.snapshot.appendItems(items, toSection: .main)
+        self.dataSource.applySnapshotUsingReloadData(self.snapshot)
+    }
+    
+    private func loadMoreReviews(_ items: [ReviewItem]) {
+        self.snapshot.appendItems(items, toSection: .main)
+        self.dataSource.applySnapshotUsingReloadData(self.snapshot)
     }
 }
 
 extension FindViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
-        if scope == 0 {
-            return stores.count
+        if self.findView.scope == 0 {
+            return self.findView.stores.count
         } else {
-            return members.count
+            return self.findView.members.count
         }
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if scope == 0 {
+        if self.findView.scope == 0 {
             guard let cell = tableView.dequeueReusableCell(
                 withIdentifier: StoreInfoTableViewCell.className,
                 for: indexPath
@@ -240,7 +235,7 @@ extension FindViewController: UITableViewDataSource, UITableViewDelegate {
             }
 
             cell.selectionStyle = .none
-            cell.setupData(stores[indexPath.item])
+            cell.setupData(self.findView.stores[indexPath.item])
 
             return cell
         } else {
@@ -250,30 +245,9 @@ extension FindViewController: UITableViewDataSource, UITableViewDelegate {
             ) as? UserInfoTableViewCell else {
                 return UITableViewCell()
             }
-
-            let member = members[indexPath.item]
-
+            
             cell.selectionStyle = .none
-            cell.setupData(member)
-
-            if member.isMe {
-                cell.followButton.isHidden = true
-            } else {
-                cell.followButton.isHidden = false
-                cell.followButton.isSelected = member.isFollowing
-                cell.followButtonTapAction = { [weak self] _ in
-                    Task {
-                        guard let self = self else { return }
-                        Task {
-                            if cell.followButton.isSelected {
-                                cell.followButton.isSelected = await self.viewModel.unfollowMember(memberId: member.memberId)
-                            } else {
-                                cell.followButton.isSelected = await self.viewModel.followMember(memberId: member.memberId)
-                            }
-                        }
-                    }
-                }
-            }
+            cell.setupData(self.findView.members[indexPath.item])
 
             return cell
         }
@@ -284,17 +258,17 @@ extension FindViewController: UITableViewDataSource, UITableViewDelegate {
     }
 
     func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if scope == 0 {
+        if self.findView.scope == 0 {
             let repository = StoreDetailRepositoryImpl()
             let usecase = StoreDetailUsecaseImpl(repository: repository)
-            let viewModel = StoreDetailViewModel(storeId: stores[indexPath.item].storeId, isFriend: false, usecase: usecase)
+            let viewModel = StoreDetailViewModel(storeId: self.findView.stores[indexPath.item].id, isFriend: false, usecase: usecase)
             let viewController = StoreDetailViewController(viewModel: viewModel)
 
             DispatchQueue.main.async { [weak self] in
                 self?.navigationController?.pushViewController(viewController, animated: true)
             }
         } else {
-            let profileViewController = ProfileViewController(memberId: members[indexPath.item].memberId)
+            let profileViewController = ProfileViewController(memberId: self.findView.members[indexPath.item].id)
             DispatchQueue.main.async { [weak self] in
                 self?.navigationController?.pushViewController(profileViewController, animated: true)
             }
@@ -304,6 +278,6 @@ extension FindViewController: UITableViewDataSource, UITableViewDelegate {
 
 extension FindViewController: CreateReviewViewControllerDelegate {
     func updateData() {
-        loadData()
+//        loadData()
     }
 }

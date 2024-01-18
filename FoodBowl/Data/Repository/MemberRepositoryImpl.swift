@@ -31,7 +31,7 @@ final class MemberRepositoryImpl: MemberRepository {
     }
     
     func getMemberBySearch(request: SearchMemberRequestDTO) async throws -> MemberBySearchDTO {
-        let response = await provider.request(.getMemberBySearch(request: request))
+        let response = await provider.request(.getMembersBySearch(request: request))
         return try response.decode()
     }
     

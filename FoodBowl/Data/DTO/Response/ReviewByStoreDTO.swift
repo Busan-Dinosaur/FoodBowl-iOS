@@ -37,11 +37,11 @@ struct StoreDetailDTO: Codable {
             name: self.name,
             addressName: self.addressName,
             isBookmarked: self.isBookmarked,
-            distance: self.distance,
+            distance: self.distance.prettyDistance,
             url: "",
             x: 0.0,
             y: 0.0,
-            reviewCount: 0
+            reviewCount: ""
         )
     }
 }
@@ -63,7 +63,8 @@ struct ReviewItemByStoreDTO: Codable, Hashable {
         ReviewItem(
             writer: self.writer.toWriter(),
             comment: self.review.toComment(),
-            store: nil
+            store: nil,
+            thumbnail: ""
         )
     }
 }

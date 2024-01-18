@@ -91,6 +91,10 @@
 		CB8306682B59748700632789 /* FindView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB8306672B59748700632789 /* FindView.swift */; };
 		CB83066A2B59778C00632789 /* Member.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB8306692B59778C00632789 /* Member.swift */; };
 		CB83066C2B59854400632789 /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB83066B2B59854400632789 /* Place.swift */; };
+		CB83066E2B59951A00632789 /* FindRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB83066D2B59951A00632789 /* FindRepositoryImpl.swift */; };
+		CB8306702B5996C400632789 /* FindRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB83066F2B5996C400632789 /* FindRepository.swift */; };
+		CB8306722B5999D500632789 /* ReviewByFeedDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB8306712B5999D500632789 /* ReviewByFeedDTO.swift */; };
+		CB8306752B599CE800632789 /* FindUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB8306742B599CE800632789 /* FindUsecase.swift */; };
 		CB84C9842AD98E9000A2E0F2 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = CB84C9832AD98E9000A2E0F2 /* Lottie */; };
 		CB8A2D9B297844720018AC6E /* Marker.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB8A2D9A297844720018AC6E /* Marker.swift */; };
 		CB91E2A42B56D7B2008A0E8E /* StoreDetailUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB91E2A32B56D7B2008A0E8E /* StoreDetailUsecase.swift */; };
@@ -279,6 +283,10 @@
 		CB8306672B59748700632789 /* FindView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindView.swift; sourceTree = "<group>"; };
 		CB8306692B59778C00632789 /* Member.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Member.swift; sourceTree = "<group>"; };
 		CB83066B2B59854400632789 /* Place.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Place.swift; sourceTree = "<group>"; };
+		CB83066D2B59951A00632789 /* FindRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindRepositoryImpl.swift; sourceTree = "<group>"; };
+		CB83066F2B5996C400632789 /* FindRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindRepository.swift; sourceTree = "<group>"; };
+		CB8306712B5999D500632789 /* ReviewByFeedDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewByFeedDTO.swift; sourceTree = "<group>"; };
+		CB8306742B599CE800632789 /* FindUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindUsecase.swift; sourceTree = "<group>"; };
 		CB8A2D9A297844720018AC6E /* Marker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Marker.swift; sourceTree = "<group>"; };
 		CB91E2A32B56D7B2008A0E8E /* StoreDetailUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreDetailUsecase.swift; sourceTree = "<group>"; };
 		CB91E2A52B56D7D6008A0E8E /* StoreDetailRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreDetailRepository.swift; sourceTree = "<group>"; };
@@ -465,8 +473,8 @@
 			isa = PBXGroup;
 			children = (
 				CB8306662B59747E00632789 /* View */,
-				CB16FD4F2B347FC6006D18D6 /* ViewModel */,
 				CB9332682AFCCB6100B7F87A /* ViewController */,
+				CB16FD4F2B347FC6006D18D6 /* ViewModel */,
 			);
 			path = FindScene;
 			sourceTree = "<group>";
@@ -487,6 +495,7 @@
 				CB4A78A02B5830000002136F /* CreateReviewRepository.swift */,
 				CB91E2A52B56D7D6008A0E8E /* StoreDetailRepository.swift */,
 				CBD8D4702B4645F400445C98 /* BlameRepository.swift */,
+				CB83066F2B5996C400632789 /* FindRepository.swift */,
 				CB5BFB302B3F091B00B35062 /* ReviewRepository.swift */,
 				CB5BFB3C2B3F13ED00B35062 /* StoreRepository.swift */,
 				CB5BFB422B3F1A3600B35062 /* MemberRepository.swift */,
@@ -503,6 +512,7 @@
 				CB4A78A52B5831570002136F /* CreateReviewRepositoryImpl.swift */,
 				CB91E2AB2B56DDE5008A0E8E /* StoreDetailRepositoryImpl.swift */,
 				CBD8D4722B4646B900445C98 /* BlameRepositroyImpl.swift */,
+				CB83066D2B59951A00632789 /* FindRepositoryImpl.swift */,
 				CB5BFB322B3F096500B35062 /* ReviewRepositoryImpl.swift */,
 				CB5BFB402B3F168800B35062 /* StoreRepositoryImpl.swift */,
 				CB5BFB442B3F1CA300B35062 /* MemberRepositoryImpl.swift */,
@@ -851,6 +861,14 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		CB8306732B599CAE00632789 /* FindScene */ = {
+			isa = PBXGroup;
+			children = (
+				CB8306742B599CE800632789 /* FindUsecase.swift */,
+			);
+			path = FindScene;
+			sourceTree = "<group>";
+		};
 		CB84C97F2AD98E1C00A2E0F2 /* Lottie */ = {
 			isa = PBXGroup;
 			children = (
@@ -929,6 +947,7 @@
 				CB4A78A22B5830090002136F /* CreateReviewScene */,
 				CB91E2A22B56D797008A0E8E /* StoreDetailScene */,
 				CBF926472B411C25005E251B /* BlameScene */,
+				CB8306732B599CAE00632789 /* FindScene */,
 			);
 			path = Usecase;
 			sourceTree = "<group>";
@@ -1125,6 +1144,7 @@
 				CB15790C2AACD45400007183 /* CategoryDTO.swift */,
 				CB51C8C82AD7DFC9002D0BA5 /* ReviewDTO.swift */,
 				CB91E2A92B56DA7B008A0E8E /* ReviewByStoreDTO.swift */,
+				CB8306712B5999D500632789 /* ReviewByFeedDTO.swift */,
 				CB51C8D42AD7E896002D0BA5 /* StoreDTO.swift */,
 				CBC158652AD80BB600FD263B /* MemberDTO.swift */,
 				CBDE390429719B9700DDE49A /* PlaceDTO.swift */,
@@ -1415,6 +1435,7 @@
 				CB9332632AFCC26800B7F87A /* PhotoPickerable.swift in Sources */,
 				CBADC2E22955C63300E56C93 /* PhotoCollectionViewCell.swift in Sources */,
 				CBD1B5EF2982A5AD00B0AD51 /* UpdateProfileViewController.swift in Sources */,
+				CB8306702B5996C400632789 /* FindRepository.swift in Sources */,
 				CBADC28A29559BC900E56C93 /* UIFont+Extension.swift in Sources */,
 				CBFB52552977B9240049E8BA /* StoreDetailViewController.swift in Sources */,
 				CB5BFB1D2B3F025F00B35062 /* SignRepositoryImpl.swift in Sources */,
@@ -1445,6 +1466,7 @@
 				CB91E2AA2B56DA7B008A0E8E /* ReviewByStoreDTO.swift in Sources */,
 				CB2E82412AA74A050016820E /* UpdateMemberProfileRequestDTO.swift in Sources */,
 				CBADC2CF2955A41500E56C93 /* TabBarController.swift in Sources */,
+				CB8306752B599CE800632789 /* FindUsecase.swift in Sources */,
 				CB93326F2AFCCCEA00B7F87A /* SignUsecase.swift in Sources */,
 				CB5BFB1B2B3EFF8700B35062 /* Result.swift in Sources */,
 				CBB12B142985845900AC0EF2 /* String+Extension.swift in Sources */,
@@ -1458,6 +1480,7 @@
 				CBE6190C296C635D005295AF /* FollowButton.swift in Sources */,
 				CB5AF8A929854AA0003D16D4 /* MapAnnotation.swift in Sources */,
 				CBC158642AD80AF800FD263B /* SearchMemberRequestDTO.swift in Sources */,
+				CB83066E2B59951A00632789 /* FindRepositoryImpl.swift in Sources */,
 				CB1790C8296DAB470083D3A4 /* DynamicHeightCollectionViewFlowLayout.swift in Sources */,
 				CBA7F184297DBB01006088A0 /* YPImagePicker+Extension.swift in Sources */,
 				CB91E2A62B56D7D6008A0E8E /* StoreDetailRepository.swift in Sources */,
@@ -1516,6 +1539,7 @@
 				CB73E56E2B3417980026E4D7 /* FollowView.swift in Sources */,
 				CB617A3A2AE24836000F7FFC /* Navigationable.swift in Sources */,
 				CBADC29429559BC900E56C93 /* Notification+Extension.swift in Sources */,
+				CB8306722B5999D500632789 /* ReviewByFeedDTO.swift in Sources */,
 				CBA7F182297DB319006088A0 /* SignViewController.swift in Sources */,
 				CBADC2E02955B92D00E56C93 /* CompleteButton.swift in Sources */,
 				CB617A532AE27FC0000F7FFC /* Publisher+Async.swift in Sources */,

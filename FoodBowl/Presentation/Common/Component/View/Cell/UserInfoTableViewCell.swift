@@ -75,13 +75,21 @@ final class UserInfoTableViewCell: BaseTableViewCell {
         userImageView.image = nil
     }
 
-    func setupData(_ member: MemberDTO) {
-        userNameLabel.text = member.nickname
-        userFollowerLabel.text = "팔로워 \(member.followerCount.prettyNumber)명"
+    func setupData(_ member: Member) {
+        self.userNameLabel.text = member.nickname
+        self.userFollowerLabel.text = "팔로워 \(member.followerCount)명"
         if let url = member.profileImageUrl {
-            userImageView.kf.setImage(with: URL(string: url))
+            self.userImageView.kf.setImage(with: URL(string: url))
         } else {
-            userImageView.image = ImageLiteral.defaultProfile
+            self.userImageView.image = ImageLiteral.defaultProfile
+        }
+        
+        if member.isMyProfile {
+            self.followButton.isHidden = true
+        } else {
+            self.followButton.isHidden = false
+            self.followButton.isSelected = member.isFollowing
+            self.followButtonTapAction = { [weak self] _ in }
         }
     }
 

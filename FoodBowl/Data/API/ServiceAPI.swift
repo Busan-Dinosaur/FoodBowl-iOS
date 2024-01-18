@@ -26,6 +26,7 @@ enum ServiceAPI {
     case getReviewsByStore(request: GetReviewsByStoreRequestDTO)
     case getReviewsBySchool(request: GetReviewsBySchoolRequestDTO)
     case getReviewsByMember(request: GetReviewsByMemberRequestDTO)
+    case getReviewsByFeed(request: GetReviewsByFeedRequestDTO)
     
     case getStoresBySearch(request: SearchStoreRequestDTO)
     case getStoresBySchool(request: GetStoresBySchoolRequestDTO)
@@ -39,7 +40,7 @@ enum ServiceAPI {
     case removeMemberProfileImage
     case updateMemberProfileImage(image: Data)
     case getMemberProfile(id: Int)
-    case getMemberBySearch(request: SearchMemberRequestDTO)
+    case getMembersBySearch(request: SearchMemberRequestDTO)
     case getMyProfile
     case followMember(memberId: Int)
     case unfollowMember(memberId: Int)
@@ -85,6 +86,8 @@ extension ServiceAPI: TargetType {
             return "/v1/reviews/following"
         case .getReviewsByBookmark:
             return "/v1/reviews/bookmarks"
+        case .getReviewsByFeed:
+            return "/v1/reviews/feeds"
         case .getStoresBySearch:
             return "/v1/stores/search"
         case .getStoresBySchool:
@@ -103,7 +106,7 @@ extension ServiceAPI: TargetType {
             return "/v1/members/profile/image"
         case .getMemberProfile(let id):
             return "/v1/members/\(id)/profile"
-        case .getMemberBySearch:
+        case .getMembersBySearch:
             return "/v1/members/search"
         case .getMyProfile:
             return "/v1/members/me/profile"
@@ -275,6 +278,21 @@ extension ServiceAPI: TargetType {
                 parameters: params,
                 encoding: URLEncoding.default
             )
+        case .getReviewsByFeed(let request):
+            var params: [String: Any] = [
+                "deviceX": request.deviceX,
+                "deviceY": request.deviceY,
+                "pageSize": request.pageSize
+            ]
+
+            if let lastReviewId = request.lastReviewId {
+                params["lastReviewId"] = lastReviewId
+            }
+
+            return .requestParameters(
+                parameters: params,
+                encoding: URLEncoding.default
+            )
         case .getStoresBySearch(let request):
             let params: [String: Any] = [
                 "name": request.name,
@@ -359,7 +377,7 @@ extension ServiceAPI: TargetType {
                 mimeType: "image/jpeg"
             )
             return .uploadMultipart([imageData])
-        case .getMemberBySearch(let form):
+        case .getMembersBySearch(let form):
             let params: [String: Any] = [
                 "name": form.name,
                 "size": form.size

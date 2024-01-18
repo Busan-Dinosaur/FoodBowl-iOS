@@ -37,8 +37,8 @@ final class PhotoCollectionViewCell: BaseCollectionViewCell {
         foodImageView.image = nil
     }
 
-    func configureCell(_ imageURL: URL) {
-        foodImageView.kf.setImage(with: imageURL)
+    func configureCell(_ url: String) {
+        foodImageView.kf.setImage(with: URL(string: url))
         foodImageView.isUserInteractionEnabled = true
 
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(imageTapped))

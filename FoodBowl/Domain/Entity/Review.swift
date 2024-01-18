@@ -24,6 +24,7 @@ struct ReviewItem: Codable, Hashable {
     let writer: Writer
     let comment: Comment
     let store: Store?
+    let thumbnail: String
     
     static func == (lhs: ReviewItem, rhs: ReviewItem) -> Bool {
         lhs.comment.id == rhs.comment.id

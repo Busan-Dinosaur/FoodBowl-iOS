@@ -9,7 +9,7 @@ import UIKit
 
 final class TabBarController: UITabBarController {
     private let vc1 = UINavigationController(rootViewController: FriendViewController())
-    private let vc2 = UINavigationController(rootViewController: FindViewController())
+    private lazy var vc2 = UINavigationController(rootViewController: self.getFindViewController())
     private let vc3 = UINavigationController(rootViewController: UnivViewController())
     private let vc4 = UINavigationController(rootViewController: ProfileViewController(isOwn: true))
 
@@ -46,5 +46,15 @@ final class TabBarController: UITabBarController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: false)
+    }
+}
+
+extension TabBarController {
+    func getFindViewController() -> FindViewController {
+        let repository = FindRepositoryImpl()
+        let usecase = FindUsecaseImpl(repository: repository)
+        let viewModel = FindViewModel(usecase: usecase)
+        let viewController = FindViewController(viewModel: viewModel)
+        return viewController
     }
 }

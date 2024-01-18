@@ -27,11 +27,11 @@ struct StoreItemDTO: Codable {
             name: self.name,
             addressName: self.addressName,
             isBookmarked: self.isBookmarked,
-            distance: 0.0,
+            distance: "",
             url: self.url,
             x: self.x,
             y: self.y,
-            reviewCount: self.reviewCount
+            reviewCount: self.reviewCount.prettyNumber
         )
     }
 }
@@ -55,11 +55,11 @@ struct StoreItemBySearchDTO: Codable {
             name: self.storeName,
             addressName: "",
             isBookmarked: false,
-            distance: self.distance,
+            distance: self.distance.prettyDistance,
             url: "",
             x: 0.0,
             y: 0.0,
-            reviewCount: self.reviewCount
+            reviewCount: self.reviewCount.prettyNumber
         )
     }
 }

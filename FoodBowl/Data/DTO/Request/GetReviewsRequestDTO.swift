@@ -35,6 +35,12 @@ struct GetReviewsByMemberRequestDTO: Encodable {
     let memberId: Int
 }
 
+struct GetReviewsByFeedRequestDTO: Encodable {
+    let lastReviewId: Int?
+    let pageSize: Int
+    let deviceX, deviceY: Double
+}
+
 struct CustomLocationRequestDTO: Codable {
     var x, y, deltaX, deltaY, deviceX, deviceY: Double
 }
