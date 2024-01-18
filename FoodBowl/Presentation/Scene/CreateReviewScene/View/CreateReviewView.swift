@@ -217,13 +217,13 @@ final class CreateReviewView: UIView, BaseViewType {
         self.completeButton.addAction(completeAction, for: .touchUpInside)
     }
     
-    func setStore(store: PlaceItemDTO) {
+    func setStore(store: Place) {
         let action = UIAction { _ in
-            self.showStorePublisher.send(store.placeURL)
+            self.showStorePublisher.send(store.url)
         }
         self.selectedStoreView.mapButton.addAction(action, for: .touchUpInside)
-        self.selectedStoreView.storeNameLabel.text = store.placeName
-        self.selectedStoreView.storeAdressLabel.text = store.addressName
+        self.selectedStoreView.storeNameLabel.text = store.name
+        self.selectedStoreView.storeAdressLabel.text = store.address
         self.selectedStoreView.isHidden = false
         self.searchBarButton.placeholderLabel.text = "가게 재검색"
         

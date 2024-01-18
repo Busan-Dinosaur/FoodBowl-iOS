@@ -22,7 +22,7 @@ final class CreateReviewViewController: UIViewController, Keyboardable, PhotoPic
     private let viewModel: any BaseViewModelType
     private var cancellable: Set<AnyCancellable> = Set()
     
-    let setStorePublisher = PassthroughSubject<(PlaceItemDTO, PlaceItemDTO?), Never>()
+    let setStorePublisher = PassthroughSubject<(Place, Place?), Never>()
     
     weak var delegate: CreateReviewViewControllerDelegate?
     
@@ -200,7 +200,7 @@ protocol CreateReviewViewControllerDelegate: AnyObject {
 }
 
 extension CreateReviewViewController: SearchStoreViewControllerDelegate {
-    func setStore(store: PlaceItemDTO, univ: PlaceItemDTO?) {
+    func setStore(store: Place, univ: Place?) {
         self.setStorePublisher.send((store, univ))
         self.createReviewView.setStore(store: store)
     }

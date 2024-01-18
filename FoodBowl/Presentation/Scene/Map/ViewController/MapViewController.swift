@@ -94,7 +94,7 @@ class MapViewController: UIViewController, Navigationable, Optionable {
     
     // MARK: - property
     
-    private var cancelBag: Set<AnyCancellable> = Set()
+    private var cancellable: Set<AnyCancellable> = Set()
     
     let customLocationPublisher = PassthroughSubject<CustomLocationRequestDTO, Never>()
     let bookmarkButtonDidTapPublisher: PassthroughSubject<StoreByReviewDTO, Never> = PassthroughSubject()
@@ -210,7 +210,7 @@ class MapViewController: UIViewController, Navigationable, Optionable {
             } receiveValue: { [weak self] reviews in
                 self?.reloadReviews(reviews)
             }
-            .store(in: &self.cancelBag)
+            .store(in: &self.cancellable)
         
         output.moreReviews
             .receive(on: DispatchQueue.main)
@@ -218,7 +218,7 @@ class MapViewController: UIViewController, Navigationable, Optionable {
             } receiveValue: { [weak self] reviews in
                 self?.loadMoreReviews(reviews)
             }
-            .store(in: &self.cancelBag)
+            .store(in: &self.cancellable)
         
         output.stores
             .receive(on: DispatchQueue.main)
@@ -226,14 +226,14 @@ class MapViewController: UIViewController, Navigationable, Optionable {
             } receiveValue: { [weak self] stores in
                 self?.handleStores(stores)
             }
-            .store(in: &self.cancelBag)
+            .store(in: &self.cancellable)
         
         output.refreshControl
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] _ in
                 self?.feedListView.refreshControl.endRefreshing()
             })
-            .store(in: &self.cancelBag)
+            .store(in: &self.cancellable)
     }
     
     private func bindUI() {
@@ -322,7 +322,7 @@ extension MapViewController {
                     latitude: store.y,
                     longitude: store.x
                 ),
-                glyphImage: Categories(rawValue: store.categoryName)?.icon,
+                glyphImage: CategoryType(rawValue: store.categoryName)?.icon,
                 handler: { [weak self] in
                     let repository = StoreDetailRepositoryImpl()
                     let usecase = StoreDetailUsecaseImpl(repository: repository)

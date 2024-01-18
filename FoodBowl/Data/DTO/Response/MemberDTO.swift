@@ -14,6 +14,19 @@ struct MemberDTO: Codable {
     let profileImageUrl: String?
     let followerCount: Int
     let isFollowing, isMe: Bool
+    
+    func toMember() -> Member {
+        Member(
+            id: self.memberId,
+            profileImageUrl: self.profileImageUrl,
+            nickname: self.nickname,
+            introduction: "",
+            followerCount: self.followerCount,
+            followingCount: 0,
+            isMyProfile: self.isMe,
+            isFollowing: self.isFollowing
+        )
+    }
 }
 
 // MARK: - MemberBySearchDTO
@@ -31,6 +44,19 @@ struct MemberProfileDTO: Codable {
     let followingCount: Int
     let isMyProfile: Bool
     let isFollowing: Bool
+    
+    func toMember() -> Member {
+        Member(
+            id: self.id,
+            profileImageUrl: self.profileImageUrl,
+            nickname: self.nickname,
+            introduction: self.introduction ?? "",
+            followerCount: self.followerCount,
+            followingCount: self.followingCount,
+            isMyProfile: self.isMyProfile,
+            isFollowing: self.isFollowing
+        )
+    }
 }
 
 // MARK: - MemberByFollowDTO
@@ -47,4 +73,17 @@ struct MemberByFollowItemDTO: Codable, Hashable {
     let nickname: String
     let followerCount: Int
     var isFollowing: Bool
+    
+    func toMember() -> Member {
+        Member(
+            id: self.memberId,
+            profileImageUrl: self.profileImageUrl,
+            nickname: self.nickname,
+            introduction: "",
+            followerCount: self.followerCount,
+            followingCount: 0,
+            isMyProfile: false,
+            isFollowing: self.isFollowing
+        )
+    }
 }

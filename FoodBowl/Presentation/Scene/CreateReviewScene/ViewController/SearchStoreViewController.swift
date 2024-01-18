@@ -22,7 +22,7 @@ final class SearchStoreViewController: UIViewController, Keyboardable {
     private let viewModel: any BaseViewModelType
     private var cancellable: Set<AnyCancellable> = Set()
     
-    let selectStorePublisher = PassthroughSubject<PlaceItemDTO, Never>()
+    let selectStorePublisher = PassthroughSubject<Place, Never>()
     
     weak var delegate: SearchStoreViewControllerDelegate?
     
@@ -134,9 +134,9 @@ extension SearchStoreViewController: UITableViewDataSource, UITableViewDelegate 
         else { return UITableViewCell() }
 
         cell.selectionStyle = .none
-        cell.storeNameLabel.text = self.searchStoreView.stores[indexPath.item].placeName
-        cell.storeAdressLabel.text = self.searchStoreView.stores[indexPath.item].addressName
-        cell.storeDistanceLabel.text = self.searchStoreView.stores[indexPath.item].distance.prettyDistance
+        cell.storeNameLabel.text = self.searchStoreView.stores[indexPath.item].name
+        cell.storeAdressLabel.text = self.searchStoreView.stores[indexPath.item].address
+        cell.storeDistanceLabel.text = self.searchStoreView.stores[indexPath.item].distance
 
         return cell
     }
@@ -151,5 +151,5 @@ extension SearchStoreViewController: UITableViewDataSource, UITableViewDelegate 
 }
 
 protocol SearchStoreViewControllerDelegate: AnyObject {
-    func setStore(store: PlaceItemDTO, univ: PlaceItemDTO?)
+    func setStore(store: Place, univ: Place?)
 }

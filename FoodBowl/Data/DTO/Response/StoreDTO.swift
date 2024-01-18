@@ -21,7 +21,7 @@ struct StoreItemDTO: Codable {
     let isBookmarked: Bool
     
     func toStore() -> Store {
-        return Store(
+        Store(
             id: self.id,
             categoryName: self.categoryName,
             name: self.name,
@@ -49,7 +49,7 @@ struct StoreItemBySearchDTO: Codable {
     let reviewCount: Int
     
     func toStore() -> Store {
-        return Store(
+        Store(
             id: self.storeId,
             categoryName: "",
             name: self.storeName,

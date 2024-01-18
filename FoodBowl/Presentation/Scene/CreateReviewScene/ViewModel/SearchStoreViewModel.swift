@@ -15,17 +15,17 @@ final class SearchStoreViewModel: NSObject, BaseViewModelType {
     private let usecase: CreateReviewUsecase
     private var cancellable: Set<AnyCancellable> = Set()
     
-    private let storesSubject = PassthroughSubject<[PlaceItemDTO], Error>()
-    private let isSelectedSubject: PassthroughSubject<Result<(PlaceItemDTO, PlaceItemDTO?), Error>, Never> = PassthroughSubject()
+    private let storesSubject = PassthroughSubject<[Place], Error>()
+    private let isSelectedSubject: PassthroughSubject<Result<(Place, Place?), Error>, Never> = PassthroughSubject()
     
     struct Input {
         let searchStores: AnyPublisher<String, Never>
-        let selectStore: AnyPublisher<PlaceItemDTO, Never>
+        let selectStore: AnyPublisher<Place, Never>
     }
     
     struct Output {
-        let stores: PassthroughSubject<[PlaceItemDTO], Error>
-        let isSelected: AnyPublisher<Result<(PlaceItemDTO, PlaceItemDTO?), Error>, Never>
+        let stores: PassthroughSubject<[Place], Error>
+        let isSelected: AnyPublisher<Result<(Place, Place?), Error>, Never>
     }
     
     func transform(from input: Input) -> Output {
@@ -58,8 +58,9 @@ final class SearchStoreViewModel: NSObject, BaseViewModelType {
     func searchStores(keyword: String) {
         Task {
             do {
-                let deviceX = String(LocationManager.shared.manager.location?.coordinate.longitude ?? 0.0)
-                let deviceY = String(LocationManager.shared.manager.location?.coordinate.latitude ?? 0.0)
+                guard let location = LocationManager.shared.manager.location?.coordinate else { return }
+                let deviceX = String(location.longitude)
+                let deviceY = String(location.latitude)
                 let stores = try await self.usecase.searchStores(x: deviceX, y: deviceY, keyword: keyword)
                 self.storesSubject.send(stores)
             } catch {
@@ -68,13 +69,12 @@ final class SearchStoreViewModel: NSObject, BaseViewModelType {
         }
     }
     
-    func searchUniv(store: PlaceItemDTO) {
+    func searchUniv(store: Place) {
         Task {
             do {
-                let univ = try await self.usecase.searchUniv(x: store.longitude, y: store.latitude)
+                let univ = try await self.usecase.searchUniv(x: store.x, y: store.y)
                 self.isSelectedSubject.send(.success((store, univ)))
             } catch {
-                print("Failed to Search Univ")
                 self.isSelectedSubject.send(.failure(NetworkError()))
             }
         }

@@ -1,5 +1,5 @@
 //
-//  Categories.swift
+//  CategoryType.swift
 //  FoodBowl
 //
 //  Created by COBY_PRO on 10/17/23.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-enum Categories: String, CaseIterable {
+enum CategoryType: String, CaseIterable {
     case cafe = "카페"
     case pub = "술집"
     case korean = "한식"

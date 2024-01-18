@@ -14,7 +14,7 @@ struct ReviewByStoreDTO: Codable {
     let page: PageDTO
     
     func toReview() -> Review {
-        return Review(
+        Review(
             reviews: self.storeReviewContentResponses.map { $0.toReviewItem() },
             page: self.page.toPage()
         )
@@ -31,7 +31,7 @@ struct StoreDetailDTO: Codable {
     let isBookmarked: Bool
     
     func toStore() -> Store {
-        return Store(
+        Store(
             id: self.id,
             categoryName: self.categoryName,
             name: self.name,
@@ -60,7 +60,7 @@ struct ReviewItemByStoreDTO: Codable, Hashable {
     }
     
     func toReviewItem() -> ReviewItem {
-        return ReviewItem(
+        ReviewItem(
             writer: self.writer.toWriter(),
             comment: self.review.toComment(),
             store: nil

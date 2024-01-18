@@ -12,8 +12,8 @@ final class CreateReviewViewModel: NSObject, BaseViewModelType {
     
     // MARK: - property
     
-    private var store: PlaceItemDTO?
-    private var univ: PlaceItemDTO?
+    private var store: Place?
+    private var univ: Place?
     
     private let usecase: CreateReviewUsecase
     private var cancellable: Set<AnyCancellable> = Set()
@@ -22,7 +22,7 @@ final class CreateReviewViewModel: NSObject, BaseViewModelType {
     
     struct Input {
         let completeButtonDidTap: AnyPublisher<(String, [UIImage]), Never>
-        let setStore: AnyPublisher<(PlaceItemDTO, PlaceItemDTO?), Never>
+        let setStore: AnyPublisher<(Place, Place?), Never>
     }
     
     struct Output {
@@ -65,30 +65,30 @@ final class CreateReviewViewModel: NSObject, BaseViewModelType {
                     if let univ = self.univ {
                         CreateReviewRequestDTO(
                             locationId: store.id,
-                            storeName: store.placeName,
-                            storeAddress: store.roadAddressName,
-                            x: Double(store.longitude)!,
-                            y: Double(store.latitude)!,
-                            storeUrl: store.placeURL,
+                            storeName: store.name,
+                            storeAddress: store.address,
+                            x: Double(store.x)!,
+                            y: Double(store.y)!,
+                            storeUrl: store.url,
                             phone: store.phone,
-                            category: store.getCategory(),
+                            category: store.category,
                             reviewContent: comment,
-                            schoolName: univ.placeName,
-                            schoolAddress: univ.roadAddressName,
-                            schoolX: Double(univ.longitude),
-                            schoolY: Double(univ.latitude),
+                            schoolName: univ.name,
+                            schoolAddress: univ.address,
+                            schoolX: Double(univ.x),
+                            schoolY: Double(univ.y),
                             images: imagesData
                         )
                     } else {
                         CreateReviewRequestDTO(
                             locationId: store.id,
-                            storeName: store.placeName,
-                            storeAddress: store.roadAddressName,
-                            x: Double(store.longitude)!,
-                            y: Double(store.latitude)!,
-                            storeUrl: store.placeURL,
+                            storeName: store.name,
+                            storeAddress: store.address,
+                            x: Double(store.x)!,
+                            y: Double(store.y)!,
+                            storeUrl: store.url,
                             phone: store.phone,
-                            category: store.getCategory(),
+                            category: store.category,
                             reviewContent: comment,
                             images: imagesData
                         )

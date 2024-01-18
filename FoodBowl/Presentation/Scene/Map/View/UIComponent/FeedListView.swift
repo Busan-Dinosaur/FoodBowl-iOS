@@ -12,6 +12,7 @@ import SnapKit
 import Then
 
 final class FeedListView: UIView, BaseViewType {
+    
     private enum Size {
         static let collectionInset = UIEdgeInsets(
             top: 10,

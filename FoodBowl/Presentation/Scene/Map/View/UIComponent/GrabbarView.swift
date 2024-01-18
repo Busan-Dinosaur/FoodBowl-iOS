@@ -11,7 +11,8 @@ import SnapKit
 import Then
 
 final class GrabbarView: UIView {
-    private lazy var grabbar = UIView().then {
+    
+    private let grabbar = UIView().then {
         $0.backgroundColor = .grey002
         $0.layer.cornerRadius = 4
     }

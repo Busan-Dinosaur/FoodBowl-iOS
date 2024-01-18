@@ -34,7 +34,7 @@ final class SearchStoreView: UIView, BaseViewType {
     // MARK: - property
     
     private let textViewPlaceHolder = "100자 이내"
-    var stores = [PlaceItemDTO]()
+    var stores: [Place] = []
     
     var cancelButtonDidTapPublisher: AnyPublisher<Void, Never> {
         return self.cancelButton.buttonTapPublisher
@@ -70,7 +70,7 @@ final class SearchStoreView: UIView, BaseViewType {
         self.listTableView.delegate = delegate
     }
     
-    func updateTableView(stores: [PlaceItemDTO]) {
+    func updateTableView(stores: [Place]) {
         self.stores = stores
         self.listTableView.reloadData()
     }

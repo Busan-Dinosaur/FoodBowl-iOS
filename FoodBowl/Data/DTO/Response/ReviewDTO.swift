@@ -13,7 +13,7 @@ struct ReviewDTO: Codable {
     let page: PageDTO
     
     func toReview() -> Review {
-        return Review(
+        Review(
             reviews: self.reviews.map { $0.toReviewItem() },
             page: self.page.toPage()
         )
@@ -26,7 +26,7 @@ struct PageDTO: Codable {
     let size: Int
     
     func toPage() -> Page {
-        return Page(
+        Page(
             firstId: self.firstId,
             lastId: self.lastId,
             size: self.size
@@ -49,7 +49,7 @@ struct ReviewItemDTO: Codable, Hashable {
     }
     
     func toReviewItem() -> ReviewItem {
-        return ReviewItem(
+        ReviewItem(
             writer: self.writer.toWriter(),
             comment: self.review.toComment(),
             store: self.store.toStore()
@@ -66,7 +66,7 @@ struct CommentDTO: Codable {
     let updatedAt: String
     
     func toComment() -> Comment {
-        return Comment(
+        Comment(
             id: self.id,
             content: self.content,
             imagePaths: self.imagePaths,
@@ -84,7 +84,7 @@ struct StoreByReviewDTO: Codable {
     var isBookmarked: Bool
     
     func toStore() -> Store {
-        return Store(
+        Store(
             id: self.id,
             categoryName: self.categoryName,
             name: self.name,
@@ -107,7 +107,7 @@ struct WriterItemDTO: Codable {
     let followerCount: Int
     
     func toWriter() -> Writer {
-        return Writer(
+        Writer(
             id: self.id,
             nickname: self.nickname,
             profileImageUrl: self.profileImageUrl,

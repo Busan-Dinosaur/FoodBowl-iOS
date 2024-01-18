@@ -11,6 +11,7 @@ import SnapKit
 import Then
 
 final class CategoryListView: UIView {
+    
     enum Size {
         static let collectionInset = UIEdgeInsets(
             top: 0,
@@ -20,8 +21,8 @@ final class CategoryListView: UIView {
         )
     }
 
-    private let categories = Categories.allCases
-    var selectedCategory: Categories? = nil
+    private let categories = CategoryType.allCases
+    var selectedCategory: CategoryType? = nil
 
     // MARK: - property
     private let collectionViewFlowLayout = UICollectionViewFlowLayout().then {
