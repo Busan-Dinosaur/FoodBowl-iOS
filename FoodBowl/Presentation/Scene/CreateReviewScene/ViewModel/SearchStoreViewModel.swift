@@ -12,14 +12,11 @@ final class SearchStoreViewModel: NSObject, BaseViewModelType {
     
     // MARK: - property
     
-    var store: PlaceItemDTO?
-    var univ: PlaceItemDTO?
-    
     private let usecase: CreateReviewUsecase
     private var cancellable: Set<AnyCancellable> = Set()
     
     private let storesSubject = PassthroughSubject<[PlaceItemDTO], Error>()
-    private let isSelectedSubject: PassthroughSubject<Result<Bool, Error>, Never> = PassthroughSubject()
+    private let isSelectedSubject: PassthroughSubject<Result<(PlaceItemDTO, PlaceItemDTO?), Error>, Never> = PassthroughSubject()
     
     struct Input {
         let searchStores: AnyPublisher<String, Never>
@@ -28,7 +25,7 @@ final class SearchStoreViewModel: NSObject, BaseViewModelType {
     
     struct Output {
         let stores: PassthroughSubject<[PlaceItemDTO], Error>
-        let isSelected: AnyPublisher<Result<Bool, Error>, Never>
+        let isSelected: AnyPublisher<Result<(PlaceItemDTO, PlaceItemDTO?), Error>, Never>
     }
     
     func transform(from input: Input) -> Output {
@@ -40,7 +37,6 @@ final class SearchStoreViewModel: NSObject, BaseViewModelType {
         
         input.selectStore
             .sink(receiveValue: { [weak self] store in
-                self?.store = store
                 self?.searchUniv(store: store)
             })
             .store(in: &self.cancellable)
@@ -75,8 +71,8 @@ final class SearchStoreViewModel: NSObject, BaseViewModelType {
     func searchUniv(store: PlaceItemDTO) {
         Task {
             do {
-                self.univ = try await self.usecase.searchUniv(x: store.longitude, y: store.latitude)
-                self.isSelectedSubject.send(.success(true))
+                let univ = try await self.usecase.searchUniv(x: store.longitude, y: store.latitude)
+                self.isSelectedSubject.send(.success((store, univ)))
             } catch {
                 print("Failed to Search Univ")
                 self.isSelectedSubject.send(.failure(NetworkError()))

@@ -528,7 +528,7 @@ extension MapViewController {
     }
 }
 
-extension MapViewController: CreateReviewControllerDelegate {
+extension MapViewController: CreateReviewViewControllerDelegate {
     func updateData() {
         if let customLocation = customLocation {
             customLocationPublisher.send(customLocation)

@@ -12,8 +12,8 @@ final class CreateReviewViewModel: NSObject, BaseViewModelType {
     
     // MARK: - property
     
-    var store: PlaceItemDTO?
-    var univ: PlaceItemDTO?
+    private var store: PlaceItemDTO?
+    private var univ: PlaceItemDTO?
     
     private let usecase: CreateReviewUsecase
     private var cancellable: Set<AnyCancellable> = Set()
@@ -22,6 +22,7 @@ final class CreateReviewViewModel: NSObject, BaseViewModelType {
     
     struct Input {
         let completeButtonDidTap: AnyPublisher<(String, [UIImage]), Never>
+        let setStore: AnyPublisher<(PlaceItemDTO, PlaceItemDTO?), Never>
     }
     
     struct Output {
@@ -32,6 +33,13 @@ final class CreateReviewViewModel: NSObject, BaseViewModelType {
         input.completeButtonDidTap
             .sink(receiveValue: { [weak self] comment, images in
                 self?.createReview(comment: comment, images: images)
+            })
+            .store(in: &self.cancellable)
+        
+        input.setStore
+            .sink(receiveValue: { [weak self] store, univ in
+                self?.store = store
+                self?.univ = univ
             })
             .store(in: &self.cancellable)
         
@@ -53,24 +61,41 @@ final class CreateReviewViewModel: NSObject, BaseViewModelType {
             do {
                 guard let store = self.store else { return }
                 let imagesData = images.map { $0.jpegData(compressionQuality: 0.3)! }
+                var request: CreateReviewRequestDTO {
+                    if let univ = self.univ {
+                        CreateReviewRequestDTO(
+                            locationId: store.id,
+                            storeName: store.placeName,
+                            storeAddress: store.roadAddressName,
+                            x: Double(store.longitude)!,
+                            y: Double(store.latitude)!,
+                            storeUrl: store.placeURL,
+                            phone: store.phone,
+                            category: store.getCategory(),
+                            reviewContent: comment,
+                            schoolName: univ.placeName,
+                            schoolAddress: univ.roadAddressName,
+                            schoolX: Double(univ.longitude),
+                            schoolY: Double(univ.latitude),
+                            images: imagesData
+                        )
+                    } else {
+                        CreateReviewRequestDTO(
+                            locationId: store.id,
+                            storeName: store.placeName,
+                            storeAddress: store.roadAddressName,
+                            x: Double(store.longitude)!,
+                            y: Double(store.latitude)!,
+                            storeUrl: store.placeURL,
+                            phone: store.phone,
+                            category: store.getCategory(),
+                            reviewContent: comment,
+                            images: imagesData
+                        )
+                    }
+                }
                 
-                try await self.usecase.createReview(request: CreateReviewRequestDTO(
-                    locationId: store.id,
-                    storeName: store.placeName,
-                    storeAddress: store.roadAddressName,
-                    x: Double(store.longitude) ?? 0.0,
-                    y: Double(store.latitude) ?? 0.0,
-                    storeUrl: store.placeURL,
-                    phone: store.phone,
-                    category: store.getCategory(),
-                    reviewContent: comment,
-                    schoolName: self.univ?.placeName,
-                    schoolAddress: self.univ?.roadAddressName,
-                    schoolX: Double(self.univ?.longitude ?? ""),
-                    schoolY: Double(self.univ?.latitude ?? ""),
-                    images: imagesData
-                ))
-                
+                try await self.usecase.createReview(request: request)
                 self.isCompletedSubject.send(.success(true))
             } catch {
                 self.isCompletedSubject.send(.failure(NetworkError()))

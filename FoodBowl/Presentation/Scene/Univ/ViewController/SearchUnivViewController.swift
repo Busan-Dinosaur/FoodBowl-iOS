@@ -11,7 +11,7 @@ import SnapKit
 import Then
 
 final class SearchUnivViewController: BaseViewController {
-    var delegate: SearchUnivViewControllerDelegate?
+    weak var delegate: SearchUnivViewControllerDelegate?
 
     private var viewModel = MapViewModel()
 

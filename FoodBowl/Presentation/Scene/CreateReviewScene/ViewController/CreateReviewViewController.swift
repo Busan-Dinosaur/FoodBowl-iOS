@@ -22,7 +22,9 @@ final class CreateReviewViewController: UIViewController, Keyboardable, PhotoPic
     private let viewModel: any BaseViewModelType
     private var cancellable: Set<AnyCancellable> = Set()
     
-    var delegate: CreateReviewControllerDelegate?
+    let setStorePublisher = PassthroughSubject<(PlaceItemDTO, PlaceItemDTO?), Never>()
+    
+    weak var delegate: CreateReviewViewControllerDelegate?
     
     // MARK: - init
     
@@ -65,7 +67,8 @@ final class CreateReviewViewController: UIViewController, Keyboardable, PhotoPic
     private func transformedOutput() -> CreateReviewViewModel.Output? {
         guard let viewModel = self.viewModel as? CreateReviewViewModel else { return nil }
         let input = CreateReviewViewModel.Input(
-            completeButtonDidTap: self.createReviewView.completeButtonDidTapPublisher.eraseToAnyPublisher()
+            completeButtonDidTap: self.createReviewView.completeButtonDidTapPublisher.eraseToAnyPublisher(),
+            setStore: self.setStorePublisher.eraseToAnyPublisher()
         )
         return viewModel.transform(from: input)
     }
@@ -78,6 +81,7 @@ final class CreateReviewViewController: UIViewController, Keyboardable, PhotoPic
             .sink(receiveValue: { [weak self] result in
                 switch result {
                 case .success:
+                    self?.delegate?.updateData()
                     self?.dismiss(animated: true)
                 case .failure(let error):
                     self?.makeAlert(
@@ -110,6 +114,13 @@ final class CreateReviewViewController: UIViewController, Keyboardable, PhotoPic
                 self?.makeAlert(title: "최대 100자까지 입력 가능합니다.")
             })
             .store(in: &self.cancellable)
+        
+        self.createReviewView.showStorePublisher
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] url in
+                self?.presentShowStoreViewController(url: url)
+            })
+            .store(in: &self.cancellable)
     }
     
     // MARK: - func
@@ -121,6 +132,15 @@ final class CreateReviewViewController: UIViewController, Keyboardable, PhotoPic
     private func configureNavigation() {
         guard let navigationController = self.navigationController else { return }
         self.createReviewView.configureNavigationBarItem(navigationController)
+    }
+    
+    @objc
+    private func photoPlusCellDidTap() {
+        self.photoAddButtonDidTap()
+    }
+    
+    func setPhotoes(images: [UIImage]) {
+        self.createReviewView.updateCollectionView(images: images)
     }
 }
 
@@ -137,6 +157,9 @@ extension CreateReviewViewController: UICollectionViewDataSource, UICollectionVi
             ) as? PhotoPlusCollectionViewCell else {
                 return UICollectionViewCell()
             }
+            
+            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.photoPlusCellDidTap))
+            cell.addGestureRecognizer(tapGesture)
 
             return cell
         } else {
@@ -152,12 +175,6 @@ extension CreateReviewViewController: UICollectionViewDataSource, UICollectionVi
             return cell
         }
     }
-
-    func collectionView(_: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if indexPath.item == 0 {
-            photoAddButtonDidTap()
-        }
-    }
 }
 
 // MARK: - Helper
@@ -167,10 +184,24 @@ extension CreateReviewViewController {
         let usecase = CreateReviewUsecaseImpl(repository: repository)
         let viewModel = SearchStoreViewModel(usecase: usecase)
         let viewController = SearchStoreViewController(viewModel: viewModel)
+        viewController.delegate = self
         self.navigationController?.pushViewController(viewController, animated: true)
+    }
+    
+    private func presentShowStoreViewController(url: String) {
+        let showWebViewController = ShowWebViewController(url: url)
+        let navigationController = UINavigationController(rootViewController: showWebViewController)
+        self.navigationController?.present(navigationController, animated: true)
     }
 }
 
-protocol CreateReviewControllerDelegate: AnyObject {
+protocol CreateReviewViewControllerDelegate: AnyObject {
     func updateData()
+}
+
+extension CreateReviewViewController: SearchStoreViewControllerDelegate {
+    func setStore(store: PlaceItemDTO, univ: PlaceItemDTO?) {
+        self.setStorePublisher.send((store, univ))
+        self.createReviewView.setStore(store: store)
+    }
 }

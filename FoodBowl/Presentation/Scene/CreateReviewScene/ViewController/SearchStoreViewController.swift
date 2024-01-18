@@ -24,6 +24,8 @@ final class SearchStoreViewController: UIViewController, Keyboardable {
     
     let selectStorePublisher = PassthroughSubject<PlaceItemDTO, Never>()
     
+    weak var delegate: SearchStoreViewControllerDelegate?
+    
     // MARK: - init
     
     init(viewModel: any BaseViewModelType) {
@@ -78,8 +80,7 @@ final class SearchStoreViewController: UIViewController, Keyboardable {
             .receive(on: DispatchQueue.main)
             .sink { _ in
             } receiveValue: { [weak self] stores in
-                self?.searchStoreView.stores = stores
-                self?.searchStoreView.updateTableView()
+                self?.searchStoreView.updateTableView(stores: stores)
             }
             .store(in: &self.cancellable)
         
@@ -87,7 +88,8 @@ final class SearchStoreViewController: UIViewController, Keyboardable {
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] result in
                 switch result {
-                case .success:
+                case .success((let store, let univ)):
+                    self?.delegate?.setStore(store: store, univ: univ)
                     self?.navigationController?.popViewController(animated: true)
                 case .failure(let error):
                     self?.makeAlert(
@@ -146,4 +148,8 @@ extension SearchStoreViewController: UITableViewDataSource, UITableViewDelegate 
     func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.selectStorePublisher.send(self.searchStoreView.stores[indexPath.item])
     }
+}
+
+protocol SearchStoreViewControllerDelegate: AnyObject {
+    func setStore(store: PlaceItemDTO, univ: PlaceItemDTO?)
 }

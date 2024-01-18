@@ -99,6 +99,7 @@ final class CreateReviewView: UIView, BaseViewType {
     }
     let completeButtonDidTapPublisher = PassthroughSubject<(String, [UIImage]), Never>()
     let maxLengthAlertPublisher = PassthroughSubject<Void, Never>()
+    let showStorePublisher = PassthroughSubject<String, Never>()
     
     // MARK: - init
     
@@ -127,7 +128,8 @@ final class CreateReviewView: UIView, BaseViewType {
         self.listCollectionView.dataSource = delegate
     }
     
-    func updateCollectionView() {
+    func updateCollectionView(images: [UIImage]) {
+        self.reviewImages = images
         self.listCollectionView.reloadData()
     }
     
@@ -145,8 +147,8 @@ final class CreateReviewView: UIView, BaseViewType {
         self.scrollView.addSubview(contentView)
         
         self.contentView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
             $0.width.equalToSuperview()
-            $0.top.bottom.equalToSuperview()
         }
         
         self.contentView.addSubviews(
@@ -165,13 +167,13 @@ final class CreateReviewView: UIView, BaseViewType {
         }
 
         self.selectedStoreView.snp.makeConstraints {
-            $0.top.equalTo(searchBarButton.snp.bottom).offset(10)
+            $0.top.equalTo(self.searchBarButton.snp.bottom).offset(10)
             $0.leading.trailing.equalToSuperview().inset(SizeLiteral.horizantalPadding)
             $0.height.equalTo(60)
         }
 
         self.guideCommentLabel.snp.makeConstraints {
-            $0.top.equalTo(self.safeAreaLayoutGuide.snp.top).offset(80)
+            $0.top.equalTo(self.selectedStoreView.snp.bottom).offset(-40)
             $0.leading.equalToSuperview().inset(SizeLiteral.horizantalPadding)
         }
 
@@ -213,6 +215,21 @@ final class CreateReviewView: UIView, BaseViewType {
             self.completeButtonDidTapPublisher.send((comment, self.reviewImages))
         }
         self.completeButton.addAction(completeAction, for: .touchUpInside)
+    }
+    
+    func setStore(store: PlaceItemDTO) {
+        let action = UIAction { _ in
+            self.showStorePublisher.send(store.placeURL)
+        }
+        self.selectedStoreView.mapButton.addAction(action, for: .touchUpInside)
+        self.selectedStoreView.storeNameLabel.text = store.placeName
+        self.selectedStoreView.storeAdressLabel.text = store.addressName
+        self.selectedStoreView.isHidden = false
+        self.searchBarButton.placeholderLabel.text = "가게 재검색"
+        
+        self.guideCommentLabel.snp.updateConstraints {
+            $0.top.equalTo(self.selectedStoreView.snp.bottom).offset(30)
+        }
     }
 }
 

@@ -302,7 +302,7 @@ extension FindViewController: UITableViewDataSource, UITableViewDelegate {
     }
 }
 
-extension FindViewController: CreateReviewControllerDelegate {
+extension FindViewController: CreateReviewViewControllerDelegate {
     func updateData() {
         loadData()
     }

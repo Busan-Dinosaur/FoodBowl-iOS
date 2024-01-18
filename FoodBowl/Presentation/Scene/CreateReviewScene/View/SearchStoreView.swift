@@ -70,7 +70,8 @@ final class SearchStoreView: UIView, BaseViewType {
         self.listTableView.delegate = delegate
     }
     
-    func updateTableView() {
+    func updateTableView(stores: [PlaceItemDTO]) {
+        self.stores = stores
         self.listTableView.reloadData()
     }
     
@@ -97,9 +98,12 @@ extension SearchStoreView: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         dissmissKeyboard()
     }
-
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        print(searchText)
-        self.searchStoresPublisher.send(searchText)
+    
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+        self.searchStoresPublisher.send(searchBar.text ?? "")
     }
+
+//    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+//        self.searchStoresPublisher.send(searchText)
+//    }
 }

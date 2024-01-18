@@ -23,7 +23,7 @@ final class UpdateReviewViewController: BaseViewController {
         )
     }
 
-    var delegate: CreateReviewControllerDelegate?
+    weak var delegate: CreateReviewViewControllerDelegate?
 
     private var viewModel: UpdateReviewViewModel
 

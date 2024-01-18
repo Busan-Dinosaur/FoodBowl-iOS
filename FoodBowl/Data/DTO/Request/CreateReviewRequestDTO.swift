@@ -22,4 +22,36 @@ struct CreateReviewRequestDTO: Encodable {
     let schoolX: Double?
     let schoolY: Double?
     let images: [Data]
+    
+    init(
+        locationId: String,
+        storeName: String,
+        storeAddress: String,
+        x: Double,
+        y: Double, 
+        storeUrl: String,
+        phone: String? = nil, 
+        category: String, 
+        reviewContent: String,
+        schoolName: String? = nil,
+        schoolAddress: String? = nil,
+        schoolX: Double? = nil,
+        schoolY: Double? = nil,
+        images: [Data] = []
+    ) {
+        self.locationId = locationId
+        self.storeName = storeName
+        self.storeAddress = storeAddress
+        self.x = x
+        self.y = y
+        self.storeUrl = storeUrl
+        self.phone = phone
+        self.category = category
+        self.reviewContent = reviewContent
+        self.schoolName = schoolName
+        self.schoolAddress = schoolAddress
+        self.schoolX = schoolX
+        self.schoolY = schoolY
+        self.images = images
+    }
 }
