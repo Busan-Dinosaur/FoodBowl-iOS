@@ -85,8 +85,8 @@ final class StoreHeaderView: UIView {
 extension StoreHeaderView {
     func configureHeader(_ store: Store) {
         self.storeNameLabel.text = store.name
-        self.storeDetailLabel.text = store.categoryName
-        self.storeAddressLabel.text = "\(store.addressName), \(store.distance)"
+        self.storeDetailLabel.text = "\(store.categoryName), \(store.distance)"
+        self.storeAddressLabel.text = store.addressName
         self.bookmarkButton.isSelected = store.isBookmarked
         
         let action = UIAction { _ in
