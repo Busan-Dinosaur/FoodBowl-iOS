@@ -10,7 +10,7 @@ import Foundation
 protocol CreateReviewUsecase {
     func searchStores(x: String, y: String, keyword: String) async throws -> [Place]
     func searchUniv(x: String, y: String) async throws -> Place?
-    func createReview(request: CreateReviewRequestDTO) async throws
+    func createReview(request: CreateReviewRequestDTO, images: [Data]) async throws
 }
 
 final class CreateReviewUsecaseImpl: CreateReviewUsecase {
@@ -45,9 +45,9 @@ final class CreateReviewUsecaseImpl: CreateReviewUsecase {
         }
     }
     
-    func createReview(request: CreateReviewRequestDTO) async throws {
+    func createReview(request: CreateReviewRequestDTO, images: [Data]) async throws {
         do {
-            try await self.repository.createReview(request: request)
+            try await self.repository.createReview(request: request, images: images)
         } catch {
             throw NetworkError()
         }

@@ -11,23 +11,22 @@ import SnapKit
 import Then
 
 final class StoreInfoView: UIView {
+    
     // MARK: - property
     let storeNameButton = UIButton().then {
-        $0.setTitle("틈새라면 홍대점", for: .normal)
         $0.setTitleColor(.mainTextColor, for: .normal)
         $0.titleLabel?.font = UIFont.preferredFont(forTextStyle: .footnote, weight: .medium)
+        $0.contentHorizontalAlignment = .left
     }
 
     let categoryLabel = UILabel().then {
         $0.font = UIFont.preferredFont(forTextStyle: .caption2, weight: .regular)
         $0.textColor = .subTextColor
-        $0.text = "일식"
     }
 
     let distanceLabel = UILabel().then {
         $0.font = UIFont.preferredFont(forTextStyle: .caption2, weight: .regular)
         $0.textColor = .subTextColor
-        $0.text = "10km"
     }
 
     let bookmarkButton = BookmarkButton()

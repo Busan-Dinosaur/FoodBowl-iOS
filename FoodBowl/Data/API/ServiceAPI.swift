@@ -18,7 +18,7 @@ enum ServiceAPI {
     case getCategories
     
     case createBlame(request: CreateBlameRequestDTO)
-    case createReview(request: CreateReviewRequestDTO)
+    case createReview(request: CreateReviewRequestDTO, images: [Data])
     case removeReview(id: Int)
     
     case getReviewsByFollowing(request: GetReviewsRequestDTO)
@@ -156,7 +156,7 @@ extension ServiceAPI: TargetType {
             )
         case .createBlame(let request):
             return .requestJSONEncodable(request)
-        case .createReview(let request):
+        case .createReview(let request, let images):
             var multipartFormData = [MultipartFormData]()
 
             if let reviewData = try? JSONEncoder().encode(request) {
@@ -168,8 +168,8 @@ extension ServiceAPI: TargetType {
                     )
                 )
             }
-
-            for image in request.images {
+            
+            for image in images {
                 multipartFormData.append(
                     MultipartFormData(
                         provider: .data(image),
@@ -179,7 +179,7 @@ extension ServiceAPI: TargetType {
                     )
                 )
             }
-
+            
             return .uploadMultipart(multipartFormData)
         case .removeReview:
             return .requestPlain

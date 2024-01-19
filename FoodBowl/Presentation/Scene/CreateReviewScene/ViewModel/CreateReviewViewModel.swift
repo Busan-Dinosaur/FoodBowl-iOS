@@ -60,7 +60,6 @@ final class CreateReviewViewModel: NSObject, BaseViewModelType {
         Task {
             do {
                 guard let store = self.store else { return }
-                let imagesData = images.map { $0.jpegData(compressionQuality: 0.3)! }
                 var request: CreateReviewRequestDTO {
                     if let univ = self.univ {
                         CreateReviewRequestDTO(
@@ -76,8 +75,7 @@ final class CreateReviewViewModel: NSObject, BaseViewModelType {
                             schoolName: univ.name,
                             schoolAddress: univ.address,
                             schoolX: Double(univ.x),
-                            schoolY: Double(univ.y),
-                            images: imagesData
+                            schoolY: Double(univ.y)
                         )
                     } else {
                         CreateReviewRequestDTO(
@@ -89,13 +87,12 @@ final class CreateReviewViewModel: NSObject, BaseViewModelType {
                             storeUrl: store.url,
                             phone: store.phone,
                             category: store.category,
-                            reviewContent: comment,
-                            images: imagesData
+                            reviewContent: comment
                         )
                     }
                 }
-                
-                try await self.usecase.createReview(request: request)
+                let imagesData = images.map { $0.jpegData(compressionQuality: 0.3)! }
+                try await self.usecase.createReview(request: request, images: imagesData)
                 self.isCompletedSubject.send(.success(true))
             } catch {
                 self.isCompletedSubject.send(.failure(NetworkError()))

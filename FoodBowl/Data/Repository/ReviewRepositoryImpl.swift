@@ -38,8 +38,8 @@ final class ReviewRepositoryImpl: ReviewRepository {
         return try response.decode()
     }
     
-    func createReview(request: CreateReviewRequestDTO) async throws {
-        let _ = await provider.request(.createReview(request: request))
+    func createReview(request: CreateReviewRequestDTO, images: [Data]) async throws {
+        let _ = await provider.request(.createReview(request: request, images: images))
     }
     
     func createBlame(request: CreateBlameRequestDTO) async throws {

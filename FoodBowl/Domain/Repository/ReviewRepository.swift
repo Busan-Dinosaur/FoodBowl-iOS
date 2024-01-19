@@ -13,7 +13,7 @@ protocol ReviewRepository {
     func getReviewsByStore(request: GetReviewsByStoreRequestDTO) async throws -> ReviewByStoreDTO
     func getReviewsBySchool(request: GetReviewsBySchoolRequestDTO) async throws -> ReviewDTO
     func getReviewsByMember(request: GetReviewsByMemberRequestDTO) async throws -> ReviewDTO
-    func createReview(request: CreateReviewRequestDTO) async throws
+    func createReview(request: CreateReviewRequestDTO, images: [Data]) async throws
     func createBlame(request: CreateBlameRequestDTO) async throws
     func removeReview(id: Int) async throws
     func getSchools() async throws -> SchoolDTO

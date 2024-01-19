@@ -14,14 +14,13 @@ struct CreateReviewRequestDTO: Encodable {
     let x: Double
     let y: Double
     let storeUrl: String
-    let phone: String?
+    let phone: String
     let category: String
     let reviewContent: String
     let schoolName: String?
     let schoolAddress: String?
     let schoolX: Double?
     let schoolY: Double?
-    let images: [Data]
     
     init(
         locationId: String,
@@ -30,14 +29,13 @@ struct CreateReviewRequestDTO: Encodable {
         x: Double,
         y: Double, 
         storeUrl: String,
-        phone: String? = nil, 
+        phone: String, 
         category: String, 
         reviewContent: String,
         schoolName: String? = nil,
         schoolAddress: String? = nil,
         schoolX: Double? = nil,
-        schoolY: Double? = nil,
-        images: [Data] = []
+        schoolY: Double? = nil
     ) {
         self.locationId = locationId
         self.storeName = storeName
@@ -52,6 +50,5 @@ struct CreateReviewRequestDTO: Encodable {
         self.schoolAddress = schoolAddress
         self.schoolX = schoolX
         self.schoolY = schoolY
-        self.images = images
     }
 }

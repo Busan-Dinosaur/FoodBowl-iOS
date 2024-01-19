@@ -26,12 +26,12 @@ final class UserInfoView: UIView {
     let userNameButton = UIButton().then {
         $0.setTitleColor(.mainTextColor, for: .normal)
         $0.titleLabel?.font = .preferredFont(forTextStyle: .subheadline, weight: .medium)
+        $0.contentHorizontalAlignment = .left
     }
     
     let userFollowerLabel = UILabel().then {
         $0.font = UIFont.preferredFont(forTextStyle: .footnote, weight: .light)
         $0.textColor = .subTextColor
-        $0.text = "팔로워 100명"
     }
     
     let followButton = FollowButton()
