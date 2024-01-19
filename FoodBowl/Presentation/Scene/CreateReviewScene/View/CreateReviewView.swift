@@ -62,6 +62,7 @@ final class CreateReviewView: UIView, BaseViewType {
         $0.isEditable = true
         $0.delegate = self
         $0.isScrollEnabled = true
+        $0.showsVerticalScrollIndicator = false
         $0.isUserInteractionEnabled = true
         $0.makeBorderLayer(color: .grey002)
         $0.backgroundColor = .clear
@@ -98,6 +99,7 @@ final class CreateReviewView: UIView, BaseViewType {
         return self.searchBarButton.buttonTapPublisher
     }
     let maxLengthAlertPublisher = PassthroughSubject<Void, Never>()
+    let maxLineAlertPublisher = PassthroughSubject<Void, Never>()
     let showStorePublisher = PassthroughSubject<String, Never>()
     let completeButtonDidTapPublisher = PassthroughSubject<(String, [UIImage]), Never>()
     
@@ -240,11 +242,18 @@ extension CreateReviewView: UITextViewDelegate {
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         let currentText = textView.text as NSString
         let newText = currentText.replacingCharacters(in: range, with: text)
+        let numberOfLines = newText.components(separatedBy: "\n").count
         
         if newText.count > 100 {
             self.maxLengthAlertPublisher.send()
             return false
         }
+        
+        if numberOfLines > 5 {
+            self.maxLineAlertPublisher.send()
+            return false
+        }
+        
         return true
     }
     

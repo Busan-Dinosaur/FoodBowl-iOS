@@ -113,7 +113,14 @@ final class CreateReviewViewController: UIViewController, Keyboardable, PhotoPic
         self.createReviewView.maxLengthAlertPublisher
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] _ in
-                self?.makeAlert(title: "최대 100자까지 입력 가능합니다.")
+                self?.makeAlert(title: "100자 이하로 작성해주세요.")
+            })
+            .store(in: &self.cancellable)
+        
+        self.createReviewView.maxLineAlertPublisher
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] _ in
+                self?.makeAlert(title: "5번 이내로 줄바꿈이 가능해요.")
             })
             .store(in: &self.cancellable)
         
