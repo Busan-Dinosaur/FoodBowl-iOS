@@ -34,7 +34,6 @@ final class SearchStoreView: UIView, BaseViewType {
     // MARK: - property
     
     private let textViewPlaceHolder = "100자 이내"
-    var stores: [Place] = []
     
     var cancelButtonDidTapPublisher: AnyPublisher<Void, Never> {
         return self.cancelButton.buttonTapPublisher
@@ -62,17 +61,8 @@ final class SearchStoreView: UIView, BaseViewType {
         navigationItem?.leftBarButtonItem = UIBarButtonItem(customView: searchBar)
     }
     
-    func configureDateSourceDelegation(_ delegate: UITableViewDataSource) {
-        self.listTableView.dataSource = delegate
-    }
-    
-    func configureDelegation(_ delegate: UITableViewDelegate) {
-        self.listTableView.delegate = delegate
-    }
-    
-    func updateTableView(stores: [Place]) {
-        self.stores = stores
-        self.listTableView.reloadData()
+    func tableView() -> UITableView {
+        return self.listTableView
     }
     
     // MARK: - base func

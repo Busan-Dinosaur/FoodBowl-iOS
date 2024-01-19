@@ -52,7 +52,7 @@ final class CreateReviewView: UIView, BaseViewType {
         $0.font = .font(.regular, ofSize: 17)
         $0.textColor = .mainTextColor
     }
-    lazy var commentTextView = UITextView().then {
+    private lazy var commentTextView = UITextView().then {
         $0.textContainerInset = UIEdgeInsets(top: 12, left: 10, bottom: 12, right: 10)
         $0.font = UIFont.preferredFont(forTextStyle: .subheadline, weight: .light)
         $0.textAlignment = NSTextAlignment.left
@@ -89,7 +89,7 @@ final class CreateReviewView: UIView, BaseViewType {
     // MARK: - property
     
     private let textViewPlaceHolder = "100자 이내"
-    var reviewImages = [UIImage]()
+    private var reviewImages = [UIImage]()
     
     var closeButtonDidTapPublisher: AnyPublisher<Void, Never> {
         return self.closeButton.buttonTapPublisher
@@ -97,9 +97,9 @@ final class CreateReviewView: UIView, BaseViewType {
     var searchBarButtonDidTapPublisher: AnyPublisher<Void, Never> {
         return self.searchBarButton.buttonTapPublisher
     }
-    let completeButtonDidTapPublisher = PassthroughSubject<(String, [UIImage]), Never>()
     let maxLengthAlertPublisher = PassthroughSubject<Void, Never>()
     let showStorePublisher = PassthroughSubject<String, Never>()
+    let completeButtonDidTapPublisher = PassthroughSubject<(String, [UIImage]), Never>()
     
     // MARK: - init
     
@@ -128,9 +128,8 @@ final class CreateReviewView: UIView, BaseViewType {
         self.listCollectionView.dataSource = delegate
     }
     
-    func updateCollectionView(images: [UIImage]) {
-        self.reviewImages = images
-        self.listCollectionView.reloadData()
+    func collectionView() -> UICollectionView {
+        return self.listCollectionView
     }
     
     // MARK: - base func
@@ -215,6 +214,10 @@ final class CreateReviewView: UIView, BaseViewType {
             self.completeButtonDidTapPublisher.send((comment, self.reviewImages))
         }
         self.completeButton.addAction(completeAction, for: .touchUpInside)
+    }
+    
+    func setImages(images: [UIImage]) {
+        self.reviewImages = images
     }
     
     func setStore(store: Place) {

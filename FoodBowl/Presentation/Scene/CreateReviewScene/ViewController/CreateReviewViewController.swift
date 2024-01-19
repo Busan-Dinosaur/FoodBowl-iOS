@@ -19,6 +19,8 @@ final class CreateReviewViewController: UIViewController, Keyboardable, PhotoPic
     
     // MARK: - property
     
+    private var reviewImages = [UIImage]()
+    
     private let viewModel: any BaseViewModelType
     private var cancellable: Set<AnyCancellable> = Set()
     
@@ -140,13 +142,15 @@ final class CreateReviewViewController: UIViewController, Keyboardable, PhotoPic
     }
     
     func setPhotoes(images: [UIImage]) {
-        self.createReviewView.updateCollectionView(images: images)
+        self.reviewImages = images
+        self.createReviewView.setImages(images: images)
+        self.createReviewView.collectionView().reloadData()
     }
 }
 
 extension CreateReviewViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_: UICollectionView, numberOfItemsInSection _: Int) -> Int {
-        return self.createReviewView.reviewImages.count + 1
+        return self.reviewImages.count + 1
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -170,7 +174,7 @@ extension CreateReviewViewController: UICollectionViewDataSource, UICollectionVi
                 return UICollectionViewCell()
             }
 
-            cell.imageView.image = self.createReviewView.reviewImages[indexPath.item - 1]
+            cell.imageView.image = self.reviewImages[indexPath.item - 1]
 
             return cell
         }

@@ -19,6 +19,8 @@ final class SearchStoreViewController: UIViewController, Keyboardable {
     
     // MARK: - property
     
+    private var stores: [Place] = []
+    
     private let viewModel: any BaseViewModelType
     private var cancellable: Set<AnyCancellable> = Set()
     
@@ -80,7 +82,8 @@ final class SearchStoreViewController: UIViewController, Keyboardable {
             .receive(on: DispatchQueue.main)
             .sink { _ in
             } receiveValue: { [weak self] stores in
-                self?.searchStoreView.updateTableView(stores: stores)
+                self?.stores = stores
+                self?.searchStoreView.tableView().reloadData()
             }
             .store(in: &self.cancellable)
         
@@ -113,8 +116,8 @@ final class SearchStoreViewController: UIViewController, Keyboardable {
     // MARK: - func
     
     private func configureDelegation() {
-        self.searchStoreView.configureDateSourceDelegation(self)
-        self.searchStoreView.configureDelegation(self)
+        self.searchStoreView.tableView().delegate = self
+        self.searchStoreView.tableView().dataSource = self
     }
     
     private func configureNavigation() {
@@ -125,7 +128,7 @@ final class SearchStoreViewController: UIViewController, Keyboardable {
 
 extension SearchStoreViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
-        return self.searchStoreView.stores.count
+        return self.stores.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -134,9 +137,9 @@ extension SearchStoreViewController: UITableViewDataSource, UITableViewDelegate 
         else { return UITableViewCell() }
 
         cell.selectionStyle = .none
-        cell.storeNameLabel.text = self.searchStoreView.stores[indexPath.item].name
-        cell.storeAdressLabel.text = self.searchStoreView.stores[indexPath.item].address
-        cell.storeDistanceLabel.text = self.searchStoreView.stores[indexPath.item].distance
+        cell.storeNameLabel.text = self.stores[indexPath.item].name
+        cell.storeAdressLabel.text = self.stores[indexPath.item].address
+        cell.storeDistanceLabel.text = self.stores[indexPath.item].distance
 
         return cell
     }
@@ -146,7 +149,7 @@ extension SearchStoreViewController: UITableViewDataSource, UITableViewDelegate 
     }
 
     func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
-        self.selectStorePublisher.send(self.searchStoreView.stores[indexPath.item])
+        self.selectStorePublisher.send(self.stores[indexPath.item])
     }
 }
 
