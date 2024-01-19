@@ -7,7 +7,7 @@
 
 import Foundation
 
-// MARK: - StoreItem
+// MARK: - Store
 struct Store: Codable {
     let id: Int
     let categoryName: String

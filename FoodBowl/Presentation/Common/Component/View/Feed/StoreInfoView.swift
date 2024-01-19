@@ -19,14 +19,10 @@ final class StoreInfoView: UIView {
         $0.contentHorizontalAlignment = .left
     }
 
-    let categoryLabel = UILabel().then {
-        $0.font = UIFont.preferredFont(forTextStyle: .caption2, weight: .regular)
-        $0.textColor = .subTextColor
-    }
-
-    let distanceLabel = UILabel().then {
-        $0.font = UIFont.preferredFont(forTextStyle: .caption2, weight: .regular)
-        $0.textColor = .subTextColor
+    let storeDetailButton = UIButton().then {
+        $0.setTitleColor(.subTextColor, for: .normal)
+        $0.titleLabel?.font = UIFont.preferredFont(forTextStyle: .caption2, weight: .regular)
+        $0.contentHorizontalAlignment = .left
     }
 
     let bookmarkButton = BookmarkButton()
@@ -44,7 +40,7 @@ final class StoreInfoView: UIView {
     }
 
     private func setupLayout() {
-        addSubviews(storeNameButton, categoryLabel, distanceLabel, bookmarkButton)
+        addSubviews(storeNameButton, storeDetailButton, bookmarkButton)
 
         storeNameButton.snp.makeConstraints {
             $0.leading.equalToSuperview().inset(14)
@@ -52,14 +48,10 @@ final class StoreInfoView: UIView {
             $0.height.equalTo(18)
         }
 
-        categoryLabel.snp.makeConstraints {
+        storeDetailButton.snp.makeConstraints {
             $0.leading.equalToSuperview().inset(14)
             $0.top.equalTo(storeNameButton.snp.bottom).offset(2)
-        }
-
-        distanceLabel.snp.makeConstraints {
-            $0.leading.equalTo(categoryLabel.snp.trailing).offset(8)
-            $0.top.equalTo(storeNameButton.snp.bottom).offset(2)
+            $0.height.equalTo(13)
         }
 
         bookmarkButton.snp.makeConstraints {
@@ -74,8 +66,7 @@ final class StoreInfoView: UIView {
 
     func configureStore(_ store: StoreByReviewDTO) {
         storeNameButton.setTitle(store.name, for: .normal)
-        categoryLabel.text = store.categoryName
-        distanceLabel.text = store.distance.prettyDistance
+        storeDetailButton.setTitle("\(store.categoryName), \(store.distance.prettyDistance)", for: .normal)
         bookmarkButton.isSelected = store.isBookmarked
     }
 }

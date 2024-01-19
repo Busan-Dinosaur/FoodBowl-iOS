@@ -19,18 +19,13 @@ final class StoreHeaderView: UIView {
         $0.textColor = .mainTextColor
     }
 
-    let categoryLabel = UILabel().then {
+    let storeDetailLabel = UILabel().then {
         $0.font = UIFont.preferredFont(forTextStyle: .footnote, weight: .light)
         $0.textColor = .subTextColor
     }
 
     let storeAddressLabel = UILabel().then {
         $0.font = UIFont.preferredFont(forTextStyle: .footnote, weight: .regular)
-        $0.textColor = .subTextColor
-    }
-
-    let distanceLabel = UILabel().then {
-        $0.font = UIFont.preferredFont(forTextStyle: .footnote, weight: .light)
         $0.textColor = .subTextColor
     }
 
@@ -52,7 +47,7 @@ final class StoreHeaderView: UIView {
     }
 
     private func setupLayout() {
-        addSubviews(mapButton, storeNameLabel, categoryLabel, storeAddressLabel, bookmarkButton, borderLineView)
+        addSubviews(mapButton, storeNameLabel, storeDetailLabel, storeAddressLabel, bookmarkButton, borderLineView)
 
         mapButton.snp.makeConstraints {
             $0.top.equalToSuperview()
@@ -64,8 +59,8 @@ final class StoreHeaderView: UIView {
             $0.leading.equalTo(mapButton.snp.trailing).offset(12)
         }
 
-        categoryLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(4)
+        storeDetailLabel.snp.makeConstraints {
+            $0.centerY.equalTo(storeNameLabel)
             $0.leading.equalTo(storeNameLabel.snp.trailing).offset(12)
         }
 
@@ -90,9 +85,8 @@ final class StoreHeaderView: UIView {
 extension StoreHeaderView {
     func configureHeader(_ store: Store) {
         self.storeNameLabel.text = store.name
-        self.categoryLabel.text = store.categoryName
-        self.storeAddressLabel.text = store.addressName
-        self.distanceLabel.text = store.distance.prettyDistance
+        self.storeDetailLabel.text = store.categoryName
+        self.storeAddressLabel.text = "\(store.addressName), \(store.distance)"
         self.bookmarkButton.isSelected = store.isBookmarked
         
         let action = UIAction { _ in

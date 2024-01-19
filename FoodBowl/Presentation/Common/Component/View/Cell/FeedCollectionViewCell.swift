@@ -94,6 +94,7 @@ final class FeedCollectionViewCell: UICollectionViewCell, BaseViewType {
         userInfoView.userNameButton.addAction(UIAction { _ in self.userButtonTapAction?(self) }, for: .touchUpInside)
         userInfoView.optionButton.addAction(UIAction { _ in self.optionButtonTapAction?(self) }, for: .touchUpInside)
         storeInfoView.storeNameButton.addAction(UIAction { _ in self.storeButtonTapAction?(self) }, for: .touchUpInside)
+        storeInfoView.storeDetailButton.addAction(UIAction { _ in self.storeButtonTapAction?(self) }, for: .touchUpInside)
         storeInfoView.bookmarkButton.addAction(UIAction { _ in self.bookmarkButtonTapAction?(self) }, for: .touchUpInside)
     }
 }
