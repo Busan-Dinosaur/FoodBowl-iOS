@@ -11,6 +11,7 @@ import SnapKit
 import Then
 
 final class FindResultViewController: BaseViewController {
+    
     lazy var searchResultTableView = UITableView().then {
         $0.register(StoreInfoTableViewCell.self, forCellReuseIdentifier: StoreInfoTableViewCell.className)
         $0.register(UserInfoTableViewCell.self, forCellReuseIdentifier: UserInfoTableViewCell.className)
@@ -19,9 +20,9 @@ final class FindResultViewController: BaseViewController {
     }
 
     override func setupLayout() {
-        view.addSubviews(searchResultTableView)
+        self.view.addSubviews(self.searchResultTableView)
 
-        searchResultTableView.snp.makeConstraints {
+        self.searchResultTableView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
     }

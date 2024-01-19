@@ -84,6 +84,7 @@ extension PhotoListView: UICollectionViewDataSource, UICollectionViewDelegate {
 
         if indexPath.item < photos.count {
             cell.configureCell(photos[indexPath.item])
+            cell.configureCellAction()
         }
 
         return cell

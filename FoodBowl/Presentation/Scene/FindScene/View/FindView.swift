@@ -57,11 +57,6 @@ final class FindView: UIView, BaseViewType {
     
     // MARK: - property
     
-    var stores: [Store] = []
-    var members: [Member] = []
-    var scope: Int = 0
-    var searchText: String = ""
-    
     var plusButtonDidTapPublisher: AnyPublisher<Void, Never> {
         return self.plusButton.buttonTapPublisher
     }

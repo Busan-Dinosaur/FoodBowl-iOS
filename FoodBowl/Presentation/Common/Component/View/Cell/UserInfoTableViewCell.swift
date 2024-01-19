@@ -5,6 +5,7 @@
 //  Created by COBY_PRO on 2023/01/18.
 //
 
+import Combine
 import UIKit
 
 import Kingfisher
@@ -89,7 +90,6 @@ final class UserInfoTableViewCell: BaseTableViewCell {
         } else {
             self.followButton.isHidden = false
             self.followButton.isSelected = member.isFollowing
-            self.followButtonTapAction = { [weak self] _ in }
         }
     }
 

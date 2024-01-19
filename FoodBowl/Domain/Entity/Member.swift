@@ -16,5 +16,5 @@ struct Member: Codable {
     let followerCount: String
     let followingCount: String
     let isMyProfile: Bool
-    let isFollowing: Bool
+    var isFollowing: Bool
 }

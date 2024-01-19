@@ -55,7 +55,7 @@ final class SearchStoreViewModel: NSObject, BaseViewModelType {
     
     // MARK: - network
     
-    func searchStores(keyword: String) {
+    private func searchStores(keyword: String) {
         Task {
             do {
                 guard let location = LocationManager.shared.manager.location?.coordinate else { return }
@@ -69,7 +69,7 @@ final class SearchStoreViewModel: NSObject, BaseViewModelType {
         }
     }
     
-    func searchUniv(store: Place) {
+    private func searchUniv(store: Place) {
         Task {
             do {
                 let univ = try await self.usecase.searchUniv(x: store.x, y: store.y)
