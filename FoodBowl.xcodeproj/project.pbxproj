@@ -125,8 +125,6 @@
 		CBADC29529559BC900E56C93 /* UITextView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADC26D29559BC900E56C93 /* UITextView+Extension.swift */; };
 		CBADC29629559BC900E56C93 /* UITableView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADC26E29559BC900E56C93 /* UITableView+Extension.swift */; };
 		CBADC29A29559BC900E56C93 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADC27529559BC900E56C93 /* BaseViewController.swift */; };
-		CBADC29B29559BC900E56C93 /* BaseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADC27629559BC900E56C93 /* BaseTableViewCell.swift */; };
-		CBADC29C29559BC900E56C93 /* BaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADC27729559BC900E56C93 /* BaseCollectionViewCell.swift */; };
 		CBADC2A129559BC900E56C93 /* BackButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADC27D29559BC900E56C93 /* BackButton.swift */; };
 		CBADC2AD2955A0FF00E56C93 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADC2AC2955A0FF00E56C93 /* ProfileViewController.swift */; };
 		CBADC2CF2955A41500E56C93 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADC2CE2955A41500E56C93 /* TabBarController.swift */; };
@@ -314,8 +312,6 @@
 		CBADC26D29559BC900E56C93 /* UITextView+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITextView+Extension.swift"; sourceTree = "<group>"; };
 		CBADC26E29559BC900E56C93 /* UITableView+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITableView+Extension.swift"; sourceTree = "<group>"; };
 		CBADC27529559BC900E56C93 /* BaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
-		CBADC27629559BC900E56C93 /* BaseTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseTableViewCell.swift; sourceTree = "<group>"; };
-		CBADC27729559BC900E56C93 /* BaseCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseCollectionViewCell.swift; sourceTree = "<group>"; };
 		CBADC27D29559BC900E56C93 /* BackButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackButton.swift; sourceTree = "<group>"; };
 		CBADC2AC2955A0FF00E56C93 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		CBADC2CE2955A41500E56C93 /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
@@ -1028,8 +1024,6 @@
 				CB20BAD22AE39F11007535C8 /* Optionable.swift */,
 				CB9332622AFCC26800B7F87A /* PhotoPickerable.swift */,
 				CBADC27529559BC900E56C93 /* BaseViewController.swift */,
-				CBADC27629559BC900E56C93 /* BaseTableViewCell.swift */,
-				CBADC27729559BC900E56C93 /* BaseCollectionViewCell.swift */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -1495,7 +1489,6 @@
 				CB2A44A62ADFC62D004A4126 /* PanZoomImageView.swift in Sources */,
 				CBDECAC82A6B2F0700259350 /* FeedListView.swift in Sources */,
 				CB4A78B02B58483F0002136F /* SearchStoreViewModel.swift in Sources */,
-				CBADC29B29559BC900E56C93 /* BaseTableViewCell.swift in Sources */,
 				CB1566D9298D72FF0056B7D9 /* LocationManager.swift in Sources */,
 				CB91E2AC2B56DDE5008A0E8E /* StoreDetailRepositoryImpl.swift in Sources */,
 				CBE6190F296C6435005295AF /* MapViewController.swift in Sources */,
@@ -1555,7 +1548,6 @@
 				CB16FD512B3491F9006D18D6 /* UserInfoTableViewCell.swift in Sources */,
 				CB5BFB1F2B3F028F00B35062 /* SignRepository.swift in Sources */,
 				CB7F3327298A51610000A6B4 /* UserDefaultHandler.swift in Sources */,
-				CBADC29C29559BC900E56C93 /* BaseCollectionViewCell.swift in Sources */,
 				CB1579002AAC61CD00007183 /* TokenDTO.swift in Sources */,
 				CB1A7C5C29560C2300C6431D /* UserInfoView.swift in Sources */,
 				CBD0362F2ABA150600E1AE9A /* RecentReviewController.swift in Sources */,

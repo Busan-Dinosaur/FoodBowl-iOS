@@ -5,7 +5,6 @@
 //  Created by COBY_PRO on 2022/12/23.
 //
 
-import Combine
 import UIKit
 
 import SnapKit
@@ -101,10 +100,10 @@ final class FeedCollectionViewCell: UICollectionViewCell, BaseViewType {
 
 // MARK: - Public - func
 extension FeedCollectionViewCell {    
-    func configureCell(_ data: ReviewItemDTO) {
-        let writer = data.writer
-        let store = data.store
-        let review = data.review
+    func configureCell(_ reviewItem: ReviewItemDTO) {
+        let writer = reviewItem.writer
+        let store = reviewItem.store
+        let review = reviewItem.review
         
         self.userInfoView.comfigureUser(writer.toWriter())
         self.storeInfoView.configureStore(store)

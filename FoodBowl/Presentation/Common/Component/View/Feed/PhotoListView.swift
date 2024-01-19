@@ -12,6 +12,7 @@ import SnapKit
 import Then
 
 final class PhotoListView: UIView {
+    
     private enum Size {
         static let cellWidth: CGFloat = 100
         static let cellHeight: CGFloat = 100
@@ -84,7 +85,18 @@ extension PhotoListView: UICollectionViewDataSource, UICollectionViewDelegate {
 
         if indexPath.item < photos.count {
             cell.configureCell(photos[indexPath.item])
-            cell.configureCellAction()
+            cell.cellAction = { _ in
+                let imageViewController = ImageViewController()
+                imageViewController.imageScrollView.imageView.image = cell.imageView.image
+                imageViewController.modalPresentationStyle = .fullScreen
+                imageViewController.modalTransitionStyle = .crossDissolve
+
+                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now()) {
+                    guard let rootVC = (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.windows.first?.rootViewController
+                    else { return }
+                    rootVC.present(imageViewController, animated: true)
+                }
+            }
         }
 
         return cell

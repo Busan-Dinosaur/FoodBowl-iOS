@@ -107,8 +107,8 @@ final class StoreDetailView: UIView, BaseViewType {
         
         let bookmarkAction = UIAction { [weak self] _ in
             guard let self = self else { return }
-            self.storeHeaderView.bookmarkButton.isSelected.toggle()
             self.bookmarkButtonDidTapPublisher.send(self.storeHeaderView.bookmarkButton.isSelected)
+            self.storeHeaderView.bookmarkButton.isSelected.toggle()
         }
         self.storeHeaderView.bookmarkButton.addAction(bookmarkAction, for: .touchUpInside)
         

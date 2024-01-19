@@ -170,7 +170,7 @@ extension CreateReviewViewController: UICollectionViewDataSource, UICollectionVi
                 return UICollectionViewCell()
             }
 
-            cell.foodImageView.image = self.createReviewView.reviewImages[indexPath.item - 1]
+            cell.imageView.image = self.createReviewView.reviewImages[indexPath.item - 1]
 
             return cell
         }

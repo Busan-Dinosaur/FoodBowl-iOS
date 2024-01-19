@@ -5,7 +5,6 @@
 //  Created by COBY_PRO on 2023/07/22.
 //
 
-import Combine
 import UIKit
 
 import SnapKit
@@ -90,9 +89,9 @@ final class FeedNSCollectionViewCell: UICollectionViewCell, BaseViewType {
 
 // MARK: - Public - func
 extension FeedNSCollectionViewCell {
-    func configureCell(_ data: ReviewItem) {
-        let writer = data.writer
-        let comment = data.comment
+    func configureCell(_ reviewItem: ReviewItem) {
+        let writer = reviewItem.writer
+        let comment = reviewItem.comment
         
         self.userInfoView.comfigureUser(writer)
         self.commentLabel.text = comment.content

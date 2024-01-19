@@ -5,60 +5,70 @@
 //  Created by COBY_PRO on 2023/01/18.
 //
 
-import Combine
 import UIKit
 
 import Kingfisher
 import SnapKit
 import Then
 
-final class UserInfoTableViewCell: BaseTableViewCell {
-    
-    var followButtonTapAction: ((UserInfoTableViewCell) -> Void)?
+final class UserInfoTableViewCell: UITableViewCell, BaseViewType {
 
-    // MARK: - property
-    let userImageView = UIImageView().then {
+    // MARK: - ui component
+    
+    private let userImageView = UIImageView().then {
         $0.image = ImageLiteral.defaultProfile
         $0.layer.cornerRadius = 20
         $0.layer.masksToBounds = true
         $0.layer.borderColor = UIColor.grey002.cgColor
         $0.layer.borderWidth = 1
     }
-
-    let userNameLabel = UILabel().then {
+    private let userNameLabel = UILabel().then {
         $0.font = UIFont.preferredFont(forTextStyle: .subheadline, weight: .medium)
         $0.textColor = .mainTextColor
     }
-
-    let userFollowerLabel = UILabel().then {
+    private let userFollowerLabel = UILabel().then {
         $0.font = UIFont.preferredFont(forTextStyle: .footnote, weight: .light)
         $0.textColor = .subTextColor
     }
+    private let followButton = FollowButton()
+    
+    // MARK: - property
+    
+    var followButtonTapAction: ((UserInfoTableViewCell) -> Void)?
+    
+    // MARK: - init
+    
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        self.baseInit()
+    }
+    
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
-    let followButton = FollowButton()
+    func setupLayout() {
+        self.contentView.addSubviews(self.userImageView, self.userNameLabel, self.userFollowerLabel, self.followButton)
 
-    // MARK: - func
-    override func setupLayout() {
-        contentView.addSubviews(userImageView, userNameLabel, userFollowerLabel, followButton)
-
-        userImageView.snp.makeConstraints {
+        self.userImageView.snp.makeConstraints {
             $0.leading.equalToSuperview().inset(SizeLiteral.horizantalPadding)
             $0.centerY.equalToSuperview()
             $0.width.height.equalTo(40)
         }
 
-        userNameLabel.snp.makeConstraints {
-            $0.leading.equalTo(userImageView.snp.trailing).offset(12)
+        self.userNameLabel.snp.makeConstraints {
+            $0.leading.equalTo(self.userImageView.snp.trailing).offset(12)
             $0.top.equalToSuperview().inset(14)
             $0.height.equalTo(18)
         }
 
-        userFollowerLabel.snp.makeConstraints {
-            $0.leading.equalTo(userImageView.snp.trailing).offset(12)
-            $0.top.equalTo(userNameLabel.snp.bottom).offset(4)
+        self.userFollowerLabel.snp.makeConstraints {
+            $0.leading.equalTo(self.userImageView.snp.trailing).offset(12)
+            $0.top.equalTo(self.userNameLabel.snp.bottom).offset(4)
         }
 
-        followButton.snp.makeConstraints {
+        self.followButton.snp.makeConstraints {
             $0.trailing.equalToSuperview().inset(SizeLiteral.horizantalPadding)
             $0.centerY.equalToSuperview()
             $0.width.equalTo(50)
@@ -66,17 +76,23 @@ final class UserInfoTableViewCell: BaseTableViewCell {
         }
     }
 
-    override func configureUI() {
+    func configureUI() {
+        self.backgroundColor = .mainBackgroundColor
+    }
+    
+    private func setupAction() {
         followButton.addAction(UIAction { _ in self.followButtonTapAction?(self) }, for: .touchUpInside)
-        backgroundColor = .clear
     }
 
     override func prepareForReuse() {
         super.prepareForReuse()
         userImageView.image = nil
     }
+}
 
-    func setupData(_ member: Member) {
+// MARK: - Public - func
+extension UserInfoTableViewCell {
+    func configureCell(_ member: Member) {
         self.userNameLabel.text = member.nickname
         self.userFollowerLabel.text = "팔로워 \(member.followerCount)명"
         if let url = member.profileImageUrl {

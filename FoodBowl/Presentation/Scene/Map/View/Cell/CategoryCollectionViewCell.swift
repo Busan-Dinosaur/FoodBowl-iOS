@@ -10,7 +10,8 @@ import UIKit
 import SnapKit
 import Then
 
-final class CategoryCollectionViewCell: BaseCollectionViewCell {
+final class CategoryCollectionViewCell: UICollectionViewCell, BaseViewType {
+    
     override var isSelected: Bool {
         didSet {
             if isSelected {
@@ -24,24 +25,37 @@ final class CategoryCollectionViewCell: BaseCollectionViewCell {
     }
 
     // MARK: - property
+    
     let categoryLabel = UILabel().then {
         $0.font = UIFont.preferredFont(forTextStyle: .footnote, weight: .light)
         $0.textColor = .mainTextColor
     }
+    
+    // MARK: - init
 
-    override func setupLayout() {
-        contentView.addSubviews(categoryLabel)
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        self.baseInit()
+    }
+    
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
-        categoryLabel.snp.makeConstraints {
+    func setupLayout() {
+        self.contentView.addSubviews(self.categoryLabel)
+
+        self.categoryLabel.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview().inset(14)
             $0.top.bottom.equalToSuperview().inset(6)
         }
     }
 
-    override func configureUI() {
-        backgroundColor = .mainBackgroundColor
-        layer.cornerRadius = 14
-        layer.borderWidth = 1
-        layer.borderColor = UIColor.grey002.cgColor
+    func configureUI() {
+        self.backgroundColor = .mainBackgroundColor
+        self.layer.cornerRadius = 14
+        self.layer.borderWidth = 1
+        self.layer.borderColor = UIColor.grey002.cgColor
     }
 }

@@ -10,31 +10,42 @@ import UIKit
 import SnapKit
 import Then
 
-final class SettingItemTableViewCell: BaseTableViewCell {
-    // MARK: - property
+final class SettingItemTableViewCell: UITableViewCell, BaseViewType {
+    
+    // MARK: - ui component
     let menuLabel = UILabel().then {
         $0.font = UIFont.preferredFont(forTextStyle: .callout, weight: .regular)
         $0.textColor = .subTextColor
     }
-
     private let forwardButton = ForwardButton()
 
-    // MARK: - func
-    override func setupLayout() {
-        contentView.addSubviews(menuLabel, forwardButton)
+    // MARK: - init
+    
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        self.baseInit()
+    }
+    
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
-        menuLabel.snp.makeConstraints {
+    func setupLayout() {
+        self.contentView.addSubviews(self.menuLabel, self.forwardButton)
+
+        self.menuLabel.snp.makeConstraints {
             $0.leading.equalToSuperview().inset(SizeLiteral.horizantalPadding)
             $0.centerY.equalToSuperview()
         }
 
-        forwardButton.snp.makeConstraints {
+        self.forwardButton.snp.makeConstraints {
             $0.trailing.equalToSuperview().inset(SizeLiteral.horizantalPadding)
             $0.centerY.equalToSuperview()
         }
     }
 
-    override func configureUI() {
-        backgroundColor = .clear
+    func configureUI() {
+        self.backgroundColor = .mainBackgroundColor
     }
 }

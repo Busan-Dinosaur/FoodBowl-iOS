@@ -10,7 +10,21 @@ import UIKit
 import SnapKit
 import Then
 
-final class FindResultViewController: BaseViewController {
+final class FindResultViewController: UIViewController {
+    
+    // MARK: - init
+    
+    deinit {
+        print("\(#file) is dead")
+    }
+    
+    // MARK: - life cycle
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.setupLayout()
+        self.configureUI()
+    }
     
     lazy var searchResultTableView = UITableView().then {
         $0.register(StoreInfoTableViewCell.self, forCellReuseIdentifier: StoreInfoTableViewCell.className)
@@ -19,11 +33,15 @@ final class FindResultViewController: BaseViewController {
         $0.backgroundColor = .mainBackgroundColor
     }
 
-    override func setupLayout() {
+    private func setupLayout() {
         self.view.addSubviews(self.searchResultTableView)
 
         self.searchResultTableView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
+    }
+    
+    private func configureUI() {
+        self.view.backgroundColor = .mainBackgroundColor
     }
 }

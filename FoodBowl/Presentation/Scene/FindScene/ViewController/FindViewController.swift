@@ -161,11 +161,11 @@ extension FindViewController {
     }
 
     private func feedCollectionViewDataSource() -> UICollectionViewDiffableDataSource<Section, ReviewItem> {
-        let reviewCellRegistration = UICollectionView.CellRegistration<PhotoCollectionViewCell, ReviewItem> {
-            [weak self] cell, indexPath, item in
-            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self?.feedDidTap))
-            cell.addGestureRecognizer(tapGesture)
+        let reviewCellRegistration = UICollectionView.CellRegistration<PhotoCollectionViewCell, ReviewItem> { cell, indexPath, item in
             cell.configureCell(item.thumbnail)
+            cell.cellAction = { [weak self] _ in
+                print(item.comment.id)
+            }
         }
 
         return UICollectionViewDiffableDataSource(
@@ -178,11 +178,6 @@ extension FindViewController {
                 )
             }
         )
-    }
-    
-    @objc
-    private func feedDidTap() {
-        print("tapped")
     }
 }
 
@@ -259,7 +254,7 @@ extension FindViewController: UITableViewDataSource, UITableViewDelegate {
             }
 
             cell.selectionStyle = .none
-            cell.setupData(self.stores[indexPath.item])
+            cell.configureCell(self.stores[indexPath.item])
 
             return cell
         } else {
@@ -271,12 +266,12 @@ extension FindViewController: UITableViewDataSource, UITableViewDelegate {
             }
             
             cell.selectionStyle = .none
-            cell.setupData(self.members[indexPath.item])
+            cell.configureCell(self.members[indexPath.item])
             cell.followButtonTapAction = { [weak self] _ in
                 guard let self = self else { return }
                 self.followButtonDidTapPublisher.send((self.members[indexPath.item].id, self.members[indexPath.item].isFollowing))
                 self.members[indexPath.item].isFollowing.toggle()
-                cell.followButton.isSelected = self.members[indexPath.item].isFollowing
+                cell.configureCell(self.members[indexPath.item])
             }
 
             return cell

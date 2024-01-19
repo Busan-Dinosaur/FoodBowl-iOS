@@ -61,7 +61,7 @@ final class StoreDetailViewModel: BaseViewModelType {
                 guard let self = self else { return }
                 self.currentpageSize = self.pageSize
                 self.lastReviewId = nil
-                self.isFriend.toggle()
+                self.isFriend = isFriend
                 self.getReviews()
             })
             .store(in: &self.cancelBag)
@@ -69,7 +69,7 @@ final class StoreDetailViewModel: BaseViewModelType {
         input.bookmarkButtonDidTap
             .sink(receiveValue: { [weak self] isBookmark in
                 guard let self = self else { return }
-                isBookmark ? self.createBookmark() : self.removeBookmark()
+                isBookmark ? self.removeBookmark() : self.createBookmark()
             })
             .store(in: &self.cancelBag)
         
