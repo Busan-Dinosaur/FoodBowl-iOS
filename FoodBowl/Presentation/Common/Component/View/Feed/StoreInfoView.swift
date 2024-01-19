@@ -21,6 +21,12 @@ final class StoreInfoView: UIView {
 
     let storeDetailButton = UIButton().then {
         $0.setTitleColor(.subTextColor, for: .normal)
+        $0.titleLabel?.font = UIFont.preferredFont(forTextStyle: .caption2, weight: .light)
+        $0.contentHorizontalAlignment = .left
+    }
+    
+    let storeAddressButton = UIButton().then {
+        $0.setTitleColor(.subTextColor, for: .normal)
         $0.titleLabel?.font = UIFont.preferredFont(forTextStyle: .caption2, weight: .regular)
         $0.contentHorizontalAlignment = .left
     }
@@ -40,7 +46,7 @@ final class StoreInfoView: UIView {
     }
 
     private func setupLayout() {
-        addSubviews(storeNameButton, storeDetailButton, bookmarkButton)
+        addSubviews(storeNameButton, storeDetailButton, storeAddressButton, bookmarkButton)
 
         storeNameButton.snp.makeConstraints {
             $0.leading.equalToSuperview().inset(14)
@@ -49,6 +55,12 @@ final class StoreInfoView: UIView {
         }
 
         storeDetailButton.snp.makeConstraints {
+            $0.leading.equalTo(storeNameButton.snp.trailing).offset(8)
+            $0.centerY.equalTo(storeNameButton)
+            $0.height.equalTo(13)
+        }
+        
+        storeAddressButton.snp.makeConstraints {
             $0.leading.equalToSuperview().inset(14)
             $0.top.equalTo(storeNameButton.snp.bottom).offset(2)
             $0.height.equalTo(13)
@@ -67,6 +79,7 @@ final class StoreInfoView: UIView {
     func configureStore(_ store: StoreByReviewDTO) {
         storeNameButton.setTitle(store.name, for: .normal)
         storeDetailButton.setTitle("\(store.categoryName), \(store.distance.prettyDistance)", for: .normal)
+        storeAddressButton.setTitle(store.addressName, for: .normal)
         bookmarkButton.isSelected = store.isBookmarked
     }
 }
