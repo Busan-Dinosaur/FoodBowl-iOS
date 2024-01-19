@@ -81,12 +81,12 @@ final class UserInfoTableViewCell: UITableViewCell, BaseViewType {
     }
     
     private func setupAction() {
-        followButton.addAction(UIAction { _ in self.followButtonTapAction?(self) }, for: .touchUpInside)
+        self.followButton.addAction(UIAction { _ in self.followButtonTapAction?(self) }, for: .touchUpInside)
     }
 
     override func prepareForReuse() {
         super.prepareForReuse()
-        userImageView.image = nil
+        self.userImageView.image = nil
     }
 }
 
@@ -106,16 +106,6 @@ extension UserInfoTableViewCell {
         } else {
             self.followButton.isHidden = false
             self.followButton.isSelected = member.isFollowing
-        }
-    }
-
-    func setupDataByMemberByFollow(_ member: MemberByFollowItemDTO) {
-        userNameLabel.text = member.nickname
-        userFollowerLabel.text = "팔로워 \(member.followerCount.prettyNumber)명"
-        if let url = member.profileImageUrl {
-            userImageView.kf.setImage(with: URL(string: url))
-        } else {
-            userImageView.image = ImageLiteral.defaultProfile
         }
     }
 }

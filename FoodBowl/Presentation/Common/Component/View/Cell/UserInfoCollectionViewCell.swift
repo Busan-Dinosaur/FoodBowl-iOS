@@ -92,7 +92,7 @@ final class UserInfoCollectionViewCell: UICollectionViewCell, BaseViewType {
 
 // MARK: - Public - func
 extension UserInfoCollectionViewCell {
-    func setupData(_ member: MemberDTO) {
+    func configureCell(_ member: Member) {
         if let url = member.profileImageUrl {
             userImageButton.kf.setImage(with: URL(string: url), for: .normal)
         } else {
@@ -100,17 +100,6 @@ extension UserInfoCollectionViewCell {
         }
         
         userNameButton.setTitle(member.nickname, for: .normal)
-        userFollowerLabel.text = "팔로워 \(member.followerCount.prettyNumber)명"
-    }
-    
-    func setupDataByMemberByFollow(_ member: MemberByFollowItemDTO) {
-        if let url = member.profileImageUrl {
-            userImageButton.kf.setImage(with: URL(string: url), for: .normal)
-        } else {
-            userImageButton.setImage(ImageLiteral.defaultProfile, for: .normal)
-        }
-        
-        userNameButton.setTitle(member.nickname, for: .normal)
-        userFollowerLabel.text = "팔로워 \(member.followerCount.prettyNumber)명"
+        userFollowerLabel.text = "팔로워 \(member.followerCount)명"
     }
 }

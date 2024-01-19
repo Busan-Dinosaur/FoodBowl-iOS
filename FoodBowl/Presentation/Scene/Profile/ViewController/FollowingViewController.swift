@@ -142,7 +142,7 @@ extension FollowingViewController {
     private func userInfoCollectionViewDataSource() -> UICollectionViewDiffableDataSource<Section, MemberByFollowItemDTO> {
         let reviewCellRegistration = UICollectionView.CellRegistration<UserInfoCollectionViewCell, MemberByFollowItemDTO> {
             [weak self] cell, indexPath, item in
-            cell.setupDataByMemberByFollow(item)
+            cell.configureCell(item.toMember())
             self?.bindCell(cell, with: item)
         }
 
