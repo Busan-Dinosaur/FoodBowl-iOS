@@ -133,7 +133,7 @@ final class FindViewController: UIViewController, Keyboardable {
         self.findView.plusButtonDidTapPublisher
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] _ in
-                self?.navigationController?.popViewController(animated: true)
+                self?.presentCreateReviewController()
             })
             .store(in: &self.cancellable)
     }
@@ -150,6 +150,19 @@ final class FindViewController: UIViewController, Keyboardable {
     private func configureNavigation() {
         guard let navigationController = self.navigationController else { return }
         self.findView.configureNavigationBarItem(navigationController)
+    }
+}
+
+// MARK: - Helper
+extension FindViewController {
+    private func presentCreateReviewController() {
+        let repository = CreateReviewRepositoryImpl()
+        let usecase = CreateReviewUsecaseImpl(repository: repository)
+        let viewModel = CreateReviewViewModel(usecase: usecase)
+        let viewController = CreateReviewViewController(viewModel: viewModel)
+        let navigationController = UINavigationController(rootViewController: viewController)
+        navigationController.modalPresentationStyle = .fullScreen
+        self.present(navigationController, animated: true)
     }
 }
 
@@ -298,11 +311,5 @@ extension FindViewController: UITableViewDataSource, UITableViewDelegate {
                 self?.navigationController?.pushViewController(profileViewController, animated: true)
             }
         }
-    }
-}
-
-extension FindViewController: CreateReviewViewControllerDelegate {
-    func updateData() {
-//        loadData()
     }
 }

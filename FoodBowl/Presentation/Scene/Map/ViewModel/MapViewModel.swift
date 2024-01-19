@@ -18,7 +18,7 @@ final class MapViewModel: BaseViewModelType {
     // MARK: - property
 
     private let provider = MoyaProvider<ServiceAPI>()
-    private var cancelBag = Set<AnyCancellable>()
+    private var cancellable = Set<AnyCancellable>()
     
     private let pageSize: Int = 20
     private let size: Int = 20
@@ -73,7 +73,7 @@ final class MapViewModel: BaseViewModelType {
                 
                 self.renewToken()
             })
-            .store(in: &self.cancelBag)
+            .store(in: &self.cancellable)
         
         input.scrolledToBottom
             .sink(receiveValue: { [weak self] _ in
@@ -88,7 +88,7 @@ final class MapViewModel: BaseViewModelType {
                     self.getReviewsByMember(lastReviewId: self.lastReviewId)
                 }
             })
-            .store(in: &self.cancelBag)
+            .store(in: &self.cancellable)
         
         input.refreshControl
             .sink(receiveValue: { [weak self] _ in
@@ -105,7 +105,7 @@ final class MapViewModel: BaseViewModelType {
                     self.getReviewsByMember()
                 }
             })
-            .store(in: &self.cancelBag)
+            .store(in: &self.cancellable)
         
         return Output(
             reviews: reviewsSubject,

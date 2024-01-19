@@ -42,7 +42,7 @@ final class FeedListView: UIView, BaseViewType {
     
     // MARK: - property
     
-    private var cancelBag: Set<AnyCancellable> = Set()
+    private var cancellable: Set<AnyCancellable> = Set()
     
     let refreshPublisher = PassthroughSubject<Void, Never>()
 

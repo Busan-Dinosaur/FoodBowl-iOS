@@ -17,7 +17,7 @@ final class FollowerViewModel: NSObject, BaseViewModelType {
     // MARK: - property
     
     private let provider = MoyaProvider<ServiceAPI>()
-    private var cancelBag = Set<AnyCancellable>()
+    private var cancellable = Set<AnyCancellable>()
     
     let isOwn: Bool
     private let memberId: Int
@@ -54,14 +54,14 @@ final class FollowerViewModel: NSObject, BaseViewModelType {
                 guard let self = self else { return }
                 self.getFollowers()
             })
-            .store(in: &self.cancelBag)
+            .store(in: &self.cancellable)
         
         input.scrolledToBottom
             .sink(receiveValue: { [weak self] _ in
                 guard let self = self else { return }
                 self.getFollowers()
             })
-            .store(in: &self.cancelBag)
+            .store(in: &self.cancellable)
         
         return Output(
             followers: followersSubject,

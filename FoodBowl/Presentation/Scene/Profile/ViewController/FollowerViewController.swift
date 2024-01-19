@@ -26,7 +26,7 @@ final class FollowerViewController: UIViewController, Navigationable {
     
     // MARK: - property
     
-    private var cancelBag: Set<AnyCancellable> = Set()
+    private var cancellable: Set<AnyCancellable> = Set()
     
     private let viewModel: FollowerViewModel
     
@@ -124,7 +124,7 @@ final class FollowerViewController: UIViewController, Navigationable {
             } receiveValue: { [weak self] followers in
                 self?.loadFollowers(followers)
             }
-            .store(in: &self.cancelBag)
+            .store(in: &self.cancellable)
         
         output.moreFollowers
             .receive(on: DispatchQueue.main)
@@ -132,7 +132,7 @@ final class FollowerViewController: UIViewController, Navigationable {
             } receiveValue: { [weak self] followers in
                 self?.loadMoreFollowers(followers)
             }
-            .store(in: &self.cancelBag)
+            .store(in: &self.cancellable)
     }
     
     private func transformedOutput() -> FollowerViewModel.Output {

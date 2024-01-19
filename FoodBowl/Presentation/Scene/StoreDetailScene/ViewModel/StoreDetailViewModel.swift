@@ -16,7 +16,7 @@ final class StoreDetailViewModel: BaseViewModelType {
     var isFriend: Bool
     
     private let usecase: StoreDetailUsecase
-    private var cancelBag = Set<AnyCancellable>()
+    private var cancellable = Set<AnyCancellable>()
     
     private let pageSize: Int = 20
     private var currentpageSize: Int = 20
@@ -64,28 +64,28 @@ final class StoreDetailViewModel: BaseViewModelType {
                 self.isFriend = isFriend
                 self.getReviews()
             })
-            .store(in: &self.cancelBag)
+            .store(in: &self.cancellable)
         
         input.bookmarkButtonDidTap
             .sink(receiveValue: { [weak self] isBookmark in
                 guard let self = self else { return }
                 isBookmark ? self.removeBookmark() : self.createBookmark()
             })
-            .store(in: &self.cancelBag)
+            .store(in: &self.cancellable)
         
         input.removeReview
             .sink(receiveValue: { [weak self] reviewId in
                 guard let self = self else { return }
                 self.removeReview(id: reviewId)
             })
-            .store(in: &self.cancelBag)
+            .store(in: &self.cancellable)
         
         input.scrolledToBottom
             .sink(receiveValue: { [weak self] _ in
                 guard let self = self else { return }
                 self.getReviews(lastReviewId: self.lastReviewId)
             })
-            .store(in: &self.cancelBag)
+            .store(in: &self.cancellable)
         
         input.refreshControl
             .sink(receiveValue: { [weak self] _ in
@@ -94,7 +94,7 @@ final class StoreDetailViewModel: BaseViewModelType {
                 self.lastReviewId = nil
                 self.getReviews()
             })
-            .store(in: &self.cancelBag)
+            .store(in: &self.cancellable)
         
         return Output(
             store: storeSubject,
