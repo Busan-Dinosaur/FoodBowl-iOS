@@ -58,6 +58,7 @@ final class StoreInfoView: UIView, BaseViewType {
             $0.leading.equalToSuperview().inset(14)
             $0.top.equalToSuperview().inset(10)
             $0.height.equalTo(18)
+            $0.width.lessThanOrEqualTo(SizeLiteral.fullWidth - 160)
         }
         
         self.storeCategoryButton.snp.makeConstraints {
@@ -70,6 +71,7 @@ final class StoreInfoView: UIView, BaseViewType {
             $0.leading.equalToSuperview().inset(14)
             $0.top.equalTo(self.storeNameButton.snp.bottom).offset(2)
             $0.height.equalTo(13)
+            $0.width.lessThanOrEqualTo(SizeLiteral.fullWidth - 120)
         }
         
         self.bookmarkButton.snp.makeConstraints {

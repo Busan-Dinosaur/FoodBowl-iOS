@@ -67,6 +67,7 @@ final class StoreHeaderView: UIView {
         self.storeNameLabel.snp.makeConstraints {
             $0.top.equalToSuperview().inset(2)
             $0.leading.equalTo(mapButton.snp.trailing).offset(12)
+            $0.width.lessThanOrEqualTo(SizeLiteral.fullWidth - 160)
         }
 
         self.storeCategoryLabel.snp.makeConstraints {
@@ -77,6 +78,7 @@ final class StoreHeaderView: UIView {
         self.storeAddressLabel.snp.makeConstraints {
             $0.top.equalTo(self.storeNameLabel.snp.bottom).offset(2)
             $0.leading.equalTo(self.mapButton.snp.trailing).offset(12)
+            $0.width.lessThanOrEqualTo(SizeLiteral.fullWidth - 120)
         }
 
         self.bookmarkButton.snp.makeConstraints {

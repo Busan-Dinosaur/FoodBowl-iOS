@@ -113,7 +113,7 @@ struct WriterItemDTO: Codable {
             profileImageUrl: self.profileImageUrl,
             nickname: self.nickname,
             introduction: "",
-            followerCount: "",
+            followerCount: self.followerCount.prettyNumber,
             followingCount: "",
             isMyProfile: false,
             isFollowing: false
