@@ -29,7 +29,7 @@ struct ReviewItemByFeedDTO: Codable {
     
     func toReviewItem() -> ReviewItem {
         ReviewItem(
-            writer: self.writer.toWriter(),
+            member: self.writer.toMember(),
             comment: self.review.toComment(),
             store: self.store.toStore(),
             thumbnail: self.reviewFeedThumbnail

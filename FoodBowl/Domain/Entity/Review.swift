@@ -21,7 +21,7 @@ struct Page: Codable {
 
 // MARK: - ReviewItem
 struct ReviewItem: Codable, Hashable {
-    let writer: Writer
+    let member: Member
     let comment: Comment
     let store: Store?
     let thumbnail: String
@@ -33,14 +33,6 @@ struct ReviewItem: Codable, Hashable {
     func hash(into hasher: inout Hasher) {
         hasher.combine(comment.id)
     }
-}
-
-// MARK: - Writer
-struct Writer: Codable {
-    let id: Int
-    let nickname: String
-    let profileImageUrl: String?
-    let followerCount: Int
 }
 
 // MARK: - Comment

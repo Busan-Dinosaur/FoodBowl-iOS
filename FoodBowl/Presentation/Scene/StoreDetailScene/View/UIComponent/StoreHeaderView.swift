@@ -11,34 +11,37 @@ import SnapKit
 import Then
 
 final class StoreHeaderView: UIView {
-    // MARK: - property
-    let mapButton = MapButton()
+    
+    // MARK: - ui component
+    
+    private let mapButton = MapButton()
 
-    let storeNameLabel = UILabel().then {
+    private let storeNameLabel = UILabel().then {
         $0.font = UIFont.preferredFont(forTextStyle: .subheadline, weight: .medium)
         $0.textColor = .mainTextColor
     }
 
-    let storeCategoryLabel = UILabel().then {
+    private let storeCategoryLabel = UILabel().then {
         $0.font = UIFont.preferredFont(forTextStyle: .footnote, weight: .light)
         $0.textColor = .mainTextColor
     }
 
-    let storeAddressLabel = UILabel().then {
+    private let storeAddressLabel = UILabel().then {
         $0.font = UIFont.preferredFont(forTextStyle: .footnote, weight: .light)
         $0.textColor = .subTextColor
     }
 
     let bookmarkButton = BookmarkButton()
 
-    let borderLineView = UIView().then {
+    private let borderLineView = UIView().then {
         $0.backgroundColor = .grey002.withAlphaComponent(0.5)
     }
 
     // MARK: - init
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setupLayout()
+        self.setupLayout()
     }
 
     @available(*, unavailable)

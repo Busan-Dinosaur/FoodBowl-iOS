@@ -8,6 +8,7 @@
 import UIKit
 
 final class BookmarkButton: UIButton {
+    
     override var isSelected: Bool {
         didSet {
             if isSelected {
@@ -25,9 +26,10 @@ final class BookmarkButton: UIButton {
     }
 
     // MARK: - init
+    
     override init(frame _: CGRect) {
         super.init(frame: .init(origin: .zero, size: .init(width: 30, height: 30)))
-        configureUI()
+        self.configureUI()
     }
 
     @available(*, unavailable)
@@ -36,8 +38,9 @@ final class BookmarkButton: UIButton {
     }
 
     // MARK: - life cycle
+    
     private func configureUI() {
-        setImage(ImageLiteral.bookmark.resize(to: CGSize(width: 20, height: 20)).withRenderingMode(.alwaysTemplate), for: .normal)
-        tintColor = .mainTextColor
+        self.setImage(ImageLiteral.bookmark.resize(to: CGSize(width: 20, height: 20)).withRenderingMode(.alwaysTemplate), for: .normal)
+        self.tintColor = .mainTextColor
     }
 }

@@ -90,10 +90,10 @@ final class FeedNSCollectionViewCell: UICollectionViewCell, BaseViewType {
 // MARK: - Public - func
 extension FeedNSCollectionViewCell {
     func configureCell(_ reviewItem: ReviewItem) {
-        let writer = reviewItem.writer
+        let member = reviewItem.member
         let comment = reviewItem.comment
         
-        self.userInfoView.comfigureUser(writer)
+        self.userInfoView.configureUser(member)
         self.commentLabel.text = comment.content
         
         if comment.imagePaths.isEmpty {

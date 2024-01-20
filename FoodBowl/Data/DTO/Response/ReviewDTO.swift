@@ -50,7 +50,7 @@ struct ReviewItemDTO: Codable, Hashable {
     
     func toReviewItem() -> ReviewItem {
         ReviewItem(
-            writer: self.writer.toWriter(),
+            member: self.writer.toMember(),
             comment: self.review.toComment(),
             store: self.store.toStore(),
             thumbnail: ""
@@ -107,12 +107,16 @@ struct WriterItemDTO: Codable {
     let profileImageUrl: String?
     let followerCount: Int
     
-    func toWriter() -> Writer {
-        Writer(
+    func toMember() -> Member {
+        Member(
             id: self.id,
-            nickname: self.nickname,
             profileImageUrl: self.profileImageUrl,
-            followerCount: self.followerCount
+            nickname: self.nickname,
+            introduction: "",
+            followerCount: "",
+            followingCount: "",
+            isMyProfile: false,
+            isFollowing: false
         )
     }
 }

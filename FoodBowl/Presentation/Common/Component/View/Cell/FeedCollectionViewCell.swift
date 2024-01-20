@@ -107,7 +107,7 @@ extension FeedCollectionViewCell {
         let store = reviewItem.store
         let review = reviewItem.review
         
-        self.userInfoView.comfigureUser(writer.toWriter())
+        self.userInfoView.configureUser(writer.toMember())
         self.storeInfoView.configureStore(store)
         self.commentLabel.text = review.content
         self.photoListView.photos = review.imagePaths
