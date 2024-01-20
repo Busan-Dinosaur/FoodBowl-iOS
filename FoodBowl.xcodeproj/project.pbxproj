@@ -16,7 +16,6 @@
 		CB1579122AADB50600007183 /* KakaoAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1579112AADB50600007183 /* KakaoAPI.swift */; };
 		CB16FD4E2B347C31006D18D6 /* FollowingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB16FD4D2B347C31006D18D6 /* FollowingViewModel.swift */; };
 		CB16FD512B3491F9006D18D6 /* UserInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB16FD502B3491F9006D18D6 /* UserInfoTableViewCell.swift */; };
-		CB1790C8296DAB470083D3A4 /* DynamicHeightCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1790C7296DAB470083D3A4 /* DynamicHeightCollectionViewFlowLayout.swift */; };
 		CB1A7C5C29560C2300C6431D /* UserInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1A7C5B29560C2300C6431D /* UserInfoView.swift */; };
 		CB1A7C5E295618A900C6431D /* SettingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1A7C5D295618A900C6431D /* SettingButton.swift */; };
 		CB1A7C6129561BCF00C6431D /* ProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1A7C6029561BCF00C6431D /* ProfileHeaderView.swift */; };
@@ -207,7 +206,6 @@
 		CB1579112AADB50600007183 /* KakaoAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoAPI.swift; sourceTree = "<group>"; };
 		CB16FD4D2B347C31006D18D6 /* FollowingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowingViewModel.swift; sourceTree = "<group>"; };
 		CB16FD502B3491F9006D18D6 /* UserInfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoTableViewCell.swift; sourceTree = "<group>"; };
-		CB1790C7296DAB470083D3A4 /* DynamicHeightCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicHeightCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
 		CB1A7C5B29560C2300C6431D /* UserInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoView.swift; sourceTree = "<group>"; };
 		CB1A7C5D295618A900C6431D /* SettingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingButton.swift; sourceTree = "<group>"; };
 		CB1A7C6029561BCF00C6431D /* ProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderView.swift; sourceTree = "<group>"; };
@@ -458,9 +456,7 @@
 			children = (
 				CBDECAC92A6B2F6800259350 /* FeedNSCollectionViewCell.swift */,
 				CBADC2D72955AC5900E56C93 /* FeedCollectionViewCell.swift */,
-				CB2E4F80297702B800FD2566 /* UserInfoCollectionViewCell.swift */,
-				CB16FD502B3491F9006D18D6 /* UserInfoTableViewCell.swift */,
-				CB2E4F7E297702A800FD2566 /* StoreInfoTableViewCell.swift */,
+				CBB58283297440A600808B0B /* CategoryCollectionViewCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -556,14 +552,8 @@
 		CB617A222AE238F0000F7FFC /* View */ = {
 			isa = PBXGroup;
 			children = (
-				CB73E0122AB5FF1E005B6BF1 /* Feed */,
+				CB73E0122AB5FF1E005B6BF1 /* UIComponent */,
 				CB49256D2AB44D0E00B66B68 /* Cell */,
-				CB1790C7296DAB470083D3A4 /* DynamicHeightCollectionViewFlowLayout.swift */,
-				CBA4C7DA2AB4840100FC9DD8 /* PaddingLabel.swift */,
-				CB2A44A52ADFC62D004A4126 /* PanZoomImageView.swift */,
-				CB2A44A72ADFC866004A4126 /* ImageViewController.swift */,
-				CBB582812973007D00808B0B /* ShowWebViewController.swift */,
-				CBADC2CE2955A41500E56C93 /* TabBarController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -581,7 +571,6 @@
 			isa = PBXGroup;
 			children = (
 				CB981C28297A5A2900AF0167 /* SignScene */,
-				CB63B7592A6986B4000AD9C2 /* Map */,
 				CBADC2B02955A13800E56C93 /* CreateReviewScene */,
 				CB73E00F2AB5FEA9005B6BF1 /* UpdateReview */,
 				CB73E0102AB5FEB4005B6BF1 /* StoreDetailScene */,
@@ -716,45 +705,6 @@
 			path = Moya;
 			sourceTree = "<group>";
 		};
-		CB63B7592A6986B4000AD9C2 /* Map */ = {
-			isa = PBXGroup;
-			children = (
-				CB63B75C2A698857000AD9C2 /* View */,
-				CB9332642AFCCA5700B7F87A /* ViewController */,
-				CBC1586C2AD81A7900FD263B /* ViewModel */,
-			);
-			path = Map;
-			sourceTree = "<group>";
-		};
-		CB63B75A2A6986BE000AD9C2 /* UIComponent */ = {
-			isa = PBXGroup;
-			children = (
-				CBF617612A6FD94900452B7B /* GrabbarView.swift */,
-				CBDECAC72A6B2F0700259350 /* FeedListView.swift */,
-				CB63B75F2A698909000AD9C2 /* CategoryListView.swift */,
-				CB8A2D9A297844720018AC6E /* Marker.swift */,
-				CB5AF8A829854AA0003D16D4 /* MapAnnotation.swift */,
-			);
-			path = UIComponent;
-			sourceTree = "<group>";
-		};
-		CB63B75B2A6986C8000AD9C2 /* Cell */ = {
-			isa = PBXGroup;
-			children = (
-				CBB58283297440A600808B0B /* CategoryCollectionViewCell.swift */,
-			);
-			path = Cell;
-			sourceTree = "<group>";
-		};
-		CB63B75C2A698857000AD9C2 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				CB63B75B2A6986C8000AD9C2 /* Cell */,
-				CB63B75A2A6986BE000AD9C2 /* UIComponent */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
 		CB63B75E2A6988CC000AD9C2 /* CustomButton */ = {
 			isa = PBXGroup;
 			children = (
@@ -794,14 +744,20 @@
 			path = UIComponent;
 			sourceTree = "<group>";
 		};
-		CB73E0122AB5FF1E005B6BF1 /* Feed */ = {
+		CB73E0122AB5FF1E005B6BF1 /* UIComponent */ = {
 			isa = PBXGroup;
 			children = (
 				CB1A7C5B29560C2300C6431D /* UserInfoView.swift */,
 				CBDDF1442A6AFB5800AE3C50 /* PhotoListView.swift */,
 				CB1BCAF62958B15B0021617D /* StoreInfoView.swift */,
+				CBA4C7DA2AB4840100FC9DD8 /* PaddingLabel.swift */,
+				CB2A44A52ADFC62D004A4126 /* PanZoomImageView.swift */,
+				CBF617612A6FD94900452B7B /* GrabbarView.swift */,
+				CBDECAC72A6B2F0700259350 /* FeedListView.swift */,
+				CB63B75F2A698909000AD9C2 /* CategoryListView.swift */,
+				CB5AF8A829854AA0003D16D4 /* MapAnnotation.swift */,
 			);
-			path = Feed;
+			path = UIComponent;
 			sourceTree = "<group>";
 		};
 		CB73E0132AB5FF8A005B6BF1 /* ViewController */ = {
@@ -852,6 +808,7 @@
 		CB8306662B59747E00632789 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				CBE3C4D42B5C1CE900F71A01 /* Cell */,
 				CB8306672B59748700632789 /* FindView.swift */,
 			);
 			path = View;
@@ -879,14 +836,6 @@
 				CB91E2A32B56D7B2008A0E8E /* StoreDetailUsecase.swift */,
 			);
 			path = StoreDetailScene;
-			sourceTree = "<group>";
-		};
-		CB9332642AFCCA5700B7F87A /* ViewController */ = {
-			isa = PBXGroup;
-			children = (
-				CBE6190E296C6435005295AF /* MapViewController.swift */,
-			);
-			path = ViewController;
 			sourceTree = "<group>";
 		};
 		CB9332652AFCCAB200B7F87A /* ViewController */ = {
@@ -1031,8 +980,9 @@
 		CBADC27829559BC900E56C93 /* Component */ = {
 			isa = PBXGroup;
 			children = (
-				CB617A222AE238F0000F7FFC /* View */,
 				CB617A232AE238F5000F7FFC /* Button */,
+				CB617A222AE238F0000F7FFC /* View */,
+				CBE3C4D72B5C1DDF00F71A01 /* ViewController */,
 			);
 			path = Component;
 			sourceTree = "<group>";
@@ -1069,14 +1019,6 @@
 			isa = PBXGroup;
 			children = (
 				CBBB97F02AB0832F00272CCE /* UpdateReviewViewModel.swift */,
-			);
-			path = ViewModel;
-			sourceTree = "<group>";
-		};
-		CBC1586C2AD81A7900FD263B /* ViewModel */ = {
-			isa = PBXGroup;
-			children = (
-				CBC1586D2AD81A8400FD263B /* MapViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -1166,6 +1108,7 @@
 		CBD1B5F22982D38300B0AD51 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
+				CB2E4F80297702B800FD2566 /* UserInfoCollectionViewCell.swift */,
 				CBD1B5F32982D39B00B0AD51 /* SettingItemTableViewCell.swift */,
 			);
 			path = Cell;
@@ -1227,6 +1170,7 @@
 				CB91E2A72B56D8C9008A0E8E /* Review.swift */,
 				CB91E2AD2B56E86B008A0E8E /* Store.swift */,
 				CB8306692B59778C00632789 /* Member.swift */,
+				CB8A2D9A297844720018AC6E /* Marker.swift */,
 			);
 			path = Entity;
 			sourceTree = "<group>";
@@ -1272,6 +1216,27 @@
 			isa = PBXGroup;
 			children = (
 				CBDF6EA52AD9255200EB2481 /* BlameViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		CBE3C4D42B5C1CE900F71A01 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				CB16FD502B3491F9006D18D6 /* UserInfoTableViewCell.swift */,
+				CB2E4F7E297702A800FD2566 /* StoreInfoTableViewCell.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		CBE3C4D72B5C1DDF00F71A01 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				CBE6190E296C6435005295AF /* MapViewController.swift */,
+				CBC1586D2AD81A8400FD263B /* MapViewModel.swift */,
+				CB2A44A72ADFC866004A4126 /* ImageViewController.swift */,
+				CBB582812973007D00808B0B /* ShowWebViewController.swift */,
+				CBADC2CE2955A41500E56C93 /* TabBarController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -1475,7 +1440,6 @@
 				CB5AF8A929854AA0003D16D4 /* MapAnnotation.swift in Sources */,
 				CBC158642AD80AF800FD263B /* SearchMemberRequestDTO.swift in Sources */,
 				CB83066E2B59951A00632789 /* FindRepositoryImpl.swift in Sources */,
-				CB1790C8296DAB470083D3A4 /* DynamicHeightCollectionViewFlowLayout.swift in Sources */,
 				CBA7F184297DBB01006088A0 /* YPImagePicker+Extension.swift in Sources */,
 				CB91E2A62B56D7D6008A0E8E /* StoreDetailRepository.swift in Sources */,
 				CB617A512AE27F96000F7FFC /* UIScrollView+Combine.swift in Sources */,

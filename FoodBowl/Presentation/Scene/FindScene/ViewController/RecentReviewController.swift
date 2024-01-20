@@ -26,7 +26,7 @@ final class RecentReviewController: BaseViewController {
 
     private var storeHeaderView = StoreHeaderView()
 
-    private let collectionViewFlowLayout = DynamicHeightCollectionViewFlowLayout().then {
+    private let collectionViewFlowLayout = UICollectionViewFlowLayout().then {
         $0.sectionInset = Size.collectionInset
         $0.minimumLineSpacing = 20
         $0.estimatedItemSize = UICollectionViewFlowLayout.automaticSize

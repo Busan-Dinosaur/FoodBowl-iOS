@@ -29,7 +29,7 @@ final class FeedListView: UIView, BaseViewType {
     let borderLineView = UIView().then {
         $0.backgroundColor = .grey002.withAlphaComponent(0.5)
     }
-    lazy var collectionViewFlowLayout = DynamicHeightCollectionViewFlowLayout().then {
+    lazy var collectionViewFlowLayout = UICollectionViewFlowLayout().then {
         $0.sectionInset = Size.collectionInset
         $0.minimumLineSpacing = 20
         $0.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
