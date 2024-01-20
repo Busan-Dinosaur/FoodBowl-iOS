@@ -144,6 +144,16 @@ final class StoreDetailViewController: UIViewController, Navigationable, Optiona
                 }
             })
             .store(in: &self.cancellable)
+        
+        output.errorAlert
+            .sink(receiveValue: { [weak self] message in
+                self?.makeAlert(
+                    title: "에러",
+                    message: message
+                )
+            })
+            .store(in: &self.cancellable)
+        
     }
     
     private func bindUI() {

@@ -75,8 +75,8 @@ final class SearchStoreViewModel: NSObject, BaseViewModelType {
             do {
                 let univ = try await self.usecase.searchUniv(x: store.x, y: store.y)
                 self.isSelectedSubject.send(.success((store, univ)))
-            } catch {
-                self.isSelectedSubject.send(.failure(NetworkError()))
+            } catch(let error) {
+                self.isSelectedSubject.send(.failure(error))
             }
         }
     }

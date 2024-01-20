@@ -42,10 +42,10 @@ final class BlameViewModel: NSObject, BaseViewModelType {
     
     // MARK: - init
     
-    init(targetId: Int, blameTarget: String, usecase: BlameUsecase) {
+    init(usecase: BlameUsecase, targetId: Int, blameTarget: String) {
+        self.usecase = usecase
         self.targetId = targetId
         self.blameTarget = blameTarget
-        self.usecase = usecase
     }
     
     // MARK: - network
@@ -60,8 +60,8 @@ final class BlameViewModel: NSObject, BaseViewModelType {
                 ))
                 
                 self.isCompletedSubject.send(.success(true))
-            } catch {
-                self.isCompletedSubject.send(.failure(NetworkError()))
+            } catch(let error) {
+                self.isCompletedSubject.send(.failure(error))
             }
         }
     }

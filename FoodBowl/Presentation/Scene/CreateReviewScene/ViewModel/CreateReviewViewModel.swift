@@ -94,8 +94,8 @@ final class CreateReviewViewModel: NSObject, BaseViewModelType {
                 let imagesData = images.map { $0.jpegData(compressionQuality: 0.3)! }
                 try await self.usecase.createReview(request: request, images: imagesData)
                 self.isCompletedSubject.send(.success(true))
-            } catch {
-                self.isCompletedSubject.send(.failure(NetworkError()))
+            } catch(let error) {
+                self.isCompletedSubject.send(.failure(error))
             }
         }
     }

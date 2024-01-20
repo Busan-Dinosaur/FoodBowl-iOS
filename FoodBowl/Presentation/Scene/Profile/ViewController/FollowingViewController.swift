@@ -76,14 +76,6 @@ final class FollowingViewController: UIViewController, Navigationable {
             }
         }
         
-        if UserDefaultStorage.id == item.memberId {
-            cell.followButton.isHidden = true
-        } else {
-            cell.followButton.isHidden = false
-        }
-        
-        cell.followButton.isSelected = item.isFollowing
-        
         cell.followButtonTapAction = { [weak self] _ in
             guard let self = self else { return }
             

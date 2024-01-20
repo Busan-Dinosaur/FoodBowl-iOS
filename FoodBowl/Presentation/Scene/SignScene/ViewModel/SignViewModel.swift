@@ -73,8 +73,8 @@ final class SignViewModel: NSObject, BaseViewModelType {
                 UserDefaultHandler.setIsLogin(isLogin: true)
                 
                 self.getMyProfile()
-            } catch {
-                self.isLoginSubject.send(.failure(NetworkError()))
+            } catch(let error) {
+                self.isLoginSubject.send(.failure(error))
             }
         }
     }
@@ -88,8 +88,8 @@ final class SignViewModel: NSObject, BaseViewModelType {
                 UserDefaultHandler.setNickname(nickname: profile.nickname)
                 
                 self.isLoginSubject.send(.success(true))
-            } catch {
-                self.isLoginSubject.send(.failure(NetworkError()))
+            } catch(let error) {
+                self.isLoginSubject.send(.failure(error))
             }
         }
     }

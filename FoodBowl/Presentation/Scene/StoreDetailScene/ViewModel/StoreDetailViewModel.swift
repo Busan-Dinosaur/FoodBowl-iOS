@@ -27,6 +27,7 @@ final class StoreDetailViewModel: BaseViewModelType {
     private let moreReviewsSubject: PassthroughSubject<Result<[ReviewItem], Error>, Never> = PassthroughSubject()
     private let refreshControlSubject: PassthroughSubject<Void, Error> = PassthroughSubject()
     private let isRemovedSubject: PassthroughSubject<Result<Int, Error>, Never> = PassthroughSubject()
+    private let errorAlertSubject: PassthroughSubject<String, Never> = PassthroughSubject()
     
     struct Input {
         let reviewToggleButtonDidTap: AnyPublisher<Bool, Never>
@@ -41,14 +42,15 @@ final class StoreDetailViewModel: BaseViewModelType {
         let reviews: AnyPublisher<Result<[ReviewItem], Error>, Never>
         let moreReviews: AnyPublisher<Result<[ReviewItem], Error>, Never>
         let isRemoved: AnyPublisher<Result<Int, Error>, Never>
+        let errorAlert: AnyPublisher<String, Never>
     }
     
     // MARK: - init
 
-    init(storeId: Int, isFriend: Bool, usecase: StoreDetailUsecase) {
+    init(usecase: StoreDetailUsecase, storeId: Int, isFriend: Bool) {
+        self.usecase = usecase
         self.storeId = storeId
         self.isFriend = isFriend
-        self.usecase = usecase
     }
     
     // MARK: - Public - func
@@ -100,7 +102,8 @@ final class StoreDetailViewModel: BaseViewModelType {
             store: storeSubject.eraseToAnyPublisher(),
             reviews: reviewsSubject.eraseToAnyPublisher(),
             moreReviews: moreReviewsSubject.eraseToAnyPublisher(),
-            isRemoved: isRemovedSubject.eraseToAnyPublisher()
+            isRemoved: isRemovedSubject.eraseToAnyPublisher(),
+            errorAlert: errorAlertSubject.eraseToAnyPublisher()
         )
     }
     
@@ -143,8 +146,8 @@ final class StoreDetailViewModel: BaseViewModelType {
             do {
                 try await self.usecase.removeReview(id: id)
                 self.isRemovedSubject.send(.success(id))
-            } catch {
-                self.isRemovedSubject.send(.failure(NetworkError()))
+            } catch(let error) {
+                self.isRemovedSubject.send(.failure(error))
             }
         }
     }
@@ -153,8 +156,8 @@ final class StoreDetailViewModel: BaseViewModelType {
         Task {
             do {
                 try await self.usecase.createBookmark(storeId: self.storeId)
-            } catch {
-                print("Failed to Create Bookmark")
+            } catch(let error) {
+                self.errorAlertSubject.send(error.localizedDescription)
             }
         }
     }
@@ -163,8 +166,8 @@ final class StoreDetailViewModel: BaseViewModelType {
         Task {
             do {
                 try await self.usecase.removeBookmark(storeId: self.storeId)
-            } catch {
-                print("Failed to Remove Bookmark")
+            } catch(let error) {
+                self.errorAlertSubject.send(error.localizedDescription)
             }
         }
     }

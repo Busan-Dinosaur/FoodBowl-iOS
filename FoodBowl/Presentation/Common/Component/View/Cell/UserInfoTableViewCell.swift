@@ -49,7 +49,12 @@ final class UserInfoTableViewCell: UITableViewCell, BaseViewType {
     }
 
     func setupLayout() {
-        self.contentView.addSubviews(self.userImageView, self.userNameLabel, self.userFollowerLabel, self.followButton)
+        self.contentView.addSubviews(
+            self.userImageView,
+            self.userNameLabel,
+            self.userFollowerLabel,
+            self.followButton
+        )
 
         self.userImageView.snp.makeConstraints {
             $0.leading.equalToSuperview().inset(SizeLiteral.horizantalPadding)
@@ -81,7 +86,10 @@ final class UserInfoTableViewCell: UITableViewCell, BaseViewType {
     }
     
     private func setupAction() {
-        self.followButton.addAction(UIAction { _ in self.followButtonTapAction?(self) }, for: .touchUpInside)
+        self.followButton.addAction(UIAction { _ in
+            self.followButtonTapAction?(self)
+            self.followButton.isSelected.toggle()
+        }, for: .touchUpInside)
     }
 
     override func prepareForReuse() {
@@ -93,19 +101,15 @@ final class UserInfoTableViewCell: UITableViewCell, BaseViewType {
 // MARK: - Public - func
 extension UserInfoTableViewCell {
     func configureCell(_ member: Member) {
-        self.userNameLabel.text = member.nickname
-        self.userFollowerLabel.text = "팔로워 \(member.followerCount)명"
         if let url = member.profileImageUrl {
             self.userImageView.kf.setImage(with: URL(string: url))
         } else {
             self.userImageView.image = ImageLiteral.defaultProfile
         }
         
-        if member.isMyProfile {
-            self.followButton.isHidden = true
-        } else {
-            self.followButton.isHidden = false
-            self.followButton.isSelected = member.isFollowing
-        }
+        self.userNameLabel.text = member.nickname
+        self.userFollowerLabel.text = "팔로워 \(member.followerCount)명"
+        self.followButton.isHidden = member.isMyProfile
+        self.followButton.isSelected = member.isFollowing
     }
 }

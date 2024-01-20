@@ -137,6 +137,15 @@ final class FindViewController: UIViewController, Keyboardable {
                 }
             })
             .store(in: &self.cancellable)
+        
+        output.errorAlert
+            .sink(receiveValue: { [weak self] message in
+                self?.makeAlert(
+                    title: "에러",
+                    message: message
+                )
+            })
+            .store(in: &self.cancellable)
     }
     
     private func bindUI() {
@@ -286,7 +295,6 @@ extension FindViewController: UITableViewDataSource, UITableViewDelegate {
                 guard let self = self else { return }
                 self.followButtonDidTapPublisher.send((self.members[indexPath.item].id, self.members[indexPath.item].isFollowing))
                 self.members[indexPath.item].isFollowing.toggle()
-                cell.configureCell(self.members[indexPath.item])
             }
 
             return cell
@@ -301,7 +309,7 @@ extension FindViewController: UITableViewDataSource, UITableViewDelegate {
         if self.scope == 0 {
             let repository = StoreDetailRepositoryImpl()
             let usecase = StoreDetailUsecaseImpl(repository: repository)
-            let viewModel = StoreDetailViewModel(storeId: self.stores[indexPath.item].id, isFriend: false, usecase: usecase)
+            let viewModel = StoreDetailViewModel(usecase: usecase, storeId: self.stores[indexPath.item].id, isFriend: false)
             let viewController = StoreDetailViewController(viewModel: viewModel)
 
             DispatchQueue.main.async { [weak self] in

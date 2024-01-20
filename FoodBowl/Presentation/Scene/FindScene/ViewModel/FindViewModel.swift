@@ -25,6 +25,7 @@ final class FindViewModel: BaseViewModelType {
     private let moreReviewsSubject: PassthroughSubject<Result<[ReviewItem], Error>, Never> = PassthroughSubject()
     private let refreshControlSubject: PassthroughSubject<Void, Error> = PassthroughSubject()
     private let storesAndMembersSubject: PassthroughSubject<Result<([Store], [Member]), Error>, Never> = PassthroughSubject()
+    private let errorAlertSubject: PassthroughSubject<String, Never> = PassthroughSubject()
     
     struct Input {
         let scrolledToBottom: AnyPublisher<Void, Never>
@@ -37,6 +38,7 @@ final class FindViewModel: BaseViewModelType {
         let reviews: AnyPublisher<Result<[ReviewItem], Error>, Never>
         let moreReviews: AnyPublisher<Result<[ReviewItem], Error>, Never>
         let storesAndMembers: AnyPublisher<Result<([Store], [Member]), Error>, Never>
+        let errorAlert: AnyPublisher<String, Never>
     }
     
     // MARK: - init
@@ -82,7 +84,8 @@ final class FindViewModel: BaseViewModelType {
         return Output(
             reviews: reviewsSubject.eraseToAnyPublisher(),
             moreReviews: moreReviewsSubject.eraseToAnyPublisher(),
-            storesAndMembers: storesAndMembersSubject.eraseToAnyPublisher()
+            storesAndMembers: storesAndMembersSubject.eraseToAnyPublisher(),
+            errorAlert: errorAlertSubject.eraseToAnyPublisher()
         )
     }
     
@@ -145,8 +148,8 @@ final class FindViewModel: BaseViewModelType {
         Task {
             do {
                 try await self.usecase.followMember(memberId: memberId)
-            } catch {
-                print("Failed to Follow Member")
+            } catch(let error) {
+                self.errorAlertSubject.send(error.localizedDescription)
             }
         }
     }
@@ -155,8 +158,8 @@ final class FindViewModel: BaseViewModelType {
         Task {
             do {
                 try await self.usecase.unfollowMember(memberId: memberId)
-            } catch {
-                print("Failed to Unfollow Member")
+            } catch(let error) {
+                self.errorAlertSubject.send(error.localizedDescription)
             }
         }
     }
