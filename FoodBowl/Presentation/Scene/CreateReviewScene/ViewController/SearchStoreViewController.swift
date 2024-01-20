@@ -145,7 +145,11 @@ extension SearchStoreViewController: UISearchBarDelegate {
     }
 
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        guard let text = searchBar.text, text != "" else { return }
+        guard let text = searchBar.text, text != "" else {
+            self.stores = []
+            self.searchStoreView.tableView().reloadData()
+            return
+        }
         self.searchStoresPublisher.send(text)
     }
 }
