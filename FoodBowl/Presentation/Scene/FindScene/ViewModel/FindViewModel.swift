@@ -21,26 +21,22 @@ final class FindViewModel: BaseViewModelType {
     
     private let size: Int = 20
     
-    private let reviewsSubject = PassthroughSubject<[ReviewItem], Error>()
-    private let moreReviewsSubject = PassthroughSubject<[ReviewItem], Error>()
-    private let refreshControlSubject = PassthroughSubject<Void, Error>()
-    
-    private let storesSubject = PassthroughSubject<[Store], Error>()
-    private let membersSubject = PassthroughSubject<[Member], Error>()
+    private let reviewsSubject: PassthroughSubject<Result<[ReviewItem], Error>, Never> = PassthroughSubject()
+    private let moreReviewsSubject: PassthroughSubject<Result<[ReviewItem], Error>, Never> = PassthroughSubject()
+    private let refreshControlSubject: PassthroughSubject<Void, Error> = PassthroughSubject()
+    private let storesAndMembersSubject: PassthroughSubject<Result<([Store], [Member]), Error>, Never> = PassthroughSubject()
     
     struct Input {
         let scrolledToBottom: AnyPublisher<Void, Never>
         let refreshControl: AnyPublisher<Void, Never>
-        let searchStores: AnyPublisher<String, Never>
-        let searchMembers: AnyPublisher<String, Never>
+        let searchStoresAndMembers: AnyPublisher<String, Never>
         let followMember: AnyPublisher<(Int, Bool), Never>
     }
     
     struct Output {
-        let reviews: PassthroughSubject<[ReviewItem], Error>
-        let moreReviews: PassthroughSubject<[ReviewItem], Error>
-        let stores: PassthroughSubject<[Store], Error>
-        let members: PassthroughSubject<[Member], Error>
+        let reviews: AnyPublisher<Result<[ReviewItem], Error>, Never>
+        let moreReviews: AnyPublisher<Result<[ReviewItem], Error>, Never>
+        let storesAndMembers: AnyPublisher<Result<([Store], [Member]), Error>, Never>
     }
     
     // MARK: - init
@@ -70,15 +66,10 @@ final class FindViewModel: BaseViewModelType {
             })
             .store(in: &self.cancellable)
         
-        input.searchStores
+        input.searchStoresAndMembers
+            .removeDuplicates()
             .sink(receiveValue: { [weak self] keyword in
-                self?.searchStores(keyword: keyword)
-            })
-            .store(in: &self.cancellable)
-        
-        input.searchMembers
-            .sink(receiveValue: { [weak self] keyword in
-                self?.searchMembers(keyword: keyword)
+                self?.searchStoresAndMembers(keyword: keyword)
             })
             .store(in: &self.cancellable)
         
@@ -89,10 +80,9 @@ final class FindViewModel: BaseViewModelType {
             .store(in: &self.cancellable)
         
         return Output(
-            reviews: reviewsSubject,
-            moreReviews: moreReviewsSubject,
-            stores: storesSubject,
-            members: membersSubject
+            reviews: reviewsSubject.eraseToAnyPublisher(),
+            moreReviews: moreReviewsSubject.eraseToAnyPublisher(),
+            storesAndMembers: storesAndMembersSubject.eraseToAnyPublisher()
         )
     }
     
@@ -115,42 +105,38 @@ final class FindViewModel: BaseViewModelType {
                 self.lastReviewId = review.page.lastId
                 self.currentpageSize = review.page.size
                 
-                lastReviewId == nil ? self.reviewsSubject.send(review.reviews) : self.moreReviewsSubject.send(review.reviews)
-            } catch {
-                self.reviewsSubject.send(completion: .failure(error))
+                lastReviewId == nil ? self.reviewsSubject.send(.success(review.reviews)) : self.moreReviewsSubject.send(.success(review.reviews))
+            } catch(let error) {
+                self.reviewsSubject.send(.failure(error))
             }
         }
     }
     
-    private func searchStores(keyword: String) {
+    private func searchStoresAndMembers(keyword: String) {
         Task {
             do {
                 guard let location = LocationManager.shared.manager.location?.coordinate else { return }
                 let deviceX = location.longitude
                 let deviceY = location.latitude
-                let stores = try await self.usecase.getStoresBySearch(request: SearchStoreRequestDTO(
-                    name: keyword,
-                    x: deviceX,
-                    y: deviceY,
-                    size: self.size
-                ))
-                self.storesSubject.send(stores)
-            } catch {
-                self.storesSubject.send(completion: .failure(error))
-            }
-        }
-    }
-    
-    private func searchMembers(keyword: String) {
-        Task {
-            do {
-                let members = try await self.usecase.getMembersBySearch(request: SearchMemberRequestDTO(
-                    name: keyword,
-                    size: self.size
-                ))
-                self.membersSubject.send(members)
-            } catch {
-                self.membersSubject.send(completion: .failure(error))
+                
+                let (stores, members) = try await Task {
+                    async let stores = self.usecase.getStoresBySearch(request: SearchStoreRequestDTO(
+                        name: keyword,
+                        x: deviceX,
+                        y: deviceY,
+                        size: self.size
+                    ))
+                    async let members = self.usecase.getMembersBySearch(request: SearchMemberRequestDTO(
+                        name: keyword,
+                        size: self.size
+                    ))
+
+                    return await (try stores, try members)
+                }.value
+                
+                self.storesAndMembersSubject.send(.success((stores, members)))
+            } catch(let error) {
+                self.storesAndMembersSubject.send(.failure(error))
             }
         }
     }

@@ -30,14 +30,12 @@ final class FindViewController: UIViewController, Keyboardable {
     private var snapshot: NSDiffableDataSourceSnapshot<Section, ReviewItem>!
     
     private var scope: Int = 0
-    private var searchText: String = ""
     private var stores: [Store] = []
     private var members: [Member] = []
     
-    let selectStorePublisher = PassthroughSubject<Place, Never>()
-    let searchStoresPublisher = PassthroughSubject<String, Never>()
-    let searchMembersPublisher = PassthroughSubject<String, Never>()
-    let followButtonDidTapPublisher = PassthroughSubject<(Int, Bool), Never>()
+    private let selectStorePublisher = PassthroughSubject<Place, Never>()
+    private let searchStoresAndMembersPublisher = PassthroughSubject<String, Never>()
+    private let followButtonDidTapPublisher = PassthroughSubject<(Int, Bool), Never>()
     
     // MARK: - init
     
@@ -83,8 +81,7 @@ final class FindViewController: UIViewController, Keyboardable {
         let input = FindViewModel.Input(
             scrolledToBottom: self.findView.collectionView().scrolledToBottomPublisher.eraseToAnyPublisher(),
             refreshControl: self.findView.refreshPublisher.eraseToAnyPublisher(),
-            searchStores: self.searchStoresPublisher.eraseToAnyPublisher(),
-            searchMembers: self.searchMembersPublisher.eraseToAnyPublisher(),
+            searchStoresAndMembers: self.searchStoresAndMembersPublisher.eraseToAnyPublisher(),
             followMember: self.followButtonDidTapPublisher.eraseToAnyPublisher()
         )
         return viewModel.transform(from: input)
@@ -95,37 +92,50 @@ final class FindViewController: UIViewController, Keyboardable {
         
         output.reviews
             .receive(on: DispatchQueue.main)
-            .sink { _ in
-            } receiveValue: { [weak self] reviews in
-                self?.reloadReviews(reviews)
-                self?.findView.refreshControl().endRefreshing()
-            }
+            .sink(receiveValue: { [weak self] result in
+                switch result {
+                case .success(let reviews):
+                    self?.reloadReviews(reviews)
+                    self?.findView.refreshControl().endRefreshing()
+                case .failure(let error):
+                    self?.makeAlert(
+                        title: "에러",
+                        message: error.localizedDescription
+                    )
+                }
+            })
             .store(in: &self.cancellable)
         
         output.moreReviews
             .receive(on: DispatchQueue.main)
-            .sink { _ in
-            } receiveValue: { [weak self] reviews in
-                self?.loadMoreReviews(reviews)
-            }
+            .sink(receiveValue: { [weak self] result in
+                switch result {
+                case .success(let reviews):
+                    self?.loadMoreReviews(reviews)
+                case .failure(let error):
+                    self?.makeAlert(
+                        title: "에러",
+                        message: error.localizedDescription
+                    )
+                }
+            })
             .store(in: &self.cancellable)
         
-        output.stores
+        output.storesAndMembers
             .receive(on: DispatchQueue.main)
-            .sink { _ in
-            } receiveValue: { [weak self] stores in
-                self?.stores = stores
-                self?.findView.findResultViewController.searchResultTableView.reloadData()
-            }
-            .store(in: &self.cancellable)
-        
-        output.members
-            .receive(on: DispatchQueue.main)
-            .sink { _ in
-            } receiveValue: { [weak self] members in
-                self?.members = members
-                self?.findView.findResultViewController.searchResultTableView.reloadData()
-            }
+            .sink(receiveValue: { [weak self] result in
+                switch result {
+                case .success((let stores, let members)):
+                    self?.stores = stores
+                    self?.members = members
+                    self?.findView.findResultViewController.searchResultTableView.reloadData()
+                case .failure(let error):
+                    self?.makeAlert(
+                        title: "에러",
+                        message: error.localizedDescription
+                    )
+                }
+            })
             .store(in: &self.cancellable)
     }
     
@@ -217,34 +227,21 @@ extension FindViewController {
 
 extension FindViewController: UISearchResultsUpdating, UISearchBarDelegate {
     func updateSearchResults(for searchController: UISearchController) {
-//        guard let text = searchController.searchBar.text?.lowercased() else { return }
-//        self.searchText = text
-//        self.searchData()
+        guard let text = searchController.searchBar.text?.lowercased(), text != "" else { return }
+        self.searchStoresAndMembersPublisher.send(text)
     }
 
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-//        guard let text = searchBar.text?.lowercased() else { return }
         self.findView.searchController.searchBar.showsScopeBar = true
     }
 
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
-        guard let text = searchBar.text?.lowercased() else { return }
-        self.searchText = text
-        self.searchData()
         self.findView.searchController.searchBar.showsScopeBar = false
     }
 
     func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
         self.scope = selectedScope
-        self.searchData()
-    }
-    
-    func searchData() {
-        if self.scope == 0 {
-            self.searchStoresPublisher.send(self.searchText)
-        } else {
-            self.searchMembersPublisher.send(self.searchText)
-        }
+        self.findView.findResultViewController.searchResultTableView.reloadData()
     }
 }
 
