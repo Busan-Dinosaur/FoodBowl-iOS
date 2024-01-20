@@ -63,12 +63,12 @@ final class StoreInfoTableViewCell: UITableViewCell, BaseViewType {
 
         self.storeAddressLabel.snp.makeConstraints {
             $0.leading.equalToSuperview().inset(SizeLiteral.horizantalPadding)
-            $0.top.equalTo(storeNameLabel.snp.bottom).offset(2)
+            $0.top.equalTo(storeNameLabel.snp.bottom).offset(3)
         }
 
         self.storeDistanceLabel.snp.makeConstraints {
             $0.trailing.equalToSuperview().inset(SizeLiteral.horizantalPadding)
-            $0.top.equalTo(storeNameLabel.snp.bottom).offset(2)
+            $0.top.equalTo(storeNameLabel.snp.bottom).offset(3)
         }
     }
 
