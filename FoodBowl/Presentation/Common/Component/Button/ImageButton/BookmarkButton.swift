@@ -37,8 +37,6 @@ final class BookmarkButton: UIButton {
         fatalError("init(coder:) has not been implemented")
     }
 
-    // MARK: - life cycle
-    
     private func configureUI() {
         self.setImage(ImageLiteral.bookmark.resize(to: CGSize(width: 20, height: 20)).withRenderingMode(.alwaysTemplate), for: .normal)
         self.tintColor = .mainTextColor

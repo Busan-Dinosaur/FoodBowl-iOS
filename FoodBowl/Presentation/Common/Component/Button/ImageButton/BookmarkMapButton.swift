@@ -8,6 +8,7 @@
 import UIKit
 
 final class BookmarkMapButton: UIButton {
+    
     override var isSelected: Bool {
         didSet {
             if isSelected {
@@ -29,9 +30,10 @@ final class BookmarkMapButton: UIButton {
     }
 
     // MARK: - init
+    
     override init(frame _: CGRect) {
         super.init(frame: .init(origin: .zero, size: .init(width: 30, height: 30)))
-        configureUI()
+        self.configureUI()
     }
 
     @available(*, unavailable)
@@ -39,10 +41,9 @@ final class BookmarkMapButton: UIButton {
         fatalError("init(coder:) has not been implemented")
     }
 
-    // MARK: - life cycle
     private func configureUI() {
-        setImage(ImageLiteral.bookmark.resize(to: CGSize(width: 20, height: 20)).withRenderingMode(.alwaysTemplate), for: .normal)
-        tintColor = .mainPink
-        backgroundColor = .mainBackgroundColor
+        self.setImage(ImageLiteral.bookmark.resize(to: CGSize(width: 20, height: 20)).withRenderingMode(.alwaysTemplate), for: .normal)
+        self.tintColor = .mainPink
+        self.backgroundColor = .mainBackgroundColor
     }
 }

@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 import Then
 
-final class StoreHeaderView: UIView {
+final class StoreHeaderView: UIView, BaseViewType {
     
     // MARK: - ui component
     
@@ -41,7 +41,7 @@ final class StoreHeaderView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.setupLayout()
+        self.baseInit()
     }
 
     @available(*, unavailable)
@@ -49,7 +49,7 @@ final class StoreHeaderView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    private func setupLayout() {
+    func setupLayout() {
         self.addSubviews(
             self.mapButton,
             self.storeNameLabel,
@@ -90,6 +90,10 @@ final class StoreHeaderView: UIView {
             $0.leading.trailing.bottom.equalToSuperview()
             $0.height.equalTo(1)
         }
+    }
+    
+    func configureUI() {
+        self.backgroundColor = .mainBackgroundColor
     }
 }
 

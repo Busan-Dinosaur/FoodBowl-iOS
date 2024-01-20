@@ -19,19 +19,16 @@ final class StoreInfoView: UIView, BaseViewType {
         $0.titleLabel?.font = UIFont.preferredFont(forTextStyle: .footnote, weight: .medium)
         $0.contentHorizontalAlignment = .left
     }
-    
     let storeCategoryButton = UIButton().then {
         $0.setTitleColor(.mainTextColor, for: .normal)
         $0.titleLabel?.font = UIFont.preferredFont(forTextStyle: .caption2, weight: .light)
         $0.contentHorizontalAlignment = .left
     }
-    
     let storeAddressButton = UIButton().then {
         $0.setTitleColor(.subTextColor, for: .normal)
         $0.titleLabel?.font = UIFont.preferredFont(forTextStyle: .caption2, weight: .light)
         $0.contentHorizontalAlignment = .left
     }
-    
     let bookmarkButton = BookmarkButton()
     
     // MARK: - init

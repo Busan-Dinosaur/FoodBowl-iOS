@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 import Then
 
-final class FollowButton: UIButton {
+final class FollowButton: UIButton, BaseViewType {
     
     override var isSelected: Bool {
         didSet {
@@ -35,8 +35,7 @@ final class FollowButton: UIButton {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.setupLayout()
-        self.configureUI()
+        self.baseInit()
     }
 
     @available(*, unavailable)
@@ -46,7 +45,7 @@ final class FollowButton: UIButton {
 
     // MARK: - life cycle
     
-    private func setupLayout() {
+    func setupLayout() {
         self.addSubview(self.label)
 
         self.label.snp.makeConstraints {
@@ -54,7 +53,7 @@ final class FollowButton: UIButton {
         }
     }
 
-    private func configureUI() {
+    func configureUI() {
         self.backgroundColor = .mainPink
         self.layer.cornerRadius = 15
         self.layer.borderColor = UIColor.grey002.cgColor

@@ -10,13 +10,14 @@ import UIKit
 import SnapKit
 import Then
 
-final class SearchBarButton: UIButton {
-    // MARK: - property
+final class SearchBarButton: UIButton, BaseViewType {
+    
+    // MARK: - ui component
+    
     private let searchIconView = UIImageView().then {
         $0.image = ImageLiteral.search.resize(to: CGSize(width: 20, height: 20)).withRenderingMode(.alwaysTemplate)
         $0.tintColor = .subTextColor
     }
-
     let placeholderLabel = UILabel().then {
         $0.font = UIFont.preferredFont(forTextStyle: .callout, weight: .regular)
         $0.textColor = .grey001
@@ -24,10 +25,10 @@ final class SearchBarButton: UIButton {
     }
 
     // MARK: - init
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setupLayout()
-        configureUI()
+        self.baseInit()
     }
 
     @available(*, unavailable)
@@ -35,25 +36,27 @@ final class SearchBarButton: UIButton {
         fatalError("init(coder:) has not been implemented")
     }
 
-    // MARK: - life cycle
-    private func setupLayout() {
-        addSubviews(searchIconView, placeholderLabel)
+    func setupLayout() {
+        self.addSubviews(
+            self.searchIconView,
+            self.placeholderLabel
+        )
 
-        searchIconView.snp.makeConstraints {
+        self.searchIconView.snp.makeConstraints {
             $0.centerY.equalToSuperview()
             $0.leading.equalToSuperview().inset(14)
         }
 
-        placeholderLabel.snp.makeConstraints {
+        self.placeholderLabel.snp.makeConstraints {
             $0.centerY.equalToSuperview()
-            $0.leading.equalTo(searchIconView.snp.trailing).offset(10)
+            $0.leading.equalTo(self.searchIconView.snp.trailing).offset(10)
         }
     }
 
-    private func configureUI() {
-        backgroundColor = .mainBackgroundColor
-        layer.cornerRadius = 20
-        layer.borderWidth = 1
-        layer.borderColor = UIColor.grey002.cgColor
+    func configureUI() {
+        self.backgroundColor = .mainBackgroundColor
+        self.layer.cornerRadius = 20
+        self.layer.borderWidth = 1
+        self.layer.borderColor = UIColor.grey002.cgColor
     }
 }

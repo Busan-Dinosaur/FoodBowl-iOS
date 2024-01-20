@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 import Then
 
-final class CompleteButton: UIButton {
+final class CompleteButton: UIButton, BaseViewType {
     
     // MARK: - ui component
 
@@ -25,8 +25,7 @@ final class CompleteButton: UIButton {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.setupLayout()
-        self.configureUI()
+        self.baseInit()
     }
 
     @available(*, unavailable)
@@ -36,7 +35,7 @@ final class CompleteButton: UIButton {
 
     // MARK: - life cycle
 
-    private func setupLayout() {
+    func setupLayout() {
         self.addSubview(self.label)
 
         self.label.snp.makeConstraints {
@@ -44,7 +43,7 @@ final class CompleteButton: UIButton {
         }
     }
 
-    private func configureUI() {
+    func configureUI() {
         self.backgroundColor = .mainTextColor
         self.layer.cornerRadius = 30
         self.layer.masksToBounds = false
