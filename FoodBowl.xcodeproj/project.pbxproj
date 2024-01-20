@@ -112,7 +112,6 @@
 		CBADC2422955989400E56C93 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = CBADC2412955989400E56C93 /* SnapKit */; };
 		CBADC245295598A200E56C93 /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = CBADC244295598A200E56C93 /* Then */; };
 		CBADC28329559BC900E56C93 /* ImageLiteral.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADC25929559BC900E56C93 /* ImageLiteral.swift */; };
-		CBADC28629559BC900E56C93 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADC25D29559BC900E56C93 /* Logger.swift */; };
 		CBADC28A29559BC900E56C93 /* UIFont+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADC26229559BC900E56C93 /* UIFont+Extension.swift */; };
 		CBADC28B29559BC900E56C93 /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADC26329559BC900E56C93 /* UIColor+Extension.swift */; };
 		CBADC28C29559BC900E56C93 /* UILabel+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADC26429559BC900E56C93 /* UILabel+Extension.swift */; };
@@ -298,7 +297,6 @@
 		CBA7F181297DB319006088A0 /* SignViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignViewController.swift; sourceTree = "<group>"; };
 		CBA7F183297DBB01006088A0 /* YPImagePicker+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "YPImagePicker+Extension.swift"; sourceTree = "<group>"; };
 		CBADC25929559BC900E56C93 /* ImageLiteral.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageLiteral.swift; sourceTree = "<group>"; };
-		CBADC25D29559BC900E56C93 /* Logger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		CBADC26229559BC900E56C93 /* UIFont+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIFont+Extension.swift"; sourceTree = "<group>"; };
 		CBADC26329559BC900E56C93 /* UIColor+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
 		CBADC26429559BC900E56C93 /* UILabel+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UILabel+Extension.swift"; sourceTree = "<group>"; };
@@ -623,19 +621,10 @@
 		CB617A2B2AE23B89000F7FFC /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				CB617A2C2AE23B9E000F7FFC /* Logger */,
 				CBADC26129559BC900E56C93 /* Extension */,
 				CBADC25829559BC900E56C93 /* Literal */,
 			);
 			path = Utils;
-			sourceTree = "<group>";
-		};
-		CB617A2C2AE23B9E000F7FFC /* Logger */ = {
-			isa = PBXGroup;
-			children = (
-				CBADC25D29559BC900E56C93 /* Logger.swift */,
-			);
-			path = Logger;
 			sourceTree = "<group>";
 		};
 		CB617A2E2AE23CF1000F7FFC /* Combine */ = {
@@ -1492,7 +1481,6 @@
 				CBA62D3F2A6EC7B800AA0830 /* FindViewController.swift in Sources */,
 				CB4FBBF22978CFA90052D371 /* FollowerViewController.swift in Sources */,
 				CBADC28B29559BC900E56C93 /* UIColor+Extension.swift in Sources */,
-				CBADC28629559BC900E56C93 /* Logger.swift in Sources */,
 				CB73E56E2B3417980026E4D7 /* FollowView.swift in Sources */,
 				CB617A3A2AE24836000F7FFC /* Navigationable.swift in Sources */,
 				CBADC29429559BC900E56C93 /* Notification+Extension.swift in Sources */,

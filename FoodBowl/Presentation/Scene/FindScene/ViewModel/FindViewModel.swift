@@ -25,7 +25,7 @@ final class FindViewModel: BaseViewModelType {
     private let moreReviewsSubject: PassthroughSubject<Result<[ReviewItem], Error>, Never> = PassthroughSubject()
     private let refreshControlSubject: PassthroughSubject<Void, Error> = PassthroughSubject()
     private let storesAndMembersSubject: PassthroughSubject<Result<([Store], [Member]), Error>, Never> = PassthroughSubject()
-    private let errorAlertSubject: PassthroughSubject<String, Never> = PassthroughSubject()
+    private let followMemberSubject: PassthroughSubject<Result<Int, Error>, Never> = PassthroughSubject()
     
     struct Input {
         let scrolledToBottom: AnyPublisher<Void, Never>
@@ -38,7 +38,7 @@ final class FindViewModel: BaseViewModelType {
         let reviews: AnyPublisher<Result<[ReviewItem], Error>, Never>
         let moreReviews: AnyPublisher<Result<[ReviewItem], Error>, Never>
         let storesAndMembers: AnyPublisher<Result<([Store], [Member]), Error>, Never>
-        let errorAlert: AnyPublisher<String, Never>
+        let followMember: AnyPublisher<Result<Int, Error>, Never>
     }
     
     // MARK: - init
@@ -85,7 +85,7 @@ final class FindViewModel: BaseViewModelType {
             reviews: reviewsSubject.eraseToAnyPublisher(),
             moreReviews: moreReviewsSubject.eraseToAnyPublisher(),
             storesAndMembers: storesAndMembersSubject.eraseToAnyPublisher(),
-            errorAlert: errorAlertSubject.eraseToAnyPublisher()
+            followMember: followMemberSubject.eraseToAnyPublisher()
         )
     }
     
@@ -148,8 +148,9 @@ final class FindViewModel: BaseViewModelType {
         Task {
             do {
                 try await self.usecase.followMember(memberId: memberId)
+                self.followMemberSubject.send(.success(memberId))
             } catch(let error) {
-                self.errorAlertSubject.send(error.localizedDescription)
+                self.followMemberSubject.send(.failure(error))
             }
         }
     }
@@ -158,8 +159,9 @@ final class FindViewModel: BaseViewModelType {
         Task {
             do {
                 try await self.usecase.unfollowMember(memberId: memberId)
+                self.followMemberSubject.send(.success(memberId))
             } catch(let error) {
-                self.errorAlertSubject.send(error.localizedDescription)
+                self.followMemberSubject.send(.failure(error))
             }
         }
     }

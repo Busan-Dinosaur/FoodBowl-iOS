@@ -82,7 +82,7 @@ struct MemberByFollowItemDTO: Codable, Hashable {
             introduction: "",
             followerCount: self.followerCount.prettyNumber,
             followingCount: "",
-            isMyProfile: false,
+            isMyProfile: UserDefaultStorage.id == self.memberId,
             isFollowing: self.isFollowing
         )
     }

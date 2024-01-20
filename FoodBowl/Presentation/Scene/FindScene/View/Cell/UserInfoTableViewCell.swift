@@ -30,7 +30,7 @@ final class UserInfoTableViewCell: UITableViewCell, BaseViewType {
         $0.font = UIFont.preferredFont(forTextStyle: .footnote, weight: .light)
         $0.textColor = .subTextColor
     }
-    private let followButton = FollowButton()
+    let followButton = FollowButton()
     
     // MARK: - property
     
@@ -41,6 +41,7 @@ final class UserInfoTableViewCell: UITableViewCell, BaseViewType {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.baseInit()
+        self.setupAction()
     }
     
     @available(*, unavailable)
@@ -86,15 +87,7 @@ final class UserInfoTableViewCell: UITableViewCell, BaseViewType {
     }
     
     private func setupAction() {
-        self.followButton.addAction(UIAction { _ in
-            self.followButtonTapAction?(self)
-            self.followButton.isSelected.toggle()
-        }, for: .touchUpInside)
-    }
-
-    override func prepareForReuse() {
-        super.prepareForReuse()
-        self.userImageView.image = nil
+        self.followButton.addAction(UIAction { _ in self.followButtonTapAction?(self) }, for: .touchUpInside)
     }
 }
 

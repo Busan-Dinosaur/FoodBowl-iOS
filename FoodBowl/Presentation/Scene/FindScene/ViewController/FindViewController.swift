@@ -128,7 +128,7 @@ final class FindViewController: UIViewController, Keyboardable {
                 case .success((let stores, let members)):
                     self?.stores = stores
                     self?.members = members
-                    self?.findView.findResultViewController.searchResultTableView.reloadData()
+                    self?.findView.findResultViewController.listTableView.reloadData()
                 case .failure(let error):
                     self?.makeAlert(
                         title: "에러",
@@ -138,12 +138,18 @@ final class FindViewController: UIViewController, Keyboardable {
             })
             .store(in: &self.cancellable)
         
-        output.errorAlert
-            .sink(receiveValue: { [weak self] message in
-                self?.makeAlert(
-                    title: "에러",
-                    message: message
-                )
+        output.followMember
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] result in
+                switch result {
+                case .success(let memberId):
+                    self?.followMember(memberId: memberId)
+                case .failure(let error):
+                    self?.makeAlert(
+                        title: "에러",
+                        message: error.localizedDescription
+                    )
+                }
             })
             .store(in: &self.cancellable)
     }
@@ -160,8 +166,8 @@ final class FindViewController: UIViewController, Keyboardable {
     // MARK: - func
     
     private func configureDelegation() {
-        self.findView.findResultViewController.searchResultTableView.delegate = self
-        self.findView.findResultViewController.searchResultTableView.dataSource = self
+        self.findView.findResultViewController.listTableView.delegate = self
+        self.findView.findResultViewController.listTableView.dataSource = self
         self.findView.searchController.searchResultsUpdater = self
         self.findView.searchController.searchBar.delegate = self
     }
@@ -169,6 +175,14 @@ final class FindViewController: UIViewController, Keyboardable {
     private func configureNavigation() {
         guard let navigationController = self.navigationController else { return }
         self.findView.configureNavigationBarItem(navigationController)
+    }
+    
+    private func followMember(memberId: Int) {
+        if let index = self.members.firstIndex(where: { $0.id == memberId }) {
+            self.members[index].isFollowing.toggle()
+            let indexPath = IndexPath(row: index, section: 0)
+            self.findView.findResultViewController.listTableView.reloadRows(at: [indexPath], with: .fade)
+        }
     }
 }
 
@@ -239,7 +253,7 @@ extension FindViewController: UISearchResultsUpdating, UISearchBarDelegate {
         guard let text = searchController.searchBar.text?.lowercased(), text != "" else {
             self.stores = []
             self.members = []
-            self.findView.findResultViewController.searchResultTableView.reloadData()
+            self.findView.findResultViewController.listTableView.reloadData()
             return
         }
         self.searchStoresAndMembersPublisher.send(text)
@@ -255,7 +269,7 @@ extension FindViewController: UISearchResultsUpdating, UISearchBarDelegate {
 
     func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
         self.scope = selectedScope
-        self.findView.findResultViewController.searchResultTableView.reloadData()
+        self.findView.findResultViewController.listTableView.reloadData()
     }
 }
 
@@ -294,7 +308,6 @@ extension FindViewController: UITableViewDataSource, UITableViewDelegate {
             cell.followButtonTapAction = { [weak self] _ in
                 guard let self = self else { return }
                 self.followButtonDidTapPublisher.send((self.members[indexPath.item].id, self.members[indexPath.item].isFollowing))
-                self.members[indexPath.item].isFollowing.toggle()
             }
 
             return cell

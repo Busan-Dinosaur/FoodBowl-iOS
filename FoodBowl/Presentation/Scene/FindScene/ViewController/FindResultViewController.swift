@@ -26,7 +26,7 @@ final class FindResultViewController: UIViewController {
         self.configureUI()
     }
     
-    lazy var searchResultTableView = UITableView().then {
+    lazy var listTableView = UITableView().then {
         $0.register(StoreInfoTableViewCell.self, forCellReuseIdentifier: StoreInfoTableViewCell.className)
         $0.register(UserInfoTableViewCell.self, forCellReuseIdentifier: UserInfoTableViewCell.className)
         $0.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 20, right: 0)
@@ -34,9 +34,9 @@ final class FindResultViewController: UIViewController {
     }
 
     private func setupLayout() {
-        self.view.addSubviews(self.searchResultTableView)
+        self.view.addSubviews(self.listTableView)
 
-        self.searchResultTableView.snp.makeConstraints {
+        self.listTableView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
     }
