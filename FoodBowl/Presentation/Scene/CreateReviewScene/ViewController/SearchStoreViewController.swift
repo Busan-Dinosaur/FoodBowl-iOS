@@ -143,13 +143,10 @@ extension SearchStoreViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         dissmissKeyboard()
     }
-    
-    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
-//        self.searchStoresPublisher.send(searchBar.text ?? "")
-    }
 
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        self.searchStoresPublisher.send(searchBar.text ?? "")
+        guard let text = searchBar.text, text != "" else { return }
+        self.searchStoresPublisher.send(text)
     }
 }
 
