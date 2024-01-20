@@ -15,10 +15,9 @@ final class SearchStoreView: UIView, BaseViewType {
     
     // MARK: - ui component
     
-    private lazy var searchBar = UISearchBar().then {
+    let searchBar = UISearchBar().then {
         $0.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width - 80, height: 0)
         $0.placeholder = "검색"
-        $0.delegate = self
     }
     private let cancelButton = UIButton().then {
         $0.setTitle("취소", for: .normal)
@@ -38,7 +37,6 @@ final class SearchStoreView: UIView, BaseViewType {
     var cancelButtonDidTapPublisher: AnyPublisher<Void, Never> {
         return self.cancelButton.buttonTapPublisher
     }
-    let searchStoresPublisher = PassthroughSubject<String, Never>()
     
     // MARK: - init
     
@@ -78,22 +76,4 @@ final class SearchStoreView: UIView, BaseViewType {
     func configureUI() {
         self.backgroundColor = .mainBackgroundColor
     }
-}
-
-extension SearchStoreView: UISearchBarDelegate {
-    private func dissmissKeyboard() {
-        searchBar.resignFirstResponder()
-    }
-
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        dissmissKeyboard()
-    }
-    
-    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
-        self.searchStoresPublisher.send(searchBar.text ?? "")
-    }
-
-//    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-//        self.searchStoresPublisher.send(searchText)
-//    }
 }

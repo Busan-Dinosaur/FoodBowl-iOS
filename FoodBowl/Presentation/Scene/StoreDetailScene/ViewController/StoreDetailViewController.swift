@@ -86,27 +86,48 @@ final class StoreDetailViewController: UIViewController, Navigationable, Optiona
         
         output.store
             .receive(on: DispatchQueue.main)
-            .sink { _ in
-            } receiveValue: { [weak self] store in
-                self?.storeDetailView.storeHeaderView.configureHeader(store)
-            }
+            .sink(receiveValue: { [weak self] result in
+                switch result {
+                case .success(let store):
+                    self?.storeDetailView.storeHeaderView.configureHeader(store)
+                case .failure(let error):
+                    self?.makeAlert(
+                        title: "에러",
+                        message: error.localizedDescription
+                    )
+                }
+            })
             .store(in: &self.cancellable)
         
         output.reviews
             .receive(on: DispatchQueue.main)
-            .sink { _ in
-            } receiveValue: { [weak self] reviews in
-                self?.reloadReviews(reviews)
-                self?.storeDetailView.refreshControl().endRefreshing()
-            }
+            .sink(receiveValue: { [weak self] result in
+                switch result {
+                case .success(let reviews):
+                    self?.reloadReviews(reviews)
+                    self?.storeDetailView.refreshControl().endRefreshing()
+                case .failure(let error):
+                    self?.makeAlert(
+                        title: "에러",
+                        message: error.localizedDescription
+                    )
+                }
+            })
             .store(in: &self.cancellable)
         
         output.moreReviews
             .receive(on: DispatchQueue.main)
-            .sink { _ in
-            } receiveValue: { [weak self] reviews in
-                self?.loadMoreReviews(reviews)
-            }
+            .sink(receiveValue: { [weak self] result in
+                switch result {
+                case .success(let reviews):
+                    self?.loadMoreReviews(reviews)
+                case .failure(let error):
+                    self?.makeAlert(
+                        title: "에러",
+                        message: error.localizedDescription
+                    )
+                }
+            })
             .store(in: &self.cancellable)
         
         output.isRemoved

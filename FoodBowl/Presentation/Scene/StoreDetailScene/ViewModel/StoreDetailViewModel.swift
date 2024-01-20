@@ -22,10 +22,10 @@ final class StoreDetailViewModel: BaseViewModelType {
     private var currentpageSize: Int = 20
     private var lastReviewId: Int?
     
-    private let storeSubject = PassthroughSubject<Store, Error>()
-    private let reviewsSubject = PassthroughSubject<[ReviewItem], Error>()
-    private let moreReviewsSubject = PassthroughSubject<[ReviewItem], Error>()
-    private let refreshControlSubject = PassthroughSubject<Void, Error>()
+    private let storeSubject: PassthroughSubject<Result<Store, Error>, Never> = PassthroughSubject()
+    private let reviewsSubject: PassthroughSubject<Result<[ReviewItem], Error>, Never> = PassthroughSubject()
+    private let moreReviewsSubject: PassthroughSubject<Result<[ReviewItem], Error>, Never> = PassthroughSubject()
+    private let refreshControlSubject: PassthroughSubject<Void, Error> = PassthroughSubject()
     private let isRemovedSubject: PassthroughSubject<Result<Int, Error>, Never> = PassthroughSubject()
     
     struct Input {
@@ -37,9 +37,9 @@ final class StoreDetailViewModel: BaseViewModelType {
     }
     
     struct Output {
-        let store: PassthroughSubject<Store, Error>
-        let reviews: PassthroughSubject<[ReviewItem], Error>
-        let moreReviews: PassthroughSubject<[ReviewItem], Error>
+        let store: AnyPublisher<Result<Store, Error>, Never>
+        let reviews: AnyPublisher<Result<[ReviewItem], Error>, Never>
+        let moreReviews: AnyPublisher<Result<[ReviewItem], Error>, Never>
         let isRemoved: AnyPublisher<Result<Int, Error>, Never>
     }
     
@@ -97,9 +97,9 @@ final class StoreDetailViewModel: BaseViewModelType {
             .store(in: &self.cancellable)
         
         return Output(
-            store: storeSubject,
-            reviews: reviewsSubject,
-            moreReviews: moreReviewsSubject,
+            store: storeSubject.eraseToAnyPublisher(),
+            reviews: reviewsSubject.eraseToAnyPublisher(),
+            moreReviews: moreReviewsSubject.eraseToAnyPublisher(),
             isRemoved: isRemovedSubject.eraseToAnyPublisher()
         )
     }
@@ -124,16 +124,16 @@ final class StoreDetailViewModel: BaseViewModelType {
                 ))
                 
                 let store = data.reviewStoreResponse.toStore()
-                self.storeSubject.send(store)
+                self.storeSubject.send(.success(store))
                 
                 let review = data.toReview()
                 
                 self.lastReviewId = review.page.lastId
                 self.currentpageSize = review.page.size
                 
-                lastReviewId == nil ? self.reviewsSubject.send(review.reviews) : self.moreReviewsSubject.send(review.reviews)
-            } catch {
-                self.reviewsSubject.send(completion: .failure(error))
+                lastReviewId == nil ? self.reviewsSubject.send(.success(review.reviews)) : self.moreReviewsSubject.send(.success(review.reviews))
+            } catch(let error) {
+                self.reviewsSubject.send(.failure(error))
             }
         }
     }

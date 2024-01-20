@@ -15,7 +15,7 @@ final class SearchStoreViewModel: NSObject, BaseViewModelType {
     private let usecase: CreateReviewUsecase
     private var cancellable: Set<AnyCancellable> = Set()
     
-    private let storesSubject = PassthroughSubject<[Place], Error>()
+    private let storesSubject: PassthroughSubject<Result<[Place], Error>, Never> = PassthroughSubject()
     private let isSelectedSubject: PassthroughSubject<Result<(Place, Place?), Error>, Never> = PassthroughSubject()
     
     struct Input {
@@ -24,12 +24,13 @@ final class SearchStoreViewModel: NSObject, BaseViewModelType {
     }
     
     struct Output {
-        let stores: PassthroughSubject<[Place], Error>
+        let stores: AnyPublisher<Result<[Place], Error>, Never>
         let isSelected: AnyPublisher<Result<(Place, Place?), Error>, Never>
     }
     
     func transform(from input: Input) -> Output {
         input.searchStores
+            .removeDuplicates()
             .sink(receiveValue: { [weak self] keyword in
                 self?.searchStores(keyword: keyword)
             })
@@ -42,7 +43,7 @@ final class SearchStoreViewModel: NSObject, BaseViewModelType {
             .store(in: &self.cancellable)
         
         return Output(
-            stores: self.storesSubject,
+            stores: self.storesSubject.eraseToAnyPublisher(),
             isSelected: self.isSelectedSubject.eraseToAnyPublisher()
         )
     }
@@ -62,9 +63,9 @@ final class SearchStoreViewModel: NSObject, BaseViewModelType {
                 let deviceX = String(location.longitude)
                 let deviceY = String(location.latitude)
                 let stores = try await self.usecase.searchStores(x: deviceX, y: deviceY, keyword: keyword)
-                self.storesSubject.send(stores)
-            } catch {
-                self.storesSubject.send(completion: .failure(error))
+                self.storesSubject.send(.success(stores))
+            } catch(let error) {
+                self.storesSubject.send(.failure(error))
             }
         }
     }

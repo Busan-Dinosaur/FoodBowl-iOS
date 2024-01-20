@@ -24,6 +24,7 @@ final class SearchStoreViewController: UIViewController, Keyboardable {
     private let viewModel: any BaseViewModelType
     private var cancellable: Set<AnyCancellable> = Set()
     
+    let searchStoresPublisher = PassthroughSubject<String, Never>()
     let selectStorePublisher = PassthroughSubject<Place, Never>()
     
     weak var delegate: SearchStoreViewControllerDelegate?
@@ -69,7 +70,7 @@ final class SearchStoreViewController: UIViewController, Keyboardable {
     private func transformedOutput() -> SearchStoreViewModel.Output? {
         guard let viewModel = self.viewModel as? SearchStoreViewModel else { return nil }
         let input = SearchStoreViewModel.Input(
-            searchStores: self.searchStoreView.searchStoresPublisher.eraseToAnyPublisher(),
+            searchStores: self.searchStoresPublisher.eraseToAnyPublisher(),
             selectStore: self.selectStorePublisher.eraseToAnyPublisher()
         )
         return viewModel.transform(from: input)
@@ -77,14 +78,21 @@ final class SearchStoreViewController: UIViewController, Keyboardable {
     
     private func bindOutputToViewModel(_ output: SearchStoreViewModel.Output?) {
         guard let output else { return }
-        
+
         output.stores
             .receive(on: DispatchQueue.main)
-            .sink { _ in
-            } receiveValue: { [weak self] stores in
-                self?.stores = stores
-                self?.searchStoreView.tableView().reloadData()
-            }
+            .sink(receiveValue: { [weak self] result in
+                switch result {
+                case .success(let stores):
+                    self?.stores = stores
+                    self?.searchStoreView.tableView().reloadData()
+                case .failure(let error):
+                    self?.makeAlert(
+                        title: "에러",
+                        message: error.localizedDescription
+                    )
+                }
+            })
             .store(in: &self.cancellable)
         
         output.isSelected
@@ -116,6 +124,7 @@ final class SearchStoreViewController: UIViewController, Keyboardable {
     // MARK: - func
     
     private func configureDelegation() {
+        self.searchStoreView.searchBar.delegate = self
         self.searchStoreView.tableView().delegate = self
         self.searchStoreView.tableView().dataSource = self
     }
@@ -123,6 +132,24 @@ final class SearchStoreViewController: UIViewController, Keyboardable {
     private func configureNavigation() {
         guard let navigationController = self.navigationController else { return }
         self.searchStoreView.configureNavigationBarItem(navigationController)
+    }
+}
+
+extension SearchStoreViewController: UISearchBarDelegate {
+    private func dissmissKeyboard() {
+        self.searchStoreView.searchBar.resignFirstResponder()
+    }
+
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        dissmissKeyboard()
+    }
+    
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+//        self.searchStoresPublisher.send(searchBar.text ?? "")
+    }
+
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        self.searchStoresPublisher.send(searchBar.text ?? "")
     }
 }
 
