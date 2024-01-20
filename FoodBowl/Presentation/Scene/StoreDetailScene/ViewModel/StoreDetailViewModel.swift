@@ -27,7 +27,7 @@ final class StoreDetailViewModel: BaseViewModelType {
     private let moreReviewsSubject: PassthroughSubject<Result<[ReviewItem], Error>, Never> = PassthroughSubject()
     private let refreshControlSubject: PassthroughSubject<Void, Error> = PassthroughSubject()
     private let isRemovedSubject: PassthroughSubject<Result<Int, Error>, Never> = PassthroughSubject()
-    private let errorAlertSubject: PassthroughSubject<String, Never> = PassthroughSubject()
+    private let isBookmarkSubject: PassthroughSubject<Result<Void, Error>, Never> = PassthroughSubject()
     
     struct Input {
         let reviewToggleButtonDidTap: AnyPublisher<Bool, Never>
@@ -42,7 +42,7 @@ final class StoreDetailViewModel: BaseViewModelType {
         let reviews: AnyPublisher<Result<[ReviewItem], Error>, Never>
         let moreReviews: AnyPublisher<Result<[ReviewItem], Error>, Never>
         let isRemoved: AnyPublisher<Result<Int, Error>, Never>
-        let errorAlert: AnyPublisher<String, Never>
+        let isBookmark: AnyPublisher<Result<Void, Error>, Never>
     }
     
     // MARK: - init
@@ -59,6 +59,7 @@ final class StoreDetailViewModel: BaseViewModelType {
         self.getReviews()
         
         input.reviewToggleButtonDidTap
+            .removeDuplicates()
             .sink(receiveValue: { [weak self] isFriend in
                 guard let self = self else { return }
                 self.currentpageSize = self.pageSize
@@ -69,6 +70,7 @@ final class StoreDetailViewModel: BaseViewModelType {
             .store(in: &self.cancellable)
         
         input.bookmarkButtonDidTap
+            .removeDuplicates()
             .sink(receiveValue: { [weak self] isBookmark in
                 guard let self = self else { return }
                 isBookmark ? self.removeBookmark() : self.createBookmark()
@@ -99,11 +101,11 @@ final class StoreDetailViewModel: BaseViewModelType {
             .store(in: &self.cancellable)
         
         return Output(
-            store: storeSubject.eraseToAnyPublisher(),
-            reviews: reviewsSubject.eraseToAnyPublisher(),
-            moreReviews: moreReviewsSubject.eraseToAnyPublisher(),
-            isRemoved: isRemovedSubject.eraseToAnyPublisher(),
-            errorAlert: errorAlertSubject.eraseToAnyPublisher()
+            store: self.storeSubject.eraseToAnyPublisher(),
+            reviews: self.reviewsSubject.eraseToAnyPublisher(),
+            moreReviews: self.moreReviewsSubject.eraseToAnyPublisher(),
+            isRemoved: self.isRemovedSubject.eraseToAnyPublisher(),
+            isBookmark: self.isBookmarkSubject.eraseToAnyPublisher()
         )
     }
     
@@ -156,8 +158,9 @@ final class StoreDetailViewModel: BaseViewModelType {
         Task {
             do {
                 try await self.usecase.createBookmark(storeId: self.storeId)
+                self.isBookmarkSubject.send(.success(()))
             } catch(let error) {
-                self.errorAlertSubject.send(error.localizedDescription)
+                self.isBookmarkSubject.send(.failure(error))
             }
         }
     }
@@ -166,8 +169,9 @@ final class StoreDetailViewModel: BaseViewModelType {
         Task {
             do {
                 try await self.usecase.removeBookmark(storeId: self.storeId)
+                self.isBookmarkSubject.send(.success(()))
             } catch(let error) {
-                self.errorAlertSubject.send(error.localizedDescription)
+                self.isBookmarkSubject.send(.failure(error))
             }
         }
     }

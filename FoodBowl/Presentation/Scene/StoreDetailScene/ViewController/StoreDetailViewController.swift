@@ -145,15 +145,20 @@ final class StoreDetailViewController: UIViewController, Navigationable, Optiona
             })
             .store(in: &self.cancellable)
         
-        output.errorAlert
-            .sink(receiveValue: { [weak self] message in
-                self?.makeAlert(
-                    title: "에러",
-                    message: message
-                )
+        output.isBookmark
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] result in
+                switch result {
+                case .success:
+                    self?.storeDetailView.storeHeaderView.bookmarkButton.isSelected.toggle()
+                case .failure(let error):
+                    self?.makeAlert(
+                        title: "에러",
+                        message: error.localizedDescription
+                    )
+                }
             })
-            .store(in: &self.cancellable)
-        
+            .store(in: &self.cancellable)        
     }
     
     private func bindUI() {
