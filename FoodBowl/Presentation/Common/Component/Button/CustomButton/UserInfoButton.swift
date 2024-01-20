@@ -1,5 +1,5 @@
 //
-//  UserInfoView.swift
+//  UserInfoButton.swift
 //  FoodBowl
 //
 //  Created by COBY_PRO on 2023/11/14.
@@ -11,27 +11,25 @@ import Kingfisher
 import SnapKit
 import Then
 
-final class UserInfoView: UIView, BaseViewType {
+final class UserInfoButton: UIButton, BaseViewType {
     
     // MARK: - ui component
     
-    let userImageButton = UIButton().then {
-        $0.backgroundColor = .grey003
+    private let userImageView = UIImageView().then {
+        $0.image = ImageLiteral.defaultProfile
         $0.layer.cornerRadius = 20
         $0.layer.masksToBounds = true
         $0.layer.borderColor = UIColor.grey002.cgColor
         $0.layer.borderWidth = 1
     }
-    let userNameButton = UIButton().then {
-        $0.setTitleColor(.mainTextColor, for: .normal)
-        $0.titleLabel?.font = .preferredFont(forTextStyle: .subheadline, weight: .medium)
-        $0.contentHorizontalAlignment = .left
+    private let userNameLabel = UILabel().then {
+        $0.font = UIFont.preferredFont(forTextStyle: .subheadline, weight: .medium)
+        $0.textColor = .mainTextColor
     }
-    let userFollowerLabel = UILabel().then {
+    private let userFollowerLabel = UILabel().then {
         $0.font = UIFont.preferredFont(forTextStyle: .footnote, weight: .light)
         $0.textColor = .subTextColor
     }
-    let followButton = FollowButton()
     let optionButton = OptionButton()
     
     // MARK: - init
@@ -48,32 +46,33 @@ final class UserInfoView: UIView, BaseViewType {
     
     func setupLayout() {
         self.addSubviews(
-            self.userImageButton,
-            self.userNameButton, 
+            self.userImageView,
+            self.userNameLabel, 
             self.userFollowerLabel,
             self.optionButton
         )
         
-        self.userImageButton.snp.makeConstraints {
+        self.userImageView.snp.makeConstraints {
             $0.leading.equalToSuperview().inset(SizeLiteral.horizantalPadding)
-            $0.top.bottom.equalToSuperview().inset(12)
+            $0.centerY.equalToSuperview()
             $0.width.height.equalTo(40)
         }
         
-        self.userNameButton.snp.makeConstraints {
-            $0.leading.equalTo(self.userImageButton.snp.trailing).offset(12)
+        self.userNameLabel.snp.makeConstraints {
+            $0.leading.equalTo(self.userImageView.snp.trailing).offset(12)
             $0.top.equalToSuperview().inset(14)
             $0.height.equalTo(18)
         }
         
         self.userFollowerLabel.snp.makeConstraints {
-            $0.leading.equalTo(self.userImageButton.snp.trailing).offset(12)
-            $0.top.equalTo(self.userNameButton.snp.bottom).offset(2)
+            $0.leading.equalTo(self.userImageView.snp.trailing).offset(12)
+            $0.top.equalTo(self.userNameLabel.snp.bottom).offset(4)
         }
         
         self.optionButton.snp.makeConstraints {
-            $0.trailing.equalToSuperview().inset(SizeLiteral.horizantalPadding)
+            $0.trailing.equalToSuperview()
             $0.centerY.equalToSuperview()
+            $0.width.height.equalTo(50)
         }
     }
     
@@ -82,15 +81,15 @@ final class UserInfoView: UIView, BaseViewType {
     }
 }
 
-extension UserInfoView {
+extension UserInfoButton {
     func configureUser(_ member: Member) {
         if let url = member.profileImageUrl {
-            self.userImageButton.kf.setImage(with: URL(string: url), for: .normal)
+            self.userImageView.kf.setImage(with: URL(string: url))
         } else {
-            self.userImageButton.setImage(ImageLiteral.defaultProfile, for: .normal)
+            self.userImageView.image = ImageLiteral.defaultProfile
         }
         
-        self.userNameButton.setTitle(member.nickname, for: .normal)
+        self.userNameLabel.text = member.nickname
         self.userFollowerLabel.text = "팔로워 \(member.followerCount)명"
     }
 }

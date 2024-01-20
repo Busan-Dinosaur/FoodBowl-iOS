@@ -283,7 +283,7 @@ class MapViewController: UIViewController, Navigationable, Optionable {
             guard let self = self else { return }
             
             Task {
-                if cell.storeInfoView.bookmarkButton.isSelected {
+                if cell.storeInfoButton.bookmarkButton.isSelected {
                     if await self.viewModel.removeBookmark(storeId: item.store.id) {
                         DispatchQueue.main.async {
                             self.updateBookmark(item.store.id)
@@ -351,7 +351,7 @@ extension MapViewController {
     private func feedCollectionViewDataSource() -> UICollectionViewDiffableDataSource<Section, ReviewItemDTO> {
         let reviewCellRegistration = UICollectionView.CellRegistration<FeedCollectionViewCell, ReviewItemDTO> {
             [weak self] cell, indexPath, item in
-            cell.configureCell(item)
+            cell.configureCell(item.toReviewItem())
             self?.bindCell(cell, with: item)
         }
 

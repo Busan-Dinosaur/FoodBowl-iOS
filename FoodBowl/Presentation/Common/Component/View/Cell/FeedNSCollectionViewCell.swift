@@ -14,7 +14,7 @@ final class FeedNSCollectionViewCell: UICollectionViewCell, BaseViewType {
     
     // MARK: - ui component
     
-    let userInfoView = UserInfoView()
+    private let userInfoButton = UserInfoButton()
     private let commentLabel = UILabel().then {
         $0.font = UIFont.preferredFont(forTextStyle: .subheadline, weight: .light)
         $0.textColor = .mainTextColor
@@ -41,21 +41,25 @@ final class FeedNSCollectionViewCell: UICollectionViewCell, BaseViewType {
     }
     
     func setupLayout() {
-        contentView.addSubviews(userInfoView, commentLabel, photoListView)
+        self.contentView.addSubviews(
+            self.userInfoButton,
+            self.commentLabel,
+            self.photoListView
+        )
         
-        userInfoView.snp.makeConstraints {
+        self.userInfoButton.snp.makeConstraints {
             $0.top.leading.trailing.equalToSuperview()
             $0.height.equalTo(64)
         }
         
-        commentLabel.snp.makeConstraints {
-            $0.top.equalTo(userInfoView.snp.bottom)
+        self.commentLabel.snp.makeConstraints {
+            $0.top.equalTo(self.userInfoButton.snp.bottom)
             $0.leading.trailing.equalToSuperview().inset(SizeLiteral.horizantalPadding)
-            $0.bottom.equalTo(photoListView.snp.top).offset(-10)
+            $0.bottom.equalTo(self.photoListView.snp.top).offset(-10)
         }
         
-        photoListView.snp.makeConstraints {
-            $0.top.equalTo(commentLabel.snp.bottom)
+        self.photoListView.snp.makeConstraints {
+            $0.top.equalTo(self.commentLabel.snp.bottom)
             $0.bottom.equalToSuperview().inset(20)
             $0.leading.trailing.equalToSuperview()
             $0.height.equalTo(100)
@@ -81,9 +85,8 @@ final class FeedNSCollectionViewCell: UICollectionViewCell, BaseViewType {
     }
     
     private func setupAction() {
-        userInfoView.userImageButton.addAction(UIAction { _ in self.userButtonTapAction?(self) }, for: .touchUpInside)
-        userInfoView.userNameButton.addAction(UIAction { _ in self.userButtonTapAction?(self) }, for: .touchUpInside)
-        userInfoView.optionButton.addAction(UIAction { _ in self.optionButtonTapAction?(self) }, for: .touchUpInside)
+        self.userInfoButton.addAction(UIAction { _ in self.userButtonTapAction?(self) }, for: .touchUpInside)
+        self.userInfoButton.optionButton.addAction(UIAction { _ in self.optionButtonTapAction?(self) }, for: .touchUpInside)
     }
 }
 
@@ -93,7 +96,7 @@ extension FeedNSCollectionViewCell {
         let member = reviewItem.member
         let comment = reviewItem.comment
         
-        self.userInfoView.configureUser(member)
+        self.userInfoButton.configureUser(member)
         self.commentLabel.text = comment.content
         
         if comment.imagePaths.isEmpty {

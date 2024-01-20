@@ -63,7 +63,7 @@ struct ReviewItemByStoreDTO: Codable, Hashable {
         ReviewItem(
             member: self.writer.toMember(),
             comment: self.review.toComment(),
-            store: nil,
+            store: .init(),
             thumbnail: ""
         )
     }

@@ -15,24 +15,19 @@ final class StoreHeaderView: UIView, BaseViewType {
     // MARK: - ui component
     
     private let mapButton = MapButton()
-
     private let storeNameLabel = UILabel().then {
         $0.font = UIFont.preferredFont(forTextStyle: .subheadline, weight: .medium)
         $0.textColor = .mainTextColor
     }
-
     private let storeCategoryLabel = UILabel().then {
         $0.font = UIFont.preferredFont(forTextStyle: .footnote, weight: .light)
         $0.textColor = .mainTextColor
     }
-
     private let storeAddressLabel = UILabel().then {
         $0.font = UIFont.preferredFont(forTextStyle: .footnote, weight: .light)
         $0.textColor = .subTextColor
     }
-
     let bookmarkButton = BookmarkButton()
-
     private let borderLineView = UIView().then {
         $0.backgroundColor = .grey002.withAlphaComponent(0.5)
     }
@@ -71,8 +66,8 @@ final class StoreHeaderView: UIView, BaseViewType {
         }
 
         self.storeCategoryLabel.snp.makeConstraints {
-            $0.centerY.equalTo(self.storeNameLabel)
             $0.leading.equalTo(self.storeNameLabel.snp.trailing).offset(8)
+            $0.centerY.equalTo(self.storeNameLabel)
         }
 
         self.storeAddressLabel.snp.makeConstraints {

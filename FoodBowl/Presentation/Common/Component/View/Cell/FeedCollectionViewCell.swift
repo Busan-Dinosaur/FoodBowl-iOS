@@ -14,14 +14,14 @@ final class FeedCollectionViewCell: UICollectionViewCell, BaseViewType {
     
     // MARK: - ui component
     
-    let userInfoView = UserInfoView()
-    lazy var commentLabel = UILabel().then {
+    private let userInfoButton = UserInfoButton()
+    private lazy var commentLabel = UILabel().then {
         $0.font = UIFont.preferredFont(forTextStyle: .subheadline, weight: .light)
         $0.textColor = .mainTextColor
         $0.numberOfLines = 0
     }
-    let photoListView = PhotoListView()
-    let storeInfoView = StoreInfoView()
+    private let photoListView = PhotoListView()
+    let storeInfoButton = StoreInfoButton()
     
     // MARK: - property
     
@@ -44,27 +44,32 @@ final class FeedCollectionViewCell: UICollectionViewCell, BaseViewType {
     }
     
     func setupLayout() {
-        contentView.addSubviews(userInfoView, commentLabel, photoListView, storeInfoView)
+        self.contentView.addSubviews(
+            self.userInfoButton,
+            self.commentLabel,
+            self.photoListView,
+            self.storeInfoButton
+        )
         
-        userInfoView.snp.makeConstraints {
+        self.userInfoButton.snp.makeConstraints {
             $0.top.leading.trailing.equalToSuperview()
             $0.height.equalTo(64)
         }
         
-        commentLabel.snp.makeConstraints {
-            $0.top.equalTo(userInfoView.snp.bottom)
+        self.commentLabel.snp.makeConstraints {
+            $0.top.equalTo(self.userInfoButton.snp.bottom)
             $0.leading.trailing.equalToSuperview().inset(SizeLiteral.horizantalPadding)
             $0.bottom.equalTo(photoListView.snp.top).offset(-10)
         }
         
-        photoListView.snp.makeConstraints {
-            $0.top.equalTo(commentLabel.snp.bottom)
+        self.photoListView.snp.makeConstraints {
+            $0.top.equalTo(self.commentLabel.snp.bottom)
             $0.leading.trailing.equalToSuperview()
             $0.height.equalTo(100)
         }
         
-        storeInfoView.snp.makeConstraints {
-            $0.top.equalTo(photoListView.snp.bottom).offset(10)
+        self.storeInfoButton.snp.makeConstraints {
+            $0.top.equalTo(self.photoListView.snp.bottom).offset(10)
             $0.leading.trailing.equalToSuperview().inset(SizeLiteral.horizantalPadding)
             $0.bottom.equalToSuperview().inset(20)
             $0.height.equalTo(54)
@@ -90,40 +95,37 @@ final class FeedCollectionViewCell: UICollectionViewCell, BaseViewType {
     }
     
     private func setupAction() {
-        userInfoView.userImageButton.addAction(UIAction { _ in self.userButtonTapAction?(self) }, for: .touchUpInside)
-        userInfoView.userNameButton.addAction(UIAction { _ in self.userButtonTapAction?(self) }, for: .touchUpInside)
-        userInfoView.optionButton.addAction(UIAction { _ in self.optionButtonTapAction?(self) }, for: .touchUpInside)
-        storeInfoView.storeNameButton.addAction(UIAction { _ in self.storeButtonTapAction?(self) }, for: .touchUpInside)
-        storeInfoView.storeCategoryButton.addAction(UIAction { _ in self.storeButtonTapAction?(self) }, for: .touchUpInside)
-        storeInfoView.storeAddressButton.addAction(UIAction { _ in self.storeButtonTapAction?(self) }, for: .touchUpInside)
-        storeInfoView.bookmarkButton.addAction(UIAction { _ in self.bookmarkButtonTapAction?(self) }, for: .touchUpInside)
+        self.userInfoButton.addAction(UIAction { _ in self.userButtonTapAction?(self) }, for: .touchUpInside)
+        self.userInfoButton.optionButton.addAction(UIAction { _ in self.optionButtonTapAction?(self) }, for: .touchUpInside)
+        self.storeInfoButton.addAction(UIAction { _ in self.storeButtonTapAction?(self) }, for: .touchUpInside)
+        self.storeInfoButton.bookmarkButton.addAction(UIAction { _ in self.bookmarkButtonTapAction?(self) }, for: .touchUpInside)
     }
 }
 
 // MARK: - Public - func
 extension FeedCollectionViewCell {    
-    func configureCell(_ reviewItem: ReviewItemDTO) {
-        let writer = reviewItem.writer
+    func configureCell(_ reviewItem: ReviewItem) {
+        let member = reviewItem.member
         let store = reviewItem.store
-        let review = reviewItem.review
+        let comment = reviewItem.comment
         
-        self.userInfoView.configureUser(writer.toMember())
-        self.storeInfoView.configureStore(store)
-        self.commentLabel.text = review.content
-        self.photoListView.photos = review.imagePaths
+        self.userInfoButton.configureUser(member)
+        self.storeInfoButton.configureStore(store)
+        self.commentLabel.text = comment.content
         
-        if review.imagePaths.isEmpty {
+        if comment.imagePaths.isEmpty {
             self.photoListView.isHidden = true
-            
-            self.storeInfoView.snp.remakeConstraints {
+            self.storeInfoButton.snp.remakeConstraints {
                 $0.top.equalTo(self.commentLabel.snp.bottom).offset(10)
                 $0.leading.trailing.equalToSuperview().inset(SizeLiteral.horizantalPadding)
                 $0.bottom.equalToSuperview().inset(14)
                 $0.height.equalTo(54)
             }
         } else {
+            self.photoListView.photos = comment.imagePaths
             self.photoListView.isHidden = false
-            self.storeInfoView.snp.remakeConstraints {
+            
+            self.storeInfoButton.snp.remakeConstraints {
                 $0.top.equalTo(self.photoListView.snp.bottom).offset(10)
                 $0.leading.trailing.equalToSuperview().inset(SizeLiteral.horizantalPadding)
                 $0.bottom.equalToSuperview().inset(14)

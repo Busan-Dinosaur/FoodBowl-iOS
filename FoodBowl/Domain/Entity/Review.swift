@@ -23,7 +23,7 @@ struct Page: Codable {
 struct ReviewItem: Codable, Hashable {
     let member: Member
     let comment: Comment
-    let store: Store?
+    let store: Store
     let thumbnail: String
     
     static func == (lhs: ReviewItem, rhs: ReviewItem) -> Bool {
