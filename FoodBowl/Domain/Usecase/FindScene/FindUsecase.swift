@@ -33,8 +33,8 @@ final class FindUsecaseImpl: FindUsecase {
         do {
             let reviewByFeedDTO = try await self.repository.getReviewsByFeed(request: request)
             return reviewByFeedDTO.toReview()
-        } catch {
-            throw NetworkError()
+        } catch(let error) {
+            throw error
         }
     }
     
@@ -42,8 +42,8 @@ final class FindUsecaseImpl: FindUsecase {
         do {
             let storesBySearchDTO = try await self.repository.getStoresBySearch(request: request)
             return storesBySearchDTO.searchResponses.map { $0.toStore() }
-        } catch {
-            throw NetworkError()
+        } catch(let error) {
+            throw error
         }
     }
     
@@ -51,24 +51,24 @@ final class FindUsecaseImpl: FindUsecase {
         do {
             let membersBySearchDTO = try await self.repository.getMembersBySearch(request: request)
             return membersBySearchDTO.memberSearchResponses.map { $0.toMember() }
-        } catch {
-            throw NetworkError()
+        } catch(let error) {
+            throw error
         }
     }
     
     func followMember(memberId: Int) async throws {
         do {
             try await self.repository.followMember(memberId: memberId)
-        } catch {
-            throw NetworkError()
+        } catch(let error) {
+            throw error
         }
     }
     
     func unfollowMember(memberId: Int) async throws {
         do {
             try await self.repository.unfollowMember(memberId: memberId)
-        } catch {
-            throw NetworkError()
+        } catch(let error) {
+            throw error
         }
     }
 }

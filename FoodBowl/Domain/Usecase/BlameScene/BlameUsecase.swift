@@ -28,8 +28,8 @@ final class BlameUsecaseImpl: BlameUsecase {
     func createBlame(request: CreateBlameRequestDTO) async throws {
         do {
             try await self.repository.createBlame(request: request)
-        } catch {
-            throw NetworkError()
+        } catch(let error) {
+            throw error
         }
     }
 }

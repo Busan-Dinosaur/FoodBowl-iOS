@@ -16,14 +16,14 @@ public extension Result<Response, MoyaError> {
             guard let data = try? result.map(T.self) else {
                 do {
                     let errorMessage = try result.map(ErrorDTO.self).message
-                    throw NetworkError(errorMessage)
+                    throw NetworkError.error(message: errorMessage)
                 } catch {
-                    throw NetworkError()
+                    throw NetworkError.unknownError
                 }
             }
             return data
         case .failure:
-            throw NetworkError()
+            throw NetworkError.unknownError
         }
     }
 }

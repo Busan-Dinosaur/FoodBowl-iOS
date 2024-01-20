@@ -31,8 +31,8 @@ final class CreateReviewUsecaseImpl: CreateReviewUsecase {
         do {
             let placeDTO = try await self.repository.searchStores(x: x, y: y, keyword: keyword)
             return placeDTO.documents.map { $0.toPlace() }
-        } catch {
-            throw NetworkError()
+        } catch(let error) {
+            throw error
         }
     }
     
@@ -40,16 +40,16 @@ final class CreateReviewUsecaseImpl: CreateReviewUsecase {
         do {
             let placeDTO = try await self.repository.searchUniv(x: x, y: y)
             return placeDTO.documents.filter { $0.placeName.contains("대학교") || $0.placeName.contains("캠퍼스") }.first?.toPlace()
-        } catch {
-            throw NetworkError()
+        } catch(let error) {
+            throw error
         }
     }
     
     func createReview(request: CreateReviewRequestDTO, images: [Data]) async throws {
         do {
             try await self.repository.createReview(request: request, images: images)
-        } catch {
-            throw NetworkError()
+        } catch(let error) {
+            throw error
         }
     }
 }

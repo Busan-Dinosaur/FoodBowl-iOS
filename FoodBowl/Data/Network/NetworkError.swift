@@ -7,14 +7,21 @@
 
 import Foundation
 
-struct NetworkError: LocalizedError {
-    let description: String
+enum NetworkError: LocalizedError {
+    case error(message: String)
+    case unknownError
+    case clientError
+}
 
-    init(_ description: String) {
-        self.description = description
-    }
-    
-    init() {
-        self.description = "네트워크 통신에 실패하였습니다."
+extension NetworkError {
+    var errorDescription: String {
+        switch self {
+        case .error(let message):
+            return message
+        case .unknownError:
+            return "알 수 없는 에러가 발생했습니다."
+        case .clientError:
+            return "네트워크 통신에 실패하였습니다."
+        }
     }
 }

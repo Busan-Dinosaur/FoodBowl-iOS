@@ -32,32 +32,32 @@ final class StoreDetailUsecaseImpl: StoreDetailUsecase {
         do {
             let reviewByStoreDTO = try await self.repository.getReviewsByStore(request: request)
             return reviewByStoreDTO
-        } catch {
-            throw NetworkError()
+        } catch(let error) {
+            throw error
         }
     }
     
     func removeReview(id: Int) async throws {
         do {
             try await self.repository.removeReview(id: id)
-        } catch {
-            throw NetworkError()
+        } catch(let error) {
+            throw error
         }
     }
     
     func createBookmark(storeId: Int) async throws {
         do {
             try await self.repository.createBookmark(storeId: storeId)
-        } catch {
-            throw NetworkError()
+        } catch(let error) {
+            throw error
         }
     }
     
     func removeBookmark(storeId: Int) async throws {
         do {
             try await self.repository.removeBookmark(storeId: storeId)
-        } catch {
-            throw NetworkError()
+        } catch(let error) {
+            throw error
         }
     }
 }

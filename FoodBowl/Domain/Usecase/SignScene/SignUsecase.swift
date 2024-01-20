@@ -30,8 +30,8 @@ final class SignUsecaseImpl: SignUsecase {
         do {
             let tokenDTO = try await self.repository.signIn(request: login)
             return tokenDTO
-        } catch {
-            throw NetworkError()
+        } catch(let error) {
+            throw error
         }
     }
     
@@ -39,8 +39,8 @@ final class SignUsecaseImpl: SignUsecase {
         do {
             let MemberProfileDTO = try await self.repository.getMyProfile()
             return MemberProfileDTO
-        } catch {
-            throw NetworkError()
+        } catch(let error) {
+            throw error
         }
     }
 }
