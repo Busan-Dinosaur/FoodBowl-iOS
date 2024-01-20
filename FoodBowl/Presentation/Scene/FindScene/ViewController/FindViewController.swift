@@ -258,13 +258,16 @@ extension FindViewController: UISearchResultsUpdating, UISearchBarDelegate {
         }
         self.searchStoresAndMembersPublisher.send(text)
     }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        self.stores = []
+        self.members = []
+        self.findView.findResultViewController.listTableView.reloadData()
+        self.findView.searchController.searchBar.showsScopeBar = false
+    }
 
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         self.findView.searchController.searchBar.showsScopeBar = true
-    }
-
-    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
-        self.findView.searchController.searchBar.showsScopeBar = false
     }
 
     func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
