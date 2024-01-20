@@ -26,7 +26,7 @@ final class StoreInfoTableViewCell: UITableViewCell, BaseViewType {
         $0.font = UIFont.preferredFont(forTextStyle: .caption1, weight: .light)
         $0.textColor = .subTextColor
     }
-    private let storeDistanceLabel = UILabel().then {
+    private let storeReviewCountLabel = UILabel().then {
         $0.font = UIFont.preferredFont(forTextStyle: .caption1, weight: .light)
         $0.textColor = .subTextColor
     }
@@ -48,7 +48,7 @@ final class StoreInfoTableViewCell: UITableViewCell, BaseViewType {
             self.storeNameLabel,
             self.storeCategoryLabel,
             self.storeAddressLabel,
-            self.storeDistanceLabel
+            self.storeReviewCountLabel
         )
 
         self.storeNameLabel.snp.makeConstraints {
@@ -66,7 +66,7 @@ final class StoreInfoTableViewCell: UITableViewCell, BaseViewType {
             $0.top.equalTo(storeNameLabel.snp.bottom).offset(3)
         }
 
-        self.storeDistanceLabel.snp.makeConstraints {
+        self.storeReviewCountLabel.snp.makeConstraints {
             $0.trailing.equalToSuperview().inset(SizeLiteral.horizantalPadding)
             $0.top.equalTo(storeNameLabel.snp.bottom).offset(3)
         }
@@ -82,7 +82,7 @@ extension StoreInfoTableViewCell {
     func configureCell(_ store: Store) {
         self.storeNameLabel.text = store.name
         self.storeCategoryLabel.text = store.category
-        self.storeAddressLabel.text = store.address
-        self.storeDistanceLabel.text = store.distance
+        self.storeAddressLabel.text = "\(store.address), \(store.distance)"
+        self.storeReviewCountLabel.text = "후기 \(store.reviewCount)"
     }
 }
