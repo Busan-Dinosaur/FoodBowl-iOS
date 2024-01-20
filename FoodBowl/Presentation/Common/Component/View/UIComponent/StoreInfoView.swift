@@ -19,7 +19,7 @@ final class StoreInfoView: UIView {
         $0.contentHorizontalAlignment = .left
     }
 
-    let storeDetailButton = UIButton().then {
+    let storeCategoryButton = UIButton().then {
         $0.setTitleColor(.mainTextColor, for: .normal)
         $0.titleLabel?.font = UIFont.preferredFont(forTextStyle: .caption2, weight: .light)
         $0.contentHorizontalAlignment = .left
@@ -27,7 +27,7 @@ final class StoreInfoView: UIView {
     
     let storeAddressButton = UIButton().then {
         $0.setTitleColor(.subTextColor, for: .normal)
-        $0.titleLabel?.font = UIFont.preferredFont(forTextStyle: .caption2, weight: .regular)
+        $0.titleLabel?.font = UIFont.preferredFont(forTextStyle: .caption2, weight: .light)
         $0.contentHorizontalAlignment = .left
     }
 
@@ -48,7 +48,7 @@ final class StoreInfoView: UIView {
     private func setupLayout() {
         self.addSubviews(
             self.storeNameButton,
-            self.storeDetailButton,
+            self.storeCategoryButton,
             self.storeAddressButton,
             self.bookmarkButton
         )
@@ -59,8 +59,8 @@ final class StoreInfoView: UIView {
             $0.height.equalTo(18)
         }
 
-        self.storeDetailButton.snp.makeConstraints {
-            $0.leading.equalTo(self.storeNameButton.snp.trailing).offset(8)
+        self.storeCategoryButton.snp.makeConstraints {
+            $0.leading.equalTo(self.storeNameButton.snp.trailing).offset(6)
             $0.centerY.equalTo(self.storeNameButton)
             $0.height.equalTo(13)
         }
@@ -83,8 +83,8 @@ final class StoreInfoView: UIView {
 
     func configureStore(_ store: StoreByReviewDTO) {
         self.storeNameButton.setTitle(store.name, for: .normal)
-        self.storeDetailButton.setTitle("\(store.categoryName), \(store.distance.prettyDistance)", for: .normal)
-        self.storeAddressButton.setTitle(store.addressName, for: .normal)
+        self.storeCategoryButton.setTitle(store.categoryName, for: .normal)
+        self.storeAddressButton.setTitle("\(store.addressName), \(store.distance.prettyDistance)", for: .normal)
         self.bookmarkButton.isSelected = store.isBookmarked
     }
 }

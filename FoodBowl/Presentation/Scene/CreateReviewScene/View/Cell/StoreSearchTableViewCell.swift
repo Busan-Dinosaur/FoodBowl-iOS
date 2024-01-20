@@ -23,12 +23,12 @@ final class StoreSearchTableViewCell: UITableViewCell, BaseViewType {
         $0.textColor = .mainTextColor
     }
     private let storeAddressLabel = UILabel().then {
-        $0.font = UIFont.preferredFont(forTextStyle: .caption1, weight: .regular)
+        $0.font = UIFont.preferredFont(forTextStyle: .caption1, weight: .light)
         $0.textColor = .subTextColor
     }
     private let storeDistanceLabel = UILabel().then {
         $0.font = UIFont.preferredFont(forTextStyle: .caption1, weight: .light)
-        $0.textColor = .mainTextColor
+        $0.textColor = .subTextColor
     }
 
     // MARK: - init
