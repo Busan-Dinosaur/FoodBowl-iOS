@@ -85,9 +85,9 @@ final class StoreHeaderView: UIView {
 extension StoreHeaderView {
     func configureHeader(_ store: Store) {
         self.storeNameLabel.text = store.name
-        self.storeDetailLabel.text = "\(store.categoryName), \(store.distance)"
-        self.storeAddressLabel.text = store.addressName
-        self.bookmarkButton.isSelected = store.isBookmarked
+        self.storeDetailLabel.text = "\(store.category), \(store.distance)"
+        self.storeAddressLabel.text = store.address
+        self.bookmarkButton.isSelected = store.isBookmark
         
         let action = UIAction { _ in
             let showWebViewController = ShowWebViewController(url: store.url)

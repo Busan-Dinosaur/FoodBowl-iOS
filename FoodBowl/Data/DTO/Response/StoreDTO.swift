@@ -23,10 +23,10 @@ struct StoreItemDTO: Codable {
     func toStore() -> Store {
         Store(
             id: self.id,
-            categoryName: self.categoryName,
+            category: self.categoryName,
             name: self.name,
-            addressName: self.addressName,
-            isBookmarked: self.isBookmarked,
+            address: self.addressName,
+            isBookmark: self.isBookmarked,
             distance: "",
             url: self.url,
             x: self.x,
@@ -51,10 +51,10 @@ struct StoreItemBySearchDTO: Codable {
     func toStore() -> Store {
         Store(
             id: self.storeId,
-            categoryName: "",
+            category: "밥밥",
             name: self.storeName,
-            addressName: "",
-            isBookmarked: false,
+            address: "주소가 없다아",
+            isBookmark: false,
             distance: self.distance.prettyDistance,
             url: "",
             x: 0.0,

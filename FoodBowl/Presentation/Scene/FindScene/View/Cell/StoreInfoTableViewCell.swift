@@ -18,7 +18,7 @@ final class StoreInfoTableViewCell: UITableViewCell, BaseViewType {
         $0.font = UIFont.preferredFont(forTextStyle: .subheadline, weight: .medium)
         $0.textColor = .mainTextColor
     }
-    private let storeFeedLabel = UILabel().then {
+    private let storeAddressLabel = UILabel().then {
         $0.font = UIFont.preferredFont(forTextStyle: .caption1, weight: .light)
         $0.textColor = .subTextColor
     }
@@ -40,14 +40,14 @@ final class StoreInfoTableViewCell: UITableViewCell, BaseViewType {
     }
 
     func setupLayout() {
-        contentView.addSubviews(storeNameLabel, storeFeedLabel, storeDistanceLabel)
+        contentView.addSubviews(storeNameLabel, storeAddressLabel, storeDistanceLabel)
 
         storeNameLabel.snp.makeConstraints {
             $0.leading.equalToSuperview().inset(SizeLiteral.horizantalPadding)
             $0.top.equalToSuperview().inset(15)
         }
 
-        storeFeedLabel.snp.makeConstraints {
+        storeAddressLabel.snp.makeConstraints {
             $0.leading.equalToSuperview().inset(SizeLiteral.horizantalPadding)
             $0.top.equalTo(storeNameLabel.snp.bottom).offset(2)
         }
@@ -67,7 +67,9 @@ final class StoreInfoTableViewCell: UITableViewCell, BaseViewType {
 extension StoreInfoTableViewCell {
     func configureCell(_ store: Store) {
         storeNameLabel.text = store.name
-        storeFeedLabel.text = "\(store.reviewCount)명이 후기를 남겼어요."
+        storeAddressLabel.text = store.address
         storeDistanceLabel.text = store.distance
+        
+//        storeAddressLabel.text = "\(store.reviewCount)명이 후기를 남겼어요."
     }
 }

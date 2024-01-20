@@ -33,10 +33,10 @@ struct StoreDetailDTO: Codable {
     func toStore() -> Store {
         Store(
             id: self.id,
-            categoryName: self.categoryName,
+            category: self.categoryName,
             name: self.name,
-            addressName: self.addressName,
-            isBookmarked: self.isBookmarked,
+            address: self.addressName,
+            isBookmark: self.isBookmarked,
             distance: self.distance.prettyDistance,
             url: "",
             x: 0.0,
