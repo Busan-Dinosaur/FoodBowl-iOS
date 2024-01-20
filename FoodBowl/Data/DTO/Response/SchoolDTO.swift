@@ -24,4 +24,18 @@ struct SchoolItemDTO: Codable {
         let distance = currentLoc.distance(from: CLLocation(latitude: y, longitude: x))
         return String(distance).prettyDistance
     }
+    
+    func toPlace() -> Place {
+        Place(
+            id: String(self.id),
+            name: self.name,
+            address: self.address,
+            phone: "",
+            url: "",
+            distance: self.distance,
+            x: String(self.x),
+            y: String(self.y),
+            category: ""
+        )
+    }
 }

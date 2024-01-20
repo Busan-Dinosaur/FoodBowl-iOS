@@ -165,9 +165,7 @@ extension SearchStoreViewController: UITableViewDataSource, UITableViewDelegate 
         else { return UITableViewCell() }
 
         cell.selectionStyle = .none
-        cell.storeNameLabel.text = self.stores[indexPath.item].name
-        cell.storeAdressLabel.text = self.stores[indexPath.item].address
-        cell.storeDistanceLabel.text = self.stores[indexPath.item].distance
+        cell.configureCell(self.stores[indexPath.item])
 
         return cell
     }

@@ -88,9 +88,7 @@ extension SearchUnivViewController: UITableViewDataSource, UITableViewDelegate {
         else { return UITableViewCell() }
 
         cell.selectionStyle = .none
-        cell.storeNameLabel.text = filteredSchools[indexPath.item].name
-        cell.storeAdressLabel.text = filteredSchools[indexPath.item].address
-        cell.storeDistanceLabel.text = filteredSchools[indexPath.item].distance
+        cell.configureCell(filteredSchools[indexPath.item].toPlace())
 
         return cell
     }

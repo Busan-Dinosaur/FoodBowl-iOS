@@ -20,7 +20,7 @@ final class StoreInfoView: UIView {
     }
 
     let storeDetailButton = UIButton().then {
-        $0.setTitleColor(.subTextColor, for: .normal)
+        $0.setTitleColor(.mainTextColor, for: .normal)
         $0.titleLabel?.font = UIFont.preferredFont(forTextStyle: .caption2, weight: .light)
         $0.contentHorizontalAlignment = .left
     }
@@ -36,8 +36,8 @@ final class StoreInfoView: UIView {
     // MARK: - init
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setupLayout()
-        configureUI()
+        self.setupLayout()
+        self.configureUI()
     }
 
     @available(*, unavailable)
@@ -46,40 +46,45 @@ final class StoreInfoView: UIView {
     }
 
     private func setupLayout() {
-        addSubviews(storeNameButton, storeDetailButton, storeAddressButton, bookmarkButton)
+        self.addSubviews(
+            self.storeNameButton,
+            self.storeDetailButton,
+            self.storeAddressButton,
+            self.bookmarkButton
+        )
 
-        storeNameButton.snp.makeConstraints {
+        self.storeNameButton.snp.makeConstraints {
             $0.leading.equalToSuperview().inset(14)
             $0.top.equalToSuperview().inset(10)
             $0.height.equalTo(18)
         }
 
-        storeDetailButton.snp.makeConstraints {
-            $0.leading.equalTo(storeNameButton.snp.trailing).offset(8)
-            $0.centerY.equalTo(storeNameButton)
+        self.storeDetailButton.snp.makeConstraints {
+            $0.leading.equalTo(self.storeNameButton.snp.trailing).offset(8)
+            $0.centerY.equalTo(self.storeNameButton)
             $0.height.equalTo(13)
         }
         
-        storeAddressButton.snp.makeConstraints {
+        self.storeAddressButton.snp.makeConstraints {
             $0.leading.equalToSuperview().inset(14)
-            $0.top.equalTo(storeNameButton.snp.bottom).offset(2)
+            $0.top.equalTo(self.storeNameButton.snp.bottom).offset(2)
             $0.height.equalTo(13)
         }
 
-        bookmarkButton.snp.makeConstraints {
+        self.bookmarkButton.snp.makeConstraints {
             $0.trailing.equalToSuperview().inset(14)
             $0.centerY.equalToSuperview()
         }
     }
 
     private func configureUI() {
-        makeBorderLayer(color: .grey002)
+        self.makeBorderLayer(color: .grey002)
     }
 
     func configureStore(_ store: StoreByReviewDTO) {
-        storeNameButton.setTitle(store.name, for: .normal)
-        storeDetailButton.setTitle("\(store.categoryName), \(store.distance.prettyDistance)", for: .normal)
-        storeAddressButton.setTitle(store.addressName, for: .normal)
-        bookmarkButton.isSelected = store.isBookmarked
+        self.storeNameButton.setTitle(store.name, for: .normal)
+        self.storeDetailButton.setTitle("\(store.categoryName), \(store.distance.prettyDistance)", for: .normal)
+        self.storeAddressButton.setTitle(store.addressName, for: .normal)
+        self.bookmarkButton.isSelected = store.isBookmarked
     }
 }

@@ -21,7 +21,7 @@ final class StoreHeaderView: UIView {
 
     let storeDetailLabel = UILabel().then {
         $0.font = UIFont.preferredFont(forTextStyle: .footnote, weight: .light)
-        $0.textColor = .subTextColor
+        $0.textColor = .mainTextColor
     }
 
     let storeAddressLabel = UILabel().then {
@@ -61,7 +61,7 @@ final class StoreHeaderView: UIView {
 
         storeDetailLabel.snp.makeConstraints {
             $0.centerY.equalTo(storeNameLabel)
-            $0.leading.equalTo(storeNameLabel.snp.trailing).offset(12)
+            $0.leading.equalTo(storeNameLabel.snp.trailing).offset(10)
         }
 
         storeAddressLabel.snp.makeConstraints {

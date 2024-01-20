@@ -14,15 +14,19 @@ final class StoreSearchTableViewCell: UITableViewCell, BaseViewType {
     
     // MARK: - ui component
 
-    let storeNameLabel = UILabel().then {
+    private let storeNameLabel = UILabel().then {
         $0.font = UIFont.preferredFont(forTextStyle: .subheadline, weight: .medium)
         $0.textColor = .mainTextColor
     }
-    let storeAdressLabel = UILabel().then {
-        $0.font = UIFont.preferredFont(forTextStyle: .caption1, weight: .light)
+    private let storeCategoryLabel = UILabel().then {
+        $0.font = UIFont.preferredFont(forTextStyle: .caption1, weight: .regular)
+        $0.textColor = .mainTextColor
+    }
+    private let storeAddressLabel = UILabel().then {
+        $0.font = UIFont.preferredFont(forTextStyle: .caption1, weight: .regular)
         $0.textColor = .subTextColor
     }
-    let storeDistanceLabel = UILabel().then {
+    private let storeDistanceLabel = UILabel().then {
         $0.font = UIFont.preferredFont(forTextStyle: .caption1, weight: .light)
         $0.textColor = .mainTextColor
     }
@@ -40,14 +44,24 @@ final class StoreSearchTableViewCell: UITableViewCell, BaseViewType {
     }
 
     func setupLayout() {
-        self.contentView.addSubviews(self.storeNameLabel, self.storeAdressLabel, self.storeDistanceLabel)
+        self.contentView.addSubviews(
+            self.storeNameLabel,
+            self.storeCategoryLabel,
+            self.storeAddressLabel,
+            self.storeDistanceLabel
+        )
 
         self.storeNameLabel.snp.makeConstraints {
             $0.leading.equalToSuperview().inset(SizeLiteral.horizantalPadding)
             $0.top.equalToSuperview().inset(12)
         }
+        
+        self.storeCategoryLabel.snp.makeConstraints {
+            $0.trailing.equalToSuperview().inset(SizeLiteral.horizantalPadding)
+            $0.top.equalToSuperview().inset(14)
+        }
 
-        self.storeAdressLabel.snp.makeConstraints {
+        self.storeAddressLabel.snp.makeConstraints {
             $0.leading.equalToSuperview().inset(SizeLiteral.horizantalPadding)
             $0.bottom.equalToSuperview().inset(12)
         }
@@ -60,5 +74,15 @@ final class StoreSearchTableViewCell: UITableViewCell, BaseViewType {
 
     func configureUI() {
         self.backgroundColor = .mainBackgroundColor
+    }
+}
+
+// MARK: - Public - func
+extension StoreSearchTableViewCell {
+    func configureCell(_ store: Place) {
+        self.storeNameLabel.text = store.name
+        self.storeCategoryLabel.text = store.category
+        self.storeAddressLabel.text = store.address
+        self.storeDistanceLabel.text = store.distance
     }
 }

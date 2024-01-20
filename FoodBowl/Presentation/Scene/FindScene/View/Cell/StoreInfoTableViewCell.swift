@@ -18,8 +18,12 @@ final class StoreInfoTableViewCell: UITableViewCell, BaseViewType {
         $0.font = UIFont.preferredFont(forTextStyle: .subheadline, weight: .medium)
         $0.textColor = .mainTextColor
     }
+    private let storeCategoryLabel = UILabel().then {
+        $0.font = UIFont.preferredFont(forTextStyle: .caption1, weight: .regular)
+        $0.textColor = .mainTextColor
+    }
     private let storeAddressLabel = UILabel().then {
-        $0.font = UIFont.preferredFont(forTextStyle: .caption1, weight: .light)
+        $0.font = UIFont.preferredFont(forTextStyle: .caption1, weight: .regular)
         $0.textColor = .subTextColor
     }
     private let storeDistanceLabel = UILabel().then {
@@ -40,19 +44,29 @@ final class StoreInfoTableViewCell: UITableViewCell, BaseViewType {
     }
 
     func setupLayout() {
-        contentView.addSubviews(storeNameLabel, storeAddressLabel, storeDistanceLabel)
+        self.contentView.addSubviews(
+            self.storeNameLabel,
+            self.storeCategoryLabel,
+            self.storeAddressLabel,
+            self.storeDistanceLabel
+        )
 
-        storeNameLabel.snp.makeConstraints {
+        self.storeNameLabel.snp.makeConstraints {
             $0.leading.equalToSuperview().inset(SizeLiteral.horizantalPadding)
             $0.top.equalToSuperview().inset(15)
         }
+        
+        self.storeCategoryLabel.snp.makeConstraints {
+            $0.trailing.equalToSuperview().inset(SizeLiteral.horizantalPadding)
+            $0.top.equalToSuperview().inset(16)
+        }
 
-        storeAddressLabel.snp.makeConstraints {
+        self.storeAddressLabel.snp.makeConstraints {
             $0.leading.equalToSuperview().inset(SizeLiteral.horizantalPadding)
             $0.top.equalTo(storeNameLabel.snp.bottom).offset(2)
         }
 
-        storeDistanceLabel.snp.makeConstraints {
+        self.storeDistanceLabel.snp.makeConstraints {
             $0.trailing.equalToSuperview().inset(SizeLiteral.horizantalPadding)
             $0.top.equalTo(storeNameLabel.snp.bottom).offset(2)
         }
@@ -66,10 +80,9 @@ final class StoreInfoTableViewCell: UITableViewCell, BaseViewType {
 // MARK: - Public - func
 extension StoreInfoTableViewCell {
     func configureCell(_ store: Store) {
-        storeNameLabel.text = store.name
-        storeAddressLabel.text = store.address
-        storeDistanceLabel.text = store.distance
-        
-//        storeAddressLabel.text = "\(store.reviewCount)명이 후기를 남겼어요."
+        self.storeNameLabel.text = store.name
+        self.storeCategoryLabel.text = store.category
+        self.storeAddressLabel.text = store.address
+        self.storeDistanceLabel.text = store.distance
     }
 }
