@@ -93,6 +93,13 @@ final class BlameViewController: UIViewController, Keyboardable {
                 self?.dismiss(animated: true)
             })
             .store(in: &self.cancellable)
+        
+        self.blameView.makeAlertPublisher
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] message in
+                self?.makeAlert(title: message)
+            })
+            .store(in: &self.cancellable)
     }
     
     // MARK: - func
