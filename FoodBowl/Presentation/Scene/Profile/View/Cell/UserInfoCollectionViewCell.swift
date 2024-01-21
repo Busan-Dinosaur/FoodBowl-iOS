@@ -78,7 +78,7 @@ final class UserInfoCollectionViewCell: UICollectionViewCell, BaseViewType {
         self.followButton.snp.makeConstraints {
             $0.trailing.equalToSuperview().inset(SizeLiteral.horizantalPadding)
             $0.centerY.equalToSuperview()
-            $0.width.equalTo(50)
+            $0.width.equalTo(60)
             $0.height.equalTo(30)
         }
     }
@@ -119,6 +119,10 @@ extension UserInfoCollectionViewCell {
         if isOwn {
             self.followButton.isHidden = false
             self.followButton.isSelected = true
+            self.followButton.label.text = "삭제"
+            self.followButton.snp.updateConstraints {
+                $0.width.equalTo(50)
+            }
         }
     }
 }

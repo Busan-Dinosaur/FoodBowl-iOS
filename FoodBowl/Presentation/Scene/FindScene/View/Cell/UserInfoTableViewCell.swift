@@ -77,7 +77,7 @@ final class UserInfoTableViewCell: UITableViewCell, BaseViewType {
         self.followButton.snp.makeConstraints {
             $0.trailing.equalToSuperview().inset(SizeLiteral.horizantalPadding)
             $0.centerY.equalToSuperview()
-            $0.width.equalTo(50)
+            $0.width.equalTo(60)
             $0.height.equalTo(30)
         }
     }

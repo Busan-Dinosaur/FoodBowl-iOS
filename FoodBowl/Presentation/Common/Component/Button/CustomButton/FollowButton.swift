@@ -16,17 +16,17 @@ final class FollowButton: UIButton, BaseViewType {
         didSet {
             if isSelected {
                 backgroundColor = .grey001
-                label.text = "삭제"
+                label.text = "팔로잉"
             } else {
                 backgroundColor = .mainPink
-                label.text = "추가"
+                label.text = "팔로우"
             }
         }
     }
 
     // MARK: - ui component
     
-    private let label = UILabel().then {
+    let label = UILabel().then {
         $0.textColor = .white
         $0.font = UIFont.preferredFont(forTextStyle: .footnote, weight: .medium)
     }
