@@ -105,7 +105,6 @@ class MapViewController: UIViewController, Navigationable, Optionable {
     var snapshot: NSDiffableDataSourceSnapshot<Section, ReviewItemDTO>!
     
     var customLocation: CustomLocationRequestDTO?
-    var currentLocation: CLLocationCoordinate2D?
     var markers = [Marker]()
 
     let modalMinHeight: CGFloat = 40
@@ -429,10 +428,6 @@ extension MapViewController {
 }
 
 extension MapViewController: MKMapViewDelegate {
-    func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
-        currentLocation = userLocation.location?.coordinate
-    }
-
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         guard view is ClusterAnnotationView else { return }
 
@@ -450,16 +445,15 @@ extension MapViewController: MKMapViewDelegate {
         let center = mapView.centerCoordinate
         let visibleMapRect = mapView.visibleMapRect
         let topLeftCoordinate = MKMapPoint(x: visibleMapRect.minX, y: visibleMapRect.minY).coordinate
-
-        guard let currentLoc = self.currentLocation else { return }
-
+        
+        guard let location = LocationManager.shared.manager.location?.coordinate else { return }
         self.customLocation = CustomLocationRequestDTO(
             x: center.longitude,
             y: center.latitude,
             deltaX: abs(topLeftCoordinate.longitude - center.longitude),
             deltaY: abs(topLeftCoordinate.latitude - center.latitude),
-            deviceX: currentLoc.longitude,
-            deviceY: currentLoc.latitude
+            deviceX: location.longitude,
+            deviceY: location.latitude
         )
         
         if let customLocation = self.customLocation {
