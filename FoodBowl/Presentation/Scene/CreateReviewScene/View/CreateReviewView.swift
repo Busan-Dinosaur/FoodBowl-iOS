@@ -210,8 +210,10 @@ final class CreateReviewView: UIView, BaseViewType {
 
     private func setupAction() {
         let completeAction = UIAction { [weak self] _ in
-            guard let self = self else { return }
-            guard let comment = self.commentTextView.text else { return }
+            guard let self = self,
+                  let comment = self.commentTextView.text,
+                  self.completeButton.isEnabled
+            else { return }
             self.completeButtonDidTapPublisher.send((comment, self.reviewImages))
         }
         self.completeButton.addAction(completeAction, for: .touchUpInside)

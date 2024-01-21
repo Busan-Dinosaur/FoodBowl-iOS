@@ -54,6 +54,7 @@ final class BlameView: UIView, BaseViewType {
     var closeButtonDidTapPublisher: AnyPublisher<Void, Never> {
         return self.closeButton.buttonTapPublisher
     }
+    let makeAlertPublisher = PassthroughSubject<String, Never>()
     let completeButtonDidTapPublisher = PassthroughSubject<String, Never>()
     
     // MARK: - init
@@ -114,14 +115,37 @@ final class BlameView: UIView, BaseViewType {
 
     private func setupAction() {
         let completeAction = UIAction { [weak self] _ in
-            guard let self = self else { return }
-            self.completeButtonDidTapPublisher.send(self.commentTextView.text)
+            guard let self = self,
+                  let comment = self.commentTextView.text,
+                  self.completeButton.isEnabled
+            else { return }
+            self.completeButtonDidTapPublisher.send(comment)
         }
         self.completeButton.addAction(completeAction, for: .touchUpInside)
     }
 }
 
 extension BlameView: UITextViewDelegate {
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        let currentText = textView.text as NSString
+        let newText = currentText.replacingCharacters(in: range, with: text)
+        let numberOfLines = newText.components(separatedBy: "\n").count
+        
+        self.completeButton.isEnabled = newText.count != 0
+        
+        if newText.count > 100 {
+            self.makeAlertPublisher.send("100자 이하로 작성해주세요.")
+            return false
+        }
+        
+        if numberOfLines > 5 {
+            self.makeAlertPublisher.send("5번 이내로 줄바꿈이 가능해요.")
+            return false
+        }
+        
+        return true
+    }
+    
     func textViewDidBeginEditing(_ textView: UITextView) {
         if textView.text == textViewPlaceHolder {
             textView.text = nil

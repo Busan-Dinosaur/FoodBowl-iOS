@@ -199,13 +199,13 @@ extension CreateReviewViewController {
     }
 }
 
-protocol CreateReviewViewControllerDelegate: AnyObject {
-    func updateData()
-}
-
 extension CreateReviewViewController: SearchStoreViewControllerDelegate {
     func setStore(store: Place, univ: Place?) {
         self.setStorePublisher.send((store, univ))
         self.createReviewView.setStore(store: store)
     }
+}
+
+protocol CreateReviewViewControllerDelegate: AnyObject {
+    func updateData()
 }
