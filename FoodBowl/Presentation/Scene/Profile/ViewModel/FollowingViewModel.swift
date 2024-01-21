@@ -6,44 +6,44 @@
 //
 
 import Combine
-import UIKit
+import Foundation
 
-import Moya
+final class FollowingViewModel: BaseViewModelType {
 
-final class FollowingViewModel: NSObject, BaseViewModelType {
-    
-    typealias Task = _Concurrency.Task
-    
     // MARK: - property
     
-    private let provider = MoyaProvider<ServiceAPI>()
+    private let usecase: FollowUsecase
     private var cancellable = Set<AnyCancellable>()
     
-    let isOwn: Bool
     private let memberId: Int
-    
     private let size: Int = 20
     private var currentPage: Int = 0
     private var currentSize: Int = 20
     
-    private let followingsSubject = PassthroughSubject<[MemberByFollowItemDTO], Error>()
-    private let moreFollowingsSubject = PassthroughSubject<[MemberByFollowItemDTO], Error>()
+    private let followingsSubject: PassthroughSubject<Result<[Member], Error>, Never> = PassthroughSubject()
+    private let moreFollowingsSubject: PassthroughSubject<Result<[Member], Error>, Never> = PassthroughSubject()
+    private let followMemberSubject: PassthroughSubject<Result<Int, Error>, Never> = PassthroughSubject()
     
     struct Input {
         let viewDidLoad: AnyPublisher<Void, Never>
         let scrolledToBottom: AnyPublisher<Void, Never>
+        let followMember: AnyPublisher<(Int, Bool), Never>
     }
     
     struct Output {
-        let followings: PassthroughSubject<[MemberByFollowItemDTO], Error>
-        let moreFollowings: PassthroughSubject<[MemberByFollowItemDTO], Error>
+        let followings: AnyPublisher<Result<[Member], Error>, Never>
+        let moreFollowings: AnyPublisher<Result<[Member], Error>, Never>
+        let followMember: AnyPublisher<Result<Int, Error>, Never>
     }
     
     // MARK: - init
 
-    init(memberId: Int) {
+    init(
+        usecase: FollowUsecase,
+        memberId: Int
+    ) {
+        self.usecase = usecase
         self.memberId = memberId
-        self.isOwn = UserDefaultStorage.id == memberId
     }
     
     // MARK: - Public - func
@@ -63,61 +63,65 @@ final class FollowingViewModel: NSObject, BaseViewModelType {
             })
             .store(in: &self.cancellable)
         
+        input.followMember
+            .sink(receiveValue: { [weak self] memberId, isFollow in
+                guard let self = self else { return }
+                isFollow ? self.unfollowMember(memberId: memberId) : self.followMember(memberId: memberId)
+            })
+            .store(in: &self.cancellable)
+        
         return Output(
-            followings: followingsSubject,
-            moreFollowings: moreFollowingsSubject
+            followings: self.followingsSubject.eraseToAnyPublisher(),
+            moreFollowings: self.moreFollowingsSubject.eraseToAnyPublisher(),
+            followMember: followMemberSubject.eraseToAnyPublisher()
         )
     }
-}
-
-// MARK: - network
-extension FollowingViewModel {
-    func followMember(memberId: Int) async -> Bool {
-        let response = await provider.request(.followMember(memberId: memberId))
-        switch response {
-        case .success:
-            return true
-        case .failure(let err):
-            handleError(err)
-            return false
-        }
-    }
     
-    func unfollowMember(memberId: Int) async -> Bool {
-        let response = await provider.request(.unfollowMember(memberId: memberId))
-        switch response {
-        case .success:
-            return true
-        case .failure(let err):
-            handleError(err)
-            return false
-        }
-    }
+    // MARK: - network
     
     private func getFollowings() {
         Task {
-            if currentSize < size { return }
-            
-            let response = await self.provider.request(
-                .getFollowingMember(
-                    memberId: memberId,
-                    page: currentPage,
-                    size: size
+            do {
+                if self.currentSize < self.size { return }
+                let members = try await self.usecase.getFollowingMember(
+                    memberId: self.memberId,
+                    page: self.currentPage,
+                    size: self.size
                 )
-            )
-            switch response {
-            case .success(let result):
-                guard let data = try? result.map(MemberByFollowDTO.self) else { return }
-                self.currentPage = data.currentPage
-                self.currentSize = data.currentSize
+                self.followingsSubject.send(.success(members.content))
                 
-                if self.currentPage == 0 {
-                    self.followingsSubject.send(data.content)
-                } else {
-                    self.moreFollowingsSubject.send(data.content)
-                }
-            case .failure(let err):
-                handleError(err)
+                self.currentPage = members.currentPage
+                self.currentSize = members.currentSize
+                
+                self.currentPage == 0 ?
+                self.followingsSubject.send(.success(members.content)) :
+                self.moreFollowingsSubject.send(.success(members.content))
+            } catch(let error) {
+                self.currentPage == 0 ?
+                self.followingsSubject.send(.failure(error)) :
+                self.moreFollowingsSubject.send(.failure(error))
+            }
+        }
+    }
+    
+    private func followMember(memberId: Int) {
+        Task {
+            do {
+                try await self.usecase.followMember(memberId: memberId)
+                self.followMemberSubject.send(.success(memberId))
+            } catch(let error) {
+                self.followMemberSubject.send(.failure(error))
+            }
+        }
+    }
+    
+    private func unfollowMember(memberId: Int) {
+        Task {
+            do {
+                try await self.usecase.unfollowMember(memberId: memberId)
+                self.followMemberSubject.send(.success(memberId))
+            } catch(let error) {
+                self.followMemberSubject.send(.failure(error))
             }
         }
     }

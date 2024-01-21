@@ -21,14 +21,15 @@ final class FollowingViewController: UIViewController, Navigationable {
     
     private let followView: FollowView = FollowView()
     
-    private var dataSource: UICollectionViewDiffableDataSource<Section, MemberByFollowItemDTO>!
-    private var snapshot: NSDiffableDataSourceSnapshot<Section, MemberByFollowItemDTO>!
-    
     // MARK: - property
     
+    private let viewModel: any BaseViewModelType
     private var cancellable: Set<AnyCancellable> = Set()
     
-    private let viewModel: FollowingViewModel
+    private var dataSource: UICollectionViewDiffableDataSource<Section, Member>!
+    private var snapshot: NSDiffableDataSourceSnapshot<Section, Member>!
+    
+    private let followButtonDidTapPublisher = PassthroughSubject<(Int, Bool), Never>()
     
     // MARK: - init
     
@@ -42,6 +43,10 @@ final class FollowingViewController: UIViewController, Navigationable {
         fatalError("init(coder:) has not been implemented")
     }
     
+    deinit {
+        print("\(#file) is dead")
+    }
+    
     // MARK: - life cycle
     
     override func loadView() {
@@ -53,66 +58,85 @@ final class FollowingViewController: UIViewController, Navigationable {
         self.configureDataSource()
         self.bindViewModel()
         self.setupNavigation()
-        self.setupNavigationBar()
     }
     
     // MARK: - func
     
-    private func setupNavigationBar() {
-        title = "팔로잉"
-    }
-    
     private func bindViewModel() {
         let output = self.transformedOutput()
+        self.configureNavigation()
         self.bindOutputToViewModel(output)
     }
     
-    private func bindCell(_ cell: UserInfoCollectionViewCell, with item: MemberByFollowItemDTO) {
-        cell.followButtonTapAction = { [weak self] _ in
-            guard let self = self else { return }
-            
-            Task {
-                if cell.followButton.isSelected {
-                    if await self.viewModel.unfollowMember(memberId: item.memberId) {
-                        DispatchQueue.main.async {
-                            self.updateFollowing(memberId: item.memberId)
-                        }
-                    }
-                } else {
-                    if await self.viewModel.followMember(memberId: item.memberId) {
-                        DispatchQueue.main.async {
-                            self.updateFollowing(memberId: item.memberId)
-                        }
-                    }
-                }
-            }
-        }
+    private func transformedOutput() -> FollowingViewModel.Output? {
+        guard let viewModel = self.viewModel as? FollowingViewModel else { return nil }
+        let input = FollowingViewModel.Input(
+            viewDidLoad: self.viewDidLoadPublisher,
+            scrolledToBottom: self.followView.collectionView().scrolledToBottomPublisher.eraseToAnyPublisher(),
+            followMember: self.followButtonDidTapPublisher.eraseToAnyPublisher()
+        )
+        return viewModel.transform(from: input)
     }
     
-    private func bindOutputToViewModel(_ output: FollowingViewModel.Output) {
+    private func bindOutputToViewModel(_ output: FollowingViewModel.Output?) {
+        guard let output else { return }
+        
         output.followings
             .receive(on: DispatchQueue.main)
-            .sink { _ in
-            } receiveValue: { [weak self] followings in
-                self?.loadFollowings(followings)
-            }
+            .sink(receiveValue: { [weak self] result in
+                switch result {
+                case .success(let followings):
+                    self?.loadFollowings(followings)
+                case .failure(let error):
+                    self?.makeAlert(
+                        title: "에러",
+                        message: error.localizedDescription
+                    )
+                }
+            })
             .store(in: &self.cancellable)
         
         output.moreFollowings
             .receive(on: DispatchQueue.main)
-            .sink { _ in
-            } receiveValue: { [weak self] followings in
-                self?.loadMoreFollowings(followings)
-            }
+            .sink(receiveValue: { [weak self] result in
+                switch result {
+                case .success(let followings):
+                    self?.loadMoreFollowings(followings)
+                case .failure(let error):
+                    self?.makeAlert(
+                        title: "에러",
+                        message: error.localizedDescription
+                    )
+                }
+            })
+            .store(in: &self.cancellable)
+        
+        output.followMember
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] result in
+                switch result {
+                case .success(let memberId):
+                    self?.updateFollowing(memberId: memberId)
+                case .failure(let error):
+                    self?.makeAlert(
+                        title: "에러",
+                        message: error.localizedDescription
+                    )
+                }
+            })
             .store(in: &self.cancellable)
     }
     
-    private func transformedOutput() -> FollowingViewModel.Output {
-        let input = FollowingViewModel.Input(
-            viewDidLoad: self.viewDidLoadPublisher,
-            scrolledToBottom: self.followView.collectionView().scrolledToBottomPublisher.eraseToAnyPublisher()
-        )
-        return viewModel.transform(from: input)
+    private func bindCell(_ cell: UserInfoCollectionViewCell, with item: Member) {
+        cell.followButtonTapAction = { [weak self] _ in
+            self?.followButtonDidTapPublisher.send((item.id, item.isFollowing))
+        }
+    }
+    
+    // MARK: - func
+    
+    private func configureNavigation() {
+        self.title = "팔로잉"
     }
 }
 
@@ -123,11 +147,16 @@ extension FollowingViewController {
         self.configureSnapshot()
     }
 
-    private func userInfoCollectionViewDataSource() -> UICollectionViewDiffableDataSource<Section, MemberByFollowItemDTO> {
-        let reviewCellRegistration = UICollectionView.CellRegistration<UserInfoCollectionViewCell, MemberByFollowItemDTO> {
+    private func userInfoCollectionViewDataSource() -> UICollectionViewDiffableDataSource<Section, Member> {
+        let reviewCellRegistration = UICollectionView.CellRegistration<UserInfoCollectionViewCell, Member> {
             [weak self] cell, indexPath, item in
-            cell.configureCell(item.toMember())
-            self?.bindCell(cell, with: item)
+            guard let self = self else { return }
+            guard let viewModel = self.viewModel as? FollowingViewModel else { return }
+            cell.configureCell(item)
+            cell.cellTapAction = { _ in
+                self.presentProfileViewController(memberId: item.id)
+            }
+            self.bindCell(cell, with: item)
         }
 
         return UICollectionViewDiffableDataSource(
@@ -146,17 +175,17 @@ extension FollowingViewController {
 // MARK: - Snapshot
 extension FollowingViewController {
     private func configureSnapshot() {
-        self.snapshot = NSDiffableDataSourceSnapshot<Section, MemberByFollowItemDTO>()
+        self.snapshot = NSDiffableDataSourceSnapshot<Section, Member>()
         self.snapshot.appendSections([.main])
         self.dataSource.apply(self.snapshot, animatingDifferences: true)
     }
 
-    private func loadFollowings(_ items: [MemberByFollowItemDTO]) {
+    private func loadFollowings(_ items: [Member]) {
         self.snapshot.appendItems(items, toSection: .main)
         self.dataSource.applySnapshotUsingReloadData(self.snapshot)
     }
     
-    private func loadMoreFollowings(_ items: [MemberByFollowItemDTO]) {
+    private func loadMoreFollowings(_ items: [Member]) {
         self.snapshot.appendItems(items, toSection: .main)
         self.dataSource.applySnapshotUsingReloadData(self.snapshot)
     }
@@ -166,7 +195,7 @@ extension FollowingViewController {
         let items = previousData
             .map { customItem in
                 var updatedItem = customItem
-                if customItem.memberId == memberId {
+                if customItem.id == memberId {
                     updatedItem.isFollowing.toggle()
                 }
                 return updatedItem
@@ -174,5 +203,26 @@ extension FollowingViewController {
         self.snapshot.deleteItems(previousData)
         self.snapshot.appendItems(items)
         self.dataSource.applySnapshotUsingReloadData(self.snapshot)
+    }
+    
+    private func removeFollowing(memberId: Int) {
+        for item in snapshot.itemIdentifiers {
+            if item.id == memberId {
+                self.snapshot.deleteItems([item])
+                self.dataSource.apply(self.snapshot)
+                return
+            }
+        }
+    }
+}
+
+// MARK: - Helper
+extension FollowingViewController {
+    private func presentProfileViewController(memberId: Int) {
+        let profileViewController = ProfileViewController(memberId: memberId)
+        
+        DispatchQueue.main.async { [weak self] in
+            self?.navigationController?.pushViewController(profileViewController, animated: true)
+        }
     }
 }
