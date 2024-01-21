@@ -8,7 +8,7 @@
 import Foundation
 
 protocol FindUsecase {
-    func getReviewsByFeed(request: GetReviewsByFeedRequestDTO) async throws -> Review
+    func getReviewsByFeed(request: GetReviewsByFeedRequestDTO) async throws -> Reviews
     func getStoresBySearch(request: SearchStoreRequestDTO) async throws -> [Store]
     func getMembersBySearch(request: SearchMemberRequestDTO) async throws -> [Member]
     func followMember(memberId: Int) async throws
@@ -29,10 +29,10 @@ final class FindUsecaseImpl: FindUsecase {
     
     // MARK: - Public - func
     
-    func getReviewsByFeed(request: GetReviewsByFeedRequestDTO) async throws -> Review {
+    func getReviewsByFeed(request: GetReviewsByFeedRequestDTO) async throws -> Reviews {
         do {
             let reviewByFeedDTO = try await self.repository.getReviewsByFeed(request: request)
-            return reviewByFeedDTO.toReview()
+            return reviewByFeedDTO.toReviews()
         } catch(let error) {
             throw error
         }

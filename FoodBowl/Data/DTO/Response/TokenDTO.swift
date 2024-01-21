@@ -10,4 +10,11 @@ import Foundation
 struct TokenDTO: Codable {
     let accessToken: String
     let refreshToken: String
+    
+    func toToken() -> Token {
+        Token(
+            accessToken: self.accessToken,
+            refreshToken: self.refreshToken
+        )
+    }
 }

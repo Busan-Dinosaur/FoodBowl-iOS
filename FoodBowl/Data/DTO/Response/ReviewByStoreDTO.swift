@@ -13,9 +13,10 @@ struct ReviewByStoreDTO: Codable {
     let storeReviewContentResponses: [ReviewItemByStoreDTO]
     let page: PageDTO
     
-    func toReview() -> Review {
-        Review(
-            reviews: self.storeReviewContentResponses.map { $0.toReviewItem() },
+    func toReviews() -> Reviews {
+        Reviews(
+            store: self.reviewStoreResponse.toStore(),
+            reviews: self.storeReviewContentResponses.map { $0.toReview() },
             page: self.page.toPage()
         )
     }
@@ -59,8 +60,8 @@ struct ReviewItemByStoreDTO: Codable, Hashable {
         hasher.combine(review.id)
     }
     
-    func toReviewItem() -> ReviewItem {
-        ReviewItem(
+    func toReview() -> Review {
+        Review(
             member: self.writer.toMember(),
             comment: self.review.toComment(),
             store: .init(),

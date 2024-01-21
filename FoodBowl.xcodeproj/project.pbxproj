@@ -87,12 +87,13 @@
 		CB78A80B2B5D0A51007EC9C1 /* FollowRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB78A80A2B5D0A51007EC9C1 /* FollowRepository.swift */; };
 		CB78A80D2B5D0AFA007EC9C1 /* FollowRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB78A80C2B5D0AFA007EC9C1 /* FollowRepositoryImpl.swift */; };
 		CB78A8102B5D0CBD007EC9C1 /* FollowUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB78A80F2B5D0CBD007EC9C1 /* FollowUsecase.swift */; };
+		CB78A8122B5D0F07007EC9C1 /* Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB78A8112B5D0F07007EC9C1 /* Token.swift */; };
 		CB7F3325298A51560000A6B4 /* UserDefaultStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB7F3324298A51560000A6B4 /* UserDefaultStorage.swift */; };
 		CB7F3327298A51610000A6B4 /* UserDefaultHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB7F3326298A51610000A6B4 /* UserDefaultHandler.swift */; };
 		CB8306632B5962A700632789 /* FriendViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB8306622B5962A700632789 /* FriendViewModel.swift */; };
 		CB8306652B59747000632789 /* FindViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB8306642B59747000632789 /* FindViewModel.swift */; };
 		CB8306682B59748700632789 /* FindView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB8306672B59748700632789 /* FindView.swift */; };
-		CB83066A2B59778C00632789 /* Member.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB8306692B59778C00632789 /* Member.swift */; };
+		CB83066A2B59778C00632789 /* Members.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB8306692B59778C00632789 /* Members.swift */; };
 		CB83066C2B59854400632789 /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB83066B2B59854400632789 /* Place.swift */; };
 		CB83066E2B59951A00632789 /* FindRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB83066D2B59951A00632789 /* FindRepositoryImpl.swift */; };
 		CB8306702B5996C400632789 /* FindRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB83066F2B5996C400632789 /* FindRepository.swift */; };
@@ -102,7 +103,7 @@
 		CB8A2D9B297844720018AC6E /* Marker.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB8A2D9A297844720018AC6E /* Marker.swift */; };
 		CB91E2A42B56D7B2008A0E8E /* StoreDetailUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB91E2A32B56D7B2008A0E8E /* StoreDetailUsecase.swift */; };
 		CB91E2A62B56D7D6008A0E8E /* StoreDetailRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB91E2A52B56D7D6008A0E8E /* StoreDetailRepository.swift */; };
-		CB91E2A82B56D8C9008A0E8E /* Review.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB91E2A72B56D8C9008A0E8E /* Review.swift */; };
+		CB91E2A82B56D8C9008A0E8E /* Reviews.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB91E2A72B56D8C9008A0E8E /* Reviews.swift */; };
 		CB91E2AA2B56DA7B008A0E8E /* ReviewByStoreDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB91E2A92B56DA7B008A0E8E /* ReviewByStoreDTO.swift */; };
 		CB91E2AC2B56DDE5008A0E8E /* StoreDetailRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB91E2AB2B56DDE5008A0E8E /* StoreDetailRepositoryImpl.swift */; };
 		CB91E2AE2B56E86B008A0E8E /* Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB91E2AD2B56E86B008A0E8E /* Store.swift */; };
@@ -278,13 +279,14 @@
 		CB78A80A2B5D0A51007EC9C1 /* FollowRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowRepository.swift; sourceTree = "<group>"; };
 		CB78A80C2B5D0AFA007EC9C1 /* FollowRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowRepositoryImpl.swift; sourceTree = "<group>"; };
 		CB78A80F2B5D0CBD007EC9C1 /* FollowUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowUsecase.swift; sourceTree = "<group>"; };
+		CB78A8112B5D0F07007EC9C1 /* Token.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Token.swift; sourceTree = "<group>"; };
 		CB7F3321298A4F1E0000A6B4 /* FoodBowl.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = FoodBowl.entitlements; sourceTree = "<group>"; };
 		CB7F3324298A51560000A6B4 /* UserDefaultStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultStorage.swift; sourceTree = "<group>"; };
 		CB7F3326298A51610000A6B4 /* UserDefaultHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultHandler.swift; sourceTree = "<group>"; };
 		CB8306622B5962A700632789 /* FriendViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendViewModel.swift; sourceTree = "<group>"; };
 		CB8306642B59747000632789 /* FindViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindViewModel.swift; sourceTree = "<group>"; };
 		CB8306672B59748700632789 /* FindView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindView.swift; sourceTree = "<group>"; };
-		CB8306692B59778C00632789 /* Member.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Member.swift; sourceTree = "<group>"; };
+		CB8306692B59778C00632789 /* Members.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Members.swift; sourceTree = "<group>"; };
 		CB83066B2B59854400632789 /* Place.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Place.swift; sourceTree = "<group>"; };
 		CB83066D2B59951A00632789 /* FindRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindRepositoryImpl.swift; sourceTree = "<group>"; };
 		CB83066F2B5996C400632789 /* FindRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindRepository.swift; sourceTree = "<group>"; };
@@ -293,7 +295,7 @@
 		CB8A2D9A297844720018AC6E /* Marker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Marker.swift; sourceTree = "<group>"; };
 		CB91E2A32B56D7B2008A0E8E /* StoreDetailUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreDetailUsecase.swift; sourceTree = "<group>"; };
 		CB91E2A52B56D7D6008A0E8E /* StoreDetailRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreDetailRepository.swift; sourceTree = "<group>"; };
-		CB91E2A72B56D8C9008A0E8E /* Review.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Review.swift; sourceTree = "<group>"; };
+		CB91E2A72B56D8C9008A0E8E /* Reviews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reviews.swift; sourceTree = "<group>"; };
 		CB91E2A92B56DA7B008A0E8E /* ReviewByStoreDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewByStoreDTO.swift; sourceTree = "<group>"; };
 		CB91E2AB2B56DDE5008A0E8E /* StoreDetailRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreDetailRepositoryImpl.swift; sourceTree = "<group>"; };
 		CB91E2AD2B56E86B008A0E8E /* Store.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Store.swift; sourceTree = "<group>"; };
@@ -1174,11 +1176,12 @@
 		CBDE390329719B8100DDE49A /* Entity */ = {
 			isa = PBXGroup;
 			children = (
+				CB78A8112B5D0F07007EC9C1 /* Token.swift */,
 				CBE32D0D2ADE7648004CCCBE /* CategoryType.swift */,
 				CB83066B2B59854400632789 /* Place.swift */,
-				CB91E2A72B56D8C9008A0E8E /* Review.swift */,
+				CB91E2A72B56D8C9008A0E8E /* Reviews.swift */,
 				CB91E2AD2B56E86B008A0E8E /* Store.swift */,
-				CB8306692B59778C00632789 /* Member.swift */,
+				CB8306692B59778C00632789 /* Members.swift */,
 				CB8A2D9A297844720018AC6E /* Marker.swift */,
 			);
 			path = Entity;
@@ -1446,6 +1449,7 @@
 				CB617A5C2AE29FBA000F7FFC /* StoreDetailView.swift in Sources */,
 				CBB58284297440A600808B0B /* CategoryCollectionViewCell.swift in Sources */,
 				CBC73104295550A100C7F198 /* AppDelegate.swift in Sources */,
+				CB78A8122B5D0F07007EC9C1 /* Token.swift in Sources */,
 				CBE6190C296C635D005295AF /* FollowButton.swift in Sources */,
 				CB5AF8A929854AA0003D16D4 /* MapAnnotation.swift in Sources */,
 				CBC158642AD80AF800FD263B /* SearchMemberRequestDTO.swift in Sources */,
@@ -1457,7 +1461,7 @@
 				CB78A8092B5CFFC0007EC9C1 /* FindResultView.swift in Sources */,
 				CB5BFB0C2B3EE37500B35062 /* TokenRepository.swift in Sources */,
 				CBE61913296C68D9005295AF /* PlusButton.swift in Sources */,
-				CB83066A2B59778C00632789 /* Member.swift in Sources */,
+				CB83066A2B59778C00632789 /* Members.swift in Sources */,
 				CB1A7C5E295618A900C6431D /* SettingButton.swift in Sources */,
 				CB5BFB432B3F1A3600B35062 /* MemberRepository.swift in Sources */,
 				CBD8D4732B4646B900445C98 /* BlameRepositroyImpl.swift in Sources */,
@@ -1550,7 +1554,7 @@
 				CB51C8C92AD7DFC9002D0BA5 /* ReviewDTO.swift in Sources */,
 				CB91E2A42B56D7B2008A0E8E /* StoreDetailUsecase.swift in Sources */,
 				CB5BFB3D2B3F13ED00B35062 /* StoreRepository.swift in Sources */,
-				CB91E2A82B56D8C9008A0E8E /* Review.swift in Sources */,
+				CB91E2A82B56D8C9008A0E8E /* Reviews.swift in Sources */,
 				CBB582822973007D00808B0B /* ShowWebViewController.swift in Sources */,
 				CB1579102AACD98600007183 /* CreateReviewViewModel.swift in Sources */,
 			);

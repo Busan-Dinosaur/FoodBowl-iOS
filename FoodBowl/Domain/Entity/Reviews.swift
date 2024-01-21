@@ -1,5 +1,5 @@
 //
-//  Review.swift
+//  Reviews.swift
 //  FoodBowl
 //
 //  Created by Coby on 1/17/24.
@@ -7,9 +7,10 @@
 
 import Foundation
 
-// MARK: - Review
-struct Review: Codable {
-    let reviews: [ReviewItem]
+// MARK: - Reviews
+struct Reviews: Codable {
+    let store: Store
+    let reviews: [Review]
     let page: Page
 }
 
@@ -19,14 +20,14 @@ struct Page: Codable {
     let size: Int
 }
 
-// MARK: - ReviewItem
-struct ReviewItem: Codable, Hashable {
+// MARK: - Review
+struct Review: Codable, Hashable {
     let member: Member
     let comment: Comment
     let store: Store
     let thumbnail: String
     
-    static func == (lhs: ReviewItem, rhs: ReviewItem) -> Bool {
+    static func == (lhs: Review, rhs: Review) -> Bool {
         lhs.comment.id == rhs.comment.id
     }
     

@@ -23,8 +23,8 @@ final class StoreDetailViewModel: BaseViewModelType {
     private var lastReviewId: Int?
     
     private let storeSubject: PassthroughSubject<Result<Store, Error>, Never> = PassthroughSubject()
-    private let reviewsSubject: PassthroughSubject<Result<[ReviewItem], Error>, Never> = PassthroughSubject()
-    private let moreReviewsSubject: PassthroughSubject<Result<[ReviewItem], Error>, Never> = PassthroughSubject()
+    private let reviewsSubject: PassthroughSubject<Result<[Review], Error>, Never> = PassthroughSubject()
+    private let moreReviewsSubject: PassthroughSubject<Result<[Review], Error>, Never> = PassthroughSubject()
     private let refreshControlSubject: PassthroughSubject<Void, Error> = PassthroughSubject()
     private let isRemovedSubject: PassthroughSubject<Result<Int, Error>, Never> = PassthroughSubject()
     private let isBookmarkSubject: PassthroughSubject<Result<Void, Error>, Never> = PassthroughSubject()
@@ -39,8 +39,8 @@ final class StoreDetailViewModel: BaseViewModelType {
     
     struct Output {
         let store: AnyPublisher<Result<Store, Error>, Never>
-        let reviews: AnyPublisher<Result<[ReviewItem], Error>, Never>
-        let moreReviews: AnyPublisher<Result<[ReviewItem], Error>, Never>
+        let reviews: AnyPublisher<Result<[Review], Error>, Never>
+        let moreReviews: AnyPublisher<Result<[Review], Error>, Never>
         let isRemoved: AnyPublisher<Result<Int, Error>, Never>
         let isBookmark: AnyPublisher<Result<Void, Error>, Never>
     }
@@ -119,7 +119,7 @@ final class StoreDetailViewModel: BaseViewModelType {
                 let deviceX = LocationManager.shared.manager.location?.coordinate.longitude ?? 0.0
                 let deviceY = LocationManager.shared.manager.location?.coordinate.latitude ?? 0.0
                 
-                let data = try await self.usecase.getReviewsByStore(request: GetReviewsByStoreRequestDTO(
+                let reviews = try await self.usecase.getReviewsByStore(request: GetReviewsByStoreRequestDTO(
                     lastReviewId: lastReviewId,
                     pageSize: self.pageSize,
                     storeId: self.storeId,
@@ -128,15 +128,13 @@ final class StoreDetailViewModel: BaseViewModelType {
                     deviceY: deviceY
                 ))
                 
-                let store = data.reviewStoreResponse.toStore()
+                let store = reviews.store
                 self.storeSubject.send(.success(store))
                 
-                let review = data.toReview()
+                self.lastReviewId = reviews.page.lastId
+                self.currentpageSize = reviews.page.size
                 
-                self.lastReviewId = review.page.lastId
-                self.currentpageSize = review.page.size
-                
-                lastReviewId == nil ? self.reviewsSubject.send(.success(review.reviews)) : self.moreReviewsSubject.send(.success(review.reviews))
+                lastReviewId == nil ? self.reviewsSubject.send(.success(reviews.reviews)) : self.moreReviewsSubject.send(.success(reviews.reviews))
             } catch(let error) {
                 self.reviewsSubject.send(.failure(error))
             }

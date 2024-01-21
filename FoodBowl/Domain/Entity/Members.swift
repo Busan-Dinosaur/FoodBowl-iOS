@@ -7,6 +7,14 @@
 
 import Foundation
 
+// MARK: - Members
+struct Members: Codable {
+    let content: [Member]
+    let isFirst, isLast, hasNext: Bool
+    let currentPage, currentSize: Int
+}
+
+
 // MARK: - Member
 struct Member: Codable {
     let id: Int

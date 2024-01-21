@@ -8,8 +8,8 @@
 import Foundation
 
 protocol SignUsecase {
-    func dispatchAppleLogin(login: SignRequestDTO) async throws -> TokenDTO
-    func getMyProfile() async throws -> MemberProfileDTO
+    func dispatchAppleLogin(login: SignRequestDTO) async throws -> Token
+    func getMyProfile() async throws -> Member
 }
 
 final class SignUsecaseImpl: SignUsecase {
@@ -26,19 +26,19 @@ final class SignUsecaseImpl: SignUsecase {
     
     // MARK: - Public - func
     
-    func dispatchAppleLogin(login: SignRequestDTO) async throws -> TokenDTO {
+    func dispatchAppleLogin(login: SignRequestDTO) async throws -> Token {
         do {
             let tokenDTO = try await self.repository.signIn(request: login)
-            return tokenDTO
+            return tokenDTO.toToken()
         } catch(let error) {
             throw error
         }
     }
     
-    func getMyProfile() async throws -> MemberProfileDTO {
+    func getMyProfile() async throws -> Member {
         do {
             let MemberProfileDTO = try await self.repository.getMyProfile()
-            return MemberProfileDTO
+            return MemberProfileDTO.toMember()
         } catch(let error) {
             throw error
         }

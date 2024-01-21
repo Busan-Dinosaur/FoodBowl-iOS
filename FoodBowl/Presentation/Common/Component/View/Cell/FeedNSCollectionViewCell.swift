@@ -92,7 +92,7 @@ final class FeedNSCollectionViewCell: UICollectionViewCell, BaseViewType {
 
 // MARK: - Public - func
 extension FeedNSCollectionViewCell {
-    func configureCell(_ reviewItem: ReviewItem) {
+    func configureCell(_ reviewItem: Review) {
         let member = reviewItem.member
         let comment = reviewItem.comment
         

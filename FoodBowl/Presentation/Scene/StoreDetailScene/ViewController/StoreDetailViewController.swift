@@ -26,8 +26,8 @@ final class StoreDetailViewController: UIViewController, Navigationable, Optiona
     private let viewModel: any BaseViewModelType
     private var cancellable: Set<AnyCancellable> = Set()
     
-    private var dataSource: UICollectionViewDiffableDataSource<Section, ReviewItem>!
-    private var snapshot: NSDiffableDataSourceSnapshot<Section, ReviewItem>!
+    private var dataSource: UICollectionViewDiffableDataSource<Section, Review>!
+    private var snapshot: NSDiffableDataSourceSnapshot<Section, Review>!
     
     let removeReviewPublisher = PassthroughSubject<Int, Never>()
 
@@ -170,7 +170,7 @@ final class StoreDetailViewController: UIViewController, Navigationable, Optiona
             .store(in: &self.cancellable)
     }
     
-    private func bindCell(_ cell: FeedNSCollectionViewCell, with item: ReviewItem) {
+    private func bindCell(_ cell: FeedNSCollectionViewCell, with item: Review) {
         cell.userButtonTapAction = { [weak self] _ in
             let profileViewController = ProfileViewController(memberId: item.member.id)
             
@@ -210,8 +210,8 @@ extension StoreDetailViewController {
         self.configureSnapshot()
     }
 
-    private func feedNSCollectionViewDataSource() -> UICollectionViewDiffableDataSource<Section, ReviewItem> {
-        let reviewCellRegistration = UICollectionView.CellRegistration<FeedNSCollectionViewCell, ReviewItem> {
+    private func feedNSCollectionViewDataSource() -> UICollectionViewDiffableDataSource<Section, Review> {
+        let reviewCellRegistration = UICollectionView.CellRegistration<FeedNSCollectionViewCell, Review> {
             [weak self] cell, indexPath, item in
             
             cell.configureCell(item)
@@ -234,19 +234,19 @@ extension StoreDetailViewController {
 // MARK: - Snapshot
 extension StoreDetailViewController {
     private func configureSnapshot() {
-        self.snapshot = NSDiffableDataSourceSnapshot<Section, ReviewItem>()
+        self.snapshot = NSDiffableDataSourceSnapshot<Section, Review>()
         self.snapshot.appendSections([.main])
         self.dataSource.apply(self.snapshot, animatingDifferences: true)
     }
 
-    private func reloadReviews(_ items: [ReviewItem]) {
+    private func reloadReviews(_ items: [Review]) {
         let previousReviewsData = self.snapshot.itemIdentifiers(inSection: .main)
         self.snapshot.deleteItems(previousReviewsData)
         self.snapshot.appendItems(items, toSection: .main)
         self.dataSource.applySnapshotUsingReloadData(self.snapshot)
     }
     
-    private func loadMoreReviews(_ items: [ReviewItem]) {
+    private func loadMoreReviews(_ items: [Review]) {
         self.snapshot.appendItems(items, toSection: .main)
         self.dataSource.applySnapshotUsingReloadData(self.snapshot)
     }

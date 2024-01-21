@@ -64,6 +64,17 @@ struct MemberByFollowDTO: Codable {
     let content: [MemberByFollowItemDTO]
     let isFirst, isLast, hasNext: Bool
     let currentPage, currentSize: Int
+    
+    func toMembers() -> Members {
+        Members(
+            content: self.content.map { $0.toMember() },
+            isFirst: self.isFirst,
+            isLast: self.isLast,
+            hasNext: self.hasNext,
+            currentPage: self.currentPage,
+            currentSize: self.currentSize
+        )
+    }
 }
 
 // MARK: - MemberByFollowItemDTO

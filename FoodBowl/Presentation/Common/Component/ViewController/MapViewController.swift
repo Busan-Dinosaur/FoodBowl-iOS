@@ -364,7 +364,7 @@ extension MapViewController {
     private func feedCollectionViewDataSource() -> UICollectionViewDiffableDataSource<Section, ReviewItemDTO> {
         let reviewCellRegistration = UICollectionView.CellRegistration<FeedCollectionViewCell, ReviewItemDTO> {
             [weak self] cell, indexPath, item in
-            cell.configureCell(item.toReviewItem())
+            cell.configureCell(item.toReview())
             self?.bindCell(cell, with: item)
         }
 

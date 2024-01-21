@@ -21,8 +21,8 @@ final class FindViewModel: BaseViewModelType {
     
     private let size: Int = 20
     
-    private let reviewsSubject: PassthroughSubject<Result<[ReviewItem], Error>, Never> = PassthroughSubject()
-    private let moreReviewsSubject: PassthroughSubject<Result<[ReviewItem], Error>, Never> = PassthroughSubject()
+    private let reviewsSubject: PassthroughSubject<Result<[Review], Error>, Never> = PassthroughSubject()
+    private let moreReviewsSubject: PassthroughSubject<Result<[Review], Error>, Never> = PassthroughSubject()
     private let refreshControlSubject: PassthroughSubject<Void, Error> = PassthroughSubject()
     private let storesAndMembersSubject: PassthroughSubject<Result<([Store], [Member]), Error>, Never> = PassthroughSubject()
     private let followMemberSubject: PassthroughSubject<Result<Int, Error>, Never> = PassthroughSubject()
@@ -35,8 +35,8 @@ final class FindViewModel: BaseViewModelType {
     }
     
     struct Output {
-        let reviews: AnyPublisher<Result<[ReviewItem], Error>, Never>
-        let moreReviews: AnyPublisher<Result<[ReviewItem], Error>, Never>
+        let reviews: AnyPublisher<Result<[Review], Error>, Never>
+        let moreReviews: AnyPublisher<Result<[Review], Error>, Never>
         let storesAndMembers: AnyPublisher<Result<([Store], [Member]), Error>, Never>
         let followMember: AnyPublisher<Result<Int, Error>, Never>
     }

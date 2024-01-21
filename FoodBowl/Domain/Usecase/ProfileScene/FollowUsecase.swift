@@ -8,8 +8,8 @@
 import Foundation
 
 protocol FollowUsecase {
-    func getFollowingMember(memberId: Int, page: Int, size: Int) async throws -> MemberByFollowDTO
-    func getFollowerMember(memberId: Int, page: Int, size: Int) async throws -> MemberByFollowDTO
+    func getFollowingMember(memberId: Int, page: Int, size: Int) async throws -> Members
+    func getFollowerMember(memberId: Int, page: Int, size: Int) async throws -> Members
     func followMember(memberId: Int) async throws
     func unfollowMember(memberId: Int) async throws
     func removeFollower(memberId: Int) async throws
@@ -29,19 +29,19 @@ final class FollowUsecaseImpl: FollowUsecase {
     
     // MARK: - Public - func
     
-    func getFollowingMember(memberId: Int, page: Int, size: Int) async throws -> MemberByFollowDTO {
+    func getFollowingMember(memberId: Int, page: Int, size: Int) async throws -> Members {
         do {
             let memberByFollowDTO = try await self.repository.getFollowingMember(memberId: memberId, page: page, size: size)
-            return memberByFollowDTO
+            return memberByFollowDTO.toMembers()
         } catch(let error) {
             throw error
         }
     }
     
-    func getFollowerMember(memberId: Int, page: Int, size: Int) async throws -> MemberByFollowDTO {
+    func getFollowerMember(memberId: Int, page: Int, size: Int) async throws -> Members {
         do {
             let memberByFollowDTO = try await self.repository.getFollowerMember(memberId: memberId, page: page, size: size)
-            return memberByFollowDTO
+            return memberByFollowDTO.toMembers()
         } catch(let error) {
             throw error
         }

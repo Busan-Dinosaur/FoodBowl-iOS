@@ -12,9 +12,10 @@ struct ReviewByFeedDTO: Codable {
     let reviewFeedResponses: [ReviewItemByFeedDTO]
     let reviewPageInfo: PageDTO
     
-    func toReview() -> Review {
-        Review(
-            reviews: self.reviewFeedResponses.map { $0.toReviewItem() },
+    func toReviews() -> Reviews {
+        Reviews(
+            store: .init(),
+            reviews: self.reviewFeedResponses.map { $0.toReview() },
             page: self.reviewPageInfo.toPage()
         )
     }
@@ -27,8 +28,8 @@ struct ReviewItemByFeedDTO: Codable {
     let review: CommentDTO
     let store: StoreByReviewDTO
     
-    func toReviewItem() -> ReviewItem {
-        ReviewItem(
+    func toReview() -> Review {
+        Review(
             member: self.writer.toMember(),
             comment: self.review.toComment(),
             store: self.store.toStore(),
