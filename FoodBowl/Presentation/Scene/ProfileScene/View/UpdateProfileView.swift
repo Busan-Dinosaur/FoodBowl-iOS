@@ -219,6 +219,11 @@ extension UpdateProfileView: UITextFieldDelegate {
         return true
     }
     
+    func textFieldShouldClear(_ textField: UITextField) -> Bool {
+        self.completeButton.isEnabled = self.getIsEnabled()
+        return true
+    }
+    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
