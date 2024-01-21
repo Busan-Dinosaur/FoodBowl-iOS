@@ -136,11 +136,11 @@
 		CBADC2E02955B92D00E56C93 /* CompleteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADC2DF2955B92D00E56C93 /* CompleteButton.swift */; };
 		CBADC2E22955C63300E56C93 /* PhotoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADC2E12955C63300E56C93 /* PhotoCollectionViewCell.swift */; };
 		CBADEF382B5D5A710026FACA /* Option.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADEF372B5D5A710026FACA /* Option.swift */; };
-		CBADEF3A2B5D5C770026FACA /* EditProfileUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADEF392B5D5C770026FACA /* EditProfileUsecase.swift */; };
-		CBADEF3C2B5D5C940026FACA /* EditProfileRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADEF3B2B5D5C940026FACA /* EditProfileRepositoryImpl.swift */; };
-		CBADEF3E2B5D5CB00026FACA /* EditProfileRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADEF3D2B5D5CB00026FACA /* EditProfileRepository.swift */; };
-		CBADEF402B5D64870026FACA /* EditProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADEF3F2B5D64870026FACA /* EditProfileViewModel.swift */; };
-		CBADEF422B5D648F0026FACA /* EditProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADEF412B5D648F0026FACA /* EditProfileView.swift */; };
+		CBADEF3A2B5D5C770026FACA /* UpdateProfileUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADEF392B5D5C770026FACA /* UpdateProfileUsecase.swift */; };
+		CBADEF3C2B5D5C940026FACA /* UpdateProfileRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADEF3B2B5D5C940026FACA /* UpdateProfileRepositoryImpl.swift */; };
+		CBADEF3E2B5D5CB00026FACA /* UpdateProfileRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADEF3D2B5D5CB00026FACA /* UpdateProfileRepository.swift */; };
+		CBADEF402B5D64870026FACA /* UpdateProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADEF3F2B5D64870026FACA /* UpdateProfileViewModel.swift */; };
+		CBADEF422B5D648F0026FACA /* UpdateProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADEF412B5D648F0026FACA /* UpdateProfileView.swift */; };
 		CBADEF442B5D64AB0026FACA /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADEF432B5D64AB0026FACA /* ProfileViewModel.swift */; };
 		CBADEF462B5D64B40026FACA /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADEF452B5D64B40026FACA /* ProfileView.swift */; };
 		CBB12B142985845900AC0EF2 /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBB12B132985845900AC0EF2 /* String+Extension.swift */; };
@@ -169,7 +169,7 @@
 		CBCD0F7F2A66DA1600A51B32 /* UnivViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBCD0F7E2A66DA1600A51B32 /* UnivViewController.swift */; };
 		CBD0362F2ABA150600E1AE9A /* RecentReviewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD0362E2ABA150600E1AE9A /* RecentReviewController.swift */; };
 		CBD036322ABA163F00E1AE9A /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = CBD036312ABA163F00E1AE9A /* Kingfisher */; };
-		CBD1B5EF2982A5AD00B0AD51 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD1B5EE2982A5AD00B0AD51 /* EditProfileViewController.swift */; };
+		CBD1B5EF2982A5AD00B0AD51 /* UpdateProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD1B5EE2982A5AD00B0AD51 /* UpdateProfileViewController.swift */; };
 		CBD1B5F12982B0A300B0AD51 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD1B5F02982B0A300B0AD51 /* SettingViewController.swift */; };
 		CBD1B5F42982D39B00B0AD51 /* SettingItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD1B5F32982D39B00B0AD51 /* SettingItemTableViewCell.swift */; };
 		CBD1B5F82982D9E100B0AD51 /* ForwardButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD1B5F72982D9E100B0AD51 /* ForwardButton.swift */; };
@@ -335,11 +335,11 @@
 		CBADC2DF2955B92D00E56C93 /* CompleteButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompleteButton.swift; sourceTree = "<group>"; };
 		CBADC2E12955C63300E56C93 /* PhotoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCollectionViewCell.swift; sourceTree = "<group>"; };
 		CBADEF372B5D5A710026FACA /* Option.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Option.swift; sourceTree = "<group>"; };
-		CBADEF392B5D5C770026FACA /* EditProfileUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileUsecase.swift; sourceTree = "<group>"; };
-		CBADEF3B2B5D5C940026FACA /* EditProfileRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileRepositoryImpl.swift; sourceTree = "<group>"; };
-		CBADEF3D2B5D5CB00026FACA /* EditProfileRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileRepository.swift; sourceTree = "<group>"; };
-		CBADEF3F2B5D64870026FACA /* EditProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewModel.swift; sourceTree = "<group>"; };
-		CBADEF412B5D648F0026FACA /* EditProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileView.swift; sourceTree = "<group>"; };
+		CBADEF392B5D5C770026FACA /* UpdateProfileUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateProfileUsecase.swift; sourceTree = "<group>"; };
+		CBADEF3B2B5D5C940026FACA /* UpdateProfileRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateProfileRepositoryImpl.swift; sourceTree = "<group>"; };
+		CBADEF3D2B5D5CB00026FACA /* UpdateProfileRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateProfileRepository.swift; sourceTree = "<group>"; };
+		CBADEF3F2B5D64870026FACA /* UpdateProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateProfileViewModel.swift; sourceTree = "<group>"; };
+		CBADEF412B5D648F0026FACA /* UpdateProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateProfileView.swift; sourceTree = "<group>"; };
 		CBADEF432B5D64AB0026FACA /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		CBADEF452B5D64B40026FACA /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		CBB12B132985845900AC0EF2 /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
@@ -366,7 +366,7 @@
 		CBCD0F7B2A66D9BC00A51B32 /* FriendViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendViewController.swift; sourceTree = "<group>"; };
 		CBCD0F7E2A66DA1600A51B32 /* UnivViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnivViewController.swift; sourceTree = "<group>"; };
 		CBD0362E2ABA150600E1AE9A /* RecentReviewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentReviewController.swift; sourceTree = "<group>"; };
-		CBD1B5EE2982A5AD00B0AD51 /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
+		CBD1B5EE2982A5AD00B0AD51 /* UpdateProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateProfileViewController.swift; sourceTree = "<group>"; };
 		CBD1B5F02982B0A300B0AD51 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		CBD1B5F32982D39B00B0AD51 /* SettingItemTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingItemTableViewCell.swift; sourceTree = "<group>"; };
 		CBD1B5F72982D9E100B0AD51 /* ForwardButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForwardButton.swift; sourceTree = "<group>"; };
@@ -515,7 +515,7 @@
 				CBD8D4702B4645F400445C98 /* BlameRepository.swift */,
 				CB83066F2B5996C400632789 /* FindRepository.swift */,
 				CB78A80A2B5D0A51007EC9C1 /* FollowRepository.swift */,
-				CBADEF3D2B5D5CB00026FACA /* EditProfileRepository.swift */,
+				CBADEF3D2B5D5CB00026FACA /* UpdateProfileRepository.swift */,
 				CB5BFB302B3F091B00B35062 /* ReviewRepository.swift */,
 				CB5BFB3C2B3F13ED00B35062 /* StoreRepository.swift */,
 				CB5BFB422B3F1A3600B35062 /* MemberRepository.swift */,
@@ -534,7 +534,7 @@
 				CBD8D4722B4646B900445C98 /* BlameRepositroyImpl.swift */,
 				CB83066D2B59951A00632789 /* FindRepositoryImpl.swift */,
 				CB78A80C2B5D0AFA007EC9C1 /* FollowRepositoryImpl.swift */,
-				CBADEF3B2B5D5C940026FACA /* EditProfileRepositoryImpl.swift */,
+				CBADEF3B2B5D5C940026FACA /* UpdateProfileRepositoryImpl.swift */,
 				CB5BFB322B3F096500B35062 /* ReviewRepositoryImpl.swift */,
 				CB5BFB402B3F168800B35062 /* StoreRepositoryImpl.swift */,
 				CB5BFB442B3F1CA300B35062 /* MemberRepositoryImpl.swift */,
@@ -793,7 +793,7 @@
 			isa = PBXGroup;
 			children = (
 				CBADEF432B5D64AB0026FACA /* ProfileViewModel.swift */,
-				CBADEF3F2B5D64870026FACA /* EditProfileViewModel.swift */,
+				CBADEF3F2B5D64870026FACA /* UpdateProfileViewModel.swift */,
 				CB73E5722B341B3B0026E4D7 /* FollowerViewModel.swift */,
 				CB16FD4D2B347C31006D18D6 /* FollowingViewModel.swift */,
 			);
@@ -804,7 +804,7 @@
 			isa = PBXGroup;
 			children = (
 				CB78A80F2B5D0CBD007EC9C1 /* FollowUsecase.swift */,
-				CBADEF392B5D5C770026FACA /* EditProfileUsecase.swift */,
+				CBADEF392B5D5C770026FACA /* UpdateProfileUsecase.swift */,
 			);
 			path = ProfileScene;
 			sourceTree = "<group>";
@@ -910,7 +910,7 @@
 			isa = PBXGroup;
 			children = (
 				CBADC2AC2955A0FF00E56C93 /* ProfileViewController.swift */,
-				CBD1B5EE2982A5AD00B0AD51 /* EditProfileViewController.swift */,
+				CBD1B5EE2982A5AD00B0AD51 /* UpdateProfileViewController.swift */,
 				CB4FBBF12978CFA90052D371 /* FollowerViewController.swift */,
 				CB4FBBF32978CFE40052D371 /* FollowingViewController.swift */,
 				CBD1B5F02982B0A300B0AD51 /* SettingViewController.swift */,
@@ -1182,7 +1182,7 @@
 				CB1A7C5F29561B8400C6431D /* UIComponent */,
 				CBD1B5F22982D38300B0AD51 /* Cell */,
 				CBADEF452B5D64B40026FACA /* ProfileView.swift */,
-				CBADEF412B5D648F0026FACA /* EditProfileView.swift */,
+				CBADEF412B5D648F0026FACA /* UpdateProfileView.swift */,
 				CB73E56D2B3417980026E4D7 /* FollowView.swift */,
 				CB78A8152B5D5511007EC9C1 /* SettingView.swift */,
 			);
@@ -1419,13 +1419,13 @@
 				CBDECACA2A6B2F6800259350 /* FeedNSCollectionViewCell.swift in Sources */,
 				CBD1B5FE2982F19300B0AD51 /* UIButton+Extension.swift in Sources */,
 				CBD1B5F42982D39B00B0AD51 /* SettingItemTableViewCell.swift in Sources */,
-				CBADEF3C2B5D5C940026FACA /* EditProfileRepositoryImpl.swift in Sources */,
+				CBADEF3C2B5D5C940026FACA /* UpdateProfileRepositoryImpl.swift in Sources */,
 				CB5BFB452B3F1CA300B35062 /* MemberRepositoryImpl.swift in Sources */,
 				CB8306652B59747000632789 /* FindViewModel.swift in Sources */,
 				CB5DD4312AB59130009FCB43 /* BookmarkMapButton.swift in Sources */,
 				CB5BFB332B3F096500B35062 /* ReviewRepositoryImpl.swift in Sources */,
 				CBCD0F7F2A66DA1600A51B32 /* UnivViewController.swift in Sources */,
-				CBADEF422B5D648F0026FACA /* EditProfileView.swift in Sources */,
+				CBADEF422B5D648F0026FACA /* UpdateProfileView.swift in Sources */,
 				CB617A462AE25B1C000F7FFC /* SignView.swift in Sources */,
 				CB1BCAF72958B15B0021617D /* StoreInfoButton.swift in Sources */,
 				CBA4C7DD2AB49B4900FC9DD8 /* ReviewToggleButton.swift in Sources */,
@@ -1434,7 +1434,7 @@
 				CB1A7C6129561BCF00C6431D /* ProfileHeaderView.swift in Sources */,
 				CB9332632AFCC26800B7F87A /* PhotoPickerable.swift in Sources */,
 				CBADC2E22955C63300E56C93 /* PhotoCollectionViewCell.swift in Sources */,
-				CBD1B5EF2982A5AD00B0AD51 /* EditProfileViewController.swift in Sources */,
+				CBD1B5EF2982A5AD00B0AD51 /* UpdateProfileViewController.swift in Sources */,
 				CB8306702B5996C400632789 /* FindRepository.swift in Sources */,
 				CBADC28A29559BC900E56C93 /* UIFont+Extension.swift in Sources */,
 				CBFB52552977B9240049E8BA /* StoreDetailViewController.swift in Sources */,
@@ -1448,7 +1448,7 @@
 				CB63B7602A698909000AD9C2 /* CategoryListView.swift in Sources */,
 				CB5BFB472B3F1DBD00B35062 /* KakaoRepository.swift in Sources */,
 				CB78A80B2B5D0A51007EC9C1 /* FollowRepository.swift in Sources */,
-				CBADEF3A2B5D5C770026FACA /* EditProfileUsecase.swift in Sources */,
+				CBADEF3A2B5D5C770026FACA /* UpdateProfileUsecase.swift in Sources */,
 				CB2E82472AA74FB60016820E /* CheckNicknameDTO.swift in Sources */,
 				CBBB97F12AB0832F00272CCE /* UpdateReviewViewModel.swift in Sources */,
 				CB51C8D12AD7E763002D0BA5 /* SearchStoreRequestDTO.swift in Sources */,
@@ -1463,7 +1463,7 @@
 				CB2E4F81297702B800FD2566 /* UserInfoCollectionViewCell.swift in Sources */,
 				CBCD0F7C2A66D9BC00A51B32 /* FriendViewController.swift in Sources */,
 				CBD1B5F82982D9E100B0AD51 /* ForwardButton.swift in Sources */,
-				CBADEF3E2B5D5CB00026FACA /* EditProfileRepository.swift in Sources */,
+				CBADEF3E2B5D5CB00026FACA /* UpdateProfileRepository.swift in Sources */,
 				CB2A44A82ADFC866004A4126 /* ImageViewController.swift in Sources */,
 				CB2E4F892977393700FD2566 /* FollowInfoButton.swift in Sources */,
 				CB91E2AA2B56DA7B008A0E8E /* ReviewByStoreDTO.swift in Sources */,
@@ -1501,7 +1501,7 @@
 				CB4A78B02B58483F0002136F /* SearchStoreViewModel.swift in Sources */,
 				CB1566D9298D72FF0056B7D9 /* LocationManager.swift in Sources */,
 				CB91E2AC2B56DDE5008A0E8E /* StoreDetailRepositoryImpl.swift in Sources */,
-				CBADEF402B5D64870026FACA /* EditProfileViewModel.swift in Sources */,
+				CBADEF402B5D64870026FACA /* UpdateProfileViewModel.swift in Sources */,
 				CBE6190F296C6435005295AF /* MapViewController.swift in Sources */,
 				CBBA9F192AB5681900BE37AE /* UnivTitleButton.swift in Sources */,
 				CBD8D4712B4645F400445C98 /* BlameRepository.swift in Sources */,

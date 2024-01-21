@@ -1,5 +1,5 @@
 //
-//  EditProfileView.swift
+//  UpdateProfileView.swift
 //  FoodBowl
 //
 //  Created by Coby on 1/21/24.
@@ -12,7 +12,7 @@ import Kingfisher
 import SnapKit
 import Then
 
-final class EditProfileView: UIView, BaseViewType {
+final class UpdateProfileView: UIView, BaseViewType {
     
     // MARK: - ui component
     
@@ -186,7 +186,7 @@ final class EditProfileView: UIView, BaseViewType {
     }
 }
 
-extension EditProfileView: UITextFieldDelegate {
+extension UpdateProfileView: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         let currentText = textField.text ?? ""
         let newText = (currentText as NSString).replacingCharacters(in: range, with: string)
@@ -211,7 +211,7 @@ extension EditProfileView: UITextFieldDelegate {
     }
 }
 
-extension EditProfileView {
+extension UpdateProfileView {
     func configureView(member: Member) {
         if let profileImageUrl = member.profileImageUrl,
            let url = URL(string: profileImageUrl) {

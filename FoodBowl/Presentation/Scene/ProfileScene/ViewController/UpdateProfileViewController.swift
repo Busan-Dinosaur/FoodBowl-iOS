@@ -1,5 +1,5 @@
 //
-//  EditProfileViewController.swift
+//  UpdateProfileViewController.swift
 //  FoodBowl
 //
 //  Created by COBY_PRO on 2023/01/26.
@@ -11,11 +11,11 @@ import UIKit
 import SnapKit
 import Then
 
-final class EditProfileViewController: UIViewController, Navigationable, Keyboardable, PhotoPickerable {
+final class UpdateProfileViewController: UIViewController, Navigationable, Keyboardable, PhotoPickerable {
     
     // MARK: - ui component
     
-    private let editProfileView: EditProfileView = EditProfileView()
+    private let updateProfileView: UpdateProfileView = UpdateProfileView()
     
     // MARK: - property
     
@@ -43,7 +43,7 @@ final class EditProfileViewController: UIViewController, Navigationable, Keyboar
     // MARK: - life cycle
     
     override func loadView() {
-        self.view = self.editProfileView
+        self.view = self.updateProfileView
     }
     
     override func viewDidLoad() {
@@ -72,17 +72,17 @@ final class EditProfileViewController: UIViewController, Navigationable, Keyboar
         self.bindOutputToViewModel(output)
     }
     
-    private func transformedOutput() -> EditProfileViewModel.Output? {
-        guard let viewModel = self.viewModel as? EditProfileViewModel else { return nil }
-        let input = EditProfileViewModel.Input(
+    private func transformedOutput() -> UpdateProfileViewModel.Output? {
+        guard let viewModel = self.viewModel as? UpdateProfileViewModel else { return nil }
+        let input = UpdateProfileViewModel.Input(
             viewDidLoad: self.viewDidLoadPublisher,
             setProfileImage: self.setProfileImagePublisher.eraseToAnyPublisher(),
-            completeButtonDidTap: self.editProfileView.completeButtonDidTapPublisher.eraseToAnyPublisher()
+            completeButtonDidTap: self.updateProfileView.completeButtonDidTapPublisher.eraseToAnyPublisher()
         )
         return viewModel.transform(from: input)
     }
     
-    private func bindOutputToViewModel(_ output: EditProfileViewModel.Output?) {
+    private func bindOutputToViewModel(_ output: UpdateProfileViewModel.Output?) {
         guard let output else { return }
         
         output.profile
@@ -90,7 +90,7 @@ final class EditProfileViewController: UIViewController, Navigationable, Keyboar
             .sink(receiveValue: { [weak self] result in
                 switch result {
                 case .success(let profile):
-                    self?.editProfileView.configureView(member: profile)
+                    self?.updateProfileView.configureView(member: profile)
                 case .failure(let error):
                     self?.makeAlert(
                         title: "에러",
@@ -117,14 +117,14 @@ final class EditProfileViewController: UIViewController, Navigationable, Keyboar
     }
     
     private func bindUI() {
-        self.editProfileView.profileImageButtonDidTapPublisher
+        self.updateProfileView.profileImageButtonDidTapPublisher
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] _ in
                 self?.photoAddButtonDidTap()
             })
             .store(in: &self.cancellable)
         
-        self.editProfileView.makeAlertPublisher
+        self.updateProfileView.makeAlertPublisher
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] message in
                 self?.makeAlert(title: message)
@@ -136,11 +136,11 @@ final class EditProfileViewController: UIViewController, Navigationable, Keyboar
     
     private func configureNavigation() {
         guard let navigationController = self.navigationController else { return }
-        self.editProfileView.configureNavigationBarTitle(navigationController)
+        self.updateProfileView.configureNavigationBarTitle(navigationController)
     }
     
     func setPhoto(image: UIImage) {
-        self.editProfileView.profileImageButton.setImage(image, for: .normal)
+        self.updateProfileView.profileImageButton.setImage(image, for: .normal)
         self.setProfileImagePublisher.send(image)
     }
 }

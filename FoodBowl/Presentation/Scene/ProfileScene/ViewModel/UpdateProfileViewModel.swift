@@ -1,5 +1,5 @@
 //
-//  EditProfileViewModel.swift
+//  UpdateProfileViewModel.swift
 //  FoodBowl
 //
 //  Created by Coby on 1/21/24.
@@ -10,13 +10,13 @@ import UIKit
 
 import Kingfisher
 
-final class EditProfileViewModel: NSObject, BaseViewModelType {
+final class UpdateProfileViewModel: NSObject, BaseViewModelType {
     
     // MARK: - property
     
     private var profileImage: UIImage = ImageLiteral.defaultProfile
     
-    private let usecase: EditProfileUsecase
+    private let usecase: UpdateProfileUsecase
     private var cancellable: Set<AnyCancellable> = Set()
     
     private let profileSubject: PassthroughSubject<Result<Member, Error>, Never> = PassthroughSubject()
@@ -62,7 +62,7 @@ final class EditProfileViewModel: NSObject, BaseViewModelType {
     
     // MARK: - init
     
-    init(usecase: EditProfileUsecase) {
+    init(usecase: UpdateProfileUsecase) {
         self.usecase = usecase
     }
     

@@ -1,5 +1,5 @@
 //
-//  EditProfileUsecase.swift
+//  UpdateProfileUsecase.swift
 //  FoodBowl
 //
 //  Created by Coby on 1/21/24.
@@ -7,21 +7,21 @@
 
 import Foundation
 
-protocol EditProfileUsecase {
+protocol UpdateProfileUsecase {
     func getMyProfile() async throws -> Member
     func updateMemberProfile(request: UpdateMemberProfileRequestDTO) async throws
     func updateMemberProfileImage(image: Data) async throws
 }
 
-final class EditProfileUsecaseImpl: EditProfileUsecase {
+final class UpdateProfileUsecaseImpl: UpdateProfileUsecase {
     
     // MARK: - property
     
-    private let repository: EditProfileRepository
+    private let repository: UpdateProfileRepository
     
     // MARK: - init
     
-    init(repository: EditProfileRepository) {
+    init(repository: UpdateProfileRepository) {
         self.repository = repository
     }
     

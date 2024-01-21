@@ -52,10 +52,10 @@ final class ProfileViewController: MapViewController {
             self?.followButtonTapped()
         }
         let editButtonAction = UIAction { [weak self] _ in
-            let repository = EditProfileRepositoryImpl()
-            let usecase = EditProfileUsecaseImpl(repository: repository)
-            let viewModel = EditProfileViewModel(usecase: usecase)
-            let viewController = EditProfileViewController(viewModel: viewModel)
+            let repository = UpdateProfileRepositoryImpl()
+            let usecase = UpdateProfileUsecaseImpl(repository: repository)
+            let viewModel = UpdateProfileViewModel(usecase: usecase)
+            let viewController = UpdateProfileViewController(viewModel: viewModel)
             
             self?.navigationController?.pushViewController(viewController, animated: true)
         }

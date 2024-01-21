@@ -1,5 +1,5 @@
 //
-//  EditProfileRepositoryImpl.swift
+//  UpdateProfileRepositoryImpl.swift
 //  FoodBowl
 //
 //  Created by Coby on 1/21/24.
@@ -9,7 +9,7 @@ import Foundation
 
 import Moya
 
-final class EditProfileRepositoryImpl: EditProfileRepository {
+final class UpdateProfileRepositoryImpl: UpdateProfileRepository {
     
     private let provider = MoyaProvider<ServiceAPI>()
     
