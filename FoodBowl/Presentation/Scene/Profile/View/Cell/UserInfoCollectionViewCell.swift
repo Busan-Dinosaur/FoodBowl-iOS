@@ -101,7 +101,10 @@ final class UserInfoCollectionViewCell: UICollectionViewCell, BaseViewType {
 
 // MARK: - Public - func
 extension UserInfoCollectionViewCell {
-    func configureCell(_ member: Member) {
+    func configureCell(
+        _ member: Member,
+        _ isOwn: Bool = false
+    ) {
         if let url = member.profileImageUrl {
             self.userImageView.kf.setImage(with: URL(string: url))
         } else {
@@ -112,5 +115,10 @@ extension UserInfoCollectionViewCell {
         self.userFollowerLabel.text = "팔로워 \(member.followerCount)명"
         self.followButton.isHidden = member.isMyProfile
         self.followButton.isSelected = member.isFollowing
+        
+        if isOwn {
+            self.followButton.isHidden = false
+            self.followButton.isSelected = true
+        }
     }
 }

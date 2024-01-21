@@ -16,7 +16,7 @@ final class FollowerViewModel: BaseViewModelType {
     private var cancellable = Set<AnyCancellable>()
     
     private let memberId: Int
-    private let isOwn: Bool
+    let isOwn: Bool
     private let size: Int = 20
     private var currentPage: Int = 0
     private var currentSize: Int = 20
@@ -140,9 +140,9 @@ final class FollowerViewModel: BaseViewModelType {
         Task {
             do {
                 try await self.usecase.removeFollower(memberId: memberId)
-                self.followMemberSubject.send(.success(memberId))
+                self.removeMemberSubject.send(.success(memberId))
             } catch(let error) {
-                self.followMemberSubject.send(.failure(error))
+                self.removeMemberSubject.send(.failure(error))
             }
         }
     }

@@ -23,7 +23,7 @@ final class FollowerViewController: UIViewController, Navigationable {
     
     // MARK: - property
     
-    private let viewModel: FollowerViewModel
+    private let viewModel: any BaseViewModelType
     private var cancellable: Set<AnyCancellable> = Set()
     
     private var dataSource: UICollectionViewDiffableDataSource<Section, Member>!
@@ -57,6 +57,7 @@ final class FollowerViewController: UIViewController, Navigationable {
         super.viewDidLoad()
         self.configureDataSource()
         self.bindViewModel()
+        self.setupNavigation()
     }
     
     // MARK: - func
@@ -67,7 +68,8 @@ final class FollowerViewController: UIViewController, Navigationable {
         self.bindOutputToViewModel(output)
     }
     
-    private func transformedOutput() -> FollowerViewModel.Output {
+    private func transformedOutput() -> FollowerViewModel.Output? {
+        guard let viewModel = self.viewModel as? FollowerViewModel else { return nil }
         let input = FollowerViewModel.Input(
             viewDidLoad: self.viewDidLoadPublisher,
             scrolledToBottom: self.followView.collectionView().scrolledToBottomPublisher.eraseToAnyPublisher(),
@@ -76,7 +78,9 @@ final class FollowerViewController: UIViewController, Navigationable {
         return viewModel.transform(from: input)
     }
     
-    private func bindOutputToViewModel(_ output: FollowerViewModel.Output) {
+    private func bindOutputToViewModel(_ output: FollowerViewModel.Output?) {
+        guard let output else { return }
+        
         output.followers
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] result in
@@ -161,11 +165,13 @@ extension FollowerViewController {
     private func userInfoCollectionViewDataSource() -> UICollectionViewDiffableDataSource<Section, Member> {
         let reviewCellRegistration = UICollectionView.CellRegistration<UserInfoCollectionViewCell, Member> {
             [weak self] cell, indexPath, item in
-            cell.configureCell(item)
-            cell.cellTapAction = { [weak self] _ in
-                self?.presentProfileViewController(memberId: item.id)
+            guard let self = self else { return }
+            guard let viewModel = self.viewModel as? FollowerViewModel else { return }
+            cell.configureCell(item, viewModel.isOwn)
+            cell.cellTapAction = { _ in
+                self.presentProfileViewController(memberId: item.id)
             }
-            self?.bindCell(cell, with: item)
+            self.bindCell(cell, with: item)
         }
 
         return UICollectionViewDiffableDataSource(
@@ -228,15 +234,6 @@ extension FollowerViewController {
 // MARK: - Helper
 extension FollowerViewController {
     private func presentProfileViewController(memberId: Int) {
-        let repository = CreateReviewRepositoryImpl()
-        let usecase = CreateReviewUsecaseImpl(repository: repository)
-        let viewModel = CreateReviewViewModel(usecase: usecase)
-        let viewController = CreateReviewViewController(viewModel: viewModel)
-        let navigationController = UINavigationController(rootViewController: viewController)
-        navigationController.modalPresentationStyle = .fullScreen
-        self.present(navigationController, animated: true)
-        
-        
         let profileViewController = ProfileViewController(memberId: memberId)
         
         DispatchQueue.main.async { [weak self] in
