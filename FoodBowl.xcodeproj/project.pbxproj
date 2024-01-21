@@ -88,6 +88,7 @@
 		CB78A80D2B5D0AFA007EC9C1 /* FollowRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB78A80C2B5D0AFA007EC9C1 /* FollowRepositoryImpl.swift */; };
 		CB78A8102B5D0CBD007EC9C1 /* FollowUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB78A80F2B5D0CBD007EC9C1 /* FollowUsecase.swift */; };
 		CB78A8122B5D0F07007EC9C1 /* Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB78A8112B5D0F07007EC9C1 /* Token.swift */; };
+		CB78A8162B5D5511007EC9C1 /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB78A8152B5D5511007EC9C1 /* SettingView.swift */; };
 		CB7F3325298A51560000A6B4 /* UserDefaultStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB7F3324298A51560000A6B4 /* UserDefaultStorage.swift */; };
 		CB7F3327298A51610000A6B4 /* UserDefaultHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB7F3326298A51610000A6B4 /* UserDefaultHandler.swift */; };
 		CB8306632B5962A700632789 /* FriendViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB8306622B5962A700632789 /* FriendViewModel.swift */; };
@@ -280,6 +281,7 @@
 		CB78A80C2B5D0AFA007EC9C1 /* FollowRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowRepositoryImpl.swift; sourceTree = "<group>"; };
 		CB78A80F2B5D0CBD007EC9C1 /* FollowUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowUsecase.swift; sourceTree = "<group>"; };
 		CB78A8112B5D0F07007EC9C1 /* Token.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Token.swift; sourceTree = "<group>"; };
+		CB78A8152B5D5511007EC9C1 /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
 		CB7F3321298A4F1E0000A6B4 /* FoodBowl.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = FoodBowl.entitlements; sourceTree = "<group>"; };
 		CB7F3324298A51560000A6B4 /* UserDefaultStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultStorage.swift; sourceTree = "<group>"; };
 		CB7F3326298A51610000A6B4 /* UserDefaultHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultHandler.swift; sourceTree = "<group>"; };
@@ -588,7 +590,7 @@
 				CBE6190D296C6423005295AF /* Friend */,
 				CB49256E2AB44D4400B66B68 /* FindScene */,
 				CBCD0F7D2A66DA0B00A51B32 /* Univ */,
-				CBADC2A52955A07B00E56C93 /* Profile */,
+				CBADC2A52955A07B00E56C93 /* ProfileScene */,
 			);
 			path = Scene;
 			sourceTree = "<group>";
@@ -998,14 +1000,14 @@
 			path = Component;
 			sourceTree = "<group>";
 		};
-		CBADC2A52955A07B00E56C93 /* Profile */ = {
+		CBADC2A52955A07B00E56C93 /* ProfileScene */ = {
 			isa = PBXGroup;
 			children = (
 				CB73E5712B341B290026E4D7 /* ViewModel */,
 				CBDDF13E2A6AD76E00AE3C50 /* View */,
 				CB9332692AFCCB7C00B7F87A /* ViewController */,
 			);
-			path = Profile;
+			path = ProfileScene;
 			sourceTree = "<group>";
 		};
 		CBADC2B02955A13800E56C93 /* CreateReviewScene */ = {
@@ -1159,6 +1161,7 @@
 				CB1A7C5F29561B8400C6431D /* UIComponent */,
 				CBD1B5F22982D38300B0AD51 /* Cell */,
 				CB73E56D2B3417980026E4D7 /* FollowView.swift */,
+				CB78A8152B5D5511007EC9C1 /* SettingView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1176,8 +1179,8 @@
 		CBDE390329719B8100DDE49A /* Entity */ = {
 			isa = PBXGroup;
 			children = (
-				CB78A8112B5D0F07007EC9C1 /* Token.swift */,
 				CBE32D0D2ADE7648004CCCBE /* CategoryType.swift */,
+				CB78A8112B5D0F07007EC9C1 /* Token.swift */,
 				CB83066B2B59854400632789 /* Place.swift */,
 				CB91E2A72B56D8C9008A0E8E /* Reviews.swift */,
 				CB91E2AD2B56E86B008A0E8E /* Store.swift */,
@@ -1503,6 +1506,7 @@
 				CB5BFB132B3EEA5800B35062 /* TokenRepositoryImpl.swift in Sources */,
 				CB558E9A29746B5D00921943 /* PhotoPlusCollectionViewCell.swift in Sources */,
 				CB617A3E2AE248BB000F7FFC /* UIViewController+Keyboard.swift in Sources */,
+				CB78A8162B5D5511007EC9C1 /* SettingView.swift in Sources */,
 				CB5BFB192B3EF92700B35062 /* NetworkError.swift in Sources */,
 				CBA62D3F2A6EC7B800AA0830 /* FindViewController.swift in Sources */,
 				CB4FBBF22978CFA90052D371 /* FollowerViewController.swift in Sources */,

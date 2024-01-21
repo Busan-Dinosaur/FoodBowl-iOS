@@ -22,17 +22,14 @@ final class ProfileHeaderView: UICollectionReusableView {
 
     let followerInfoButton = FollowInfoButton().then {
         $0.infoLabel.text = "팔로워"
-        $0.numberLabel.text = "0명"
     }
 
     let followingInfoButton = FollowInfoButton().then {
         $0.infoLabel.text = "팔로잉"
-        $0.numberLabel.text = "0명"
     }
 
     let userInfoLabel = UILabel().then {
         $0.font = UIFont.preferredFont(forTextStyle: .footnote, weight: .regular)
-        $0.text = "자기 소개를 작성해주세요."
         $0.textColor = .mainTextColor
         $0.numberOfLines = 1
     }

@@ -40,7 +40,7 @@ final class ProfileViewController: MapViewController {
             
             self?.navigationController?.pushViewController(viewController, animated: true)
         }
-        let followingAction = UIAction { [weak self] _ in
+        let followingAction = UIAction { [weak self] _ in 
             let repository = FollowRepositoryImpl()
             let usecase = FollowUsecaseImpl(repository: repository)
             let viewModel = FollowingViewModel(usecase: usecase, memberId: self?.memberId ?? 0)

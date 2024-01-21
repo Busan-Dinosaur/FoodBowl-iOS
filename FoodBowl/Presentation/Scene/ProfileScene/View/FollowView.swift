@@ -34,7 +34,7 @@ final class FollowView: UIView, BaseViewType {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        baseInit()
+        self.baseInit()
     }
 
     @available(*, unavailable)
