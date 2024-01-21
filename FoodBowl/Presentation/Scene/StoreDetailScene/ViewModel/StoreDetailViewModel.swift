@@ -29,6 +29,7 @@ final class StoreDetailViewModel: BaseViewModelType {
     private let isBookmarkSubject: PassthroughSubject<Result<Void, Error>, Never> = PassthroughSubject()
     
     struct Input {
+        let viewDidLoad: AnyPublisher<Void, Never>
         let reviewToggleButtonDidTap: AnyPublisher<Bool, Never>
         let bookmarkButtonDidTap: AnyPublisher<Bool, Never>
         let removeReview: AnyPublisher<Int, Never>
@@ -55,7 +56,12 @@ final class StoreDetailViewModel: BaseViewModelType {
     // MARK: - Public - func
     
     func transform(from input: Input) -> Output {
-        self.getReviews()
+        input.viewDidLoad
+            .sink(receiveValue: { [weak self] _ in
+                guard let self = self else { return }
+                self.getReviews()
+            })
+            .store(in: &self.cancellable)
         
         input.reviewToggleButtonDidTap
             .removeDuplicates()

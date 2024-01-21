@@ -28,6 +28,7 @@ final class FindViewModel: BaseViewModelType {
     private let followMemberSubject: PassthroughSubject<Result<Int, Error>, Never> = PassthroughSubject()
     
     struct Input {
+        let viewDidLoad: AnyPublisher<Void, Never>
         let scrolledToBottom: AnyPublisher<Void, Never>
         let refreshControl: AnyPublisher<Void, Never>
         let searchStoresAndMembers: AnyPublisher<String, Never>
@@ -50,7 +51,12 @@ final class FindViewModel: BaseViewModelType {
     // MARK: - Public - func
     
     func transform(from input: Input) -> Output {
-        self.getReviews()
+        input.viewDidLoad
+            .sink(receiveValue: { [weak self] _ in
+                guard let self = self else { return }
+                self.getReviews()
+            })
+            .store(in: &self.cancellable)
         
         input.scrolledToBottom
             .sink(receiveValue: { [weak self] _ in

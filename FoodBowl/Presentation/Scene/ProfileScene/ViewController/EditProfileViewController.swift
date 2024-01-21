@@ -1,5 +1,5 @@
 //
-//  UpdateProfileViewController.swift
+//  EditProfileViewController.swift
 //  FoodBowl
 //
 //  Created by COBY_PRO on 2023/01/26.
@@ -12,7 +12,7 @@ import SnapKit
 import Then
 import YPImagePicker
 
-final class UpdateProfileViewController: BaseViewController {
+final class EditProfileViewController: BaseViewController {
     
     // MARK: - property
     
@@ -234,7 +234,7 @@ final class UpdateProfileViewController: BaseViewController {
     }
 }
 
-extension UpdateProfileViewController: UITextFieldDelegate {
+extension EditProfileViewController: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         var maxLength = 0
         

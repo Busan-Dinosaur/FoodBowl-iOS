@@ -79,6 +79,7 @@ final class FindViewController: UIViewController, Keyboardable {
     private func transformedOutput() -> FindViewModel.Output? {
         guard let viewModel = self.viewModel as? FindViewModel else { return nil }
         let input = FindViewModel.Input(
+            viewDidLoad: self.viewDidLoadPublisher,
             scrolledToBottom: self.findView.collectionView().scrolledToBottomPublisher.eraseToAnyPublisher(),
             refreshControl: self.findView.refreshPublisher.eraseToAnyPublisher(),
             searchStoresAndMembers: self.searchStoresAndMembersPublisher.eraseToAnyPublisher(),
