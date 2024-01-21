@@ -135,6 +135,7 @@
 		CBADC2D82955AC5900E56C93 /* FeedCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADC2D72955AC5900E56C93 /* FeedCollectionViewCell.swift */; };
 		CBADC2E02955B92D00E56C93 /* CompleteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADC2DF2955B92D00E56C93 /* CompleteButton.swift */; };
 		CBADC2E22955C63300E56C93 /* PhotoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADC2E12955C63300E56C93 /* PhotoCollectionViewCell.swift */; };
+		CBADEF382B5D5A710026FACA /* Option.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADEF372B5D5A710026FACA /* Option.swift */; };
 		CBB12B142985845900AC0EF2 /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBB12B132985845900AC0EF2 /* String+Extension.swift */; };
 		CBB582802972C9C400808B0B /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = CBB5827F2972C9C400808B0B /* Alamofire */; };
 		CBB582822973007D00808B0B /* ShowWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBB582812973007D00808B0B /* ShowWebViewController.swift */; };
@@ -326,6 +327,7 @@
 		CBADC2D72955AC5900E56C93 /* FeedCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedCollectionViewCell.swift; sourceTree = "<group>"; };
 		CBADC2DF2955B92D00E56C93 /* CompleteButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompleteButton.swift; sourceTree = "<group>"; };
 		CBADC2E12955C63300E56C93 /* PhotoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCollectionViewCell.swift; sourceTree = "<group>"; };
+		CBADEF372B5D5A710026FACA /* Option.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Option.swift; sourceTree = "<group>"; };
 		CBB12B132985845900AC0EF2 /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 		CBB582812973007D00808B0B /* ShowWebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowWebViewController.swift; sourceTree = "<group>"; };
 		CBB58283297440A600808B0B /* CategoryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -1180,6 +1182,7 @@
 			isa = PBXGroup;
 			children = (
 				CBE32D0D2ADE7648004CCCBE /* CategoryType.swift */,
+				CBADEF372B5D5A710026FACA /* Option.swift */,
 				CB78A8112B5D0F07007EC9C1 /* Token.swift */,
 				CB83066B2B59854400632789 /* Place.swift */,
 				CB91E2A72B56D8C9008A0E8E /* Reviews.swift */,
@@ -1553,6 +1556,7 @@
 				CBADC28D29559BC900E56C93 /* NSObject+Extension.swift in Sources */,
 				CBDE390529719B9700DDE49A /* PlaceDTO.swift in Sources */,
 				CB617A402AE248CF000F7FFC /* UIViewController+Alert.swift in Sources */,
+				CBADEF382B5D5A710026FACA /* Option.swift in Sources */,
 				CBADC29629559BC900E56C93 /* UITableView+Extension.swift in Sources */,
 				CBE32D0E2ADE7648004CCCBE /* CategoryType.swift in Sources */,
 				CB51C8C92AD7DFC9002D0BA5 /* ReviewDTO.swift in Sources */,

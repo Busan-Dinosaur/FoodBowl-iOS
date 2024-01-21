@@ -14,7 +14,7 @@ final class SettingView: UIView, BaseViewType {
 
     // MARK: - ui component
     
-    private lazy var listTableView = UITableView().then {
+    let listTableView = UITableView().then {
         $0.register(SettingItemTableViewCell.self, forCellReuseIdentifier: SettingItemTableViewCell.className)
         $0.separatorStyle = .none
         $0.backgroundColor = .mainBackgroundColor

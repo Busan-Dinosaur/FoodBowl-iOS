@@ -15,7 +15,7 @@ final class FindResultView: UIView, BaseViewType {
     
     // MARK: - ui component
     
-    lazy var listTableView = UITableView().then {
+    let listTableView = UITableView().then {
         $0.register(StoreInfoTableViewCell.self, forCellReuseIdentifier: StoreInfoTableViewCell.className)
         $0.register(UserInfoTableViewCell.self, forCellReuseIdentifier: UserInfoTableViewCell.className)
         $0.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 20, right: 0)

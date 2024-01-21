@@ -11,7 +11,13 @@ import UIKit
 import SnapKit
 import Then
 
-final class SettingViewController: BaseViewController {
+final class SettingViewController: UIViewController, Navigationable {
+    
+    // MARK: - ui component
+    
+    private let settingView: SettingView = SettingView()
+    
+    // MARK: - property
     
     private var options: [Option] {
         [
@@ -39,8 +45,8 @@ final class SettingViewController: BaseViewController {
                     self?.makeRequestAlert(
                         title: "로그아웃 하시겠어요?",
                         message: "",
-                        okTitle: "확인",
-                        cancelTitle: "취소",
+                        okTitle: "네",
+                        cancelTitle: "아니오",
                         okAction: { _ in
                             guard let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate else { return }
                             sceneDelegate.logOut()
@@ -49,13 +55,13 @@ final class SettingViewController: BaseViewController {
                 }
             ),
             Option(
-                title: "회원탈퇴",
+                title: "탈퇴하기",
                 handler: { [weak self] in
                     self?.makeRequestAlert(
-                        title: "회원탈퇴 하시겠어요?",
+                        title: "정말 탈퇴하시나요?",
                         message: "",
-                        okTitle: "확인",
-                        cancelTitle: "취소",
+                        okTitle: "네",
+                        cancelTitle: "아니오",
                         okAction: { _ in
                         }
                     )
@@ -63,29 +69,36 @@ final class SettingViewController: BaseViewController {
             ),
         ]
     }
-
-    // MARK: - property
-
-    private lazy var listTableView = UITableView().then {
-        $0.register(SettingItemTableViewCell.self, forCellReuseIdentifier: SettingItemTableViewCell.className)
-        $0.delegate = self
-        $0.dataSource = self
-        $0.separatorStyle = .none
-        $0.backgroundColor = .mainBackgroundColor
+    
+    // MARK: - init
+    
+    deinit {
+        print("\(#file) is dead")
     }
-
+    
     // MARK: - life cycle
-
+    
+    override func loadView() {
+        self.view = self.settingView
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.configureDelegation()
+        self.setupNavigation()
+        self.configureNavigation()
     }
-
-    override func setupLayout() {
-        view.addSubviews(listTableView)
-
-        listTableView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
-        }
+    
+    // MARK: - func
+    
+    private func configureDelegation() {
+        self.settingView.listTableView.delegate = self
+        self.settingView.listTableView.dataSource = self
+    }
+    
+    private func configureNavigation() {
+        guard let navigationController = self.navigationController else { return }
+        self.settingView.configureNavigationBarTitle(navigationController)
     }
 }
 
@@ -115,7 +128,7 @@ extension SettingViewController: UITableViewDataSource, UITableViewDelegate {
 }
 
 extension SettingViewController: MFMailComposeViewControllerDelegate {
-    func sendReportMail() {
+    private func sendReportMail() {
         if MFMailComposeViewController.canSendMail() {
             let composeVC = MFMailComposeViewController()
             let emailAdress = "foodbowl5502@gmail.com"
@@ -131,7 +144,7 @@ extension SettingViewController: MFMailComposeViewControllerDelegate {
 
             present(composeVC, animated: true, completion: nil)
         } else {
-            showSendMailErrorAlert()
+            self.showSendMailErrorAlert()
         }
     }
 
@@ -145,11 +158,6 @@ extension SettingViewController: MFMailComposeViewControllerDelegate {
     func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith _: MFMailComposeResult, error _: Error?) {
         controller.dismiss(animated: true, completion: nil)
     }
-}
-
-struct Option {
-    let title: String
-    let handler: () -> Void
 }
 
 // MARK: - Helper

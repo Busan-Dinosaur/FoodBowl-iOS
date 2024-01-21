@@ -20,6 +20,7 @@ final class FollowInfoButton: UIButton {
     let numberLabel = UILabel().then {
         $0.font = UIFont.preferredFont(forTextStyle: .footnote, weight: .regular)
         $0.textColor = .subTextColor
+        $0.text = "0명"
     }
 
     // MARK: - init

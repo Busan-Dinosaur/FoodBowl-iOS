@@ -10,8 +10,10 @@ import UIKit
 import SnapKit
 import Then
 
-final class ProfileHeaderView: UICollectionReusableView {
-    // MARK: - property
+final class ProfileHeaderView: UIView, BaseViewType {
+    
+    // MARK: - ui component
+    
     let userImageView = UIImageView().then {
         $0.image = ImageLiteral.defaultProfile
         $0.layer.cornerRadius = 25
@@ -19,30 +21,25 @@ final class ProfileHeaderView: UICollectionReusableView {
         $0.layer.borderColor = UIColor.grey002.cgColor
         $0.layer.borderWidth = 1
     }
-
     let followerInfoButton = FollowInfoButton().then {
         $0.infoLabel.text = "팔로워"
     }
-
     let followingInfoButton = FollowInfoButton().then {
         $0.infoLabel.text = "팔로잉"
     }
-
     let userInfoLabel = UILabel().then {
         $0.font = UIFont.preferredFont(forTextStyle: .footnote, weight: .regular)
         $0.textColor = .mainTextColor
         $0.numberOfLines = 1
     }
-
     let followButton = FollowButton()
-
     let editButton = EditButton()
 
     // MARK: - init
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setupLayout()
-        configureUI()
+        self.baseInit()
     }
 
     @available(*, unavailable)
@@ -50,50 +47,50 @@ final class ProfileHeaderView: UICollectionReusableView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    // MARK: - life cycle
+    // MARK: - base func
 
-    private func setupLayout() {
-        addSubviews(
-            userImageView,
-            followerInfoButton,
-            followingInfoButton,
-            userInfoLabel,
-            followButton,
-            editButton
+    func setupLayout() {
+        self.addSubviews(
+            self.userImageView,
+            self.followerInfoButton,
+            self.followingInfoButton,
+            self.userInfoLabel,
+            self.followButton,
+            self.editButton
         )
 
-        userImageView.snp.makeConstraints {
+        self.userImageView.snp.makeConstraints {
             $0.leading.equalToSuperview().inset(SizeLiteral.horizantalPadding)
             $0.top.equalToSuperview()
             $0.width.height.equalTo(50)
         }
 
-        followerInfoButton.snp.makeConstraints {
+        self.followerInfoButton.snp.makeConstraints {
             $0.leading.equalTo(userImageView.snp.trailing).offset(SizeLiteral.horizantalPadding)
             $0.top.equalToSuperview().inset(4)
             $0.height.equalTo(20)
         }
 
-        followingInfoButton.snp.makeConstraints {
-            $0.leading.equalTo(followerInfoButton.snp.trailing).offset(20)
+        self.followingInfoButton.snp.makeConstraints {
+            $0.leading.equalTo(self.followerInfoButton.snp.trailing).offset(20)
             $0.top.equalToSuperview().inset(4)
             $0.height.equalTo(20)
         }
 
-        userInfoLabel.snp.makeConstraints {
+        self.userInfoLabel.snp.makeConstraints {
             $0.leading.equalTo(userImageView.snp.trailing).offset(20)
-            $0.top.equalTo(followerInfoButton.snp.bottom).offset(6)
+            $0.top.equalTo(self.followerInfoButton.snp.bottom).offset(6)
             $0.width.equalTo(SizeLiteral.fullWidth - 140)
         }
 
-        followButton.snp.makeConstraints {
+        self.followButton.snp.makeConstraints {
             $0.top.equalToSuperview().inset(10)
             $0.trailing.equalToSuperview().inset(SizeLiteral.horizantalPadding)
-            $0.width.equalTo(50)
+            $0.width.equalTo(60)
             $0.height.equalTo(30)
         }
 
-        editButton.snp.makeConstraints {
+        self.editButton.snp.makeConstraints {
             $0.top.equalToSuperview().inset(10)
             $0.trailing.equalToSuperview().inset(SizeLiteral.horizantalPadding)
             $0.width.equalTo(50)
@@ -101,7 +98,7 @@ final class ProfileHeaderView: UICollectionReusableView {
         }
     }
 
-    private func configureUI() {
-        backgroundColor = .mainBackgroundColor
+    func configureUI() {
+        self.backgroundColor = .mainBackgroundColor
     }
 }
