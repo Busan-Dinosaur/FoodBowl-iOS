@@ -69,8 +69,8 @@ final class CreateReviewViewController: UIViewController, Keyboardable, PhotoPic
     private func transformedOutput() -> CreateReviewViewModel.Output? {
         guard let viewModel = self.viewModel as? CreateReviewViewModel else { return nil }
         let input = CreateReviewViewModel.Input(
-            completeButtonDidTap: self.createReviewView.completeButtonDidTapPublisher.eraseToAnyPublisher(),
-            setStore: self.setStorePublisher.eraseToAnyPublisher()
+            setStore: self.setStorePublisher.eraseToAnyPublisher(),
+            completeButtonDidTap: self.createReviewView.completeButtonDidTapPublisher.eraseToAnyPublisher()
         )
         return viewModel.transform(from: input)
     }
@@ -138,7 +138,7 @@ final class CreateReviewViewController: UIViewController, Keyboardable, PhotoPic
     
     @objc
     private func photoPlusCellDidTap() {
-        self.photoAddButtonDidTap()
+        self.photoesAddButtonDidTap()
     }
     
     func setPhotoes(images: [UIImage]) {

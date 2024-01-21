@@ -13,8 +13,8 @@ final class EditProfileRepositoryImpl: EditProfileRepository {
     
     private let provider = MoyaProvider<ServiceAPI>()
     
-    func getMemberProfile(id: Int) async throws -> MemberProfileDTO {
-        let response = await provider.request(.getMemberProfile(id: id))
+    func getMyProfile() async throws -> MemberProfileDTO {
+        let response = await provider.request(.getMyProfile)
         return try response.decode()
     }
     

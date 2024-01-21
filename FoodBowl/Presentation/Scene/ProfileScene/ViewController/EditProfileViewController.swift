@@ -5,256 +5,142 @@
 //  Created by COBY_PRO on 2023/01/26.
 //
 
+import Combine
 import UIKit
 
-import Kingfisher
 import SnapKit
 import Then
-import YPImagePicker
 
-final class EditProfileViewController: BaseViewController {
-    
-    // MARK: - property
-    
-    private var viewModel = MapViewModel()
+final class EditProfileViewController: UIViewController, Navigationable, Keyboardable, PhotoPickerable {
     
     // MARK: - ui component
     
-    private let scrollView = UIScrollView().then {
-        $0.isScrollEnabled = true
-        $0.showsVerticalScrollIndicator = false
+    private let editProfileView: EditProfileView = EditProfileView()
+    
+    // MARK: - property
+    
+    private let viewModel: any BaseViewModelType
+    private var cancellable: Set<AnyCancellable> = Set()
+    
+    let setProfileImagePublisher = PassthroughSubject<UIImage, Never>()
+    
+    // MARK: - init
+    
+    init(viewModel: any BaseViewModelType) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
     }
-    private let contentView = UIView()
-    private lazy var profileImageView = UIImageView().then {
-        $0.layer.cornerRadius = 50
-        $0.layer.masksToBounds = true
-        $0.layer.borderColor = UIColor.grey002.cgColor
-        $0.layer.borderWidth = 1
-        $0.isUserInteractionEnabled = true
-        $0.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tappedProfileImageView)))
+    
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
-    private let nicknameLabel = UILabel().then {
-        $0.text = "닉네임"
-        $0.font = .font(.regular, ofSize: 17)
-        $0.textColor = .mainTextColor
-    }
-    private lazy var nicknameField = UITextField().then {
-        let attributes = [
-            NSAttributedString.Key.foregroundColor: UIColor.grey001,
-            NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .subheadline, weight: .regular)
-        ]
-
-        $0.backgroundColor = .clear
-        $0.attributedPlaceholder = NSAttributedString(string: "10자 이내 한글 또는 영문", attributes: attributes)
-        $0.autocapitalizationType = .none
-        $0.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 0))
-        $0.leftViewMode = .always
-        $0.clearButtonMode = .always
-        $0.font = UIFont.preferredFont(forTextStyle: .subheadline, weight: .regular)
-        $0.textColor = .mainTextColor
-        $0.delegate = self
-        $0.makeBorderLayer(color: .grey002)
-    }
-    private let userInfoLabel = UILabel().then {
-        $0.text = "한줄 소개"
-        $0.font = .font(.regular, ofSize: 17)
-        $0.textColor = .mainTextColor
-    }
-    private lazy var userInfoField = UITextField().then {
-        let attributes = [
-            NSAttributedString.Key.foregroundColor: UIColor.grey001,
-            NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .subheadline, weight: .regular)
-        ]
-
-        $0.backgroundColor = .clear
-        $0.attributedPlaceholder = NSAttributedString(string: "20자 이내 한글 또는 영문", attributes: attributes)
-        $0.autocapitalizationType = .none
-        $0.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 0))
-        $0.leftViewMode = .always
-        $0.clearButtonMode = .always
-        $0.font = UIFont.preferredFont(forTextStyle: .subheadline, weight: .regular)
-        $0.textColor = .mainTextColor
-        $0.delegate = self
-        $0.makeBorderLayer(color: .grey002)
-    }
-    private lazy var completeButton = CompleteButton().then {
-        let action = UIAction { [weak self] _ in
-            self?.tappedCompleteButton()
-        }
-        $0.addAction(action, for: .touchUpInside)
+    
+    deinit {
+        print("\(#file) is dead")
     }
     
     // MARK: - life cycle
     
+    override func loadView() {
+        self.view = self.editProfileView
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupProfile()
+        self.bindViewModel()
+        self.bindUI()
+        self.setupNavigation()
+        self.setupKeyboardGesture()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        tabBarController?.tabBar.isHidden = true
+        self.tabBarController?.tabBar.isHidden = true
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        tabBarController?.tabBar.isHidden = false
+        self.tabBarController?.tabBar.isHidden = false
     }
-
-    override func setupLayout() {
-        view.addSubviews(scrollView, completeButton)
-        
-        scrollView.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
-            $0.bottom.equalTo(completeButton.snp.top).offset(-20)
-            $0.leading.trailing.equalToSuperview()
-        }
-        
-        scrollView.addSubview(contentView)
-        
-        contentView.snp.makeConstraints {
-            $0.width.equalToSuperview()
-            $0.top.bottom.equalToSuperview()
-        }
-        
-        contentView.addSubviews(profileImageView, nicknameLabel, nicknameField, userInfoLabel, userInfoField)
-
-        profileImageView.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(20)
-            $0.centerX.equalToSuperview()
-            $0.width.height.equalTo(100)
-        }
-
-        nicknameLabel.snp.makeConstraints {
-            $0.top.equalTo(profileImageView.snp.bottom).offset(40)
-            $0.leading.equalToSuperview().inset(SizeLiteral.horizantalPadding)
-        }
-
-        nicknameField.snp.makeConstraints {
-            $0.top.equalTo(nicknameLabel.snp.bottom).offset(10)
-            $0.leading.trailing.equalToSuperview().inset(SizeLiteral.horizantalPadding)
-            $0.height.equalTo(50)
-        }
-
-        userInfoLabel.snp.makeConstraints {
-            $0.top.equalTo(nicknameField.snp.bottom).offset(30)
-            $0.leading.equalToSuperview().inset(SizeLiteral.horizantalPadding)
-        }
-
-        userInfoField.snp.makeConstraints {
-            $0.top.equalTo(userInfoLabel.snp.bottom).offset(10)
-            $0.leading.trailing.equalToSuperview().inset(SizeLiteral.horizantalPadding)
-            $0.height.equalTo(50)
-            $0.bottom.equalToSuperview()
-        }
-
-        completeButton.snp.makeConstraints {
-            $0.leading.trailing.equalToSuperview().inset(SizeLiteral.horizantalPadding)
-            $0.bottom.equalToSuperview().inset(SizeLiteral.bottomPadding)
-            $0.height.equalTo(60)
-        }
+    
+    // MARK: - func - bind
+    
+    private func bindViewModel() {
+        let output = self.transformedOutput()
+        self.configureNavigation()
+        self.bindOutputToViewModel(output)
     }
-
-    override func setupNavigationBar() {
-        super.setupNavigationBar()
-        title = "프로필 수정"
+    
+    private func transformedOutput() -> EditProfileViewModel.Output? {
+        guard let viewModel = self.viewModel as? EditProfileViewModel else { return nil }
+        let input = EditProfileViewModel.Input(
+            viewDidLoad: self.viewDidLoadPublisher,
+            setProfileImage: self.setProfileImagePublisher.eraseToAnyPublisher(),
+            completeButtonDidTap: self.editProfileView.completeButtonDidTapPublisher.eraseToAnyPublisher()
+        )
+        return viewModel.transform(from: input)
     }
-
-    private func setupProfile() {
-        nicknameField.text = UserDefaultStorage.nickname
-        userInfoField.text = UserDefaultStorage.introduction
-
-        if let url = UserDefaultStorage.profileImageUrl {
-            profileImageView.kf.setImage(with: URL(string: url))
-        } else {
-            profileImageView.image = ImageLiteral.defaultProfile
-        }
-    }
-
-    @objc
-    private func tappedProfileImageView(_: UITapGestureRecognizer) {
-        var config = YPImagePickerConfiguration()
-        config.onlySquareImagesFromCamera = true
-        config.library.defaultMultipleSelection = false
-        config.library.mediaType = .photo
-        config.startOnScreen = YPPickerScreen.library
-        config.shouldSaveNewPicturesToAlbum = true
-        config.albumName = "FoodBowl"
-
-        let titleAttributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 17, weight: .regular)]
-        let barButtonAttributes = [NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .headline, weight: .regular)]
-        UINavigationBar.appearance().titleTextAttributes = titleAttributes // Title fonts
-        UIBarButtonItem.appearance().setTitleTextAttributes(barButtonAttributes, for: .normal) // Bar Button fonts
-        config.wordings.libraryTitle = "갤러리"
-        config.wordings.cameraTitle = "카메라"
-        config.wordings.next = "다음"
-        config.wordings.cancel = "취소"
-        config.colors.tintColor = .mainPink
-
-        let picker = YPImagePicker(configuration: config)
-
-        picker.didFinishPicking { [unowned picker] items, cancelled in
-            if !cancelled {
-                let images: [UIImage] = items.compactMap { item in
-                    if case .photo(let photo) = item {
-                        return photo.image
-                    } else {
-                        return nil
-                    }
+    
+    private func bindOutputToViewModel(_ output: EditProfileViewModel.Output?) {
+        guard let output else { return }
+        
+        output.profile
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] result in
+                switch result {
+                case .success(let profile):
+                    self?.editProfileView.configureView(member: profile)
+                case .failure(let error):
+                    self?.makeAlert(
+                        title: "에러",
+                        message: error.localizedDescription
+                    )
                 }
-                self.profileImageView.image = images[0]
-            }
-            picker.dismiss(animated: true, completion: nil)
-        }
-        present(picker, animated: true, completion: nil)
-    }
-
-    private func tappedCompleteButton() {
-        if let nickname = nicknameField.text, let introduction = userInfoField.text {
-            if nickname.count != 0 && introduction.count != 0 {
-                let updatedProfile = UpdateMemberProfileRequestDTO(nickname: nickname, introduction: introduction)
-                Task {
-                    animationView!.isHidden = false
-                    await viewModel.updateMembeProfile(profile: updatedProfile)
-                    if let image = profileImageView.image {
-                        await viewModel.updateMembeProfileImage(image: image)
-                    }
-                    animationView!.isHidden = true
-                    navigationController?.popViewController(animated: true)
+            })
+            .store(in: &self.cancellable)
+        
+        output.isCompleted
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] result in
+                switch result {
+                case .success:
+                    self?.navigationController?.popViewController(animated: true)
+                case .failure(let error):
+                    self?.makeAlert(
+                        title: "에러",
+                        message: error.localizedDescription
+                    )
                 }
-            } else {
-                let alert = UIAlertController(title: nil, message: "닉네임과 한줄 소개를 입력해주세요", preferredStyle: .alert)
-                let cancel = UIAlertAction(title: "닫기", style: .cancel, handler: nil)
-
-                alert.addAction(cancel)
-
-                present(alert, animated: true, completion: nil)
-            }
-        }
+            })
+            .store(in: &self.cancellable)
     }
-}
-
-extension EditProfileViewController: UITextFieldDelegate {
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        var maxLength = 0
+    
+    private func bindUI() {
+        self.editProfileView.profileImageButtonDidTapPublisher
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] _ in
+                self?.photoAddButtonDidTap()
+            })
+            .store(in: &self.cancellable)
         
-        // 길이 제한을 설정
-        if textField == nicknameField {
-            maxLength = 10
-        } else if textField == userInfoField {
-            maxLength = 20
-        }
-        
-        // 새로운 텍스트와 길이 제한 검사
-        let currentText = textField.text ?? ""
-        let newText = (currentText as NSString).replacingCharacters(in: range, with: string)
-        
-        if newText.count > maxLength {
-            // 최대 길이에 도달했을 때 알림 표시
-            makeAlert(title: "최대 \(maxLength)자까지 입력 가능합니다.")
-            return false
-        }
-        
-        return true
+        self.editProfileView.makeAlertPublisher
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] message in
+                self?.makeAlert(title: message)
+            })
+            .store(in: &self.cancellable)
+    }
+    
+    // MARK: - func
+    
+    private func configureNavigation() {
+        guard let navigationController = self.navigationController else { return }
+        self.editProfileView.configureNavigationBarTitle(navigationController)
+    }
+    
+    func setPhoto(image: UIImage) {
+        self.editProfileView.profileImageButton.setImage(image, for: .normal)
+        self.setProfileImagePublisher.send(image)
     }
 }

@@ -8,7 +8,7 @@
 import Foundation
 
 protocol EditProfileRepository {
-    func getMemberProfile(id: Int) async throws -> MemberProfileDTO
+    func getMyProfile() async throws -> MemberProfileDTO
     func updateMemberProfile(request: UpdateMemberProfileRequestDTO) async throws
     func updateMemberProfileImage(image: Data) async throws
 }

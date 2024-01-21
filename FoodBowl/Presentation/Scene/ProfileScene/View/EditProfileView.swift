@@ -8,6 +8,7 @@
 import Combine
 import UIKit
 
+import Kingfisher
 import SnapKit
 import Then
 
@@ -20,12 +21,13 @@ final class EditProfileView: UIView, BaseViewType {
         $0.showsVerticalScrollIndicator = false
     }
     private let contentView = UIView()
-    private let profileImageButton = UIButton().then {
+    let profileImageButton = UIButton().then {
         $0.backgroundColor = .grey003
         $0.layer.cornerRadius = 50
         $0.layer.masksToBounds = true
         $0.layer.borderColor = UIColor.grey002.cgColor
         $0.layer.borderWidth = 1
+        $0.setImage(ImageLiteral.defaultProfile, for: .normal)
     }
     
     private let nicknameLabel = UILabel().then {
@@ -49,7 +51,7 @@ final class EditProfileView: UIView, BaseViewType {
         $0.delegate = self
         $0.makeBorderLayer(color: .grey002)
     }
-    private let userInfoLabel = UILabel().then {
+    private let introductionLabel = UILabel().then {
         $0.text = "한줄 소개"
         $0.font = .font(.regular, ofSize: 17)
         $0.textColor = .mainTextColor
@@ -93,6 +95,13 @@ final class EditProfileView: UIView, BaseViewType {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - func
+    
+    func configureNavigationBarTitle(_ navigationController: UINavigationController) {
+        let navigationItem = navigationController.topViewController?.navigationItem
+        navigationItem?.title = "프로필 수정"
+    }
+    
     // MARK: - base func
     
     func setupLayout() {
@@ -118,7 +127,7 @@ final class EditProfileView: UIView, BaseViewType {
             self.profileImageButton,
             self.nicknameLabel,
             self.nicknameField,
-            self.userInfoLabel,
+            self.introductionLabel,
             self.introductionField
         )
 
@@ -139,13 +148,13 @@ final class EditProfileView: UIView, BaseViewType {
             $0.height.equalTo(50)
         }
 
-        self.userInfoLabel.snp.makeConstraints {
+        self.introductionLabel.snp.makeConstraints {
             $0.top.equalTo(self.nicknameField.snp.bottom).offset(30)
             $0.leading.equalToSuperview().inset(SizeLiteral.horizantalPadding)
         }
 
         self.introductionField.snp.makeConstraints {
-            $0.top.equalTo(self.userInfoLabel.snp.bottom).offset(10)
+            $0.top.equalTo(self.introductionLabel.snp.bottom).offset(10)
             $0.leading.trailing.equalToSuperview().inset(SizeLiteral.horizantalPadding)
             $0.height.equalTo(50)
             $0.bottom.equalToSuperview()
@@ -168,7 +177,9 @@ final class EditProfileView: UIView, BaseViewType {
         let completeAction = UIAction { [weak self] _ in
             guard let self = self else { return }
             guard let nickname = self.nicknameField.text,
-                  let introduction = self.introductionField.text else { return }
+                  let introduction = self.introductionField.text,
+                  self.completeButton.isEnabled
+            else { return }
             self.completeButtonDidTapPublisher.send((nickname, introduction))
         }
         self.completeButton.addAction(completeAction, for: .touchUpInside)
@@ -197,5 +208,18 @@ extension EditProfileView: UITextFieldDelegate {
         }
         
         return true
+    }
+}
+
+extension EditProfileView {
+    func configureView(member: Member) {
+        if let profileImageUrl = member.profileImageUrl,
+           let url = URL(string: profileImageUrl) {
+            self.profileImageButton.kf.setImage(with: url, for: .normal)
+        }
+        
+        self.nicknameField.text = member.nickname
+        self.introductionField.text = member.introduction
+        self.completeButton.isEnabled = self.nicknameField.text?.count != 0 && self.introductionField.text?.count != 0
     }
 }

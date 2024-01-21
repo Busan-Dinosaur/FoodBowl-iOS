@@ -18,28 +18,28 @@ final class CreateReviewViewModel: NSObject, BaseViewModelType {
     private let usecase: CreateReviewUsecase
     private var cancellable: Set<AnyCancellable> = Set()
     
-    private let isCompletedSubject: PassthroughSubject<Result<Bool, Error>, Never> = PassthroughSubject()
+    private let isCompletedSubject: PassthroughSubject<Result<Void, Error>, Never> = PassthroughSubject()
     
     struct Input {
-        let completeButtonDidTap: AnyPublisher<(String, [UIImage]), Never>
         let setStore: AnyPublisher<(Place, Place?), Never>
+        let completeButtonDidTap: AnyPublisher<(String, [UIImage]), Never>
     }
     
     struct Output {
-        let isCompleted: AnyPublisher<Result<Bool, Error>, Never>
+        let isCompleted: AnyPublisher<Result<Void, Error>, Never>
     }
     
     func transform(from input: Input) -> Output {
-        input.completeButtonDidTap
-            .sink(receiveValue: { [weak self] comment, images in
-                self?.createReview(comment: comment, images: images)
-            })
-            .store(in: &self.cancellable)
-        
         input.setStore
             .sink(receiveValue: { [weak self] store, univ in
                 self?.store = store
                 self?.univ = univ
+            })
+            .store(in: &self.cancellable)
+        
+        input.completeButtonDidTap
+            .sink(receiveValue: { [weak self] comment, images in
+                self?.createReview(comment: comment, images: images)
             })
             .store(in: &self.cancellable)
         
@@ -93,7 +93,7 @@ final class CreateReviewViewModel: NSObject, BaseViewModelType {
                 }
                 let imagesData = images.map { $0.jpegData(compressionQuality: 0.3)! }
                 try await self.usecase.createReview(request: request, images: imagesData)
-                self.isCompletedSubject.send(.success(true))
+                self.isCompletedSubject.send(.success(()))
             } catch(let error) {
                 self.isCompletedSubject.send(.failure(error))
             }

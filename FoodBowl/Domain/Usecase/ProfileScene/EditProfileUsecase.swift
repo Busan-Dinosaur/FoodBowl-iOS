@@ -8,7 +8,7 @@
 import Foundation
 
 protocol EditProfileUsecase {
-    func getMemberProfile(id: Int) async throws -> Member
+    func getMyProfile() async throws -> Member
     func updateMemberProfile(request: UpdateMemberProfileRequestDTO) async throws
     func updateMemberProfileImage(image: Data) async throws
 }
@@ -27,10 +27,10 @@ final class EditProfileUsecaseImpl: EditProfileUsecase {
     
     // MARK: - Public - func
     
-    func getMemberProfile(id: Int) async throws -> Member {
+    func getMyProfile() async throws -> Member {
         do {
-            let memberProfileDTO = try await self.repository.getMemberProfile(id: id)
-            return memberProfileDTO.toMember()
+            let MemberProfileDTO = try await self.repository.getMyProfile()
+            return MemberProfileDTO.toMember()
         } catch(let error) {
             throw error
         }

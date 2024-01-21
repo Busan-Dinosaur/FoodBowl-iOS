@@ -52,8 +52,12 @@ final class ProfileViewController: MapViewController {
             self?.followButtonTapped()
         }
         let editButtonAction = UIAction { [weak self] _ in
-            let updateProfileViewController = EditProfileViewController()
-            self?.navigationController?.pushViewController(updateProfileViewController, animated: true)
+            let repository = EditProfileRepositoryImpl()
+            let usecase = EditProfileUsecaseImpl(repository: repository)
+            let viewModel = EditProfileViewModel(usecase: usecase)
+            let viewController = EditProfileViewController(viewModel: viewModel)
+            
+            self?.navigationController?.pushViewController(viewController, animated: true)
         }
         $0.followerInfoButton.addAction(followerAction, for: .touchUpInside)
         $0.followingInfoButton.addAction(followingAction, for: .touchUpInside)
