@@ -98,8 +98,7 @@ final class CreateReviewView: UIView, BaseViewType {
     var searchBarButtonDidTapPublisher: AnyPublisher<Void, Never> {
         return self.searchBarButton.buttonTapPublisher
     }
-    let maxLengthAlertPublisher = PassthroughSubject<Void, Never>()
-    let maxLineAlertPublisher = PassthroughSubject<Void, Never>()
+    let makeAlertPublisher = PassthroughSubject<String, Never>()
     let showStorePublisher = PassthroughSubject<String, Never>()
     let completeButtonDidTapPublisher = PassthroughSubject<(String, [UIImage]), Never>()
     
@@ -235,6 +234,8 @@ final class CreateReviewView: UIView, BaseViewType {
         self.guideCommentLabel.snp.updateConstraints {
             $0.top.equalTo(self.selectedStoreView.snp.bottom).offset(30)
         }
+        
+        self.completeButton.isEnabled = !self.selectedStoreView.isHidden && self.commentTextView.text.count != 0
     }
 }
 
@@ -244,13 +245,15 @@ extension CreateReviewView: UITextViewDelegate {
         let newText = currentText.replacingCharacters(in: range, with: text)
         let numberOfLines = newText.components(separatedBy: "\n").count
         
+        self.completeButton.isEnabled = !self.selectedStoreView.isHidden && newText.count != 0
+        
         if newText.count > 100 {
-            self.maxLengthAlertPublisher.send()
+            self.makeAlertPublisher.send("100자 이하로 작성해주세요.")
             return false
         }
         
         if numberOfLines > 5 {
-            self.maxLineAlertPublisher.send()
+            self.makeAlertPublisher.send("5번 이내로 줄바꿈이 가능해요.")
             return false
         }
         

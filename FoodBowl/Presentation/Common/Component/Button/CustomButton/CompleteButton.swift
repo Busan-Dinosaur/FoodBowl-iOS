@@ -12,6 +12,12 @@ import Then
 
 final class CompleteButton: UIButton, BaseViewType {
     
+    override var isEnabled: Bool {
+        didSet {
+            self.alpha = self.isEnabled ? 1.0 : 0.3
+        }
+    }
+    
     // MARK: - ui component
 
     let label = UILabel().then {
@@ -44,6 +50,7 @@ final class CompleteButton: UIButton, BaseViewType {
     }
 
     func configureUI() {
+        self.isEnabled = false
         self.backgroundColor = .mainTextColor
         self.layer.cornerRadius = 30
         self.layer.masksToBounds = false
