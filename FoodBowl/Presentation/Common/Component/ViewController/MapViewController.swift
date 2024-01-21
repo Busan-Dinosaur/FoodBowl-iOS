@@ -137,9 +137,15 @@ class MapViewController: UIViewController, Navigationable, Optionable {
         self.configureDataSource()
         self.setupLayout()
         self.configureUI()
+        self.setupModal()
         self.bindViewModel()
         self.bindUI()
         self.setupNavigation()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.setModalState()
     }
 
     func setupLayout() {
@@ -181,11 +187,15 @@ class MapViewController: UIViewController, Navigationable, Optionable {
     }
 
     func configureUI() {
+        self.view.backgroundColor = .mainBackgroundColor
+    }
+    
+    func setupModal() {
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan(_:)))
-        grabbarView.isUserInteractionEnabled = true
-        grabbarView.addGestureRecognizer(panGesture)
-        currentModalHeight = modalMidHeight
-        bookmarkButton.isHidden = true
+        self.grabbarView.isUserInteractionEnabled = true
+        self.grabbarView.addGestureRecognizer(panGesture)
+        self.currentModalHeight = self.modalMidHeight
+        self.bookmarkButton.isHidden = true
     }
 
     func tappedBookMarkButton() {
@@ -307,6 +317,10 @@ class MapViewController: UIViewController, Navigationable, Optionable {
             }
         }
     }
+}
+
+// MARK: - Modal
+extension MapViewController {
 }
 
 // MARK: - Helper
@@ -460,35 +474,36 @@ extension MapViewController {
     func handlePan(_ gesture: UIPanGestureRecognizer) {
         guard gesture.view != nil else { return }
         let translation = gesture.translation(in: gesture.view?.superview)
-        var newModalHeight = currentModalHeight - translation.y
-        if newModalHeight <= modalMinHeight {
-            newModalHeight = modalMinHeight
-            modalMinState()
-        } else if newModalHeight >= modalMaxHeight {
+        
+        var newModalHeight = self.currentModalHeight - translation.y
+        switch newModalHeight {
+        case ...self.modalMinHeight:
+            newModalHeight = self.modalMinHeight
+            self.setModalMinState()
+        case ...self.modalMaxHeight:
+            self.setModalMidState()
+        default:
             newModalHeight = modalMaxHeight
-            modalMaxState()
-        } else {
-            modalMidState()
+            self.setModalMaxState()
         }
 
-        feedListView.snp.remakeConstraints {
-            $0.top.equalTo(grabbarView.snp.bottom)
+        self.feedListView.snp.remakeConstraints {
+            $0.top.equalTo(self.grabbarView.snp.bottom)
             $0.leading.trailing.bottom.equalToSuperview()
             $0.height.equalTo(newModalHeight)
         }
 
         if gesture.state == .ended {
             switch newModalHeight {
-            case let height where height - modalMinHeight < modalMidHeight - height:
-                currentModalHeight = modalMinHeight
-                modalMinState()
-            case let height where height - modalMidHeight < modalMaxHeight - height:
-                currentModalHeight = modalMidHeight
-                modalMidState()
+            case let height where height - self.modalMinHeight < self.modalMidHeight - height:
+                self.currentModalHeight = self.modalMinHeight
+            case let height where height - self.modalMidHeight < self.modalMaxHeight - height:
+                self.currentModalHeight = self.modalMidHeight
             default:
-                currentModalHeight = modalMaxHeight
-                modalMaxState()
+                self.currentModalHeight = self.modalMaxHeight
             }
+            
+            self.setModalState()
 
             UIView.animate(
                 withDuration: 0.5,
@@ -507,24 +522,35 @@ extension MapViewController {
             )
         }
     }
-
-    func modalMinState() {
-        grabbarView.showResult()
-        feedListView.listCollectionView.isHidden = true
-        feedListView.borderLineView.isHidden = true
-        tabBarController?.tabBar.frame.origin = CGPoint(x: 0, y: UIScreen.main.bounds.maxY)
+    
+    private func setModalState() {
+        switch self.currentModalHeight {
+        case self.modalMinHeight:
+            self.setModalMinState()
+        case self.modalMidHeight:
+            self.setModalMidState()
+        default:
+            self.setModalMaxState()
+        }
     }
 
-    func modalMidState() {
-        grabbarView.showContent()
-        feedListView.listCollectionView.isHidden = false
-        feedListView.borderLineView.isHidden = false
-        tabBarController?.tabBar.frame.origin = CGPoint(x: 0, y: UIScreen.main.bounds.maxY - tabBarHeight)
-        grabbarView.layer.cornerRadius = 15
+    private func setModalMinState() {
+        self.grabbarView.showResult()
+        self.feedListView.listCollectionView.isHidden = true
+        self.feedListView.borderLineView.isHidden = true
+        self.tabBarController?.tabBar.frame.origin = CGPoint(x: 0, y: UIScreen.main.bounds.maxY)
     }
 
-    func modalMaxState() {
-        grabbarView.layer.cornerRadius = 0
+    private func setModalMidState() {
+        self.grabbarView.layer.cornerRadius = 15
+        self.grabbarView.showContent()
+        self.feedListView.listCollectionView.isHidden = false
+        self.feedListView.borderLineView.isHidden = false
+        self.tabBarController?.tabBar.frame.origin = CGPoint(x: 0, y: UIScreen.main.bounds.maxY - self.tabBarHeight)
+    }
+
+    private func setModalMaxState() {
+        self.grabbarView.layer.cornerRadius = 0
     }
 }
 
