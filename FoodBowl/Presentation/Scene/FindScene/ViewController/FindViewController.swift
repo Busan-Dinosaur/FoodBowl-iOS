@@ -158,7 +158,7 @@ final class FindViewController: UIViewController, Keyboardable {
         self.findView.plusButtonDidTapPublisher
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] _ in
-                self?.presentCreateReviewController()
+                self?.presentCreateReviewViewController()
             })
             .store(in: &self.cancellable)
     }
@@ -188,7 +188,7 @@ final class FindViewController: UIViewController, Keyboardable {
 
 // MARK: - Helper
 extension FindViewController {
-    private func presentCreateReviewController() {
+    private func presentCreateReviewViewController() {
         let repository = CreateReviewRepositoryImpl()
         let usecase = CreateReviewUsecaseImpl(repository: repository)
         let viewModel = CreateReviewViewModel(usecase: usecase)
@@ -209,7 +209,7 @@ extension FindViewController {
     private func feedCollectionViewDataSource() -> UICollectionViewDiffableDataSource<Section, Review> {
         let reviewCellRegistration = UICollectionView.CellRegistration<PhotoCollectionViewCell, Review> { cell, indexPath, item in
             cell.configureCell(item.thumbnail)
-            cell.cellAction = { [weak self] _ in
+            cell.cellTapAction = { [weak self] _ in
                 print(item.comment.id)
             }
         }

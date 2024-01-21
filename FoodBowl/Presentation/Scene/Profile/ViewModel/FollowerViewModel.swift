@@ -6,44 +6,49 @@
 //
 
 import Combine
-import UIKit
+import Foundation
 
-import Moya
+final class FollowerViewModel: BaseViewModelType {
 
-final class FollowerViewModel: NSObject, BaseViewModelType {
-    
-    typealias Task = _Concurrency.Task
-    
     // MARK: - property
     
-    private let provider = MoyaProvider<ServiceAPI>()
+    private let usecase: FollowUsecase
     private var cancellable = Set<AnyCancellable>()
     
-    let isOwn: Bool
     private let memberId: Int
-    
+    private let isOwn: Bool
     private let size: Int = 20
     private var currentPage: Int = 0
     private var currentSize: Int = 20
     
-    private let followersSubject = PassthroughSubject<[MemberByFollowItemDTO], Error>()
-    private let moreFollowersSubject = PassthroughSubject<[MemberByFollowItemDTO], Error>()
+    private let followersSubject: PassthroughSubject<Result<[Member], Error>, Never> = PassthroughSubject()
+    private let moreFollowersSubject: PassthroughSubject<Result<[Member], Error>, Never> = PassthroughSubject()
+    private let followMemberSubject: PassthroughSubject<Result<Int, Error>, Never> = PassthroughSubject()
+    private let removeMemberSubject: PassthroughSubject<Result<Int, Error>, Never> = PassthroughSubject()
     
     struct Input {
         let viewDidLoad: AnyPublisher<Void, Never>
         let scrolledToBottom: AnyPublisher<Void, Never>
+        let followMember: AnyPublisher<(Int, Bool), Never>
     }
     
     struct Output {
-        let followers: PassthroughSubject<[MemberByFollowItemDTO], Error>
-        let moreFollowers: PassthroughSubject<[MemberByFollowItemDTO], Error>
+        let followers: AnyPublisher<Result<[Member], Error>, Never>
+        let moreFollowers: AnyPublisher<Result<[Member], Error>, Never>
+        let followMember: AnyPublisher<Result<Int, Error>, Never>
+        let removeMember: AnyPublisher<Result<Int, Error>, Never>
     }
     
     // MARK: - init
 
-    init(memberId: Int) {
+    init(
+        usecase: FollowUsecase,
+        memberId: Int,
+        isOwn: Bool = false
+    ) {
+        self.usecase = usecase
         self.memberId = memberId
-        self.isOwn = UserDefaultStorage.id == memberId
+        self.isOwn = isOwn
     }
     
     // MARK: - Public - func
@@ -63,72 +68,81 @@ final class FollowerViewModel: NSObject, BaseViewModelType {
             })
             .store(in: &self.cancellable)
         
+        input.followMember
+            .sink(receiveValue: { [weak self] memberId, isFollow in
+                guard let self = self else { return }
+                if self.isOwn {
+                    self.removeMember(memberId: memberId)
+                } else {
+                    isFollow ? self.unfollowMember(memberId: memberId) : self.followMember(memberId: memberId)
+                }
+            })
+            .store(in: &self.cancellable)
+        
         return Output(
-            followers: followersSubject,
-            moreFollowers: moreFollowersSubject
+            followers: self.followersSubject.eraseToAnyPublisher(),
+            moreFollowers: self.moreFollowersSubject.eraseToAnyPublisher(),
+            followMember: followMemberSubject.eraseToAnyPublisher(),
+            removeMember: removeMemberSubject.eraseToAnyPublisher()
         )
     }
-}
-
-// MARK: - network
-extension FollowerViewModel {
-    func followMember(memberId: Int) async -> Bool {
-        let response = await provider.request(.followMember(memberId: memberId))
-        switch response {
-        case .success:
-            return true
-        case .failure(let err):
-            handleError(err)
-            return false
-        }
-    }
     
-    func unfollowMember(memberId: Int) async -> Bool {
-        let response = await provider.request(.unfollowMember(memberId: memberId))
-        switch response {
-        case .success:
-            return true
-        case .failure(let err):
-            handleError(err)
-            return false
-        }
-    }
-    
-    func removeFollowingMember(memberId: Int) async -> Bool {
-        let response = await provider.request(.removeFollower(memberId: memberId))
-        switch response {
-        case .success:
-            return true
-        case .failure(let err):
-            handleError(err)
-            return false
-        }
-    }
+    // MARK: - network
     
     private func getFollowers() {
         Task {
-            if currentSize < size { return }
-            
-            let response = await self.provider.request(
-                .getFollowerMember(
-                    memberId: memberId,
-                    page: currentPage,
-                    size: size
+            do {
+                if self.currentSize < self.size { return }
+                let members = try await self.usecase.getFollowerMember(
+                    memberId: self.memberId,
+                    page: self.currentPage,
+                    size: self.size
                 )
-            )
-            switch response {
-            case .success(let result):
-                guard let data = try? result.map(MemberByFollowDTO.self) else { return }
-                self.currentPage = data.currentPage
-                self.currentSize = data.currentSize
+                self.followersSubject.send(.success(members.content))
                 
-                if self.currentPage == 0 {
-                    self.followersSubject.send(data.content)
-                } else {
-                    self.moreFollowersSubject.send(data.content)
-                }
-            case .failure(let err):
-                handleError(err)
+                self.currentPage = members.currentPage
+                self.currentSize = members.currentSize
+                
+                self.currentPage == 0 ? 
+                self.followersSubject.send(.success(members.content)) :
+                self.moreFollowersSubject.send(.success(members.content))
+            } catch(let error) {
+                self.currentPage == 0 ?
+                self.followersSubject.send(.failure(error)) :
+                self.moreFollowersSubject.send(.failure(error))
+            }
+        }
+    }
+    
+    private func followMember(memberId: Int) {
+        Task {
+            do {
+                try await self.usecase.followMember(memberId: memberId)
+                self.followMemberSubject.send(.success(memberId))
+            } catch(let error) {
+                self.followMemberSubject.send(.failure(error))
+            }
+        }
+    }
+    
+    private func unfollowMember(memberId: Int) {
+        Task {
+            do {
+                try await self.usecase.unfollowMember(memberId: memberId)
+                self.followMemberSubject.send(.success(memberId))
+            } catch(let error) {
+                self.followMemberSubject.send(.failure(error))
+            }
+        }
+    }
+    
+    private func removeMember(memberId: Int) {
+        Task {
+            do {
+                try await self.usecase.removeFollower(memberId: memberId)
+                self.followMemberSubject.send(.success(memberId))
+            } catch(let error) {
+                self.followMemberSubject.send(.failure(error))
             }
         }
     }

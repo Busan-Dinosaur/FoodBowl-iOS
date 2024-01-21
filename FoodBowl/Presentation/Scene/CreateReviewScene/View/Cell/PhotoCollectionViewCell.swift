@@ -22,7 +22,7 @@ final class PhotoCollectionViewCell: UICollectionViewCell, BaseViewType {
     
     // MARK: - property
     
-    var cellAction: ((PhotoCollectionViewCell) -> Void)?
+    var cellTapAction: ((PhotoCollectionViewCell) -> Void)?
     
     // MARK: - init
 
@@ -53,12 +53,12 @@ final class PhotoCollectionViewCell: UICollectionViewCell, BaseViewType {
     
     private func setupAction() {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(cellTapped))
-        contentView.addGestureRecognizer(tapGesture)
+        self.contentView.addGestureRecognizer(tapGesture)
     }
     
     @objc
     private func cellTapped() {
-        self.cellAction?(self)
+        self.cellTapAction?(self)
     }
 
     override func prepareForReuse() {

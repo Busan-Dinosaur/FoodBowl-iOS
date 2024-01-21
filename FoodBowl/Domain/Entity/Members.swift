@@ -16,7 +16,7 @@ struct Members: Codable {
 
 
 // MARK: - Member
-struct Member: Codable {
+struct Member: Codable, Hashable {
     let id: Int
     let profileImageUrl: String?
     let nickname: String

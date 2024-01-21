@@ -21,14 +21,15 @@ final class FollowerViewController: UIViewController, Navigationable {
     
     private let followView: FollowView = FollowView()
     
-    private var dataSource: UICollectionViewDiffableDataSource<Section, MemberByFollowItemDTO>!
-    private var snapshot: NSDiffableDataSourceSnapshot<Section, MemberByFollowItemDTO>!
-    
     // MARK: - property
     
+    private let viewModel: FollowerViewModel
     private var cancellable: Set<AnyCancellable> = Set()
     
-    private let viewModel: FollowerViewModel
+    private var dataSource: UICollectionViewDiffableDataSource<Section, Member>!
+    private var snapshot: NSDiffableDataSourceSnapshot<Section, Member>!
+    
+    private let followButtonDidTapPublisher = PassthroughSubject<(Int, Bool), Never>()
     
     // MARK: - init
     
@@ -42,6 +43,10 @@ final class FollowerViewController: UIViewController, Navigationable {
         fatalError("init(coder:) has not been implemented")
     }
     
+    deinit {
+        print("\(#file) is dead")
+    }
+    
     // MARK: - life cycle
     
     override func loadView() {
@@ -52,83 +57,97 @@ final class FollowerViewController: UIViewController, Navigationable {
         super.viewDidLoad()
         self.configureDataSource()
         self.bindViewModel()
-        self.setupNavigation()
-        self.setupNavigationBar()
     }
     
     // MARK: - func
     
-    private func setupNavigationBar() {
-        title = "팔로워"
-    }
-    
     private func bindViewModel() {
         let output = self.transformedOutput()
+        self.configureNavigation()
         self.bindOutputToViewModel(output)
-    }
-    
-    private func bindCell(_ cell: UserInfoCollectionViewCell, with item: MemberByFollowItemDTO) {
-        cell.userButtonTapAction = { [weak self] _ in
-            let profileViewController = ProfileViewController(memberId: item.memberId)
-            
-            DispatchQueue.main.async { [weak self] in
-                self?.navigationController?.pushViewController(profileViewController, animated: true)
-            }
-        }
-        
-        cell.followButtonTapAction = { [weak self] _ in
-            guard let self = self else { return }
-            
-            Task {
-                if self.viewModel.isOwn {
-                    if await self.viewModel.removeFollowingMember(memberId: item.memberId) {
-                        DispatchQueue.main.async {
-                            self.deleteFollower(memberId: item.memberId)
-                        }
-                    }
-                } else {
-                    if cell.followButton.isSelected {
-                        if await self.viewModel.unfollowMember(memberId: item.memberId) {
-                            DispatchQueue.main.async {
-                                self.updateFollower(memberId: item.memberId)
-                            }
-                        }
-                    } else {
-                        if await self.viewModel.followMember(memberId: item.memberId) {
-                            DispatchQueue.main.async {
-                                self.updateFollower(memberId: item.memberId)
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-    
-    private func bindOutputToViewModel(_ output: FollowerViewModel.Output) {
-        output.followers
-            .receive(on: DispatchQueue.main)
-            .sink { _ in
-            } receiveValue: { [weak self] followers in
-                self?.loadFollowers(followers)
-            }
-            .store(in: &self.cancellable)
-        
-        output.moreFollowers
-            .receive(on: DispatchQueue.main)
-            .sink { _ in
-            } receiveValue: { [weak self] followers in
-                self?.loadMoreFollowers(followers)
-            }
-            .store(in: &self.cancellable)
     }
     
     private func transformedOutput() -> FollowerViewModel.Output {
         let input = FollowerViewModel.Input(
             viewDidLoad: self.viewDidLoadPublisher,
-            scrolledToBottom: self.followView.collectionView().scrolledToBottomPublisher.eraseToAnyPublisher()
+            scrolledToBottom: self.followView.collectionView().scrolledToBottomPublisher.eraseToAnyPublisher(),
+            followMember: self.followButtonDidTapPublisher.eraseToAnyPublisher()
         )
         return viewModel.transform(from: input)
+    }
+    
+    private func bindOutputToViewModel(_ output: FollowerViewModel.Output) {
+        output.followers
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] result in
+                switch result {
+                case .success(let followers):
+                    self?.loadFollowers(followers)
+                case .failure(let error):
+                    self?.makeAlert(
+                        title: "에러",
+                        message: error.localizedDescription
+                    )
+                }
+            })
+            .store(in: &self.cancellable)
+        
+        output.moreFollowers
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] result in
+                switch result {
+                case .success(let followers):
+                    self?.loadMoreFollowers(followers)
+                case .failure(let error):
+                    self?.makeAlert(
+                        title: "에러",
+                        message: error.localizedDescription
+                    )
+                }
+            })
+            .store(in: &self.cancellable)
+        
+        output.followMember
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] result in
+                switch result {
+                case .success(let memberId):
+                    self?.updateFollower(memberId: memberId)
+                case .failure(let error):
+                    self?.makeAlert(
+                        title: "에러",
+                        message: error.localizedDescription
+                    )
+                }
+            })
+            .store(in: &self.cancellable)
+        
+        output.removeMember
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] result in
+                switch result {
+                case .success(let memberId):
+                    self?.removeFollower(memberId: memberId)
+                case .failure(let error):
+                    self?.makeAlert(
+                        title: "에러",
+                        message: error.localizedDescription
+                    )
+                }
+            })
+            .store(in: &self.cancellable)
+    }
+    
+    private func bindCell(_ cell: UserInfoCollectionViewCell, with item: Member) {
+        cell.followButtonTapAction = { [weak self] _ in
+            self?.followButtonDidTapPublisher.send((item.id, item.isFollowing))
+        }
+    }
+    
+    // MARK: - func
+    
+    private func configureNavigation() {
+        self.title = "팔로워"
     }
 }
 
@@ -139,10 +158,13 @@ extension FollowerViewController {
         self.configureSnapshot()
     }
 
-    private func userInfoCollectionViewDataSource() -> UICollectionViewDiffableDataSource<Section, MemberByFollowItemDTO> {
-        let reviewCellRegistration = UICollectionView.CellRegistration<UserInfoCollectionViewCell, MemberByFollowItemDTO> {
+    private func userInfoCollectionViewDataSource() -> UICollectionViewDiffableDataSource<Section, Member> {
+        let reviewCellRegistration = UICollectionView.CellRegistration<UserInfoCollectionViewCell, Member> {
             [weak self] cell, indexPath, item in
-            cell.configureCell(item.toMember())
+            cell.configureCell(item)
+            cell.cellTapAction = { [weak self] _ in
+                self?.presentProfileViewController(memberId: item.id)
+            }
             self?.bindCell(cell, with: item)
         }
 
@@ -162,17 +184,17 @@ extension FollowerViewController {
 // MARK: - Snapshot
 extension FollowerViewController {
     private func configureSnapshot() {
-        self.snapshot = NSDiffableDataSourceSnapshot<Section, MemberByFollowItemDTO>()
+        self.snapshot = NSDiffableDataSourceSnapshot<Section, Member>()
         self.snapshot.appendSections([.main])
         self.dataSource.apply(self.snapshot, animatingDifferences: true)
     }
 
-    private func loadFollowers(_ items: [MemberByFollowItemDTO]) {
+    private func loadFollowers(_ items: [Member]) {
         self.snapshot.appendItems(items, toSection: .main)
         self.dataSource.applySnapshotUsingReloadData(self.snapshot)
     }
     
-    private func loadMoreFollowers(_ items: [MemberByFollowItemDTO]) {
+    private func loadMoreFollowers(_ items: [Member]) {
         self.snapshot.appendItems(items, toSection: .main)
         self.dataSource.applySnapshotUsingReloadData(self.snapshot)
     }
@@ -182,7 +204,7 @@ extension FollowerViewController {
         let items = previousData
             .map { customItem in
                 var updatedItem = customItem
-                if customItem.memberId == memberId {
+                if customItem.id == memberId {
                     updatedItem.isFollowing.toggle()
                 }
                 return updatedItem
@@ -192,13 +214,33 @@ extension FollowerViewController {
         self.dataSource.applySnapshotUsingReloadData(self.snapshot)
     }
     
-    private func deleteFollower(memberId: Int) {
+    private func removeFollower(memberId: Int) {
         for item in snapshot.itemIdentifiers {
-            if item.memberId == memberId {
+            if item.id == memberId {
                 self.snapshot.deleteItems([item])
                 self.dataSource.apply(self.snapshot)
                 return
             }
+        }
+    }
+}
+
+// MARK: - Helper
+extension FollowerViewController {
+    private func presentProfileViewController(memberId: Int) {
+        let repository = CreateReviewRepositoryImpl()
+        let usecase = CreateReviewUsecaseImpl(repository: repository)
+        let viewModel = CreateReviewViewModel(usecase: usecase)
+        let viewController = CreateReviewViewController(viewModel: viewModel)
+        let navigationController = UINavigationController(rootViewController: viewController)
+        navigationController.modalPresentationStyle = .fullScreen
+        self.present(navigationController, animated: true)
+        
+        
+        let profileViewController = ProfileViewController(memberId: memberId)
+        
+        DispatchQueue.main.async { [weak self] in
+            self?.navigationController?.pushViewController(profileViewController, animated: true)
         }
     }
 }

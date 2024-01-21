@@ -29,7 +29,7 @@ final class StoreDetailViewController: UIViewController, Navigationable, Optiona
     private var dataSource: UICollectionViewDiffableDataSource<Section, Review>!
     private var snapshot: NSDiffableDataSourceSnapshot<Section, Review>!
     
-    let removeReviewPublisher = PassthroughSubject<Int, Never>()
+    private let removeReviewPublisher = PassthroughSubject<Int, Never>()
 
     // MARK: - init
     
@@ -104,7 +104,7 @@ final class StoreDetailViewController: UIViewController, Navigationable, Optiona
             .sink(receiveValue: { [weak self] result in
                 switch result {
                 case .success(let reviews):
-                    self?.reloadReviews(reviews)
+                    self?.loadReviews(reviews)
                     self?.storeDetailView.refreshControl().endRefreshing()
                 case .failure(let error):
                     self?.makeAlert(
@@ -239,7 +239,7 @@ extension StoreDetailViewController {
         self.dataSource.apply(self.snapshot, animatingDifferences: true)
     }
 
-    private func reloadReviews(_ items: [Review]) {
+    private func loadReviews(_ items: [Review]) {
         let previousReviewsData = self.snapshot.itemIdentifiers(inSection: .main)
         self.snapshot.deleteItems(previousReviewsData)
         self.snapshot.appendItems(items, toSection: .main)

@@ -33,8 +33,11 @@ final class ProfileViewController: MapViewController {
     }
     private lazy var profileHeaderView = ProfileHeaderView().then {
         let followerAction = UIAction { [weak self] _ in
-            let viewModel = FollowerViewModel(memberId: self?.memberId ?? 0)
+            let repository = FollowRepositoryImpl()
+            let usecase = FollowUsecaseImpl(repository: repository)
+            let viewModel = FollowerViewModel(usecase: usecase, memberId: self?.memberId ?? 0)
             let viewController = FollowerViewController(viewModel: viewModel)
+            
             self?.navigationController?.pushViewController(viewController, animated: true)
         }
         let followingAction = UIAction { [weak self] _ in

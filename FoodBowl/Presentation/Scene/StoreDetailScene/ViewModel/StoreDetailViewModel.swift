@@ -12,12 +12,11 @@ final class StoreDetailViewModel: BaseViewModelType {
     
     // MARK: - property
     
-    private let storeId: Int
-    var isFriend: Bool
-    
     private let usecase: StoreDetailUsecase
     private var cancellable = Set<AnyCancellable>()
     
+    private let storeId: Int
+    var isFriend: Bool
     private let pageSize: Int = 20
     private var currentpageSize: Int = 20
     private var lastReviewId: Int?

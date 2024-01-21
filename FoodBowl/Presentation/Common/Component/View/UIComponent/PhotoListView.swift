@@ -85,7 +85,7 @@ extension PhotoListView: UICollectionViewDataSource, UICollectionViewDelegate {
 
         if indexPath.item < photos.count {
             cell.configureCell(photos[indexPath.item])
-            cell.cellAction = { _ in
+            cell.cellTapAction = { _ in
                 let imageViewController = ImageViewController()
                 imageViewController.imageScrollView.imageView.image = cell.imageView.image
                 imageViewController.modalPresentationStyle = .fullScreen

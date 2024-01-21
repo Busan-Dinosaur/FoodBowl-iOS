@@ -68,14 +68,6 @@ final class FollowingViewController: UIViewController, Navigationable {
     }
     
     private func bindCell(_ cell: UserInfoCollectionViewCell, with item: MemberByFollowItemDTO) {
-        cell.userButtonTapAction = { [weak self] _ in
-            let profileViewController = ProfileViewController(memberId: item.memberId)
-            
-            DispatchQueue.main.async { [weak self] in
-                self?.navigationController?.pushViewController(profileViewController, animated: true)
-            }
-        }
-        
         cell.followButtonTapAction = { [weak self] _ in
             guard let self = self else { return }
             
