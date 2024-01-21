@@ -184,6 +184,15 @@ final class UpdateProfileView: UIView, BaseViewType {
         }
         self.completeButton.addAction(completeAction, for: .touchUpInside)
     }
+    
+    private func getIsEnabled() -> Bool {
+        if let nickname = self.nicknameField.text, nickname.count != 0,
+           let introduction = self.introductionField.text, introduction.count != 0 {
+            return true
+        } else {
+            return false
+        }
+    }
 }
 
 extension UpdateProfileView: UITextFieldDelegate {
@@ -191,7 +200,7 @@ extension UpdateProfileView: UITextFieldDelegate {
         let currentText = textField.text ?? ""
         let newText = (currentText as NSString).replacingCharacters(in: range, with: string)
         
-        self.completeButton.isEnabled = self.nicknameField.text?.count != 0 && self.introductionField.text?.count != 0
+        self.completeButton.isEnabled = self.getIsEnabled()
         
         var maxLength: Int {
             switch textField {
@@ -225,6 +234,6 @@ extension UpdateProfileView {
         
         self.nicknameField.text = member.nickname
         self.introductionField.text = member.introduction
-        self.completeButton.isEnabled = self.nicknameField.text?.count != 0 && self.introductionField.text?.count != 0
+        self.completeButton.isEnabled = self.getIsEnabled()
     }
 }

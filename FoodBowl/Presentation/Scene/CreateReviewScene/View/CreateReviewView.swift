@@ -65,7 +65,7 @@ final class CreateReviewView: UIView, BaseViewType {
         $0.showsVerticalScrollIndicator = false
         $0.isUserInteractionEnabled = true
         $0.makeBorderLayer(color: .grey002)
-        $0.backgroundColor = .clear
+        $0.backgroundColor = .mainBackgroundColor
     }
     private let guidePhotoLabel = UILabel().then {
         $0.text = "사진"
@@ -237,7 +237,7 @@ final class CreateReviewView: UIView, BaseViewType {
             $0.top.equalTo(self.selectedStoreView.snp.bottom).offset(30)
         }
         
-        self.completeButton.isEnabled = !self.selectedStoreView.isHidden && self.commentTextView.text.count != 0
+        self.completeButton.isEnabled = !self.selectedStoreView.isHidden && self.commentTextView.text.count != 0 && self.commentTextView.text != self.textViewPlaceHolder
     }
 }
 
@@ -247,7 +247,7 @@ extension CreateReviewView: UITextViewDelegate {
         let newText = currentText.replacingCharacters(in: range, with: text)
         let numberOfLines = newText.components(separatedBy: "\n").count
         
-        self.completeButton.isEnabled = !self.selectedStoreView.isHidden && newText.count != 0
+        self.completeButton.isEnabled = !self.selectedStoreView.isHidden && newText.count != 0 && newText != self.textViewPlaceHolder
         
         if newText.count > 100 {
             self.makeAlertPublisher.send("100자 이하로 작성해주세요.")
@@ -263,7 +263,7 @@ extension CreateReviewView: UITextViewDelegate {
     }
     
     func textViewDidBeginEditing(_ textView: UITextView) {
-        if textView.text == textViewPlaceHolder {
+        if textView.text == self.textViewPlaceHolder {
             textView.text = nil
             textView.textColor = .mainTextColor
         }
@@ -271,7 +271,7 @@ extension CreateReviewView: UITextViewDelegate {
 
     func textViewDidEndEditing(_ textView: UITextView) {
         if textView.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-            textView.text = textViewPlaceHolder
+            textView.text = self.textViewPlaceHolder
             textView.textColor = .grey001
         }
     }

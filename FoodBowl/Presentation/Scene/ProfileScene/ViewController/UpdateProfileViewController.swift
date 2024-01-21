@@ -29,6 +29,7 @@ final class UpdateProfileViewController: UIViewController, Navigationable, Keybo
     init(viewModel: any BaseViewModelType) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
+        self.tabBarController?.tabBar.isHidden = true
     }
     
     @available(*, unavailable)
@@ -38,6 +39,7 @@ final class UpdateProfileViewController: UIViewController, Navigationable, Keybo
     
     deinit {
         print("\(#file) is dead")
+        self.tabBarController?.tabBar.isHidden = false
     }
     
     // MARK: - life cycle
@@ -52,16 +54,6 @@ final class UpdateProfileViewController: UIViewController, Navigationable, Keybo
         self.bindUI()
         self.setupNavigation()
         self.setupKeyboardGesture()
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        self.tabBarController?.tabBar.isHidden = true
-    }
-
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        self.tabBarController?.tabBar.isHidden = false
     }
     
     // MARK: - func - bind

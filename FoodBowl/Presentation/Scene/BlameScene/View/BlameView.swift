@@ -37,14 +37,15 @@ final class BlameView: UIView, BaseViewType {
         $0.font = UIFont.preferredFont(forTextStyle: .subheadline, weight: .light)
         $0.textAlignment = NSTextAlignment.left
         $0.dataDetectorTypes = UIDataDetectorTypes.all
+        $0.text = textViewPlaceHolder
         $0.textColor = .grey001
         $0.isEditable = true
         $0.delegate = self
         $0.isScrollEnabled = true
+        $0.showsVerticalScrollIndicator = false
         $0.isUserInteractionEnabled = true
         $0.makeBorderLayer(color: .grey002)
-        $0.backgroundColor = .clear
-        $0.text = textViewPlaceHolder
+        $0.backgroundColor = .mainBackgroundColor
     }
     private let completeButton = CompleteButton()
     
@@ -131,7 +132,7 @@ extension BlameView: UITextViewDelegate {
         let newText = currentText.replacingCharacters(in: range, with: text)
         let numberOfLines = newText.components(separatedBy: "\n").count
         
-        self.completeButton.isEnabled = newText.count != 0
+        self.completeButton.isEnabled = newText.count != 0 && newText != self.textViewPlaceHolder
         
         if newText.count > 100 {
             self.makeAlertPublisher.send("100자 이하로 작성해주세요.")
@@ -147,7 +148,7 @@ extension BlameView: UITextViewDelegate {
     }
     
     func textViewDidBeginEditing(_ textView: UITextView) {
-        if textView.text == textViewPlaceHolder {
+        if textView.text == self.textViewPlaceHolder {
             textView.text = nil
             textView.textColor = .mainTextColor
         }
@@ -155,7 +156,7 @@ extension BlameView: UITextViewDelegate {
 
     func textViewDidEndEditing(_ textView: UITextView) {
         if textView.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-            textView.text = textViewPlaceHolder
+            textView.text = self.textViewPlaceHolder
             textView.textColor = .grey001
         }
     }
