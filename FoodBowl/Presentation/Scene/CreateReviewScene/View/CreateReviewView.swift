@@ -144,7 +144,7 @@ final class CreateReviewView: UIView, BaseViewType {
             $0.leading.trailing.equalToSuperview()
         }
         
-        self.scrollView.addSubview(contentView)
+        self.scrollView.addSubview(self.contentView)
         
         self.contentView.snp.makeConstraints {
             $0.edges.equalToSuperview()
