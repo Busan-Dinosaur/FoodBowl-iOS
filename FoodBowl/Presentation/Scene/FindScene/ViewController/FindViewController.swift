@@ -128,7 +128,7 @@ final class FindViewController: UIViewController, Keyboardable {
                 case .success((let stores, let members)):
                     self?.stores = stores
                     self?.members = members
-                    self?.findView.findResultViewController.listTableView.reloadData()
+                    self?.findView.findResultViewController.findResultView.listTableView.reloadData()
                 case .failure(let error):
                     self?.makeAlert(
                         title: "에러",
@@ -166,8 +166,8 @@ final class FindViewController: UIViewController, Keyboardable {
     // MARK: - func
     
     private func configureDelegation() {
-        self.findView.findResultViewController.listTableView.delegate = self
-        self.findView.findResultViewController.listTableView.dataSource = self
+        self.findView.findResultViewController.findResultView.listTableView.delegate = self
+        self.findView.findResultViewController.findResultView.listTableView.dataSource = self
         self.findView.searchController.searchResultsUpdater = self
         self.findView.searchController.searchBar.delegate = self
     }
@@ -181,7 +181,7 @@ final class FindViewController: UIViewController, Keyboardable {
         if let index = self.members.firstIndex(where: { $0.id == memberId }) {
             self.members[index].isFollowing.toggle()
             let indexPath = IndexPath(row: index, section: 0)
-            self.findView.findResultViewController.listTableView.reloadRows(at: [indexPath], with: .fade)
+            self.findView.findResultViewController.findResultView.listTableView.reloadRows(at: [indexPath], with: .fade)
         }
     }
 }
@@ -253,7 +253,7 @@ extension FindViewController: UISearchResultsUpdating, UISearchBarDelegate {
         guard let text = searchController.searchBar.text?.lowercased(), text != "" else {
             self.stores = []
             self.members = []
-            self.findView.findResultViewController.listTableView.reloadData()
+            self.findView.findResultViewController.findResultView.listTableView.reloadData()
             return
         }
         self.searchStoresAndMembersPublisher.send(text)
@@ -262,7 +262,7 @@ extension FindViewController: UISearchResultsUpdating, UISearchBarDelegate {
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         self.stores = []
         self.members = []
-        self.findView.findResultViewController.listTableView.reloadData()
+        self.findView.findResultViewController.findResultView.listTableView.reloadData()
         self.findView.searchController.searchBar.showsScopeBar = false
     }
 
@@ -272,7 +272,7 @@ extension FindViewController: UISearchResultsUpdating, UISearchBarDelegate {
 
     func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
         self.scope = selectedScope
-        self.findView.findResultViewController.listTableView.reloadData()
+        self.findView.findResultViewController.findResultView.listTableView.reloadData()
     }
 }
 
