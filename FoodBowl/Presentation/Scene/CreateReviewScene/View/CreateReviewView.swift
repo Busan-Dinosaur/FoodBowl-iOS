@@ -224,10 +224,9 @@ final class CreateReviewView: UIView, BaseViewType {
     }
     
     func setStore(store: Store) {
-        let action = UIAction { _ in
+        self.selectedStoreView.mapButtonTapAction = { _ in
             self.showStorePublisher.send(store.url)
         }
-        self.selectedStoreView.mapButton.addAction(action, for: .touchUpInside)
         self.selectedStoreView.configureStore(store)
         self.selectedStoreView.isHidden = false
         self.searchBarButton.placeholderLabel.text = "가게 재검색"

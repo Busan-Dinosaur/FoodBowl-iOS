@@ -26,14 +26,18 @@ final class SelectedStoreView: UIView, BaseViewType {
         $0.font = UIFont.preferredFont(forTextStyle: .footnote, weight: .light)
         $0.textColor = .subTextColor
     }
-
-    let mapButton = MapButton()
+    private let mapButton = MapButton()
+    
+    // MARK: - property
+    
+    var mapButtonTapAction: ((SelectedStoreView) -> Void)?
 
     // MARK: - init
 
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.baseInit()
+        self.setupAction()
     }
 
     @available(*, unavailable)
@@ -75,6 +79,10 @@ final class SelectedStoreView: UIView, BaseViewType {
     func configureUI() {
         self.backgroundColor = .mainBackgroundColor
         self.makeBorderLayer(color: .grey002)
+    }
+    
+    func setupAction() {
+        self.mapButton.addAction(UIAction { _ in self.mapButtonTapAction?(self) }, for: .touchUpInside)
     }
 }
 
