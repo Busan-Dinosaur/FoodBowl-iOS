@@ -84,7 +84,13 @@ final class CreateReviewViewController: UIViewController, Keyboardable, PhotoPic
                 switch result {
                 case .success:
                     self?.delegate?.updateData()
-                    self?.dismiss(animated: true)
+                    self?.makeAlert(
+                        title: "알림",
+                        message: "후기가 등록되었어요.",
+                        okAction: { _ in
+                            self?.dismiss(animated: true)
+                        }
+                    )
                 case .failure(let error):
                     self?.makeAlert(
                         title: "에러",

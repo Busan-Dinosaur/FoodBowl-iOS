@@ -105,7 +105,13 @@ final class UpdateProfileViewController: UIViewController, Navigationable, Keybo
             .sink(receiveValue: { [weak self] result in
                 switch result {
                 case .success:
-                    self?.navigationController?.popViewController(animated: true)
+                    self?.makeAlert(
+                        title: "알림",
+                        message: "프로필이 변경되었어요.",
+                        okAction: { _ in
+                            self?.navigationController?.popViewController(animated: true)
+                        }
+                    )
                 case .failure(let error):
                     self?.makeAlert(
                         title: "에러",
