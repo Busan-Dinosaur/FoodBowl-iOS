@@ -12,8 +12,8 @@ final class CreateReviewViewModel: NSObject, BaseViewModelType {
     
     // MARK: - property
     
-    private var store: Place?
-    private var univ: Place?
+    private var store: Store?
+    private var univ: Store?
     
     private let usecase: CreateReviewUsecase
     private var cancellable: Set<AnyCancellable> = Set()
@@ -21,7 +21,7 @@ final class CreateReviewViewModel: NSObject, BaseViewModelType {
     private let isCompletedSubject: PassthroughSubject<Result<Void, Error>, Never> = PassthroughSubject()
     
     struct Input {
-        let setStore: AnyPublisher<(Place, Place?), Never>
+        let setStore: AnyPublisher<(Store, Store?), Never>
         let completeButtonDidTap: AnyPublisher<(String, [UIImage]), Never>
     }
     
@@ -63,11 +63,11 @@ final class CreateReviewViewModel: NSObject, BaseViewModelType {
                 var request: CreateReviewRequestDTO {
                     if let univ = self.univ {
                         CreateReviewRequestDTO(
-                            locationId: store.id,
+                            locationId: String(store.id),
                             storeName: store.name,
                             storeAddress: store.address,
-                            x: Double(store.x)!,
-                            y: Double(store.y)!,
+                            x: store.x,
+                            y: store.y,
                             storeUrl: store.url,
                             phone: store.phone,
                             category: store.category,
@@ -79,11 +79,11 @@ final class CreateReviewViewModel: NSObject, BaseViewModelType {
                         )
                     } else {
                         CreateReviewRequestDTO(
-                            locationId: store.id,
+                            locationId: String(store.id),
                             storeName: store.name,
                             storeAddress: store.address,
-                            x: Double(store.x)!,
-                            y: Double(store.y)!,
+                            x: store.x,
+                            y: store.y,
                             storeUrl: store.url,
                             phone: store.phone,
                             category: store.category,

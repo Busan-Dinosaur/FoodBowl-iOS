@@ -1,5 +1,5 @@
 //
-//  StoreSearchTableViewCell.swift
+//  StoreTableViewCell.swift
 //  FoodBowl
 //
 //  Created by Coby Kim on 2023/01/13.
@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 import Then
 
-final class StoreSearchTableViewCell: UITableViewCell, BaseViewType {
+final class StoreTableViewCell: UITableViewCell, BaseViewType {
     
     // MARK: - ui component
 
@@ -78,8 +78,8 @@ final class StoreSearchTableViewCell: UITableViewCell, BaseViewType {
 }
 
 // MARK: - Public - func
-extension StoreSearchTableViewCell {
-    func configureCell(_ store: Place) {
+extension StoreTableViewCell {
+    func configureCell(_ store: Store) {
         self.storeNameLabel.text = store.name
         self.storeCategoryLabel.text = store.category
         self.storeAddressLabel.text = store.address

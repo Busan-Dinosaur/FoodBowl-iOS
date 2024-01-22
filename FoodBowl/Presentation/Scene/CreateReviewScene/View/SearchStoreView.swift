@@ -25,7 +25,7 @@ final class SearchStoreView: UIView, BaseViewType {
         $0.titleLabel?.font = UIFont.preferredFont(forTextStyle: .headline, weight: .regular)
     }
     private let listTableView = UITableView().then {
-        $0.register(StoreSearchTableViewCell.self, forCellReuseIdentifier: StoreSearchTableViewCell.className)
+        $0.register(StoreTableViewCell.self, forCellReuseIdentifier: StoreTableViewCell.className)
         $0.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 20, right: 0)
         $0.backgroundColor = .clear
     }

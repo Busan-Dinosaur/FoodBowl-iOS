@@ -33,7 +33,6 @@ final class FindViewController: UIViewController, Keyboardable {
     private var stores: [Store] = []
     private var members: [Member] = []
     
-    private let selectStorePublisher = PassthroughSubject<Place, Never>()
     private let searchStoresAndMembersPublisher = PassthroughSubject<String, Never>()
     private let followButtonDidTapPublisher = PassthroughSubject<(Int, Bool), Never>()
     

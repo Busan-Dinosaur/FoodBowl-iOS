@@ -36,7 +36,7 @@ final class SearchUnivViewController: BaseViewController {
     }
 
     private lazy var univTableView = UITableView().then {
-        $0.register(StoreSearchTableViewCell.self, forCellReuseIdentifier: StoreSearchTableViewCell.className)
+        $0.register(StoreTableViewCell.self, forCellReuseIdentifier: StoreTableViewCell.className)
         $0.delegate = self
         $0.dataSource = self
         $0.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 20, right: 0)
@@ -84,11 +84,11 @@ extension SearchUnivViewController: UITableViewDataSource, UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView
-            .dequeueReusableCell(withIdentifier: StoreSearchTableViewCell.className, for: indexPath) as? StoreSearchTableViewCell
+            .dequeueReusableCell(withIdentifier: StoreTableViewCell.className, for: indexPath) as? StoreTableViewCell
         else { return UITableViewCell() }
 
         cell.selectionStyle = .none
-        cell.configureCell(filteredSchools[indexPath.item].toPlace())
+        cell.configureCell(filteredSchools[indexPath.item].toStore())
 
         return cell
     }

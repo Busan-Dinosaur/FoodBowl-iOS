@@ -37,17 +37,19 @@ struct PlaceItemDTO: Codable {
 }
 
 extension PlaceItemDTO {
-    func toPlace() -> Place {
-        Place(
-            id: self.id,
+    func toStore() -> Store {
+        Store(
+            id: Int(self.id) ?? 0,
+            category: self.getCategory(),
             name: self.placeName,
             address: self.roadAddressName,
             phone: self.phone,
-            url: self.placeURL,
+            isBookmark: false,
             distance: self.distance.prettyDistance,
-            x: self.longitude,
-            y: self.latitude,
-            category: self.getCategory()
+            url: self.placeURL,
+            x: Double(self.longitude) ?? 0.0,
+            y: Double(self.latitude) ?? 0.0,
+            reviewCount: ""
         )
     }
     

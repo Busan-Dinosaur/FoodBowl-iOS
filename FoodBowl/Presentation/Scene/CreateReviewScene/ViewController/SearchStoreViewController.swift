@@ -19,13 +19,13 @@ final class SearchStoreViewController: UIViewController, Keyboardable {
     
     // MARK: - property
     
-    private var stores: [Place] = []
+    private var stores: [Store] = []
     
     private let viewModel: any BaseViewModelType
     private var cancellable: Set<AnyCancellable> = Set()
     
     let searchStoresPublisher = PassthroughSubject<String, Never>()
-    let selectStorePublisher = PassthroughSubject<Place, Never>()
+    let selectStorePublisher = PassthroughSubject<Store, Never>()
     
     weak var delegate: SearchStoreViewControllerDelegate?
     
@@ -162,7 +162,7 @@ extension SearchStoreViewController: UITableViewDataSource, UITableViewDelegate 
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView
-            .dequeueReusableCell(withIdentifier: StoreSearchTableViewCell.className, for: indexPath) as? StoreSearchTableViewCell
+            .dequeueReusableCell(withIdentifier: StoreTableViewCell.className, for: indexPath) as? StoreTableViewCell
         else { return UITableViewCell() }
 
         cell.selectionStyle = .none
@@ -181,5 +181,5 @@ extension SearchStoreViewController: UITableViewDataSource, UITableViewDelegate 
 }
 
 protocol SearchStoreViewControllerDelegate: AnyObject {
-    func setStore(store: Place, univ: Place?)
+    func setStore(store: Store, univ: Store?)
 }

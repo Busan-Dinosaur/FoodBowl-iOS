@@ -25,17 +25,18 @@ struct SchoolItemDTO: Codable {
         return String(distance).prettyDistance
     }
     
-    func toPlace() -> Place {
-        Place(
-            id: String(self.id),
+    func toStore() -> Store {
+        Store(
+            id: self.id,
+            category: "",
             name: self.name,
             address: self.address,
-            phone: "",
-            url: "",
+            isBookmark: false,
             distance: self.distance,
-            x: String(self.x),
-            y: String(self.y),
-            category: ""
+            url: "",
+            x: 0.0,
+            y: 0.0,
+            reviewCount: ""
         )
     }
 }

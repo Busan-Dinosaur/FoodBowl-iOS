@@ -57,7 +57,7 @@ final class CreateReviewView: UIView, BaseViewType {
         $0.font = UIFont.preferredFont(forTextStyle: .subheadline, weight: .light)
         $0.textAlignment = NSTextAlignment.left
         $0.dataDetectorTypes = UIDataDetectorTypes.all
-        $0.text = textViewPlaceHolder
+        $0.text = textViewStoreHolder
         $0.textColor = .grey001
         $0.isEditable = true
         $0.delegate = self
@@ -89,7 +89,7 @@ final class CreateReviewView: UIView, BaseViewType {
     
     // MARK: - property
     
-    private let textViewPlaceHolder = "100자 이내"
+    private let textViewStoreHolder = "100자 이내"
     private var reviewImages = [UIImage]()
     
     var closeButtonDidTapPublisher: AnyPublisher<Void, Never> {
@@ -223,7 +223,7 @@ final class CreateReviewView: UIView, BaseViewType {
         self.reviewImages = images
     }
     
-    func setStore(store: Place) {
+    func setStore(store: Store) {
         let action = UIAction { _ in
             self.showStorePublisher.send(store.url)
         }
@@ -237,17 +237,17 @@ final class CreateReviewView: UIView, BaseViewType {
             $0.top.equalTo(self.selectedStoreView.snp.bottom).offset(30)
         }
         
-        self.completeButton.isEnabled = !self.selectedStoreView.isHidden && self.commentTextView.text.count != 0 && self.commentTextView.text != self.textViewPlaceHolder
+        self.completeButton.isEnabled = !self.selectedStoreView.isHidden && self.commentTextView.text.count != 0 && self.commentTextView.text != self.textViewStoreHolder
     }
 }
 
 extension CreateReviewView: UITextViewDelegate {
-    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, reStorementText text: String) -> Bool {
         let currentText = textView.text as NSString
         let newText = currentText.replacingCharacters(in: range, with: text)
         let numberOfLines = newText.components(separatedBy: "\n").count
         
-        self.completeButton.isEnabled = !self.selectedStoreView.isHidden && newText.count != 0 && newText != self.textViewPlaceHolder
+        self.completeButton.isEnabled = !self.selectedStoreView.isHidden && newText.count != 0 && newText != self.textViewStoreHolder
         
         if newText.count > 100 {
             self.makeAlertPublisher.send("100자 이하로 작성해주세요.")
@@ -263,7 +263,7 @@ extension CreateReviewView: UITextViewDelegate {
     }
     
     func textViewDidBeginEditing(_ textView: UITextView) {
-        if textView.text == self.textViewPlaceHolder {
+        if textView.text == self.textViewStoreHolder {
             textView.text = nil
             textView.textColor = .mainTextColor
         }
@@ -271,7 +271,7 @@ extension CreateReviewView: UITextViewDelegate {
 
     func textViewDidEndEditing(_ textView: UITextView) {
         if textView.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-            textView.text = self.textViewPlaceHolder
+            textView.text = self.textViewStoreHolder
             textView.textColor = .grey001
         }
     }

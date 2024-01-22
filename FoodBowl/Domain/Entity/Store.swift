@@ -13,6 +13,7 @@ struct Store: Codable {
     let category: String
     let name: String
     let address: String
+    let phone: String
     let isBookmark: Bool
     let distance: String
     let url: String
@@ -24,6 +25,7 @@ struct Store: Codable {
         category: String = "",
         name: String = "",
         address: String = "",
+        phone: String = "",
         isBookmark: Bool = false,
         distance: String = "",
         url: String = "",
@@ -35,6 +37,7 @@ struct Store: Codable {
         self.category = category
         self.name = name
         self.address = address
+        self.phone = phone
         self.isBookmark = isBookmark
         self.distance = distance
         self.url = url
