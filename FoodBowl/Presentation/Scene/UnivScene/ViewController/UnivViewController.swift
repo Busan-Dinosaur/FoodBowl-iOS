@@ -17,10 +17,14 @@ final class UnivViewController: MapViewController {
 
     private lazy var univTitleButton = UnivTitleButton().then {
         let action = UIAction { [weak self] _ in
-            let searchUnivViewController = SearchUnivViewController()
-            searchUnivViewController.delegate = self
-            let navigationController = UINavigationController(rootViewController: searchUnivViewController)
+            let repository = SearchUnivRepositoryImpl()
+            let usecase = SearchUnivUsecaseImpl(repository: repository)
+            let viewModel = SearchUnivViewModel(usecase: usecase)
+            let viewController = SearchUnivViewController(viewModel: viewModel)
+            viewController.delegate = self
+            let navigationController = UINavigationController(rootViewController: viewController)
             navigationController.modalPresentationStyle = .fullScreen
+            
             DispatchQueue.main.async {
                 self?.present(navigationController, animated: true)
             }
@@ -74,7 +78,7 @@ final class UnivViewController: MapViewController {
 }
 
 extension UnivViewController: SearchUnivViewControllerDelegate {
-    func setUniv(univ: SchoolItemDTO) {
+    func setUniv(univ: Store) {
         UserDefaultHandler.setSchoolId(schoolId: univ.id)
         UserDefaultHandler.setSchoolName(schoolName: univ.name)
         UserDefaultHandler.setSchoolX(schoolX: univ.x)

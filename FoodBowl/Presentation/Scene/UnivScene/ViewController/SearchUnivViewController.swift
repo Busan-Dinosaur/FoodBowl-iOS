@@ -5,81 +5,146 @@
 //  Created by COBY_PRO on 2023/09/18.
 //
 
+import Combine
 import UIKit
 
 import SnapKit
 import Then
 
-final class SearchUnivViewController: BaseViewController {
-    weak var delegate: SearchUnivViewControllerDelegate?
-
-    private var viewModel = MapViewModel()
-
-    private var schools = [SchoolItemDTO]()
-    private var filteredSchools = [SchoolItemDTO]()
+final class SearchUnivViewController: UIViewController, Keyboardable {
+    
+    // MARK: - ui component
+    
+    private let searchUnivView: SearchUnivView = SearchUnivView()
 
     // MARK: - property
-    private lazy var searchBar = UISearchBar().then {
-        $0.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width - 80, height: 0)
-        $0.placeholder = "검색"
-        $0.delegate = self
-    }
+    
+    private var univs = [Store]()
+    private var filteredUnivs = [Store]()
+    
+    private let viewModel: any BaseViewModelType
+    private var cancellable: Set<AnyCancellable> = Set()
+    
+    weak var delegate: SearchUnivViewControllerDelegate?
 
-    private lazy var closeButton = UIButton().then {
-        $0.setTitle("닫기", for: .normal)
-        $0.setTitleColor(.mainPink, for: .normal)
-        $0.titleLabel?.font = UIFont.preferredFont(forTextStyle: .headline, weight: .regular)
-        let action = UIAction { [weak self] _ in
-            self?.dismiss(animated: true)
-        }
-        $0.addAction(action, for: .touchUpInside)
+    // MARK: - init
+    
+    init(viewModel: any BaseViewModelType) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
     }
-
-    private lazy var univTableView = UITableView().then {
-        $0.register(StoreTableViewCell.self, forCellReuseIdentifier: StoreTableViewCell.className)
-        $0.delegate = self
-        $0.dataSource = self
-        $0.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 20, right: 0)
-        $0.backgroundColor = .clear
+    
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    deinit {
+        print("\(#file) is dead")
+        self.view.endEditing(true)
     }
 
     // MARK: - life cycle
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        setupSchools()
+    
+    override func loadView() {
+        self.view = self.searchUnivView
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.configureDelegation()
+        self.bindViewModel()
+        self.bindUI()
+        self.setupKeyboardGesture()
+    }
+    
+    // MARK: - func - bind
+    
+    private func bindViewModel() {
+        let output = self.transformedOutput()
+        self.configureNavigation()
+        self.bindOutputToViewModel(output)
     }
 
-    override func setupLayout() {
-        view.addSubviews(univTableView)
+    private func transformedOutput() -> SearchUnivViewModel.Output? {
+        guard let viewModel = self.viewModel as? SearchUnivViewModel else { return nil }
+        let input = SearchUnivViewModel.Input(
+            viewDidLoad: self.viewDidLoadPublisher
+        )
+        return viewModel.transform(from: input)
+    }
+    
+    private func bindOutputToViewModel(_ output: SearchUnivViewModel.Output?) {
+        guard let output else { return }
 
-        univTableView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
+        output.univs
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] result in
+                switch result {
+                case .success(let univs):
+                    self?.univs = univs
+                    self?.filteredUnivs = univs
+                    self?.searchUnivView.tableView().reloadData()
+                case .failure(let error):
+                    self?.makeAlert(
+                        title: "에러",
+                        message: error.localizedDescription
+                    )
+                }
+            })
+            .store(in: &self.cancellable)
+    }
+    
+    private func bindUI() {
+        self.searchUnivView.closeButtonDidTapPublisher
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] _ in
+                self?.dismiss(animated: true)
+            })
+            .store(in: &self.cancellable)
+    }
+    
+    // MARK: - func
+    
+    private func configureDelegation() {
+        self.searchUnivView.searchBar.delegate = self
+        self.searchUnivView.listTableView.delegate = self
+        self.searchUnivView.listTableView.dataSource = self
+    }
+    
+    private func configureNavigation() {
+        guard let navigationController = self.navigationController else { return }
+        self.searchUnivView.configureNavigationBarItem(navigationController)
+    }
+    
+    private func setUniv(univ: Store) {
+        self.delegate?.setUniv(univ: univ)
+        self.dismiss(animated: true)
+    }
+}
+
+extension SearchUnivViewController: UISearchBarDelegate {
+    private func dissmissKeyboard() {
+        self.searchUnivView.searchBar.resignFirstResponder()
+    }
+
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        self.dissmissKeyboard()
+    }
+
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchText == "" {
+            self.filteredUnivs = univs
+        } else {
+            self.filteredUnivs = univs.filter { $0.name.contains(searchText) }
         }
-    }
-
-    override func setupNavigationBar() {
-        let closeButton = makeBarButtonItem(with: closeButton)
-        navigationItem.rightBarButtonItem = closeButton
-        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: searchBar)
-    }
-
-    private func setupSchools() {
-        Task {
-            await schools = viewModel.getSchools()
-            filteredSchools = schools
-            univTableView.reloadData()
-        }
-    }
-
-    private func setUniv(univ: SchoolItemDTO) {
-        delegate?.setUniv(univ: univ)
-        dismiss(animated: true)
+        self.searchUnivView.listTableView.reloadData()
     }
 }
 
 extension SearchUnivViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
-        return filteredSchools.count
+        return self.filteredUnivs.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -88,7 +153,7 @@ extension SearchUnivViewController: UITableViewDataSource, UITableViewDelegate {
         else { return UITableViewCell() }
 
         cell.selectionStyle = .none
-        cell.configureCell(filteredSchools[indexPath.item].toStore())
+        cell.configureCell(filteredUnivs[indexPath.item])
 
         return cell
     }
@@ -98,29 +163,10 @@ extension SearchUnivViewController: UITableViewDataSource, UITableViewDelegate {
     }
 
     func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
-        setUniv(univ: filteredSchools[indexPath.item])
-    }
-}
-
-extension SearchUnivViewController: UISearchBarDelegate {
-    private func dissmissKeyboard() {
-        searchBar.resignFirstResponder()
-    }
-
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        dissmissKeyboard()
-    }
-
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        if searchText == "" {
-            filteredSchools = schools
-        } else {
-            filteredSchools = schools.filter { $0.name.contains(searchText) }
-        }
-        univTableView.reloadData()
+        self.setUniv(univ: filteredUnivs[indexPath.item])
     }
 }
 
 protocol SearchUnivViewControllerDelegate: AnyObject {
-    func setUniv(univ: SchoolItemDTO)
+    func setUniv(univ: Store)
 }

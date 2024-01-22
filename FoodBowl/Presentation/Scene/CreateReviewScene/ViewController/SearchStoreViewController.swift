@@ -142,16 +142,16 @@ extension SearchStoreViewController: UISearchBarDelegate {
     }
 
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        dissmissKeyboard()
+        self.dissmissKeyboard()
     }
 
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        guard let text = searchBar.text, text != "" else {
+        if searchText == "" {
             self.stores = []
             self.searchStoreView.tableView().reloadData()
-            return
+        } else {
+            self.searchStoresPublisher.send(searchText)
         }
-        self.searchStoresPublisher.send(text)
     }
 }
 
