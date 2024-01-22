@@ -105,7 +105,15 @@ final class CreateReviewViewController: UIViewController, Keyboardable, PhotoPic
         self.createReviewView.closeButtonDidTapPublisher
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] _ in
-                self?.dismiss(animated: true)
+                self?.makeRequestAlert(
+                    title: "알림",
+                    message: "후기를 작성하지 않고 나가시나요?",
+                    okTitle: "네",
+                    cancelTitle: "아니요",
+                    okAction: { _ in
+                        self?.dismiss(animated: true)
+                    }
+                )
             })
             .store(in: &self.cancellable)
         

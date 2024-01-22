@@ -46,7 +46,7 @@ final class FollowInfoButton: UIButton {
 
         numberLabel.snp.makeConstraints {
             $0.top.bottom.trailing.equalToSuperview()
-            $0.leading.equalTo(infoLabel.snp.trailing).offset(8)
+            $0.leading.equalTo(infoLabel.snp.trailing).offset(4)
             $0.trailing.equalToSuperview()
         }
     }
