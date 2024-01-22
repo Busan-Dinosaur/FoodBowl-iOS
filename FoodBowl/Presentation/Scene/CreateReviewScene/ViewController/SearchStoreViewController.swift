@@ -43,7 +43,6 @@ final class SearchStoreViewController: UIViewController, Keyboardable {
     
     deinit {
         print("\(#file) is dead")
-        self.view.endEditing(true)
     }
     
     // MARK: - life cycle
@@ -137,14 +136,6 @@ final class SearchStoreViewController: UIViewController, Keyboardable {
 }
 
 extension SearchStoreViewController: UISearchBarDelegate {
-    private func dissmissKeyboard() {
-        self.searchStoreView.searchBar.resignFirstResponder()
-    }
-
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        self.dissmissKeyboard()
-    }
-
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchText == "" {
             self.stores = []

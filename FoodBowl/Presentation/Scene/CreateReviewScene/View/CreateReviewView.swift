@@ -228,8 +228,7 @@ final class CreateReviewView: UIView, BaseViewType {
             self.showStorePublisher.send(store.url)
         }
         self.selectedStoreView.mapButton.addAction(action, for: .touchUpInside)
-        self.selectedStoreView.storeNameLabel.text = store.name
-        self.selectedStoreView.storeAdressLabel.text = store.address
+        self.selectedStoreView.configureStore(store)
         self.selectedStoreView.isHidden = false
         self.searchBarButton.placeholderLabel.text = "가게 재검색"
         
@@ -242,7 +241,7 @@ final class CreateReviewView: UIView, BaseViewType {
 }
 
 extension CreateReviewView: UITextViewDelegate {
-    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, reStorementText text: String) -> Bool {
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         let currentText = textView.text as NSString
         let newText = currentText.replacingCharacters(in: range, with: text)
         let numberOfLines = newText.components(separatedBy: "\n").count

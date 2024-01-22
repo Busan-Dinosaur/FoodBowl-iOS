@@ -41,7 +41,6 @@ final class SearchUnivViewController: UIViewController, Keyboardable {
     
     deinit {
         print("\(#file) is dead")
-        self.view.endEditing(true)
     }
 
     // MARK: - life cycle

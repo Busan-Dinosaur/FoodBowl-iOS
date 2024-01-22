@@ -10,16 +10,20 @@ import UIKit
 import SnapKit
 import Then
 
-final class SelectedStoreView: UIView {
-    // MARK: - property
+final class SelectedStoreView: UIView, BaseViewType {
+    
+    // MARK: - ui component
 
-    let storeNameLabel = UILabel().then {
+    private let storeNameLabel = UILabel().then {
         $0.font = UIFont.preferredFont(forTextStyle: .subheadline, weight: .medium)
         $0.textColor = .mainTextColor
     }
-
-    let storeAdressLabel = UILabel().then {
-        $0.font = UIFont.preferredFont(forTextStyle: .caption1, weight: .light)
+    private let storeCategoryLabel = UILabel().then {
+        $0.font = UIFont.preferredFont(forTextStyle: .footnote, weight: .light)
+        $0.textColor = .mainTextColor
+    }
+    private let storeAddressLabel = UILabel().then {
+        $0.font = UIFont.preferredFont(forTextStyle: .footnote, weight: .light)
         $0.textColor = .subTextColor
     }
 
@@ -29,54 +33,55 @@ final class SelectedStoreView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setupLayout()
-        configureUI()
+        self.baseInit()
     }
 
     @available(*, unavailable)
     required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    // MARK: - base func
 
-    private func setupLayout() {
-        addSubviews(storeNameLabel, storeAdressLabel, mapButton)
+    func setupLayout() {
+        self.addSubviews(
+            self.storeNameLabel,
+            self.storeCategoryLabel,
+            self.storeAddressLabel,
+            self.mapButton
+        )
 
-        storeNameLabel.snp.makeConstraints {
+        self.storeNameLabel.snp.makeConstraints {
             $0.leading.equalToSuperview().inset(14)
             $0.top.equalToSuperview().inset(12)
         }
+        
+        self.storeCategoryLabel.snp.makeConstraints {
+            $0.leading.equalTo(self.storeNameLabel.snp.trailing).offset(8)
+            $0.centerY.equalTo(self.storeNameLabel)
+        }
 
-        storeAdressLabel.snp.makeConstraints {
+        self.storeAddressLabel.snp.makeConstraints {
             $0.leading.equalToSuperview().inset(14)
             $0.bottom.equalToSuperview().inset(12)
         }
 
-        mapButton.snp.makeConstraints {
+        self.mapButton.snp.makeConstraints {
             $0.trailing.equalToSuperview().inset(14)
             $0.centerY.equalToSuperview()
         }
     }
 
-    private func configureUI() {
-        backgroundColor = .clear
-        makeBorderLayer(color: .grey002)
+    func configureUI() {
+        self.backgroundColor = .mainBackgroundColor
+        self.makeBorderLayer(color: .grey002)
     }
 }
 
 extension SelectedStoreView {
-    func configureStore(_ store: PlaceItemDTO) {
-        let action = UIAction { _ in
-            let showWebViewController = ShowWebViewController(url: store.placeURL)
-            let navigationController = UINavigationController(rootViewController: showWebViewController)
-            
-            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now()) {
-                guard let rootVC = (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.windows.first?.rootViewController
-                else { return }
-                rootVC.present(navigationController, animated: true)
-            }
-        }
-        self.mapButton.addAction(action, for: .touchUpInside)
-        self.storeNameLabel.text = store.placeName
-        self.storeAdressLabel.text = store.addressName
+    func configureStore(_ store: Store) {
+        self.storeNameLabel.text = store.name
+        self.storeCategoryLabel.text = store.category
+        self.storeAddressLabel.text = "\(store.address), \(store.distance)"
     }
 }
