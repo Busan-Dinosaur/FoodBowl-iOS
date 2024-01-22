@@ -48,8 +48,9 @@ final class UpdateProfileView: UIView, BaseViewType {
         $0.clearButtonMode = .always
         $0.font = UIFont.preferredFont(forTextStyle: .subheadline, weight: .regular)
         $0.textColor = .mainTextColor
-        $0.delegate = self
         $0.makeBorderLayer(color: .grey002)
+        $0.delegate = self
+        $0.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
     }
     private let introductionLabel = UILabel().then {
         $0.text = "한줄 소개"
@@ -69,8 +70,9 @@ final class UpdateProfileView: UIView, BaseViewType {
         $0.clearButtonMode = .always
         $0.font = UIFont.preferredFont(forTextStyle: .subheadline, weight: .regular)
         $0.textColor = .mainTextColor
-        $0.delegate = self
         $0.makeBorderLayer(color: .grey002)
+        $0.delegate = self
+        $0.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
     }
     private let completeButton = CompleteButton()
     
@@ -185,22 +187,17 @@ final class UpdateProfileView: UIView, BaseViewType {
         self.completeButton.addAction(completeAction, for: .touchUpInside)
     }
     
-    private func getIsEnabled() -> Bool {
-        if let nickname = self.nicknameField.text, nickname.count != 0,
-           let introduction = self.introductionField.text, introduction.count != 0 {
-            return true
-        } else {
-            return false
-        }
+    @objc
+    private func textFieldDidChange(_ textField: UITextField) {
+        self.completeButton.isEnabled = !(self.nicknameField.text?.isEmpty ?? true) && !(self.introductionField.text?.isEmpty ?? true)
     }
 }
 
 extension UpdateProfileView: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         let currentText = textField.text ?? ""
-        let newText = (currentText as NSString).replacingCharacters(in: range, with: string)
-        
-        self.completeButton.isEnabled = self.getIsEnabled()
+        guard let stringRange = Range(range, in: currentText) else { return false }
+        let updatedText = currentText.replacingCharacters(in: stringRange, with: string)
         
         var maxLength: Int {
             switch textField {
@@ -211,7 +208,7 @@ extension UpdateProfileView: UITextFieldDelegate {
             }
         }
         
-        if newText.count > maxLength {
+        if updatedText.count > maxLength {
             self.makeAlertPublisher.send("\(maxLength)자 이하로 작성해주세요.")
             return false
         }
@@ -234,6 +231,6 @@ extension UpdateProfileView {
         
         self.nicknameField.text = member.nickname
         self.introductionField.text = member.introduction
-        self.completeButton.isEnabled = self.getIsEnabled()
+        self.completeButton.isEnabled = member.nickname.count != 0 && member.introduction.count != 0
     }
 }
