@@ -1,5 +1,5 @@
 //
-//  UnivUsecase.swift
+//  FriendUsecase.swift
 //  FoodBowl
 //
 //  Created by Coby on 1/22/24.
@@ -7,41 +7,61 @@
 
 import Foundation
 
-protocol UnivUsecase {
-    func getReviewsBySchool(request: GetReviewsBySchoolRequestDTO) async throws -> Reviews
-    func getStoresBySchool(request: GetStoresBySchoolRequestDTO) async throws -> [Store]
+protocol FriendUsecase {
+    func getReviewsByFollowing(request: GetReviewsRequestDTO) async throws -> Reviews
+    func getReviewsByBookmark(request: GetReviewsRequestDTO) async throws -> Reviews
+    func getStoresByFollowing(request: CustomLocationRequestDTO) async throws -> [Store]
+    func getStoresByBookmark(request: CustomLocationRequestDTO) async throws -> [Store]
     func createBookmark(storeId: Int) async throws
     func removeBookmark(storeId: Int) async throws
     func followMember(memberId: Int) async throws
     func unfollowMember(memberId: Int) async throws
 }
 
-final class UnivUsecaseImpl: UnivUsecase {
+final class FriendUsecaseImpl: FriendUsecase {
     
     // MARK: - property
     
-    private let repository: UnivRepository
+    private let repository: FriendRepository
     
     // MARK: - init
     
-    init(repository: UnivRepository) {
+    init(repository: FriendRepository) {
         self.repository = repository
     }
     
     // MARK: - Public - func
     
-    func getReviewsBySchool(request: GetReviewsBySchoolRequestDTO) async throws -> Reviews {
+    func getReviewsByFollowing(request: GetReviewsRequestDTO) async throws -> Reviews {
         do {
-            let reviewDTO = try await self.repository.getReviewsBySchool(request: request)
+            let reviewDTO = try await self.repository.getReviewsByFollowing(request: request)
             return reviewDTO.toReviews()
         } catch(let error) {
             throw error
         }
     }
     
-    func getStoresBySchool(request: GetStoresBySchoolRequestDTO) async throws -> [Store] {
+    func getReviewsByBookmark(request: GetReviewsRequestDTO) async throws -> Reviews {
         do {
-            let storeDTO = try await self.repository.getStoresBySchool(request: request)
+            let reviewDTO = try await self.repository.getReviewsByBookmark(request: request)
+            return reviewDTO.toReviews()
+        } catch(let error) {
+            throw error
+        }
+    }
+    
+    func getStoresByFollowing(request: CustomLocationRequestDTO) async throws -> [Store] {
+        do {
+            let storeDTO = try await self.repository.getStoresByFollowing(request: request)
+            return storeDTO.stores.map { $0.toStore() }
+        } catch(let error) {
+            throw error
+        }
+    }
+    
+    func getStoresByBookmark(request: CustomLocationRequestDTO) async throws -> [Store] {
+        do {
+            let storeDTO = try await self.repository.getStoresByBookmark(request: request)
             return storeDTO.stores.map { $0.toStore() }
         } catch(let error) {
             throw error

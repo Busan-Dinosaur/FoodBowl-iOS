@@ -1,5 +1,5 @@
 //
-//  UnivRepositoryImpl.swift
+//  ProfileRepositoryImpl.swift
 //  FoodBowl
 //
 //  Created by Coby on 1/22/24.
@@ -9,18 +9,27 @@ import Foundation
 
 import Moya
 
-final class UnivRepositoryImpl: UnivRepository {
+final class ProfileRepositoryImpl: ProfileRepository {
     
     private let provider = MoyaProvider<ServiceAPI>()
     
-    func getReviewsBySchool(request: GetReviewsBySchoolRequestDTO) async throws -> ReviewDTO {
-        let response = await provider.request(.getReviewsBySchool(request: request))
+    func getMemberProfile(id: Int) async throws -> MemberProfileDTO {
+        let response = await provider.request(.getMemberProfile(id: id))
         return try response.decode()
     }
     
-    func getStoresBySchool(request: GetStoresBySchoolRequestDTO) async throws -> StoreDTO {
-        let response = await provider.request(.getStoresBySchool(request: request))
+    func getReviewsByMember(request: GetReviewsByMemberRequestDTO) async throws -> ReviewDTO {
+        let response = await provider.request(.getReviewsByMember(request: request))
         return try response.decode()
+    }
+    
+    func getStoresByMember(request: GetStoresByMemberRequestDTO) async throws -> StoreDTO {
+        let response = await provider.request(.getStoresByMember(request: request))
+        return try response.decode()
+    }
+
+    func removeReview(id: Int) async throws {
+        let _ = await provider.request(.removeReview(id: id))
     }
     
     func createBookmark(storeId: Int) async throws {

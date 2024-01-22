@@ -1,5 +1,5 @@
 //
-//  UnivUsecase.swift
+//  ProfileUsecase.swift
 //  FoodBowl
 //
 //  Created by Coby on 1/22/24.
@@ -7,42 +7,61 @@
 
 import Foundation
 
-protocol UnivUsecase {
-    func getReviewsBySchool(request: GetReviewsBySchoolRequestDTO) async throws -> Reviews
-    func getStoresBySchool(request: GetStoresBySchoolRequestDTO) async throws -> [Store]
+protocol ProfileUsecase {
+    func getMemberProfile(id: Int) async throws -> Member
+    func getReviewsByMember(request: GetReviewsByMemberRequestDTO) async throws -> Reviews
+    func getStoresByMember(request: GetStoresByMemberRequestDTO) async throws -> [Store]
+    func removeReview(id: Int) async throws
     func createBookmark(storeId: Int) async throws
     func removeBookmark(storeId: Int) async throws
     func followMember(memberId: Int) async throws
     func unfollowMember(memberId: Int) async throws
 }
 
-final class UnivUsecaseImpl: UnivUsecase {
+final class ProfileUsecaseImpl: ProfileUsecase {
     
     // MARK: - property
     
-    private let repository: UnivRepository
+    private let repository: ProfileRepository
     
     // MARK: - init
     
-    init(repository: UnivRepository) {
+    init(repository: ProfileRepository) {
         self.repository = repository
     }
     
     // MARK: - Public - func
     
-    func getReviewsBySchool(request: GetReviewsBySchoolRequestDTO) async throws -> Reviews {
+    func getMemberProfile(id: Int) async throws -> Member {
         do {
-            let reviewDTO = try await self.repository.getReviewsBySchool(request: request)
+            let MemberProfileDTO = try await self.repository.getMemberProfile(id: id)
+            return MemberProfileDTO.toMember()
+        } catch(let error) {
+            throw error
+        }
+    }
+    
+    func getReviewsByMember(request: GetReviewsByMemberRequestDTO) async throws -> Reviews {
+        do {
+            let reviewDTO = try await self.repository.getReviewsByMember(request: request)
             return reviewDTO.toReviews()
         } catch(let error) {
             throw error
         }
     }
     
-    func getStoresBySchool(request: GetStoresBySchoolRequestDTO) async throws -> [Store] {
+    func getStoresByMember(request: GetStoresByMemberRequestDTO) async throws -> [Store] {
         do {
-            let storeDTO = try await self.repository.getStoresBySchool(request: request)
+            let storeDTO = try await self.repository.getStoresByMember(request: request)
             return storeDTO.stores.map { $0.toStore() }
+        } catch(let error) {
+            throw error
+        }
+    }
+    
+    func removeReview(id: Int) async throws {
+        do {
+            try await self.repository.removeReview(id: id)
         } catch(let error) {
             throw error
         }

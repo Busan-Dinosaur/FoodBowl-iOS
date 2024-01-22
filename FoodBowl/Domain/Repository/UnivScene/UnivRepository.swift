@@ -10,11 +10,8 @@ import Foundation
 protocol UnivRepository {
     func getReviewsBySchool(request: GetReviewsBySchoolRequestDTO) async throws -> ReviewDTO
     func getStoresBySchool(request: GetStoresBySchoolRequestDTO) async throws -> StoreDTO
-    
-    func removeReview(id: Int) async throws
     func createBookmark(storeId: Int) async throws
     func removeBookmark(storeId: Int) async throws
-    
     func followMember(memberId: Int) async throws
     func unfollowMember(memberId: Int) async throws
 }
