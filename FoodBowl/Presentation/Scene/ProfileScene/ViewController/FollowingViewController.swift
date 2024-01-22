@@ -151,7 +151,6 @@ extension FollowingViewController {
         let reviewCellRegistration = UICollectionView.CellRegistration<UserInfoCollectionViewCell, Member> {
             [weak self] cell, indexPath, item in
             guard let self = self else { return }
-            guard let viewModel = self.viewModel as? FollowingViewModel else { return }
             cell.configureCell(item)
             cell.cellTapAction = { _ in
                 self.presentProfileViewController(memberId: item.id)

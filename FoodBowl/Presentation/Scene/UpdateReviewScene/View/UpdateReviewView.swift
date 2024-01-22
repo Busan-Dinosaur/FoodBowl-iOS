@@ -1,8 +1,8 @@
 //
-//  CreateReviewView.swift
+//  UpdateReviewView.swift
 //  FoodBowl
 //
-//  Created by Coby on 1/17/24.
+//  Updated by Coby on 1/23/24.
 //
 
 import Combine
@@ -11,7 +11,7 @@ import UIKit
 import SnapKit
 import Then
 
-final class CreateReviewView: UIView, BaseViewType {
+final class UpdateReviewView: UIView, BaseViewType {
     
     private enum Size {
         static let cellWidth: CGFloat = 100
@@ -33,7 +33,7 @@ final class CreateReviewView: UIView, BaseViewType {
     private let contentView = UIView()
     private let newFeedGuideLabel = PaddingLabel().then {
         $0.font = .font(.regular, ofSize: 22)
-        $0.text = "후기 작성"
+        $0.text = "후기 수정"
         $0.textColor = .mainTextColor
         $0.padding = UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 0)
         $0.frame = CGRect(x: 0, y: 0, width: 150, height: 0)
@@ -43,10 +43,7 @@ final class CreateReviewView: UIView, BaseViewType {
         $0.setTitleColor(.mainPink, for: .normal)
         $0.titleLabel?.font = UIFont.preferredFont(forTextStyle: .headline, weight: .regular)
     }
-    private let searchBarButton = SearchBarButton()
-    private lazy var selectedStoreView = SelectedStoreView().then {
-        $0.isHidden = true
-    }
+    private let selectedStoreView = SelectedStoreView()
     private let guideCommentLabel = UILabel().then {
         $0.text = "한줄평"
         $0.font = .font(.regular, ofSize: 17)
@@ -80,7 +77,6 @@ final class CreateReviewView: UIView, BaseViewType {
     }
     private lazy var listCollectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewFlowLayout).then {
         $0.showsVerticalScrollIndicator = false
-        $0.register(PhotoPlusCollectionViewCell.self, forCellWithReuseIdentifier: PhotoPlusCollectionViewCell.className)
         $0.register(PhotoCollectionViewCell.self, forCellWithReuseIdentifier: PhotoCollectionViewCell.className)
         $0.backgroundColor = .clear
         $0.showsHorizontalScrollIndicator = false
@@ -94,9 +90,6 @@ final class CreateReviewView: UIView, BaseViewType {
     
     var closeButtonDidTapPublisher: AnyPublisher<Void, Never> {
         return self.closeButton.buttonTapPublisher
-    }
-    var searchBarButtonDidTapPublisher: AnyPublisher<Void, Never> {
-        return self.searchBarButton.buttonTapPublisher
     }
     let makeAlertPublisher = PassthroughSubject<String, Never>()
     let showStorePublisher = PassthroughSubject<String, Never>()
@@ -152,7 +145,6 @@ final class CreateReviewView: UIView, BaseViewType {
         }
         
         self.contentView.addSubviews(
-            self.searchBarButton,
             self.selectedStoreView,
             self.guideCommentLabel,
             self.commentTextView,
@@ -160,20 +152,14 @@ final class CreateReviewView: UIView, BaseViewType {
             self.listCollectionView
         )
 
-        self.searchBarButton.snp.makeConstraints {
-            $0.top.equalToSuperview()
-            $0.leading.trailing.equalToSuperview().inset(SizeLiteral.horizantalPadding)
-            $0.height.equalTo(40)
-        }
-
         self.selectedStoreView.snp.makeConstraints {
-            $0.top.equalTo(self.searchBarButton.snp.bottom).offset(10)
+            $0.top.equalToSuperview()
             $0.leading.trailing.equalToSuperview().inset(SizeLiteral.horizantalPadding)
             $0.height.equalTo(60)
         }
 
         self.guideCommentLabel.snp.makeConstraints {
-            $0.top.equalTo(self.selectedStoreView.snp.bottom).offset(-40)
+            $0.top.equalTo(self.selectedStoreView.snp.bottom).offset(30)
             $0.leading.equalToSuperview().inset(SizeLiteral.horizantalPadding)
         }
 
@@ -218,28 +204,9 @@ final class CreateReviewView: UIView, BaseViewType {
         }
         self.completeButton.addAction(completeAction, for: .touchUpInside)
     }
-    
-    func setImages(images: [UIImage]) {
-        self.reviewImages = images
-    }
-    
-    func setStore(store: Store) {
-        self.selectedStoreView.mapButtonTapAction = { _ in
-            self.showStorePublisher.send(store.url)
-        }
-        self.selectedStoreView.configureStore(store)
-        self.selectedStoreView.isHidden = false
-        self.searchBarButton.placeholderLabel.text = "가게 재검색"
-        
-        self.guideCommentLabel.snp.updateConstraints {
-            $0.top.equalTo(self.selectedStoreView.snp.bottom).offset(30)
-        }
-        
-        self.completeButton.isEnabled = !self.selectedStoreView.isHidden && self.commentTextView.text.count != 0 && self.commentTextView.text != self.textViewStoreHolder
-    }
 }
 
-extension CreateReviewView: UITextViewDelegate {
+extension UpdateReviewView: UITextViewDelegate {
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         let currentText = textView.text as NSString
         let newText = currentText.replacingCharacters(in: range, with: text)

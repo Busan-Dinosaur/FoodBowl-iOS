@@ -76,14 +76,16 @@ extension Optionable where Self: UIViewController {
     }
     
     func presentEditViewController(reviewId: Int) {
-        let viewModel = UpdateReviewViewModel(reviewContent: "", images: [])
-        let viewController = UpdateReviewViewController(viewModel: viewModel)
-        let navigationController = UINavigationController(rootViewController: viewController)
-        navigationController.modalPresentationStyle = .fullScreen
-        
-        DispatchQueue.main.async { [weak self] in
-            self?.present(navigationController, animated: true)
-        }
+//        let repository = UpdateReviewRepositoryImpl()
+//        let usecase = UpdateReviewUsecaseImpl(repository: repository)
+//        let viewModel = UpdateReviewViewModel(usecase: usecase)
+//        let viewController = UpdateReviewViewController(viewModel: viewModel)
+//        let navigationController = UINavigationController(rootViewController: viewController)
+//        navigationController.modalPresentationStyle = .fullScreen
+//        
+//        DispatchQueue.main.async { [weak self] in
+//            self?.present(navigationController, animated: true)
+//        }
     }
     
     func removeReview(reviewId: Int) {}
