@@ -74,8 +74,8 @@ final class CreateReviewViewModel: NSObject, BaseViewModelType {
                             reviewContent: comment,
                             schoolName: univ.name,
                             schoolAddress: univ.address,
-                            schoolX: Double(univ.x),
-                            schoolY: Double(univ.y)
+                            schoolX: univ.x,
+                            schoolY: univ.y
                         )
                     } else {
                         CreateReviewRequestDTO(

@@ -28,15 +28,12 @@ struct SchoolItemDTO: Codable {
     func toStore() -> Store {
         Store(
             id: self.id,
-            category: "",
             name: self.name,
             address: self.address,
             isBookmark: false,
             distance: self.distance,
-            url: "",
-            x: 0.0,
-            y: 0.0,
-            reviewCount: ""
+            x: self.x,
+            y: self.y
         )
     }
 }

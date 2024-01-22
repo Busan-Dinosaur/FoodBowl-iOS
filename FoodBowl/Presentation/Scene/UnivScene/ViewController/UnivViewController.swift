@@ -79,6 +79,7 @@ final class UnivViewController: MapViewController {
 
 extension UnivViewController: SearchUnivViewControllerDelegate {
     func setUniv(univ: Store) {
+        print(univ)
         UserDefaultHandler.setSchoolId(schoolId: univ.id)
         UserDefaultHandler.setSchoolName(schoolName: univ.name)
         UserDefaultHandler.setSchoolX(schoolX: univ.x)

@@ -48,8 +48,7 @@ extension PlaceItemDTO {
             distance: self.distance.prettyDistance,
             url: self.placeURL,
             x: Double(self.longitude) ?? 0.0,
-            y: Double(self.latitude) ?? 0.0,
-            reviewCount: ""
+            y: Double(self.latitude) ?? 0.0
         )
     }
     
