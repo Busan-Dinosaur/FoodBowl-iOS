@@ -43,7 +43,7 @@ final class SettingViewController: UIViewController, Navigationable {
                 title: "로그아웃",
                 handler: { [weak self] in
                     self?.makeRequestAlert(
-                        title: "알림",
+                        title: "로그아웃",
                         message: "로그아웃 하시겠어요?",
                         okTitle: "네",
                         cancelTitle: "아니요",
@@ -58,7 +58,7 @@ final class SettingViewController: UIViewController, Navigationable {
                 title: "탈퇴하기",
                 handler: { [weak self] in
                     self?.makeRequestAlert(
-                        title: "알림",
+                        title: "탈퇴",
                         message: "정말 탈퇴하시나요?",
                         okTitle: "네",
                         cancelTitle: "아니요",

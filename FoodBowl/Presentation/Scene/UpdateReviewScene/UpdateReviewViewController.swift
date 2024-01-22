@@ -82,7 +82,7 @@ final class UpdateReviewViewController: UIViewController, Keyboardable {
                 switch result {
                 case .success:
                     self?.makeAlert(
-                        title: "알림",
+                        title: "후기",
                         message: "후기가 수정되었어요.",
                         okAction: { _ in
                             self?.dismiss(animated: true)

@@ -106,7 +106,7 @@ final class UpdateProfileViewController: UIViewController, Navigationable, Keybo
                 switch result {
                 case .success:
                     self?.makeAlert(
-                        title: "알림",
+                        title: "프로필",
                         message: "프로필이 변경되었어요.",
                         okAction: { _ in
                             self?.navigationController?.popViewController(animated: true)

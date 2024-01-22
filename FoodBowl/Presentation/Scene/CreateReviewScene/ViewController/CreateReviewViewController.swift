@@ -85,7 +85,7 @@ final class CreateReviewViewController: UIViewController, Keyboardable, PhotoPic
                 case .success:
                     self?.delegate?.updateData()
                     self?.makeAlert(
-                        title: "알림",
+                        title: "후기",
                         message: "후기가 등록되었어요.",
                         okAction: { _ in
                             self?.dismiss(animated: true)
@@ -106,8 +106,8 @@ final class CreateReviewViewController: UIViewController, Keyboardable, PhotoPic
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] _ in
                 self?.makeRequestAlert(
-                    title: "알림",
-                    message: "후기를 작성하지 않고 나가시나요?",
+                    title: "후기",
+                    message: "후기를 작성하지 않으시나요?",
                     okTitle: "네",
                     cancelTitle: "아니요",
                     okAction: { _ in

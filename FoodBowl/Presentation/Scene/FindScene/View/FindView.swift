@@ -23,7 +23,7 @@ final class FindView: UIView, BaseViewType {
         static let sectionContentInset: NSDirectionalEdgeInsets = NSDirectionalEdgeInsets(
             top: 0,
             leading: SizeLiteral.horizantalPadding - 4,
-            bottom: 0,
+            bottom: 10,
             trailing: SizeLiteral.horizantalPadding - 4
         )
     }

@@ -76,7 +76,7 @@ final class BlameViewController: UIViewController, Keyboardable {
                 switch result {
                 case .success:
                     self?.makeAlert(
-                        title: "알림",
+                        title: "신고",
                         message: "신고가 등록되었어요.",
                         okAction: { _ in
                             self?.dismiss(animated: true)
@@ -96,7 +96,15 @@ final class BlameViewController: UIViewController, Keyboardable {
         self.blameView.closeButtonDidTapPublisher
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] _ in
-                self?.dismiss(animated: true)
+                self?.makeRequestAlert(
+                    title: "신고",
+                    message: "신고하지 않으시나요?",
+                    okTitle: "네",
+                    cancelTitle: "아니요",
+                    okAction: { _ in
+                        self?.dismiss(animated: true)
+                    }
+                )
             })
             .store(in: &self.cancellable)
         
