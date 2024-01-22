@@ -101,6 +101,7 @@ final class SearchStoreViewController: UIViewController, Keyboardable {
                 switch result {
                 case .success((let store, let univ)):
                     self?.delegate?.setStore(store: store, univ: univ)
+                    self?.dissmissKeyboard()
                     self?.navigationController?.popViewController(animated: true)
                 case .failure(let error):
                     self?.makeAlert(
@@ -116,6 +117,7 @@ final class SearchStoreViewController: UIViewController, Keyboardable {
         self.searchStoreView.cancelButtonDidTapPublisher
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] _ in
+                self?.dissmissKeyboard()
                 self?.navigationController?.popViewController(animated: true)
             })
             .store(in: &self.cancellable)
@@ -136,6 +138,14 @@ final class SearchStoreViewController: UIViewController, Keyboardable {
 }
 
 extension SearchStoreViewController: UISearchBarDelegate {
+    private func dissmissKeyboard() {
+        self.searchStoreView.searchBar.resignFirstResponder()
+    }
+
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        self.dissmissKeyboard()
+    }
+    
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchText == "" {
             self.stores = []

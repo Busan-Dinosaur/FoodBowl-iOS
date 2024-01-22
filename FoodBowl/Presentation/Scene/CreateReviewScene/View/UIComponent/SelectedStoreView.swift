@@ -58,6 +58,7 @@ final class SelectedStoreView: UIView, BaseViewType {
         self.storeNameLabel.snp.makeConstraints {
             $0.leading.equalToSuperview().inset(14)
             $0.top.equalToSuperview().inset(12)
+            $0.width.lessThanOrEqualTo(SizeLiteral.fullWidth - 140)
         }
         
         self.storeCategoryLabel.snp.makeConstraints {
@@ -68,6 +69,7 @@ final class SelectedStoreView: UIView, BaseViewType {
         self.storeAddressLabel.snp.makeConstraints {
             $0.leading.equalToSuperview().inset(14)
             $0.bottom.equalToSuperview().inset(12)
+            $0.width.lessThanOrEqualTo(SizeLiteral.fullWidth - 100)
         }
 
         self.mapButton.snp.makeConstraints {
