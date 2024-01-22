@@ -193,6 +193,16 @@
 		CBDF110F2B5E9D04007DA3E1 /* UnivView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDF110E2B5E9D04007DA3E1 /* UnivView.swift */; };
 		CBDF11112B5E9D18007DA3E1 /* SearchUnivView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDF11102B5E9D18007DA3E1 /* SearchUnivView.swift */; };
 		CBDF11132B5E9D2E007DA3E1 /* SearchUnivViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDF11122B5E9D2E007DA3E1 /* SearchUnivViewModel.swift */; };
+		CBDF11192B5EA76D007DA3E1 /* UnivUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDF11182B5EA76D007DA3E1 /* UnivUsecase.swift */; };
+		CBDF111D2B5EA86A007DA3E1 /* UnivRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDF111C2B5EA86A007DA3E1 /* UnivRepositoryImpl.swift */; };
+		CBDF11212B5EA887007DA3E1 /* UnivRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDF11202B5EA887007DA3E1 /* UnivRepository.swift */; };
+		CBDF11252B5EAA12007DA3E1 /* SearchUnivRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDF11242B5EAA12007DA3E1 /* SearchUnivRepository.swift */; };
+		CBDF11272B5EAA38007DA3E1 /* SearchUnivUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDF11262B5EAA38007DA3E1 /* SearchUnivUsecase.swift */; };
+		CBDF11292B5EAA48007DA3E1 /* SearchUnivRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDF11282B5EAA48007DA3E1 /* SearchUnivRepositoryImpl.swift */; };
+		CBDF112B2B5EABC0007DA3E1 /* FriendRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDF112A2B5EABC0007DA3E1 /* FriendRepository.swift */; };
+		CBDF112D2B5EABE7007DA3E1 /* ProfileRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDF112C2B5EABE7007DA3E1 /* ProfileRepository.swift */; };
+		CBDF11392B5EAD26007DA3E1 /* UpdateReviewRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDF11382B5EAD26007DA3E1 /* UpdateReviewRepository.swift */; };
+		CBDF113C2B5EAD8D007DA3E1 /* UpdateReviewUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDF113B2B5EAD8D007DA3E1 /* UpdateReviewUsecase.swift */; };
 		CBDF6EA62AD9255200EB2481 /* BlameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDF6EA52AD9255200EB2481 /* BlameViewController.swift */; };
 		CBE32D0E2ADE7648004CCCBE /* CategoryType.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBE32D0D2ADE7648004CCCBE /* CategoryType.swift */; };
 		CBE6190C296C635D005295AF /* FollowButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBE6190B296C635D005295AF /* FollowButton.swift */; };
@@ -391,6 +401,16 @@
 		CBDF110E2B5E9D04007DA3E1 /* UnivView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnivView.swift; sourceTree = "<group>"; };
 		CBDF11102B5E9D18007DA3E1 /* SearchUnivView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchUnivView.swift; sourceTree = "<group>"; };
 		CBDF11122B5E9D2E007DA3E1 /* SearchUnivViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchUnivViewModel.swift; sourceTree = "<group>"; };
+		CBDF11182B5EA76D007DA3E1 /* UnivUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnivUsecase.swift; sourceTree = "<group>"; };
+		CBDF111C2B5EA86A007DA3E1 /* UnivRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnivRepositoryImpl.swift; sourceTree = "<group>"; };
+		CBDF11202B5EA887007DA3E1 /* UnivRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnivRepository.swift; sourceTree = "<group>"; };
+		CBDF11242B5EAA12007DA3E1 /* SearchUnivRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchUnivRepository.swift; sourceTree = "<group>"; };
+		CBDF11262B5EAA38007DA3E1 /* SearchUnivUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchUnivUsecase.swift; sourceTree = "<group>"; };
+		CBDF11282B5EAA48007DA3E1 /* SearchUnivRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchUnivRepositoryImpl.swift; sourceTree = "<group>"; };
+		CBDF112A2B5EABC0007DA3E1 /* FriendRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendRepository.swift; sourceTree = "<group>"; };
+		CBDF112C2B5EABE7007DA3E1 /* ProfileRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileRepository.swift; sourceTree = "<group>"; };
+		CBDF11382B5EAD26007DA3E1 /* UpdateReviewRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateReviewRepository.swift; sourceTree = "<group>"; };
+		CBDF113B2B5EAD8D007DA3E1 /* UpdateReviewUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateReviewUsecase.swift; sourceTree = "<group>"; };
 		CBDF6EA52AD9255200EB2481 /* BlameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlameViewController.swift; sourceTree = "<group>"; };
 		CBE32D0D2ADE7648004CCCBE /* CategoryType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryType.swift; sourceTree = "<group>"; };
 		CBE6190B296C635D005295AF /* FollowButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowButton.swift; sourceTree = "<group>"; };
@@ -515,14 +535,15 @@
 		CB5BFB0A2B3EE36800B35062 /* Repository */ = {
 			isa = PBXGroup;
 			children = (
-				CB5BFB0B2B3EE37500B35062 /* TokenRepository.swift */,
-				CB5BFB1E2B3F028F00B35062 /* SignRepository.swift */,
-				CB4A78A02B5830000002136F /* CreateReviewRepository.swift */,
-				CB91E2A52B56D7D6008A0E8E /* StoreDetailRepository.swift */,
-				CBD8D4702B4645F400445C98 /* BlameRepository.swift */,
-				CB83066F2B5996C400632789 /* FindRepository.swift */,
-				CB78A80A2B5D0A51007EC9C1 /* FollowRepository.swift */,
-				CBADEF3D2B5D5CB00026FACA /* UpdateProfileRepository.swift */,
+				CBDF112E2B5EAC15007DA3E1 /* SignScene */,
+				CBDF11302B5EAC2D007DA3E1 /* FriendScene */,
+				CBDF11312B5EAC38007DA3E1 /* FindScene */,
+				CBDF11332B5EAC6A007DA3E1 /* UnivScene */,
+				CBDF11342B5EAC73007DA3E1 /* ProfileScene */,
+				CBDF112F2B5EAC21007DA3E1 /* CreateReviewScene */,
+				CBDF11372B5EAD0A007DA3E1 /* UpdateReviewScene */,
+				CBDF11352B5EACAC007DA3E1 /* StoreDetailScene */,
+				CBDF11362B5EACB4007DA3E1 /* BlameScene */,
 				CB5BFB302B3F091B00B35062 /* ReviewRepository.swift */,
 				CB5BFB3C2B3F13ED00B35062 /* StoreRepository.swift */,
 				CB5BFB422B3F1A3600B35062 /* MemberRepository.swift */,
@@ -534,14 +555,15 @@
 		CB5BFB0E2B3EE39500B35062 /* Repository */ = {
 			isa = PBXGroup;
 			children = (
-				CB5BFB122B3EEA5800B35062 /* TokenRepositoryImpl.swift */,
-				CB5BFB1C2B3F025F00B35062 /* SignRepositoryImpl.swift */,
-				CB4A78A52B5831570002136F /* CreateReviewRepositoryImpl.swift */,
-				CB91E2AB2B56DDE5008A0E8E /* StoreDetailRepositoryImpl.swift */,
-				CBD8D4722B4646B900445C98 /* BlameRepositroyImpl.swift */,
-				CB83066D2B59951A00632789 /* FindRepositoryImpl.swift */,
-				CB78A80C2B5D0AFA007EC9C1 /* FollowRepositoryImpl.swift */,
-				CBADEF3B2B5D5C940026FACA /* UpdateProfileRepositoryImpl.swift */,
+				CBDF113D2B5EAD9C007DA3E1 /* SignScene */,
+				CBDF113E2B5EADA4007DA3E1 /* FriendScene */,
+				CBDF11452B5EADF5007DA3E1 /* FindScene */,
+				CBDF113F2B5EADAA007DA3E1 /* UnivScene */,
+				CBDF11402B5EADB8007DA3E1 /* ProfileScene */,
+				CBDF11412B5EADC7007DA3E1 /* CreateReviewScene */,
+				CBDF11422B5EADD4007DA3E1 /* UpdateReviewScene */,
+				CBDF11432B5EADD8007DA3E1 /* StoreDetailScene */,
+				CBDF11442B5EADDF007DA3E1 /* BlameScene */,
 				CB5BFB322B3F096500B35062 /* ReviewRepositoryImpl.swift */,
 				CB5BFB402B3F168800B35062 /* StoreRepositoryImpl.swift */,
 				CB5BFB442B3F1CA300B35062 /* MemberRepositoryImpl.swift */,
@@ -608,14 +630,14 @@
 			isa = PBXGroup;
 			children = (
 				CB981C28297A5A2900AF0167 /* SignScene */,
+				CBE6190D296C6423005295AF /* FriendScene */,
+				CB49256E2AB44D4400B66B68 /* FindScene */,
+				CBCD0F7D2A66DA0B00A51B32 /* UnivScene */,
+				CBADC2A52955A07B00E56C93 /* ProfileScene */,
 				CBADC2B02955A13800E56C93 /* CreateReviewScene */,
-				CB73E00F2AB5FEA9005B6BF1 /* UpdateReview */,
+				CB73E00F2AB5FEA9005B6BF1 /* UpdateReviewScene */,
 				CB73E0102AB5FEB4005B6BF1 /* StoreDetailScene */,
 				CBDF6EA42AD9253A00EB2481 /* BlameScene */,
-				CBE6190D296C6423005295AF /* Friend */,
-				CB49256E2AB44D4400B66B68 /* FindScene */,
-				CBCD0F7D2A66DA0B00A51B32 /* Univ */,
-				CBADC2A52955A07B00E56C93 /* ProfileScene */,
 			);
 			path = Scene;
 			sourceTree = "<group>";
@@ -747,13 +769,13 @@
 			path = CustomButton;
 			sourceTree = "<group>";
 		};
-		CB73E00F2AB5FEA9005B6BF1 /* UpdateReview */ = {
+		CB73E00F2AB5FEA9005B6BF1 /* UpdateReviewScene */ = {
 			isa = PBXGroup;
 			children = (
 				CBBB97EF2AB0831B00272CCE /* ViewModel */,
 				CB73E0132AB5FF8A005B6BF1 /* ViewController */,
 			);
-			path = UpdateReview;
+			path = UpdateReviewScene;
 			sourceTree = "<group>";
 		};
 		CB73E0102AB5FEB4005B6BF1 /* StoreDetailScene */ = {
@@ -928,11 +950,14 @@
 			isa = PBXGroup;
 			children = (
 				CB9332702AFCCCF100B7F87A /* SignScene */,
+				CBDF11322B5EAC56007DA3E1 /* FriendScene */,
+				CB8306732B599CAE00632789 /* FindScene */,
+				CBDF11152B5EA750007DA3E1 /* UnivScene */,
+				CB78A80E2B5D0CA2007EC9C1 /* ProfileScene */,
 				CB4A78A22B5830090002136F /* CreateReviewScene */,
+				CBDF113A2B5EAD79007DA3E1 /* UpdateReviewScene */,
 				CB91E2A22B56D797008A0E8E /* StoreDetailScene */,
 				CBF926472B411C25005E251B /* BlameScene */,
-				CB8306732B599CAE00632789 /* FindScene */,
-				CB78A80E2B5D0CA2007EC9C1 /* ProfileScene */,
 			);
 			path = Usecase;
 			sourceTree = "<group>";
@@ -1137,14 +1162,14 @@
 			path = API;
 			sourceTree = "<group>";
 		};
-		CBCD0F7D2A66DA0B00A51B32 /* Univ */ = {
+		CBCD0F7D2A66DA0B00A51B32 /* UnivScene */ = {
 			isa = PBXGroup;
 			children = (
 				CBDF110A2B5E9C89007DA3E1 /* View */,
 				CBDDF13D2A6AD76900AE3C50 /* ViewController */,
 				CBDF110B2B5E9CBB007DA3E1 /* ViewModel */,
 			);
-			path = Univ;
+			path = UnivScene;
 			sourceTree = "<group>";
 		};
 		CBD1B5F22982D38300B0AD51 /* Cell */ = {
@@ -1255,6 +1280,179 @@
 			path = Cell;
 			sourceTree = "<group>";
 		};
+		CBDF11152B5EA750007DA3E1 /* UnivScene */ = {
+			isa = PBXGroup;
+			children = (
+				CBDF11182B5EA76D007DA3E1 /* UnivUsecase.swift */,
+				CBDF11262B5EAA38007DA3E1 /* SearchUnivUsecase.swift */,
+			);
+			path = UnivScene;
+			sourceTree = "<group>";
+		};
+		CBDF112E2B5EAC15007DA3E1 /* SignScene */ = {
+			isa = PBXGroup;
+			children = (
+				CB5BFB0B2B3EE37500B35062 /* TokenRepository.swift */,
+				CB5BFB1E2B3F028F00B35062 /* SignRepository.swift */,
+			);
+			path = SignScene;
+			sourceTree = "<group>";
+		};
+		CBDF112F2B5EAC21007DA3E1 /* CreateReviewScene */ = {
+			isa = PBXGroup;
+			children = (
+				CB4A78A02B5830000002136F /* CreateReviewRepository.swift */,
+			);
+			path = CreateReviewScene;
+			sourceTree = "<group>";
+		};
+		CBDF11302B5EAC2D007DA3E1 /* FriendScene */ = {
+			isa = PBXGroup;
+			children = (
+				CBDF112A2B5EABC0007DA3E1 /* FriendRepository.swift */,
+			);
+			path = FriendScene;
+			sourceTree = "<group>";
+		};
+		CBDF11312B5EAC38007DA3E1 /* FindScene */ = {
+			isa = PBXGroup;
+			children = (
+				CB83066F2B5996C400632789 /* FindRepository.swift */,
+			);
+			path = FindScene;
+			sourceTree = "<group>";
+		};
+		CBDF11322B5EAC56007DA3E1 /* FriendScene */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = FriendScene;
+			sourceTree = "<group>";
+		};
+		CBDF11332B5EAC6A007DA3E1 /* UnivScene */ = {
+			isa = PBXGroup;
+			children = (
+				CBDF11202B5EA887007DA3E1 /* UnivRepository.swift */,
+				CBDF11242B5EAA12007DA3E1 /* SearchUnivRepository.swift */,
+			);
+			path = UnivScene;
+			sourceTree = "<group>";
+		};
+		CBDF11342B5EAC73007DA3E1 /* ProfileScene */ = {
+			isa = PBXGroup;
+			children = (
+				CBDF112C2B5EABE7007DA3E1 /* ProfileRepository.swift */,
+				CBADEF3D2B5D5CB00026FACA /* UpdateProfileRepository.swift */,
+				CB78A80A2B5D0A51007EC9C1 /* FollowRepository.swift */,
+			);
+			path = ProfileScene;
+			sourceTree = "<group>";
+		};
+		CBDF11352B5EACAC007DA3E1 /* StoreDetailScene */ = {
+			isa = PBXGroup;
+			children = (
+				CB91E2A52B56D7D6008A0E8E /* StoreDetailRepository.swift */,
+			);
+			path = StoreDetailScene;
+			sourceTree = "<group>";
+		};
+		CBDF11362B5EACB4007DA3E1 /* BlameScene */ = {
+			isa = PBXGroup;
+			children = (
+				CBD8D4702B4645F400445C98 /* BlameRepository.swift */,
+			);
+			path = BlameScene;
+			sourceTree = "<group>";
+		};
+		CBDF11372B5EAD0A007DA3E1 /* UpdateReviewScene */ = {
+			isa = PBXGroup;
+			children = (
+				CBDF11382B5EAD26007DA3E1 /* UpdateReviewRepository.swift */,
+			);
+			path = UpdateReviewScene;
+			sourceTree = "<group>";
+		};
+		CBDF113A2B5EAD79007DA3E1 /* UpdateReviewScene */ = {
+			isa = PBXGroup;
+			children = (
+				CBDF113B2B5EAD8D007DA3E1 /* UpdateReviewUsecase.swift */,
+			);
+			path = UpdateReviewScene;
+			sourceTree = "<group>";
+		};
+		CBDF113D2B5EAD9C007DA3E1 /* SignScene */ = {
+			isa = PBXGroup;
+			children = (
+				CB5BFB122B3EEA5800B35062 /* TokenRepositoryImpl.swift */,
+				CB5BFB1C2B3F025F00B35062 /* SignRepositoryImpl.swift */,
+			);
+			path = SignScene;
+			sourceTree = "<group>";
+		};
+		CBDF113E2B5EADA4007DA3E1 /* FriendScene */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = FriendScene;
+			sourceTree = "<group>";
+		};
+		CBDF113F2B5EADAA007DA3E1 /* UnivScene */ = {
+			isa = PBXGroup;
+			children = (
+				CBDF111C2B5EA86A007DA3E1 /* UnivRepositoryImpl.swift */,
+				CBDF11282B5EAA48007DA3E1 /* SearchUnivRepositoryImpl.swift */,
+			);
+			path = UnivScene;
+			sourceTree = "<group>";
+		};
+		CBDF11402B5EADB8007DA3E1 /* ProfileScene */ = {
+			isa = PBXGroup;
+			children = (
+				CB78A80C2B5D0AFA007EC9C1 /* FollowRepositoryImpl.swift */,
+				CBADEF3B2B5D5C940026FACA /* UpdateProfileRepositoryImpl.swift */,
+			);
+			path = ProfileScene;
+			sourceTree = "<group>";
+		};
+		CBDF11412B5EADC7007DA3E1 /* CreateReviewScene */ = {
+			isa = PBXGroup;
+			children = (
+				CB4A78A52B5831570002136F /* CreateReviewRepositoryImpl.swift */,
+			);
+			path = CreateReviewScene;
+			sourceTree = "<group>";
+		};
+		CBDF11422B5EADD4007DA3E1 /* UpdateReviewScene */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = UpdateReviewScene;
+			sourceTree = "<group>";
+		};
+		CBDF11432B5EADD8007DA3E1 /* StoreDetailScene */ = {
+			isa = PBXGroup;
+			children = (
+				CB91E2AB2B56DDE5008A0E8E /* StoreDetailRepositoryImpl.swift */,
+			);
+			path = StoreDetailScene;
+			sourceTree = "<group>";
+		};
+		CBDF11442B5EADDF007DA3E1 /* BlameScene */ = {
+			isa = PBXGroup;
+			children = (
+				CBD8D4722B4646B900445C98 /* BlameRepositroyImpl.swift */,
+			);
+			path = BlameScene;
+			sourceTree = "<group>";
+		};
+		CBDF11452B5EADF5007DA3E1 /* FindScene */ = {
+			isa = PBXGroup;
+			children = (
+				CB83066D2B59951A00632789 /* FindRepositoryImpl.swift */,
+			);
+			path = FindScene;
+			sourceTree = "<group>";
+		};
 		CBDF6EA42AD9253A00EB2481 /* BlameScene */ = {
 			isa = PBXGroup;
 			children = (
@@ -1294,13 +1492,13 @@
 			path = ViewController;
 			sourceTree = "<group>";
 		};
-		CBE6190D296C6423005295AF /* Friend */ = {
+		CBE6190D296C6423005295AF /* FriendScene */ = {
 			isa = PBXGroup;
 			children = (
 				CB9332672AFCCB5A00B7F87A /* ViewController */,
 				CB8306612B59629800632789 /* ViewModel */,
 			);
-			path = Friend;
+			path = FriendScene;
 			sourceTree = "<group>";
 		};
 		CBF926472B411C25005E251B /* BlameScene */ = {
@@ -1430,6 +1628,7 @@
 				CBFB52612977C9AB0049E8BA /* FindResultViewController.swift in Sources */,
 				CB73E5732B341B3B0026E4D7 /* FollowerViewModel.swift in Sources */,
 				CB4A78A42B58301A0002136F /* CreateReviewUsecase.swift in Sources */,
+				CBDF11392B5EAD26007DA3E1 /* UpdateReviewRepository.swift in Sources */,
 				CBD1B6022984394A00B0AD51 /* FeedButton.swift in Sources */,
 				CBDECACA2A6B2F6800259350 /* FeedNSCollectionViewCell.swift in Sources */,
 				CBD1B5FE2982F19300B0AD51 /* UIButton+Extension.swift in Sources */,
@@ -1439,6 +1638,7 @@
 				CB8306652B59747000632789 /* FindViewModel.swift in Sources */,
 				CB5DD4312AB59130009FCB43 /* BookmarkMapButton.swift in Sources */,
 				CB5BFB332B3F096500B35062 /* ReviewRepositoryImpl.swift in Sources */,
+				CBDF112B2B5EABC0007DA3E1 /* FriendRepository.swift in Sources */,
 				CBCD0F7F2A66DA1600A51B32 /* UnivViewController.swift in Sources */,
 				CBADEF422B5D648F0026FACA /* UpdateProfileView.swift in Sources */,
 				CB617A462AE25B1C000F7FFC /* SignView.swift in Sources */,
@@ -1465,6 +1665,7 @@
 				CB78A80B2B5D0A51007EC9C1 /* FollowRepository.swift in Sources */,
 				CBADEF3A2B5D5C770026FACA /* UpdateProfileUsecase.swift in Sources */,
 				CB2E82472AA74FB60016820E /* CheckNicknameDTO.swift in Sources */,
+				CBDF11212B5EA887007DA3E1 /* UnivRepository.swift in Sources */,
 				CBBB97F12AB0832F00272CCE /* UpdateReviewViewModel.swift in Sources */,
 				CB51C8D12AD7E763002D0BA5 /* SearchStoreRequestDTO.swift in Sources */,
 				CBF9264F2B411F4E005E251B /* BlameView.swift in Sources */,
@@ -1513,6 +1714,7 @@
 				CB1A7C5E295618A900C6431D /* SettingButton.swift in Sources */,
 				CB5BFB432B3F1A3600B35062 /* MemberRepository.swift in Sources */,
 				CBD8D4732B4646B900445C98 /* BlameRepositroyImpl.swift in Sources */,
+				CBDF11292B5EAA48007DA3E1 /* SearchUnivRepositoryImpl.swift in Sources */,
 				CB2A44A62ADFC62D004A4126 /* PanZoomImageView.swift in Sources */,
 				CBDECAC82A6B2F0700259350 /* FeedListView.swift in Sources */,
 				CB4A78B02B58483F0002136F /* SearchStoreViewModel.swift in Sources */,
@@ -1553,6 +1755,7 @@
 				CB617A3E2AE248BB000F7FFC /* UIViewController+Keyboard.swift in Sources */,
 				CB78A8162B5D5511007EC9C1 /* SettingView.swift in Sources */,
 				CB5BFB192B3EF92700B35062 /* NetworkError.swift in Sources */,
+				CBDF113C2B5EAD8D007DA3E1 /* UpdateReviewUsecase.swift in Sources */,
 				CBDF110F2B5E9D04007DA3E1 /* UnivView.swift in Sources */,
 				CBA62D3F2A6EC7B800AA0830 /* FindViewController.swift in Sources */,
 				CB4FBBF22978CFA90052D371 /* FollowerViewController.swift in Sources */,
@@ -1571,6 +1774,7 @@
 				CBDF6EA62AD9255200EB2481 /* BlameViewController.swift in Sources */,
 				CB40C6F82A83E812003E3F06 /* SignViewModel.swift in Sources */,
 				CBA4C7DB2AB4840100FC9DD8 /* PaddingLabel.swift in Sources */,
+				CBDF11272B5EAA38007DA3E1 /* SearchUnivUsecase.swift in Sources */,
 				CBE61911296C6804005295AF /* OptionButton.swift in Sources */,
 				CB5BFB492B3F1DFF00B35062 /* KakaoRepositoryImpl.swift in Sources */,
 				CBADC28E29559BC900E56C93 /* UIView+Extension.swift in Sources */,
@@ -1592,6 +1796,8 @@
 				CBADC2D82955AC5900E56C93 /* FeedCollectionViewCell.swift in Sources */,
 				CBEB005E2ADC2F8200F6EFED /* Double+Extension.swift in Sources */,
 				CBB94BF62ADD0A4E00F44245 /* StoreDetailViewModel.swift in Sources */,
+				CBDF111D2B5EA86A007DA3E1 /* UnivRepositoryImpl.swift in Sources */,
+				CBDF11252B5EAA12007DA3E1 /* SearchUnivRepository.swift in Sources */,
 				CBADC2AD2955A0FF00E56C93 /* ProfileViewController.swift in Sources */,
 				CBBA9F1B2AB5691900BE37AE /* DownButton.swift in Sources */,
 				CBDE38FD29715C5F00DDE49A /* SearchBarButton.swift in Sources */,
@@ -1603,8 +1809,10 @@
 				CBADEF382B5D5A710026FACA /* Option.swift in Sources */,
 				CBADC29629559BC900E56C93 /* UITableView+Extension.swift in Sources */,
 				CBE32D0E2ADE7648004CCCBE /* CategoryType.swift in Sources */,
+				CBDF11192B5EA76D007DA3E1 /* UnivUsecase.swift in Sources */,
 				CB51C8C92AD7DFC9002D0BA5 /* ReviewDTO.swift in Sources */,
 				CB91E2A42B56D7B2008A0E8E /* StoreDetailUsecase.swift in Sources */,
+				CBDF112D2B5EABE7007DA3E1 /* ProfileRepository.swift in Sources */,
 				CB5BFB3D2B3F13ED00B35062 /* StoreRepository.swift in Sources */,
 				CB91E2A82B56D8C9008A0E8E /* Reviews.swift in Sources */,
 				CBB582822973007D00808B0B /* ShowWebViewController.swift in Sources */,

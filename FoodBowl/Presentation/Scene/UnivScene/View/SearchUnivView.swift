@@ -1,8 +1,8 @@
 //
-//  SearchStoreView.swift
+//  SearchUnivView.swift
 //  FoodBowl
 //
-//  Created by Coby on 1/18/24.
+//  Created by Coby on 1/22/24.
 //
 
 import Combine
@@ -11,7 +11,7 @@ import UIKit
 import SnapKit
 import Then
 
-final class SearchStoreView: UIView, BaseViewType {
+final class SearchUnivView: UIView, BaseViewType {
     
     // MARK: - ui component
     
@@ -19,8 +19,8 @@ final class SearchStoreView: UIView, BaseViewType {
         $0.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width - 80, height: 0)
         $0.placeholder = "검색"
     }
-    private let cancelButton = UIButton().then {
-        $0.setTitle("취소", for: .normal)
+    private let closeButton = UIButton().then {
+        $0.setTitle("닫기", for: .normal)
         $0.setTitleColor(.mainPink, for: .normal)
         $0.titleLabel?.font = UIFont.preferredFont(forTextStyle: .headline, weight: .regular)
     }
@@ -32,8 +32,8 @@ final class SearchStoreView: UIView, BaseViewType {
     
     // MARK: - property
     
-    var cancelButtonDidTapPublisher: AnyPublisher<Void, Never> {
-        return self.cancelButton.buttonTapPublisher
+    var closeButtonDidTapPublisher: AnyPublisher<Void, Never> {
+        return self.closeButton.buttonTapPublisher
     }
     
     // MARK: - init
@@ -52,9 +52,9 @@ final class SearchStoreView: UIView, BaseViewType {
     
     func configureNavigationBarItem(_ navigationController: UINavigationController) {
         let navigationItem = navigationController.topViewController?.navigationItem
-        let cancelButton = navigationController.makeBarButtonItem(with: cancelButton)
+        let closeButton = navigationController.makeBarButtonItem(with: closeButton)
         navigationItem?.leftBarButtonItem = UIBarButtonItem(customView: searchBar)
-        navigationItem?.rightBarButtonItem = cancelButton
+        navigationItem?.rightBarButtonItem = closeButton
     }
     
     func tableView() -> UITableView {
