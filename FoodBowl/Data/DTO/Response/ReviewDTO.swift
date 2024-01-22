@@ -116,7 +116,7 @@ struct WriterItemDTO: Codable {
             introduction: "",
             followerCount: self.followerCount.prettyNumber,
             followingCount: "",
-            isMyProfile: false,
+            isMyProfile: UserDefaultStorage.id == self.id,
             isFollowing: false
         )
     }

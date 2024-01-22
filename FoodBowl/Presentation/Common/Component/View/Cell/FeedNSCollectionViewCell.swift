@@ -92,7 +92,10 @@ final class FeedNSCollectionViewCell: UICollectionViewCell, BaseViewType {
 
 // MARK: - Public - func
 extension FeedNSCollectionViewCell {
-    func configureCell(_ reviewItem: Review) {
+    func configureCell(
+        _ reviewItem: Review,
+        _ isOwn: Bool = false
+    ) {
         let member = reviewItem.member
         let comment = reviewItem.comment
         
@@ -117,6 +120,10 @@ extension FeedNSCollectionViewCell {
                 $0.bottom.equalToSuperview().inset(14)
                 $0.height.equalTo(100)
             }
+        }
+        
+        if member.isMyProfile && !isOwn {
+            self.userInfoButton.optionButton.isHidden = true
         }
     }
 }

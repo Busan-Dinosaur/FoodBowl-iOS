@@ -9,7 +9,6 @@ import Foundation
 
 protocol StoreDetailUsecase {
     func getReviewsByStore(request: GetReviewsByStoreRequestDTO) async throws -> Reviews
-    func removeReview(id: Int) async throws
     func createBookmark(storeId: Int) async throws
     func removeBookmark(storeId: Int) async throws
 }
@@ -32,14 +31,6 @@ final class StoreDetailUsecaseImpl: StoreDetailUsecase {
         do {
             let reviewByStoreDTO = try await self.repository.getReviewsByStore(request: request)
             return reviewByStoreDTO.toReviews()
-        } catch(let error) {
-            throw error
-        }
-    }
-    
-    func removeReview(id: Int) async throws {
-        do {
-            try await self.repository.removeReview(id: id)
         } catch(let error) {
             throw error
         }

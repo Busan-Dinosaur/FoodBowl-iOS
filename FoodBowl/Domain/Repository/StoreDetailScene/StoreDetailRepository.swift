@@ -9,7 +9,6 @@ import Foundation
 
 protocol StoreDetailRepository {
     func getReviewsByStore(request: GetReviewsByStoreRequestDTO) async throws -> ReviewByStoreDTO
-    func removeReview(id: Int) async throws
     func createBookmark(storeId: Int) async throws
     func removeBookmark(storeId: Int) async throws
 }

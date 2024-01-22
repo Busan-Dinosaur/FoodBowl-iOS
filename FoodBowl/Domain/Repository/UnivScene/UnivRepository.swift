@@ -12,6 +12,4 @@ protocol UnivRepository {
     func getStoresBySchool(request: GetStoresBySchoolRequestDTO) async throws -> StoreDTO
     func createBookmark(storeId: Int) async throws
     func removeBookmark(storeId: Int) async throws
-    func followMember(memberId: Int) async throws
-    func unfollowMember(memberId: Int) async throws
 }

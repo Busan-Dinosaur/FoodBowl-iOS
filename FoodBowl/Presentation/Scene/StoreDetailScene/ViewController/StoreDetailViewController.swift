@@ -28,8 +28,6 @@ final class StoreDetailViewController: UIViewController, Navigationable, Optiona
     
     private var dataSource: UICollectionViewDiffableDataSource<Section, Review>!
     private var snapshot: NSDiffableDataSourceSnapshot<Section, Review>!
-    
-    private let removeReviewPublisher = PassthroughSubject<Int, Never>()
 
     // MARK: - init
     
@@ -75,7 +73,6 @@ final class StoreDetailViewController: UIViewController, Navigationable, Optiona
             viewDidLoad: self.viewDidLoadPublisher,
             reviewToggleButtonDidTap: self.storeDetailView.reviewToggleButtonDidTapPublisher.eraseToAnyPublisher(),
             bookmarkButtonDidTap: self.storeDetailView.bookmarkButtonDidTapPublisher.eraseToAnyPublisher(),
-            removeReview: self.removeReviewPublisher.eraseToAnyPublisher(),
             scrolledToBottom: self.storeDetailView.collectionView().scrolledToBottomPublisher.eraseToAnyPublisher(),
             refreshControl: self.storeDetailView.refreshPublisher.eraseToAnyPublisher()
         )
@@ -122,21 +119,6 @@ final class StoreDetailViewController: UIViewController, Navigationable, Optiona
                 switch result {
                 case .success(let reviews):
                     self?.loadMoreReviews(reviews)
-                case .failure(let error):
-                    self?.makeAlert(
-                        title: "에러",
-                        message: error.localizedDescription
-                    )
-                }
-            })
-            .store(in: &self.cancellable)
-        
-        output.isRemoved
-            .receive(on: DispatchQueue.main)
-            .sink(receiveValue: { [weak self] result in
-                switch result {
-                case .success(let id):
-                    self?.deleteReview(id)
                 case .failure(let error):
                     self?.makeAlert(
                         title: "에러",
@@ -198,10 +180,6 @@ final class StoreDetailViewController: UIViewController, Navigationable, Optiona
         self.storeDetailView.configureNavigationBarItem(navigationController)
         self.storeDetailView.configureNavigationBarTitle(navigationController)
     }
-    
-    func removeReview(reviewId: Int) {
-        removeReviewPublisher.send(reviewId)
-    }
 }
 
 // MARK: - DataSource
@@ -214,7 +192,6 @@ extension StoreDetailViewController {
     private func feedNSCollectionViewDataSource() -> UICollectionViewDiffableDataSource<Section, Review> {
         let reviewCellRegistration = UICollectionView.CellRegistration<FeedNSCollectionViewCell, Review> {
             [weak self] cell, indexPath, item in
-            
             cell.configureCell(item)
             self?.bindCell(cell, with: item)
         }
@@ -250,15 +227,5 @@ extension StoreDetailViewController {
     private func loadMoreReviews(_ items: [Review]) {
         self.snapshot.appendItems(items, toSection: .main)
         self.dataSource.applySnapshotUsingReloadData(self.snapshot)
-    }
-    
-    private func deleteReview(_ reviewId: Int) {
-        for item in snapshot.itemIdentifiers {
-            if item.comment.id == reviewId {
-                self.snapshot.deleteItems([item])
-                self.dataSource.apply(self.snapshot)
-                return
-            }
-        }
     }
 }

@@ -25,14 +25,12 @@ final class StoreDetailViewModel: BaseViewModelType {
     private let reviewsSubject: PassthroughSubject<Result<[Review], Error>, Never> = PassthroughSubject()
     private let moreReviewsSubject: PassthroughSubject<Result<[Review], Error>, Never> = PassthroughSubject()
     private let refreshControlSubject: PassthroughSubject<Void, Error> = PassthroughSubject()
-    private let isRemovedSubject: PassthroughSubject<Result<Int, Error>, Never> = PassthroughSubject()
     private let isBookmarkSubject: PassthroughSubject<Result<Void, Error>, Never> = PassthroughSubject()
     
     struct Input {
         let viewDidLoad: AnyPublisher<Void, Never>
         let reviewToggleButtonDidTap: AnyPublisher<Bool, Never>
         let bookmarkButtonDidTap: AnyPublisher<Bool, Never>
-        let removeReview: AnyPublisher<Int, Never>
         let scrolledToBottom: AnyPublisher<Void, Never>
         let refreshControl: AnyPublisher<Void, Never>
     }
@@ -41,7 +39,6 @@ final class StoreDetailViewModel: BaseViewModelType {
         let store: AnyPublisher<Result<Store, Error>, Never>
         let reviews: AnyPublisher<Result<[Review], Error>, Never>
         let moreReviews: AnyPublisher<Result<[Review], Error>, Never>
-        let isRemoved: AnyPublisher<Result<Int, Error>, Never>
         let isBookmark: AnyPublisher<Result<Void, Error>, Never>
     }
     
@@ -82,13 +79,6 @@ final class StoreDetailViewModel: BaseViewModelType {
             })
             .store(in: &self.cancellable)
         
-        input.removeReview
-            .sink(receiveValue: { [weak self] reviewId in
-                guard let self = self else { return }
-                self.removeReview(id: reviewId)
-            })
-            .store(in: &self.cancellable)
-        
         input.scrolledToBottom
             .sink(receiveValue: { [weak self] _ in
                 guard let self = self else { return }
@@ -109,7 +99,6 @@ final class StoreDetailViewModel: BaseViewModelType {
             store: self.storeSubject.eraseToAnyPublisher(),
             reviews: self.reviewsSubject.eraseToAnyPublisher(),
             moreReviews: self.moreReviewsSubject.eraseToAnyPublisher(),
-            isRemoved: self.isRemovedSubject.eraseToAnyPublisher(),
             isBookmark: self.isBookmarkSubject.eraseToAnyPublisher()
         )
     }
@@ -142,17 +131,6 @@ final class StoreDetailViewModel: BaseViewModelType {
                 lastReviewId == nil ? self.reviewsSubject.send(.success(reviews.reviews)) : self.moreReviewsSubject.send(.success(reviews.reviews))
             } catch(let error) {
                 self.reviewsSubject.send(.failure(error))
-            }
-        }
-    }
-    
-    func removeReview(id: Int) {
-        Task {
-            do {
-                try await self.usecase.removeReview(id: id)
-                self.isRemovedSubject.send(.success(id))
-            } catch(let error) {
-                self.isRemovedSubject.send(.failure(error))
             }
         }
     }

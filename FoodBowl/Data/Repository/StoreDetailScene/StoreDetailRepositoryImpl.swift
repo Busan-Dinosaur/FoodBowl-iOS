@@ -18,10 +18,6 @@ final class StoreDetailRepositoryImpl: StoreDetailRepository {
         return try response.decode()
     }
     
-    func removeReview(id: Int) async throws {
-        let _ = await provider.request(.removeReview(id: id))
-    }
-    
     func createBookmark(storeId: Int) async throws {
         let _ = await provider.request(.createBookmark(storeId: storeId))
     }

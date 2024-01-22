@@ -30,12 +30,4 @@ final class UnivRepositoryImpl: UnivRepository {
     func removeBookmark(storeId: Int) async throws {
         let _ = await provider.request(.removeBookmark(storeId: storeId))
     }
-    
-    func followMember(memberId: Int) async throws {
-        let _ = await provider.request(.followMember(memberId: memberId))
-    }
-    
-    func unfollowMember(memberId: Int) async throws {
-        let _ = await provider.request(.unfollowMember(memberId: memberId))
-    }
 }

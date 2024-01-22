@@ -14,8 +14,6 @@ protocol FriendUsecase {
     func getStoresByBookmark(request: CustomLocationRequestDTO) async throws -> [Store]
     func createBookmark(storeId: Int) async throws
     func removeBookmark(storeId: Int) async throws
-    func followMember(memberId: Int) async throws
-    func unfollowMember(memberId: Int) async throws
 }
 
 final class FriendUsecaseImpl: FriendUsecase {
@@ -79,22 +77,6 @@ final class FriendUsecaseImpl: FriendUsecase {
     func removeBookmark(storeId: Int) async throws {
         do {
             try await self.repository.removeBookmark(storeId: storeId)
-        } catch(let error) {
-            throw error
-        }
-    }
-    
-    func followMember(memberId: Int) async throws {
-        do {
-            try await self.repository.followMember(memberId: memberId)
-        } catch(let error) {
-            throw error
-        }
-    }
-    
-    func unfollowMember(memberId: Int) async throws {
-        do {
-            try await self.repository.unfollowMember(memberId: memberId)
         } catch(let error) {
             throw error
         }

@@ -104,7 +104,10 @@ final class FeedCollectionViewCell: UICollectionViewCell, BaseViewType {
 
 // MARK: - Public - func
 extension FeedCollectionViewCell {    
-    func configureCell(_ reviewItem: Review) {
+    func configureCell(
+        _ reviewItem: Review,
+        _ isOwn: Bool = false
+    ) {
         let member = reviewItem.member
         let store = reviewItem.store
         let comment = reviewItem.comment
@@ -131,6 +134,10 @@ extension FeedCollectionViewCell {
                 $0.bottom.equalToSuperview().inset(14)
                 $0.height.equalTo(54)
             }
+        }
+        
+        if member.isMyProfile && !isOwn {
+            self.userInfoButton.optionButton.isHidden = true
         }
     }
 }
