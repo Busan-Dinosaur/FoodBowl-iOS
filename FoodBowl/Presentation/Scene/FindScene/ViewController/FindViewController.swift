@@ -181,7 +181,9 @@ final class FindViewController: UIViewController, Keyboardable {
         if let index = self.members.firstIndex(where: { $0.id == memberId }) {
             self.members[index].isFollowing.toggle()
             let indexPath = IndexPath(row: index, section: 0)
-            self.findView.findResultViewController.findResultView.listTableView.reloadRows(at: [indexPath], with: .fade)
+            if let cell = self.findView.findResultViewController.findResultView.listTableView.cellForRow(at: indexPath) as? UserInfoTableViewCell {
+                cell.followButton.isSelected = self.members[index].isFollowing
+            }
         }
     }
 }
