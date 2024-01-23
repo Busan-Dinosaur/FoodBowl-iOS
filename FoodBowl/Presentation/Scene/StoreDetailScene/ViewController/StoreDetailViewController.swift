@@ -155,15 +155,18 @@ final class StoreDetailViewController: UIViewController, Navigationable, Optiona
     
     private func bindCell(_ cell: FeedNSCollectionViewCell, with item: Review) {
         cell.userButtonTapAction = { [weak self] _ in
-            let profileViewController = ProfileViewController(memberId: item.member.id)
-            DispatchQueue.main.async { [weak self] in
-                self?.navigationController?.pushViewController(profileViewController, animated: true)
-            }
+            self?.presentProfileViewController(id: item.member.id)
         }
         
         cell.optionButtonTapAction = { [weak self] _ in
             DispatchQueue.main.async { [weak self] in
                 self?.presentReviewOptionAlert(reviewId: item.comment.id)
+            }
+        }
+        
+        cell.commentLabelTapAction = { [weak self] _ in
+            DispatchQueue.main.async { [weak self] in
+                self?.presentReviewDetailViewController(id: item.comment.id)
             }
         }
     }
@@ -224,5 +227,27 @@ extension StoreDetailViewController {
     private func loadMoreReviews(_ items: [Review]) {
         self.snapshot.appendItems(items, toSection: .main)
         self.dataSource.applySnapshotUsingReloadData(self.snapshot)
+    }
+}
+
+// MARK: - Helper
+extension StoreDetailViewController {
+    private func presentProfileViewController(id: Int) {
+        let profileViewController = ProfileViewController(memberId: id)
+        
+        DispatchQueue.main.async { [weak self] in
+            self?.navigationController?.pushViewController(profileViewController, animated: true)
+        }
+    }
+    
+    private func presentReviewDetailViewController(id: Int) {
+        let repository = ReviewDetailRepositoryImpl()
+        let usecase = ReviewDetailUsecaseImpl(repository: repository)
+        let viewModel = ReviewDetailViewModel(
+            usecase: usecase,
+            reviewId: id
+        )
+        let viewController = ReviewDetailViewController(viewModel: viewModel)
+        self.navigationController?.pushViewController(viewController, animated: true)
     }
 }

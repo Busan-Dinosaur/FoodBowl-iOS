@@ -314,7 +314,7 @@ extension FindViewController: UITableViewDataSource, UITableViewDelegate {
         if self.scope == 0 {
             self.presentStoreDetailViewController(id: self.stores[indexPath.item].id)
         } else {
-            self.presentProfileViewController(memberId: self.members[indexPath.item].id)
+            self.presentProfileViewController(id: self.members[indexPath.item].id)
         }
     }
 }
@@ -343,8 +343,8 @@ extension FindViewController {
         self.navigationController?.pushViewController(viewController, animated: true)
     }
     
-    private func presentProfileViewController(memberId: Int) {
-        let profileViewController = ProfileViewController(memberId: memberId)
+    private func presentProfileViewController(id: Int) {
+        let profileViewController = ProfileViewController(memberId: id)
         
         DispatchQueue.main.async { [weak self] in
             self?.navigationController?.pushViewController(profileViewController, animated: true)

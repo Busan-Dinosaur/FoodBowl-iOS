@@ -108,7 +108,7 @@ final class ReviewDetailViewController: UIViewController, Navigationable, Option
             .sink(receiveValue: { [weak self] _ in
                 guard let self = self else { return }
                 guard let viewModel = self.viewModel as? ReviewDetailViewModel else { return }
-                self.presentProfileViewController(memberId: viewModel.memberId)
+                self.presentProfileViewController(id: viewModel.memberId)
             })
             .store(in: &self.cancellable)
         
@@ -141,8 +141,8 @@ final class ReviewDetailViewController: UIViewController, Navigationable, Option
 
 // MARK: - Helper
 extension ReviewDetailViewController {
-    private func presentProfileViewController(memberId: Int) {
-        let profileViewController = ProfileViewController(memberId: memberId)
+    private func presentProfileViewController(id: Int) {
+        let profileViewController = ProfileViewController(memberId: id)
         
         DispatchQueue.main.async { [weak self] in
             self?.navigationController?.pushViewController(profileViewController, animated: true)

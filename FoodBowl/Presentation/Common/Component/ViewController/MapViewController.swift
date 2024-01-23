@@ -262,11 +262,7 @@ class MapViewController: UIViewController, Navigationable, Optionable {
     
     private func bindCell(_ cell: FeedCollectionViewCell, with item: ReviewItemDTO) {
         cell.userButtonTapAction = { [weak self] _ in
-            let profileViewController = ProfileViewController(memberId: item.writer.id)
-            
-            DispatchQueue.main.async { [weak self] in
-                self?.navigationController?.pushViewController(profileViewController, animated: true)
-            }
+            self?.presentProfileViewController(id: item.writer.id)
         }
         
         cell.optionButtonTapAction = { [weak self] _ in
@@ -277,18 +273,12 @@ class MapViewController: UIViewController, Navigationable, Optionable {
             }
         }
         
+        cell.commentLabelTapAction = { [weak self] _ in
+            self?.presentReviewDetailViewController(id: item.review.id)
+        }
+        
         cell.storeButtonTapAction = { [weak self] _ in
-            let repository = StoreDetailRepositoryImpl()
-            let usecase = StoreDetailUsecaseImpl(repository: repository)
-            let viewModel = StoreDetailViewModel(
-                usecase: usecase,
-                storeId: item.store.id
-            )
-            let viewController = StoreDetailViewController(viewModel: viewModel)
-            
-            DispatchQueue.main.async { [weak self] in
-                self?.navigationController?.pushViewController(viewController, animated: true)
-            }
+            self?.presentStoreDetailViewController(id: item.store.id)
         }
         
         cell.bookmarkButtonTapAction = { [weak self] _ in
@@ -340,17 +330,7 @@ extension MapViewController {
                 ),
                 glyphImage: CategoryType(rawValue: store.categoryName)?.icon,
                 handler: { [weak self] in
-                    let repository = StoreDetailRepositoryImpl()
-                    let usecase = StoreDetailUsecaseImpl(repository: repository)
-                    let viewModel = StoreDetailViewModel(
-                        usecase: usecase,
-                        storeId: store.id
-                    )
-                    let viewController = StoreDetailViewController(viewModel: viewModel)
-                    
-                    DispatchQueue.main.async { [weak self] in
-                        self?.navigationController?.pushViewController(viewController, animated: true)
-                    }
+                    self?.presentStoreDetailViewController(id: store.id)
                 }
             )
         }
@@ -559,5 +539,38 @@ extension MapViewController: CreateReviewViewControllerDelegate {
         if let customLocation = customLocation {
             customLocationPublisher.send(customLocation)
         }
+    }
+}
+
+// MARK: - Helper
+extension MapViewController {
+    private func presentProfileViewController(id: Int) {
+        let profileViewController = ProfileViewController(memberId: id)
+        
+        DispatchQueue.main.async { [weak self] in
+            self?.navigationController?.pushViewController(profileViewController, animated: true)
+        }
+    }
+    
+    private func presentStoreDetailViewController(id: Int) {
+        let repository = StoreDetailRepositoryImpl()
+        let usecase = StoreDetailUsecaseImpl(repository: repository)
+        let viewModel = StoreDetailViewModel(
+            usecase: usecase,
+            storeId: id
+        )
+        let viewController = StoreDetailViewController(viewModel: viewModel)
+        self.navigationController?.pushViewController(viewController, animated: true)
+    }
+    
+    private func presentReviewDetailViewController(id: Int) {
+        let repository = ReviewDetailRepositoryImpl()
+        let usecase = ReviewDetailUsecaseImpl(repository: repository)
+        let viewModel = ReviewDetailViewModel(
+            usecase: usecase,
+            reviewId: id
+        )
+        let viewController = ReviewDetailViewController(viewModel: viewModel)
+        self.navigationController?.pushViewController(viewController, animated: true)
     }
 }

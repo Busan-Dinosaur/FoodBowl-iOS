@@ -19,6 +19,7 @@ final class FeedCollectionViewCell: UICollectionViewCell, BaseViewType {
         $0.font = UIFont.preferredFont(forTextStyle: .subheadline, weight: .light)
         $0.textColor = .mainTextColor
         $0.numberOfLines = 0
+        $0.isUserInteractionEnabled = true
     }
     private let photoListView = PhotoListView()
     let storeInfoButton = StoreInfoButton()
@@ -27,6 +28,7 @@ final class FeedCollectionViewCell: UICollectionViewCell, BaseViewType {
     
     var userButtonTapAction: ((FeedCollectionViewCell) -> Void)?
     var optionButtonTapAction: ((FeedCollectionViewCell) -> Void)?
+    var commentLabelTapAction: ((FeedCollectionViewCell) -> Void)?
     var storeButtonTapAction: ((FeedCollectionViewCell) -> Void)?
     var bookmarkButtonTapAction: ((FeedCollectionViewCell) -> Void)?
     
@@ -99,6 +101,14 @@ final class FeedCollectionViewCell: UICollectionViewCell, BaseViewType {
         self.userInfoButton.optionButton.addAction(UIAction { _ in self.optionButtonTapAction?(self) }, for: .touchUpInside)
         self.storeInfoButton.addAction(UIAction { _ in self.storeButtonTapAction?(self) }, for: .touchUpInside)
         self.storeInfoButton.bookmarkButton.addAction(UIAction { _ in self.bookmarkButtonTapAction?(self) }, for: .touchUpInside)
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(commentLabelTapped))
+        self.commentLabel.addGestureRecognizer(tapGesture)
+    }
+    
+    @objc 
+    private func commentLabelTapped() {
+        self.commentLabelTapAction?(self)
     }
 }
 

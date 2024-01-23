@@ -19,6 +19,7 @@ final class FeedNSCollectionViewCell: UICollectionViewCell, BaseViewType {
         $0.font = UIFont.preferredFont(forTextStyle: .subheadline, weight: .light)
         $0.textColor = .mainTextColor
         $0.numberOfLines = 0
+        $0.isUserInteractionEnabled = true
     }
     private let photoListView = PhotoListView()
     
@@ -26,6 +27,7 @@ final class FeedNSCollectionViewCell: UICollectionViewCell, BaseViewType {
     
     var userButtonTapAction: ((FeedNSCollectionViewCell) -> Void)?
     var optionButtonTapAction: ((FeedNSCollectionViewCell) -> Void)?
+    var commentLabelTapAction: ((FeedNSCollectionViewCell) -> Void)?
     
     // MARK: - init
     
@@ -87,6 +89,14 @@ final class FeedNSCollectionViewCell: UICollectionViewCell, BaseViewType {
     private func setupAction() {
         self.userInfoButton.addAction(UIAction { _ in self.userButtonTapAction?(self) }, for: .touchUpInside)
         self.userInfoButton.optionButton.addAction(UIAction { _ in self.optionButtonTapAction?(self) }, for: .touchUpInside)
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(commentLabelTapped))
+        self.commentLabel.addGestureRecognizer(tapGesture)
+    }
+    
+    @objc
+    private func commentLabelTapped() {
+        self.commentLabelTapAction?(self)
     }
 }
 

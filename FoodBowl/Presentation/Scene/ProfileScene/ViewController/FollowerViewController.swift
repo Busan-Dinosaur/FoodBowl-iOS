@@ -169,7 +169,7 @@ extension FollowerViewController {
             guard let viewModel = self.viewModel as? FollowerViewModel else { return }
             cell.configureCell(item, viewModel.isOwn)
             cell.cellTapAction = { _ in
-                self.presentProfileViewController(memberId: item.id)
+                self.presentProfileViewController(id: item.id)
             }
             self.bindCell(cell, with: item)
         }
@@ -233,8 +233,8 @@ extension FollowerViewController {
 
 // MARK: - Helper
 extension FollowerViewController {
-    private func presentProfileViewController(memberId: Int) {
-        let profileViewController = ProfileViewController(memberId: memberId)
+    private func presentProfileViewController(id: Int) {
+        let profileViewController = ProfileViewController(memberId: id)
         
         DispatchQueue.main.async { [weak self] in
             self?.navigationController?.pushViewController(profileViewController, animated: true)
