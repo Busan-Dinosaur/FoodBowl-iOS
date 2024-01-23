@@ -47,7 +47,7 @@ final class StoreDetailViewModel: BaseViewModelType {
     init(
         usecase: StoreDetailUsecase,
         storeId: Int,
-        isFriend: Bool = true
+        isFriend: Bool = false
     ) {
         self.usecase = usecase
         self.storeId = storeId

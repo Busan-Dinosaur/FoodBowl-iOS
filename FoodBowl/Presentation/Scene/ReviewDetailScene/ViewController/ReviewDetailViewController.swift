@@ -145,8 +145,7 @@ extension ReviewDetailViewController {
         let usecase = StoreDetailUsecaseImpl(repository: repository)
         let viewModel = StoreDetailViewModel(
             usecase: usecase,
-            storeId: id,
-            isFriend: false
+            storeId: id
         )
         let viewController = StoreDetailViewController(viewModel: viewModel)
         self.navigationController?.pushViewController(viewController, animated: true)

@@ -188,27 +188,6 @@ final class FindViewController: UIViewController, Keyboardable {
     }
 }
 
-// MARK: - Helper
-extension FindViewController {
-    private func presentCreateReviewViewController() {
-        let repository = CreateReviewRepositoryImpl()
-        let usecase = CreateReviewUsecaseImpl(repository: repository)
-        let viewModel = CreateReviewViewModel(usecase: usecase)
-        let viewController = CreateReviewViewController(viewModel: viewModel)
-        let navigationController = UINavigationController(rootViewController: viewController)
-        navigationController.modalPresentationStyle = .fullScreen
-        self.present(navigationController, animated: true)
-    }
-    
-    private func presentReviewDetailViewController(id: Int) {
-        let repository = ReviewDetailRepositoryImpl()
-        let usecase = ReviewDetailUsecaseImpl(repository: repository)
-        let viewModel = ReviewDetailViewModel(usecase: usecase, reviewId: id)
-        let viewController = ReviewDetailViewController(viewModel: viewModel)
-        self.navigationController?.pushViewController(viewController, animated: true)
-    }
-}
-
 // MARK: - DataSource
 extension FindViewController {
     private func configureDataSource() {
@@ -333,23 +312,50 @@ extension FindViewController: UITableViewDataSource, UITableViewDelegate {
 
     func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
         if self.scope == 0 {
-            let repository = StoreDetailRepositoryImpl()
-            let usecase = StoreDetailUsecaseImpl(repository: repository)
-            let viewModel = StoreDetailViewModel(
-                usecase: usecase,
-                storeId: self.stores[indexPath.item].id,
-                isFriend: false
-            )
-            let viewController = StoreDetailViewController(viewModel: viewModel)
-
-            DispatchQueue.main.async { [weak self] in
-                self?.navigationController?.pushViewController(viewController, animated: true)
-            }
+            self.presentStoreDetailViewController(id: self.stores[indexPath.item].id)
         } else {
-            let profileViewController = ProfileViewController(memberId: self.members[indexPath.item].id)
-            DispatchQueue.main.async { [weak self] in
-                self?.navigationController?.pushViewController(profileViewController, animated: true)
-            }
+            self.presentProfileViewController(memberId: self.members[indexPath.item].id)
         }
+    }
+}
+
+
+// MARK: - Helper
+extension FindViewController {
+    private func presentCreateReviewViewController() {
+        let repository = CreateReviewRepositoryImpl()
+        let usecase = CreateReviewUsecaseImpl(repository: repository)
+        let viewModel = CreateReviewViewModel(usecase: usecase)
+        let viewController = CreateReviewViewController(viewModel: viewModel)
+        let navigationController = UINavigationController(rootViewController: viewController)
+        navigationController.modalPresentationStyle = .fullScreen
+        self.present(navigationController, animated: true)
+    }
+    
+    private func presentStoreDetailViewController(id: Int) {
+        let repository = StoreDetailRepositoryImpl()
+        let usecase = StoreDetailUsecaseImpl(repository: repository)
+        let viewModel = StoreDetailViewModel(
+            usecase: usecase,
+            storeId: id
+        )
+        let viewController = StoreDetailViewController(viewModel: viewModel)
+        self.navigationController?.pushViewController(viewController, animated: true)
+    }
+    
+    private func presentProfileViewController(memberId: Int) {
+        let profileViewController = ProfileViewController(memberId: memberId)
+        
+        DispatchQueue.main.async { [weak self] in
+            self?.navigationController?.pushViewController(profileViewController, animated: true)
+        }
+    }
+    
+    private func presentReviewDetailViewController(id: Int) {
+        let repository = ReviewDetailRepositoryImpl()
+        let usecase = ReviewDetailUsecaseImpl(repository: repository)
+        let viewModel = ReviewDetailViewModel(usecase: usecase, reviewId: id)
+        let viewController = ReviewDetailViewController(viewModel: viewModel)
+        self.navigationController?.pushViewController(viewController, animated: true)
     }
 }
