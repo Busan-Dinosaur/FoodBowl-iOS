@@ -199,6 +199,14 @@ extension FindViewController {
         navigationController.modalPresentationStyle = .fullScreen
         self.present(navigationController, animated: true)
     }
+    
+    private func presentReviewDetailViewController(id: Int) {
+        let repository = ReviewDetailRepositoryImpl()
+        let usecase = ReviewDetailUsecaseImpl(repository: repository)
+        let viewModel = ReviewDetailViewModel(usecase: usecase, reviewId: id)
+        let viewController = ReviewDetailViewController(viewModel: viewModel)
+        self.navigationController?.pushViewController(viewController, animated: true)
+    }
 }
 
 // MARK: - DataSource
@@ -212,7 +220,7 @@ extension FindViewController {
         let reviewCellRegistration = UICollectionView.CellRegistration<PhotoCollectionViewCell, Review> { cell, indexPath, item in
             cell.configureCell(item.thumbnail)
             cell.cellTapAction = { [weak self] _ in
-                print(item.comment.id)
+                self?.presentReviewDetailViewController(id: item.comment.id)
             }
         }
 
@@ -327,7 +335,11 @@ extension FindViewController: UITableViewDataSource, UITableViewDelegate {
         if self.scope == 0 {
             let repository = StoreDetailRepositoryImpl()
             let usecase = StoreDetailUsecaseImpl(repository: repository)
-            let viewModel = StoreDetailViewModel(usecase: usecase, storeId: self.stores[indexPath.item].id, isFriend: false)
+            let viewModel = StoreDetailViewModel(
+                usecase: usecase,
+                storeId: self.stores[indexPath.item].id,
+                isFriend: false
+            )
             let viewController = StoreDetailViewController(viewModel: viewModel)
 
             DispatchQueue.main.async { [weak self] in

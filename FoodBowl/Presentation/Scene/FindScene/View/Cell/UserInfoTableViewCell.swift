@@ -71,7 +71,7 @@ final class UserInfoTableViewCell: UITableViewCell, BaseViewType {
 
         self.userFollowerLabel.snp.makeConstraints {
             $0.leading.equalTo(self.userImageView.snp.trailing).offset(12)
-            $0.top.equalTo(self.userNameLabel.snp.bottom).offset(4)
+            $0.top.equalTo(self.userNameLabel.snp.bottom).offset(2)
         }
 
         self.followButton.snp.makeConstraints {

@@ -100,6 +100,9 @@
 		CB84CAFD2B602FE100F4591A /* ReviewDetailRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB84CAFC2B602FE100F4591A /* ReviewDetailRepository.swift */; };
 		CB84CB002B602FF300F4591A /* ReviewDetailUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB84CAFF2B602FF300F4591A /* ReviewDetailUsecase.swift */; };
 		CB84CB032B60300C00F4591A /* ReviewDetailRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB84CB022B60300C00F4591A /* ReviewDetailRepositoryImpl.swift */; };
+		CB84CB062B60357100F4591A /* HorizontalScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB84CB052B60357100F4591A /* HorizontalScrollView.swift */; };
+		CB84CB082B60359300F4591A /* BaseScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB84CB072B60359300F4591A /* BaseScrollView.swift */; };
+		CB84CB0A2B60411500F4591A /* StoreDetailInfoButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB84CB092B60411500F4591A /* StoreDetailInfoButton.swift */; };
 		CB8A2D9B297844720018AC6E /* Marker.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB8A2D9A297844720018AC6E /* Marker.swift */; };
 		CB91E2A42B56D7B2008A0E8E /* StoreDetailUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB91E2A32B56D7B2008A0E8E /* StoreDetailUsecase.swift */; };
 		CB91E2A62B56D7D6008A0E8E /* StoreDetailRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB91E2A52B56D7D6008A0E8E /* StoreDetailRepository.swift */; };
@@ -314,6 +317,9 @@
 		CB84CAFC2B602FE100F4591A /* ReviewDetailRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewDetailRepository.swift; sourceTree = "<group>"; };
 		CB84CAFF2B602FF300F4591A /* ReviewDetailUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewDetailUsecase.swift; sourceTree = "<group>"; };
 		CB84CB022B60300C00F4591A /* ReviewDetailRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewDetailRepositoryImpl.swift; sourceTree = "<group>"; };
+		CB84CB052B60357100F4591A /* HorizontalScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalScrollView.swift; sourceTree = "<group>"; };
+		CB84CB072B60359300F4591A /* BaseScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseScrollView.swift; sourceTree = "<group>"; };
+		CB84CB092B60411500F4591A /* StoreDetailInfoButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreDetailInfoButton.swift; sourceTree = "<group>"; };
 		CB8A2D9A297844720018AC6E /* Marker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Marker.swift; sourceTree = "<group>"; };
 		CB91E2A32B56D7B2008A0E8E /* StoreDetailUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreDetailUsecase.swift; sourceTree = "<group>"; };
 		CB91E2A52B56D7D6008A0E8E /* StoreDetailRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreDetailRepository.swift; sourceTree = "<group>"; };
@@ -917,6 +923,7 @@
 		CB84CAF42B602F9E00F4591A /* View */ = {
 			isa = PBXGroup;
 			children = (
+				CB84CB042B60356900F4591A /* UIComponent */,
 				CB84CAF52B602FAC00F4591A /* ReviewDetailView.swift */,
 			);
 			path = View;
@@ -944,6 +951,16 @@
 				CB84CB022B60300C00F4591A /* ReviewDetailRepositoryImpl.swift */,
 			);
 			path = ReviewDetailScene;
+			sourceTree = "<group>";
+		};
+		CB84CB042B60356900F4591A /* UIComponent */ = {
+			isa = PBXGroup;
+			children = (
+				CB84CB052B60357100F4591A /* HorizontalScrollView.swift */,
+				CB84CB072B60359300F4591A /* BaseScrollView.swift */,
+				CB84CB092B60411500F4591A /* StoreDetailInfoButton.swift */,
+			);
+			path = UIComponent;
 			sourceTree = "<group>";
 		};
 		CB91E2A22B56D797008A0E8E /* StoreDetailScene */ = {
@@ -1779,6 +1796,7 @@
 				CBE61913296C68D9005295AF /* PlusButton.swift in Sources */,
 				CB83066A2B59778C00632789 /* Members.swift in Sources */,
 				CB1A7C5E295618A900C6431D /* SettingButton.swift in Sources */,
+				CB84CB082B60359300F4591A /* BaseScrollView.swift in Sources */,
 				CBD8D4732B4646B900445C98 /* BlameRepositroyImpl.swift in Sources */,
 				CBDF11292B5EAA48007DA3E1 /* SearchUnivRepositoryImpl.swift in Sources */,
 				CB2A44A62ADFC62D004A4126 /* PanZoomImageView.swift in Sources */,
@@ -1791,6 +1809,7 @@
 				CBE6190F296C6435005295AF /* MapViewController.swift in Sources */,
 				CBBA9F192AB5681900BE37AE /* UnivTitleButton.swift in Sources */,
 				CBD8D4712B4645F400445C98 /* BlameRepository.swift in Sources */,
+				CB84CB062B60357100F4591A /* HorizontalScrollView.swift in Sources */,
 				CB5BFB3F2B3F14EC00B35062 /* GetStoresRequestDTO.swift in Sources */,
 				CB15790B2AACD44700007183 /* SchoolDTO.swift in Sources */,
 				CBF9264D2B411F45005E251B /* BlameViewModel.swift in Sources */,
@@ -1847,6 +1866,7 @@
 				CB5BFB1F2B3F028F00B35062 /* SignRepository.swift in Sources */,
 				CB7F3327298A51610000A6B4 /* UserDefaultHandler.swift in Sources */,
 				CB1579002AAC61CD00007183 /* TokenDTO.swift in Sources */,
+				CB84CB0A2B60411500F4591A /* StoreDetailInfoButton.swift in Sources */,
 				CB84CAEC2B602C9100F4591A /* UpdateReviewRequestDTO.swift in Sources */,
 				CB1A7C5C29560C2300C6431D /* UserInfoButton.swift in Sources */,
 				CBC158662AD80BB600FD263B /* MemberDTO.swift in Sources */,

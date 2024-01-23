@@ -280,7 +280,10 @@ class MapViewController: UIViewController, Navigationable, Optionable {
         cell.storeButtonTapAction = { [weak self] _ in
             let repository = StoreDetailRepositoryImpl()
             let usecase = StoreDetailUsecaseImpl(repository: repository)
-            let viewModel = StoreDetailViewModel(usecase: usecase, storeId: item.store.id, isFriend: true)
+            let viewModel = StoreDetailViewModel(
+                usecase: usecase,
+                storeId: item.store.id
+            )
             let viewController = StoreDetailViewController(viewModel: viewModel)
             
             DispatchQueue.main.async { [weak self] in
@@ -339,7 +342,10 @@ extension MapViewController {
                 handler: { [weak self] in
                     let repository = StoreDetailRepositoryImpl()
                     let usecase = StoreDetailUsecaseImpl(repository: repository)
-                    let viewModel = StoreDetailViewModel(usecase: usecase, storeId: store.id, isFriend: true)
+                    let viewModel = StoreDetailViewModel(
+                        usecase: usecase,
+                        storeId: store.id
+                    )
                     let viewController = StoreDetailViewController(viewModel: viewModel)
                     
                     DispatchQueue.main.async { [weak self] in

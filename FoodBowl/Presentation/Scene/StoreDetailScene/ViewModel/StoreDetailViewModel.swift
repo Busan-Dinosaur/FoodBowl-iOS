@@ -44,7 +44,11 @@ final class StoreDetailViewModel: BaseViewModelType {
     
     // MARK: - init
 
-    init(usecase: StoreDetailUsecase, storeId: Int, isFriend: Bool) {
+    init(
+        usecase: StoreDetailUsecase,
+        storeId: Int,
+        isFriend: Bool = true
+    ) {
         self.usecase = usecase
         self.storeId = storeId
         self.isFriend = isFriend

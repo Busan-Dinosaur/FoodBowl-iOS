@@ -17,4 +17,12 @@ final class ReviewDetailRepositoryImpl: ReviewDetailRepository {
         let response = await provider.request(.getReview(request: request))
         return try response.decode()
     }
+    
+    func createBookmark(storeId: Int) async throws {
+        let _ = await provider.request(.createBookmark(storeId: storeId))
+    }
+    
+    func removeBookmark(storeId: Int) async throws {
+        let _ = await provider.request(.removeBookmark(storeId: storeId))
+    }
 }

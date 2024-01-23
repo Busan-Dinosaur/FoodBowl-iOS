@@ -81,8 +81,8 @@ extension ServiceAPI: TargetType {
             return "/v1/reviews/\(id)"
         case .removeReview(let id):
             return "/v1/reviews/\(id)"
-        case .getReview:
-            return "/v1/reviews"
+        case .getReview(let request):
+            return "/v1/reviews/\(request.id)"
         case .getReviewsByStore:
             return "/v1/reviews/stores"
         case .getReviewsBySchool:
@@ -216,7 +216,7 @@ extension ServiceAPI: TargetType {
         case .removeReview:
             return .requestPlain
         case .getReview(let request):
-            var params: [String: Any] = [
+            let params: [String: Any] = [
                 "id": request.id,
                 "deviceX": request.deviceX,
                 "deviceY": request.deviceY
