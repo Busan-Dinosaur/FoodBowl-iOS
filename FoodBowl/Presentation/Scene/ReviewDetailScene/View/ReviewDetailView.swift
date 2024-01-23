@@ -130,8 +130,16 @@ extension ReviewDetailView {
         self.userInfoButton.configureUser(review.member)
         self.commentLabel.text = review.comment.content
         self.storeInfoButton.configureStore(review.store)
-        self.downloadImages(from: review.comment.imagePaths) { images in
-            self.reviewImagesView.model = images
+        
+        if review.comment.imagePaths.isEmpty {
+            self.reviewImagesView.isHidden = true
+            self.storeInfoButton.snp.updateConstraints {
+                $0.top.equalTo(self.userInfoButton.snp.bottom)
+            }
+        } else {
+            self.downloadImages(from: review.comment.imagePaths) { images in
+                self.reviewImagesView.model = images
+            }
         }
     }
     
