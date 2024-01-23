@@ -88,8 +88,7 @@ final class ReviewDetailView: UIView, BaseViewType {
         )
         
         self.userInfoButton.snp.makeConstraints {
-            $0.top.equalTo(self.safeAreaLayoutGuide)
-            $0.leading.trailing.equalToSuperview()
+            $0.top.leading.trailing.equalToSuperview()
             $0.height.equalTo(64)
         }
         
