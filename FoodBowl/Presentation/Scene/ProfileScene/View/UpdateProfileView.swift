@@ -122,6 +122,7 @@ final class UpdateProfileView: UIView, BaseViewType {
         
         self.contentView.snp.makeConstraints {
             $0.edges.equalToSuperview()
+            $0.width.equalToSuperview()
         }
         
         self.contentView.addSubviews(

@@ -80,6 +80,7 @@ final class ReviewDetailView: UIView, BaseViewType {
         
         self.contentView.snp.makeConstraints {
             $0.edges.equalToSuperview()
+            $0.width.equalToSuperview()
         }
     }
     
