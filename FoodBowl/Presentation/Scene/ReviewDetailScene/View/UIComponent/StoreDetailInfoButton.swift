@@ -27,9 +27,6 @@ final class StoreDetailInfoButton: UIButton, BaseViewType {
         $0.textColor = .subTextColor
     }
     let bookmarkButton = BookmarkButton()
-    private let borderLineView = UIView().then {
-        $0.backgroundColor = .grey002.withAlphaComponent(0.5)
-    }
 
     // MARK: - init
     
@@ -48,9 +45,12 @@ final class StoreDetailInfoButton: UIButton, BaseViewType {
             self.storeNameLabel,
             self.storeCategoryLabel,
             self.storeAddressLabel,
-            self.bookmarkButton,
-            self.borderLineView
+            self.bookmarkButton
         )
+        
+        self.snp.makeConstraints {
+            $0.width.equalTo(UIScreen.main.bounds.size.width)
+        }
 
         self.storeNameLabel.snp.makeConstraints {
             $0.top.equalToSuperview().inset(12)
@@ -74,15 +74,10 @@ final class StoreDetailInfoButton: UIButton, BaseViewType {
             $0.centerY.equalToSuperview()
             $0.width.height.equalTo(50)
         }
-        
-        self.borderLineView.snp.makeConstraints {
-            $0.leading.trailing.bottom.equalToSuperview()
-            $0.height.equalTo(1)
-        }
     }
     
     func configureUI() {
-        self.backgroundColor = .mainBackgroundColor
+        self.backgroundColor = .subBackgroundColor
     }
 }
 

@@ -15,6 +15,14 @@ extension UIColor {
                 : UIColor(hex: "#F8F9FA")
         }
     }
+    
+    static var subBackgroundColor: UIColor {
+        return UIColor { traits -> UIColor in
+            traits.userInterfaceStyle == .dark
+                ? UIColor(hex: "#495057")
+                : UIColor(hex: "#E9ECEF")
+        }
+    }
 
     static var mainTextColor: UIColor {
         return UIColor { traits -> UIColor in

@@ -82,7 +82,7 @@ final class StoreDetailView: UIView, BaseViewType {
         self.storeHeaderView.snp.makeConstraints {
             $0.top.equalTo(self.safeAreaLayoutGuide)
             $0.leading.trailing.equalToSuperview()
-            $0.height.equalTo(50)
+            $0.height.equalTo(60)
         }
 
         self.listCollectionView.snp.makeConstraints {

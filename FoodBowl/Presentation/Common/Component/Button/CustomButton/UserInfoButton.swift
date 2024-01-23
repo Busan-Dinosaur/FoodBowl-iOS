@@ -52,6 +52,10 @@ final class UserInfoButton: UIButton, BaseViewType {
             self.optionButton
         )
         
+        self.snp.makeConstraints {
+            $0.width.equalTo(UIScreen.main.bounds.size.width)
+        }
+        
         self.userImageView.snp.makeConstraints {
             $0.leading.equalToSuperview().inset(SizeLiteral.horizantalPadding)
             $0.centerY.equalToSuperview()

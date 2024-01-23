@@ -28,9 +28,6 @@ final class StoreHeaderView: UIView, BaseViewType {
         $0.textColor = .subTextColor
     }
     let bookmarkButton = BookmarkButton()
-    private let borderLineView = UIView().then {
-        $0.backgroundColor = .grey002.withAlphaComponent(0.5)
-    }
 
     // MARK: - init
     
@@ -50,17 +47,20 @@ final class StoreHeaderView: UIView, BaseViewType {
             self.storeNameLabel,
             self.storeCategoryLabel,
             self.storeAddressLabel,
-            self.bookmarkButton,
-            self.borderLineView
+            self.bookmarkButton
         )
+        
+        self.snp.makeConstraints {
+            $0.width.equalTo(UIScreen.main.bounds.size.width)
+        }
 
         self.mapButton.snp.makeConstraints {
-            $0.top.equalToSuperview()
+            $0.centerY.equalToSuperview()
             $0.leading.equalToSuperview().inset(SizeLiteral.horizantalPadding)
         }
 
         self.storeNameLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(2)
+            $0.top.equalToSuperview().inset(12)
             $0.leading.equalTo(mapButton.snp.trailing).offset(12)
             $0.width.lessThanOrEqualTo(SizeLiteral.fullWidth - 140)
         }
@@ -77,18 +77,13 @@ final class StoreHeaderView: UIView, BaseViewType {
         }
 
         self.bookmarkButton.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(10)
+            $0.centerY.equalToSuperview()
             $0.trailing.equalToSuperview().inset(SizeLiteral.horizantalPadding)
-        }
-
-        self.borderLineView.snp.makeConstraints {
-            $0.leading.trailing.bottom.equalToSuperview()
-            $0.height.equalTo(1)
         }
     }
     
     func configureUI() {
-        self.backgroundColor = .mainBackgroundColor
+        self.backgroundColor = .subBackgroundColor
     }
 }
 

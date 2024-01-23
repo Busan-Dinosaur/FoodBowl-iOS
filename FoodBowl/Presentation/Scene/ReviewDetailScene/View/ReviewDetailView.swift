@@ -80,9 +80,24 @@ final class ReviewDetailView: UIView, BaseViewType {
         
         self.contentView.snp.makeConstraints {
             $0.edges.equalToSuperview()
-            $0.width.equalToSuperview()
         }
-        
+    }
+    
+    func configureUI() {
+        self.backgroundColor = .mainBackgroundColor
+    }
+    
+    // MARK: - Private - func
+
+    private func setupAction() {
+        let bookmarkAction = UIAction { [weak self] _ in
+            guard let self = self else { return }
+            self.bookmarkButtonDidTapPublisher.send(self.storeInfoButton.bookmarkButton.isSelected)
+        }
+        self.storeInfoButton.bookmarkButton.addAction(bookmarkAction, for: .touchUpInside)
+    }
+    
+    private func setupExistImageUI() {
         self.contentView.addSubviews(
             self.userInfoButton,
             self.reviewImagesView,
@@ -113,18 +128,29 @@ final class ReviewDetailView: UIView, BaseViewType {
         }
     }
     
-    func configureUI() {
-        self.backgroundColor = .mainBackgroundColor
-    }
-    
-    // MARK: - Private - func
-
-    private func setupAction() {
-        let bookmarkAction = UIAction { [weak self] _ in
-            guard let self = self else { return }
-            self.bookmarkButtonDidTapPublisher.send(self.storeInfoButton.bookmarkButton.isSelected)
+    private func setupNoneImageUI() {
+        self.contentView.addSubviews(
+            self.userInfoButton,
+            self.storeInfoButton,
+            self.commentLabel
+        )
+        
+        self.userInfoButton.snp.makeConstraints {
+            $0.top.leading.trailing.equalToSuperview()
+            $0.height.equalTo(64)
         }
-        self.storeInfoButton.bookmarkButton.addAction(bookmarkAction, for: .touchUpInside)
+        
+        self.storeInfoButton.snp.makeConstraints {
+            $0.top.equalTo(self.userInfoButton.snp.bottom)
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(60)
+        }
+        
+        self.commentLabel.snp.makeConstraints {
+            $0.top.equalTo(self.storeInfoButton.snp.bottom).offset(12)
+            $0.leading.trailing.equalToSuperview().inset(SizeLiteral.horizantalPadding)
+            $0.bottom.equalToSuperview()
+        }
     }
 }
 
@@ -136,11 +162,9 @@ extension ReviewDetailView {
         self.storeInfoButton.configureStore(review.store)
         
         if review.comment.imagePaths.isEmpty {
-            self.reviewImagesView.isHidden = true
-            self.storeInfoButton.snp.updateConstraints {
-                $0.top.equalTo(self.userInfoButton.snp.bottom)
-            }
+            self.setupNoneImageUI()
         } else {
+            self.setupExistImageUI()
             self.downloadImages(from: review.comment.imagePaths) { images in
                 self.reviewImagesView.model = images
             }
