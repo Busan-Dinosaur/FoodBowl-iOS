@@ -164,7 +164,7 @@ final class StoreDetailViewController: UIViewController, Navigationable, Optiona
             }
         }
         
-        cell.commentLabelTapAction = { [weak self] _ in
+        cell.cellTapAction = { [weak self] _ in
             DispatchQueue.main.async { [weak self] in
                 self?.presentReviewDetailViewController(id: item.comment.id)
             }

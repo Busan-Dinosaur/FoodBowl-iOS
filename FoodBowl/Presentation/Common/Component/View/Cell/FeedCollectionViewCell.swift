@@ -28,7 +28,7 @@ final class FeedCollectionViewCell: UICollectionViewCell, BaseViewType {
     
     var userButtonTapAction: ((FeedCollectionViewCell) -> Void)?
     var optionButtonTapAction: ((FeedCollectionViewCell) -> Void)?
-    var commentLabelTapAction: ((FeedCollectionViewCell) -> Void)?
+    var cellTapAction: ((FeedCollectionViewCell) -> Void)?
     var storeButtonTapAction: ((FeedCollectionViewCell) -> Void)?
     var bookmarkButtonTapAction: ((FeedCollectionViewCell) -> Void)?
     
@@ -102,13 +102,13 @@ final class FeedCollectionViewCell: UICollectionViewCell, BaseViewType {
         self.storeInfoButton.addAction(UIAction { _ in self.storeButtonTapAction?(self) }, for: .touchUpInside)
         self.storeInfoButton.bookmarkButton.addAction(UIAction { _ in self.bookmarkButtonTapAction?(self) }, for: .touchUpInside)
         
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(commentLabelTapped))
-        self.commentLabel.addGestureRecognizer(tapGesture)
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(cellTapped))
+        self.addGestureRecognizer(tapGesture)
     }
     
     @objc 
-    private func commentLabelTapped() {
-        self.commentLabelTapAction?(self)
+    private func cellTapped() {
+        self.cellTapAction?(self)
     }
 }
 

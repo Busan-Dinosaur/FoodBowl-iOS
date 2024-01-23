@@ -273,10 +273,6 @@ class MapViewController: UIViewController, Navigationable, Optionable {
             }
         }
         
-        cell.commentLabelTapAction = { [weak self] _ in
-            self?.presentReviewDetailViewController(id: item.review.id)
-        }
-        
         cell.storeButtonTapAction = { [weak self] _ in
             self?.presentStoreDetailViewController(id: item.store.id)
         }
@@ -299,6 +295,10 @@ class MapViewController: UIViewController, Navigationable, Optionable {
                     }
                 }
             }
+        }
+        
+        cell.cellTapAction = { [weak self] _ in
+            self?.presentReviewDetailViewController(id: item.review.id)
         }
     }
     
