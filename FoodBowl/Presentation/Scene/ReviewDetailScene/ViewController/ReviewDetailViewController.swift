@@ -112,6 +112,15 @@ final class ReviewDetailViewController: UIViewController, Navigationable, Option
             })
             .store(in: &self.cancellable)
         
+        self.reviewDetailView.optionButtonDidTapPublisher
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] _ in
+                guard let self = self else { return }
+                guard let viewModel = self.viewModel as? ReviewDetailViewModel else { return }
+                self.presentReviewOptionAlert(reviewId: viewModel.reviewId)
+            })
+            .store(in: &self.cancellable)
+        
         self.reviewDetailView.storeInfoButtonDidTapPublisher
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] _ in

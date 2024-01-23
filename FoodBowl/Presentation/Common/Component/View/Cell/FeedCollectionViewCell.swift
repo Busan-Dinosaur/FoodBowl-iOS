@@ -113,6 +113,7 @@ extension FeedCollectionViewCell {
         let comment = reviewItem.comment
         
         self.userInfoButton.configureUser(member)
+        self.userInfoButton.optionButton.isHidden = member.isMyProfile && !isOwn
         self.storeInfoButton.configureStore(store)
         self.commentLabel.text = comment.content
         
@@ -134,10 +135,6 @@ extension FeedCollectionViewCell {
                 $0.bottom.equalToSuperview().inset(14)
                 $0.height.equalTo(54)
             }
-        }
-        
-        if member.isMyProfile && !isOwn {
-            self.userInfoButton.optionButton.isHidden = true
         }
     }
 }

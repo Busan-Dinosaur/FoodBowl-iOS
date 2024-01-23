@@ -15,7 +15,7 @@ final class ReviewDetailViewModel: BaseViewModelType {
     private let usecase: ReviewDetailUsecase
     private var cancellable = Set<AnyCancellable>()
     
-    private let reviewId: Int
+    let reviewId: Int
     var memberId: Int = 0
     var storeId: Int = 0
     

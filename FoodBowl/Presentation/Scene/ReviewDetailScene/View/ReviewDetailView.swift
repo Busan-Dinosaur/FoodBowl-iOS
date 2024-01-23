@@ -38,6 +38,9 @@ final class ReviewDetailView: UIView, BaseViewType {
     var userInfoButtonDidTapPublisher: AnyPublisher<Void, Never> {
         return self.userInfoButton.buttonTapPublisher
     }
+    var optionButtonDidTapPublisher: AnyPublisher<Void, Never> {
+        return self.userInfoButton.optionButton.buttonTapPublisher
+    }
     var storeInfoButtonDidTapPublisher: AnyPublisher<Void, Never> {
         return self.storeInfoButton.buttonTapPublisher
     }
@@ -106,6 +109,7 @@ final class ReviewDetailView: UIView, BaseViewType {
         self.commentLabel.snp.makeConstraints {
             $0.top.equalTo(self.storeInfoButton.snp.bottom).offset(12)
             $0.leading.trailing.equalToSuperview().inset(SizeLiteral.horizantalPadding)
+            $0.bottom.equalToSuperview()
         }
     }
     
@@ -127,6 +131,7 @@ final class ReviewDetailView: UIView, BaseViewType {
 extension ReviewDetailView {
     func configureReview(_ review: Review) {
         self.userInfoButton.configureUser(review.member)
+        self.userInfoButton.optionButton.isHidden = UserDefaultStorage.id == review.member.id
         self.commentLabel.text = review.comment.content
         self.storeInfoButton.configureStore(review.store)
         

@@ -156,17 +156,14 @@ final class StoreDetailViewController: UIViewController, Navigationable, Optiona
     private func bindCell(_ cell: FeedNSCollectionViewCell, with item: Review) {
         cell.userButtonTapAction = { [weak self] _ in
             let profileViewController = ProfileViewController(memberId: item.member.id)
-            
             DispatchQueue.main.async { [weak self] in
                 self?.navigationController?.pushViewController(profileViewController, animated: true)
             }
         }
         
         cell.optionButtonTapAction = { [weak self] _ in
-            let isOwn = UserDefaultStorage.id == item.member.id
-            
             DispatchQueue.main.async { [weak self] in
-                self?.presentReviewOptionAlert(isOwn: isOwn, reviewId: item.comment.id)
+                self?.presentReviewOptionAlert(reviewId: item.comment.id)
             }
         }
     }

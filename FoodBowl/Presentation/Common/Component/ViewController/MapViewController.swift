@@ -273,7 +273,7 @@ class MapViewController: UIViewController, Navigationable, Optionable {
             let isOwn = UserDefaultStorage.id == item.writer.id
             
             DispatchQueue.main.async { [weak self] in
-                self?.presentReviewOptionAlert(isOwn: isOwn, reviewId: item.review.id)
+                self?.presentReviewOptionAlert(reviewId: item.review.id)
             }
         }
         

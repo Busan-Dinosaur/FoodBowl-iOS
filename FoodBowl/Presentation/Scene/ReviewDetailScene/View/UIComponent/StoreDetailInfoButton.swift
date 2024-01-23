@@ -14,7 +14,6 @@ final class StoreDetailInfoButton: UIButton, BaseViewType {
     
     // MARK: - ui component
     
-    private let mapButton = MapButton()
     private let storeNameLabel = UILabel().then {
         $0.font = UIFont.preferredFont(forTextStyle: .subheadline, weight: .medium)
         $0.textColor = .mainTextColor
@@ -46,7 +45,6 @@ final class StoreDetailInfoButton: UIButton, BaseViewType {
 
     func setupLayout() {
         self.addSubviews(
-            self.mapButton,
             self.storeNameLabel,
             self.storeCategoryLabel,
             self.storeAddressLabel,
@@ -54,16 +52,10 @@ final class StoreDetailInfoButton: UIButton, BaseViewType {
             self.borderLineView
         )
 
-        self.mapButton.snp.makeConstraints {
-            $0.leading.equalToSuperview().inset(10)
-            $0.centerY.equalToSuperview()
-            $0.width.height.equalTo(60)
-        }
-
         self.storeNameLabel.snp.makeConstraints {
             $0.top.equalToSuperview().inset(12)
-            $0.leading.equalTo(mapButton.snp.trailing)
-            $0.width.lessThanOrEqualTo(SizeLiteral.fullWidth - 140)
+            $0.leading.equalToSuperview().inset(SizeLiteral.horizantalPadding)
+            $0.width.lessThanOrEqualTo(SizeLiteral.fullWidth - 90)
         }
 
         self.storeCategoryLabel.snp.makeConstraints {
@@ -73,8 +65,8 @@ final class StoreDetailInfoButton: UIButton, BaseViewType {
 
         self.storeAddressLabel.snp.makeConstraints {
             $0.top.equalTo(self.storeNameLabel.snp.bottom).offset(2)
-            $0.leading.equalTo(self.mapButton.snp.trailing)
-            $0.width.lessThanOrEqualTo(SizeLiteral.fullWidth - 100)
+            $0.leading.equalToSuperview().inset(SizeLiteral.horizantalPadding)
+            $0.width.lessThanOrEqualTo(SizeLiteral.fullWidth - 50)
         }
 
         self.bookmarkButton.snp.makeConstraints {
@@ -101,17 +93,5 @@ extension StoreDetailInfoButton {
         self.storeCategoryLabel.text = store.category
         self.storeAddressLabel.text = "\(store.address), \(store.distance)"
         self.bookmarkButton.isSelected = store.isBookmark
-        
-        let action = UIAction { _ in
-            let showWebViewController = ShowWebViewController(url: store.url)
-            let navigationController = UINavigationController(rootViewController: showWebViewController)
-            
-            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now()) {
-                guard let rootVC = (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.windows.first?.rootViewController
-                else { return }
-                rootVC.present(navigationController, animated: true)
-            }
-        }
-        self.mapButton.addAction(action, for: .touchUpInside)
     }
 }

@@ -100,6 +100,7 @@ extension FeedNSCollectionViewCell {
         let comment = reviewItem.comment
         
         self.userInfoButton.configureUser(member)
+        self.userInfoButton.optionButton.isHidden = member.isMyProfile && !isOwn
         self.commentLabel.text = comment.content
         
         if comment.imagePaths.isEmpty {
@@ -120,10 +121,6 @@ extension FeedNSCollectionViewCell {
                 $0.bottom.equalToSuperview().inset(14)
                 $0.height.equalTo(100)
             }
-        }
-        
-        if member.isMyProfile && !isOwn {
-            self.userInfoButton.optionButton.isHidden = true
         }
     }
 }

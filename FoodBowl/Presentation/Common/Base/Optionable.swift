@@ -12,7 +12,7 @@ protocol Optionable: UIGestureRecognizerDelegate {
 }
 
 extension Optionable where Self: UIViewController {
-    func presentReviewOptionAlert(isOwn: Bool, reviewId: Int) {
+    func presentReviewOptionAlert(isOwn: Bool = false, reviewId: Int) {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
         if isOwn {
