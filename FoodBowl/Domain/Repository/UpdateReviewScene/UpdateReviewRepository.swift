@@ -6,3 +6,7 @@
 //
 
 import Foundation
+
+protocol UpdateReviewRepository {
+    func updateReview(id: Int, request: UpdateReviewRequestDTO, images: [Data]) async throws
+}

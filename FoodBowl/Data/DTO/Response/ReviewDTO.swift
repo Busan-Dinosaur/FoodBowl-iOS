@@ -59,6 +59,27 @@ struct ReviewItemDTO: Codable, Hashable {
     }
 }
 
+// MARK: - WriterItemDTO
+struct WriterItemDTO: Codable {
+    let id: Int
+    let nickname: String
+    let profileImageUrl: String?
+    let followerCount: Int
+    
+    func toMember() -> Member {
+        Member(
+            id: self.id,
+            profileImageUrl: self.profileImageUrl,
+            nickname: self.nickname,
+            introduction: "",
+            followerCount: self.followerCount.prettyNumber,
+            followingCount: "",
+            isMyProfile: UserDefaultStorage.id == self.id,
+            isFollowing: false
+        )
+    }
+}
+
 // MARK: - CommentDTO
 struct CommentDTO: Codable {
     let id: Int
@@ -97,27 +118,6 @@ struct StoreByReviewDTO: Codable {
             x: 0.0,
             y: 0.0,
             reviewCount: ""
-        )
-    }
-}
-
-// MARK: - WriterItemDTO
-struct WriterItemDTO: Codable {
-    let id: Int
-    let nickname: String
-    let profileImageUrl: String?
-    let followerCount: Int
-    
-    func toMember() -> Member {
-        Member(
-            id: self.id,
-            profileImageUrl: self.profileImageUrl,
-            nickname: self.nickname,
-            introduction: "",
-            followerCount: self.followerCount.prettyNumber,
-            followingCount: "",
-            isMyProfile: UserDefaultStorage.id == self.id,
-            isFollowing: false
         )
     }
 }

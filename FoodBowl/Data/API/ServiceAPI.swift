@@ -18,9 +18,11 @@ enum ServiceAPI {
     case getCategories
     
     case createBlame(request: CreateBlameRequestDTO)
-    case createReview(request: CreateReviewRequestDTO, images: [Data])
-    case removeReview(id: Int)
     
+    case createReview(request: CreateReviewRequestDTO, images: [Data])
+    case updateReview(id: Int, request: UpdateReviewRequestDTO, images: [Data])
+    case removeReview(id: Int)
+    case getReview(request: GetReviewRequestDTO)
     case getReviewsByFollowing(request: GetReviewsRequestDTO)
     case getReviewsByBookmark(request: GetReviewsRequestDTO)
     case getReviewsByStore(request: GetReviewsByStoreRequestDTO)
@@ -33,6 +35,7 @@ enum ServiceAPI {
     case getStoresByMember(request: GetStoresByMemberRequestDTO)
     case getStoresByFollowing(request: CustomLocationRequestDTO)
     case getStoresByBookmark(request: CustomLocationRequestDTO)
+    
     case createBookmark(storeId: Int)
     case removeBookmark(storeId: Int)
     
@@ -74,8 +77,12 @@ extension ServiceAPI: TargetType {
             return "/v1/blames"
         case .createReview:
             return "/v1/reviews"
+        case .updateReview(let id, _, _):
+            return "/v1/reviews/\(id)"
         case .removeReview(let id):
             return "/v1/reviews/\(id)"
+        case .getReview:
+            return "/v1/reviews"
         case .getReviewsByStore:
             return "/v1/reviews/stores"
         case .getReviewsBySchool:
@@ -127,7 +134,7 @@ extension ServiceAPI: TargetType {
         switch self {
         case .signIn, .logOut, .patchRefreshToken, .createBlame, .createReview, .createBookmark, .followMember:
             return .post
-        case .updateMemberProfile, .updateMemberProfileImage:
+        case .updateMemberProfile, .updateMemberProfileImage, .updateReview:
             return .patch
         case .removeReview, .removeBookmark, .removeMemberProfileImage, .unfollowMember, .removeFollower:
             return .delete
@@ -174,7 +181,32 @@ extension ServiceAPI: TargetType {
                     MultipartFormData(
                         provider: .data(image),
                         name: "images",
-                        fileName: "\(request.storeName)_\(UUID().uuidString).jpg",
+                        fileName: "\(UUID().uuidString).jpg",
+                        mimeType: "image/jpeg"
+                    )
+                )
+            }
+            
+            return .uploadMultipart(multipartFormData)
+        case .updateReview(_, let request, let images):
+            var multipartFormData = [MultipartFormData]()
+
+            if let reviewData = try? JSONEncoder().encode(request) {
+                multipartFormData.append(
+                    MultipartFormData(
+                        provider: .data(reviewData),
+                        name: "request",
+                        mimeType: "application/json"
+                    )
+                )
+            }
+            
+            for image in images {
+                multipartFormData.append(
+                    MultipartFormData(
+                        provider: .data(image),
+                        name: "images",
+                        fileName: "\(UUID().uuidString).jpg",
                         mimeType: "image/jpeg"
                     )
                 )
@@ -183,6 +215,17 @@ extension ServiceAPI: TargetType {
             return .uploadMultipart(multipartFormData)
         case .removeReview:
             return .requestPlain
+        case .getReview(let request):
+            var params: [String: Any] = [
+                "id": request.id,
+                "deviceX": request.deviceX,
+                "deviceY": request.deviceY
+            ]
+
+            return .requestParameters(
+                parameters: params,
+                encoding: URLEncoding.default
+            )
         case .getReviewsByStore(let request):
             var params: [String: Any] = [
                 "storeId": request.storeId,

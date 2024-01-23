@@ -5,6 +5,11 @@
 //  Created by Coby on 12/29/23.
 //
 
+struct GetReviewRequestDTO: Encodable {
+    let id: Int
+    let deviceX, deviceY: Double
+}
+
 struct GetReviewsRequestDTO: Encodable {
     let location: CustomLocationRequestDTO
     let lastReviewId: Int?

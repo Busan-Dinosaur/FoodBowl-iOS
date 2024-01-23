@@ -76,7 +76,7 @@ final class SignViewController: UIViewController {
                     self?.presentTapBarController()
                 case .failure(let error):
                     self?.makeAlert(
-                        title: "로그인 에러",
+                        title: "에러",
                         message: error.localizedDescription
                     )
                 }

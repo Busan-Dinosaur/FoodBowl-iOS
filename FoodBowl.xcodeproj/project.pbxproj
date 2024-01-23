@@ -92,6 +92,14 @@
 		CB8306722B5999D500632789 /* ReviewByFeedDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB8306712B5999D500632789 /* ReviewByFeedDTO.swift */; };
 		CB8306752B599CE800632789 /* FindUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB8306742B599CE800632789 /* FindUsecase.swift */; };
 		CB84C9842AD98E9000A2E0F2 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = CB84C9832AD98E9000A2E0F2 /* Lottie */; };
+		CB84CAEC2B602C9100F4591A /* UpdateReviewRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB84CAEB2B602C9100F4591A /* UpdateReviewRequestDTO.swift */; };
+		CB84CAEE2B602E9100F4591A /* UpdateReviewRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB84CAED2B602E9100F4591A /* UpdateReviewRepositoryImpl.swift */; };
+		CB84CAF62B602FAC00F4591A /* ReviewDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB84CAF52B602FAC00F4591A /* ReviewDetailView.swift */; };
+		CB84CAF82B602FB400F4591A /* ReviewDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB84CAF72B602FB400F4591A /* ReviewDetailViewController.swift */; };
+		CB84CAFA2B602FBE00F4591A /* ReviewDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB84CAF92B602FBE00F4591A /* ReviewDetailViewModel.swift */; };
+		CB84CAFD2B602FE100F4591A /* ReviewDetailRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB84CAFC2B602FE100F4591A /* ReviewDetailRepository.swift */; };
+		CB84CB002B602FF300F4591A /* ReviewDetailUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB84CAFF2B602FF300F4591A /* ReviewDetailUsecase.swift */; };
+		CB84CB032B60300C00F4591A /* ReviewDetailRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB84CB022B60300C00F4591A /* ReviewDetailRepositoryImpl.swift */; };
 		CB8A2D9B297844720018AC6E /* Marker.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB8A2D9A297844720018AC6E /* Marker.swift */; };
 		CB91E2A42B56D7B2008A0E8E /* StoreDetailUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB91E2A32B56D7B2008A0E8E /* StoreDetailUsecase.swift */; };
 		CB91E2A62B56D7D6008A0E8E /* StoreDetailRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB91E2A52B56D7D6008A0E8E /* StoreDetailRepository.swift */; };
@@ -298,6 +306,14 @@
 		CB83066F2B5996C400632789 /* FindRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindRepository.swift; sourceTree = "<group>"; };
 		CB8306712B5999D500632789 /* ReviewByFeedDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewByFeedDTO.swift; sourceTree = "<group>"; };
 		CB8306742B599CE800632789 /* FindUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindUsecase.swift; sourceTree = "<group>"; };
+		CB84CAEB2B602C9100F4591A /* UpdateReviewRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateReviewRequestDTO.swift; sourceTree = "<group>"; };
+		CB84CAED2B602E9100F4591A /* UpdateReviewRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateReviewRepositoryImpl.swift; sourceTree = "<group>"; };
+		CB84CAF52B602FAC00F4591A /* ReviewDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewDetailView.swift; sourceTree = "<group>"; };
+		CB84CAF72B602FB400F4591A /* ReviewDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewDetailViewController.swift; sourceTree = "<group>"; };
+		CB84CAF92B602FBE00F4591A /* ReviewDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewDetailViewModel.swift; sourceTree = "<group>"; };
+		CB84CAFC2B602FE100F4591A /* ReviewDetailRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewDetailRepository.swift; sourceTree = "<group>"; };
+		CB84CAFF2B602FF300F4591A /* ReviewDetailUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewDetailUsecase.swift; sourceTree = "<group>"; };
+		CB84CB022B60300C00F4591A /* ReviewDetailRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewDetailRepositoryImpl.swift; sourceTree = "<group>"; };
 		CB8A2D9A297844720018AC6E /* Marker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Marker.swift; sourceTree = "<group>"; };
 		CB91E2A32B56D7B2008A0E8E /* StoreDetailUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreDetailUsecase.swift; sourceTree = "<group>"; };
 		CB91E2A52B56D7D6008A0E8E /* StoreDetailRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreDetailRepository.swift; sourceTree = "<group>"; };
@@ -526,6 +542,7 @@
 				CBDF11312B5EAC38007DA3E1 /* FindScene */,
 				CBDF11332B5EAC6A007DA3E1 /* UnivScene */,
 				CBDF11342B5EAC73007DA3E1 /* ProfileScene */,
+				CB84CAFB2B602FCD00F4591A /* ReviewDetailScene */,
 				CBDF112F2B5EAC21007DA3E1 /* CreateReviewScene */,
 				CBDF11372B5EAD0A007DA3E1 /* UpdateReviewScene */,
 				CBDF11352B5EACAC007DA3E1 /* StoreDetailScene */,
@@ -542,6 +559,7 @@
 				CBDF11452B5EADF5007DA3E1 /* FindScene */,
 				CBDF113F2B5EADAA007DA3E1 /* UnivScene */,
 				CBDF11402B5EADB8007DA3E1 /* ProfileScene */,
+				CB84CB012B602FF800F4591A /* ReviewDetailScene */,
 				CBDF11412B5EADC7007DA3E1 /* CreateReviewScene */,
 				CBDF11422B5EADD4007DA3E1 /* UpdateReviewScene */,
 				CBDF11432B5EADD8007DA3E1 /* StoreDetailScene */,
@@ -612,6 +630,7 @@
 				CB49256E2AB44D4400B66B68 /* FindScene */,
 				CBCD0F7D2A66DA0B00A51B32 /* UnivScene */,
 				CBADC2A52955A07B00E56C93 /* ProfileScene */,
+				CB84CAF12B602F8600F4591A /* ReviewDetailScene */,
 				CBADC2B02955A13800E56C93 /* CreateReviewScene */,
 				CB73E00F2AB5FEA9005B6BF1 /* UpdateReviewScene */,
 				CB73E0102AB5FEB4005B6BF1 /* StoreDetailScene */,
@@ -869,6 +888,64 @@
 			path = Lottie;
 			sourceTree = "<group>";
 		};
+		CB84CAF12B602F8600F4591A /* ReviewDetailScene */ = {
+			isa = PBXGroup;
+			children = (
+				CB84CAF42B602F9E00F4591A /* View */,
+				CB84CAF32B602F9700F4591A /* ViewController */,
+				CB84CAF22B602F9100F4591A /* ViewModel */,
+			);
+			path = ReviewDetailScene;
+			sourceTree = "<group>";
+		};
+		CB84CAF22B602F9100F4591A /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				CB84CAF92B602FBE00F4591A /* ReviewDetailViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		CB84CAF32B602F9700F4591A /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				CB84CAF72B602FB400F4591A /* ReviewDetailViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		CB84CAF42B602F9E00F4591A /* View */ = {
+			isa = PBXGroup;
+			children = (
+				CB84CAF52B602FAC00F4591A /* ReviewDetailView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		CB84CAFB2B602FCD00F4591A /* ReviewDetailScene */ = {
+			isa = PBXGroup;
+			children = (
+				CB84CAFC2B602FE100F4591A /* ReviewDetailRepository.swift */,
+			);
+			path = ReviewDetailScene;
+			sourceTree = "<group>";
+		};
+		CB84CAFE2B602FE700F4591A /* ReviewDetailScene */ = {
+			isa = PBXGroup;
+			children = (
+				CB84CAFF2B602FF300F4591A /* ReviewDetailUsecase.swift */,
+			);
+			path = ReviewDetailScene;
+			sourceTree = "<group>";
+		};
+		CB84CB012B602FF800F4591A /* ReviewDetailScene */ = {
+			isa = PBXGroup;
+			children = (
+				CB84CB022B60300C00F4591A /* ReviewDetailRepositoryImpl.swift */,
+			);
+			path = ReviewDetailScene;
+			sourceTree = "<group>";
+		};
 		CB91E2A22B56D797008A0E8E /* StoreDetailScene */ = {
 			isa = PBXGroup;
 			children = (
@@ -931,6 +1008,7 @@
 				CB8306732B599CAE00632789 /* FindScene */,
 				CBDF11152B5EA750007DA3E1 /* UnivScene */,
 				CB78A80E2B5D0CA2007EC9C1 /* ProfileScene */,
+				CB84CAFE2B602FE700F4591A /* ReviewDetailScene */,
 				CB4A78A22B5830090002136F /* CreateReviewScene */,
 				CBDF113A2B5EAD79007DA3E1 /* UpdateReviewScene */,
 				CB91E2A22B56D797008A0E8E /* StoreDetailScene */,
@@ -1102,6 +1180,7 @@
 				CB5BFB3A2B3F0CF300B35062 /* GetReviewsRequestDTO.swift */,
 				CB5BFB3E2B3F14EC00B35062 /* GetStoresRequestDTO.swift */,
 				CB1579082AACCFCB00007183 /* CreateReviewRequestDTO.swift */,
+				CB84CAEB2B602C9100F4591A /* UpdateReviewRequestDTO.swift */,
 				CBC158672AD80C3300FD263B /* CreateBlameRequestDTO.swift */,
 				CB51C8D02AD7E763002D0BA5 /* SearchStoreRequestDTO.swift */,
 				CB2E82402AA74A050016820E /* UpdateMemberProfileRequestDTO.swift */,
@@ -1404,6 +1483,7 @@
 		CBDF11422B5EADD4007DA3E1 /* UpdateReviewScene */ = {
 			isa = PBXGroup;
 			children = (
+				CB84CAED2B602E9100F4591A /* UpdateReviewRepositoryImpl.swift */,
 			);
 			path = UpdateReviewScene;
 			sourceTree = "<group>";
@@ -1630,6 +1710,7 @@
 				CB2E4F7F297702A800FD2566 /* StoreInfoTableViewCell.swift in Sources */,
 				CBDDF1422A6AF70500AE3C50 /* StoreHeaderView.swift in Sources */,
 				CBDF11472B5EB0A7007DA3E1 /* FriendRepositoryImpl.swift in Sources */,
+				CB84CAEE2B602E9100F4591A /* UpdateReviewRepositoryImpl.swift in Sources */,
 				CB1A7C6129561BCF00C6431D /* ProfileHeaderView.swift in Sources */,
 				CB9332632AFCC26800B7F87A /* PhotoPickerable.swift in Sources */,
 				CBADC2E22955C63300E56C93 /* PhotoCollectionViewCell.swift in Sources */,
@@ -1672,8 +1753,10 @@
 				CB93326F2AFCCCEA00B7F87A /* SignUsecase.swift in Sources */,
 				CB5BFB1B2B3EFF8700B35062 /* Result.swift in Sources */,
 				CBB12B142985845900AC0EF2 /* String+Extension.swift in Sources */,
+				CB84CAFA2B602FBE00F4591A /* ReviewDetailViewModel.swift in Sources */,
 				CBC158682AD80C3300FD263B /* CreateBlameRequestDTO.swift in Sources */,
 				CB15790D2AACD45400007183 /* CategoryDTO.swift in Sources */,
+				CB84CB032B60300C00F4591A /* ReviewDetailRepositoryImpl.swift in Sources */,
 				CBDECAC62A6B2B5900259350 /* MapButton.swift in Sources */,
 				CB4A789D2B581F8B0002136F /* CreateReviewView.swift in Sources */,
 				CBDF110D2B5E9CD8007DA3E1 /* UnivViewModel.swift in Sources */,
@@ -1725,6 +1808,7 @@
 				CB617A3C2AE2484F000F7FFC /* Keyboardable.swift in Sources */,
 				CB1579122AADB50600007183 /* KakaoAPI.swift in Sources */,
 				CBF926492B411C46005E251B /* BlameUsecase.swift in Sources */,
+				CB84CAF82B602FB400F4591A /* ReviewDetailViewController.swift in Sources */,
 				CBADC29029559BC900E56C93 /* UIViewController+Extension.swift in Sources */,
 				CBF926462B3FED74005E251B /* UpdateProfileImageDTO.swift in Sources */,
 				CBC747B52A83DBE300F171F5 /* KeychainManager.swift in Sources */,
@@ -1735,6 +1819,7 @@
 				CB558E9A29746B5D00921943 /* PhotoPlusCollectionViewCell.swift in Sources */,
 				CB617A3E2AE248BB000F7FFC /* UIViewController+Keyboard.swift in Sources */,
 				CB78A8162B5D5511007EC9C1 /* SettingView.swift in Sources */,
+				CB84CB002B602FF300F4591A /* ReviewDetailUsecase.swift in Sources */,
 				CB5BFB192B3EF92700B35062 /* NetworkError.swift in Sources */,
 				CBDF113C2B5EAD8D007DA3E1 /* UpdateReviewUsecase.swift in Sources */,
 				CBDF110F2B5E9D04007DA3E1 /* UnivView.swift in Sources */,
@@ -1762,6 +1847,7 @@
 				CB5BFB1F2B3F028F00B35062 /* SignRepository.swift in Sources */,
 				CB7F3327298A51610000A6B4 /* UserDefaultHandler.swift in Sources */,
 				CB1579002AAC61CD00007183 /* TokenDTO.swift in Sources */,
+				CB84CAEC2B602C9100F4591A /* UpdateReviewRequestDTO.swift in Sources */,
 				CB1A7C5C29560C2300C6431D /* UserInfoButton.swift in Sources */,
 				CBC158662AD80BB600FD263B /* MemberDTO.swift in Sources */,
 				CB8306682B59748700632789 /* FindView.swift in Sources */,
@@ -1779,7 +1865,9 @@
 				CBDF111D2B5EA86A007DA3E1 /* UnivRepositoryImpl.swift in Sources */,
 				CBDF11252B5EAA12007DA3E1 /* SearchUnivRepository.swift in Sources */,
 				CBADC2AD2955A0FF00E56C93 /* ProfileViewController.swift in Sources */,
+				CB84CAFD2B602FE100F4591A /* ReviewDetailRepository.swift in Sources */,
 				CBBA9F1B2AB5691900BE37AE /* DownButton.swift in Sources */,
+				CB84CAF62B602FAC00F4591A /* ReviewDetailView.swift in Sources */,
 				CBDE38FD29715C5F00DDE49A /* SearchBarButton.swift in Sources */,
 				CB5DD4332AB5A175009FCB43 /* CreateReviewViewController.swift in Sources */,
 				CBADC28D29559BC900E56C93 /* NSObject+Extension.swift in Sources */,
