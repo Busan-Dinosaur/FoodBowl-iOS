@@ -19,7 +19,6 @@ final class FeedNSCollectionViewCell: UICollectionViewCell, BaseViewType {
         $0.font = UIFont.preferredFont(forTextStyle: .subheadline, weight: .light)
         $0.textColor = .mainTextColor
         $0.numberOfLines = 0
-        $0.isUserInteractionEnabled = true
     }
     private let photoListView = PhotoListView()
     
