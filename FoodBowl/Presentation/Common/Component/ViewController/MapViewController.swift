@@ -188,8 +188,7 @@ class MapViewController: UIViewController, Navigationable, Optionable, Helperabl
         }
         
         cell.optionButtonTapAction = { [weak self] _ in
-            guard let self = self else { return }
-            self.presentReviewOptionAlert(
+            self?.presentReviewOptionAlert(
                 reviewId: item.comment.id,
                 isMyReview: item.member.isMyProfile
             )
@@ -204,7 +203,7 @@ class MapViewController: UIViewController, Navigationable, Optionable, Helperabl
         }
         
         cell.cellTapAction = { [weak self] _ in
-            self?.presentReviewDetailViewController(id: item.member.id)
+            self?.presentReviewDetailViewController(id: item.comment.id)
         }
     }
     

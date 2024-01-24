@@ -5,11 +5,9 @@
 //  Created by COBY_PRO on 2022/12/23.
 //
 
-import MapKit
-import MessageUI
+import Combine
 import UIKit
 
-import Kingfisher
 import SnapKit
 import Then
 
@@ -60,26 +58,141 @@ final class ProfileViewController: MapViewController {
         self.modalMaxHeight = UIScreen.main.bounds.height - SizeLiteral.topAreaPadding - navBarHeight - 180
     }
     
+    // MARK: - func - bind
+    
+    override func bindViewModel() {
+        let output = self.transformedOutput()
+        self.configureNavigation()
+        self.bindOutputToViewModel(output)
+    }
+    
+    private func transformedOutput() -> ProfileViewModel.Output? {
+        guard let viewModel = self.viewModel as? ProfileViewModel else { return nil }
+        let input = ProfileViewModel.Input(
+            viewDidLoad: self.viewDidLoadPublisher,
+            followMember: self.followButtonDidTapPublisher.eraseToAnyPublisher(),
+            customLocation: self.locationPublisher.eraseToAnyPublisher(),
+            bookmarkButtonDidTap: self.bookmarkButtonDidTapPublisher.eraseToAnyPublisher(),
+            scrolledToBottom: self.feedListView.collectionView().scrolledToBottomPublisher.eraseToAnyPublisher(),
+            refreshControl: self.feedListView.refreshPublisher.eraseToAnyPublisher()
+        )
+        return viewModel.transform(from: input)
+    }
+    
+    private func bindOutputToViewModel(_ output: ProfileViewModel.Output?) {
+        guard let output else { return }
+        
+        output.member
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] result in
+                switch result {
+                case .success(let member):
+                    self?.setUpProfileHeader(member: member)
+                case .failure(let error):
+                    self?.makeAlert(
+                        title: "에러",
+                        message: error.localizedDescription
+                    )
+                }
+            })
+            .store(in: &self.cancellable)
+        
+        output.followMember
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] result in
+                switch result {
+                case .success:
+                    self?.profileHeaderView.followButton.isSelected.toggle()
+                case .failure(let error):
+                    self?.makeAlert(
+                        title: "에러",
+                        message: error.localizedDescription
+                    )
+                }
+            })
+            .store(in: &self.cancellable)
+        
+        output.stores
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] result in
+                switch result {
+                case .success(let stores):
+                    self?.setupMarkers(stores)
+                case .failure(let error):
+                    self?.makeAlert(
+                        title: "에러",
+                        message: error.localizedDescription
+                    )
+                }
+            })
+            .store(in: &self.cancellable)
+        
+        output.reviews
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] result in
+                switch result {
+                case .success(let reviews):
+                    self?.loadReviews(reviews)
+                    self?.feedListView.refreshControl().endRefreshing()
+                case .failure(let error):
+                    self?.makeAlert(
+                        title: "에러",
+                        message: error.localizedDescription
+                    )
+                }
+            })
+            .store(in: &self.cancellable)
+        
+        output.moreReviews
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] result in
+                switch result {
+                case .success(let reviews):
+                    self?.loadMoreReviews(reviews)
+                case .failure(let error):
+                    self?.makeAlert(
+                        title: "에러",
+                        message: error.localizedDescription
+                    )
+                }
+            })
+            .store(in: &self.cancellable)
+        
+        output.isBookmark
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] result in
+                switch result {
+                case .success(let storeId):
+                    self?.updateBookmark(storeId)
+                case .failure(let error):
+                    self?.makeAlert(
+                        title: "에러",
+                        message: error.localizedDescription
+                    )
+                }
+            })
+            .store(in: &self.cancellable)
+    }
+    
+    override func bindUI() {
+        self.bookmarkToggleButtonDidTapPublisher
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] isBookmark in
+                self?.bookmarkButton.isSelected = isBookmark
+            })
+            .store(in: &self.cancellable)
+    }
+    
     // MARK: - func
     
     private func configureNavigation() {
-        guard let viewModel = self.viewModel as? ProfileViewModel else { return }
-        
         if isOwn {
-            let userNicknameLabel = makeBarButtonItem(with: userNicknameLabel)
-            let plusButton = makeBarButtonItem(with: plusButton)
-            let settingButton = makeBarButtonItem(with: settingButton)
-            navigationItem.leftBarButtonItem = userNicknameLabel
-            navigationItem.rightBarButtonItems = [settingButton, plusButton]
-            profileHeaderView.followButton.isHidden = true
-        } else {
-            if UserDefaultStorage.id == viewModel.memberId {
-                profileHeaderView.followButton.isHidden = true
-            } else {
-                let optionButton = makeBarButtonItem(with: optionButton)
-                navigationItem.rightBarButtonItem = optionButton
-            }
-            profileHeaderView.editButton.isHidden = true
+            let userNicknameLabel = self.makeBarButtonItem(with: self.userNicknameLabel)
+            let plusButton = self.makeBarButtonItem(with: self.plusButton)
+            let settingButton = self.makeBarButtonItem(with: self.settingButton)
+            self.navigationItem.leftBarButtonItem = userNicknameLabel
+            self.navigationItem.rightBarButtonItems = [settingButton, plusButton]
+            self.profileHeaderView.followButton.isHidden = true
         }
     }
     
@@ -111,7 +224,7 @@ final class ProfileViewController: MapViewController {
         let followButtonAction = UIAction { [weak self] _ in
             guard let self = self else { return }
             guard let viewModel = self.viewModel as? ProfileViewModel else { return }
-            self.followButtonDidTapPublisher.send((viewModel.memberId, true)) // 수정해야함
+            self.followButtonDidTapPublisher.send((viewModel.memberId, self.profileHeaderView.followButton.isSelected))
         }
         let editButtonAction = UIAction { [weak self] _ in
             guard let self = self else { return }
@@ -121,5 +234,30 @@ final class ProfileViewController: MapViewController {
         self.profileHeaderView.followingInfoButton.addAction(followingAction, for: .touchUpInside)
         self.profileHeaderView.followButton.addAction(followButtonAction, for: .touchUpInside)
         self.profileHeaderView.editButton.addAction(editButtonAction, for: .touchUpInside)
+    }
+    
+    private func setUpProfileHeader(member: Member) {
+        if let url = member.profileImageUrl {
+            self.profileHeaderView.userImageView.kf.setImage(with: URL(string: url))
+        } else {
+            self.profileHeaderView.userImageView.image = ImageLiteral.defaultProfile
+        }
+        
+        self.userNicknameLabel.text = member.nickname
+        self.profileHeaderView.userInfoLabel.text = member.introduction
+        self.profileHeaderView.followerInfoButton.numberLabel.text = "\(member.followerCount)명"
+        self.profileHeaderView.followingInfoButton.numberLabel.text = "\(member.followingCount)명"
+        self.profileHeaderView.followButton.isSelected = member.isFollowing
+        self.profileHeaderView.followButton.isHidden = member.isMyProfile
+        self.profileHeaderView.editButton.isHidden = !isOwn
+        
+        if !member.isMyProfile {
+            let optionButton = self.makeBarButtonItem(with: self.optionButton)
+            self.navigationItem.rightBarButtonItem = optionButton
+        }
+        
+        if !isOwn {
+            self.title = member.nickname
+        }
     }
 }
