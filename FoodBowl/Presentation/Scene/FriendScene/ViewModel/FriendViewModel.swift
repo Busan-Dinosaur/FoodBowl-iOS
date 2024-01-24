@@ -53,7 +53,7 @@ final class FriendViewModel: BaseViewModelType {
     
     func transform(from input: Input) -> Output {
         input.customLocation
-            .debounce(for: .milliseconds(500), scheduler: RunLoop.main)
+            .debounce(for: .milliseconds(100), scheduler: RunLoop.main)
             .sink(receiveValue: { [weak self] location in
                 guard let self = self else { return }
                 self.location = location
