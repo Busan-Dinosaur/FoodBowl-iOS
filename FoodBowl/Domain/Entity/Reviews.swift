@@ -24,7 +24,7 @@ struct Page: Codable {
 struct Review: Codable, Hashable {
     let member: Member
     let comment: Comment
-    let store: Store
+    var store: Store
     let thumbnail: String
     
     static func == (lhs: Review, rhs: Review) -> Bool {

@@ -22,21 +22,14 @@ final class FriendViewController: MapViewController {
         $0.frame = CGRect(x: 0, y: 0, width: 150, height: 0)
     }
     
-    // MARK: - life cycle
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        self.configureUI()
-        self.setupNavigationBar()
-    }
+    // MARK: - func
 
     override func configureUI() {
         super.configureUI()
         bookmarkButton.isHidden = false
-        viewModel.type = .friend
     }
 
-    private func setupNavigationBar() {
+    override func setupNavigationBar() {
         let friendLabel = makeBarButtonItem(with: friendLabel)
         let plusButton = makeBarButtonItem(with: plusButton)
         navigationItem.leftBarButtonItem = friendLabel

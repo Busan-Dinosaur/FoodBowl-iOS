@@ -15,8 +15,7 @@ final class ProfileViewModel: BaseViewModelType {
     private let usecase: ProfileUsecase
     private var cancellable = Set<AnyCancellable>()
     
-    private let memberId: Int
-    let isOwn: Bool
+    let memberId: Int
     
     private var location: CustomLocationRequestDTO?
     private let pageSize: Int = 20
@@ -53,12 +52,10 @@ final class ProfileViewModel: BaseViewModelType {
 
     init(
         usecase: ProfileUsecase,
-        memberId: Int,
-        isOwn: Bool = false
+        memberId: Int = UserDefaultStorage.id
     ) {
         self.usecase = usecase
         self.memberId = memberId
-        self.isOwn = isOwn
     }
     
     // MARK: - Public - func

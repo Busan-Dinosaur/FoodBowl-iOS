@@ -26,38 +26,50 @@ final class ProfileViewController: MapViewController {
     }
     lazy var optionButton = OptionButton().then {
         let optionButtonAction = UIAction { [weak self] _ in
-            guard let memberId = self?.memberId else { return }
-            self?.presentMemberOptionAlert(memberId: memberId)
+            guard let self = self else { return }
+            guard let viewModel = self.viewModel as? ProfileViewModel else { return }
+            self.presentMemberOptionAlert(memberId: viewModel.memberId)
         }
         $0.addAction(optionButtonAction, for: .touchUpInside)
     }
     private lazy var profileHeaderView = ProfileHeaderView().then {
         let followerAction = UIAction { [weak self] _ in
+            guard let self = self else { return }
+            guard let profileViewModel = self.viewModel as? ProfileViewModel else { return }
             let repository = FollowRepositoryImpl()
             let usecase = FollowUsecaseImpl(repository: repository)
-            let viewModel = FollowerViewModel(usecase: usecase, memberId: self?.memberId ?? 0, isOwn: self?.isOwn ?? false)
+            let viewModel = FollowerViewModel(
+                usecase: usecase,
+                memberId: profileViewModel.memberId,
+                isOwn: self.isOwn
+            )
             let viewController = FollowerViewController(viewModel: viewModel)
             
-            self?.navigationController?.pushViewController(viewController, animated: true)
+            self.navigationController?.pushViewController(viewController, animated: true)
         }
         let followingAction = UIAction { [weak self] _ in 
+            guard let self = self else { return }
+            guard let profileViewModel = self.viewModel as? ProfileViewModel else { return }
             let repository = FollowRepositoryImpl()
             let usecase = FollowUsecaseImpl(repository: repository)
-            let viewModel = FollowingViewModel(usecase: usecase, memberId: self?.memberId ?? 0)
+            let viewModel = FollowingViewModel(usecase: usecase, memberId: profileViewModel.memberId)
             let viewController = FollowingViewController(viewModel: viewModel)
             
-            self?.navigationController?.pushViewController(viewController, animated: true)
+            self.navigationController?.pushViewController(viewController, animated: true)
         }
         let followButtonAction = UIAction { [weak self] _ in
-            self?.followButtonTapped()
+            guard let self = self else { return }
+            guard let viewModel = self.viewModel as? ProfileViewModel else { return }
+            self.followButtonDidTapPublisher.send((viewModel.memberId, true)) // 수정해야함
         }
         let editButtonAction = UIAction { [weak self] _ in
+            guard let self = self else { return }
             let repository = UpdateProfileRepositoryImpl()
             let usecase = UpdateProfileUsecaseImpl(repository: repository)
             let viewModel = UpdateProfileViewModel(usecase: usecase)
             let viewController = UpdateProfileViewController(viewModel: viewModel)
             
-            self?.navigationController?.pushViewController(viewController, animated: true)
+            self.navigationController?.pushViewController(viewController, animated: true)
         }
         $0.followerInfoButton.addAction(followerAction, for: .touchUpInside)
         $0.followingInfoButton.addAction(followingAction, for: .touchUpInside)
@@ -65,36 +77,9 @@ final class ProfileViewController: MapViewController {
         $0.editButton.addAction(editButtonAction, for: .touchUpInside)
     }
     
-    // MARK: - property
-    
-    private let isOwn: Bool
-    private let memberId: Int
-
-    init(isOwn: Bool = false, memberId: Int = UserDefaultStorage.id) {
-        self.isOwn = isOwn
-        self.memberId = memberId
-        super.init()
-    }
-
-    required init?(coder _: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    // MARK: - life cycle
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        self.setupNavigationBar()
-        self.setupLayout()
-        self.configureUI()
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        self.setUpProfile()
-    }
-    
-    private func setupNavigationBar() {
+    override func setupNavigationBar() {
+        guard let viewModel = self.viewModel as? ProfileViewModel else { return }
+        
         if isOwn {
             let userNicknameLabel = makeBarButtonItem(with: userNicknameLabel)
             let plusButton = makeBarButtonItem(with: plusButton)
@@ -103,7 +88,7 @@ final class ProfileViewController: MapViewController {
             navigationItem.rightBarButtonItems = [settingButton, plusButton]
             profileHeaderView.followButton.isHidden = true
         } else {
-            if UserDefaultStorage.id == memberId {
+            if UserDefaultStorage.id == viewModel.memberId {
                 profileHeaderView.followButton.isHidden = true
             } else {
                 let optionButton = makeBarButtonItem(with: optionButton)
@@ -130,7 +115,7 @@ final class ProfileViewController: MapViewController {
             $0.height.equalTo(40)
         }
 
-        trakingButton.snp.makeConstraints {
+        trackingButton.snp.makeConstraints {
             $0.trailing.equalToSuperview().inset(10)
             $0.top.equalTo(categoryListView.snp.bottom).offset(20)
             $0.height.width.equalTo(40)
@@ -139,67 +124,6 @@ final class ProfileViewController: MapViewController {
 
     override func configureUI() {
         super.configureUI()
-        modalMaxHeight = UIScreen.main.bounds.height - SizeLiteral.topAreaPadding - navBarHeight - 180
-        viewModel.type = .member
-        viewModel.memberId = self.memberId
-    }
-
-    private func setUpProfile() {
-        Task {
-            if isOwn {
-                self.userNicknameLabel.text = UserDefaultStorage.nickname
-                
-                if let url = UserDefaultStorage.profileImageUrl {
-                    self.profileHeaderView.userImageView.kf.setImage(with: URL(string: url))
-                } else {
-                    self.profileHeaderView.userImageView.image = ImageLiteral.defaultProfile
-                }
-                
-                if let introduction = UserDefaultStorage.introduction {
-                    self.profileHeaderView.userInfoLabel.text = introduction
-                } else {
-                    self.profileHeaderView.userInfoLabel.text = "소개를 작성해주세요"
-                }
-            }
-            
-            guard let member = await viewModel.getMemberProfile(id: memberId) else { return }
-            
-            DispatchQueue.main.async {
-                self.userNicknameLabel.text = member.nickname
-                self.profileHeaderView.followerInfoButton.numberLabel.text = "\(member.followerCount)명"
-                self.profileHeaderView.followingInfoButton.numberLabel.text = "\(member.followingCount)명"
-                self.profileHeaderView.followButton.isSelected = member.isFollowing
-                
-                if let url = member.profileImageUrl {
-                    self.profileHeaderView.userImageView.kf.setImage(with: URL(string: url))
-                } else {
-                    self.profileHeaderView.userImageView.image = ImageLiteral.defaultProfile
-                }
-                
-                if let introduction = member.introduction {
-                    self.profileHeaderView.userInfoLabel.text = introduction
-                } else {
-                    self.profileHeaderView.userInfoLabel.text = "소개를 작성해주세요"
-                }
-                
-                if !self.isOwn {
-                    self.title = member.nickname
-                }
-                
-                if self.memberId == UserDefaultStorage.id {
-                    self.profileHeaderView.followButton.isHidden = true
-                }
-            }
-        }
-    }
-    
-    private func followButtonTapped() {
-        Task {
-            if profileHeaderView.followButton.isSelected {
-                profileHeaderView.followButton.isSelected = await self.viewModel.unfollowMember(memberId: memberId)
-            } else {
-                profileHeaderView.followButton.isSelected = await self.viewModel.followMember(memberId: memberId)
-            }
-        }
+        self.modalMaxHeight = UIScreen.main.bounds.height - SizeLiteral.topAreaPadding - navBarHeight - 180
     }
 }

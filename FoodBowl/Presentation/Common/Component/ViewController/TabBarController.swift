@@ -8,10 +8,10 @@
 import UIKit
 
 final class TabBarController: UITabBarController {
-    private let vc1 = UINavigationController(rootViewController: FriendViewController())
-    private lazy var vc2 = UINavigationController(rootViewController: self.getFindViewController())
-    private let vc3 = UINavigationController(rootViewController: UnivViewController())
-    private let vc4 = UINavigationController(rootViewController: ProfileViewController(isOwn: true))
+    private lazy var vc1 = UINavigationController(rootViewController: self.friendViewController)
+    private lazy var vc2 = UINavigationController(rootViewController: self.findViewController)
+    private lazy var vc3 = UINavigationController(rootViewController: self.univViewController)
+    private lazy var vc4 = UINavigationController(rootViewController: self.profileViewController)
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,11 +50,35 @@ final class TabBarController: UITabBarController {
 }
 
 extension TabBarController {
-    func getFindViewController() -> FindViewController {
+    var friendViewController: FriendViewController {
+        let repository = FriendRepositoryImpl()
+        let usecase = FriendUsecaseImpl(repository: repository)
+        let viewModel = FriendViewModel(usecase: usecase)
+        let viewController = FriendViewController(viewModel: viewModel)
+        return viewController
+    }
+    
+    var findViewController: FindViewController {
         let repository = FindRepositoryImpl()
         let usecase = FindUsecaseImpl(repository: repository)
         let viewModel = FindViewModel(usecase: usecase)
         let viewController = FindViewController(viewModel: viewModel)
+        return viewController
+    }
+    
+    var univViewController: UnivViewController {
+        let repository = UnivRepositoryImpl()
+        let usecase = UnivUsecaseImpl(repository: repository)
+        let viewModel = UnivViewModel(usecase: usecase)
+        let viewController = UnivViewController(viewModel: viewModel)
+        return viewController
+    }
+    
+    var profileViewController: ProfileViewController {
+        let repository = ProfileRepositoryImpl()
+        let usecase = ProfileUsecaseImpl(repository: repository)
+        let viewModel = ProfileViewModel(usecase: usecase)
+        let viewController = ProfileViewController(viewModel: viewModel, isOwn: true)
         return viewController
     }
 }

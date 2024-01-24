@@ -13,11 +13,7 @@ import UIKit
 import SnapKit
 import Then
 
-enum MapViewType {
-    case friend, univ, member
-}
-
-class MapViewController: UIViewController, Navigationable, Optionable {
+class MapViewController: UIViewController, Optionable {
     
     enum Section: CaseIterable {
         case main
@@ -37,8 +33,6 @@ class MapViewController: UIViewController, Navigationable, Optionable {
             DispatchQueue.main.async {
                 self?.present(navigationController, animated: true)
             }
-            
-            viewController.delegate = self
         }
         $0.addAction(action, for: .touchUpInside)
     }
@@ -65,7 +59,7 @@ class MapViewController: UIViewController, Navigationable, Optionable {
             forAnnotationViewWithReuseIdentifier: MKMapViewDefaultClusterAnnotationViewReuseIdentifier
         )
     }
-    lazy var trakingButton = MKUserTrackingButton(mapView: mapView).then {
+    lazy var trackingButton = MKUserTrackingButton(mapView: mapView).then {
         $0.layer.backgroundColor = UIColor.mainBackgroundColor.cgColor
         $0.layer.borderColor = UIColor.grey002.cgColor
         $0.layer.borderWidth = 1
@@ -79,34 +73,29 @@ class MapViewController: UIViewController, Navigationable, Optionable {
         $0.layer.borderWidth = 1
         $0.layer.cornerRadius = 10
         $0.layer.masksToBounds = true
-        let action = UIAction { [weak self] _ in
-            self?.tappedBookMarkButton()
-        }
-        $0.addAction(action, for: .touchUpInside)
+        $0.isHidden = true
     }
     let categoryListView = CategoryListView()
     let grabbarView = GrabbarView()
     let feedListView = FeedListView()
-
-    lazy var presentBlameVC: (Int, String) -> Void = { targetId, blameTarget in
-        self.presentBlameViewController(targetId: targetId, blameTarget: blameTarget)
-    }
     
     // MARK: - property
     
-    private var cancellable: Set<AnyCancellable> = Set()
+    let isOwn: Bool
+    var markers: [Marker] = []
     
-    let customLocationPublisher = PassthroughSubject<CustomLocationRequestDTO, Never>()
-    let bookmarkButtonDidTapPublisher: PassthroughSubject<StoreByReviewDTO, Never> = PassthroughSubject()
+    let viewModel: any BaseViewModelType
+    var cancellable: Set<AnyCancellable> = Set()
     
-    let viewModel = MapViewModel()
+    let locationPublisher = PassthroughSubject<CustomLocationRequestDTO, Never>()
+    let followButtonDidTapPublisher = PassthroughSubject<(Int, Bool), Never>()
+    let bookmarkButtonDidTapPublisher = PassthroughSubject<(Int, Bool), Never>()
     
-    var dataSource: UICollectionViewDiffableDataSource<Section, ReviewItemDTO>!
-    var snapshot: NSDiffableDataSourceSnapshot<Section, ReviewItemDTO>!
+    var dataSource: UICollectionViewDiffableDataSource<Section, Review>!
+    var snapshot: NSDiffableDataSourceSnapshot<Section, Review>!
     
-    var customLocation: CustomLocationRequestDTO?
-    var markers = [Marker]()
-
+    // MARK: - Modal Values
+    
     let modalMinHeight: CGFloat = 40
     let modalMidHeight: CGFloat = UIScreen.main.bounds.height / 2 - 100
     lazy var tabBarHeight: CGFloat = tabBarController?.tabBar.frame.height ?? 0
@@ -114,163 +103,108 @@ class MapViewController: UIViewController, Navigationable, Optionable {
     lazy var modalMaxHeight: CGFloat = UIScreen.main.bounds.height - SizeLiteral.topAreaPadding - navBarHeight - 120
     var currentModalHeight: CGFloat = 0
     var categoryListHeight: CGFloat = 40
-
+    
     private var panGesture = UIPanGestureRecognizer()
     
-    init() {
+    // MARK: - init
+    
+    init(
+        viewModel: any BaseViewModelType,
+        isOwn: Bool = false
+    ) {
+        self.viewModel = viewModel
+        self.isOwn = isOwn
         super.init(nibName: nil, bundle: nil)
+        self.setupLayout()
+        self.configureUI()
     }
-
+    
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
     deinit {
-        NotificationCenter.default.removeObserver(self)
+        print("\(#file) is dead")
     }
     
     // MARK: - life cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.setupNavigationBar()
         self.configureDataSource()
-        self.setupLayout()
-        self.configureUI()
         self.setupModal()
         self.bindViewModel()
         self.bindUI()
-        self.setupNavigation()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.setModalState()
     }
-
+    
     func setupLayout() {
-        view.addSubviews(mapView, categoryListView, trakingButton, bookmarkButton, grabbarView, feedListView)
-
+        view.addSubviews(mapView, categoryListView, trackingButton, bookmarkButton, grabbarView, feedListView)
+        
         mapView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide)
             $0.leading.trailing.bottom.equalToSuperview()
         }
-
+        
         categoryListView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide)
             $0.leading.trailing.equalToSuperview()
             $0.height.equalTo(40)
         }
-
-        trakingButton.snp.makeConstraints {
+        
+        trackingButton.snp.makeConstraints {
             $0.trailing.equalToSuperview().inset(10)
             $0.top.equalTo(categoryListView.snp.bottom).offset(20)
             $0.height.width.equalTo(40)
         }
-
+        
         bookmarkButton.snp.makeConstraints {
             $0.trailing.equalToSuperview().inset(10)
-            $0.top.equalTo(trakingButton.snp.bottom).offset(8)
+            $0.top.equalTo(trackingButton.snp.bottom).offset(8)
             $0.height.width.equalTo(40)
         }
-
+        
         grabbarView.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview()
             $0.height.equalTo(80)
         }
-
+        
         feedListView.snp.makeConstraints {
             $0.top.equalTo(grabbarView.snp.bottom)
             $0.leading.trailing.bottom.equalToSuperview()
             $0.height.equalTo(modalMidHeight)
         }
     }
-
+    
     func configureUI() {
         self.view.backgroundColor = .mainBackgroundColor
     }
     
-    func setupModal() {
-        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan(_:)))
-        self.grabbarView.isUserInteractionEnabled = true
-        self.grabbarView.addGestureRecognizer(panGesture)
-        self.currentModalHeight = self.modalMidHeight
-        self.bookmarkButton.isHidden = true
-    }
-
-    func tappedBookMarkButton() {
-        bookmarkButton.isSelected.toggle()
-        viewModel.isBookmark = bookmarkButton.isSelected
-        if let customLocation = customLocation {
-            customLocationPublisher.send(customLocation)
-        }
-    }
+    func setupNavigationBar() { }
     
     // MARK: - func - bind
-
-    private func bindViewModel() {
-        let output = self.transformedOutput()
-        self.bindOutputToViewModel(output)
-    }
     
-    private func bindOutputToViewModel(_ output: MapViewModel.Output) {
-        output.reviews
-            .receive(on: DispatchQueue.main)
-            .sink { _ in
-            } receiveValue: { [weak self] reviews in
-                self?.reloadReviews(reviews)
-            }
-            .store(in: &self.cancellable)
-        
-        output.moreReviews
-            .receive(on: DispatchQueue.main)
-            .sink { _ in
-            } receiveValue: { [weak self] reviews in
-                self?.loadMoreReviews(reviews)
-            }
-            .store(in: &self.cancellable)
-        
-        output.stores
-            .receive(on: DispatchQueue.main)
-            .sink { _ in
-            } receiveValue: { [weak self] stores in
-                self?.handleStores(stores)
-            }
-            .store(in: &self.cancellable)
-        
-        output.refreshControl
-            .receive(on: DispatchQueue.main)
-            .sink(receiveValue: { [weak self] _ in
-                self?.feedListView.refreshControl.endRefreshing()
-            })
-            .store(in: &self.cancellable)
-    }
+    func bindViewModel() { }
     
-    private func bindUI() {
-    }
+    func bindUI() { }
     
-    // MARK: - func
-    
-    private func transformedOutput() -> MapViewModel.Output {
-        let input = MapViewModel.Input(
-            customLocation: self.customLocationPublisher.eraseToAnyPublisher(),
-            scrolledToBottom: self.feedListView.collectionView().scrolledToBottomPublisher.eraseToAnyPublisher(),
-            refreshControl: self.feedListView.refreshPublisher.eraseToAnyPublisher()
-        )
-
-        return self.viewModel.transform(from: input)
-    }
-    
-    private func bindCell(_ cell: FeedCollectionViewCell, with item: ReviewItemDTO) {
+    private func bindCell(_ cell: FeedCollectionViewCell, with item: Review) {
         cell.userButtonTapAction = { [weak self] _ in
-            self?.presentProfileViewController(id: item.writer.id)
+            self?.presentProfileViewController(id: item.member.id)
         }
         
         cell.optionButtonTapAction = { [weak self] _ in
-            let isOwn = UserDefaultStorage.id == item.writer.id
-            
-            DispatchQueue.main.async { [weak self] in
-                self?.presentReviewOptionAlert(reviewId: item.review.id)
-            }
+            guard let self = self else { return }
+            self.presentReviewOptionAlert(
+                reviewId: item.comment.id,
+                isMyReview: item.member.isMyProfile
+            )
         }
         
         cell.storeButtonTapAction = { [weak self] _ in
@@ -278,57 +212,29 @@ class MapViewController: UIViewController, Navigationable, Optionable {
         }
         
         cell.bookmarkButtonTapAction = { [weak self] _ in
-            guard let self = self else { return }
-            
-            Task {
-                if cell.storeInfoButton.bookmarkButton.isSelected {
-                    if await self.viewModel.removeBookmark(storeId: item.store.id) {
-                        DispatchQueue.main.async {
-                            self.updateBookmark(item.store.id)
-                        }
-                    }
-                } else {
-                    if await self.viewModel.createBookmark(storeId: item.store.id) {
-                        DispatchQueue.main.async {
-                            self.updateBookmark(item.store.id)
-                        }
-                    }
-                }
-            }
+            self?.bookmarkButtonDidTapPublisher.send((item.store.id, item.store.isBookmark))
         }
         
         cell.cellTapAction = { [weak self] _ in
-            self?.presentReviewDetailViewController(id: item.review.id)
-        }
-    }
-    
-    func removeReview(reviewId: Int) {
-        Task {
-            if await self.viewModel.removeReview(id: reviewId) {
-                self.deleteReview(reviewId)
-            }
+            self?.presentReviewDetailViewController(id: item.member.id)
         }
     }
 }
 
-// MARK: - Modal
+// MARK: - Markers
 extension MapViewController {
-}
-
-// MARK: - Helper
-extension MapViewController {
-    private func handleStores(_ stores: [StoreItemDTO]) {
+    func setupMarkers(_ stores: [Store]) {
         mapView.removeAnnotations(markers)
 
         markers = stores.map { store in
             Marker(
                 title: store.name,
-                subtitle: "\(store.reviewCount.prettyNumber)개의 후기",
+                subtitle: "\(store.reviewCount)개의 후기",
                 coordinate: CLLocationCoordinate2D(
                     latitude: store.y,
                     longitude: store.x
                 ),
-                glyphImage: CategoryType(rawValue: store.categoryName)?.icon,
+                glyphImage: CategoryType(rawValue: store.category)?.icon,
                 handler: { [weak self] in
                     self?.presentStoreDetailViewController(id: store.id)
                 }
@@ -347,11 +253,12 @@ extension MapViewController {
         self.configureSnapshot()
     }
 
-    private func feedCollectionViewDataSource() -> UICollectionViewDiffableDataSource<Section, ReviewItemDTO> {
-        let reviewCellRegistration = UICollectionView.CellRegistration<FeedCollectionViewCell, ReviewItemDTO> {
+    private func feedCollectionViewDataSource() -> UICollectionViewDiffableDataSource<Section, Review> {
+        let reviewCellRegistration = UICollectionView.CellRegistration<FeedCollectionViewCell, Review> {
             [weak self] cell, indexPath, item in
-            cell.configureCell(item.toReview())
-            self?.bindCell(cell, with: item)
+            guard let self = self else { return }
+            cell.configureCell(item, self.isOwn)
+            self.bindCell(cell, with: item)
         }
 
         return UICollectionViewDiffableDataSource(
@@ -370,19 +277,19 @@ extension MapViewController {
 // MARK: - Snapshot
 extension MapViewController {
     private func configureSnapshot() {
-        self.snapshot = NSDiffableDataSourceSnapshot<Section, ReviewItemDTO>()
+        self.snapshot = NSDiffableDataSourceSnapshot<Section, Review>()
         self.snapshot.appendSections([.main])
         self.dataSource.apply(self.snapshot, animatingDifferences: true)
     }
 
-    private func reloadReviews(_ items: [ReviewItemDTO]) {
+    private func reloadReviews(_ items: [Review]) {
         let previousReviewsData = self.snapshot.itemIdentifiers(inSection: .main)
         self.snapshot.deleteItems(previousReviewsData)
         self.snapshot.appendItems(items, toSection: .main)
         self.dataSource.applySnapshotUsingReloadData(self.snapshot)
     }
     
-    private func loadMoreReviews(_ items: [ReviewItemDTO]) {
+    private func loadMoreReviews(_ items: [Review]) {
         self.snapshot.appendItems(items, toSection: .main)
         self.dataSource.applySnapshotUsingReloadData(self.snapshot)
     }
@@ -393,7 +300,7 @@ extension MapViewController {
             .map { customItem in
                 var updatedItem = customItem
                 if customItem.store.id == storeId {
-                    updatedItem.store.isBookmarked.toggle()
+                    updatedItem.store.isBookmark.toggle()
                 }
                 return updatedItem
             }
@@ -404,7 +311,7 @@ extension MapViewController {
     
     private func deleteReview(_ reviewId: Int) {
         for item in snapshot.itemIdentifiers {
-            if item.review.id == reviewId {
+            if item.comment.id == reviewId {
                 self.snapshot.deleteItems([item])
                 self.dataSource.apply(self.snapshot)
                 return
@@ -428,28 +335,31 @@ extension MapViewController: MKMapViewDelegate {
     }
 
     func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
+        guard let currentLocation = LocationManager.shared.manager.location?.coordinate else { return }
         let center = mapView.centerCoordinate
         let visibleMapRect = mapView.visibleMapRect
         let topLeftCoordinate = MKMapPoint(x: visibleMapRect.minX, y: visibleMapRect.minY).coordinate
-        
-        guard let location = LocationManager.shared.manager.location?.coordinate else { return }
-        self.customLocation = CustomLocationRequestDTO(
+        let customLocation = CustomLocationRequestDTO(
             x: center.longitude,
             y: center.latitude,
             deltaX: abs(topLeftCoordinate.longitude - center.longitude),
             deltaY: abs(topLeftCoordinate.latitude - center.latitude),
-            deviceX: location.longitude,
-            deviceY: location.latitude
+            deviceX: currentLocation.longitude,
+            deviceY: currentLocation.latitude
         )
-        
-        if let customLocation = self.customLocation {
-            customLocationPublisher.send(customLocation)
-        }
+        self.locationPublisher.send(customLocation)
     }
 }
 
 // MARK: - Control Modal
 extension MapViewController {
+    func setupModal() {
+        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan(_:)))
+        self.grabbarView.isUserInteractionEnabled = true
+        self.grabbarView.addGestureRecognizer(panGesture)
+        self.currentModalHeight = self.modalMidHeight
+    }
+    
     @objc
     func handlePan(_ gesture: UIPanGestureRecognizer) {
         guard gesture.view != nil else { return }
@@ -534,22 +444,17 @@ extension MapViewController {
     }
 }
 
-extension MapViewController: CreateReviewViewControllerDelegate {
-    func updateData() {
-        if let customLocation = customLocation {
-            customLocationPublisher.send(customLocation)
-        }
-    }
-}
-
 // MARK: - Helper
 extension MapViewController {
     private func presentProfileViewController(id: Int) {
-        let profileViewController = ProfileViewController(memberId: id)
-        
-        DispatchQueue.main.async { [weak self] in
-            self?.navigationController?.pushViewController(profileViewController, animated: true)
-        }
+        let repository = ProfileRepositoryImpl()
+        let usecase = ProfileUsecaseImpl(repository: repository)
+        let viewModel = ProfileViewModel(
+            usecase: usecase,
+            memberId: id
+        )
+        let viewController = ProfileViewController(viewModel: viewModel)
+        self.navigationController?.pushViewController(viewController, animated: true)
     }
     
     private func presentStoreDetailViewController(id: Int) {

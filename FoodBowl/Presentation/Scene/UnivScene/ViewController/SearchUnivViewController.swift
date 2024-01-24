@@ -117,7 +117,7 @@ final class SearchUnivViewController: UIViewController, Keyboardable {
     }
     
     private func setUniv(univ: Store) {
-        self.delegate?.setUniv(univ: univ)
+        self.delegate?.setupUniv(univ: univ)
         self.dismiss(animated: true)
     }
 }
@@ -167,5 +167,5 @@ extension SearchUnivViewController: UITableViewDataSource, UITableViewDelegate {
 }
 
 protocol SearchUnivViewControllerDelegate: AnyObject {
-    func setUniv(univ: Store)
+    func setupUniv(univ: Store)
 }

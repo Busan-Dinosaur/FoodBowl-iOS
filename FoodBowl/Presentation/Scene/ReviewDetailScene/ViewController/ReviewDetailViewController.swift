@@ -115,9 +115,12 @@ final class ReviewDetailViewController: UIViewController, Navigationable, Option
         self.reviewDetailView.optionButtonDidTapPublisher
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] _ in
-                guard let self = self else { return }
-                guard let viewModel = self.viewModel as? ReviewDetailViewModel else { return }
-                self.presentReviewOptionAlert(reviewId: viewModel.reviewId)
+                guard let self,
+                      let viewModel = self.viewModel as? ReviewDetailViewModel else { return }
+                self.presentReviewOptionAlert(
+                    reviewId: viewModel.reviewId,
+                    isMyReview: viewModel.reviewId == UserDefaultStorage.id
+                )
             })
             .store(in: &self.cancellable)
         
@@ -142,11 +145,14 @@ final class ReviewDetailViewController: UIViewController, Navigationable, Option
 // MARK: - Helper
 extension ReviewDetailViewController {
     private func presentProfileViewController(id: Int) {
-        let profileViewController = ProfileViewController(memberId: id)
-        
-        DispatchQueue.main.async { [weak self] in
-            self?.navigationController?.pushViewController(profileViewController, animated: true)
-        }
+        let repository = ProfileRepositoryImpl()
+        let usecase = ProfileUsecaseImpl(repository: repository)
+        let viewModel = ProfileViewModel(
+            usecase: usecase,
+            memberId: id
+        )
+        let viewController = ProfileViewController(viewModel: viewModel)
+        self.navigationController?.pushViewController(viewController, animated: true)
     }
     
     private func presentStoreDetailViewController(id: Int) {

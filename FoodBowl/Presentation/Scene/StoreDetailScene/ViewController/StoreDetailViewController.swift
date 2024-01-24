@@ -160,7 +160,10 @@ final class StoreDetailViewController: UIViewController, Navigationable, Optiona
         
         cell.optionButtonTapAction = { [weak self] _ in
             DispatchQueue.main.async { [weak self] in
-                self?.presentReviewOptionAlert(reviewId: item.comment.id)
+                self?.presentReviewOptionAlert(
+                    reviewId: item.comment.id,
+                    isMyReview: item.member.isMyProfile
+                )
             }
         }
         
@@ -233,11 +236,14 @@ extension StoreDetailViewController {
 // MARK: - Helper
 extension StoreDetailViewController {
     private func presentProfileViewController(id: Int) {
-        let profileViewController = ProfileViewController(memberId: id)
-        
-        DispatchQueue.main.async { [weak self] in
-            self?.navigationController?.pushViewController(profileViewController, animated: true)
-        }
+        let repository = ProfileRepositoryImpl()
+        let usecase = ProfileUsecaseImpl(repository: repository)
+        let viewModel = ProfileViewModel(
+            usecase: usecase,
+            memberId: id
+        )
+        let viewController = ProfileViewController(viewModel: viewModel)
+        self.navigationController?.pushViewController(viewController, animated: true)
     }
     
     private func presentReviewDetailViewController(id: Int) {
