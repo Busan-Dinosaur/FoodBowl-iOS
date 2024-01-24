@@ -62,7 +62,7 @@ final class ProfileViewController: MapViewController {
     
     // MARK: - func
     
-    func configureNavigation() {
+    private func configureNavigation() {
         guard let viewModel = self.viewModel as? ProfileViewModel else { return }
         
         if isOwn {

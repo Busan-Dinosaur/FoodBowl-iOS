@@ -6,6 +6,7 @@
 //
 
 import MapKit
+import Combine
 import UIKit
 
 import SnapKit
@@ -34,20 +35,125 @@ final class UnivViewController: MapViewController {
         $0.label.text = UserDefaultStorage.schoolName ?? "대학가"
     }
     
+    // MARK: - property
+    
+    private let setUnivPublisher = PassthroughSubject<Store, Never>()
+    
+    // MARK: - func - bind
+    
+    override func bindViewModel() {
+        let output = self.transformedOutput()
+        self.configureNavigation()
+        self.bindOutputToViewModel(output)
+    }
+    
+    private func transformedOutput() -> UnivViewModel.Output? {
+        guard let viewModel = self.viewModel as? UnivViewModel else { return nil }
+        let input = UnivViewModel.Input(
+            viewDidLoad: self.viewDidLoadPublisher,
+            setUniv: self.setUnivPublisher.eraseToAnyPublisher(),
+            customLocation: self.locationPublisher.eraseToAnyPublisher(),
+            bookmarkButtonDidTap: self.bookmarkButtonDidTapPublisher.eraseToAnyPublisher(),
+            scrolledToBottom: self.feedListView.collectionView().scrolledToBottomPublisher.eraseToAnyPublisher(),
+            refreshControl: self.feedListView.refreshPublisher.eraseToAnyPublisher()
+        )
+        return viewModel.transform(from: input)
+    }
+    
+    private func bindOutputToViewModel(_ output: UnivViewModel.Output?) {
+        guard let output else { return }
+        
+        output.univ
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] schoolName, schoolX, schoolY in
+                self?.moveCameraToUniv(schoolName: schoolName, schoolX: schoolX, schoolY: schoolY)
+            })
+            .store(in: &self.cancellable)
+        
+        output.stores
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] result in
+                switch result {
+                case .success(let stores):
+                    self?.setupMarkers(stores)
+                case .failure(let error):
+                    self?.makeAlert(
+                        title: "에러",
+                        message: error.localizedDescription
+                    )
+                }
+            })
+            .store(in: &self.cancellable)
+        
+        output.reviews
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] result in
+                switch result {
+                case .success(let reviews):
+                    self?.loadReviews(reviews)
+                    self?.feedListView.refreshControl().endRefreshing()
+                case .failure(let error):
+                    self?.makeAlert(
+                        title: "에러",
+                        message: error.localizedDescription
+                    )
+                }
+            })
+            .store(in: &self.cancellable)
+        
+        output.moreReviews
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] result in
+                switch result {
+                case .success(let reviews):
+                    self?.loadMoreReviews(reviews)
+                case .failure(let error):
+                    self?.makeAlert(
+                        title: "에러",
+                        message: error.localizedDescription
+                    )
+                }
+            })
+            .store(in: &self.cancellable)
+        
+        output.isBookmark
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] result in
+                switch result {
+                case .success(let storeId):
+                    self?.updateBookmark(storeId)
+                case .failure(let error):
+                    self?.makeAlert(
+                        title: "에러",
+                        message: error.localizedDescription
+                    )
+                }
+            })
+            .store(in: &self.cancellable)
+    }
+    
+    override func bindUI() {
+        self.bookmarkToggleButtonDidTapPublisher
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] isBookmark in
+                self?.bookmarkButton.isSelected = isBookmark
+            })
+            .store(in: &self.cancellable)
+    }
+    
     // MARK: - func
     
-    func configureNavigation() {
+    private func configureNavigation() {
         let leftOffsetUnivTitleButton = removeBarButtonItem(with: univTitleButton, offsetX: 10)
         let univTitleButton = makeBarButtonItem(with: leftOffsetUnivTitleButton)
         let plusButton = makeBarButtonItem(with: plusButton)
-        navigationItem.leftBarButtonItem = univTitleButton
-        navigationItem.rightBarButtonItem = plusButton
+        self.navigationItem.leftBarButtonItem = univTitleButton
+        self.navigationItem.rightBarButtonItem = plusButton
     }
 
-    private func currentUniv() {
-        guard let schoolX = UserDefaultStorage.schoolX, let schoolY = UserDefaultStorage.schoolY else { return }
-
-        mapView.setRegion(
+    private func moveCameraToUniv(schoolName: String, schoolX: Double, schoolY: Double) {
+        self.univTitleButton.label.text = schoolName
+        self.mapView.setRegion(
             MKCoordinateRegion(
                 center: CLLocationCoordinate2D(latitude: schoolY, longitude: schoolX),
                 span: MKCoordinateSpan(latitudeDelta: 0.02, longitudeDelta: 0.02)
@@ -68,17 +174,6 @@ extension UnivViewController {
 
 extension UnivViewController: SearchUnivViewControllerDelegate {
     func setupUniv(univ: Store) {
-        UserDefaultHandler.setSchoolId(schoolId: univ.id)
-        UserDefaultHandler.setSchoolName(schoolName: univ.name)
-        UserDefaultHandler.setSchoolX(schoolX: univ.x)
-        UserDefaultHandler.setSchoolY(schoolY: univ.y)
-        
-        univTitleButton.label.text = univ.name
-        
-//        viewModel.schoolId = univ.id
-//        self.currentUniv()
-//        if let customLocation = customLocation {
-//            customLocationPublisher.send(customLocation)
-//        }
+        self.setUnivPublisher.send(univ)
     }
 }

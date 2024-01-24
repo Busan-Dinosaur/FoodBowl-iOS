@@ -22,6 +22,7 @@ final class UnivViewModel: BaseViewModelType {
     private var currentpageSize: Int = 20
     private var lastReviewId: Int?
     
+    private let univSubject: PassthroughSubject<(String, Double, Double), Never> = PassthroughSubject()
     private let storesSubject: PassthroughSubject<Result<[Store], Error>, Never> = PassthroughSubject()
     private let reviewsSubject: PassthroughSubject<Result<[Review], Error>, Never> = PassthroughSubject()
     private let moreReviewsSubject: PassthroughSubject<Result<[Review], Error>, Never> = PassthroughSubject()
@@ -30,6 +31,7 @@ final class UnivViewModel: BaseViewModelType {
     
     struct Input {
         let viewDidLoad: AnyPublisher<Void, Never>
+        let setUniv: AnyPublisher<Store, Never>
         let customLocation: AnyPublisher<CustomLocationRequestDTO, Never>
         let bookmarkButtonDidTap: AnyPublisher<(Int, Bool), Never>
         let scrolledToBottom: AnyPublisher<Void, Never>
@@ -37,6 +39,7 @@ final class UnivViewModel: BaseViewModelType {
     }
     
     struct Output {
+        let univ: AnyPublisher<(String, Double, Double), Never>
         let stores: AnyPublisher<Result<[Store], Error>, Never>
         let reviews: AnyPublisher<Result<[Review], Error>, Never>
         let moreReviews: AnyPublisher<Result<[Review], Error>, Never>
@@ -54,7 +57,13 @@ final class UnivViewModel: BaseViewModelType {
     func transform(from input: Input) -> Output {
         input.viewDidLoad
             .sink(receiveValue: { [weak self] _ in
-                self?.schoolId = UserDefaultStorage.schoolId
+                self?.getSchool()
+            })
+            .store(in: &self.cancellable)
+        
+        input.setUniv
+            .sink(receiveValue: { [weak self] univ in
+                self?.setSchool(school: univ)
             })
             .store(in: &self.cancellable)
         
@@ -94,11 +103,31 @@ final class UnivViewModel: BaseViewModelType {
             .store(in: &self.cancellable)
         
         return Output(
+            univ: self.univSubject.eraseToAnyPublisher(),
             stores: self.storesSubject.eraseToAnyPublisher(),
             reviews: self.reviewsSubject.eraseToAnyPublisher(),
             moreReviews: self.moreReviewsSubject.eraseToAnyPublisher(),
             isBookmark: self.isBookmarkSubject.eraseToAnyPublisher()
         )
+    }
+    
+    private func getSchool() {
+        if let schoolId = UserDefaultStorage.schoolId,
+           let schoolName = UserDefaultStorage.schoolName,
+           let schoolX = UserDefaultStorage.schoolX,
+           let schoolY = UserDefaultStorage.schoolY {
+            self.schoolId = schoolId
+            self.univSubject.send((schoolName, schoolX, schoolY))
+        }
+    }
+    
+    private func setSchool(school: Store) {
+        UserDefaultHandler.setSchoolId(schoolId: school.id)
+        UserDefaultHandler.setSchoolName(schoolName: school.name)
+        UserDefaultHandler.setSchoolX(schoolX: school.x)
+        UserDefaultHandler.setSchoolY(schoolY: school.y)
+        self.schoolId = school.id
+        self.univSubject.send((school.name, school.x, school.y))
     }
     
     // MARK: - network
@@ -141,7 +170,7 @@ final class UnivViewModel: BaseViewModelType {
         }
     }
     
-    func createBookmark(storeId: Int) {
+    private func createBookmark(storeId: Int) {
         Task {
             do {
                 try await self.usecase.createBookmark(storeId: storeId)
@@ -152,7 +181,7 @@ final class UnivViewModel: BaseViewModelType {
         }
     }
     
-    func removeBookmark(storeId: Int) {
+    private func removeBookmark(storeId: Int) {
         Task {
             do {
                 try await self.usecase.removeBookmark(storeId: storeId)

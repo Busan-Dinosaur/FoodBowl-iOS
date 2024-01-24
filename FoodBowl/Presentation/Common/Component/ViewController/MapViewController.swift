@@ -13,7 +13,7 @@ import UIKit
 import SnapKit
 import Then
 
-class MapViewController: UIViewController, Optionable, Helperable {
+class MapViewController: UIViewController, Navigationable, Optionable, Helperable {
     
     enum Section: CaseIterable {
         case main
@@ -112,6 +112,7 @@ class MapViewController: UIViewController, Optionable, Helperable {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.setupNavigation()
         self.configureDataSource()
         self.setupModal()
         self.bindViewModel()
@@ -216,6 +217,7 @@ class MapViewController: UIViewController, Optionable, Helperable {
         let bookmarkToggleAction = UIAction { [weak self] _ in
             guard let self = self else { return }
             self.bookmarkToggleButtonDidTapPublisher.send(self.bookmarkButton.isSelected)
+            self.bookmarkButton.isSelected.toggle()
         }
         self.bookmarkButton.addAction(bookmarkToggleAction, for: .touchUpInside)
     }

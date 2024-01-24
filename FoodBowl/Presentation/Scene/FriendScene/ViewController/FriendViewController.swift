@@ -112,15 +112,6 @@ final class FriendViewController: MapViewController {
             .store(in: &self.cancellable)
     }
     
-    override func bindUI() {
-        self.bookmarkToggleButtonDidTapPublisher
-            .receive(on: DispatchQueue.main)
-            .sink(receiveValue: { [weak self] isBookmark in
-                self?.bookmarkButton.isSelected = isBookmark
-            })
-            .store(in: &self.cancellable)
-    }
-    
     // MARK: - func
     
     func configureNavigation() {

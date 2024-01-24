@@ -72,6 +72,7 @@ final class FriendViewModel: BaseViewModelType {
                 self.lastReviewId = nil
                 self.isBookmark = !isBookmark
                 self.isBookmark ? self.getReviewsByBookmark() : self.getReviewsByFollowing()
+                self.isBookmark ? self.getStoresByBookmark() : self.getStoresByFollowing()
             })
             .store(in: &self.cancellable)
         
