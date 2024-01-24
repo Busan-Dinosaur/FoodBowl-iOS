@@ -192,7 +192,7 @@ final class ProfileViewModel: BaseViewModelType {
         }
     }
     
-    func createBookmark(storeId: Int) {
+    private func createBookmark(storeId: Int) {
         Task {
             do {
                 try await self.usecase.createBookmark(storeId: storeId)
@@ -203,7 +203,7 @@ final class ProfileViewModel: BaseViewModelType {
         }
     }
     
-    func removeBookmark(storeId: Int) {
+    private func removeBookmark(storeId: Int) {
         Task {
             do {
                 try await self.usecase.removeBookmark(storeId: storeId)

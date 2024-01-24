@@ -260,4 +260,12 @@ final class ProfileViewController: MapViewController {
             self.title = member.nickname
         }
     }
+    
+    override func updateReview(reviewId: Int) {
+        self.presentUpdateReviewViewController(id: reviewId)
+    }
+    
+    override func removeReview(reviewId: Int) {
+        self.deleteReview(reviewId)
+    }
 }

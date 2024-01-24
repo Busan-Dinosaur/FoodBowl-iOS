@@ -8,6 +8,7 @@
 import UIKit
 
 protocol Optionable: UIGestureRecognizerDelegate {
+    func updateReview(reviewId: Int)
     func removeReview(reviewId: Int)
 }
 
@@ -17,7 +18,7 @@ extension Optionable where Self: UIViewController {
         
         if isMyReview {
             let edit = UIAlertAction(title: "수정", style: .default, handler: { _ in
-                self.presentEditViewController(reviewId: reviewId)
+                self.updateReview(reviewId: reviewId)
             })
             alert.addAction(edit)
             
@@ -75,18 +76,7 @@ extension Optionable where Self: UIViewController {
         }
     }
     
-    func presentEditViewController(reviewId: Int) {
-//        let repository = UpdateReviewRepositoryImpl()
-//        let usecase = UpdateReviewUsecaseImpl(repository: repository)
-//        let viewModel = UpdateReviewViewModel(usecase: usecase)
-//        let viewController = UpdateReviewViewController(viewModel: viewModel)
-//        let navigationController = UINavigationController(rootViewController: viewController)
-//        navigationController.modalPresentationStyle = .fullScreen
-//        
-//        DispatchQueue.main.async { [weak self] in
-//            self?.present(navigationController, animated: true)
-//        }
-    }
+    func updateReview(reviewId: Int) { }
     
-    func removeReview(reviewId: Int) {}
+    func removeReview(reviewId: Int) { }
 }

@@ -207,6 +207,8 @@ class MapViewController: UIViewController, Navigationable, Optionable, Helperabl
         }
     }
     
+    // MARK: - func
+    
     func setupAction() {
         let plusAction = UIAction { [weak self] _ in
             self?.presentCreateReviewViewController()
@@ -220,6 +222,10 @@ class MapViewController: UIViewController, Navigationable, Optionable, Helperabl
         }
         self.bookmarkButton.addAction(bookmarkToggleAction, for: .touchUpInside)
     }
+    
+    func updateReview(reviewId: Int) { }
+    
+    func removeReview(reviewId: Int) { }
 }
 
 // MARK: - Markers

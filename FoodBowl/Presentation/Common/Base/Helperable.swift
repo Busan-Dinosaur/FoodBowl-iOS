@@ -29,7 +29,10 @@ extension Helperable where Self: UIViewController {
             memberId: id
         )
         let viewController = ProfileViewController(viewModel: viewModel)
-        self.navigationController?.pushViewController(viewController, animated: true)
+        
+        DispatchQueue.main.async { [weak self] in
+            self?.navigationController?.pushViewController(viewController, animated: true)
+        }
     }
     
     func presentUpdateProfileViewController() {
@@ -37,7 +40,10 @@ extension Helperable where Self: UIViewController {
         let usecase = UpdateProfileUsecaseImpl(repository: repository)
         let viewModel = UpdateProfileViewModel(usecase: usecase)
         let viewController = UpdateProfileViewController(viewModel: viewModel)
-        self.navigationController?.pushViewController(viewController, animated: true)
+        
+        DispatchQueue.main.async { [weak self] in
+            self?.navigationController?.pushViewController(viewController, animated: true)
+        }
     }
     
     func presentStoreDetailViewController(id: Int) {
@@ -48,7 +54,10 @@ extension Helperable where Self: UIViewController {
             storeId: id
         )
         let viewController = StoreDetailViewController(viewModel: viewModel)
-        self.navigationController?.pushViewController(viewController, animated: true)
+        
+        DispatchQueue.main.async { [weak self] in
+            self?.navigationController?.pushViewController(viewController, animated: true)
+        }
     }
     
     func presentReviewDetailViewController(id: Int) {
@@ -59,7 +68,10 @@ extension Helperable where Self: UIViewController {
             reviewId: id
         )
         let viewController = ReviewDetailViewController(viewModel: viewModel)
-        self.navigationController?.pushViewController(viewController, animated: true)
+        
+        DispatchQueue.main.async { [weak self] in
+            self?.navigationController?.pushViewController(viewController, animated: true)
+        }
     }
     
     func presentCreateReviewViewController() {
@@ -69,7 +81,10 @@ extension Helperable where Self: UIViewController {
         let viewController = CreateReviewViewController(viewModel: viewModel)
         let navigationController = UINavigationController(rootViewController: viewController)
         navigationController.modalPresentationStyle = .fullScreen
-        self.present(navigationController, animated: true)
+        
+        DispatchQueue.main.async { [weak self] in
+            self?.present(navigationController, animated: true)
+        }
     }
     
     func presentUpdateReviewViewController(id: Int) {
@@ -81,7 +96,10 @@ extension Helperable where Self: UIViewController {
         let viewModel = SearchStoreViewModel(usecase: usecase)
         let viewController = SearchStoreViewController(viewModel: viewModel)
         viewController.delegate = self as? any SearchStoreViewControllerDelegate
-        self.navigationController?.pushViewController(viewController, animated: true)
+        
+        DispatchQueue.main.async { [weak self] in
+            self?.navigationController?.pushViewController(viewController, animated: true)
+        }
     }
     
     func presentFollowerViewController(id: Int, isOwn: Bool) {
@@ -93,7 +111,10 @@ extension Helperable where Self: UIViewController {
             isOwn: isOwn
         )
         let viewController = FollowerViewController(viewModel: viewModel)
-        self.navigationController?.pushViewController(viewController, animated: true)
+        
+        DispatchQueue.main.async { [weak self] in
+            self?.navigationController?.pushViewController(viewController, animated: true)
+        }
     }
     
     func presentFollowingViewController(id: Int) {
@@ -104,12 +125,18 @@ extension Helperable where Self: UIViewController {
             memberId: id
         )
         let viewController = FollowingViewController(viewModel: viewModel)
-        self.navigationController?.pushViewController(viewController, animated: true)
+        
+        DispatchQueue.main.async { [weak self] in
+            self?.navigationController?.pushViewController(viewController, animated: true)
+        }
     }
     
     func presentShowWebViewController(url: String) {
         let showWebViewController = ShowWebViewController(url: url)
         let navigationController = UINavigationController(rootViewController: showWebViewController)
-        self.navigationController?.present(navigationController, animated: true)
+        
+        DispatchQueue.main.async { [weak self] in
+            self?.navigationController?.present(navigationController, animated: true)
+        }
     }
 }
