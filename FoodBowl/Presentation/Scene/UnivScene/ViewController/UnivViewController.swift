@@ -66,7 +66,8 @@ final class UnivViewController: MapViewController {
         output.univ
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] schoolName, schoolX, schoolY in
-                self?.moveCameraToUniv(schoolName: schoolName, schoolX: schoolX, schoolY: schoolY)
+                self?.univTitleButton.label.text = schoolName
+                self?.moveCameraToUniv(schoolX: schoolX, schoolY: schoolY)
             })
             .store(in: &self.cancellable)
         
@@ -142,12 +143,17 @@ final class UnivViewController: MapViewController {
         self.navigationItem.rightBarButtonItem = plusButton
     }
 
-    private func moveCameraToUniv(schoolName: String, schoolX: Double, schoolY: Double) {
-        self.univTitleButton.label.text = schoolName
-        self.mapView.setRegion(
-            MKCoordinateRegion(
-                center: CLLocationCoordinate2D(latitude: schoolY, longitude: schoolX),
-                span: MKCoordinateSpan(latitudeDelta: 0.02, longitudeDelta: 0.02)
+    private func moveCameraToUniv(schoolX: Double, schoolY: Double) {
+        self.mapView.userTrackingMode = .none
+        self.mapView.setCamera(
+            MKMapCamera(
+                lookingAtCenter: CLLocationCoordinate2D(
+                    latitude: schoolY,
+                    longitude: schoolX
+                ),
+                fromDistance: 1000,
+                pitch: 50,
+                heading: 0
             ),
             animated: true
         )
