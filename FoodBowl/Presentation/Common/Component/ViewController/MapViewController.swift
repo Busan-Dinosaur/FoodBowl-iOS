@@ -76,13 +76,15 @@ class MapViewController: UIViewController, Navigationable, Optionable, Helperabl
     
     // MARK: - Modal Values
     
-    let modalMinHeight: CGFloat = 40
-    let modalMidHeight: CGFloat = UIScreen.main.bounds.height / 2 - 100
-    lazy var tabBarHeight: CGFloat = tabBarController?.tabBar.frame.height ?? 0
-    lazy var navBarHeight: CGFloat = navigationController?.navigationBar.frame.height ?? 0
+    private var modalMinHeight: CGFloat = 40
+    private var modalMidHeight: CGFloat = UIScreen.main.bounds.height / 2 - 100
     lazy var modalMaxHeight: CGFloat = UIScreen.main.bounds.height - SizeLiteral.topAreaPadding - navBarHeight - 120
-    var currentModalHeight: CGFloat = 0
-    var categoryListHeight: CGFloat = 40
+    
+    private lazy var tabBarHeight: CGFloat = tabBarController?.tabBar.frame.height ?? 0
+    private lazy var navBarHeight: CGFloat = navigationController?.navigationBar.frame.height ?? 0
+    
+    private var currentModalHeight: CGFloat = 0
+    private var categoryListHeight: CGFloat = 40
     
     private var panGesture = UIPanGestureRecognizer()
     
@@ -95,6 +97,8 @@ class MapViewController: UIViewController, Navigationable, Optionable, Helperabl
         self.viewModel = viewModel
         self.isOwn = isOwn
         super.init(nibName: nil, bundle: nil)
+        self.setupLayout()
+        self.configureUI()
     }
     
     @available(*, unavailable)
@@ -112,10 +116,9 @@ class MapViewController: UIViewController, Navigationable, Optionable, Helperabl
         super.viewDidLoad()
         self.setupNavigation()
         self.configureDataSource()
-        self.bindViewModel()
-        self.setupLayout()
-        self.configureUI()
+        self.configureModal()
         self.setupModal()
+        self.bindViewModel()
         self.bindUI()
         self.setupAction()
     }
@@ -208,6 +211,15 @@ class MapViewController: UIViewController, Navigationable, Optionable, Helperabl
     }
     
     // MARK: - func
+    
+    func configureModal() { }
+    
+    func setupModal() {
+        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan(_:)))
+        self.grabbarView.isUserInteractionEnabled = true
+        self.grabbarView.addGestureRecognizer(panGesture)
+        self.currentModalHeight = self.modalMidHeight
+    }
     
     func setupAction() {
         let plusAction = UIAction { [weak self] _ in
@@ -360,13 +372,6 @@ extension MapViewController: MKMapViewDelegate {
 
 // MARK: - Control Modal
 extension MapViewController {
-    func setupModal() {
-        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan(_:)))
-        self.grabbarView.isUserInteractionEnabled = true
-        self.grabbarView.addGestureRecognizer(panGesture)
-        self.currentModalHeight = self.modalMidHeight
-    }
-    
     @objc
     func handlePan(_ gesture: UIPanGestureRecognizer) {
         guard gesture.view != nil else { return }

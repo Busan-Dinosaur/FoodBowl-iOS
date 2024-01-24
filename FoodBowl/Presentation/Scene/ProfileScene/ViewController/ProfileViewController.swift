@@ -52,11 +52,6 @@ final class ProfileViewController: MapViewController {
             $0.height.width.equalTo(40)
         }
     }
-
-    override func configureUI() {
-        super.configureUI()
-        self.modalMaxHeight = UIScreen.main.bounds.height - SizeLiteral.topAreaPadding - navBarHeight - 180
-    }
     
     // MARK: - func - bind
     
@@ -194,6 +189,11 @@ final class ProfileViewController: MapViewController {
             self.navigationItem.rightBarButtonItems = [settingButton, plusButton]
             self.profileHeaderView.followButton.isHidden = true
         }
+    }
+    
+    override func configureModal() {
+        super.configureModal()
+        self.modalMaxHeight -= 100
     }
     
     override func setupAction() {
