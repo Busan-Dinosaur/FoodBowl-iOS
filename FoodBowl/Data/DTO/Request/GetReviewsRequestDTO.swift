@@ -46,6 +46,6 @@ struct GetReviewsByFeedRequestDTO: Encodable {
     let deviceX, deviceY: Double
 }
 
-struct CustomLocationRequestDTO: Codable {
-    var x, y, deltaX, deltaY, deviceX, deviceY: Double
+struct CustomLocationRequestDTO: Codable, Equatable {
+    let x, y, deltaX, deltaY, deviceX, deviceY: Double
 }
