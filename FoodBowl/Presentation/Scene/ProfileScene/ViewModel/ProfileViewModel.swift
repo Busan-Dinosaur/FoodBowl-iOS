@@ -32,6 +32,7 @@ final class ProfileViewModel: BaseViewModelType {
     
     struct Input {
         let viewDidLoad: AnyPublisher<Void, Never>
+        let viewWillAppear: AnyPublisher<Void, Never>
         let followMember: AnyPublisher<(Int, Bool), Never>
         let customLocation: AnyPublisher<CustomLocationRequestDTO, Never>
         let bookmarkButtonDidTap: AnyPublisher<(Int, Bool), Never>
@@ -62,6 +63,13 @@ final class ProfileViewModel: BaseViewModelType {
     
     func transform(from input: Input) -> Output {
         input.viewDidLoad
+            .sink(receiveValue: { [weak self] _ in
+                guard let self = self else { return }
+                self.getMemberProfile(memberId: self.memberId)
+            })
+            .store(in: &self.cancellable)
+        
+        input.viewWillAppear
             .sink(receiveValue: { [weak self] _ in
                 guard let self = self else { return }
                 self.getMemberProfile(memberId: self.memberId)

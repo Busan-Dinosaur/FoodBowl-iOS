@@ -25,6 +25,8 @@ final class ProfileViewController: MapViewController {
     private let optionButton = OptionButton()
     private let settingButton = SettingButton()
     private let profileHeaderView = ProfileHeaderView()
+    
+    let viewWillAppearPublisher: PassthroughSubject<Void, Never> = PassthroughSubject()
 
     override func setupLayout() {
         super.setupLayout()
@@ -53,6 +55,13 @@ final class ProfileViewController: MapViewController {
         }
     }
     
+    // MARK: - life cycle
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.viewWillAppearPublisher.send(())
+    }
+    
     // MARK: - func - bind
     
     override func bindViewModel() {
@@ -65,6 +74,7 @@ final class ProfileViewController: MapViewController {
         guard let viewModel = self.viewModel as? ProfileViewModel else { return nil }
         let input = ProfileViewModel.Input(
             viewDidLoad: self.viewDidLoadPublisher,
+            viewWillAppear: self.viewWillAppearPublisher.eraseToAnyPublisher(),
             followMember: self.followButtonDidTapPublisher.eraseToAnyPublisher(),
             customLocation: self.locationPublisher.eraseToAnyPublisher(),
             bookmarkButtonDidTap: self.bookmarkButtonDidTapPublisher.eraseToAnyPublisher(),
@@ -165,15 +175,6 @@ final class ProfileViewController: MapViewController {
                         message: error.localizedDescription
                     )
                 }
-            })
-            .store(in: &self.cancellable)
-    }
-    
-    override func bindUI() {
-        self.bookmarkToggleButtonDidTapPublisher
-            .receive(on: DispatchQueue.main)
-            .sink(receiveValue: { [weak self] isBookmark in
-                self?.bookmarkButton.isSelected = isBookmark
             })
             .store(in: &self.cancellable)
     }
