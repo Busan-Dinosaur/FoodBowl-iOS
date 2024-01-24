@@ -95,8 +95,6 @@ class MapViewController: UIViewController, Navigationable, Optionable, Helperabl
         self.viewModel = viewModel
         self.isOwn = isOwn
         super.init(nibName: nil, bundle: nil)
-        self.setupLayout()
-        self.configureUI()
     }
     
     @available(*, unavailable)
@@ -114,8 +112,10 @@ class MapViewController: UIViewController, Navigationable, Optionable, Helperabl
         super.viewDidLoad()
         self.setupNavigation()
         self.configureDataSource()
-        self.setupModal()
         self.bindViewModel()
+        self.setupLayout()
+        self.configureUI()
+        self.setupModal()
         self.bindUI()
         self.setupAction()
     }
