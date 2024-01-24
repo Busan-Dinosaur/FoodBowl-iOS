@@ -26,7 +26,7 @@ final class ProfileViewController: MapViewController {
     private let settingButton = SettingButton()
     private let profileHeaderView = ProfileHeaderView()
     
-    let viewWillAppearPublisher: PassthroughSubject<Void, Never> = PassthroughSubject()
+    private let viewWillAppearPublisher: PassthroughSubject<Void, Never> = PassthroughSubject()
 
     override func setupLayout() {
         super.setupLayout()
