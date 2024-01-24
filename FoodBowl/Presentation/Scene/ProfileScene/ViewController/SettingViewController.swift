@@ -11,7 +11,7 @@ import UIKit
 import SnapKit
 import Then
 
-final class SettingViewController: UIViewController, Navigationable {
+final class SettingViewController: UIViewController, Navigationable, Helperable {
     
     // MARK: - ui component
     
@@ -19,56 +19,54 @@ final class SettingViewController: UIViewController, Navigationable {
     
     // MARK: - property
     
-    private var options: [Option] {
-        [
-            Option(
-                title: "공지사항",
-                handler: { [weak self] in
-                    self?.presentWebViewController(url: "https://coby5502.notion.site/a25fe63009d24b958fe77ab87e53994e")
-                }
-            ),
-            Option(
-                title: "개인정보처리방침",
-                handler: { [weak self] in
-                    self?.presentWebViewController(url: "https://coby5502.notion.site/2ca079dd7b354cd790b3280728ebb0d5")
-                }
-            ),
-            Option(
-                title: "이용약관",
-                handler: { [weak self] in
-                    self?.presentWebViewController(url: "https://coby5502.notion.site/32da9811cd284eaab7c3d8390c0ddccc")
-                }
-            ),
-            Option(
-                title: "로그아웃",
-                handler: { [weak self] in
-                    self?.makeRequestAlert(
-                        title: "로그아웃",
-                        message: "로그아웃 하시겠어요?",
-                        okTitle: "네",
-                        cancelTitle: "아니요",
-                        okAction: { _ in
-                            guard let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate else { return }
-                            sceneDelegate.logOut()
-                        }
-                    )
-                }
-            ),
-            Option(
-                title: "탈퇴하기",
-                handler: { [weak self] in
-                    self?.makeRequestAlert(
-                        title: "탈퇴",
-                        message: "정말 탈퇴하시나요?",
-                        okTitle: "네",
-                        cancelTitle: "아니요",
-                        okAction: { _ in
-                        }
-                    )
-                }
-            ),
-        ]
-    }
+    private var options: [Option] {[
+        Option(
+            title: "공지사항",
+            handler: { [weak self] in
+                self?.presentShowWebViewController(url: "https://coby5502.notion.site/a25fe63009d24b958fe77ab87e53994e")
+            }
+        ),
+        Option(
+            title: "개인정보처리방침",
+            handler: { [weak self] in
+                self?.presentShowWebViewController(url: "https://coby5502.notion.site/2ca079dd7b354cd790b3280728ebb0d5")
+            }
+        ),
+        Option(
+            title: "이용약관",
+            handler: { [weak self] in
+                self?.presentShowWebViewController(url: "https://coby5502.notion.site/32da9811cd284eaab7c3d8390c0ddccc")
+            }
+        ),
+        Option(
+            title: "로그아웃",
+            handler: { [weak self] in
+                self?.makeRequestAlert(
+                    title: "로그아웃",
+                    message: "로그아웃 하시겠어요?",
+                    okTitle: "네",
+                    cancelTitle: "아니요",
+                    okAction: { _ in
+                        guard let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate else { return }
+                        sceneDelegate.logOut()
+                    }
+                )
+            }
+        ),
+        Option(
+            title: "탈퇴하기",
+            handler: { [weak self] in
+                self?.makeRequestAlert(
+                    title: "탈퇴",
+                    message: "정말 탈퇴하시나요?",
+                    okTitle: "네",
+                    cancelTitle: "아니요",
+                    okAction: { _ in
+                    }
+                )
+            }
+        ),
+    ]}
     
     // MARK: - init
     
@@ -157,17 +155,5 @@ extension SettingViewController: MFMailComposeViewControllerDelegate {
 
     func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith _: MFMailComposeResult, error _: Error?) {
         controller.dismiss(animated: true, completion: nil)
-    }
-}
-
-// MARK: - Helper
-extension SettingViewController {
-    private func presentWebViewController(url: String) {
-        let showWebViewController = ShowWebViewController(url: url)
-        let navigationController = UINavigationController(rootViewController: showWebViewController)
-        
-        DispatchQueue.main.async { [weak self] in
-            self?.present(navigationController, animated: true)
-        }
     }
 }

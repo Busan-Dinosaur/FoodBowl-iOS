@@ -11,7 +11,7 @@ import UIKit
 import SnapKit
 import Then
 
-final class ReviewDetailViewController: UIViewController, Navigationable, Optionable {
+final class ReviewDetailViewController: UIViewController, Navigationable, Optionable, Helperable {
     
     // MARK: - ui component
     
@@ -139,30 +139,5 @@ final class ReviewDetailViewController: UIViewController, Navigationable, Option
     private func configureNavigation() {
         guard let navigationController = self.navigationController else { return }
         self.reviewDetailView.configureNavigationBarTitle(navigationController)
-    }
-}
-
-// MARK: - Helper
-extension ReviewDetailViewController {
-    private func presentProfileViewController(id: Int) {
-        let repository = ProfileRepositoryImpl()
-        let usecase = ProfileUsecaseImpl(repository: repository)
-        let viewModel = ProfileViewModel(
-            usecase: usecase,
-            memberId: id
-        )
-        let viewController = ProfileViewController(viewModel: viewModel)
-        self.navigationController?.pushViewController(viewController, animated: true)
-    }
-    
-    private func presentStoreDetailViewController(id: Int) {
-        let repository = StoreDetailRepositoryImpl()
-        let usecase = StoreDetailUsecaseImpl(repository: repository)
-        let viewModel = StoreDetailViewModel(
-            usecase: usecase,
-            storeId: id
-        )
-        let viewController = StoreDetailViewController(viewModel: viewModel)
-        self.navigationController?.pushViewController(viewController, animated: true)
     }
 }

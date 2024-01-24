@@ -52,7 +52,7 @@ final class ProfileViewModel: BaseViewModelType {
 
     init(
         usecase: ProfileUsecase,
-        memberId: Int = UserDefaultStorage.id
+        memberId: Int
     ) {
         self.usecase = usecase
         self.memberId = memberId

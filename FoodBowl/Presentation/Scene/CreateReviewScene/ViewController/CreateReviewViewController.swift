@@ -11,7 +11,7 @@ import UIKit
 import SnapKit
 import Then
 
-final class CreateReviewViewController: UIViewController, Keyboardable, PhotoPickerable {
+final class CreateReviewViewController: UIViewController, Keyboardable, PhotoPickerable, Helperable {
     
     // MARK: - ui component
     
@@ -134,7 +134,7 @@ final class CreateReviewViewController: UIViewController, Keyboardable, PhotoPic
         self.createReviewView.showStorePublisher
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] url in
-                self?.presentShowStoreViewController(url: url)
+                self?.presentShowWebViewController(url: url)
             })
             .store(in: &self.cancellable)
     }
@@ -192,24 +192,6 @@ extension CreateReviewViewController: UICollectionViewDataSource, UICollectionVi
 
             return cell
         }
-    }
-}
-
-// MARK: - Helper
-extension CreateReviewViewController {
-    private func presentSearchStoreViewController() {
-        let repository = CreateReviewRepositoryImpl()
-        let usecase = CreateReviewUsecaseImpl(repository: repository)
-        let viewModel = SearchStoreViewModel(usecase: usecase)
-        let viewController = SearchStoreViewController(viewModel: viewModel)
-        viewController.delegate = self
-        self.navigationController?.pushViewController(viewController, animated: true)
-    }
-    
-    private func presentShowStoreViewController(url: String) {
-        let showWebViewController = ShowWebViewController(url: url)
-        let navigationController = UINavigationController(rootViewController: showWebViewController)
-        self.navigationController?.present(navigationController, animated: true)
     }
 }
 

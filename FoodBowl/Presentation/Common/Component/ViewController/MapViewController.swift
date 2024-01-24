@@ -13,7 +13,7 @@ import UIKit
 import SnapKit
 import Then
 
-class MapViewController: UIViewController, Optionable {
+class MapViewController: UIViewController, Optionable, Helperable {
     
     enum Section: CaseIterable {
         case main
@@ -441,41 +441,5 @@ extension MapViewController {
 
     private func setModalMaxState() {
         self.grabbarView.layer.cornerRadius = 0
-    }
-}
-
-// MARK: - Helper
-extension MapViewController {
-    private func presentProfileViewController(id: Int) {
-        let repository = ProfileRepositoryImpl()
-        let usecase = ProfileUsecaseImpl(repository: repository)
-        let viewModel = ProfileViewModel(
-            usecase: usecase,
-            memberId: id
-        )
-        let viewController = ProfileViewController(viewModel: viewModel)
-        self.navigationController?.pushViewController(viewController, animated: true)
-    }
-    
-    private func presentStoreDetailViewController(id: Int) {
-        let repository = StoreDetailRepositoryImpl()
-        let usecase = StoreDetailUsecaseImpl(repository: repository)
-        let viewModel = StoreDetailViewModel(
-            usecase: usecase,
-            storeId: id
-        )
-        let viewController = StoreDetailViewController(viewModel: viewModel)
-        self.navigationController?.pushViewController(viewController, animated: true)
-    }
-    
-    private func presentReviewDetailViewController(id: Int) {
-        let repository = ReviewDetailRepositoryImpl()
-        let usecase = ReviewDetailUsecaseImpl(repository: repository)
-        let viewModel = ReviewDetailViewModel(
-            usecase: usecase,
-            reviewId: id
-        )
-        let viewController = ReviewDetailViewController(viewModel: viewModel)
-        self.navigationController?.pushViewController(viewController, animated: true)
     }
 }

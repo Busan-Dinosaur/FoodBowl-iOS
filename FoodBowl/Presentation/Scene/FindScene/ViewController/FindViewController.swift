@@ -11,7 +11,7 @@ import UIKit
 import SnapKit
 import Then
 
-final class FindViewController: UIViewController, Keyboardable {
+final class FindViewController: UIViewController, Keyboardable, Helperable {
     
     enum Section: CaseIterable {
         case main
@@ -316,49 +316,5 @@ extension FindViewController: UITableViewDataSource, UITableViewDelegate {
         } else {
             self.presentProfileViewController(id: self.members[indexPath.item].id)
         }
-    }
-}
-
-
-// MARK: - Helper
-extension FindViewController {
-    private func presentCreateReviewViewController() {
-        let repository = CreateReviewRepositoryImpl()
-        let usecase = CreateReviewUsecaseImpl(repository: repository)
-        let viewModel = CreateReviewViewModel(usecase: usecase)
-        let viewController = CreateReviewViewController(viewModel: viewModel)
-        let navigationController = UINavigationController(rootViewController: viewController)
-        navigationController.modalPresentationStyle = .fullScreen
-        self.present(navigationController, animated: true)
-    }
-    
-    private func presentStoreDetailViewController(id: Int) {
-        let repository = StoreDetailRepositoryImpl()
-        let usecase = StoreDetailUsecaseImpl(repository: repository)
-        let viewModel = StoreDetailViewModel(
-            usecase: usecase,
-            storeId: id
-        )
-        let viewController = StoreDetailViewController(viewModel: viewModel)
-        self.navigationController?.pushViewController(viewController, animated: true)
-    }
-    
-    private func presentProfileViewController(id: Int) {
-        let repository = ProfileRepositoryImpl()
-        let usecase = ProfileUsecaseImpl(repository: repository)
-        let viewModel = ProfileViewModel(
-            usecase: usecase,
-            memberId: id
-        )
-        let viewController = ProfileViewController(viewModel: viewModel)
-        self.navigationController?.pushViewController(viewController, animated: true)
-    }
-    
-    private func presentReviewDetailViewController(id: Int) {
-        let repository = ReviewDetailRepositoryImpl()
-        let usecase = ReviewDetailUsecaseImpl(repository: repository)
-        let viewModel = ReviewDetailViewModel(usecase: usecase, reviewId: id)
-        let viewController = ReviewDetailViewController(viewModel: viewModel)
-        self.navigationController?.pushViewController(viewController, animated: true)
     }
 }

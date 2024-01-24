@@ -11,7 +11,7 @@ import UIKit
 import SnapKit
 import Then
 
-final class StoreDetailViewController: UIViewController, Navigationable, Optionable {
+final class StoreDetailViewController: UIViewController, Navigationable, Optionable, Helperable {
     
     enum Section: CaseIterable {
         case main
@@ -230,30 +230,5 @@ extension StoreDetailViewController {
     private func loadMoreReviews(_ items: [Review]) {
         self.snapshot.appendItems(items, toSection: .main)
         self.dataSource.applySnapshotUsingReloadData(self.snapshot)
-    }
-}
-
-// MARK: - Helper
-extension StoreDetailViewController {
-    private func presentProfileViewController(id: Int) {
-        let repository = ProfileRepositoryImpl()
-        let usecase = ProfileUsecaseImpl(repository: repository)
-        let viewModel = ProfileViewModel(
-            usecase: usecase,
-            memberId: id
-        )
-        let viewController = ProfileViewController(viewModel: viewModel)
-        self.navigationController?.pushViewController(viewController, animated: true)
-    }
-    
-    private func presentReviewDetailViewController(id: Int) {
-        let repository = ReviewDetailRepositoryImpl()
-        let usecase = ReviewDetailUsecaseImpl(repository: repository)
-        let viewModel = ReviewDetailViewModel(
-            usecase: usecase,
-            reviewId: id
-        )
-        let viewController = ReviewDetailViewController(viewModel: viewModel)
-        self.navigationController?.pushViewController(viewController, animated: true)
     }
 }

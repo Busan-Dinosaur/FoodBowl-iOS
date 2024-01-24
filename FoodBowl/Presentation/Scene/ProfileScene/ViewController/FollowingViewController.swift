@@ -11,7 +11,7 @@ import UIKit
 import SnapKit
 import Then
 
-final class FollowingViewController: UIViewController, Navigationable {
+final class FollowingViewController: UIViewController, Navigationable, Helperable {
     
     enum Section: CaseIterable {
         case main
@@ -212,19 +212,5 @@ extension FollowingViewController {
                 return
             }
         }
-    }
-}
-
-// MARK: - Helper
-extension FollowingViewController {
-    private func presentProfileViewController(id: Int) {
-        let repository = ProfileRepositoryImpl()
-        let usecase = ProfileUsecaseImpl(repository: repository)
-        let viewModel = ProfileViewModel(
-            usecase: usecase,
-            memberId: id
-        )
-        let viewController = ProfileViewController(viewModel: viewModel)
-        self.navigationController?.pushViewController(viewController, animated: true)
     }
 }

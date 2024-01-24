@@ -71,6 +71,7 @@
 		CB617A572AE28C71000F7FFC /* Moya in Frameworks */ = {isa = PBXBuildFile; productRef = CB617A562AE28C71000F7FFC /* Moya */; };
 		CB617A5C2AE29FBA000F7FFC /* StoreDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB617A5B2AE29FBA000F7FFC /* StoreDetailView.swift */; };
 		CB617A5E2AE2A386000F7FFC /* SizeLiteral.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB617A5D2AE2A386000F7FFC /* SizeLiteral.swift */; };
+		CB6301E42B6165070037B7FA /* Helperable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6301E32B6165070037B7FA /* Helperable.swift */; };
 		CB63B7602A698909000AD9C2 /* CategoryListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB63B75F2A698909000AD9C2 /* CategoryListView.swift */; };
 		CB73E00E2AB5F6BF005B6BF1 /* SearchStoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB73E00D2AB5F6BF005B6BF1 /* SearchStoreViewController.swift */; };
 		CB73E56E2B3417980026E4D7 /* FollowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB73E56D2B3417980026E4D7 /* FollowView.swift */; };
@@ -286,6 +287,7 @@
 		CB617A522AE27FC0000F7FFC /* Publisher+Async.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Publisher+Async.swift"; sourceTree = "<group>"; };
 		CB617A5B2AE29FBA000F7FFC /* StoreDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreDetailView.swift; sourceTree = "<group>"; };
 		CB617A5D2AE2A386000F7FFC /* SizeLiteral.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SizeLiteral.swift; sourceTree = "<group>"; };
+		CB6301E32B6165070037B7FA /* Helperable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helperable.swift; sourceTree = "<group>"; };
 		CB63B75F2A698909000AD9C2 /* CategoryListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryListView.swift; sourceTree = "<group>"; };
 		CB73E00D2AB5F6BF005B6BF1 /* SearchStoreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchStoreViewController.swift; sourceTree = "<group>"; };
 		CB73E56D2B3417980026E4D7 /* FollowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowView.swift; sourceTree = "<group>"; };
@@ -1104,6 +1106,7 @@
 				CB617A392AE24836000F7FFC /* Navigationable.swift */,
 				CB617A3B2AE2484F000F7FFC /* Keyboardable.swift */,
 				CB20BAD22AE39F11007535C8 /* Optionable.swift */,
+				CB6301E32B6165070037B7FA /* Helperable.swift */,
 				CB9332622AFCC26800B7F87A /* PhotoPickerable.swift */,
 			);
 			path = Base;
@@ -1759,6 +1762,7 @@
 				CB91E2AA2B56DA7B008A0E8E /* ReviewByStoreDTO.swift in Sources */,
 				CB2E82412AA74A050016820E /* UpdateMemberProfileRequestDTO.swift in Sources */,
 				CBADC2CF2955A41500E56C93 /* TabBarController.swift in Sources */,
+				CB6301E42B6165070037B7FA /* Helperable.swift in Sources */,
 				CB8306752B599CE800632789 /* FindUsecase.swift in Sources */,
 				CB93326F2AFCCCEA00B7F87A /* SignUsecase.swift in Sources */,
 				CB5BFB1B2B3EFF8700B35062 /* Result.swift in Sources */,

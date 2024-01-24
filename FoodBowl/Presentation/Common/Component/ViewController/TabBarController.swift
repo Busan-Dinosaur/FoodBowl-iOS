@@ -77,7 +77,10 @@ extension TabBarController {
     var profileViewController: ProfileViewController {
         let repository = ProfileRepositoryImpl()
         let usecase = ProfileUsecaseImpl(repository: repository)
-        let viewModel = ProfileViewModel(usecase: usecase)
+        let viewModel = ProfileViewModel(
+            usecase: usecase,
+            memberId: UserDefaultStorage.id
+        )
         let viewController = ProfileViewController(viewModel: viewModel, isOwn: true)
         return viewController
     }
