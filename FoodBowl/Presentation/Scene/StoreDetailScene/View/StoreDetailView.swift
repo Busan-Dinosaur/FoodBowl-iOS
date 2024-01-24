@@ -77,7 +77,10 @@ final class StoreDetailView: UIView, BaseViewType {
     // MARK: - base func
     
     func setupLayout() {
-        self.addSubviews(self.storeHeaderView, self.listCollectionView)
+        self.addSubviews(
+            self.storeHeaderView,
+            self.listCollectionView
+        )
 
         self.storeHeaderView.snp.makeConstraints {
             $0.top.equalTo(self.safeAreaLayoutGuide)

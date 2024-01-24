@@ -17,67 +17,52 @@ final class ProfileViewController: MapViewController {
     
     // MARK: - ui component
     
-    let userNicknameLabel = PaddingLabel().then {
+    private let userNicknameLabel = PaddingLabel().then {
         $0.font = .font(.regular, ofSize: 22)
         $0.text = "그냥저냥"
         $0.textColor = .mainTextColor
         $0.padding = UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 0)
         $0.frame = CGRect(x: 0, y: 0, width: 200, height: 0)
     }
-    lazy var optionButton = OptionButton().then {
-        let optionButtonAction = UIAction { [weak self] _ in
-            guard let self = self else { return }
-            guard let viewModel = self.viewModel as? ProfileViewModel else { return }
-            self.presentMemberOptionAlert(memberId: viewModel.memberId)
+    private let optionButton = OptionButton()
+    private let settingButton = SettingButton()
+    private let profileHeaderView = ProfileHeaderView()
+
+    override func setupLayout() {
+        super.setupLayout()
+        self.categoryListView.removeFromSuperview()
+        self.view.addSubviews(
+            self.profileHeaderView,
+            self.categoryListView
+        )
+
+        self.profileHeaderView.snp.makeConstraints {
+            $0.top.equalTo(self.view.safeAreaLayoutGuide)
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(60)
         }
-        $0.addAction(optionButtonAction, for: .touchUpInside)
+
+        self.categoryListView.snp.makeConstraints {
+            $0.top.equalTo(self.profileHeaderView.snp.bottom)
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(40)
+        }
+
+        self.trackingButton.snp.makeConstraints {
+            $0.trailing.equalToSuperview().inset(10)
+            $0.top.equalTo(self.categoryListView.snp.bottom).offset(20)
+            $0.height.width.equalTo(40)
+        }
     }
-    private lazy var profileHeaderView = ProfileHeaderView().then {
-        let followerAction = UIAction { [weak self] _ in
-            guard let self = self else { return }
-            guard let profileViewModel = self.viewModel as? ProfileViewModel else { return }
-            let repository = FollowRepositoryImpl()
-            let usecase = FollowUsecaseImpl(repository: repository)
-            let viewModel = FollowerViewModel(
-                usecase: usecase,
-                memberId: profileViewModel.memberId,
-                isOwn: self.isOwn
-            )
-            let viewController = FollowerViewController(viewModel: viewModel)
-            
-            self.navigationController?.pushViewController(viewController, animated: true)
-        }
-        let followingAction = UIAction { [weak self] _ in 
-            guard let self = self else { return }
-            guard let profileViewModel = self.viewModel as? ProfileViewModel else { return }
-            let repository = FollowRepositoryImpl()
-            let usecase = FollowUsecaseImpl(repository: repository)
-            let viewModel = FollowingViewModel(usecase: usecase, memberId: profileViewModel.memberId)
-            let viewController = FollowingViewController(viewModel: viewModel)
-            
-            self.navigationController?.pushViewController(viewController, animated: true)
-        }
-        let followButtonAction = UIAction { [weak self] _ in
-            guard let self = self else { return }
-            guard let viewModel = self.viewModel as? ProfileViewModel else { return }
-            self.followButtonDidTapPublisher.send((viewModel.memberId, true)) // 수정해야함
-        }
-        let editButtonAction = UIAction { [weak self] _ in
-            guard let self = self else { return }
-            let repository = UpdateProfileRepositoryImpl()
-            let usecase = UpdateProfileUsecaseImpl(repository: repository)
-            let viewModel = UpdateProfileViewModel(usecase: usecase)
-            let viewController = UpdateProfileViewController(viewModel: viewModel)
-            
-            self.navigationController?.pushViewController(viewController, animated: true)
-        }
-        $0.followerInfoButton.addAction(followerAction, for: .touchUpInside)
-        $0.followingInfoButton.addAction(followingAction, for: .touchUpInside)
-        $0.followButton.addAction(followButtonAction, for: .touchUpInside)
-        $0.editButton.addAction(editButtonAction, for: .touchUpInside)
+
+    override func configureUI() {
+        super.configureUI()
+        self.modalMaxHeight = UIScreen.main.bounds.height - SizeLiteral.topAreaPadding - navBarHeight - 180
     }
     
-    override func setupNavigationBar() {
+    // MARK: - func
+    
+    func configureNavigation() {
         guard let viewModel = self.viewModel as? ProfileViewModel else { return }
         
         if isOwn {
@@ -97,33 +82,44 @@ final class ProfileViewController: MapViewController {
             profileHeaderView.editButton.isHidden = true
         }
     }
-
-    override func setupLayout() {
-        super.setupLayout()
-        categoryListView.removeFromSuperview()
-        view.addSubviews(profileHeaderView, categoryListView)
-
-        profileHeaderView.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide)
-            $0.leading.trailing.equalToSuperview()
-            $0.height.equalTo(60)
+    
+    override func setupAction() {
+        super.setupAction()
+        
+        let optionButtonAction = UIAction { [weak self] _ in
+            guard let self = self else { return }
+            guard let viewModel = self.viewModel as? ProfileViewModel else { return }
+            self.presentMemberOptionAlert(memberId: viewModel.memberId)
         }
-
-        categoryListView.snp.makeConstraints {
-            $0.top.equalTo(profileHeaderView.snp.bottom)
-            $0.leading.trailing.equalToSuperview()
-            $0.height.equalTo(40)
+        self.optionButton.addAction(optionButtonAction, for: .touchUpInside)
+        
+        let settingButtonAction = UIAction { [weak self] _ in
+            self?.navigationController?.pushViewController(SettingViewController(), animated: true)
         }
-
-        trackingButton.snp.makeConstraints {
-            $0.trailing.equalToSuperview().inset(10)
-            $0.top.equalTo(categoryListView.snp.bottom).offset(20)
-            $0.height.width.equalTo(40)
+        self.settingButton.addAction(settingButtonAction, for: .touchUpInside)
+        
+        let followerAction = UIAction { [weak self] _ in
+            guard let self = self else { return }
+            guard let viewModel = self.viewModel as? ProfileViewModel else { return }
+            self.presentFollowerViewController(id: viewModel.memberId, isOwn: self.isOwn)
         }
-    }
-
-    override func configureUI() {
-        super.configureUI()
-        self.modalMaxHeight = UIScreen.main.bounds.height - SizeLiteral.topAreaPadding - navBarHeight - 180
+        let followingAction = UIAction { [weak self] _ in
+            guard let self = self else { return }
+            guard let viewModel = self.viewModel as? ProfileViewModel else { return }
+            self.presentFollowingViewController(id: viewModel.memberId)
+        }
+        let followButtonAction = UIAction { [weak self] _ in
+            guard let self = self else { return }
+            guard let viewModel = self.viewModel as? ProfileViewModel else { return }
+            self.followButtonDidTapPublisher.send((viewModel.memberId, true)) // 수정해야함
+        }
+        let editButtonAction = UIAction { [weak self] _ in
+            guard let self = self else { return }
+            self.presentUpdateProfileViewController()
+        }
+        self.profileHeaderView.followerInfoButton.addAction(followerAction, for: .touchUpInside)
+        self.profileHeaderView.followingInfoButton.addAction(followingAction, for: .touchUpInside)
+        self.profileHeaderView.followButton.addAction(followButtonAction, for: .touchUpInside)
+        self.profileHeaderView.editButton.addAction(editButtonAction, for: .touchUpInside)
     }
 }

@@ -25,20 +25,17 @@ final class FeedListView: UIView, BaseViewType {
     
     // MARK: - ui component
     
-    let refreshControl = UIRefreshControl()
-    
     let borderLineView = UIView().then {
         $0.backgroundColor = .grey002.withAlphaComponent(0.5)
     }
-    lazy var listCollectionView = UICollectionView(frame: .zero, collectionViewLayout: self.createLayout()).then {
+    private lazy var listCollectionView = UICollectionView(frame: .zero, collectionViewLayout: self.createLayout()).then {
         $0.showsVerticalScrollIndicator = false
         $0.register(FeedCollectionViewCell.self, forCellWithReuseIdentifier: FeedCollectionViewCell.className)
         $0.backgroundColor = .mainBackgroundColor
     }
+    private var refresh = UIRefreshControl()
     
     // MARK: - property
-    
-    private var cancellable: Set<AnyCancellable> = Set()
     
     let refreshPublisher = PassthroughSubject<Void, Never>()
 
@@ -46,8 +43,8 @@ final class FeedListView: UIView, BaseViewType {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        baseInit()
-        setupAction()
+        self.baseInit()
+        self.setupAction()
     }
 
     @available(*, unavailable)
@@ -61,24 +58,31 @@ final class FeedListView: UIView, BaseViewType {
         return self.listCollectionView
     }
     
+    func refreshControl() -> UIRefreshControl {
+        return self.refresh
+    }
+    
     // MARK: - base func
     
     func setupLayout() {
-        addSubviews(borderLineView, listCollectionView)
+        self.addSubviews(
+            self.borderLineView,
+            self.listCollectionView
+        )
 
-        borderLineView.snp.makeConstraints {
+        self.borderLineView.snp.makeConstraints {
             $0.top.leading.trailing.equalToSuperview()
             $0.height.equalTo(1)
         }
 
-        listCollectionView.snp.makeConstraints {
-            $0.top.equalTo(borderLineView.snp.bottom)
+        self.listCollectionView.snp.makeConstraints {
+            $0.top.equalTo(self.borderLineView.snp.bottom)
             $0.leading.trailing.bottom.equalToSuperview()
         }
     }
 
     func configureUI() {
-        backgroundColor = .mainBackgroundColor
+        self.backgroundColor = .mainBackgroundColor
     }
     
     // MARK: - Private - func
@@ -87,9 +91,9 @@ final class FeedListView: UIView, BaseViewType {
         let refreshAction = UIAction { [weak self] _ in
             self?.refreshPublisher.send()
         }
-        self.refreshControl.addAction(refreshAction, for: .valueChanged)
-        self.refreshControl.tintColor = .grey002
-        self.listCollectionView.refreshControl = self.refreshControl
+        self.refresh.addAction(refreshAction, for: .valueChanged)
+        self.refresh.tintColor = .grey002
+        self.listCollectionView.refreshControl = self.refresh
     }
 }
 

@@ -21,28 +21,7 @@ class MapViewController: UIViewController, Optionable, Helperable {
     
     // MARK: - ui component
     
-    lazy var plusButton = PlusButton().then {
-        let action = UIAction { [weak self] _ in
-            let repository = CreateReviewRepositoryImpl()
-            let usecase = CreateReviewUsecaseImpl(repository: repository)
-            let viewModel = CreateReviewViewModel(usecase: usecase)
-            let viewController = CreateReviewViewController(viewModel: viewModel)
-            let navigationController = UINavigationController(rootViewController: viewController)
-            navigationController.modalPresentationStyle = .fullScreen
-            
-            DispatchQueue.main.async {
-                self?.present(navigationController, animated: true)
-            }
-        }
-        $0.addAction(action, for: .touchUpInside)
-    }
-    lazy var settingButton = SettingButton().then {
-        let action = UIAction { [weak self] _ in
-            let settingViewController = SettingViewController()
-            self?.navigationController?.pushViewController(settingViewController, animated: true)
-        }
-        $0.addAction(action, for: .touchUpInside)
-    }
+    let plusButton = PlusButton()
     lazy var mapView = MKMapView().then {
         $0.delegate = self
         $0.mapType = MKMapType.standard
@@ -67,7 +46,7 @@ class MapViewController: UIViewController, Optionable, Helperable {
         $0.layer.masksToBounds = true
         $0.tintColor = UIColor.mainPink
     }
-    lazy var bookmarkButton = BookmarkMapButton().then {
+    let bookmarkButton = BookmarkMapButton().then {
         $0.layer.backgroundColor = UIColor.mainBackgroundColor.cgColor
         $0.layer.borderColor = UIColor.grey002.cgColor
         $0.layer.borderWidth = 1
@@ -89,6 +68,7 @@ class MapViewController: UIViewController, Optionable, Helperable {
     
     let locationPublisher = PassthroughSubject<CustomLocationRequestDTO, Never>()
     let followButtonDidTapPublisher = PassthroughSubject<(Int, Bool), Never>()
+    let bookmarkToggleButtonDidTapPublisher = PassthroughSubject<Bool, Never>()
     let bookmarkButtonDidTapPublisher = PassthroughSubject<(Int, Bool), Never>()
     
     var dataSource: UICollectionViewDiffableDataSource<Section, Review>!
@@ -132,11 +112,11 @@ class MapViewController: UIViewController, Optionable, Helperable {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.setupNavigationBar()
         self.configureDataSource()
         self.setupModal()
         self.bindViewModel()
         self.bindUI()
+        self.setupAction()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -144,49 +124,56 @@ class MapViewController: UIViewController, Optionable, Helperable {
         self.setModalState()
     }
     
+    // MARK: - func
+    
     func setupLayout() {
-        view.addSubviews(mapView, categoryListView, trackingButton, bookmarkButton, grabbarView, feedListView)
+        self.view.addSubviews(
+            self.mapView,
+            self.categoryListView,
+            self.trackingButton,
+            self.bookmarkButton,
+            self.grabbarView,
+            self.feedListView
+        )
         
-        mapView.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide)
+        self.mapView.snp.makeConstraints {
+            $0.top.equalTo(self.view.safeAreaLayoutGuide)
             $0.leading.trailing.bottom.equalToSuperview()
         }
         
-        categoryListView.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide)
+        self.categoryListView.snp.makeConstraints {
+            $0.top.equalTo(self.view.safeAreaLayoutGuide)
             $0.leading.trailing.equalToSuperview()
             $0.height.equalTo(40)
         }
         
-        trackingButton.snp.makeConstraints {
+        self.trackingButton.snp.makeConstraints {
             $0.trailing.equalToSuperview().inset(10)
-            $0.top.equalTo(categoryListView.snp.bottom).offset(20)
+            $0.top.equalTo(self.categoryListView.snp.bottom).offset(20)
             $0.height.width.equalTo(40)
         }
         
-        bookmarkButton.snp.makeConstraints {
+        self.bookmarkButton.snp.makeConstraints {
             $0.trailing.equalToSuperview().inset(10)
-            $0.top.equalTo(trackingButton.snp.bottom).offset(8)
+            $0.top.equalTo(self.trackingButton.snp.bottom).offset(8)
             $0.height.width.equalTo(40)
         }
         
-        grabbarView.snp.makeConstraints {
+        self.grabbarView.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview()
             $0.height.equalTo(80)
         }
         
-        feedListView.snp.makeConstraints {
-            $0.top.equalTo(grabbarView.snp.bottom)
+        self.feedListView.snp.makeConstraints {
+            $0.top.equalTo(self.grabbarView.snp.bottom)
             $0.leading.trailing.bottom.equalToSuperview()
-            $0.height.equalTo(modalMidHeight)
+            $0.height.equalTo(self.modalMidHeight)
         }
     }
     
     func configureUI() {
         self.view.backgroundColor = .mainBackgroundColor
     }
-    
-    func setupNavigationBar() { }
     
     // MARK: - func - bind
     
@@ -219,14 +206,27 @@ class MapViewController: UIViewController, Optionable, Helperable {
             self?.presentReviewDetailViewController(id: item.member.id)
         }
     }
+    
+    func setupAction() {
+        let plusAction = UIAction { [weak self] _ in
+            self?.presentCreateReviewViewController()
+        }
+        self.plusButton.addAction(plusAction, for: .touchUpInside)
+        
+        let bookmarkToggleAction = UIAction { [weak self] _ in
+            guard let self = self else { return }
+            self.bookmarkToggleButtonDidTapPublisher.send(self.bookmarkButton.isSelected)
+        }
+        self.bookmarkButton.addAction(bookmarkToggleAction, for: .touchUpInside)
+    }
 }
 
 // MARK: - Markers
 extension MapViewController {
     func setupMarkers(_ stores: [Store]) {
-        mapView.removeAnnotations(markers)
+        self.mapView.removeAnnotations(self.markers)
 
-        markers = stores.map { store in
+        self.markers = stores.map { store in
             Marker(
                 title: store.name,
                 subtitle: "\(store.reviewCount)개의 후기",
@@ -241,8 +241,8 @@ extension MapViewController {
             )
         }
 
-        mapView.addAnnotations(markers)
-        grabbarView.modalResultLabel.text = "\(stores.count.prettyNumber)개의 맛집"
+        self.mapView.addAnnotations(self.markers)
+        self.grabbarView.modalResultLabel.text = "\(stores.count.prettyNumber)개의 맛집"
     }
 }
 
@@ -282,19 +282,19 @@ extension MapViewController {
         self.dataSource.apply(self.snapshot, animatingDifferences: true)
     }
 
-    private func reloadReviews(_ items: [Review]) {
+    func loadReviews(_ items: [Review]) {
         let previousReviewsData = self.snapshot.itemIdentifiers(inSection: .main)
         self.snapshot.deleteItems(previousReviewsData)
         self.snapshot.appendItems(items, toSection: .main)
         self.dataSource.applySnapshotUsingReloadData(self.snapshot)
     }
     
-    private func loadMoreReviews(_ items: [Review]) {
+    func loadMoreReviews(_ items: [Review]) {
         self.snapshot.appendItems(items, toSection: .main)
         self.dataSource.applySnapshotUsingReloadData(self.snapshot)
     }
     
-    private func updateBookmark(_ storeId: Int) {
+    func updateBookmark(_ storeId: Int) {
         let previousReviewsData = self.snapshot.itemIdentifiers(inSection: .main)
         let items = previousReviewsData
             .map { customItem in
@@ -309,7 +309,7 @@ extension MapViewController {
         self.dataSource.applySnapshotUsingReloadData(self.snapshot)
     }
     
-    private func deleteReview(_ reviewId: Int) {
+    func deleteReview(_ reviewId: Int) {
         for item in snapshot.itemIdentifiers {
             if item.comment.id == reviewId {
                 self.snapshot.deleteItems([item])
@@ -426,7 +426,7 @@ extension MapViewController {
 
     private func setModalMinState() {
         self.grabbarView.showResult()
-        self.feedListView.listCollectionView.isHidden = true
+        self.feedListView.collectionView().isHidden = true
         self.feedListView.borderLineView.isHidden = true
         self.tabBarController?.tabBar.frame.origin = CGPoint(x: 0, y: UIScreen.main.bounds.maxY)
     }
@@ -434,7 +434,7 @@ extension MapViewController {
     private func setModalMidState() {
         self.grabbarView.layer.cornerRadius = 15
         self.grabbarView.showContent()
-        self.feedListView.listCollectionView.isHidden = false
+        self.feedListView.collectionView().isHidden = false
         self.feedListView.borderLineView.isHidden = false
         self.tabBarController?.tabBar.frame.origin = CGPoint(x: 0, y: UIScreen.main.bounds.maxY - self.tabBarHeight)
     }

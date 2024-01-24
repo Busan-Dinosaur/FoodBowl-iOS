@@ -21,18 +21,112 @@ final class FriendViewController: MapViewController {
         $0.padding = UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 0)
         $0.frame = CGRect(x: 0, y: 0, width: 150, height: 0)
     }
-    
-    // MARK: - func
 
     override func configureUI() {
         super.configureUI()
-        bookmarkButton.isHidden = false
+        self.bookmarkButton.isHidden = false
     }
-
-    override func setupNavigationBar() {
-        let friendLabel = makeBarButtonItem(with: friendLabel)
-        let plusButton = makeBarButtonItem(with: plusButton)
-        navigationItem.leftBarButtonItem = friendLabel
-        navigationItem.rightBarButtonItem = plusButton
+    
+    // MARK: - func - bind
+    
+    override func bindViewModel() {
+        let output = self.transformedOutput()
+        self.configureNavigation()
+        self.bindOutputToViewModel(output)
+    }
+    
+    private func transformedOutput() -> FriendViewModel.Output? {
+        guard let viewModel = self.viewModel as? FriendViewModel else { return nil }
+        let input = FriendViewModel.Input(
+            customLocation: self.locationPublisher.eraseToAnyPublisher(),
+            bookmarkToggleButtonDidTap: self.bookmarkToggleButtonDidTapPublisher.eraseToAnyPublisher(),
+            bookmarkButtonDidTap: self.bookmarkButtonDidTapPublisher.eraseToAnyPublisher(),
+            scrolledToBottom: self.feedListView.collectionView().scrolledToBottomPublisher.eraseToAnyPublisher(),
+            refreshControl: self.feedListView.refreshPublisher.eraseToAnyPublisher()
+        )
+        return viewModel.transform(from: input)
+    }
+    
+    private func bindOutputToViewModel(_ output: FriendViewModel.Output?) {
+        guard let output else { return }
+        
+        output.stores
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] result in
+                switch result {
+                case .success(let stores):
+                    self?.setupMarkers(stores)
+                case .failure(let error):
+                    self?.makeAlert(
+                        title: "에러",
+                        message: error.localizedDescription
+                    )
+                }
+            })
+            .store(in: &self.cancellable)
+        
+        output.reviews
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] result in
+                switch result {
+                case .success(let reviews):
+                    self?.loadReviews(reviews)
+                    self?.feedListView.refreshControl().endRefreshing()
+                case .failure(let error):
+                    self?.makeAlert(
+                        title: "에러",
+                        message: error.localizedDescription
+                    )
+                }
+            })
+            .store(in: &self.cancellable)
+        
+        output.moreReviews
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] result in
+                switch result {
+                case .success(let reviews):
+                    self?.loadMoreReviews(reviews)
+                case .failure(let error):
+                    self?.makeAlert(
+                        title: "에러",
+                        message: error.localizedDescription
+                    )
+                }
+            })
+            .store(in: &self.cancellable)
+        
+        output.isBookmark
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] result in
+                switch result {
+                case .success(let storeId):
+                    self?.updateBookmark(storeId)
+                case .failure(let error):
+                    self?.makeAlert(
+                        title: "에러",
+                        message: error.localizedDescription
+                    )
+                }
+            })
+            .store(in: &self.cancellable)
+    }
+    
+    override func bindUI() {
+        self.bookmarkToggleButtonDidTapPublisher
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] isBookmark in
+                self?.bookmarkButton.isSelected = isBookmark
+            })
+            .store(in: &self.cancellable)
+    }
+    
+    // MARK: - func
+    
+    func configureNavigation() {
+        let friendLabel = makeBarButtonItem(with: self.friendLabel)
+        let plusButton = makeBarButtonItem(with: self.plusButton)
+        self.navigationItem.leftBarButtonItem = friendLabel
+        self.navigationItem.rightBarButtonItem = plusButton
     }
 }
