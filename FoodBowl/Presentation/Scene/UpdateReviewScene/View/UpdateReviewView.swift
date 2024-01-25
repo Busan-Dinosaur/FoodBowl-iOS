@@ -43,7 +43,7 @@ final class UpdateReviewView: UIView, BaseViewType {
         $0.setTitleColor(.mainPink, for: .normal)
         $0.titleLabel?.font = UIFont.preferredFont(forTextStyle: .headline, weight: .regular)
     }
-    private let selectedStoreView = SelectedStoreView()
+    let selectedStoreView = SelectedStoreView()
     private let guideCommentLabel = UILabel().then {
         $0.text = "한줄평"
         $0.font = .font(.regular, ofSize: 17)
@@ -86,14 +86,12 @@ final class UpdateReviewView: UIView, BaseViewType {
     // MARK: - property
     
     private let textViewStoreHolder = "100자 이내"
-    private var reviewImages = [UIImage]()
     
     var closeButtonDidTapPublisher: AnyPublisher<Void, Never> {
         return self.closeButton.buttonTapPublisher
     }
     let makeAlertPublisher = PassthroughSubject<String, Never>()
-    let showStorePublisher = PassthroughSubject<String, Never>()
-    let completeButtonDidTapPublisher = PassthroughSubject<(String, [UIImage]), Never>()
+    let completeButtonDidTapPublisher = PassthroughSubject<String, Never>()
     
     // MARK: - init
     
@@ -200,7 +198,7 @@ final class UpdateReviewView: UIView, BaseViewType {
                   let comment = self.commentTextView.text,
                   self.completeButton.isEnabled
             else { return }
-            self.completeButtonDidTapPublisher.send((comment, self.reviewImages))
+            self.completeButtonDidTapPublisher.send(comment)
         }
         self.completeButton.addAction(completeAction, for: .touchUpInside)
     }
@@ -238,6 +236,20 @@ extension UpdateReviewView: UITextViewDelegate {
         if textView.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
             textView.text = self.textViewStoreHolder
             textView.textColor = .grey001
+        }
+    }
+}
+
+extension UpdateReviewView {
+    func configureReview(_ review: Review) {
+        self.selectedStoreView.configureStore(review.store)
+        self.commentTextView.text = review.comment.content
+        self.commentTextView.textColor = .mainTextColor
+        
+        if review.comment.imagePaths.isEmpty {
+            self.listCollectionView.snp.updateConstraints {
+                $0.height.equalTo(0)
+            }
         }
     }
 }

@@ -2,16 +2,17 @@
 //  UpdateReviewViewController.swift
 //  FoodBowl
 //
-//  Created by COBY_PRO on 2023/09/12.
+//  Updated by COBY_PRO on 2023/09/12.
 //
 
 import Combine
 import UIKit
 
+import Kingfisher
 import SnapKit
 import Then
 
-final class UpdateReviewViewController: UIViewController, Keyboardable {
+final class UpdateReviewViewController: UIViewController, Keyboardable, Helperable {
     
     // MARK: - ui component
     
@@ -23,8 +24,6 @@ final class UpdateReviewViewController: UIViewController, Keyboardable {
     
     private let viewModel: any BaseViewModelType
     private var cancellable: Set<AnyCancellable> = Set()
-    
-    let setStorePublisher = PassthroughSubject<(Store, Store?), Never>()
 
     // MARK: - init
     
@@ -64,17 +63,40 @@ final class UpdateReviewViewController: UIViewController, Keyboardable {
         self.bindOutputToViewModel(output)
     }
     
-    private func transformedOutput() -> CreateReviewViewModel.Output? {
-        guard let viewModel = self.viewModel as? CreateReviewViewModel else { return nil }
-        let input = CreateReviewViewModel.Input(
-            setStore: self.setStorePublisher.eraseToAnyPublisher(),
+    private func transformedOutput() -> UpdateReviewViewModel.Output? {
+        guard let viewModel = self.viewModel as? UpdateReviewViewModel else { return nil }
+        let input = UpdateReviewViewModel.Input(
+            viewDidLoad: self.viewDidLoadPublisher,
             completeButtonDidTap: self.updateReviewView.completeButtonDidTapPublisher.eraseToAnyPublisher()
         )
         return viewModel.transform(from: input)
     }
     
-    private func bindOutputToViewModel(_ output: CreateReviewViewModel.Output?) {
+    private func bindOutputToViewModel(_ output: UpdateReviewViewModel.Output?) {
         guard let output else { return }
+        
+        output.review
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] result in
+                switch result {
+                case .success(let review):
+                    guard let self = self else { return }
+                    self.updateReviewView.selectedStoreView.mapButtonTapAction = { _ in
+                        self.presentShowWebViewController(url: review.store.url)
+                    }
+                    self.updateReviewView.configureReview(review)
+                    self.downloadImages(from: review.comment.imagePaths) { images in
+                        self.reviewImages = images
+                        self.updateReviewView.collectionView().reloadData()
+                    }
+                case .failure(let error):
+                    self?.makeAlert(
+                        title: "에러",
+                        message: error.localizedDescription
+                    )
+                }
+            })
+            .store(in: &self.cancellable)
         
         output.isCompleted
             .receive(on: DispatchQueue.main)
@@ -102,7 +124,15 @@ final class UpdateReviewViewController: UIViewController, Keyboardable {
         self.updateReviewView.closeButtonDidTapPublisher
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] _ in
-                self?.dismiss(animated: true)
+                self?.makeRequestAlert(
+                    title: "후기",
+                    message: "후기를 수정하지 않으시나요?",
+                    okTitle: "네",
+                    cancelTitle: "아니요",
+                    okAction: { _ in
+                        self?.dismiss(animated: true)
+                    }
+                )
             })
             .store(in: &self.cancellable)
         
@@ -142,5 +172,31 @@ extension UpdateReviewViewController: UICollectionViewDataSource, UICollectionVi
         cell.imageView.image = self.reviewImages[indexPath.item]
         
         return cell
+    }
+}
+
+extension UpdateReviewViewController {
+    func downloadImages(from urls: [String], completion: @escaping ([UIImage]) -> Void) {
+        var images: [UIImage] = []
+        let group = DispatchGroup()
+        
+        for urlString in urls {
+            guard let url = URL(string: urlString) else { continue }
+            
+            group.enter()
+            KingfisherManager.shared.retrieveImage(with: url) { result in
+                switch result {
+                case .success(let imageResult):
+                    images.append(imageResult.image)
+                case .failure(let error):
+                    print("Error downloading image: \(error)")
+                }
+                group.leave()
+            }
+        }
+        
+        group.notify(queue: .main) {
+            completion(images)
+        }
     }
 }

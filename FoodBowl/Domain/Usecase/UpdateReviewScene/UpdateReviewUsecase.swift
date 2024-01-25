@@ -8,6 +8,7 @@
 import Foundation
 
 protocol UpdateReviewUsecase {
+    func getReview(request: GetReviewRequestDTO) async throws -> Review
     func updateReview(id: Int, request: UpdateReviewRequestDTO, images: [Data]) async throws
 }
 
@@ -24,6 +25,15 @@ final class UpdateReviewUsecaseImpl: UpdateReviewUsecase {
     }
     
     // MARK: - Public - func
+    
+    func getReview(request: GetReviewRequestDTO) async throws -> Review {
+        do {
+            let reviewItemDTO = try await self.repository.getReview(request: request)
+            return reviewItemDTO.toReview()
+        } catch(let error) {
+            throw error
+        }
+    }
     
     func updateReview(id: Int, request: UpdateReviewRequestDTO, images: [Data]) async throws {
         do {

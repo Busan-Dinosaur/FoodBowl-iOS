@@ -12,12 +12,12 @@ final class ReviewDetailViewModel: BaseViewModelType {
     
     // MARK: - property
     
-    private let usecase: ReviewDetailUsecase
-    private var cancellable = Set<AnyCancellable>()
-    
     let reviewId: Int
     var memberId: Int = 0
     var storeId: Int = 0
+    
+    private let usecase: ReviewDetailUsecase
+    private var cancellable = Set<AnyCancellable>()
     
     private let reviewSubject: PassthroughSubject<Result<Review, Error>, Never> = PassthroughSubject()
     private let isBookmarkSubject: PassthroughSubject<Result<Void, Error>, Never> = PassthroughSubject()

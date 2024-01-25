@@ -144,16 +144,10 @@ final class UnivViewController: MapViewController {
     }
 
     private func moveCameraToUniv(schoolX: Double, schoolY: Double) {
-        self.mapView.userTrackingMode = .none
-        self.mapView.setCamera(
-            MKMapCamera(
-                lookingAtCenter: CLLocationCoordinate2D(
-                    latitude: schoolY,
-                    longitude: schoolX
-                ),
-                fromDistance: 1000,
-                pitch: 50,
-                heading: 0
+        self.mapView.setRegion(
+            MKCoordinateRegion(
+                center: CLLocationCoordinate2D(latitude: schoolY, longitude: schoolX),
+                span: MKCoordinateSpan(latitudeDelta: 0.02, longitudeDelta: 0.02)
             ),
             animated: true
         )
