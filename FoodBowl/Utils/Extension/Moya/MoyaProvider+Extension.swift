@@ -76,17 +76,3 @@ extension MoyaProvider where Target == ServiceAPI {
         }
     }
 }
-
-extension MoyaError {
-    var errorResponse: ErrorDTO? {
-        if let response = response {
-            do {
-                return try response.map(ErrorDTO.self)
-            } catch {
-                print("에러 데이터 매핑에 실패했습니다.")
-                return nil
-            }
-        }
-        return nil
-    }
-}

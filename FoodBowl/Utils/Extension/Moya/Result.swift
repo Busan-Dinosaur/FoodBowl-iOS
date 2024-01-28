@@ -13,17 +13,19 @@ public extension Result<Response, MoyaError> {
     func decode<T: Decodable>() throws -> T {
         switch self {
         case .success(let result):
-            guard let data = try? result.map(T.self) else {
+            do {
+                let data = try result.map(T.self)
+                return data
+            } catch {
                 do {
                     let errorMessage = try result.map(ErrorDTO.self).message
-                    throw NetworkError.error(message: errorMessage)
+                    throw CustomError.error(message: errorMessage)
                 } catch {
-                    throw NetworkError.unknownError
+                    throw CustomError.unknownError
                 }
             }
-            return data
         case .failure:
-            throw NetworkError.unknownError
+            throw CustomError.unknownError
         }
     }
 }

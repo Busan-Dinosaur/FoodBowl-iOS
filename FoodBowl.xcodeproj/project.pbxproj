@@ -48,7 +48,7 @@
 		CB5BFB0C2B3EE37500B35062 /* TokenRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5BFB0B2B3EE37500B35062 /* TokenRepository.swift */; };
 		CB5BFB132B3EEA5800B35062 /* TokenRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5BFB122B3EEA5800B35062 /* TokenRepositoryImpl.swift */; };
 		CB5BFB172B3EF76E00B35062 /* ErrorDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5BFB162B3EF76E00B35062 /* ErrorDTO.swift */; };
-		CB5BFB192B3EF92700B35062 /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5BFB182B3EF92700B35062 /* NetworkError.swift */; };
+		CB5BFB192B3EF92700B35062 /* CustomError.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5BFB182B3EF92700B35062 /* CustomError.swift */; };
 		CB5BFB1B2B3EFF8700B35062 /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5BFB1A2B3EFF8700B35062 /* Result.swift */; };
 		CB5BFB1D2B3F025F00B35062 /* SignRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5BFB1C2B3F025F00B35062 /* SignRepositoryImpl.swift */; };
 		CB5BFB1F2B3F028F00B35062 /* SignRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5BFB1E2B3F028F00B35062 /* SignRepository.swift */; };
@@ -267,7 +267,7 @@
 		CB5BFB0B2B3EE37500B35062 /* TokenRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenRepository.swift; sourceTree = "<group>"; };
 		CB5BFB122B3EEA5800B35062 /* TokenRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenRepositoryImpl.swift; sourceTree = "<group>"; };
 		CB5BFB162B3EF76E00B35062 /* ErrorDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorDTO.swift; sourceTree = "<group>"; };
-		CB5BFB182B3EF92700B35062 /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
+		CB5BFB182B3EF92700B35062 /* CustomError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomError.swift; sourceTree = "<group>"; };
 		CB5BFB1A2B3EFF8700B35062 /* Result.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
 		CB5BFB1C2B3F025F00B35062 /* SignRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignRepositoryImpl.swift; sourceTree = "<group>"; };
 		CB5BFB1E2B3F028F00B35062 /* SignRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignRepository.swift; sourceTree = "<group>"; };
@@ -577,7 +577,7 @@
 		CB5BFB0F2B3EE3A800B35062 /* Network */ = {
 			isa = PBXGroup;
 			children = (
-				CB5BFB182B3EF92700B35062 /* NetworkError.swift */,
+				CB5BFB182B3EF92700B35062 /* CustomError.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -1840,7 +1840,7 @@
 				CB617A3E2AE248BB000F7FFC /* UIViewController+Keyboard.swift in Sources */,
 				CB78A8162B5D5511007EC9C1 /* SettingView.swift in Sources */,
 				CB84CB002B602FF300F4591A /* ReviewDetailUsecase.swift in Sources */,
-				CB5BFB192B3EF92700B35062 /* NetworkError.swift in Sources */,
+				CB5BFB192B3EF92700B35062 /* CustomError.swift in Sources */,
 				CBDF113C2B5EAD8D007DA3E1 /* UpdateReviewUsecase.swift in Sources */,
 				CBDF110F2B5E9D04007DA3E1 /* UnivView.swift in Sources */,
 				CBA62D3F2A6EC7B800AA0830 /* FindViewController.swift in Sources */,
@@ -2072,7 +2072,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.9.5;
+				MARKETING_VERSION = 0.9.6;
 				NONCE = wH_pSu5wSUHzoFPBUE9Q9ZRs3fcKzGSn;
 				PRODUCT_BUNDLE_IDENTIFIER = com.coby.FoodBowl;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2115,7 +2115,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.9.5;
+				MARKETING_VERSION = 0.9.6;
 				NONCE = wH_pSu5wSUHzoFPBUE9Q9ZRs3fcKzGSn;
 				PRODUCT_BUNDLE_IDENTIFIER = com.coby.FoodBowl;
 				PRODUCT_NAME = "$(TARGET_NAME)";
