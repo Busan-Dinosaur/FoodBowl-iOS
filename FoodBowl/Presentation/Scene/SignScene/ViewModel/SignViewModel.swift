@@ -71,6 +71,10 @@ final class SignViewModel: NSObject, BaseViewModelType {
                 KeychainManager.set(token.accessToken, for: .accessToken)
                 KeychainManager.set(token.refreshToken, for: .refreshToken)
                 UserDefaultHandler.setIsLogin(isLogin: true)
+                UserDefaultHandler.setIsLogin(isLogin: true)
+                
+                let expiryDate = Date().addingTimeInterval(1800)
+                UserDefaults.standard.set(expiryDate, forKey: "tokenExpiryDate")
                 
                 self.getMyProfile()
             } catch(let error) {

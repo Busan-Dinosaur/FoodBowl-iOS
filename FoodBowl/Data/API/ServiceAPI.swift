@@ -10,7 +10,6 @@ import Foundation
 import Moya
 
 enum ServiceAPI {
-    case signIn(request: SignRequestDTO)
     case logOut
     case patchRefreshToken(token: TokenDTO)
     case checkNickname(nickname: String)
@@ -61,8 +60,6 @@ extension ServiceAPI: TargetType {
 
     var path: String {
         switch self {
-        case .signIn:
-            return "/v1/auth/login/oauth/apple"
         case .logOut:
             return "/v1/auth/logout"
         case .patchRefreshToken:
@@ -132,7 +129,7 @@ extension ServiceAPI: TargetType {
 
     var method: Moya.Method {
         switch self {
-        case .signIn, .logOut, .patchRefreshToken, .createBlame, .createReview, .createBookmark, .followMember:
+        case .logOut, .patchRefreshToken, .createBlame, .createReview, .createBookmark, .followMember:
             return .post
         case .updateMemberProfile, .updateMemberProfileImage, .updateReview:
             return .patch
@@ -145,8 +142,6 @@ extension ServiceAPI: TargetType {
 
     var task: Task {
         switch self {
-        case .signIn(let request):
-            return .requestJSONEncodable(request)
         case .patchRefreshToken(let request):
             let request = TokenDTO(
                 accessToken: request.accessToken,
@@ -456,10 +451,6 @@ extension ServiceAPI: TargetType {
         let accessToken: String = KeychainManager.get(.accessToken)
         
         switch self {
-        case .signIn, .patchRefreshToken:
-            return [
-                "Content-Type": "application/json"
-            ]
         case .createReview:
             return [
                 "Content-Type": "application/json",

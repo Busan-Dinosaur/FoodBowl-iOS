@@ -8,6 +8,7 @@
 import Foundation
 
 enum DataKeys: String, CaseIterable {
+    case tokenExpiryDate
     case isLogin
     case id
     case nickname
@@ -20,6 +21,10 @@ enum DataKeys: String, CaseIterable {
 }
 
 enum UserDefaultStorage {
+    static var tokenExpiryDate: Date {
+        return UserData<Date>.getValue(forKey: .tokenExpiryDate) ?? .now
+    }
+    
     static var isLogin: Bool {
         return UserData<Bool>.getValue(forKey: .isLogin) ?? false
     }

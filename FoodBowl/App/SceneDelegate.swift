@@ -60,16 +60,9 @@ extension SceneDelegate {
     func logOut() {
         KeychainManager.clear()
         UserDefaultHandler.clearAllData()
-        
-        let repository = SignRepositoryImpl()
-        let usecase = SignUsecaseImpl(repository: repository)
-        let viewModel = SignViewModel(usecase: usecase)
-        let viewController = SignViewController(viewModel: viewModel)
-        window?.rootViewController = viewController
+        self.moveToSignViewController()
     }
-}
-
-extension SceneDelegate {
+    
     func moveToSignViewController() {
         let repository = SignRepositoryImpl()
         let usecase = SignUsecaseImpl(repository: repository)

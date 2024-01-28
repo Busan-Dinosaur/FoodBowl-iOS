@@ -84,6 +84,7 @@
 		CB78A8162B5D5511007EC9C1 /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB78A8152B5D5511007EC9C1 /* SettingView.swift */; };
 		CB7F3325298A51560000A6B4 /* UserDefaultStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB7F3324298A51560000A6B4 /* UserDefaultStorage.swift */; };
 		CB7F3327298A51610000A6B4 /* UserDefaultHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB7F3326298A51610000A6B4 /* UserDefaultHandler.swift */; };
+		CB811AA62B66DE7200DCCA49 /* SignAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB811AA52B66DE7200DCCA49 /* SignAPI.swift */; };
 		CB8306632B5962A700632789 /* FriendViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB8306622B5962A700632789 /* FriendViewModel.swift */; };
 		CB8306652B59747000632789 /* FindViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB8306642B59747000632789 /* FindViewModel.swift */; };
 		CB8306682B59748700632789 /* FindView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB8306672B59748700632789 /* FindView.swift */; };
@@ -301,6 +302,7 @@
 		CB7F3321298A4F1E0000A6B4 /* FoodBowl.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = FoodBowl.entitlements; sourceTree = "<group>"; };
 		CB7F3324298A51560000A6B4 /* UserDefaultStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultStorage.swift; sourceTree = "<group>"; };
 		CB7F3326298A51610000A6B4 /* UserDefaultHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultHandler.swift; sourceTree = "<group>"; };
+		CB811AA52B66DE7200DCCA49 /* SignAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignAPI.swift; sourceTree = "<group>"; };
 		CB8306622B5962A700632789 /* FriendViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendViewModel.swift; sourceTree = "<group>"; };
 		CB8306642B59747000632789 /* FindViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindViewModel.swift; sourceTree = "<group>"; };
 		CB8306672B59748700632789 /* FindView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindView.swift; sourceTree = "<group>"; };
@@ -1227,6 +1229,7 @@
 		CBC747B12A83D9E900F171F5 /* API */ = {
 			isa = PBXGroup;
 			children = (
+				CB811AA52B66DE7200DCCA49 /* SignAPI.swift */,
 				CB51C8D62AD7EB58002D0BA5 /* ServiceAPI.swift */,
 				CB1579112AADB50600007183 /* KakaoAPI.swift */,
 			);
@@ -1825,6 +1828,7 @@
 				CB1579122AADB50600007183 /* KakaoAPI.swift in Sources */,
 				CBF926492B411C46005E251B /* BlameUsecase.swift in Sources */,
 				CB84CAF82B602FB400F4591A /* ReviewDetailViewController.swift in Sources */,
+				CB811AA62B66DE7200DCCA49 /* SignAPI.swift in Sources */,
 				CBADC29029559BC900E56C93 /* UIViewController+Extension.swift in Sources */,
 				CBF926462B3FED74005E251B /* UpdateProfileImageDTO.swift in Sources */,
 				CBC747B52A83DBE300F171F5 /* KeychainManager.swift in Sources */,

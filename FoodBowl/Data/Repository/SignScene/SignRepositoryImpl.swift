@@ -11,6 +11,7 @@ import Moya
 
 final class SignRepositoryImpl: SignRepository {
 
+    private let providerSign = MoyaProvider<SignAPI>()
     private let provider = MoyaProvider<ServiceAPI>()
     
     func checkNickname(nickname: String) async throws -> CheckNicknameDTO {
@@ -19,7 +20,7 @@ final class SignRepositoryImpl: SignRepository {
     }
     
     func signIn(request: SignRequestDTO) async throws -> TokenDTO {
-        let response = await provider.request(.signIn(request: request))
+        let response = await providerSign.request(.signIn(request: request))
         return try response.decode()
     }
     

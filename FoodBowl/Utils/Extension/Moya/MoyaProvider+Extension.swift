@@ -19,6 +19,64 @@ extension MoyaProvider {
     }
 }
 
+extension MoyaProvider where Target == ServiceAPI {
+    func request(_ target: Target) async -> Result<Response, MoyaError> {
+        // 토큰 갱신이 필요한지 체크
+        if !isTokenValid() {
+            // 토큰 갱신이 필요한 경우
+            let refreshTokenResult = await refreshToken()
+            if case .failure = refreshTokenResult {
+                // 토큰 갱신 실패 시, 실패 결과 반환
+                return .failure(MoyaError.requestMapping("토큰 갱신 실패"))
+            }
+        }
+        
+        // 토큰 갱신 후 또는 갱신이 필요 없는 경우, 원래 요청 수행
+        return await withCheckedContinuation { continuation in
+            self.request(target) { result in
+                continuation.resume(returning: result)
+            }
+        }
+    }
+    
+    private func isTokenValid() -> Bool {
+        guard let expiryDate = UserDefaults.standard.object(forKey: "tokenExpiryDate") as? Date else {
+            return false
+        }
+        return Date() < expiryDate
+    }
+    
+    private func refreshToken() async -> Result<Void, MoyaError> {
+        let accessToken: String = KeychainManager.get(.accessToken)
+        let refreshToken: String = KeychainManager.get(.refreshToken)
+        
+        let result = await self.request(.patchRefreshToken(token: TokenDTO(
+            accessToken: accessToken,
+            refreshToken: refreshToken
+        )))
+        switch result {
+        case .success(let response):
+            do {
+                let token = try JSONDecoder().decode(TokenDTO.self, from: response.data).toToken()
+                
+                KeychainManager.set(token.accessToken, for: .accessToken)
+                KeychainManager.set(token.refreshToken, for: .refreshToken)
+                UserDefaultHandler.setIsLogin(isLogin: true)
+                UserDefaultHandler.setIsLogin(isLogin: true)
+                
+                let expiryDate = Date().addingTimeInterval(1800)
+                UserDefaults.standard.set(expiryDate, forKey: "tokenExpiryDate")
+                
+                return .success(())
+            } catch {
+                return .failure(MoyaError.jsonMapping(response))
+            }
+        case .failure(let error):
+            return .failure(error)
+        }
+    }
+}
+
 extension MoyaError {
     var errorResponse: ErrorDTO? {
         if let response = response {
