@@ -142,6 +142,13 @@ final class UpdateReviewViewController: UIViewController, Keyboardable, Helperab
                 self?.makeAlert(title: message)
             })
             .store(in: &self.cancellable)
+        
+        self.updateReviewView.showStorePublisher
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] url in
+                self?.presentShowWebViewController(url: url)
+            })
+            .store(in: &self.cancellable)
     }
     
     // MARK: - func

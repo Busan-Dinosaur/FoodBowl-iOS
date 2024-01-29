@@ -91,6 +91,7 @@ final class UpdateReviewView: UIView, BaseViewType {
         return self.closeButton.buttonTapPublisher
     }
     let makeAlertPublisher = PassthroughSubject<String, Never>()
+    let showStorePublisher = PassthroughSubject<String, Never>()
     let completeButtonDidTapPublisher = PassthroughSubject<String, Never>()
     
     // MARK: - init
@@ -242,14 +243,16 @@ extension UpdateReviewView: UITextViewDelegate {
 
 extension UpdateReviewView {
     func configureReview(_ review: Review) {
+        self.selectedStoreView.mapButtonTapAction = { _ in
+            self.showStorePublisher.send(review.store.url)
+        }
         self.selectedStoreView.configureStore(review.store)
         self.commentTextView.text = review.comment.content
         self.commentTextView.textColor = .mainTextColor
         
         if review.comment.imagePaths.isEmpty {
-            self.listCollectionView.snp.updateConstraints {
-                $0.height.equalTo(0)
-            }
+            self.guidePhotoLabel.isHidden = true
+            self.listCollectionView.isHidden = true
         }
     }
 }
