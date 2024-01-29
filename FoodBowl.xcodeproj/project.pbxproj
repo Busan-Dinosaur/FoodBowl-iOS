@@ -2050,7 +2050,7 @@
 				BASE_URL = "https://justdoeat.shop";
 				CODE_SIGN_ENTITLEMENTS = FoodBowl/FoodBowl.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 0;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 3Y8YH8GWMM;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = FoodBowl/App/Info.plist;
@@ -2072,7 +2072,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.9.8;
+				MARKETING_VERSION = 0.9.9;
 				NONCE = wH_pSu5wSUHzoFPBUE9Q9ZRs3fcKzGSn;
 				PRODUCT_BUNDLE_IDENTIFIER = com.coby.FoodBowl;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2093,7 +2093,7 @@
 				BASE_URL = "https://justdoeat.shop";
 				CODE_SIGN_ENTITLEMENTS = FoodBowl/FoodBowl.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 0;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 3Y8YH8GWMM;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = FoodBowl/App/Info.plist;
@@ -2115,7 +2115,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.9.8;
+				MARKETING_VERSION = 0.9.9;
 				NONCE = wH_pSu5wSUHzoFPBUE9Q9ZRs3fcKzGSn;
 				PRODUCT_BUNDLE_IDENTIFIER = com.coby.FoodBowl;
 				PRODUCT_NAME = "$(TARGET_NAME)";
