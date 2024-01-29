@@ -67,9 +67,6 @@ final class SignViewModel: NSObject, BaseViewModelType {
         Task {
             do {
                 let token = try await self.usecase.dispatchAppleLogin(login: login)
-                
-                print(token)
-                
                 KeychainManager.set(token.accessToken, for: .accessToken)
                 KeychainManager.set(token.refreshToken, for: .refreshToken)
                 UserDefaultHandler.setIsLogin(isLogin: true)
@@ -79,7 +76,6 @@ final class SignViewModel: NSObject, BaseViewModelType {
                 
                 self.getMyProfile()
             } catch(let error) {
-                print("로그인에서 에러 뜬다")
                 self.isLoginSubject.send(.failure(error))
             }
         }
@@ -95,7 +91,6 @@ final class SignViewModel: NSObject, BaseViewModelType {
                 
                 self.isLoginSubject.send(.success(true))
             } catch(let error) {
-                print("프로필 가져오기서 에러 뜬다")
                 self.isLoginSubject.send(.failure(error))
             }
         }
