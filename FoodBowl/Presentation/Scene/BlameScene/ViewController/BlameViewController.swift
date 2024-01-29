@@ -83,9 +83,9 @@ final class BlameViewController: UIViewController, Keyboardable {
                         }
                     )
                 case .failure(let error):
-                    self?.makeAlert(
+                    self?.makeErrorAlert(
                         title: "에러",
-                        message: error.localizedDescription
+                        error: error
                     )
                 }
             })

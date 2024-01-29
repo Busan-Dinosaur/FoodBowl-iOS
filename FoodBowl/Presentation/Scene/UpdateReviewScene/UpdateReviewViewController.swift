@@ -90,9 +90,9 @@ final class UpdateReviewViewController: UIViewController, Keyboardable, Helperab
                         self.updateReviewView.collectionView().reloadData()
                     }
                 case .failure(let error):
-                    self?.makeAlert(
+                    self?.makeErrorAlert(
                         title: "에러",
-                        message: error.localizedDescription
+                        error: error
                     )
                 }
             })
@@ -111,9 +111,9 @@ final class UpdateReviewViewController: UIViewController, Keyboardable, Helperab
                         }
                     )
                 case .failure(let error):
-                    self?.makeAlert(
+                    self?.makeErrorAlert(
                         title: "에러",
-                        message: error.localizedDescription
+                        error: error
                     )
                 }
             })

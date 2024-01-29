@@ -78,9 +78,9 @@ final class ReviewDetailViewController: UIViewController, Navigationable, Option
                 case .success(let review):
                     self?.reviewDetailView.configureReview(review)
                 case .failure(let error):
-                    self?.makeAlert(
+                    self?.makeErrorAlert(
                         title: "에러",
-                        message: error.localizedDescription
+                        error: error
                     )
                 }
             })
@@ -93,9 +93,9 @@ final class ReviewDetailViewController: UIViewController, Navigationable, Option
                 case .success:
                     self?.reviewDetailView.storeInfoButton.bookmarkButton.isSelected.toggle()
                 case .failure(let error):
-                    self?.makeAlert(
+                    self?.makeErrorAlert(
                         title: "에러",
-                        message: error.localizedDescription
+                        error: error
                     )
                 }
             })

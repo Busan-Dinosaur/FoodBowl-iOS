@@ -88,9 +88,9 @@ final class FollowingViewController: UIViewController, Navigationable, Helperabl
                 case .success(let followings):
                     self?.loadFollowings(followings)
                 case .failure(let error):
-                    self?.makeAlert(
+                    self?.makeErrorAlert(
                         title: "에러",
-                        message: error.localizedDescription
+                        error: error
                     )
                 }
             })
@@ -103,9 +103,9 @@ final class FollowingViewController: UIViewController, Navigationable, Helperabl
                 case .success(let followings):
                     self?.loadMoreFollowings(followings)
                 case .failure(let error):
-                    self?.makeAlert(
+                    self?.makeErrorAlert(
                         title: "에러",
-                        message: error.localizedDescription
+                        error: error
                     )
                 }
             })
@@ -118,9 +118,9 @@ final class FollowingViewController: UIViewController, Navigationable, Helperabl
                 case .success(let memberId):
                     self?.updateFollowing(memberId: memberId)
                 case .failure(let error):
-                    self?.makeAlert(
+                    self?.makeErrorAlert(
                         title: "에러",
-                        message: error.localizedDescription
+                        error: error
                     )
                 }
             })

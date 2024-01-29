@@ -98,9 +98,9 @@ final class FindViewController: UIViewController, Keyboardable, Helperable {
                     self?.reloadReviews(reviews)
                     self?.findView.refreshControl().endRefreshing()
                 case .failure(let error):
-                    self?.makeAlert(
+                    self?.makeErrorAlert(
                         title: "에러",
-                        message: error.localizedDescription
+                        error: error
                     )
                 }
             })
@@ -113,9 +113,9 @@ final class FindViewController: UIViewController, Keyboardable, Helperable {
                 case .success(let reviews):
                     self?.loadMoreReviews(reviews)
                 case .failure(let error):
-                    self?.makeAlert(
+                    self?.makeErrorAlert(
                         title: "에러",
-                        message: error.localizedDescription
+                        error: error
                     )
                 }
             })
@@ -130,9 +130,9 @@ final class FindViewController: UIViewController, Keyboardable, Helperable {
                     self?.members = members
                     self?.findView.findResultViewController.findResultView.listTableView.reloadData()
                 case .failure(let error):
-                    self?.makeAlert(
+                    self?.makeErrorAlert(
                         title: "에러",
-                        message: error.localizedDescription
+                        error: error
                     )
                 }
             })
@@ -145,9 +145,9 @@ final class FindViewController: UIViewController, Keyboardable, Helperable {
                 case .success(let memberId):
                     self?.followMember(memberId: memberId)
                 case .failure(let error):
-                    self?.makeAlert(
+                    self?.makeErrorAlert(
                         title: "에러",
-                        message: error.localizedDescription
+                        error: error
                     )
                 }
             })

@@ -87,9 +87,9 @@ final class SearchStoreViewController: UIViewController, Keyboardable {
                     self?.stores = stores
                     self?.searchStoreView.tableView().reloadData()
                 case .failure(let error):
-                    self?.makeAlert(
+                    self?.makeErrorAlert(
                         title: "에러",
-                        message: error.localizedDescription
+                        error: error
                     )
                 }
             })
@@ -104,9 +104,9 @@ final class SearchStoreViewController: UIViewController, Keyboardable {
                     self?.dissmissKeyboard()
                     self?.navigationController?.popViewController(animated: true)
                 case .failure(let error):
-                    self?.makeAlert(
+                    self?.makeErrorAlert(
                         title: "에러",
-                        message: error.localizedDescription
+                        error: error
                     )
                 }
             })

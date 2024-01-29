@@ -89,9 +89,9 @@ final class StoreDetailViewController: UIViewController, Navigationable, Optiona
                 case .success(let store):
                     self?.storeDetailView.storeHeaderView.configureHeader(store)
                 case .failure(let error):
-                    self?.makeAlert(
+                    self?.makeErrorAlert(
                         title: "에러",
-                        message: error.localizedDescription
+                        error: error
                     )
                 }
             })
@@ -105,9 +105,9 @@ final class StoreDetailViewController: UIViewController, Navigationable, Optiona
                     self?.loadReviews(reviews)
                     self?.storeDetailView.refreshControl().endRefreshing()
                 case .failure(let error):
-                    self?.makeAlert(
+                    self?.makeErrorAlert(
                         title: "에러",
-                        message: error.localizedDescription
+                        error: error
                     )
                 }
             })
@@ -120,9 +120,9 @@ final class StoreDetailViewController: UIViewController, Navigationable, Optiona
                 case .success(let reviews):
                     self?.loadMoreReviews(reviews)
                 case .failure(let error):
-                    self?.makeAlert(
+                    self?.makeErrorAlert(
                         title: "에러",
-                        message: error.localizedDescription
+                        error: error
                     )
                 }
             })
@@ -135,9 +135,9 @@ final class StoreDetailViewController: UIViewController, Navigationable, Optiona
                 case .success:
                     self?.storeDetailView.storeHeaderView.bookmarkButton.isSelected.toggle()
                 case .failure(let error):
-                    self?.makeAlert(
+                    self?.makeErrorAlert(
                         title: "에러",
-                        message: error.localizedDescription
+                        error: error
                     )
                 }
             })

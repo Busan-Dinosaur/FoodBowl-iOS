@@ -69,11 +69,17 @@ extension SceneDelegate {
             
             switch result {
             case .success:
-                KeychainManager.clear()
-                UserDefaultHandler.clearAllData()
                 self.moveToSignViewController()
             case .failure(let error):
-                print(error.localizedDescription)
+                guard let rootVC = (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.windows.first?.rootViewController
+                else { return }
+                
+                rootVC.makeErrorAlert(
+                    title: "에러",
+                    error: error
+                ) { _ in
+                    self.moveToSignViewController()
+                }
             }
         }
     }
@@ -85,16 +91,25 @@ extension SceneDelegate {
             
             switch result {
             case .success:
-                KeychainManager.clear()
-                UserDefaultHandler.clearAllData()
                 self.moveToSignViewController()
             case .failure(let error):
-                print(error.localizedDescription)
+                guard let rootVC = (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.windows.first?.rootViewController
+                else { return }
+                
+                rootVC.makeErrorAlert(
+                    title: "에러",
+                    error: error
+                ) { _ in
+                    self.moveToSignViewController()
+                }
             }
         }
     }
     
     func moveToSignViewController() {
+        KeychainManager.clear()
+        UserDefaultHandler.clearAllData()
+        
         let repository = SignRepositoryImpl()
         let usecase = SignUsecaseImpl(repository: repository)
         let viewModel = SignViewModel(usecase: usecase)

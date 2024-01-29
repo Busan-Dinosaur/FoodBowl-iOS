@@ -439,7 +439,7 @@ extension ServiceAPI: TargetType {
         let accessToken: String = KeychainManager.get(.accessToken)
         
         switch self {
-        case .createReview:
+        case .createReview, .updateReview:
             return [
                 "Content-Type": "application/json",
                 "Content-type": "multipart/form-data",

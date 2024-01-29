@@ -92,9 +92,9 @@ final class UpdateProfileViewController: UIViewController, Navigationable, Keybo
                 case .success(let profile):
                     self?.updateProfileView.configureView(member: profile)
                 case .failure(let error):
-                    self?.makeAlert(
+                    self?.makeErrorAlert(
                         title: "에러",
-                        message: error.localizedDescription
+                        error: error
                     )
                 }
             })
@@ -113,9 +113,9 @@ final class UpdateProfileViewController: UIViewController, Navigationable, Keybo
                         }
                     )
                 case .failure(let error):
-                    self?.makeAlert(
+                    self?.makeErrorAlert(
                         title: "에러",
-                        message: error.localizedDescription
+                        error: error
                     )
                 }
             })

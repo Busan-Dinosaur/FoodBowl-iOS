@@ -99,9 +99,9 @@ final class ProfileViewController: MapViewController {
                 case .success(let member):
                     self?.setUpProfileHeader(member: member)
                 case .failure(let error):
-                    self?.makeAlert(
+                    self?.makeErrorAlert(
                         title: "에러",
-                        message: error.localizedDescription
+                        error: error
                     )
                 }
             })
@@ -114,9 +114,9 @@ final class ProfileViewController: MapViewController {
                 case .success:
                     self?.profileHeaderView.followButton.isSelected.toggle()
                 case .failure(let error):
-                    self?.makeAlert(
+                    self?.makeErrorAlert(
                         title: "에러",
-                        message: error.localizedDescription
+                        error: error
                     )
                 }
             })
@@ -129,9 +129,9 @@ final class ProfileViewController: MapViewController {
                 case .success(let stores):
                     self?.setupMarkers(stores)
                 case .failure(let error):
-                    self?.makeAlert(
+                    self?.makeErrorAlert(
                         title: "에러",
-                        message: error.localizedDescription
+                        error: error
                     )
                 }
             })
@@ -145,9 +145,9 @@ final class ProfileViewController: MapViewController {
                     self?.loadReviews(reviews)
                     self?.feedListView.refreshControl().endRefreshing()
                 case .failure(let error):
-                    self?.makeAlert(
+                    self?.makeErrorAlert(
                         title: "에러",
-                        message: error.localizedDescription
+                        error: error
                     )
                 }
             })
@@ -160,9 +160,9 @@ final class ProfileViewController: MapViewController {
                 case .success(let reviews):
                     self?.loadMoreReviews(reviews)
                 case .failure(let error):
-                    self?.makeAlert(
+                    self?.makeErrorAlert(
                         title: "에러",
-                        message: error.localizedDescription
+                        error: error
                     )
                 }
             })
@@ -175,9 +175,9 @@ final class ProfileViewController: MapViewController {
                 case .success(let storeId):
                     self?.updateBookmark(storeId)
                 case .failure(let error):
-                    self?.makeAlert(
+                    self?.makeErrorAlert(
                         title: "에러",
-                        message: error.localizedDescription
+                        error: error
                     )
                 }
             })
@@ -190,9 +190,9 @@ final class ProfileViewController: MapViewController {
                 case .success(let reviewId):
                     self?.deleteReview(reviewId)
                 case .failure(let error):
-                    self?.makeAlert(
+                    self?.makeErrorAlert(
                         title: "에러",
-                        message: error.localizedDescription
+                        error: error
                     )
                 }
             })

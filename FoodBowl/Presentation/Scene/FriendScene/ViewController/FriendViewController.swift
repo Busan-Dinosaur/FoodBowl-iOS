@@ -58,9 +58,9 @@ final class FriendViewController: MapViewController {
                 case .success(let stores):
                     self?.setupMarkers(stores)
                 case .failure(let error):
-                    self?.makeAlert(
+                    self?.makeErrorAlert(
                         title: "에러",
-                        message: error.localizedDescription
+                        error: error
                     )
                 }
             })
@@ -74,9 +74,9 @@ final class FriendViewController: MapViewController {
                     self?.loadReviews(reviews)
                     self?.feedListView.refreshControl().endRefreshing()
                 case .failure(let error):
-                    self?.makeAlert(
+                    self?.makeErrorAlert(
                         title: "에러",
-                        message: error.localizedDescription
+                        error: error
                     )
                 }
             })
@@ -89,9 +89,9 @@ final class FriendViewController: MapViewController {
                 case .success(let reviews):
                     self?.loadMoreReviews(reviews)
                 case .failure(let error):
-                    self?.makeAlert(
+                    self?.makeErrorAlert(
                         title: "에러",
-                        message: error.localizedDescription
+                        error: error
                     )
                 }
             })
@@ -104,9 +104,9 @@ final class FriendViewController: MapViewController {
                 case .success(let storeId):
                     self?.updateBookmark(storeId)
                 case .failure(let error):
-                    self?.makeAlert(
+                    self?.makeErrorAlert(
                         title: "에러",
-                        message: error.localizedDescription
+                        error: error
                     )
                 }
             })

@@ -58,4 +58,26 @@ extension UIViewController {
 
         self.present(alert, animated: true, completion: nil)
     }
+    
+    func makeErrorAlert(title: String,
+                   error: Error,
+                   okAction: ((UIAlertAction) -> Void)? = nil,
+                   completion : (() -> Void)? = nil) {
+        var message: String {
+            switch error {
+            case CustomError.error(let message):
+                return message
+            default:
+                return "네트워크 통신에 실패하였습니다."
+            }
+        }
+        
+        let alertViewController = UIAlertController(title: title,
+                                                    message: message,
+                                                    preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "확인", style: .default, handler: okAction)
+        alertViewController.addAction(okAction)
+
+        self.present(alertViewController, animated: true, completion: completion)
+    }
 }

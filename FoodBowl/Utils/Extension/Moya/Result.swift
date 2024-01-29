@@ -20,7 +20,7 @@ extension Result<Response, MoyaError> {
                 print("에러 코드: \(errorResponse.errorCode)")
                 print("에러 메시지: \(errorResponse.message)")
                 
-                throw CustomError.error(message: "\(errorResponse.errorCode): \(errorResponse.message)")
+                throw CustomError.error(message: errorResponse.message)
             } else {
                 print("네트워크 에러: \(error.localizedDescription)")
                 throw CustomError.unknownError

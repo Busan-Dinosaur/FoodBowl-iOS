@@ -61,14 +61,14 @@ extension SignAPI: TargetType {
     }
 
     var headers: [String: String]? {
-        let accessToken: String = KeychainManager.get(.accessToken)
-        
         switch self {
         case .signIn:
             return [
                 "Content-Type": "application/json"
             ]
         default:
+            let accessToken: String = KeychainManager.get(.accessToken)
+            
             return [
                 "Content-Type": "application/json",
                 "Authorization": "Bearer " + accessToken

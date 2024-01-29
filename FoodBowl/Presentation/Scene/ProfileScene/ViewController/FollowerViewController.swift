@@ -88,9 +88,9 @@ final class FollowerViewController: UIViewController, Navigationable {
                 case .success(let followers):
                     self?.loadFollowers(followers)
                 case .failure(let error):
-                    self?.makeAlert(
+                    self?.makeErrorAlert(
                         title: "에러",
-                        message: error.localizedDescription
+                        error: error
                     )
                 }
             })
@@ -103,9 +103,9 @@ final class FollowerViewController: UIViewController, Navigationable {
                 case .success(let followers):
                     self?.loadMoreFollowers(followers)
                 case .failure(let error):
-                    self?.makeAlert(
+                    self?.makeErrorAlert(
                         title: "에러",
-                        message: error.localizedDescription
+                        error: error
                     )
                 }
             })
@@ -118,9 +118,9 @@ final class FollowerViewController: UIViewController, Navigationable {
                 case .success(let memberId):
                     self?.updateFollower(memberId: memberId)
                 case .failure(let error):
-                    self?.makeAlert(
+                    self?.makeErrorAlert(
                         title: "에러",
-                        message: error.localizedDescription
+                        error: error
                     )
                 }
             })
@@ -133,9 +133,9 @@ final class FollowerViewController: UIViewController, Navigationable {
                 case .success(let memberId):
                     self?.removeFollower(memberId: memberId)
                 case .failure(let error):
-                    self?.makeAlert(
+                    self?.makeErrorAlert(
                         title: "에러",
-                        message: error.localizedDescription
+                        error: error
                     )
                 }
             })
