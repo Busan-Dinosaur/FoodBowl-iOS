@@ -26,7 +26,10 @@ final class ProfileViewController: MapViewController {
     private let settingButton = SettingButton()
     private let profileHeaderView = ProfileHeaderView()
     
+    // MARK: - property
+    
     private let viewWillAppearPublisher: PassthroughSubject<Void, Never> = PassthroughSubject()
+    private let removeButtonDidTapPublisher = PassthroughSubject<Int, Never>()
 
     override func setupLayout() {
         super.setupLayout()
@@ -78,6 +81,7 @@ final class ProfileViewController: MapViewController {
             followMember: self.followButtonDidTapPublisher.eraseToAnyPublisher(),
             customLocation: self.locationPublisher.eraseToAnyPublisher(),
             bookmarkButtonDidTap: self.bookmarkButtonDidTapPublisher.eraseToAnyPublisher(),
+            removeButtonDidTap: self.removeButtonDidTapPublisher.eraseToAnyPublisher(),
             scrolledToBottom: self.feedListView.collectionView().scrolledToBottomPublisher.eraseToAnyPublisher(),
             refreshControl: self.feedListView.refreshPublisher.eraseToAnyPublisher()
         )
@@ -177,6 +181,21 @@ final class ProfileViewController: MapViewController {
                 }
             })
             .store(in: &self.cancellable)
+        
+        output.isRemove
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] result in
+                switch result {
+                case .success(let reviewId):
+                    self?.deleteReview(reviewId)
+                case .failure(let error):
+                    self?.makeAlert(
+                        title: "에러",
+                        message: error.localizedDescription
+                    )
+                }
+            })
+            .store(in: &self.cancellable)
     }
     
     // MARK: - func
@@ -267,6 +286,6 @@ final class ProfileViewController: MapViewController {
     }
     
     override func removeReview(reviewId: Int) {
-        self.deleteReview(reviewId)
+        self.removeButtonDidTapPublisher.send(reviewId)
     }
 }

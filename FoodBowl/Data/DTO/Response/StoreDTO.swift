@@ -45,15 +45,17 @@ struct StoreBySearchDTO: Codable {
 struct StoreItemBySearchDTO: Codable {
     let storeId: Int
     let storeName: String
+    let address: String
+    let category: String
     let distance: Double
     let reviewCount: Int
     
     func toStore() -> Store {
         Store(
             id: self.storeId,
-            category: "밥밥",
+            category: self.category,
             name: self.storeName,
-            address: "주소가 없다아",
+            address: self.address,
             isBookmark: false,
             distance: self.distance.prettyDistance,
             url: "",
