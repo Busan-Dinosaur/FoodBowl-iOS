@@ -19,7 +19,7 @@ final class SignRepositoryImpl: SignRepository {
         return try response.decode()
     }
     
-    func signIn(request: SignRequestDTO) async throws -> TokenDTO {
+    func signIn(request: SignRequestDTO) async throws -> Token {
         let response = await providerSign.request(.signIn(request: request))
         return try response.decode()
     }

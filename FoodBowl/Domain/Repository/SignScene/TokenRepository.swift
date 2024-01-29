@@ -8,5 +8,5 @@
 import Foundation
 
 protocol TokenRepository {
-    func patchRefreshToken(token: TokenDTO) async throws -> TokenDTO
+    func patchRefreshToken(token: Token) async throws -> Token
 }

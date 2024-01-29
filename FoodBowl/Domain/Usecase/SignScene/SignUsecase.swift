@@ -28,8 +28,8 @@ final class SignUsecaseImpl: SignUsecase {
     
     func dispatchAppleLogin(login: SignRequestDTO) async throws -> Token {
         do {
-            let tokenDTO = try await self.repository.signIn(request: login)
-            return tokenDTO.toToken()
+            let token = try await self.repository.signIn(request: login)
+            return token
         } catch(let error) {
             throw error
         }

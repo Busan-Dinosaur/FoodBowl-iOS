@@ -11,7 +11,7 @@ import Moya
 
 enum SignAPI {
     case signIn(request: SignRequestDTO)
-    case patchRefreshToken(token: TokenDTO)
+    case patchRefreshToken(token: Token)
     case logOut
     case signOut
 }
@@ -50,7 +50,7 @@ extension SignAPI: TargetType {
         case .signIn(let request):
             return .requestJSONEncodable(request)
         case .patchRefreshToken(let request):
-            let request = TokenDTO(
+            let request = Token(
                 accessToken: request.accessToken,
                 refreshToken: request.refreshToken
             )

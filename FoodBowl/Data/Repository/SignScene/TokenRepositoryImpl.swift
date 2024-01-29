@@ -13,7 +13,7 @@ final class TokenRepositoryImpl: TokenRepository {
 
     private let provider = MoyaProvider<SignAPI>()
 
-    func patchRefreshToken(token: TokenDTO) async throws -> TokenDTO {
+    func patchRefreshToken(token: Token) async throws -> Token {
         let response = await provider.request(.patchRefreshToken(token: token))
         return try response.decode()
     }

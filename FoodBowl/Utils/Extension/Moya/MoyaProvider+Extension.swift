@@ -51,14 +51,14 @@ extension MoyaProvider where Target == ServiceAPI {
         let refreshToken: String = KeychainManager.get(.refreshToken)
         
         let provider = MoyaProvider<SignAPI>()
-        let result = await provider.request(.patchRefreshToken(token: TokenDTO(
+        let result = await provider.request(.patchRefreshToken(token: Token(
             accessToken: accessToken,
             refreshToken: refreshToken
         )))
         switch result {
         case .success(let response):
             do {
-                let token = try JSONDecoder().decode(TokenDTO.self, from: response.data).toToken()
+                let token = try JSONDecoder().decode(Token.self, from: response.data)
                 
                 KeychainManager.set(token.accessToken, for: .accessToken)
                 KeychainManager.set(token.refreshToken, for: .refreshToken)

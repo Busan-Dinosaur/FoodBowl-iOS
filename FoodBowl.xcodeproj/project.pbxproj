@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		CB1566D9298D72FF0056B7D9 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1566D8298D72FF0056B7D9 /* LocationManager.swift */; };
-		CB1579002AAC61CD00007183 /* TokenDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1578FF2AAC61CD00007183 /* TokenDTO.swift */; };
 		CB1579092AACCFCB00007183 /* CreateReviewRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1579082AACCFCB00007183 /* CreateReviewRequestDTO.swift */; };
 		CB15790B2AACD44700007183 /* SchoolDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB15790A2AACD44700007183 /* SchoolDTO.swift */; };
 		CB15790D2AACD45400007183 /* CategoryDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB15790C2AACD45400007183 /* CategoryDTO.swift */; };
@@ -227,7 +226,6 @@
 
 /* Begin PBXFileReference section */
 		CB1566D8298D72FF0056B7D9 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
-		CB1578FF2AAC61CD00007183 /* TokenDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenDTO.swift; sourceTree = "<group>"; };
 		CB1579082AACCFCB00007183 /* CreateReviewRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateReviewRequestDTO.swift; sourceTree = "<group>"; };
 		CB15790A2AACD44700007183 /* SchoolDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchoolDTO.swift; sourceTree = "<group>"; };
 		CB15790C2AACD45400007183 /* CategoryDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryDTO.swift; sourceTree = "<group>"; };
@@ -1211,7 +1209,6 @@
 			isa = PBXGroup;
 			children = (
 				CB5BFB162B3EF76E00B35062 /* ErrorDTO.swift */,
-				CB1578FF2AAC61CD00007183 /* TokenDTO.swift */,
 				CB2E82462AA74FB60016820E /* CheckNicknameDTO.swift */,
 				CBF926452B3FED74005E251B /* UpdateProfileImageDTO.swift */,
 				CB15790A2AACD44700007183 /* SchoolDTO.swift */,
@@ -1297,9 +1294,9 @@
 		CBDE390329719B8100DDE49A /* Entity */ = {
 			isa = PBXGroup;
 			children = (
+				CB78A8112B5D0F07007EC9C1 /* Token.swift */,
 				CBE32D0D2ADE7648004CCCBE /* CategoryType.swift */,
 				CBADEF372B5D5A710026FACA /* Option.swift */,
-				CB78A8112B5D0F07007EC9C1 /* Token.swift */,
 				CB91E2A72B56D8C9008A0E8E /* Reviews.swift */,
 				CB91E2AD2B56E86B008A0E8E /* Store.swift */,
 				CB8306692B59778C00632789 /* Members.swift */,
@@ -1865,7 +1862,6 @@
 				CB16FD512B3491F9006D18D6 /* UserInfoTableViewCell.swift in Sources */,
 				CB5BFB1F2B3F028F00B35062 /* SignRepository.swift in Sources */,
 				CB7F3327298A51610000A6B4 /* UserDefaultHandler.swift in Sources */,
-				CB1579002AAC61CD00007183 /* TokenDTO.swift in Sources */,
 				CB84CB0A2B60411500F4591A /* StoreDetailInfoButton.swift in Sources */,
 				CB84CAEC2B602C9100F4591A /* UpdateReviewRequestDTO.swift in Sources */,
 				CB1A7C5C29560C2300C6431D /* UserInfoButton.swift in Sources */,
