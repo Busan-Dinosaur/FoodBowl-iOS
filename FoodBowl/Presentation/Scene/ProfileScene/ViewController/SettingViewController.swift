@@ -62,6 +62,8 @@ final class SettingViewController: UIViewController, Navigationable, Helperable 
                     okTitle: "네",
                     cancelTitle: "아니요",
                     okAction: { _ in
+                        guard let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate else { return }
+                        sceneDelegate.signOut()
                     }
                 )
             }

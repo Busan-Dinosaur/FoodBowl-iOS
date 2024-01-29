@@ -11,8 +11,9 @@ import Moya
 
 enum SignAPI {
     case signIn(request: SignRequestDTO)
-    case logOut
     case patchRefreshToken(token: TokenDTO)
+    case logOut
+    case signOut
 }
 
 extension SignAPI: TargetType {
@@ -26,17 +27,21 @@ extension SignAPI: TargetType {
         switch self {
         case .signIn:
             return "/v1/auth/login/oauth/apple"
-        case .logOut:
-            return "/v1/auth/logout"
         case .patchRefreshToken:
             return "/v1/auth/token/renew"
+        case .logOut:
+            return "/v1/auth/logout"
+        case .signOut:
+            return "/v1/members/deactivate"
         }
     }
 
     var method: Moya.Method {
         switch self {
-        case .signIn, .logOut, .patchRefreshToken:
+        case .signIn, .patchRefreshToken, .logOut:
             return .post
+        case .signOut:
+            return .delete
         }
     }
 

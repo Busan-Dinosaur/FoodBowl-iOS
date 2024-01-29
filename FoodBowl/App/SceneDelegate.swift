@@ -7,7 +7,12 @@
 
 import UIKit
 
+import Moya
+
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
+    
+    typealias Task = _Concurrency.Task
+    
     var window: UIWindow?
 
     func scene(_ scene: UIScene, willConnectTo _: UISceneSession, options _: UIScene.ConnectionOptions) {
@@ -58,9 +63,35 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 extension SceneDelegate {
     func logOut() {
-        KeychainManager.clear()
-        UserDefaultHandler.clearAllData()
-        self.moveToSignViewController()
+        Task {
+            let provider = MoyaProvider<SignAPI>()
+            let result = await provider.request(.logOut)
+            
+            switch result {
+            case .success:
+                KeychainManager.clear()
+                UserDefaultHandler.clearAllData()
+                self.moveToSignViewController()
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+    }
+    
+    func signOut() {
+        Task {
+            let provider = MoyaProvider<SignAPI>()
+            let result = await provider.request(.signOut)
+            
+            switch result {
+            case .success:
+                KeychainManager.clear()
+                UserDefaultHandler.clearAllData()
+                self.moveToSignViewController()
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
     }
     
     func moveToSignViewController() {
