@@ -28,8 +28,8 @@ final class ProfileViewModel: BaseViewModelType {
     private let reviewsSubject: PassthroughSubject<Result<[Review], Error>, Never> = PassthroughSubject()
     private let moreReviewsSubject: PassthroughSubject<Result<[Review], Error>, Never> = PassthroughSubject()
     private let refreshControlSubject: PassthroughSubject<Void, Error> = PassthroughSubject()
-    private let isBookmarkSubject: PassthroughSubject<Result<Int, Error>, Never> = PassthroughSubject()
-    private let isRemoveSubject: PassthroughSubject<Result<Int, Error>, Never> = PassthroughSubject()
+    private let isBookmarkedSubject: PassthroughSubject<Result<Int, Error>, Never> = PassthroughSubject()
+    private let isRemovedSubject: PassthroughSubject<Result<Int, Error>, Never> = PassthroughSubject()
     
     struct Input {
         let viewDidLoad: AnyPublisher<Void, Never>
@@ -48,8 +48,8 @@ final class ProfileViewModel: BaseViewModelType {
         let stores: AnyPublisher<Result<[Store], Error>, Never>
         let reviews: AnyPublisher<Result<[Review], Error>, Never>
         let moreReviews: AnyPublisher<Result<[Review], Error>, Never>
-        let isBookmark: AnyPublisher<Result<Int, Error>, Never>
-        let isRemove: AnyPublisher<Result<Int, Error>, Never>
+        let isBookmarked: AnyPublisher<Result<Int, Error>, Never>
+        let isRemoved: AnyPublisher<Result<Int, Error>, Never>
     }
     
     // MARK: - init
@@ -133,8 +133,8 @@ final class ProfileViewModel: BaseViewModelType {
             stores: self.storesSubject.eraseToAnyPublisher(),
             reviews: self.reviewsSubject.eraseToAnyPublisher(),
             moreReviews: self.moreReviewsSubject.eraseToAnyPublisher(),
-            isBookmark: self.isBookmarkSubject.eraseToAnyPublisher(),
-            isRemove: self.isRemoveSubject.eraseToAnyPublisher()
+            isBookmarked: self.isBookmarkedSubject.eraseToAnyPublisher(),
+            isRemoved: self.isRemovedSubject.eraseToAnyPublisher()
         )
     }
     
@@ -215,9 +215,9 @@ final class ProfileViewModel: BaseViewModelType {
         Task {
             do {
                 try await self.usecase.createBookmark(storeId: storeId)
-                self.isBookmarkSubject.send(.success(storeId))
+                self.isBookmarkedSubject.send(.success(storeId))
             } catch(let error) {
-                self.isBookmarkSubject.send(.failure(error))
+                self.isBookmarkedSubject.send(.failure(error))
             }
         }
     }
@@ -226,9 +226,9 @@ final class ProfileViewModel: BaseViewModelType {
         Task {
             do {
                 try await self.usecase.removeBookmark(storeId: storeId)
-                self.isBookmarkSubject.send(.success(storeId))
+                self.isBookmarkedSubject.send(.success(storeId))
             } catch(let error) {
-                self.isBookmarkSubject.send(.failure(error))
+                self.isBookmarkedSubject.send(.failure(error))
             }
         }
     }
@@ -237,9 +237,9 @@ final class ProfileViewModel: BaseViewModelType {
         Task {
             do {
                 try await self.usecase.removeReview(id: id)
-                self.isRemoveSubject.send(.success(id))
+                self.isRemovedSubject.send(.success(id))
             } catch(let error) {
-                self.isRemoveSubject.send(.failure(error))
+                self.isRemovedSubject.send(.failure(error))
             }
         }
     }

@@ -44,7 +44,7 @@ extension PlaceItemDTO {
             name: self.placeName,
             address: self.roadAddressName,
             phone: self.phone,
-            isBookmark: false,
+            isBookmarked: false,
             distance: self.distance.prettyDistance,
             url: self.placeURL,
             x: Double(self.longitude) ?? 0.0,

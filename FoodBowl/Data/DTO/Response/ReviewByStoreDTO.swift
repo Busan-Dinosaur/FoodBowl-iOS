@@ -38,7 +38,7 @@ struct StoreDetailDTO: Codable {
             category: self.categoryName,
             name: self.name,
             address: self.addressName,
-            isBookmark: self.isBookmarked,
+            isBookmarked: self.isBookmarked,
             distance: self.distance.prettyDistance,
             url: self.storeUrl,
             x: 0.0,

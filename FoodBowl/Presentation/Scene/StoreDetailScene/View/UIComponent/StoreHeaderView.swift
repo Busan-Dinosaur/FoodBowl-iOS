@@ -93,7 +93,7 @@ extension StoreHeaderView {
         self.storeNameLabel.text = store.name
         self.storeCategoryLabel.text = store.category
         self.storeAddressLabel.text = "\(store.address), \(store.distance)"
-        self.bookmarkButton.isSelected = store.isBookmark
+        self.bookmarkButton.isSelected = store.isBookmarked
         
         let action = UIAction { _ in
             let showWebViewController = ShowWebViewController(url: store.url)

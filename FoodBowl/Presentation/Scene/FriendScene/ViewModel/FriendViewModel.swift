@@ -26,7 +26,7 @@ final class FriendViewModel: BaseViewModelType {
     private let reviewsSubject: PassthroughSubject<Result<[Review], Error>, Never> = PassthroughSubject()
     private let moreReviewsSubject: PassthroughSubject<Result<[Review], Error>, Never> = PassthroughSubject()
     private let refreshControlSubject: PassthroughSubject<Void, Error> = PassthroughSubject()
-    private let isBookmarkSubject: PassthroughSubject<Result<Int, Error>, Never> = PassthroughSubject()
+    private let isBookmarkedSubject: PassthroughSubject<Result<Int, Error>, Never> = PassthroughSubject()
     
     struct Input {
         let customLocation: AnyPublisher<CustomLocationRequestDTO, Never>
@@ -40,7 +40,7 @@ final class FriendViewModel: BaseViewModelType {
         let stores: AnyPublisher<Result<[Store], Error>, Never>
         let reviews: AnyPublisher<Result<[Review], Error>, Never>
         let moreReviews: AnyPublisher<Result<[Review], Error>, Never>
-        let isBookmark: AnyPublisher<Result<Int, Error>, Never>
+        let isBookmarked: AnyPublisher<Result<Int, Error>, Never>
     }
     
     // MARK: - init
@@ -77,9 +77,9 @@ final class FriendViewModel: BaseViewModelType {
             .store(in: &self.cancellable)
         
         input.bookmarkButtonDidTap
-            .sink(receiveValue: { [weak self] storeId, isBookmark in
+            .sink(receiveValue: { [weak self] storeId, isBookmarked in
                 guard let self = self else { return }
-                isBookmark ? self.removeBookmark(storeId: storeId) : self.createBookmark(storeId: storeId)
+                isBookmarked ? self.removeBookmark(storeId: storeId) : self.createBookmark(storeId: storeId)
             })
             .store(in: &self.cancellable)
         
@@ -103,7 +103,7 @@ final class FriendViewModel: BaseViewModelType {
             stores: self.storesSubject.eraseToAnyPublisher(),
             reviews: self.reviewsSubject.eraseToAnyPublisher(),
             moreReviews: self.moreReviewsSubject.eraseToAnyPublisher(),
-            isBookmark: self.isBookmarkSubject.eraseToAnyPublisher()
+            isBookmarked: self.isBookmarkedSubject.eraseToAnyPublisher()
         )
     }
     
@@ -181,9 +181,9 @@ final class FriendViewModel: BaseViewModelType {
         Task {
             do {
                 try await self.usecase.createBookmark(storeId: storeId)
-                self.isBookmarkSubject.send(.success(storeId))
+                self.isBookmarkedSubject.send(.success(storeId))
             } catch(let error) {
-                self.isBookmarkSubject.send(.failure(error))
+                self.isBookmarkedSubject.send(.failure(error))
             }
         }
     }
@@ -192,9 +192,9 @@ final class FriendViewModel: BaseViewModelType {
         Task {
             do {
                 try await self.usecase.removeBookmark(storeId: storeId)
-                self.isBookmarkSubject.send(.success(storeId))
+                self.isBookmarkedSubject.send(.success(storeId))
             } catch(let error) {
-                self.isBookmarkSubject.send(.failure(error))
+                self.isBookmarkedSubject.send(.failure(error))
             }
         }
     }

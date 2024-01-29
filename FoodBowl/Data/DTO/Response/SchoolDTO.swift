@@ -30,7 +30,7 @@ struct SchoolItemDTO: Codable {
             id: self.id,
             name: self.name,
             address: self.address,
-            isBookmark: false,
+            isBookmarked: false,
             distance: self.distance,
             x: self.x,
             y: self.y

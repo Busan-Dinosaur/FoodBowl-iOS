@@ -202,7 +202,7 @@ class MapViewController: UIViewController, Navigationable, Optionable, Helperabl
         }
         
         cell.bookmarkButtonTapAction = { [weak self] _ in
-            self?.bookmarkButtonDidTapPublisher.send((item.store.id, item.store.isBookmark))
+            self?.bookmarkButtonDidTapPublisher.send((item.store.id, item.store.isBookmarked))
         }
         
         cell.cellTapAction = { [weak self] _ in
@@ -319,7 +319,7 @@ extension MapViewController {
             .map { customItem in
                 var updatedItem = customItem
                 if customItem.store.id == storeId {
-                    updatedItem.store.isBookmark.toggle()
+                    updatedItem.store.isBookmarked.toggle()
                 }
                 return updatedItem
             }

@@ -128,7 +128,7 @@ final class StoreDetailViewController: UIViewController, Navigationable, Optiona
             })
             .store(in: &self.cancellable)
         
-        output.isBookmark
+        output.isBookmarked
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] result in
                 switch result {

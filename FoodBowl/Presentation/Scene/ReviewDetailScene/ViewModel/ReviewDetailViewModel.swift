@@ -20,7 +20,7 @@ final class ReviewDetailViewModel: BaseViewModelType {
     private var cancellable = Set<AnyCancellable>()
     
     private let reviewSubject: PassthroughSubject<Result<Review, Error>, Never> = PassthroughSubject()
-    private let isBookmarkSubject: PassthroughSubject<Result<Void, Error>, Never> = PassthroughSubject()
+    private let isBookmarkedSubject: PassthroughSubject<Result<Void, Error>, Never> = PassthroughSubject()
     
     struct Input {
         let viewDidLoad: AnyPublisher<Void, Never>
@@ -29,7 +29,7 @@ final class ReviewDetailViewModel: BaseViewModelType {
     
     struct Output {
         let review: AnyPublisher<Result<Review, Error>, Never>
-        let isBookmark: AnyPublisher<Result<Void, Error>, Never>
+        let isBookmarked: AnyPublisher<Result<Void, Error>, Never>
     }
     
     // MARK: - init
@@ -53,15 +53,15 @@ final class ReviewDetailViewModel: BaseViewModelType {
         
         input.bookmarkButtonDidTap
             .removeDuplicates()
-            .sink(receiveValue: { [weak self] isBookmark in
+            .sink(receiveValue: { [weak self] isBookmarked in
                 guard let self = self else { return }
-                isBookmark ? self.removeBookmark() : self.createBookmark()
+                isBookmarked ? self.removeBookmark() : self.createBookmark()
             })
             .store(in: &self.cancellable)
         
         return Output(
             review: self.reviewSubject.eraseToAnyPublisher(),
-            isBookmark: self.isBookmarkSubject.eraseToAnyPublisher()
+            isBookmarked: self.isBookmarkedSubject.eraseToAnyPublisher()
         )
     }
     
@@ -92,9 +92,9 @@ final class ReviewDetailViewModel: BaseViewModelType {
         Task {
             do {
                 try await self.usecase.createBookmark(storeId: self.storeId)
-                self.isBookmarkSubject.send(.success(()))
+                self.isBookmarkedSubject.send(.success(()))
             } catch(let error) {
-                self.isBookmarkSubject.send(.failure(error))
+                self.isBookmarkedSubject.send(.failure(error))
             }
         }
     }
@@ -103,9 +103,9 @@ final class ReviewDetailViewModel: BaseViewModelType {
         Task {
             do {
                 try await self.usecase.removeBookmark(storeId: self.storeId)
-                self.isBookmarkSubject.send(.success(()))
+                self.isBookmarkedSubject.send(.success(()))
             } catch(let error) {
-                self.isBookmarkSubject.send(.failure(error))
+                self.isBookmarkedSubject.send(.failure(error))
             }
         }
     }

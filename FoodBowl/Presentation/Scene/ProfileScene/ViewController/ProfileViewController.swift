@@ -167,7 +167,7 @@ final class ProfileViewController: MapViewController {
             })
             .store(in: &self.cancellable)
         
-        output.isBookmark
+        output.isBookmarked
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] result in
                 switch result {
@@ -182,7 +182,7 @@ final class ProfileViewController: MapViewController {
             })
             .store(in: &self.cancellable)
         
-        output.isRemove
+        output.isRemoved
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] result in
                 switch result {

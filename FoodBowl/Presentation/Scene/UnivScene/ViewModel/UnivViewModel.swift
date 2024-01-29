@@ -27,7 +27,7 @@ final class UnivViewModel: BaseViewModelType {
     private let reviewsSubject: PassthroughSubject<Result<[Review], Error>, Never> = PassthroughSubject()
     private let moreReviewsSubject: PassthroughSubject<Result<[Review], Error>, Never> = PassthroughSubject()
     private let refreshControlSubject: PassthroughSubject<Void, Error> = PassthroughSubject()
-    private let isBookmarkSubject: PassthroughSubject<Result<Int, Error>, Never> = PassthroughSubject()
+    private let isBookmarkedSubject: PassthroughSubject<Result<Int, Error>, Never> = PassthroughSubject()
     
     struct Input {
         let viewDidLoad: AnyPublisher<Void, Never>
@@ -43,7 +43,7 @@ final class UnivViewModel: BaseViewModelType {
         let stores: AnyPublisher<Result<[Store], Error>, Never>
         let reviews: AnyPublisher<Result<[Review], Error>, Never>
         let moreReviews: AnyPublisher<Result<[Review], Error>, Never>
-        let isBookmark: AnyPublisher<Result<Int, Error>, Never>
+        let isBookmarked: AnyPublisher<Result<Int, Error>, Never>
     }
     
     // MARK: - init
@@ -107,7 +107,7 @@ final class UnivViewModel: BaseViewModelType {
             stores: self.storesSubject.eraseToAnyPublisher(),
             reviews: self.reviewsSubject.eraseToAnyPublisher(),
             moreReviews: self.moreReviewsSubject.eraseToAnyPublisher(),
-            isBookmark: self.isBookmarkSubject.eraseToAnyPublisher()
+            isBookmarked: self.isBookmarkedSubject.eraseToAnyPublisher()
         )
     }
     
@@ -174,9 +174,9 @@ final class UnivViewModel: BaseViewModelType {
         Task {
             do {
                 try await self.usecase.createBookmark(storeId: storeId)
-                self.isBookmarkSubject.send(.success(storeId))
+                self.isBookmarkedSubject.send(.success(storeId))
             } catch(let error) {
-                self.isBookmarkSubject.send(.failure(error))
+                self.isBookmarkedSubject.send(.failure(error))
             }
         }
     }
@@ -185,9 +185,9 @@ final class UnivViewModel: BaseViewModelType {
         Task {
             do {
                 try await self.usecase.removeBookmark(storeId: storeId)
-                self.isBookmarkSubject.send(.success(storeId))
+                self.isBookmarkedSubject.send(.success(storeId))
             } catch(let error) {
-                self.isBookmarkSubject.send(.failure(error))
+                self.isBookmarkedSubject.send(.failure(error))
             }
         }
     }
