@@ -50,7 +50,8 @@ extension MoyaProvider where Target == ServiceAPI {
         let accessToken: String = KeychainManager.get(.accessToken)
         let refreshToken: String = KeychainManager.get(.refreshToken)
         
-        let result = await self.request(.patchRefreshToken(token: TokenDTO(
+        let provider = MoyaProvider<SignAPI>()
+        let result = await provider.request(.patchRefreshToken(token: TokenDTO(
             accessToken: accessToken,
             refreshToken: refreshToken
         )))
@@ -62,10 +63,9 @@ extension MoyaProvider where Target == ServiceAPI {
                 KeychainManager.set(token.accessToken, for: .accessToken)
                 KeychainManager.set(token.refreshToken, for: .refreshToken)
                 UserDefaultHandler.setIsLogin(isLogin: true)
-                UserDefaultHandler.setIsLogin(isLogin: true)
                 
                 let expiryDate = Date().addingTimeInterval(1800)
-                UserDefaults.standard.set(expiryDate, forKey: "tokenExpiryDate")
+                UserDefaultHandler.setTokenExpiryDate(tokenExpiryDate: expiryDate)
                 
                 return .success(())
             } catch {

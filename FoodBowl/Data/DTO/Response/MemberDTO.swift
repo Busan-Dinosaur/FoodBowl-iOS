@@ -83,6 +83,7 @@ struct MemberByFollowItemDTO: Codable, Hashable {
     let profileImageUrl: String?
     let nickname: String
     let followerCount: Int
+    let isMe: Bool
     var isFollowing: Bool
     
     func toMember() -> Member {
@@ -93,7 +94,7 @@ struct MemberByFollowItemDTO: Codable, Hashable {
             introduction: "",
             followerCount: self.followerCount.prettyNumber,
             followingCount: "",
-            isMyProfile: UserDefaultStorage.id == self.memberId,
+            isMyProfile: self.isMe,
             isFollowing: self.isFollowing
         )
     }

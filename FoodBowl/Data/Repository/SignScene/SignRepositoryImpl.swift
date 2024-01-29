@@ -30,6 +30,6 @@ final class SignRepositoryImpl: SignRepository {
     }
     
     func logOut() async throws {
-        let _ = await provider.request(.logOut)
+        let _ = await providerSign.request(.logOut)
     }
 }

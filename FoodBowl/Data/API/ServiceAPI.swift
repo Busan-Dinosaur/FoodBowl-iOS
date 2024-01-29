@@ -10,8 +10,6 @@ import Foundation
 import Moya
 
 enum ServiceAPI {
-    case logOut
-    case patchRefreshToken(token: TokenDTO)
     case checkNickname(nickname: String)
     case getSchools
     case getCategories
@@ -60,10 +58,6 @@ extension ServiceAPI: TargetType {
 
     var path: String {
         switch self {
-        case .logOut:
-            return "/v1/auth/logout"
-        case .patchRefreshToken:
-            return "/v1/auth/token/renew"
         case .checkNickname:
             return "/v1/members/nickname/exist"
         case .getSchools:
@@ -129,7 +123,7 @@ extension ServiceAPI: TargetType {
 
     var method: Moya.Method {
         switch self {
-        case .logOut, .patchRefreshToken, .createBlame, .createReview, .createBookmark, .followMember:
+        case .createBlame, .createReview, .createBookmark, .followMember:
             return .post
         case .updateMemberProfile, .updateMemberProfileImage, .updateReview:
             return .patch
@@ -142,12 +136,6 @@ extension ServiceAPI: TargetType {
 
     var task: Task {
         switch self {
-        case .patchRefreshToken(let request):
-            let request = TokenDTO(
-                accessToken: request.accessToken,
-                refreshToken: request.refreshToken
-            )
-            return .requestJSONEncodable(request)
         case .checkNickname(let nickname):
             let params: [String: String] = [
                 "nickname": nickname

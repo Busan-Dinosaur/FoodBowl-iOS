@@ -30,6 +30,7 @@ struct StoreDetailDTO: Codable {
     let addressName: String
     let distance: Double
     let isBookmarked: Bool
+    let storeUrl: String
     
     func toStore() -> Store {
         Store(
@@ -39,7 +40,7 @@ struct StoreDetailDTO: Codable {
             address: self.addressName,
             isBookmark: self.isBookmarked,
             distance: self.distance.prettyDistance,
-            url: "",
+            url: self.storeUrl,
             x: 0.0,
             y: 0.0,
             reviewCount: ""
