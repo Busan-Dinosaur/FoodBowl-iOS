@@ -12,15 +12,16 @@ final class FriendViewModel: BaseViewModelType {
     
     // MARK: - property
     
-    private let usecase: FriendUsecase
-    private var cancellable = Set<AnyCancellable>()
-    
+    private var category: CategoryType?
     private var isBookmark: Bool = false
     
     private var location: CustomLocationRequestDTO?
     private let pageSize: Int = 20
     private var currentpageSize: Int = 20
     private var lastReviewId: Int?
+    
+    private let usecase: FriendUsecase
+    private var cancellable = Set<AnyCancellable>()
     
     private let storesSubject: PassthroughSubject<Result<[Store], Error>, Never> = PassthroughSubject()
     private let reviewsSubject: PassthroughSubject<Result<[Review], Error>, Never> = PassthroughSubject()
@@ -29,6 +30,7 @@ final class FriendViewModel: BaseViewModelType {
     private let isBookmarkedSubject: PassthroughSubject<Result<Int, Error>, Never> = PassthroughSubject()
     
     struct Input {
+        let setCategory: AnyPublisher<CategoryType?, Never>
         let customLocation: AnyPublisher<CustomLocationRequestDTO, Never>
         let bookmarkToggleButtonDidTap: AnyPublisher<Bool, Never>
         let bookmarkButtonDidTap: AnyPublisher<(Int, Bool), Never>
@@ -52,6 +54,18 @@ final class FriendViewModel: BaseViewModelType {
     // MARK: - Public - func
     
     func transform(from input: Input) -> Output {
+        input.setCategory
+            .debounce(for: .milliseconds(100), scheduler: RunLoop.main)
+            .sink(receiveValue: { [weak self] category in
+                guard let self = self else { return }
+                self.category = category
+                self.currentpageSize = self.pageSize
+                self.lastReviewId = nil
+                self.isBookmark ? self.getReviewsByBookmark() : self.getReviewsByFollowing()
+                self.isBookmark ? self.getStoresByBookmark() : self.getStoresByFollowing()
+            })
+            .store(in: &self.cancellable)
+        
         input.customLocation
             .debounce(for: .milliseconds(100), scheduler: RunLoop.main)
             .sink(receiveValue: { [weak self] location in

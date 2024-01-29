@@ -12,15 +12,16 @@ final class UnivViewModel: BaseViewModelType {
     
     // MARK: - property
     
-    private let usecase: UnivUsecase
-    private var cancellable = Set<AnyCancellable>()
-    
+    private var category: CategoryType?
     var schoolId: Int?
     
     private var location: CustomLocationRequestDTO?
     private let pageSize: Int = 20
     private var currentpageSize: Int = 20
     private var lastReviewId: Int?
+    
+    private let usecase: UnivUsecase
+    private var cancellable = Set<AnyCancellable>()
     
     private let univSubject: PassthroughSubject<(String, Double, Double), Never> = PassthroughSubject()
     private let storesSubject: PassthroughSubject<Result<[Store], Error>, Never> = PassthroughSubject()
@@ -31,6 +32,7 @@ final class UnivViewModel: BaseViewModelType {
     
     struct Input {
         let viewDidLoad: AnyPublisher<Void, Never>
+        let setCategory: AnyPublisher<CategoryType?, Never>
         let setUniv: AnyPublisher<Store, Never>
         let customLocation: AnyPublisher<CustomLocationRequestDTO, Never>
         let bookmarkButtonDidTap: AnyPublisher<(Int, Bool), Never>
@@ -58,6 +60,18 @@ final class UnivViewModel: BaseViewModelType {
         input.viewDidLoad
             .sink(receiveValue: { [weak self] _ in
                 self?.getSchool()
+            })
+            .store(in: &self.cancellable)
+        
+        input.setCategory
+            .debounce(for: .milliseconds(100), scheduler: RunLoop.main)
+            .sink(receiveValue: { [weak self] category in
+                guard let self = self else { return }
+                self.category = category
+                self.currentpageSize = self.pageSize
+                self.lastReviewId = nil
+                self.getReviewsBySchool()
+                self.getStoresBySchool()
             })
             .store(in: &self.cancellable)
         

@@ -38,6 +38,7 @@ final class FriendViewController: MapViewController {
     private func transformedOutput() -> FriendViewModel.Output? {
         guard let viewModel = self.viewModel as? FriendViewModel else { return nil }
         let input = FriendViewModel.Input(
+            setCategory: self.categoryListView.setCategoryPublisher.eraseToAnyPublisher(),
             customLocation: self.locationPublisher.eraseToAnyPublisher(),
             bookmarkToggleButtonDidTap: self.bookmarkToggleButtonDidTapPublisher.eraseToAnyPublisher(),
             bookmarkButtonDidTap: self.bookmarkButtonDidTapPublisher.eraseToAnyPublisher(),

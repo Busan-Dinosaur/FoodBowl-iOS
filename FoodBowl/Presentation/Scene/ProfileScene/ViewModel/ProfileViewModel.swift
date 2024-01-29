@@ -12,15 +12,16 @@ final class ProfileViewModel: BaseViewModelType {
     
     // MARK: - property
     
-    private let usecase: ProfileUsecase
-    private var cancellable = Set<AnyCancellable>()
-    
+    private var category: CategoryType?
     let memberId: Int
     
     private var location: CustomLocationRequestDTO?
     private let pageSize: Int = 20
     private var currentpageSize: Int = 20
     private var lastReviewId: Int?
+    
+    private let usecase: ProfileUsecase
+    private var cancellable = Set<AnyCancellable>()
     
     private let memberSubject: PassthroughSubject<Result<Member, Error>, Never> = PassthroughSubject()
     private let followMemberSubject: PassthroughSubject<Result<Int, Error>, Never> = PassthroughSubject()
@@ -34,6 +35,7 @@ final class ProfileViewModel: BaseViewModelType {
     struct Input {
         let viewDidLoad: AnyPublisher<Void, Never>
         let viewWillAppear: AnyPublisher<Void, Never>
+        let setCategory: AnyPublisher<CategoryType?, Never>
         let followMember: AnyPublisher<(Int, Bool), Never>
         let customLocation: AnyPublisher<CustomLocationRequestDTO, Never>
         let bookmarkButtonDidTap: AnyPublisher<(Int, Bool), Never>
@@ -76,6 +78,18 @@ final class ProfileViewModel: BaseViewModelType {
             .sink(receiveValue: { [weak self] _ in
                 guard let self = self else { return }
                 self.getMemberProfile(memberId: self.memberId)
+            })
+            .store(in: &self.cancellable)
+        
+        input.setCategory
+            .debounce(for: .milliseconds(100), scheduler: RunLoop.main)
+            .sink(receiveValue: { [weak self] category in
+                guard let self = self else { return }
+                self.category = category
+                self.currentpageSize = self.pageSize
+                self.lastReviewId = nil
+                self.getReviewsByMember()
+                self.getStoresByMember()
             })
             .store(in: &self.cancellable)
         

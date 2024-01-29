@@ -78,6 +78,7 @@ final class ProfileViewController: MapViewController {
         let input = ProfileViewModel.Input(
             viewDidLoad: self.viewDidLoadPublisher,
             viewWillAppear: self.viewWillAppearPublisher.eraseToAnyPublisher(),
+            setCategory: self.categoryListView.setCategoryPublisher.eraseToAnyPublisher(),
             followMember: self.followButtonDidTapPublisher.eraseToAnyPublisher(),
             customLocation: self.locationPublisher.eraseToAnyPublisher(),
             bookmarkButtonDidTap: self.bookmarkButtonDidTapPublisher.eraseToAnyPublisher(),

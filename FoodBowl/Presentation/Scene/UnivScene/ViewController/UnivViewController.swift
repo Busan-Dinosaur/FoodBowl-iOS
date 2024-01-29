@@ -51,6 +51,7 @@ final class UnivViewController: MapViewController {
         guard let viewModel = self.viewModel as? UnivViewModel else { return nil }
         let input = UnivViewModel.Input(
             viewDidLoad: self.viewDidLoadPublisher,
+            setCategory: self.categoryListView.setCategoryPublisher.eraseToAnyPublisher(),
             setUniv: self.setUnivPublisher.eraseToAnyPublisher(),
             customLocation: self.locationPublisher.eraseToAnyPublisher(),
             bookmarkButtonDidTap: self.bookmarkButtonDidTapPublisher.eraseToAnyPublisher(),

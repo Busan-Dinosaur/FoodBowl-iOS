@@ -5,14 +5,15 @@
 //  Created by COBY_PRO on 2023/07/21.
 //
 
+import Combine
 import UIKit
 
 import SnapKit
 import Then
 
-final class CategoryListView: UIView {
+final class CategoryListView: UIView, BaseViewType {
     
-    enum Size {
+    private enum Size {
         static let collectionInset = UIEdgeInsets(
             top: 0,
             left: SizeLiteral.horizantalPadding,
@@ -22,16 +23,15 @@ final class CategoryListView: UIView {
     }
 
     private let categories = CategoryType.allCases
-    var selectedCategory: CategoryType? = nil
 
-    // MARK: - property
+    // MARK: - ui component
+    
     private let collectionViewFlowLayout = UICollectionViewFlowLayout().then {
         $0.scrollDirection = .horizontal
         $0.sectionInset = Size.collectionInset
         $0.minimumLineSpacing = 6
         $0.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
     }
-
     private lazy var listCollectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewFlowLayout).then {
         $0.backgroundColor = .clear
         $0.dataSource = self
@@ -39,12 +39,16 @@ final class CategoryListView: UIView {
         $0.showsHorizontalScrollIndicator = false
         $0.register(CategoryCollectionViewCell.self, forCellWithReuseIdentifier: CategoryCollectionViewCell.className)
     }
+    
+    // MARK: - property
+    
+    let setCategoryPublisher = PassthroughSubject<CategoryType?, Never>()
 
     // MARK: - init
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setupLayout()
-        configureUI()
+        self.baseInit()
     }
 
     @available(*, unavailable)
@@ -53,24 +57,25 @@ final class CategoryListView: UIView {
     }
 
     // MARK: - life cycle
-    private func setupLayout() {
-        addSubviews(listCollectionView)
+    
+    func setupLayout() {
+        self.addSubviews(self.listCollectionView)
 
-        listCollectionView.snp.makeConstraints {
+        self.listCollectionView.snp.makeConstraints {
             $0.edges.equalToSuperview()
             $0.height.equalTo(40)
         }
     }
 
-    private func configureUI() {
-        backgroundColor = .mainBackgroundColor
+    func configureUI() {
+        self.backgroundColor = .mainBackgroundColor
     }
 }
 
 // MARK: - UICollectionViewDataSource, UICollectionViewDelegate
 extension CategoryListView: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_: UICollectionView, numberOfItemsInSection _: Int) -> Int {
-        return categories.count
+        return self.categories.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -92,10 +97,10 @@ extension CategoryListView: UICollectionViewDataSource, UICollectionViewDelegate
         
         if cell.isSelected {
             collectionView.deselectItem(at: indexPath, animated: true)
-            self.selectedCategory = nil
+            self.setCategoryPublisher.send(nil)
             return false
         } else {
-            self.selectedCategory = self.categories[indexPath.item]
+            self.setCategoryPublisher.send(self.categories[indexPath.item])
             return true
         }
     }
