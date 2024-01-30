@@ -125,7 +125,7 @@ final class ReviewDetailView: UIView, BaseViewType {
         self.commentLabel.snp.makeConstraints {
             $0.top.equalTo(self.storeInfoButton.snp.bottom).offset(12)
             $0.leading.trailing.equalToSuperview().inset(SizeLiteral.horizantalPadding)
-            $0.bottom.equalToSuperview()
+            $0.bottom.equalToSuperview().inset(SizeLiteral.bottomPadding)
         }
     }
     
