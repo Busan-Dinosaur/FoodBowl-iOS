@@ -16,6 +16,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
 
     func scene(_ scene: UIScene, willConnectTo _: UISceneSession, options _: UIScene.ConnectionOptions) {
+        self.renewToken()
+        
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
 
@@ -62,6 +64,32 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 }
 
 extension SceneDelegate {
+    func renewToken() {
+        let accessToken: String = KeychainManager.get(.accessToken)
+        let refreshToken: String = KeychainManager.get(.refreshToken)
+        
+        let provider = MoyaProvider<SignAPI>()
+        provider.request(.patchRefreshToken(token: Token(
+            accessToken: accessToken,
+            refreshToken: refreshToken
+        ))) { result in
+            switch result {
+            case .success(let response):
+                guard let token = try? JSONDecoder().decode(Token.self, from: response.data) else { return }
+                
+                KeychainManager.set(token.accessToken, for: .accessToken)
+                KeychainManager.set(token.refreshToken, for: .refreshToken)
+                UserDefaultHandler.setIsLogin(isLogin: true)
+                
+                let expiryDate = Date().addingTimeInterval(1800)
+                UserDefaultHandler.setTokenExpiryDate(tokenExpiryDate: expiryDate)
+            case .failure:
+                KeychainManager.clear()
+                UserDefaultHandler.clearAllData()
+            }
+        }
+    }
+    
     func logOut() {
         Task {
             let provider = MoyaProvider<SignAPI>()
