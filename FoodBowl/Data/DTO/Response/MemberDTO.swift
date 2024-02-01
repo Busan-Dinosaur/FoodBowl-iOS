@@ -50,7 +50,7 @@ struct MemberProfileDTO: Codable {
             id: self.id,
             profileImageUrl: self.profileImageUrl,
             nickname: self.nickname,
-            introduction: self.introduction ?? "소개를 작성해주세요.",
+            introduction: self.introduction ?? "",
             followerCount: self.followerCount.prettyNumber,
             followingCount: self.followingCount.prettyNumber,
             isMyProfile: self.isMyProfile,

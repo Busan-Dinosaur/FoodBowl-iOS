@@ -265,7 +265,7 @@ final class ProfileViewController: MapViewController {
         }
         
         self.userNicknameLabel.text = member.nickname
-        self.profileHeaderView.userInfoLabel.text = member.introduction
+        self.profileHeaderView.userInfoLabel.text = member.introduction == "" ? "소개를 작성하지 않았어요." : member.introduction
         self.profileHeaderView.followerInfoButton.numberLabel.text = "\(member.followerCount)명"
         self.profileHeaderView.followingInfoButton.numberLabel.text = "\(member.followingCount)명"
         self.profileHeaderView.followButton.isSelected = member.isFollowing
