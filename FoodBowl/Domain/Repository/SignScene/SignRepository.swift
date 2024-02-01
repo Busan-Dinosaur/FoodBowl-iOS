@@ -8,8 +8,6 @@
 import Foundation
 
 protocol SignRepository {
-    func checkNickname(nickname: String) async throws -> CheckNicknameDTO
     func signIn(request: SignRequestDTO) async throws -> Token
     func getMyProfile() async throws -> MemberProfileDTO
-    func logOut() async throws
 }

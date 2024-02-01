@@ -228,7 +228,7 @@ final class ProfileViewController: MapViewController {
         self.optionButton.addAction(optionButtonAction, for: .touchUpInside)
         
         let settingButtonAction = UIAction { [weak self] _ in
-            self?.navigationController?.pushViewController(SettingViewController(), animated: true)
+            self?.presentSettingViewController()
         }
         self.settingButton.addAction(settingButtonAction, for: .touchUpInside)
         

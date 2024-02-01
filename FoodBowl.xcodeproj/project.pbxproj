@@ -7,6 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CB07CE082B6BB2B9001658E2 /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB07CE072B6BB2B9001658E2 /* SplashView.swift */; };
+		CB07CE0A2B6BB2C1001658E2 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB07CE092B6BB2C1001658E2 /* SplashViewController.swift */; };
+		CB07CE0C2B6BB30C001658E2 /* SplashViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB07CE0B2B6BB30C001658E2 /* SplashViewModel.swift */; };
+		CB07CE112B6BB3BE001658E2 /* SplashUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB07CE102B6BB3BE001658E2 /* SplashUsecase.swift */; };
+		CB07CE172B6BBABD001658E2 /* SettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB07CE162B6BBABD001658E2 /* SettingViewModel.swift */; };
+		CB07CE192B6BBAD1001658E2 /* SettingRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB07CE182B6BBAD1001658E2 /* SettingRepository.swift */; };
+		CB07CE1B2B6BBB1D001658E2 /* SettingUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB07CE1A2B6BBB1D001658E2 /* SettingUsecase.swift */; };
+		CB07CE1D2B6BBB85001658E2 /* SettingRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB07CE1C2B6BBB85001658E2 /* SettingRepositoryImpl.swift */; };
 		CB1566D9298D72FF0056B7D9 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1566D8298D72FF0056B7D9 /* LocationManager.swift */; };
 		CB1579092AACCFCB00007183 /* CreateReviewRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1579082AACCFCB00007183 /* CreateReviewRequestDTO.swift */; };
 		CB15790B2AACD44700007183 /* SchoolDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB15790A2AACD44700007183 /* SchoolDTO.swift */; };
@@ -225,6 +233,14 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		CB07CE072B6BB2B9001658E2 /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
+		CB07CE092B6BB2C1001658E2 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
+		CB07CE0B2B6BB30C001658E2 /* SplashViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewModel.swift; sourceTree = "<group>"; };
+		CB07CE102B6BB3BE001658E2 /* SplashUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashUsecase.swift; sourceTree = "<group>"; };
+		CB07CE162B6BBABD001658E2 /* SettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewModel.swift; sourceTree = "<group>"; };
+		CB07CE182B6BBAD1001658E2 /* SettingRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingRepository.swift; sourceTree = "<group>"; };
+		CB07CE1A2B6BBB1D001658E2 /* SettingUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingUsecase.swift; sourceTree = "<group>"; };
+		CB07CE1C2B6BBB85001658E2 /* SettingRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingRepositoryImpl.swift; sourceTree = "<group>"; };
 		CB1566D8298D72FF0056B7D9 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		CB1579082AACCFCB00007183 /* CreateReviewRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateReviewRequestDTO.swift; sourceTree = "<group>"; };
 		CB15790A2AACD44700007183 /* SchoolDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchoolDTO.swift; sourceTree = "<group>"; };
@@ -456,6 +472,64 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		CB07CE032B6BB24D001658E2 /* SplashScene */ = {
+			isa = PBXGroup;
+			children = (
+				CB07CE042B6BB28F001658E2 /* View */,
+				CB07CE052B6BB294001658E2 /* ViewController */,
+				CB07CE062B6BB29A001658E2 /* ViewModel */,
+			);
+			path = SplashScene;
+			sourceTree = "<group>";
+		};
+		CB07CE042B6BB28F001658E2 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				CB07CE072B6BB2B9001658E2 /* SplashView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		CB07CE052B6BB294001658E2 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				CB07CE092B6BB2C1001658E2 /* SplashViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		CB07CE062B6BB29A001658E2 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				CB07CE0B2B6BB30C001658E2 /* SplashViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		CB07CE0D2B6BB37A001658E2 /* SplashScene */ = {
+			isa = PBXGroup;
+			children = (
+				CB5BFB0B2B3EE37500B35062 /* TokenRepository.swift */,
+			);
+			path = SplashScene;
+			sourceTree = "<group>";
+		};
+		CB07CE0E2B6BB3A2001658E2 /* SplashScene */ = {
+			isa = PBXGroup;
+			children = (
+				CB5BFB122B3EEA5800B35062 /* TokenRepositoryImpl.swift */,
+			);
+			path = SplashScene;
+			sourceTree = "<group>";
+		};
+		CB07CE0F2B6BB3B4001658E2 /* SplashScene */ = {
+			isa = PBXGroup;
+			children = (
+				CB07CE102B6BB3BE001658E2 /* SplashUsecase.swift */,
+			);
+			path = SplashScene;
+			sourceTree = "<group>";
+		};
 		CB15790E2AACD97300007183 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
@@ -541,6 +615,7 @@
 		CB5BFB0A2B3EE36800B35062 /* Repository */ = {
 			isa = PBXGroup;
 			children = (
+				CB07CE0D2B6BB37A001658E2 /* SplashScene */,
 				CBDF112E2B5EAC15007DA3E1 /* SignScene */,
 				CBDF11302B5EAC2D007DA3E1 /* FriendScene */,
 				CBDF11312B5EAC38007DA3E1 /* FindScene */,
@@ -558,6 +633,7 @@
 		CB5BFB0E2B3EE39500B35062 /* Repository */ = {
 			isa = PBXGroup;
 			children = (
+				CB07CE0E2B6BB3A2001658E2 /* SplashScene */,
 				CBDF113D2B5EAD9C007DA3E1 /* SignScene */,
 				CBDF113E2B5EADA4007DA3E1 /* FriendScene */,
 				CBDF11452B5EADF5007DA3E1 /* FindScene */,
@@ -629,6 +705,7 @@
 		CB617A252AE23959000F7FFC /* Scene */ = {
 			isa = PBXGroup;
 			children = (
+				CB07CE032B6BB24D001658E2 /* SplashScene */,
 				CB981C28297A5A2900AF0167 /* SignScene */,
 				CBE6190D296C6423005295AF /* FriendScene */,
 				CB49256E2AB44D4400B66B68 /* FindScene */,
@@ -824,6 +901,7 @@
 				CBADEF3F2B5D64870026FACA /* UpdateProfileViewModel.swift */,
 				CB73E5722B341B3B0026E4D7 /* FollowerViewModel.swift */,
 				CB16FD4D2B347C31006D18D6 /* FollowingViewModel.swift */,
+				CB07CE162B6BBABD001658E2 /* SettingViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -834,6 +912,7 @@
 				CBDF114C2B5EB77A007DA3E1 /* ProfileUsecase.swift */,
 				CB78A80F2B5D0CBD007EC9C1 /* FollowUsecase.swift */,
 				CBADEF392B5D5C770026FACA /* UpdateProfileUsecase.swift */,
+				CB07CE1A2B6BBB1D001658E2 /* SettingUsecase.swift */,
 			);
 			path = ProfileScene;
 			sourceTree = "<group>";
@@ -1018,6 +1097,7 @@
 		CB93326D2AFCCCC600B7F87A /* Usecase */ = {
 			isa = PBXGroup;
 			children = (
+				CB07CE0F2B6BB3B4001658E2 /* SplashScene */,
 				CB9332702AFCCCF100B7F87A /* SignScene */,
 				CBDF11322B5EAC56007DA3E1 /* FriendScene */,
 				CB8306732B599CAE00632789 /* FindScene */,
@@ -1362,7 +1442,6 @@
 		CBDF112E2B5EAC15007DA3E1 /* SignScene */ = {
 			isa = PBXGroup;
 			children = (
-				CB5BFB0B2B3EE37500B35062 /* TokenRepository.swift */,
 				CB5BFB1E2B3F028F00B35062 /* SignRepository.swift */,
 			);
 			path = SignScene;
@@ -1415,6 +1494,7 @@
 				CBDF112C2B5EABE7007DA3E1 /* ProfileRepository.swift */,
 				CBADEF3D2B5D5CB00026FACA /* UpdateProfileRepository.swift */,
 				CB78A80A2B5D0A51007EC9C1 /* FollowRepository.swift */,
+				CB07CE182B6BBAD1001658E2 /* SettingRepository.swift */,
 			);
 			path = ProfileScene;
 			sourceTree = "<group>";
@@ -1454,7 +1534,6 @@
 		CBDF113D2B5EAD9C007DA3E1 /* SignScene */ = {
 			isa = PBXGroup;
 			children = (
-				CB5BFB122B3EEA5800B35062 /* TokenRepositoryImpl.swift */,
 				CB5BFB1C2B3F025F00B35062 /* SignRepositoryImpl.swift */,
 			);
 			path = SignScene;
@@ -1483,6 +1562,7 @@
 				CBDF11482B5EB190007DA3E1 /* ProfileRepositoryImpl.swift */,
 				CB78A80C2B5D0AFA007EC9C1 /* FollowRepositoryImpl.swift */,
 				CBADEF3B2B5D5C940026FACA /* UpdateProfileRepositoryImpl.swift */,
+				CB07CE1C2B6BBB85001658E2 /* SettingRepositoryImpl.swift */,
 			);
 			path = ProfileScene;
 			sourceTree = "<group>";
@@ -1722,6 +1802,7 @@
 				CBA4C7DD2AB49B4900FC9DD8 /* ReviewToggleButton.swift in Sources */,
 				CB2E4F7F297702A800FD2566 /* StoreInfoTableViewCell.swift in Sources */,
 				CBDDF1422A6AF70500AE3C50 /* StoreHeaderView.swift in Sources */,
+				CB07CE1B2B6BBB1D001658E2 /* SettingUsecase.swift in Sources */,
 				CBDF11472B5EB0A7007DA3E1 /* FriendRepositoryImpl.swift in Sources */,
 				CB84CAEE2B602E9100F4591A /* UpdateReviewRepositoryImpl.swift in Sources */,
 				CB1A7C6129561BCF00C6431D /* ProfileHeaderView.swift in Sources */,
@@ -1791,6 +1872,7 @@
 				CB78A8092B5CFFC0007EC9C1 /* FindResultView.swift in Sources */,
 				CB5BFB0C2B3EE37500B35062 /* TokenRepository.swift in Sources */,
 				CBE61913296C68D9005295AF /* PlusButton.swift in Sources */,
+				CB07CE192B6BBAD1001658E2 /* SettingRepository.swift in Sources */,
 				CB83066A2B59778C00632789 /* Members.swift in Sources */,
 				CB1A7C5E295618A900C6431D /* SettingButton.swift in Sources */,
 				CB84CB082B60359300F4591A /* BaseScrollView.swift in Sources */,
@@ -1819,9 +1901,11 @@
 				CB5BFB3B2B3F0CF300B35062 /* GetReviewsRequestDTO.swift in Sources */,
 				CB40C6FA2A83E916003E3F06 /* MoyaProvider+Extension.swift in Sources */,
 				CBC73106295550A100C7F198 /* SceneDelegate.swift in Sources */,
+				CB07CE082B6BB2B9001658E2 /* SplashView.swift in Sources */,
 				CBDE39022971947B00DDE49A /* StoreTableViewCell.swift in Sources */,
 				CB51C8D72AD7EB58002D0BA5 /* ServiceAPI.swift in Sources */,
 				CB617A3C2AE2484F000F7FFC /* Keyboardable.swift in Sources */,
+				CB07CE112B6BB3BE001658E2 /* SplashUsecase.swift in Sources */,
 				CB1579122AADB50600007183 /* KakaoAPI.swift in Sources */,
 				CBF926492B411C46005E251B /* BlameUsecase.swift in Sources */,
 				CB84CAF82B602FB400F4591A /* ReviewDetailViewController.swift in Sources */,
@@ -1844,7 +1928,9 @@
 				CB4FBBF22978CFA90052D371 /* FollowerViewController.swift in Sources */,
 				CBADC28B29559BC900E56C93 /* UIColor+Extension.swift in Sources */,
 				CB73E56E2B3417980026E4D7 /* FollowView.swift in Sources */,
+				CB07CE0A2B6BB2C1001658E2 /* SplashViewController.swift in Sources */,
 				CB617A3A2AE24836000F7FFC /* Navigationable.swift in Sources */,
+				CB07CE0C2B6BB30C001658E2 /* SplashViewModel.swift in Sources */,
 				CBADC29429559BC900E56C93 /* Notification+Extension.swift in Sources */,
 				CB8306722B5999D500632789 /* ReviewByFeedDTO.swift in Sources */,
 				CBA7F182297DB319006088A0 /* SignViewController.swift in Sources */,
@@ -1855,7 +1941,9 @@
 				CB617A382AE247E4000F7FFC /* BaseViewType.swift in Sources */,
 				CBDF6EA62AD9255200EB2481 /* BlameViewController.swift in Sources */,
 				CB40C6F82A83E812003E3F06 /* SignViewModel.swift in Sources */,
+				CB07CE172B6BBABD001658E2 /* SettingViewModel.swift in Sources */,
 				CBA4C7DB2AB4840100FC9DD8 /* PaddingLabel.swift in Sources */,
+				CB07CE1D2B6BBB85001658E2 /* SettingRepositoryImpl.swift in Sources */,
 				CBDF11272B5EAA38007DA3E1 /* SearchUnivUsecase.swift in Sources */,
 				CBE61911296C6804005295AF /* OptionButton.swift in Sources */,
 				CBADC28E29559BC900E56C93 /* UIView+Extension.swift in Sources */,

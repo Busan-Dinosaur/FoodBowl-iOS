@@ -5,6 +5,7 @@
 //  Created by COBY_PRO on 2023/01/26.
 //
 
+import Combine
 import MessageUI
 import UIKit
 
@@ -18,6 +19,12 @@ final class SettingViewController: UIViewController, Navigationable, Helperable 
     private let settingView: SettingView = SettingView()
     
     // MARK: - property
+    
+    private let viewModel: any BaseViewModelType
+    private var cancellable: Set<AnyCancellable> = Set()
+    
+    private let logOutPublisher: PassthroughSubject<Void, Never> = PassthroughSubject()
+    private let signOutPublisher: PassthroughSubject<Void, Never> = PassthroughSubject()
     
     private var options: [Option] {[
         Option(
@@ -47,8 +54,7 @@ final class SettingViewController: UIViewController, Navigationable, Helperable 
                     okTitle: "네",
                     cancelTitle: "아니요",
                     okAction: { _ in
-                        guard let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate else { return }
-                        sceneDelegate.logOut()
+                        self?.logOutPublisher.send(())
                     }
                 )
             }
@@ -62,8 +68,7 @@ final class SettingViewController: UIViewController, Navigationable, Helperable 
                     okTitle: "네",
                     cancelTitle: "아니요",
                     okAction: { _ in
-                        guard let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate else { return }
-                        sceneDelegate.signOut()
+                        self?.signOutPublisher.send(())
                     }
                 )
             }
@@ -71,6 +76,16 @@ final class SettingViewController: UIViewController, Navigationable, Helperable 
     ]}
     
     // MARK: - init
+    
+    init(viewModel: any BaseViewModelType) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     deinit {
         print("\(#file) is dead")
@@ -84,9 +99,62 @@ final class SettingViewController: UIViewController, Navigationable, Helperable 
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.bindViewModel()
         self.configureDelegation()
         self.setupNavigation()
+    }
+    
+    // MARK: - func - bind
+    
+    private func bindViewModel() {
+        let output = self.transformedOutput()
         self.configureNavigation()
+        self.bindOutputToViewModel(output)
+    }
+    
+    private func transformedOutput() -> SettingViewModel.Output? {
+        guard let viewModel = self.viewModel as? SettingViewModel else { return nil }
+        let input = SettingViewModel.Input(
+            logOut: self.logOutPublisher.eraseToAnyPublisher(),
+            signOut: self.signOutPublisher.eraseToAnyPublisher()
+        )
+        return viewModel.transform(from: input)
+    }
+    
+    private func bindOutputToViewModel(_ output: SettingViewModel.Output?) {
+        guard let output else { return }
+        
+        output.isLogOut
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] result in
+                switch result {
+                case .success:
+                    guard let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate else { return }
+                    sceneDelegate.moveToSignViewController()
+                case .failure(let error):
+                    self?.makeErrorAlert(
+                        title: "에러",
+                        error: error
+                    )
+                }
+            })
+            .store(in: &self.cancellable)
+        
+        output.isSignOut
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] result in
+                switch result {
+                case .success:
+                    guard let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate else { return }
+                    sceneDelegate.moveToSignViewController()
+                case .failure(let error):
+                    self?.makeErrorAlert(
+                        title: "에러",
+                        error: error
+                    )
+                }
+            })
+            .store(in: &self.cancellable)
     }
     
     // MARK: - func

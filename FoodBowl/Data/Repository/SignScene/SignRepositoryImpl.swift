@@ -11,25 +11,15 @@ import Moya
 
 final class SignRepositoryImpl: SignRepository {
 
-    private let providerSign = MoyaProvider<SignAPI>()
-    private let provider = MoyaProvider<ServiceAPI>()
-    
-    func checkNickname(nickname: String) async throws -> CheckNicknameDTO {
-        let response = await provider.request(.checkNickname(nickname: nickname))
-        return try response.decode()
-    }
+    private let provider = MoyaProvider<SignAPI>()
     
     func signIn(request: SignRequestDTO) async throws -> Token {
-        let response = await providerSign.request(.signIn(request: request))
+        let response = await provider.request(.signIn(request: request))
         return try response.decode()
     }
     
     func getMyProfile() async throws -> MemberProfileDTO {
         let response = await provider.request(.getMyProfile)
         return try response.decode()
-    }
-    
-    func logOut() async throws {
-        let _ = await providerSign.request(.logOut)
     }
 }

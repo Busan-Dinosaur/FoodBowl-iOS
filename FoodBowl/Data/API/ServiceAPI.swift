@@ -41,7 +41,6 @@ enum ServiceAPI {
     case updateMemberProfileImage(image: Data)
     case getMemberProfile(id: Int)
     case getMembersBySearch(request: SearchMemberRequestDTO)
-    case getMyProfile
     case followMember(memberId: Int)
     case unfollowMember(memberId: Int)
     case removeFollower(memberId: Int)
@@ -106,8 +105,6 @@ extension ServiceAPI: TargetType {
             return "/v1/members/\(id)/profile"
         case .getMembersBySearch:
             return "/v1/members/search"
-        case .getMyProfile:
-            return "/v1/members/me/profile"
         case .followMember(let memberId):
             return "/v1/follows/\(memberId)/follow"
         case .unfollowMember(let memberId):

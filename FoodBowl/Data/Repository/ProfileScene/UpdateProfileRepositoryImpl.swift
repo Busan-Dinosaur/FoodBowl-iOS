@@ -12,9 +12,10 @@ import Moya
 final class UpdateProfileRepositoryImpl: UpdateProfileRepository {
     
     private let provider = MoyaProvider<ServiceAPI>()
+    private let providerSign = MoyaProvider<SignAPI>()
     
     func getMyProfile() async throws -> MemberProfileDTO {
-        let response = await provider.request(.getMyProfile)
+        let response = await providerSign.request(.getMyProfile)
         return try response.decode()
     }
     

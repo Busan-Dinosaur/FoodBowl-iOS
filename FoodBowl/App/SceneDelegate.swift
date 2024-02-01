@@ -7,8 +7,6 @@
 
 import UIKit
 
-import Moya
-
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     typealias Task = _Concurrency.Task
@@ -16,21 +14,17 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
 
     func scene(_ scene: UIScene, willConnectTo _: UISceneSession, options _: UIScene.ConnectionOptions) {
-        self.renewToken()
-        
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
 
         LocationManager.shared.checkLocationService()
         
-        let repository = SignRepositoryImpl()
-        let usecase = SignUsecaseImpl(repository: repository)
-        let viewModel = SignViewModel(usecase: usecase)
-        let viewController = SignViewController(viewModel: viewModel)
-
-        window?.rootViewController = UINavigationController(
-            rootViewController: UserDefaultStorage.isLogin ? TabBarController() : viewController
-        )
+        let repository = TokenRepositoryImpl()
+        let usecase = SplashUsecaseImpl(repository: repository)
+        let viewModel = SplashViewModel(usecase: usecase)
+        let viewController = SplashViewController(viewModel: viewModel)
+        
+        window?.rootViewController = UINavigationController(rootViewController: viewController)
         window?.makeKeyAndVisible()
     }
 
@@ -64,80 +58,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 }
 
 extension SceneDelegate {
-    func renewToken() {
-        let accessToken: String = KeychainManager.get(.accessToken)
-        let refreshToken: String = KeychainManager.get(.refreshToken)
-        
-        let provider = MoyaProvider<SignAPI>()
-        provider.request(.patchRefreshToken(token: Token(
-            accessToken: accessToken,
-            refreshToken: refreshToken
-        ))) { result in
-            switch result {
-            case .success(let response):
-                guard let token = try? JSONDecoder().decode(Token.self, from: response.data) else { return }
-                
-                KeychainManager.set(token.accessToken, for: .accessToken)
-                KeychainManager.set(token.refreshToken, for: .refreshToken)
-                UserDefaultHandler.setIsLogin(isLogin: true)
-                
-                let expiryDate = Date().addingTimeInterval(1800)
-                UserDefaultHandler.setTokenExpiryDate(tokenExpiryDate: expiryDate)
-            case .failure:
-                KeychainManager.clear()
-                UserDefaultHandler.clearAllData()
-            }
-        }
-    }
-    
-    func logOut() {
-        Task {
-            let provider = MoyaProvider<SignAPI>()
-            let result = await provider.request(.logOut)
-            
-            switch result {
-            case .success:
-                self.moveToSignViewController()
-            case .failure(let error):
-                guard let rootVC = (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.windows.first?.rootViewController
-                else { return }
-                
-                rootVC.makeErrorAlert(
-                    title: "에러",
-                    error: error
-                ) { _ in
-                    self.moveToSignViewController()
-                }
-            }
-        }
-    }
-    
-    func signOut() {
-        Task {
-            let provider = MoyaProvider<SignAPI>()
-            let result = await provider.request(.signOut)
-            
-            switch result {
-            case .success:
-                self.moveToSignViewController()
-            case .failure(let error):
-                guard let rootVC = (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.windows.first?.rootViewController
-                else { return }
-                
-                rootVC.makeErrorAlert(
-                    title: "에러",
-                    error: error
-                ) { _ in
-                    self.moveToSignViewController()
-                }
-            }
-        }
-    }
-    
     func moveToSignViewController() {
-        KeychainManager.clear()
-        UserDefaultHandler.clearAllData()
-        
         let repository = SignRepositoryImpl()
         let usecase = SignUsecaseImpl(repository: repository)
         let viewModel = SignViewModel(usecase: usecase)

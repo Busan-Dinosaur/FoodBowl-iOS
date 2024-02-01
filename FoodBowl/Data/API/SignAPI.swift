@@ -14,6 +14,7 @@ enum SignAPI {
     case patchRefreshToken(token: Token)
     case logOut
     case signOut
+    case getMyProfile
 }
 
 extension SignAPI: TargetType {
@@ -33,6 +34,8 @@ extension SignAPI: TargetType {
             return "/v1/auth/logout"
         case .signOut:
             return "/v1/members/deactivate"
+        case .getMyProfile:
+            return "/v1/members/me/profile"
         }
     }
 
@@ -40,6 +43,8 @@ extension SignAPI: TargetType {
         switch self {
         case .signIn, .patchRefreshToken, .logOut:
             return .post
+        case .getMyProfile:
+            return .get
         case .signOut:
             return .delete
         }
