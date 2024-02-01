@@ -2134,7 +2134,7 @@
 				BASE_URL = "https://justdoeat.shop";
 				CODE_SIGN_ENTITLEMENTS = FoodBowl/FoodBowl.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = 3Y8YH8GWMM;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = FoodBowl/App/Info.plist;
@@ -2177,7 +2177,7 @@
 				BASE_URL = "https://justdoeat.shop";
 				CODE_SIGN_ENTITLEMENTS = FoodBowl/FoodBowl.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = 3Y8YH8GWMM;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = FoodBowl/App/Info.plist;
