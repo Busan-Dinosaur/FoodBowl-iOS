@@ -40,7 +40,8 @@ final class SplashView: UIView, BaseViewType {
 
         self.logoImageView.snp.makeConstraints {
             $0.width.height.equalTo(300)
-            $0.centerX.centerY.equalToSuperview()
+            $0.centerX.equalToSuperview()
+            $0.top.equalTo(self.snp.top).inset(150)
         }
     }
     

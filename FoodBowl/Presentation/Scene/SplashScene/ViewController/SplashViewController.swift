@@ -93,9 +93,7 @@ extension SplashViewController {
         viewController.modalPresentationStyle = .fullScreen
         viewController.modalTransitionStyle = .crossDissolve
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-            self.present(viewController, animated: true)
-        }
+        self.present(viewController, animated: true)
     }
     
     private func presentTapBarController() {

@@ -55,7 +55,7 @@ final class SignView: UIView, BaseViewType {
         self.logoImageView.snp.makeConstraints {
             $0.width.height.equalTo(300)
             $0.centerX.equalToSuperview()
-            $0.top.equalTo(self.safeAreaLayoutGuide).inset(100)
+            $0.top.equalTo(self.snp.top).inset(150)
         }
 
         self.appleSignButton.snp.makeConstraints {
