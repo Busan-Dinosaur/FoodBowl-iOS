@@ -16,19 +16,12 @@ final class SignView: UIView, BaseViewType {
     
     // MARK: - ui component
     
-    private let titleLabel = UILabel().then {
-        $0.font = .font(.regular, ofSize: 50)
-        $0.textColor = .mainTextColor
-        $0.text = "FoodBowl"
-    }
-    private let subTitleLabel = UILabel().then {
-        $0.font = .font(.regular, ofSize: 30)
-        $0.textColor = .mainTextColor
-        $0.text = "Just Do Eat"
+    private let logoImageView = UIImageView().then {
+        $0.image = ImageLiteral.logo
     }
     private lazy var appleSignButton = ASAuthorizationAppleIDButton(
         type: .signIn,
-        style: traitCollection.userInterfaceStyle == .dark ? .white : .black
+        style: .white
     ).then {
         $0.cornerRadius = 30
     }
@@ -55,19 +48,14 @@ final class SignView: UIView, BaseViewType {
     
     func setupLayout() {
         self.addSubviews(
-            self.titleLabel,
-            self.subTitleLabel,
+            self.logoImageView,
             self.appleSignButton
         )
 
-        self.titleLabel.snp.makeConstraints {
-            $0.top.equalTo(self.safeAreaLayoutGuide.snp.top).inset(100)
+        self.logoImageView.snp.makeConstraints {
+            $0.width.height.equalTo(300)
             $0.centerX.equalToSuperview()
-        }
-
-        self.subTitleLabel.snp.makeConstraints {
-            $0.top.equalTo(self.titleLabel.snp.bottom).offset(40)
-            $0.centerX.equalToSuperview()
+            $0.top.equalTo(self.safeAreaLayoutGuide).inset(100)
         }
 
         self.appleSignButton.snp.makeConstraints {
@@ -78,6 +66,6 @@ final class SignView: UIView, BaseViewType {
     }
     
     func configureUI() {
-        self.backgroundColor = .mainBackgroundColor
+        self.backgroundColor = .mainPink
     }
 }

@@ -39,9 +39,9 @@ extension UIColor {
                 : UIColor(hex: "#495057")
         }
     }
-
+    
     static var mainPink: UIColor {
-        return UIColor(hex: "#FF689F")
+        return UIColor(hex: "#E95A84")
     }
 
     static var mainBlue: UIColor {

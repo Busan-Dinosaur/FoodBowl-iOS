@@ -90,13 +90,21 @@ extension SplashViewController {
         let usecase = SignUsecaseImpl(repository: repository)
         let viewModel = SignViewModel(usecase: usecase)
         let viewController = SignViewController(viewModel: viewModel)
-        self.present(viewController, animated: true)
+        viewController.modalPresentationStyle = .fullScreen
+        viewController.modalTransitionStyle = .crossDissolve
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            self.present(viewController, animated: true)
+        }
     }
     
     private func presentTapBarController() {
         let tabbarViewController = UINavigationController(rootViewController: TabBarController())
         tabbarViewController.modalPresentationStyle = .fullScreen
         tabbarViewController.modalTransitionStyle = .crossDissolve
-        self.present(tabbarViewController, animated: true)
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            self.present(tabbarViewController, animated: true)
+        }
     }
 }

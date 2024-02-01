@@ -15,15 +15,8 @@ final class SplashView: UIView, BaseViewType {
     
     // MARK: - ui component
     
-    private let titleLabel = UILabel().then {
-        $0.font = .font(.regular, ofSize: 50)
-        $0.textColor = .white
-        $0.text = "FoodBowl"
-    }
-    private let subTitleLabel = UILabel().then {
-        $0.font = .font(.regular, ofSize: 30)
-        $0.textColor = .white
-        $0.text = "Just Do Eat"
+    private let logoImageView = UIImageView().then {
+        $0.image = ImageLiteral.logo
     }
     
     // MARK: - init
@@ -42,18 +35,12 @@ final class SplashView: UIView, BaseViewType {
     
     func setupLayout() {
         self.addSubviews(
-            self.titleLabel,
-            self.subTitleLabel
+            self.logoImageView
         )
 
-        self.titleLabel.snp.makeConstraints {
-            $0.top.equalTo(self.safeAreaLayoutGuide.snp.top).inset(100)
-            $0.centerX.equalToSuperview()
-        }
-
-        self.subTitleLabel.snp.makeConstraints {
-            $0.top.equalTo(self.titleLabel.snp.bottom).offset(40)
-            $0.centerX.equalToSuperview()
+        self.logoImageView.snp.makeConstraints {
+            $0.width.height.equalTo(300)
+            $0.centerX.centerY.equalToSuperview()
         }
     }
     
