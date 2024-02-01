@@ -52,8 +52,8 @@
 		CB51C8D72AD7EB58002D0BA5 /* ServiceAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB51C8D62AD7EB58002D0BA5 /* ServiceAPI.swift */; };
 		CB558E9A29746B5D00921943 /* PhotoPlusCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB558E9929746B5D00921943 /* PhotoPlusCollectionViewCell.swift */; };
 		CB5AF8A929854AA0003D16D4 /* MapAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5AF8A829854AA0003D16D4 /* MapAnnotation.swift */; };
-		CB5BFB0C2B3EE37500B35062 /* TokenRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5BFB0B2B3EE37500B35062 /* TokenRepository.swift */; };
-		CB5BFB132B3EEA5800B35062 /* TokenRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5BFB122B3EEA5800B35062 /* TokenRepositoryImpl.swift */; };
+		CB5BFB0C2B3EE37500B35062 /* SplashRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5BFB0B2B3EE37500B35062 /* SplashRepository.swift */; };
+		CB5BFB132B3EEA5800B35062 /* SplashRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5BFB122B3EEA5800B35062 /* SplashRepositoryImpl.swift */; };
 		CB5BFB172B3EF76E00B35062 /* ErrorDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5BFB162B3EF76E00B35062 /* ErrorDTO.swift */; };
 		CB5BFB192B3EF92700B35062 /* CustomError.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5BFB182B3EF92700B35062 /* CustomError.swift */; };
 		CB5BFB1B2B3EFF8700B35062 /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5BFB1A2B3EFF8700B35062 /* Result.swift */; };
@@ -278,8 +278,8 @@
 		CB51C8D62AD7EB58002D0BA5 /* ServiceAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceAPI.swift; sourceTree = "<group>"; };
 		CB558E9929746B5D00921943 /* PhotoPlusCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPlusCollectionViewCell.swift; sourceTree = "<group>"; };
 		CB5AF8A829854AA0003D16D4 /* MapAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapAnnotation.swift; sourceTree = "<group>"; };
-		CB5BFB0B2B3EE37500B35062 /* TokenRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenRepository.swift; sourceTree = "<group>"; };
-		CB5BFB122B3EEA5800B35062 /* TokenRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenRepositoryImpl.swift; sourceTree = "<group>"; };
+		CB5BFB0B2B3EE37500B35062 /* SplashRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashRepository.swift; sourceTree = "<group>"; };
+		CB5BFB122B3EEA5800B35062 /* SplashRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashRepositoryImpl.swift; sourceTree = "<group>"; };
 		CB5BFB162B3EF76E00B35062 /* ErrorDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorDTO.swift; sourceTree = "<group>"; };
 		CB5BFB182B3EF92700B35062 /* CustomError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomError.swift; sourceTree = "<group>"; };
 		CB5BFB1A2B3EFF8700B35062 /* Result.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
@@ -509,7 +509,7 @@
 		CB07CE0D2B6BB37A001658E2 /* SplashScene */ = {
 			isa = PBXGroup;
 			children = (
-				CB5BFB0B2B3EE37500B35062 /* TokenRepository.swift */,
+				CB5BFB0B2B3EE37500B35062 /* SplashRepository.swift */,
 			);
 			path = SplashScene;
 			sourceTree = "<group>";
@@ -517,7 +517,7 @@
 		CB07CE0E2B6BB3A2001658E2 /* SplashScene */ = {
 			isa = PBXGroup;
 			children = (
-				CB5BFB122B3EEA5800B35062 /* TokenRepositoryImpl.swift */,
+				CB5BFB122B3EEA5800B35062 /* SplashRepositoryImpl.swift */,
 			);
 			path = SplashScene;
 			sourceTree = "<group>";
@@ -1870,7 +1870,7 @@
 				CB617A512AE27F96000F7FFC /* UIScrollView+Combine.swift in Sources */,
 				CB4A78A12B5830000002136F /* CreateReviewRepository.swift in Sources */,
 				CB78A8092B5CFFC0007EC9C1 /* FindResultView.swift in Sources */,
-				CB5BFB0C2B3EE37500B35062 /* TokenRepository.swift in Sources */,
+				CB5BFB0C2B3EE37500B35062 /* SplashRepository.swift in Sources */,
 				CBE61913296C68D9005295AF /* PlusButton.swift in Sources */,
 				CB07CE192B6BBAD1001658E2 /* SettingRepository.swift in Sources */,
 				CB83066A2B59778C00632789 /* Members.swift in Sources */,
@@ -1916,7 +1916,7 @@
 				CBADC28329559BC900E56C93 /* ImageLiteral.swift in Sources */,
 				CBD1B5F12982B0A300B0AD51 /* SettingViewController.swift in Sources */,
 				CBDECABE2A6B07DE00259350 /* BookmarkButton.swift in Sources */,
-				CB5BFB132B3EEA5800B35062 /* TokenRepositoryImpl.swift in Sources */,
+				CB5BFB132B3EEA5800B35062 /* SplashRepositoryImpl.swift in Sources */,
 				CB558E9A29746B5D00921943 /* PhotoPlusCollectionViewCell.swift in Sources */,
 				CB617A3E2AE248BB000F7FFC /* UIViewController+Keyboard.swift in Sources */,
 				CB78A8162B5D5511007EC9C1 /* SettingView.swift in Sources */,

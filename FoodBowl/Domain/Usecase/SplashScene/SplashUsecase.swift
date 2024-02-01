@@ -15,11 +15,11 @@ final class SplashUsecaseImpl: SplashUsecase {
     
     // MARK: - property
     
-    private let repository: TokenRepository
+    private let repository: SplashRepository
     
     // MARK: - init
     
-    init(repository: TokenRepository) {
+    init(repository: SplashRepository) {
         self.repository = repository
     }
     

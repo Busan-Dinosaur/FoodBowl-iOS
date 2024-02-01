@@ -19,7 +19,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         LocationManager.shared.checkLocationService()
         
-        let repository = TokenRepositoryImpl()
+        let repository = SplashRepositoryImpl()
         let usecase = SplashUsecaseImpl(repository: repository)
         let viewModel = SplashViewModel(usecase: usecase)
         let viewController = SplashViewController(viewModel: viewModel)
