@@ -15,10 +15,6 @@ struct UserDefaultHandler {
     static func setTokenExpiryDate(tokenExpiryDate: Date) {
         UserData.setValue(tokenExpiryDate, forKey: .tokenExpiryDate)
     }
-
-    static func setIsLogin(isLogin: Bool) {
-        UserData.setValue(isLogin, forKey: .isLogin)
-    }
     
     static func setId(id: Int) {
         UserData.setValue(id, forKey: .id)

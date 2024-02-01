@@ -69,7 +69,6 @@ final class SignViewModel: NSObject, BaseViewModelType {
                 let token = try await self.usecase.dispatchAppleLogin(login: login)
                 KeychainManager.set(token.accessToken, for: .accessToken)
                 KeychainManager.set(token.refreshToken, for: .refreshToken)
-                UserDefaultHandler.setIsLogin(isLogin: true)
                 
                 let expiryDate = Date().addingTimeInterval(1800)
                 UserDefaultHandler.setTokenExpiryDate(tokenExpiryDate: expiryDate)
