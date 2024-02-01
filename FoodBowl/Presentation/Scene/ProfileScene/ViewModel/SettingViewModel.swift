@@ -29,6 +29,17 @@ final class SettingViewModel: NSObject, BaseViewModelType {
     }
     
     func transform(from input: Input) -> Output {
+        input.logOut
+            .sink(receiveValue: { [weak self] in
+                self?.logOut()
+            })
+            .store(in: &self.cancellable)
+        
+        input.signOut
+            .sink(receiveValue: { [weak self] in
+                self?.signOut()
+            })
+            .store(in: &self.cancellable)
         
         return Output(
             isLogOut: self.isLogOutSubject.eraseToAnyPublisher(),

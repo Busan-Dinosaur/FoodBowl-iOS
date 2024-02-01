@@ -17,12 +17,12 @@ final class SplashView: UIView, BaseViewType {
     
     private let titleLabel = UILabel().then {
         $0.font = .font(.regular, ofSize: 50)
-        $0.textColor = .mainTextColor
+        $0.textColor = .white
         $0.text = "FoodBowl"
     }
     private let subTitleLabel = UILabel().then {
         $0.font = .font(.regular, ofSize: 30)
-        $0.textColor = .mainTextColor
+        $0.textColor = .white
         $0.text = "Just Do Eat"
     }
     
@@ -58,6 +58,6 @@ final class SplashView: UIView, BaseViewType {
     }
     
     func configureUI() {
-        self.backgroundColor = .mainBackgroundColor
+        self.backgroundColor = .mainPink
     }
 }
