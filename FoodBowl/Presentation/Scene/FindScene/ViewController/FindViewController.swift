@@ -96,7 +96,7 @@ final class FindViewController: UIViewController, Keyboardable, Helperable {
             .sink(receiveValue: { [weak self] result in
                 switch result {
                 case .success(let reviews):
-                    self?.reloadReviews(reviews)
+                    self?.loadReviews(reviews)
                     self?.findView.refreshControl().endRefreshing()
                 case .failure(let error):
                     self?.makeErrorAlert(
@@ -226,11 +226,17 @@ extension FindViewController {
         self.dataSource.apply(self.snapshot, animatingDifferences: true)
     }
     
-    private func reloadReviews(_ items: [Review]) {
+    private func loadReviews(_ items: [Review]) {
         let previousReviewsData = self.snapshot.itemIdentifiers(inSection: .main)
         self.snapshot.deleteItems(previousReviewsData)
         self.snapshot.appendItems(items, toSection: .main)
-        self.dataSource.applySnapshotUsingReloadData(self.snapshot)
+        self.dataSource.applySnapshotUsingReloadData(self.snapshot) {
+            if self.snapshot.numberOfItems == 0 {
+                self.findView.collectionView().backgroundView = EmptyView(message: "사진이 첨부된 후기가 없습니다.")
+            } else {
+                self.findView.collectionView().backgroundView = nil
+            }
+        }
     }
     
     private func loadMoreReviews(_ items: [Review]) {

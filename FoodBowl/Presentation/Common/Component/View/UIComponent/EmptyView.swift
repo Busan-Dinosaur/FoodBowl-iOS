@@ -13,7 +13,7 @@ import Then
 final class EmptyView: UIView, BaseViewType {
 
     private let emptyLabel = UILabel().then {
-        $0.font = UIFont.preferredFont(forTextStyle: .body, weight: .regular)
+        $0.font = UIFont.preferredFont(forTextStyle: .subheadline, weight: .regular)
         $0.textColor = .subTextColor
     }
 
@@ -34,7 +34,8 @@ final class EmptyView: UIView, BaseViewType {
         self.addSubviews(emptyLabel)
         
         self.emptyLabel.snp.makeConstraints {
-            $0.center.equalToSuperview()
+            $0.centerX.equalToSuperview()
+            $0.centerY.equalToSuperview().offset(-50)
         }
     }
 

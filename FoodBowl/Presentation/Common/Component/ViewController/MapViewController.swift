@@ -305,7 +305,13 @@ extension MapViewController {
         let previousReviewsData = self.snapshot.itemIdentifiers(inSection: .main)
         self.snapshot.deleteItems(previousReviewsData)
         self.snapshot.appendItems(items, toSection: .main)
-        self.dataSource.applySnapshotUsingReloadData(self.snapshot)
+        self.dataSource.applySnapshotUsingReloadData(self.snapshot) {
+            if self.snapshot.numberOfItems == 0 {
+                self.feedListView.collectionView().backgroundView = EmptyView(message: "검색된 후기가 없습니다.")
+            } else {
+                self.feedListView.collectionView().backgroundView = nil
+            }
+        }
     }
     
     func loadMoreReviews(_ items: [Review]) {
