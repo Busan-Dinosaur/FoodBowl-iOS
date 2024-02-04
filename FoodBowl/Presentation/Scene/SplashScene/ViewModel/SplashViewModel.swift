@@ -49,21 +49,28 @@ final class SplashViewModel: NSObject, BaseViewModelType {
     private func patchRefreshToken() {
         Task {
             do {
-                let accessToken: String = KeychainManager.get(.accessToken)
-                let refreshToken: String = KeychainManager.get(.refreshToken)
-                
-                let token = try await self.usecase.patchRefreshToken(token: Token(
-                    accessToken: accessToken,
-                    refreshToken: refreshToken
-                ))
-                
-                KeychainManager.set(token.accessToken, for: .accessToken)
-                KeychainManager.set(token.refreshToken, for: .refreshToken)
-                
-                let expiryDate = Date().addingTimeInterval(1800)
-                UserDefaultHandler.setTokenExpiryDate(tokenExpiryDate: expiryDate)
-                
-                self.isLoginSubject.send(true)
+                if UserDefaultStorage.isLogin {
+                    let accessToken: String = KeychainManager.get(.accessToken)
+                    let refreshToken: String = KeychainManager.get(.refreshToken)
+                    
+                    let token = try await self.usecase.patchRefreshToken(token: Token(
+                        accessToken: accessToken,
+                        refreshToken: refreshToken
+                    ))
+                    
+                    KeychainManager.set(token.accessToken, for: .accessToken)
+                    KeychainManager.set(token.refreshToken, for: .refreshToken)
+                    
+                    let expiryDate = Date().addingTimeInterval(1800)
+                    UserDefaultHandler.setTokenExpiryDate(tokenExpiryDate: expiryDate)
+                    
+                    self.isLoginSubject.send(true)
+                } else {
+                    KeychainManager.clear()
+                    UserDefaultHandler.clearAllData()
+                    
+                    self.isLoginSubject.send(false)
+                }
             } catch {
                 KeychainManager.clear()
                 UserDefaultHandler.clearAllData()

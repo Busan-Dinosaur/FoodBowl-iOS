@@ -72,16 +72,8 @@ final class SplashViewController: UIViewController {
             .sink(receiveValue: { [weak self] isLogin in
                 switch isLogin {
                 case true:
-                    if UserDefaultStorage.isLogin {
-                        self?.presentTapBarController()
-                    } else {
-                        KeychainManager.clear()
-                        UserDefaultHandler.clearAllData()
-                        self?.presentSignViewController()
-                    }
+                    self?.presentTapBarController()
                 case false:
-                    KeychainManager.clear()
-                    UserDefaultHandler.clearAllData()
                     self?.presentSignViewController()
                 }
             })
