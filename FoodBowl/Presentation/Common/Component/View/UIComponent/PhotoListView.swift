@@ -82,22 +82,8 @@ extension PhotoListView: UICollectionViewDataSource, UICollectionViewDelegate {
         ) as? PhotoCollectionViewCell else {
             return UICollectionViewCell()
         }
-
-        if indexPath.item < photos.count {
-            cell.configureCell(photos[indexPath.item])
-            cell.cellTapAction = { _ in
-                let imageViewController = ImageViewController()
-                imageViewController.imageScrollView.imageView.image = cell.imageView.image
-                imageViewController.modalPresentationStyle = .fullScreen
-                imageViewController.modalTransitionStyle = .crossDissolve
-
-                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now()) {
-                    guard let rootVC = (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.windows.first?.rootViewController
-                    else { return }
-                    rootVC.present(imageViewController, animated: true)
-                }
-            }
-        }
+        
+        cell.imageView.kf.setImage(with: URL(string: photos[indexPath.item]))
 
         return cell
     }

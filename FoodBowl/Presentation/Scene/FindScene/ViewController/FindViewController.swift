@@ -8,6 +8,7 @@
 import Combine
 import UIKit
 
+import Kingfisher
 import SnapKit
 import Then
 
@@ -197,7 +198,8 @@ extension FindViewController {
 
     private func feedCollectionViewDataSource() -> UICollectionViewDiffableDataSource<Section, Review> {
         let reviewCellRegistration = UICollectionView.CellRegistration<PhotoCollectionViewCell, Review> { cell, indexPath, item in
-            cell.configureCell(item.thumbnail)
+            
+            cell.imageView.kf.setImage(with: URL(string: item.thumbnail))
             cell.cellTapAction = { [weak self] _ in
                 self?.presentReviewDetailViewController(id: item.comment.id)
             }

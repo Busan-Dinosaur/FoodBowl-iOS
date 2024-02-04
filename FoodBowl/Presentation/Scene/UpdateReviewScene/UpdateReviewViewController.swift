@@ -49,7 +49,6 @@ final class UpdateReviewViewController: UIViewController, Keyboardable, Helperab
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.configureDelegation()
         self.bindViewModel()
         self.bindUI()
         self.setupKeyboardGesture()
@@ -85,10 +84,6 @@ final class UpdateReviewViewController: UIViewController, Keyboardable, Helperab
                         self.presentShowWebViewController(url: review.store.url)
                     }
                     self.updateReviewView.configureReview(review)
-                    self.downloadImages(from: review.comment.imagePaths) { images in
-                        self.reviewImages = images
-                        self.updateReviewView.collectionView().reloadData()
-                    }
                 case .failure(let error):
                     self?.makeErrorAlert(
                         title: "에러",
@@ -153,57 +148,8 @@ final class UpdateReviewViewController: UIViewController, Keyboardable, Helperab
     
     // MARK: - func
     
-    private func configureDelegation() {
-        self.updateReviewView.configureDelegation(self)
-    }
-    
     private func configureNavigation() {
         guard let navigationController = self.navigationController else { return }
         self.updateReviewView.configureNavigationBarItem(navigationController)
-    }
-}
-
-extension UpdateReviewViewController: UICollectionViewDataSource, UICollectionViewDelegate {
-    func collectionView(_: UICollectionView, numberOfItemsInSection _: Int) -> Int {
-        return self.reviewImages.count
-    }
-
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(
-            withReuseIdentifier: PhotoCollectionViewCell.className,
-            for: indexPath
-        ) as? PhotoCollectionViewCell else {
-            return UICollectionViewCell()
-        }
-        
-        cell.imageView.image = self.reviewImages[indexPath.item]
-        
-        return cell
-    }
-}
-
-extension UpdateReviewViewController {
-    func downloadImages(from urls: [String], completion: @escaping ([UIImage]) -> Void) {
-        var images: [UIImage] = []
-        let group = DispatchGroup()
-        
-        for urlString in urls {
-            guard let url = URL(string: urlString) else { continue }
-            
-            group.enter()
-            KingfisherManager.shared.retrieveImage(with: url) { result in
-                switch result {
-                case .success(let imageResult):
-                    images.append(imageResult.image)
-                case .failure(let error):
-                    print("Error downloading image: \(error)")
-                }
-                group.leave()
-            }
-        }
-        
-        group.notify(queue: .main) {
-            completion(images)
-        }
     }
 }

@@ -15,7 +15,7 @@ final class PhotoCollectionViewCell: UICollectionViewCell, BaseViewType {
     
     // MARK: - ui component
     
-    lazy var imageView = UIImageView().then {
+    let imageView = UIImageView().then {
         $0.backgroundColor = .grey002
         $0.contentMode = .scaleAspectFill
     }
@@ -29,7 +29,6 @@ final class PhotoCollectionViewCell: UICollectionViewCell, BaseViewType {
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.baseInit()
-        self.setupAction()
     }
     
     @available(*, unavailable)
@@ -50,27 +49,9 @@ final class PhotoCollectionViewCell: UICollectionViewCell, BaseViewType {
         self.clipsToBounds = true
         self.makeBorderLayer(color: .grey002)
     }
-    
-    private func setupAction() {
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(cellTapped))
-        self.contentView.addGestureRecognizer(tapGesture)
-    }
-    
-    @objc
-    private func cellTapped() {
-        self.cellTapAction?(self)
-    }
 
     override func prepareForReuse() {
         super.prepareForReuse()
         self.imageView.image = nil
-    }
-}
-
-// MARK: - Public - func
-extension PhotoCollectionViewCell {
-    func configureCell(_ url: String) {
-        self.imageView.kf.setImage(with: URL(string: url))
-        self.imageView.isUserInteractionEnabled = true
     }
 }
