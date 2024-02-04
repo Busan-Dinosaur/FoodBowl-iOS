@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 import Then
 
-final class GrabbarView: UIView {
+final class GrabbarView: UIView, BaseViewType {
     
     private let grabbar = UIView().then {
         $0.backgroundColor = .grey002
@@ -24,10 +24,10 @@ final class GrabbarView: UIView {
     }
 
     // MARK: - init
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setupLayout()
-        configureUI()
+        self.baseInit()
     }
 
     @available(*, unavailable)
@@ -36,36 +36,39 @@ final class GrabbarView: UIView {
     }
 
     func setupLayout() {
-        addSubviews(grabbar, modalResultLabel)
+        self.addSubviews(
+            self.grabbar,
+            self.modalResultLabel
+        )
 
-        grabbar.snp.makeConstraints {
+        self.grabbar.snp.makeConstraints {
             $0.top.equalToSuperview().inset(10)
             $0.centerX.equalToSuperview()
             $0.width.equalTo(50)
             $0.height.equalTo(8)
         }
 
-        modalResultLabel.snp.makeConstraints {
-            $0.top.equalTo(grabbar.snp.bottom).offset(30)
+        self.modalResultLabel.snp.makeConstraints {
+            $0.top.equalTo(self.grabbar.snp.bottom).offset(30)
             $0.leading.equalToSuperview().inset(SizeLiteral.horizantalPadding)
         }
     }
 
     func configureUI() {
-        backgroundColor = .mainBackgroundColor
-        layer.cornerRadius = 15
-        layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        self.backgroundColor = .mainBackgroundColor
+        self.layer.cornerRadius = 15
+        self.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
     }
 
     func showContent() {
-        modalResultLabel.snp.remakeConstraints {
+        self.modalResultLabel.snp.remakeConstraints {
             $0.top.equalTo(grabbar.snp.bottom).offset(30)
             $0.leading.equalToSuperview().inset(SizeLiteral.horizantalPadding)
         }
     }
 
     func showResult() {
-        modalResultLabel.snp.remakeConstraints {
+        self.modalResultLabel.snp.remakeConstraints {
             $0.top.equalTo(grabbar.snp.bottom).offset(30)
             $0.centerX.equalToSuperview()
         }

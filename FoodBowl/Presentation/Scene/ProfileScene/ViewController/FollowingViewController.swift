@@ -181,7 +181,13 @@ extension FollowingViewController {
 
     private func loadFollowings(_ items: [Member]) {
         self.snapshot.appendItems(items, toSection: .main)
-        self.dataSource.applySnapshotUsingReloadData(self.snapshot)
+        self.dataSource.applySnapshotUsingReloadData(self.snapshot) {
+            if self.snapshot.numberOfItems == 0 {
+                self.followView.collectionView().backgroundView = EmptyView(message: "팔로잉 중인 유저가 없습니다.")
+            } else {
+                self.followView.collectionView().backgroundView = nil
+            }
+        }
     }
     
     private func loadMoreFollowings(_ items: [Member]) {

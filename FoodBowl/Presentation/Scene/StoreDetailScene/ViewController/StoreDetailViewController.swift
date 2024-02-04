@@ -23,6 +23,8 @@ final class StoreDetailViewController: UIViewController, Navigationable, Optiona
     
     // MARK: - property
     
+    private var owner: String = "친구들"
+    
     private let viewModel: any BaseViewModelType
     private var cancellable: Set<AnyCancellable> = Set()
     
@@ -152,6 +154,7 @@ final class StoreDetailViewController: UIViewController, Navigationable, Optiona
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] isFriend in
                 self?.title = isFriend ? "친구들의 후기" : "모두의 후기"
+                self?.owner = isFriend ? "친구들" : "모두"
             })
             .store(in: &self.cancellable)
     }
@@ -227,7 +230,13 @@ extension StoreDetailViewController {
         let previousReviewsData = self.snapshot.itemIdentifiers(inSection: .main)
         self.snapshot.deleteItems(previousReviewsData)
         self.snapshot.appendItems(items, toSection: .main)
-        self.dataSource.applySnapshotUsingReloadData(self.snapshot)
+        self.dataSource.applySnapshotUsingReloadData(self.snapshot) {
+            if self.snapshot.numberOfItems == 0 {
+                self.storeDetailView.collectionView().backgroundView = EmptyView(message: "\(self.owner)의 후기가 없습니다.")
+            } else {
+                self.storeDetailView.collectionView().backgroundView = nil
+            }
+        }
     }
     
     private func loadMoreReviews(_ items: [Review]) {
