@@ -7,7 +7,6 @@
 
 import UIKit
 
-import Kingfisher
 import SnapKit
 import Then
 
@@ -29,7 +28,6 @@ final class PhotoCollectionViewCell: UICollectionViewCell, BaseViewType {
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.baseInit()
-        self.setupAction()
     }
     
     @available(*, unavailable)
@@ -51,7 +49,7 @@ final class PhotoCollectionViewCell: UICollectionViewCell, BaseViewType {
         self.makeBorderLayer(color: .grey002)
     }
     
-    private func setupAction() {
+    func setupAction() {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(cellTapped))
         self.contentView.addGestureRecognizer(tapGesture)
     }

@@ -203,6 +203,7 @@ extension FindViewController {
             cell.cellTapAction = { [weak self] _ in
                 self?.presentReviewDetailViewController(id: item.comment.id)
             }
+            cell.setupAction()
         }
 
         return UICollectionViewDiffableDataSource(
