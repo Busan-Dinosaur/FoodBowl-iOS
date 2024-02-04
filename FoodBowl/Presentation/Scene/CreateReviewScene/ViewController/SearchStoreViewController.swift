@@ -158,6 +158,12 @@ extension SearchStoreViewController: UISearchBarDelegate {
 
 extension SearchStoreViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
+        if self.stores.count == 0 {
+            self.searchStoreView.tableView().backgroundView = EmptyView(message: "검색된 가게가 없습니다.")
+        } else {
+            self.searchStoreView.tableView().backgroundView = nil
+        }
+        
         return self.stores.count
     }
 

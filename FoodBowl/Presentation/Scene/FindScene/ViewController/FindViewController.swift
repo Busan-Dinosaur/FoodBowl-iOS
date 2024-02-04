@@ -270,8 +270,20 @@ extension FindViewController: UISearchResultsUpdating, UISearchBarDelegate {
 extension FindViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
         if self.scope == 0 {
+            if self.stores.count == 0 {
+                self.findView.findResultViewController.findResultView.listTableView.backgroundView = EmptyView(message: "검색된 맛집이 없습니다.")
+            } else {
+                self.findView.findResultViewController.findResultView.listTableView.backgroundView = nil
+            }
+            
             return self.stores.count
         } else {
+            if self.members.count == 0 {
+                self.findView.findResultViewController.findResultView.listTableView.backgroundView = EmptyView(message: "검색된 유저가 없습니다.")
+            } else {
+                self.findView.findResultViewController.findResultView.listTableView.backgroundView = nil
+            }
+            
             return self.members.count
         }
     }
