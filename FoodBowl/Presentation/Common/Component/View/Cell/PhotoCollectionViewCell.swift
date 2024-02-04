@@ -29,6 +29,7 @@ final class PhotoCollectionViewCell: UICollectionViewCell, BaseViewType {
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.baseInit()
+        self.setupAction()
     }
     
     @available(*, unavailable)
@@ -48,6 +49,16 @@ final class PhotoCollectionViewCell: UICollectionViewCell, BaseViewType {
         self.backgroundColor = .grey002
         self.clipsToBounds = true
         self.makeBorderLayer(color: .grey002)
+    }
+    
+    private func setupAction() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(cellTapped))
+        self.contentView.addGestureRecognizer(tapGesture)
+    }
+    
+    @objc
+    private func cellTapped() {
+        self.cellTapAction?(self)
     }
 
     override func prepareForReuse() {

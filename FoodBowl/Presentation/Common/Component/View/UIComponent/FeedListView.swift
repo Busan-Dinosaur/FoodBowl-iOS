@@ -32,6 +32,7 @@ final class FeedListView: UIView, BaseViewType {
         $0.showsVerticalScrollIndicator = false
         $0.register(FeedCollectionViewCell.self, forCellWithReuseIdentifier: FeedCollectionViewCell.className)
         $0.backgroundColor = .mainBackgroundColor
+        $0.backgroundView = EmptyView(message: "해당 지역에 후기가 없어요.")
     }
     private var refresh = UIRefreshControl()
     
