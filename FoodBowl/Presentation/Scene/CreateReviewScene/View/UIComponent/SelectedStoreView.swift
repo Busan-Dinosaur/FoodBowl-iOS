@@ -26,7 +26,7 @@ final class SelectedStoreView: UIView, BaseViewType {
         $0.font = UIFont.preferredFont(forTextStyle: .footnote, weight: .light)
         $0.textColor = .subTextColor
     }
-    private let mapButton = MapButton()
+    let mapButton = MapButton()
     
     // MARK: - property
     

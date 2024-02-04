@@ -194,9 +194,7 @@ extension UpdateReviewView: UITextViewDelegate {
 
 extension UpdateReviewView {
     func configureReview(_ review: Review) {
-        self.selectedStoreView.mapButtonTapAction = { _ in
-            self.showStorePublisher.send(review.store.url)
-        }
+        self.selectedStoreView.mapButton.isHidden = true
         self.selectedStoreView.configureStore(review.store)
         self.commentTextView.text = review.comment.content
         self.commentTextView.textColor = .mainTextColor

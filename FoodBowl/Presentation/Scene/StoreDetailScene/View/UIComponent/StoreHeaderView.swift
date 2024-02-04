@@ -28,12 +28,17 @@ final class StoreHeaderView: UIView, BaseViewType {
         $0.textColor = .subTextColor
     }
     let bookmarkButton = BookmarkButton()
+    
+    // MARK: - property
+    
+    var mapButtonTapAction: ((StoreHeaderView) -> Void)?
 
     // MARK: - init
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.baseInit()
+        self.setupAction()
     }
 
     @available(*, unavailable)
@@ -85,6 +90,10 @@ final class StoreHeaderView: UIView, BaseViewType {
     func configureUI() {
         self.backgroundColor = .subBackgroundColor
     }
+    
+    func setupAction() {
+        self.mapButton.addAction(UIAction { _ in self.mapButtonTapAction?(self) }, for: .touchUpInside)
+    }
 }
 
 // MARK: - Public - func
@@ -94,17 +103,5 @@ extension StoreHeaderView {
         self.storeCategoryLabel.text = store.category
         self.storeAddressLabel.text = "\(store.address), \(store.distance)"
         self.bookmarkButton.isSelected = store.isBookmarked
-        
-        let action = UIAction { _ in
-            let showWebViewController = ShowWebViewController(url: store.url)
-            let navigationController = UINavigationController(rootViewController: showWebViewController)
-            
-            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now()) {
-                guard let rootVC = (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.windows.first?.rootViewController
-                else { return }
-                rootVC.present(navigationController, animated: true)
-            }
-        }
-        self.mapButton.addAction(action, for: .touchUpInside)
     }
 }

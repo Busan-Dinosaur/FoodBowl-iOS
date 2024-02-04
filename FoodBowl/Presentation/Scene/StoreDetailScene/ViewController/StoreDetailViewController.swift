@@ -88,6 +88,9 @@ final class StoreDetailViewController: UIViewController, Navigationable, Optiona
                 switch result {
                 case .success(let store):
                     self?.storeDetailView.storeHeaderView.configureHeader(store)
+                    self?.storeDetailView.storeHeaderView.mapButtonTapAction = { _ in
+                        self?.presentShowWebViewController(url: store.url)
+                    }
                 case .failure(let error):
                     self?.makeErrorAlert(
                         title: "에러",
