@@ -144,7 +144,7 @@ extension SearchUnivViewController: UISearchBarDelegate {
 extension SearchUnivViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
         if self.filteredUnivs.count == 0 {
-            self.searchUnivView.listTableView.backgroundView = EmptyView(message: "등록된 학교가 없습니다.")
+            self.searchUnivView.listTableView.backgroundView = EmptyView(message: "등록된 학교가 없어요.")
         } else {
             self.searchUnivView.listTableView.backgroundView = nil
         }

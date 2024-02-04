@@ -199,7 +199,7 @@ extension FollowerViewController {
         self.snapshot.appendItems(items, toSection: .main)
         self.dataSource.applySnapshotUsingReloadData(self.snapshot) {
             if self.snapshot.numberOfItems == 0 {
-                self.followView.collectionView().backgroundView = EmptyView(message: "팔로워 중인 유저가 없습니다.")
+                self.followView.collectionView().backgroundView = EmptyView(message: "팔로워 중인 유저가 없어요.")
             } else {
                 self.followView.collectionView().backgroundView = nil
             }

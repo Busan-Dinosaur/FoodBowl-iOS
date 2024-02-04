@@ -307,7 +307,7 @@ extension MapViewController {
         self.snapshot.appendItems(items, toSection: .main)
         self.dataSource.applySnapshotUsingReloadData(self.snapshot) {
             if self.snapshot.numberOfItems == 0 {
-                self.feedListView.collectionView().backgroundView = EmptyView(message: "검색된 후기가 없습니다.")
+                self.feedListView.collectionView().backgroundView = EmptyView(message: "해당 지역에 후기가 없어요.")
             } else {
                 self.feedListView.collectionView().backgroundView = nil
             }
