@@ -27,12 +27,12 @@ final class SettingViewController: UIViewController, Navigationable, Helperable 
     private let signOutPublisher: PassthroughSubject<Void, Never> = PassthroughSubject()
     
     private var options: [Option] {[
-        Option(
-            title: "공지사항",
-            handler: { [weak self] in
-                self?.presentShowWebViewController(url: "https://coby5502.notion.site/a25fe63009d24b958fe77ab87e53994e")
-            }
-        ),
+//        Option(
+//            title: "공지사항",
+//            handler: { [weak self] in
+//                self?.presentShowWebViewController(url: "https://coby5502.notion.site/a25fe63009d24b958fe77ab87e53994e")
+//            }
+//        ),
         Option(
             title: "개인정보처리방침",
             handler: { [weak self] in
