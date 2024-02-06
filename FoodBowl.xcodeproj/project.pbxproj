@@ -80,6 +80,7 @@
 		CB617A5E2AE2A386000F7FFC /* SizeLiteral.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB617A5D2AE2A386000F7FFC /* SizeLiteral.swift */; };
 		CB6301E42B6165070037B7FA /* Helperable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6301E32B6165070037B7FA /* Helperable.swift */; };
 		CB63B7602A698909000AD9C2 /* CategoryListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB63B75F2A698909000AD9C2 /* CategoryListView.swift */; };
+		CB6D2F332B7282840049CF79 /* AppStoreReviewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6D2F322B7282840049CF79 /* AppStoreReviewManager.swift */; };
 		CB73E00E2AB5F6BF005B6BF1 /* SearchStoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB73E00D2AB5F6BF005B6BF1 /* SearchStoreViewController.swift */; };
 		CB73E56E2B3417980026E4D7 /* FollowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB73E56D2B3417980026E4D7 /* FollowView.swift */; };
 		CB73E5732B341B3B0026E4D7 /* FollowerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB73E5722B341B3B0026E4D7 /* FollowerViewModel.swift */; };
@@ -303,6 +304,7 @@
 		CB617A5D2AE2A386000F7FFC /* SizeLiteral.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SizeLiteral.swift; sourceTree = "<group>"; };
 		CB6301E32B6165070037B7FA /* Helperable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helperable.swift; sourceTree = "<group>"; };
 		CB63B75F2A698909000AD9C2 /* CategoryListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryListView.swift; sourceTree = "<group>"; };
+		CB6D2F322B7282840049CF79 /* AppStoreReviewManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStoreReviewManager.swift; sourceTree = "<group>"; };
 		CB73E00D2AB5F6BF005B6BF1 /* SearchStoreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchStoreViewController.swift; sourceTree = "<group>"; };
 		CB73E56D2B3417980026E4D7 /* FollowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowView.swift; sourceTree = "<group>"; };
 		CB73E5722B341B3B0026E4D7 /* FollowerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowerViewModel.swift; sourceTree = "<group>"; };
@@ -721,6 +723,7 @@
 		CB617A262AE23A5D000F7FFC /* Service */ = {
 			isa = PBXGroup;
 			children = (
+				CB6D2F312B7282780049CF79 /* AppStoreReviewManager */,
 				CB617A282AE23A93000F7FFC /* KeychainManager */,
 				CB617A272AE23A80000F7FFC /* LocationManager */,
 				CB7F3323298A51430000A6B4 /* UserDefaultService */,
@@ -840,6 +843,14 @@
 				CB1A7C5B29560C2300C6431D /* UserInfoButton.swift */,
 			);
 			path = CustomButton;
+			sourceTree = "<group>";
+		};
+		CB6D2F312B7282780049CF79 /* AppStoreReviewManager */ = {
+			isa = PBXGroup;
+			children = (
+				CB6D2F322B7282840049CF79 /* AppStoreReviewManager.swift */,
+			);
+			path = AppStoreReviewManager;
 			sourceTree = "<group>";
 		};
 		CB73E00F2AB5FEA9005B6BF1 /* UpdateReviewScene */ = {
@@ -1944,6 +1955,7 @@
 				CBC158662AD80BB600FD263B /* MemberDTO.swift in Sources */,
 				CB8306682B59748700632789 /* FindView.swift in Sources */,
 				CBDE390729719CB400DDE49A /* SelectedStoreView.swift in Sources */,
+				CB6D2F332B7282840049CF79 /* AppStoreReviewManager.swift in Sources */,
 				CBADC29129559BC900E56C93 /* UICollectionView+Extension.swift in Sources */,
 				CBD641A32AB824A2009A05D8 /* SearchUnivViewController.swift in Sources */,
 				CB617A5E2AE2A386000F7FFC /* SizeLiteral.swift in Sources */,
@@ -2122,7 +2134,7 @@
 				BASE_URL = "https://justdoeat.shop";
 				CODE_SIGN_ENTITLEMENTS = FoodBowl/FoodBowl.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 0;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 3Y8YH8GWMM;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = FoodBowl/App/Info.plist;
@@ -2165,7 +2177,7 @@
 				BASE_URL = "https://justdoeat.shop";
 				CODE_SIGN_ENTITLEMENTS = FoodBowl/FoodBowl.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 0;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 3Y8YH8GWMM;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = FoodBowl/App/Info.plist;
