@@ -197,6 +197,7 @@ final class ProfileViewModel: BaseViewModelType {
                     location: location,
                     lastReviewId: lastReviewId,
                     pageSize: self.pageSize,
+                    category: self.category?.rawValue,
                     memberId: memberId
                 ))
                 

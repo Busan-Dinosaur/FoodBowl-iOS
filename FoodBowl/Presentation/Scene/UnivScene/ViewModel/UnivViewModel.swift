@@ -156,6 +156,7 @@ final class UnivViewModel: BaseViewModelType {
                     location: location,
                     lastReviewId: lastReviewId,
                     pageSize: self.pageSize,
+                    category: self.category?.rawValue,
                     schoolId: schoolId
                 ))
                 

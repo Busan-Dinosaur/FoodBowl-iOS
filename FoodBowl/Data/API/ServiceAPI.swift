@@ -234,6 +234,10 @@ extension ServiceAPI: TargetType {
                 "deviceY": request.location.deviceY,
                 "pageSize": request.pageSize
             ]
+            
+            if let category = request.category {
+                params["category"] = category
+            }
 
             if let lastReviewId = request.lastReviewId {
                 params["lastReviewId"] = lastReviewId
@@ -254,6 +258,10 @@ extension ServiceAPI: TargetType {
                 "deviceY": request.location.deviceY,
                 "pageSize": request.pageSize
             ]
+            
+            if let category = request.category {
+                params["category"] = category
+            }
 
             if let lastReviewId = request.lastReviewId {
                 params["lastReviewId"] = lastReviewId
@@ -273,6 +281,10 @@ extension ServiceAPI: TargetType {
                 "deviceY": request.location.deviceY,
                 "pageSize": request.pageSize
             ]
+            
+            if let category = request.category {
+                params["category"] = category
+            }
 
             if let lastReviewId = request.lastReviewId {
                 params["lastReviewId"] = lastReviewId
@@ -292,6 +304,10 @@ extension ServiceAPI: TargetType {
                 "deviceY": request.location.deviceY,
                 "pageSize": request.pageSize
             ]
+            
+            if let category = request.category {
+                params["category"] = category
+            }
 
             if let lastReviewId = request.lastReviewId {
                 params["lastReviewId"] = lastReviewId

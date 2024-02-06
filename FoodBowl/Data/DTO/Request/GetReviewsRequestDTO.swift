@@ -14,6 +14,7 @@ struct GetReviewsRequestDTO: Encodable {
     let location: CustomLocationRequestDTO
     let lastReviewId: Int?
     let pageSize: Int
+    let category: String?
 }
 
 struct GetReviewsByStoreRequestDTO: Encodable {
@@ -28,6 +29,7 @@ struct GetReviewsBySchoolRequestDTO: Encodable {
     let location: CustomLocationRequestDTO
     let lastReviewId: Int?
     let pageSize: Int
+    let category: String?
     
     let schoolId: Int
 }
@@ -36,6 +38,7 @@ struct GetReviewsByMemberRequestDTO: Encodable {
     let location: CustomLocationRequestDTO
     let lastReviewId: Int?
     let pageSize: Int
+    let category: String?
     
     let memberId: Int
 }

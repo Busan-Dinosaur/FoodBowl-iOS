@@ -132,7 +132,8 @@ final class FriendViewModel: BaseViewModelType {
                 let reviews = try await self.usecase.getReviewsByFollowing(request: GetReviewsRequestDTO(
                     location: location,
                     lastReviewId: lastReviewId,
-                    pageSize: self.pageSize
+                    pageSize: self.pageSize,
+                    category: self.category?.rawValue
                 ))
                 
                 self.lastReviewId = reviews.page.lastId
@@ -154,7 +155,8 @@ final class FriendViewModel: BaseViewModelType {
                 let reviews = try await self.usecase.getReviewsByFollowing(request: GetReviewsRequestDTO(
                     location: location,
                     lastReviewId: lastReviewId,
-                    pageSize: self.pageSize
+                    pageSize: self.pageSize,
+                    category: self.category?.rawValue
                 ))
                 
                 self.lastReviewId = reviews.page.lastId
