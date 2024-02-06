@@ -8,6 +8,7 @@
 import Foundation
 
 enum DataKeys: String, CaseIterable {
+    case inAppReviewCount
     case isLogin
     case tokenExpiryDate
     case id
@@ -21,6 +22,10 @@ enum DataKeys: String, CaseIterable {
 }
 
 enum UserDefaultStorage {
+    static var inAppReviewCount: Int {
+        return UserData<Int>.getValue(forKey: .inAppReviewCount) ?? 0
+    }
+    
     static var isLogin: Bool {
         return UserData<Bool>.getValue(forKey: .isLogin) ?? false
     }

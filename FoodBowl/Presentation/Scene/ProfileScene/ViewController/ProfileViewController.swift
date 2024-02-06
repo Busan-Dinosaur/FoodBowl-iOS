@@ -98,6 +98,7 @@ final class ProfileViewController: MapViewController {
                 switch result {
                 case .success(let member):
                     self?.setUpProfileHeader(member: member)
+                    AppStoreReviewManager.requestReviewIfAppropriate()
                 case .failure(let error):
                     self?.makeErrorAlert(
                         title: "에러",
