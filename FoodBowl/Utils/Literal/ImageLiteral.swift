@@ -8,6 +8,8 @@
 import UIKit
 
 enum ImageLiteral {
+    static var logo: UIImage { .load(name: "logo") }
+    
     static var friends: UIImage { .load(name: "friends") }
     static var bookmark: UIImage { .load(name: "bookmark") }
     static var search: UIImage { .load(name: "search") }

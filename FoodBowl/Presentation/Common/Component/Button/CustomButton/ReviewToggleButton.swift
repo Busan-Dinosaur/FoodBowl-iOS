@@ -7,30 +7,34 @@
 
 import UIKit
 
-final class ReviewToggleButton: UIButton {
+import SnapKit
+import Then
+
+final class ReviewToggleButton: UIButton, BaseViewType {
+    
     override var isSelected: Bool {
         didSet {
             if isSelected {
                 label.text = "모두"
-                label.textColor = .subTextColor
             } else {
                 label.text = "친구만"
-                label.textColor = .mainPink
             }
         }
     }
 
-    // MARK: - property
+    // MARK: - ui component
+    
     private let label = UILabel().then {
         let label = UILabel()
         $0.font = UIFont.preferredFont(forTextStyle: .subheadline, weight: .medium)
+        $0.textColor = .subTextColor
     }
 
     // MARK: - init
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setupLayout()
-        configureUI()
+        self.baseInit()
     }
 
     @available(*, unavailable)
@@ -38,27 +42,22 @@ final class ReviewToggleButton: UIButton {
         fatalError("init(coder:) has not been implemented")
     }
 
-    // MARK: - life cycle
-    private func setupLayout() {
-        addSubviews(label)
+    func setupLayout() {
+        self.addSubviews(self.label)
 
-        snp.makeConstraints {
+        self.snp.makeConstraints {
             $0.width.equalTo(80)
             $0.height.equalTo(30)
         }
 
-        label.snp.makeConstraints {
+        self.label.snp.makeConstraints {
             $0.centerX.centerY.equalToSuperview()
         }
     }
 
-    // MARK: - life cycle
-    private func configureUI() {
-        isSelected = true
-        label.text = "모두"
-        label.textColor = .subTextColor
-        layer.cornerRadius = 4
-        layer.borderColor = UIColor.grey002.cgColor
-        layer.borderWidth = 1
+    func configureUI() {
+        self.layer.cornerRadius = 4
+        self.layer.borderColor = UIColor.grey002.cgColor
+        self.layer.borderWidth = 1
     }
 }

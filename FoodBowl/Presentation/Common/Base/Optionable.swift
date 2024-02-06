@@ -7,19 +7,18 @@
 
 import UIKit
 
-import Moya
-
 protocol Optionable: UIGestureRecognizerDelegate {
+    func updateReview(reviewId: Int)
     func removeReview(reviewId: Int)
 }
 
 extension Optionable where Self: UIViewController {
-    func presentReviewOptionAlert(isOwn: Bool, reviewId: Int) {
+    func presentReviewOptionAlert(reviewId: Int, isMyReview: Bool) {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
-        if isOwn {
+        if isMyReview {
             let edit = UIAlertAction(title: "수정", style: .default, handler: { _ in
-                self.presentEditViewController(reviewId: reviewId)
+                self.updateReview(reviewId: reviewId)
             })
             alert.addAction(edit)
             
@@ -65,7 +64,10 @@ extension Optionable where Self: UIViewController {
     }
     
     func presentBlameViewController(targetId: Int, blameTarget: String) {
-        let viewController = BlameViewController(targetId: targetId, blameTarget: blameTarget)
+        let repository = BlameRepositoryImpl()
+        let usecase = BlameUsecaseImpl(repository: repository)
+        let viewModel = BlameViewModel(usecase: usecase, targetId: targetId, blameTarget: blameTarget)
+        let viewController = BlameViewController(viewModel: viewModel)
         let navigationController = UINavigationController(rootViewController: viewController)
         navigationController.modalPresentationStyle = .fullScreen
         
@@ -74,16 +76,7 @@ extension Optionable where Self: UIViewController {
         }
     }
     
-    func presentEditViewController(reviewId: Int) {
-        let viewModel = UpdateReviewViewModel(reviewContent: "", images: [])
-        let viewController = UpdateReviewViewController(viewModel: viewModel)
-        let navigationController = UINavigationController(rootViewController: viewController)
-        navigationController.modalPresentationStyle = .fullScreen
-        
-        DispatchQueue.main.async { [weak self] in
-            self?.present(navigationController, animated: true)
-        }
-    }
+    func updateReview(reviewId: Int) { }
     
-    func removeReview(reviewId: Int) {}
+    func removeReview(reviewId: Int) { }
 }

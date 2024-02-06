@@ -8,6 +8,9 @@
 import UIKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
+    
+    typealias Task = _Concurrency.Task
+    
     var window: UIWindow?
 
     func scene(_ scene: UIScene, willConnectTo _: UISceneSession, options _: UIScene.ConnectionOptions) {
@@ -15,10 +18,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(windowScene: windowScene)
 
         LocationManager.shared.checkLocationService()
-
-        window?.rootViewController = UINavigationController(
-            rootViewController: UserDefaultStorage.isLogin ? TabBarController() : OnboardingViewController()
-        )
+        
+        let repository = SplashRepositoryImpl()
+        let usecase = SplashUsecaseImpl(repository: repository)
+        let viewModel = SplashViewModel(usecase: usecase)
+        let viewController = SplashViewController(viewModel: viewModel)
+        
+        window?.rootViewController = UINavigationController(rootViewController: viewController)
         window?.makeKeyAndVisible()
     }
 
@@ -52,10 +58,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 }
 
 extension SceneDelegate {
-    func logOut() {
-        KeychainManager.clear()
-        UserDefaultHandler.clearAllData()
-        UserDefaultsManager.currentUser = nil
-        window?.rootViewController = OnboardingViewController()
+    func moveToSignViewController() {
+        let repository = SignRepositoryImpl()
+        let usecase = SignUsecaseImpl(repository: repository)
+        let viewModel = SignViewModel(usecase: usecase)
+        let viewController = SignViewController(viewModel: viewModel)
+        window?.rootViewController = UINavigationController(rootViewController: viewController)
     }
 }

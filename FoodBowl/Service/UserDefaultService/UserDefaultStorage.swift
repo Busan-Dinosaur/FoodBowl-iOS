@@ -9,21 +9,56 @@ import Foundation
 
 enum DataKeys: String, CaseIterable {
     case isLogin
-    case accessToken
-    case refreshToken
+    case tokenExpiryDate
+    case id
+    case nickname
+    case introduction
+    case profileImageUrl
+    case schoolId
+    case schoolName
+    case schoolX
+    case schoolY
 }
 
 enum UserDefaultStorage {
     static var isLogin: Bool {
         return UserData<Bool>.getValue(forKey: .isLogin) ?? false
     }
-
-    static var accessToken: String? {
-        return UserData<String>.getValue(forKey: .accessToken)
+    
+    static var tokenExpiryDate: Date {
+        return UserData<Date>.getValue(forKey: .tokenExpiryDate) ?? .now
     }
-
-    static var refreshToken: String? {
-        return UserData<String>.getValue(forKey: .refreshToken)
+    
+    static var id: Int {
+        return UserData<Int>.getValue(forKey: .id) ?? 0
+    }
+    
+    static var nickname: String {
+        return UserData<String>.getValue(forKey: .nickname) ?? ""
+    }
+    
+    static var introduction: String? {
+        return UserData<String>.getValue(forKey: .introduction)
+    }
+    
+    static var profileImageUrl: String? {
+        return UserData<String>.getValue(forKey: .profileImageUrl)
+    }
+    
+    static var schoolId: Int? {
+        return UserData<Int>.getValue(forKey: .schoolId)
+    }
+    
+    static var schoolName: String? {
+        return UserData<String>.getValue(forKey: .schoolName)
+    }
+    
+    static var schoolX: Double? {
+        return UserData<Double>.getValue(forKey: .schoolX)
+    }
+    
+    static var schoolY: Double? {
+        return UserData<Double>.getValue(forKey: .schoolY)
     }
 }
 

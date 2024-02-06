@@ -5,7 +5,6 @@
 //  Created by COBY_PRO on 2023/07/22.
 //
 
-import Combine
 import UIKit
 
 import SnapKit
@@ -15,7 +14,7 @@ final class FeedNSCollectionViewCell: UICollectionViewCell, BaseViewType {
     
     // MARK: - ui component
     
-    let userInfoView = UserInfoView()
+    private let userInfoButton = UserInfoButton()
     private let commentLabel = UILabel().then {
         $0.font = UIFont.preferredFont(forTextStyle: .subheadline, weight: .light)
         $0.textColor = .mainTextColor
@@ -27,6 +26,7 @@ final class FeedNSCollectionViewCell: UICollectionViewCell, BaseViewType {
     
     var userButtonTapAction: ((FeedNSCollectionViewCell) -> Void)?
     var optionButtonTapAction: ((FeedNSCollectionViewCell) -> Void)?
+    var cellTapAction: ((FeedNSCollectionViewCell) -> Void)?
     
     // MARK: - init
     
@@ -42,21 +42,25 @@ final class FeedNSCollectionViewCell: UICollectionViewCell, BaseViewType {
     }
     
     func setupLayout() {
-        contentView.addSubviews(userInfoView, commentLabel, photoListView)
+        self.contentView.addSubviews(
+            self.userInfoButton,
+            self.commentLabel,
+            self.photoListView
+        )
         
-        userInfoView.snp.makeConstraints {
+        self.userInfoButton.snp.makeConstraints {
             $0.top.leading.trailing.equalToSuperview()
             $0.height.equalTo(64)
         }
         
-        commentLabel.snp.makeConstraints {
-            $0.top.equalTo(userInfoView.snp.bottom)
+        self.commentLabel.snp.makeConstraints {
+            $0.top.equalTo(self.userInfoButton.snp.bottom)
             $0.leading.trailing.equalToSuperview().inset(SizeLiteral.horizantalPadding)
-            $0.bottom.equalTo(photoListView.snp.top).offset(-10)
+            $0.bottom.equalTo(self.photoListView.snp.top).offset(-10)
         }
         
-        photoListView.snp.makeConstraints {
-            $0.top.equalTo(commentLabel.snp.bottom)
+        self.photoListView.snp.makeConstraints {
+            $0.top.equalTo(self.commentLabel.snp.bottom)
             $0.bottom.equalToSuperview().inset(20)
             $0.leading.trailing.equalToSuperview()
             $0.height.equalTo(100)
@@ -82,23 +86,34 @@ final class FeedNSCollectionViewCell: UICollectionViewCell, BaseViewType {
     }
     
     private func setupAction() {
-        userInfoView.userImageButton.addAction(UIAction { _ in self.userButtonTapAction?(self) }, for: .touchUpInside)
-        userInfoView.userNameButton.addAction(UIAction { _ in self.userButtonTapAction?(self) }, for: .touchUpInside)
-        userInfoView.optionButton.addAction(UIAction { _ in self.optionButtonTapAction?(self) }, for: .touchUpInside)
+        self.userInfoButton.addAction(UIAction { _ in self.userButtonTapAction?(self) }, for: .touchUpInside)
+        self.userInfoButton.optionButton.addAction(UIAction { _ in self.optionButtonTapAction?(self) }, for: .touchUpInside)
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(cellTapped))
+        self.addGestureRecognizer(tapGesture)
+    }
+    
+    @objc
+    private func cellTapped() {
+        self.cellTapAction?(self)
     }
 }
 
 // MARK: - Public - func
 extension FeedNSCollectionViewCell {
-    func configureCell(_ data: ReviewByStore) {
-        let writer = data.writer
-        let review = data.review
+    func configureCell(
+        _ reviewItem: Review,
+        _ isOwn: Bool = false
+    ) {
+        let member = reviewItem.member
+        let comment = reviewItem.comment
         
-        self.userInfoView.comfigureUser(writer)
-        self.commentLabel.text = review.content
+        self.userInfoButton.configureUser(member)
+        self.userInfoButton.optionButton.isHidden = member.isMyProfile && !isOwn
+        self.commentLabel.text = comment.content
         
-        if review.imagePaths.isEmpty {
-            self.photoListView.isHidden = true            
+        if comment.imagePaths.isEmpty {
+            self.photoListView.isHidden = true
             self.photoListView.snp.remakeConstraints {
                 $0.top.equalTo(self.commentLabel.snp.bottom)
                 $0.leading.trailing.equalToSuperview()
@@ -106,7 +121,7 @@ extension FeedNSCollectionViewCell {
                 $0.height.equalTo(0)
             }
         } else {
-            self.photoListView.photos = review.imagePaths
+            self.photoListView.photos = comment.imagePaths
             self.photoListView.isHidden = false
             
             self.photoListView.snp.remakeConstraints {

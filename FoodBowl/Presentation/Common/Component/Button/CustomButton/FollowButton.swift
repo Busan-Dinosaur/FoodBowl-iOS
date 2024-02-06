@@ -10,31 +10,32 @@ import UIKit
 import SnapKit
 import Then
 
-final class FollowButton: UIButton {
+final class FollowButton: UIButton, BaseViewType {
+    
     override var isSelected: Bool {
         didSet {
             if isSelected {
                 backgroundColor = .grey001
-                label.text = "삭제"
+                label.text = "팔로잉"
             } else {
                 backgroundColor = .mainPink
-                label.text = "추가"
+                label.text = "팔로우"
             }
         }
     }
 
-    // MARK: - property
+    // MARK: - ui component
+    
     let label = UILabel().then {
         $0.textColor = .white
         $0.font = UIFont.preferredFont(forTextStyle: .footnote, weight: .medium)
-        $0.text = "추가"
     }
 
     // MARK: - init
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setupLayout()
-        configureUI()
+        self.baseInit()
     }
 
     @available(*, unavailable)
@@ -43,18 +44,19 @@ final class FollowButton: UIButton {
     }
 
     // MARK: - life cycle
-    private func setupLayout() {
-        addSubview(label)
+    
+    func setupLayout() {
+        self.addSubview(self.label)
 
-        label.snp.makeConstraints {
+        self.label.snp.makeConstraints {
             $0.centerX.centerY.equalToSuperview()
         }
     }
 
-    private func configureUI() {
-        backgroundColor = .mainPink
-        layer.cornerRadius = 15
-        layer.borderColor = UIColor.grey002.cgColor
-        layer.borderWidth = 1
+    func configureUI() {
+        self.backgroundColor = .mainPink
+        self.layer.cornerRadius = 15
+        self.layer.borderColor = UIColor.grey002.cgColor
+        self.layer.borderWidth = 1
     }
 }

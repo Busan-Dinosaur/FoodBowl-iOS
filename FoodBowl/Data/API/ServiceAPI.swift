@@ -10,33 +10,37 @@ import Foundation
 import Moya
 
 enum ServiceAPI {
-    case signIn(request: SignRequestDTO)
-    case logOut
-    case renew
     case checkNickname(nickname: String)
     case getSchools
     case getCategories
-    case createBlame(request: CreateBlameRequest)
-    case createReview(request: CreateReviewRequest, images: [Data])
+    
+    case createBlame(request: CreateBlameRequestDTO)
+    
+    case createReview(request: CreateReviewRequestDTO, images: [Data])
+    case updateReview(id: Int, request: UpdateReviewRequestDTO, images: [Data])
     case removeReview(id: Int)
-    case getReviewsByStore(form: GetReviewByStoreRequest, lastReviewId: Int?, pageSize: Int)
-    case getReviewsBySchool(form: CustomLocation, schoolId: Int, lastReviewId: Int?, pageSize: Int)
-    case getReviewsByMember(form: CustomLocation, memberId: Int, lastReviewId: Int?, pageSize: Int)
-    case getReviewsByFollowing(form: CustomLocation, lastReviewId: Int?, pageSize: Int)
-    case getReviewsByBookmark(form: CustomLocation, lastReviewId: Int?, pageSize: Int)
-    case getStoresBySearch(form: SearchStoresRequest)
-    case getStoresBySchool(form: CustomLocation, schoolId: Int)
-    case getStoresByMember(form: CustomLocation, memberId: Int)
-    case getStoresByFollowing(form: CustomLocation)
-    case getStoresByBookmark(form: CustomLocation)
+    case getReview(request: GetReviewRequestDTO)
+    case getReviewsByFollowing(request: GetReviewsRequestDTO)
+    case getReviewsByBookmark(request: GetReviewsRequestDTO)
+    case getReviewsByStore(request: GetReviewsByStoreRequestDTO)
+    case getReviewsBySchool(request: GetReviewsBySchoolRequestDTO)
+    case getReviewsByMember(request: GetReviewsByMemberRequestDTO)
+    case getReviewsByFeed(request: GetReviewsByFeedRequestDTO)
+    
+    case getStoresBySearch(request: SearchStoreRequestDTO)
+    case getStoresBySchool(request: GetStoresBySchoolRequestDTO)
+    case getStoresByMember(request: GetStoresByMemberRequestDTO)
+    case getStoresByFollowing(request: CustomLocationRequestDTO)
+    case getStoresByBookmark(request: CustomLocationRequestDTO)
+    
     case createBookmark(storeId: Int)
     case removeBookmark(storeId: Int)
-    case updateMemberProfile(request: UpdateMemberProfileRequest)
+    
+    case updateMemberProfile(request: UpdateMemberProfileRequestDTO)
     case removeMemberProfileImage
     case updateMemberProfileImage(image: Data)
     case getMemberProfile(id: Int)
-    case getMemberBySearch(form: SearchMembersRequest)
-    case getMyProfile
+    case getMembersBySearch(request: SearchMemberRequestDTO)
     case followMember(memberId: Int)
     case unfollowMember(memberId: Int)
     case removeFollower(memberId: Int)
@@ -53,12 +57,6 @@ extension ServiceAPI: TargetType {
 
     var path: String {
         switch self {
-        case .signIn:
-            return "/v1/auth/login/oauth/apple"
-        case .logOut:
-            return "/v1/auth/logout"
-        case .renew:
-            return "/v1/auth/token/renew"
         case .checkNickname:
             return "/v1/members/nickname/exist"
         case .getSchools:
@@ -69,8 +67,12 @@ extension ServiceAPI: TargetType {
             return "/v1/blames"
         case .createReview:
             return "/v1/reviews"
+        case .updateReview(let id, _, _):
+            return "/v1/reviews/\(id)"
         case .removeReview(let id):
             return "/v1/reviews/\(id)"
+        case .getReview(let request):
+            return "/v1/reviews/\(request.id)"
         case .getReviewsByStore:
             return "/v1/reviews/stores"
         case .getReviewsBySchool:
@@ -81,6 +83,8 @@ extension ServiceAPI: TargetType {
             return "/v1/reviews/following"
         case .getReviewsByBookmark:
             return "/v1/reviews/bookmarks"
+        case .getReviewsByFeed:
+            return "/v1/reviews/feeds"
         case .getStoresBySearch:
             return "/v1/stores/search"
         case .getStoresBySchool:
@@ -99,10 +103,8 @@ extension ServiceAPI: TargetType {
             return "/v1/members/profile/image"
         case .getMemberProfile(let id):
             return "/v1/members/\(id)/profile"
-        case .getMemberBySearch:
+        case .getMembersBySearch:
             return "/v1/members/search"
-        case .getMyProfile:
-            return "/v1/members/me/profile"
         case .followMember(let memberId):
             return "/v1/follows/\(memberId)/follow"
         case .unfollowMember(let memberId):
@@ -118,9 +120,9 @@ extension ServiceAPI: TargetType {
 
     var method: Moya.Method {
         switch self {
-        case .signIn, .logOut, .renew, .createBlame, .createReview, .createBookmark, .followMember:
+        case .createBlame, .createReview, .createBookmark, .followMember:
             return .post
-        case .updateMemberProfile, .updateMemberProfileImage:
+        case .updateMemberProfile, .updateMemberProfileImage, .updateReview:
             return .patch
         case .removeReview, .removeBookmark, .removeMemberProfileImage, .unfollowMember, .removeFollower:
             return .delete
@@ -131,14 +133,6 @@ extension ServiceAPI: TargetType {
 
     var task: Task {
         switch self {
-        case .signIn(let request):
-            return .requestJSONEncodable(request)
-        case .renew:
-            let request = RenewRequest(
-                accessToken: KeychainManager.get(.accessToken),
-                refreshToken: KeychainManager.get(.refreshToken)
-            )
-            return .requestJSONEncodable(request)
         case .checkNickname(let nickname):
             let params: [String: String] = [
                 "nickname": nickname
@@ -161,29 +155,67 @@ extension ServiceAPI: TargetType {
                     )
                 )
             }
-
+            
             for image in images {
                 multipartFormData.append(
                     MultipartFormData(
                         provider: .data(image),
                         name: "images",
-                        fileName: "\(request.storeName)_\(UUID().uuidString).jpg",
+                        fileName: "\(UUID().uuidString).jpg",
                         mimeType: "image/jpeg"
                     )
                 )
             }
+            
+            return .uploadMultipart(multipartFormData)
+        case .updateReview(_, let request, let images):
+            var multipartFormData = [MultipartFormData]()
 
+            if let reviewData = try? JSONEncoder().encode(request) {
+                multipartFormData.append(
+                    MultipartFormData(
+                        provider: .data(reviewData),
+                        name: "request",
+                        mimeType: "application/json"
+                    )
+                )
+            }
+            
+            for image in images {
+                multipartFormData.append(
+                    MultipartFormData(
+                        provider: .data(image),
+                        name: "images",
+                        fileName: "\(UUID().uuidString).jpg",
+                        mimeType: "image/jpeg"
+                    )
+                )
+            }
+            
             return .uploadMultipart(multipartFormData)
         case .removeReview:
             return .requestPlain
-        case .getReviewsByStore(let form, let lastReviewId, let pageSize):
-            var params: [String: Any] = [
-                "storeId": form.storeId,
-                "filter": form.filter,
-                "pageSize": pageSize
+        case .getReview(let request):
+            let params: [String: Any] = [
+                "id": request.id,
+                "deviceX": request.deviceX,
+                "deviceY": request.deviceY
             ]
 
-            if let lastReviewId = lastReviewId {
+            return .requestParameters(
+                parameters: params,
+                encoding: URLEncoding.default
+            )
+        case .getReviewsByStore(let request):
+            var params: [String: Any] = [
+                "storeId": request.storeId,
+                "filter": request.filter,
+                "pageSize": request.pageSize,
+                "deviceX": request.deviceX,
+                "deviceY": request.deviceY
+            ]
+
+            if let lastReviewId = request.lastReviewId {
                 params["lastReviewId"] = lastReviewId
             }
 
@@ -191,19 +223,23 @@ extension ServiceAPI: TargetType {
                 parameters: params,
                 encoding: URLEncoding.default
             )
-        case .getReviewsBySchool(let form, let schoolId, let lastReviewId, let pageSize):
+        case .getReviewsBySchool(let request):
             var params: [String: Any] = [
-                "schoolId": schoolId,
-                "x": form.x,
-                "y": form.y,
-                "deltaX": form.deltaX,
-                "deltaY": form.deltaY,
-                "deviceX": form.deviceX,
-                "deviceY": form.deviceY,
-                "pageSize": pageSize
+                "schoolId": request.schoolId,
+                "x": request.location.x,
+                "y": request.location.y,
+                "deltaX": request.location.deltaX,
+                "deltaY": request.location.deltaY,
+                "deviceX": request.location.deviceX,
+                "deviceY": request.location.deviceY,
+                "pageSize": request.pageSize
             ]
+            
+            if let category = request.category {
+                params["category"] = category
+            }
 
-            if let lastReviewId = lastReviewId {
+            if let lastReviewId = request.lastReviewId {
                 params["lastReviewId"] = lastReviewId
             }
 
@@ -211,19 +247,23 @@ extension ServiceAPI: TargetType {
                 parameters: params,
                 encoding: URLEncoding.default
             )
-        case .getReviewsByMember(let form, let memberId, let lastReviewId, let pageSize):
+        case .getReviewsByMember(let request):
             var params: [String: Any] = [
-                "memberId": memberId,
-                "x": form.x,
-                "y": form.y,
-                "deltaX": form.deltaX,
-                "deltaY": form.deltaY,
-                "deviceX": form.deviceX,
-                "deviceY": form.deviceY,
-                "pageSize": pageSize
+                "memberId": request.memberId,
+                "x": request.location.x,
+                "y": request.location.y,
+                "deltaX": request.location.deltaX,
+                "deltaY": request.location.deltaY,
+                "deviceX": request.location.deviceX,
+                "deviceY": request.location.deviceY,
+                "pageSize": request.pageSize
             ]
+            
+            if let category = request.category {
+                params["category"] = category
+            }
 
-            if let lastReviewId = lastReviewId {
+            if let lastReviewId = request.lastReviewId {
                 params["lastReviewId"] = lastReviewId
             }
 
@@ -231,18 +271,22 @@ extension ServiceAPI: TargetType {
                 parameters: params,
                 encoding: URLEncoding.default
             )
-        case .getReviewsByFollowing(let form, let lastReviewId, let pageSize):
+        case .getReviewsByFollowing(let request):
             var params: [String: Any] = [
-                "x": form.x,
-                "y": form.y,
-                "deltaX": form.deltaX,
-                "deltaY": form.deltaY,
-                "deviceX": form.deviceX,
-                "deviceY": form.deviceY,
-                "pageSize": pageSize
+                "x": request.location.x,
+                "y": request.location.y,
+                "deltaX": request.location.deltaX,
+                "deltaY": request.location.deltaY,
+                "deviceX": request.location.deviceX,
+                "deviceY": request.location.deviceY,
+                "pageSize": request.pageSize
             ]
+            
+            if let category = request.category {
+                params["category"] = category
+            }
 
-            if let lastReviewId = lastReviewId {
+            if let lastReviewId = request.lastReviewId {
                 params["lastReviewId"] = lastReviewId
             }
 
@@ -250,18 +294,22 @@ extension ServiceAPI: TargetType {
                 parameters: params,
                 encoding: URLEncoding.default
             )
-        case .getReviewsByBookmark(let form, let lastReviewId, let pageSize):
+        case .getReviewsByBookmark(let request):
             var params: [String: Any] = [
-                "x": form.x,
-                "y": form.y,
-                "deltaX": form.deltaX,
-                "deltaY": form.deltaY,
-                "deviceX": form.deviceX,
-                "deviceY": form.deviceY,
-                "pageSize": pageSize
+                "x": request.location.x,
+                "y": request.location.y,
+                "deltaX": request.location.deltaX,
+                "deltaY": request.location.deltaY,
+                "deviceX": request.location.deviceX,
+                "deviceY": request.location.deviceY,
+                "pageSize": request.pageSize
             ]
+            
+            if let category = request.category {
+                params["category"] = category
+            }
 
-            if let lastReviewId = lastReviewId {
+            if let lastReviewId = request.lastReviewId {
                 params["lastReviewId"] = lastReviewId
             }
 
@@ -269,58 +317,73 @@ extension ServiceAPI: TargetType {
                 parameters: params,
                 encoding: URLEncoding.default
             )
-        case .getStoresBySearch(let form):
+        case .getReviewsByFeed(let request):
+            var params: [String: Any] = [
+                "deviceX": request.deviceX,
+                "deviceY": request.deviceY,
+                "pageSize": request.pageSize
+            ]
+
+            if let lastReviewId = request.lastReviewId {
+                params["lastReviewId"] = lastReviewId
+            }
+
+            return .requestParameters(
+                parameters: params,
+                encoding: URLEncoding.default
+            )
+        case .getStoresBySearch(let request):
             let params: [String: Any] = [
-                "name": form.name,
-                "x": form.x,
-                "y": form.y,
-                "size": form.size
+                "name": request.name,
+                "x": request.x,
+                "y": request.y,
+                "size": request.size
             ]
             return .requestParameters(
                 parameters: params,
                 encoding: URLEncoding.default
             )
-        case .getStoresBySchool(let form, let schoolId):
+        case .getStoresBySchool(let request):
             let params: [String: Any] = [
-                "schoolId": schoolId,
-                "x": form.x,
-                "y": form.y,
-                "deltaX": form.deltaX,
-                "deltaY": form.deltaY
+                "x": request.location.x,
+                "y": request.location.y,
+                "deltaX": request.location.deltaX,
+                "deltaY": request.location.deltaY,
+                "schoolId": request.schoolId
             ]
             return .requestParameters(
                 parameters: params,
                 encoding: URLEncoding.default
             )
-        case .getStoresByMember(let form, let memberId):
+        case .getStoresByMember(let request):
             let params: [String: Any] = [
-                "memberId": memberId,
-                "x": form.x,
-                "y": form.y,
-                "deltaX": form.deltaX,
-                "deltaY": form.deltaY
+                "x": request.location.x,
+                "y": request.location.y,
+                "deltaX": request.location.deltaX,
+                "deltaY": request.location.deltaY,
+                "memberId": request.memberId
             ]
             return .requestParameters(
                 parameters: params,
                 encoding: URLEncoding.default
             )
-        case .getStoresByFollowing(let form):
+        case .getStoresByFollowing(let request):
             let params: [String: Any] = [
-                "x": form.x,
-                "y": form.y,
-                "deltaX": form.deltaX,
-                "deltaY": form.deltaY
+                "x": request.x,
+                "y": request.y,
+                "deltaX": request.deltaX,
+                "deltaY": request.deltaY
             ]
             return .requestParameters(
                 parameters: params,
                 encoding: URLEncoding.default
             )
-        case .getStoresByBookmark(let form):
+        case .getStoresByBookmark(let request):
             let params: [String: Any] = [
-                "x": form.x,
-                "y": form.y,
-                "deltaX": form.deltaX,
-                "deltaY": form.deltaY
+                "x": request.x,
+                "y": request.y,
+                "deltaX": request.deltaX,
+                "deltaY": request.deltaY
             ]
             return .requestParameters(
                 parameters: params,
@@ -345,7 +408,7 @@ extension ServiceAPI: TargetType {
         case .updateMemberProfile(let request):
             return .requestJSONEncodable(request)
         case .updateMemberProfileImage(let image):
-            let id = String(describing: UserDefaultsManager.currentUser?.id)
+            let id = String(describing: UserDefaultStorage.id)
             let imageData = MultipartFormData(
                 provider: .data(image),
                 name: "image",
@@ -353,7 +416,7 @@ extension ServiceAPI: TargetType {
                 mimeType: "image/jpeg"
             )
             return .uploadMultipart([imageData])
-        case .getMemberBySearch(let form):
+        case .getMembersBySearch(let form):
             let params: [String: Any] = [
                 "name": form.name,
                 "size": form.size
@@ -389,11 +452,7 @@ extension ServiceAPI: TargetType {
         let accessToken: String = KeychainManager.get(.accessToken)
         
         switch self {
-        case .signIn, .renew:
-            return [
-                "Content-Type": "application/json"
-            ]
-        case .createReview:
+        case .createReview, .updateReview:
             return [
                 "Content-Type": "application/json",
                 "Content-type": "multipart/form-data",

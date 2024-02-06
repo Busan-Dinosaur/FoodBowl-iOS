@@ -7,36 +7,40 @@
 
 import Foundation
 
-import Moya
+protocol SignUsecase {
+    func dispatchAppleLogin(login: SignRequestDTO) async throws -> Token
+    func getMyProfile() async throws -> Member
+}
 
-//protocol SignUsecase {
-//    func dispatchAppleLogin(login: LoginRequestDTO) async throws -> Login
-//}
-//
-//final class SignUsecaseImpl: SignUsecase {
-//    
-//    // MARK: - property
-//    
-//    private let providerService = MoyaProvider<ServiceAPI>()
-//    private let providerMember = MoyaProvider<MemberAPI>()
-//    
-//    // MARK: - Public - func
-//    
-//    func getToken(signRequest: SignRequest) async throws -> SignDTO {
-//        do {
-//            let signResponse = try await self.providerService.request(.signIn(request: signRequest))
-//            return signResponse
-//        } catch {
-//            
-//        }
-//    }
-//    
-//    func dispatchAppleLogin(login: LoginRequestDTO) async throws -> Login {
-//        do {
-//            let loginDTO = try await self.repository.dispatchAppleLogin(login: login)
-//            return loginDTO.toLogin()
-//        } catch {
-//            throw LoginUsecaseError.failedToLogin
-//        }
-//    }
-//}
+final class SignUsecaseImpl: SignUsecase {
+    
+    // MARK: - property
+    
+    private let repository: SignRepository
+    
+    // MARK: - init
+    
+    init(repository: SignRepository) {
+        self.repository = repository
+    }
+    
+    // MARK: - Public - func
+    
+    func dispatchAppleLogin(login: SignRequestDTO) async throws -> Token {
+        do {
+            let token = try await self.repository.signIn(request: login)
+            return token
+        } catch(let error) {
+            throw error
+        }
+    }
+    
+    func getMyProfile() async throws -> Member {
+        do {
+            let MemberProfileDTO = try await self.repository.getMyProfile()
+            return MemberProfileDTO.toMember()
+        } catch(let error) {
+            throw error
+        }
+    }
+}

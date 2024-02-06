@@ -8,10 +8,12 @@
 import UIKit
 
 final class MapButton: UIButton {
+    
     // MARK: - init
+    
     override init(frame _: CGRect) {
         super.init(frame: .init(origin: .zero, size: .init(width: 40, height: 40)))
-        configureUI()
+        self.configureUI()
     }
 
     @available(*, unavailable)
@@ -19,10 +21,9 @@ final class MapButton: UIButton {
         fatalError("init(coder:) has not been implemented")
     }
 
-    // MARK: - life cycle
     private func configureUI() {
-        setImage(ImageLiteral.btnKakaomap.resize(to: CGSize(width: 40, height: 40)), for: .normal)
-        clipsToBounds = true
-        layer.cornerRadius = 10
+        self.setImage(ImageLiteral.btnKakaomap.resize(to: CGSize(width: 40, height: 40)), for: .normal)
+        self.clipsToBounds = true
+        self.layer.cornerRadius = 10
     }
 }

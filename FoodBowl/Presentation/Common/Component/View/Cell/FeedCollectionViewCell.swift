@@ -5,7 +5,6 @@
 //  Created by COBY_PRO on 2022/12/23.
 //
 
-import Combine
 import UIKit
 
 import SnapKit
@@ -15,19 +14,20 @@ final class FeedCollectionViewCell: UICollectionViewCell, BaseViewType {
     
     // MARK: - ui component
     
-    let userInfoView = UserInfoView()
-    lazy var commentLabel = UILabel().then {
+    private let userInfoButton = UserInfoButton()
+    private lazy var commentLabel = UILabel().then {
         $0.font = UIFont.preferredFont(forTextStyle: .subheadline, weight: .light)
         $0.textColor = .mainTextColor
         $0.numberOfLines = 0
     }
-    let photoListView = PhotoListView()
-    let storeInfoView = StoreInfoView()
+    private let photoListView = PhotoListView()
+    let storeInfoButton = StoreInfoButton()
     
     // MARK: - property
     
     var userButtonTapAction: ((FeedCollectionViewCell) -> Void)?
     var optionButtonTapAction: ((FeedCollectionViewCell) -> Void)?
+    var cellTapAction: ((FeedCollectionViewCell) -> Void)?
     var storeButtonTapAction: ((FeedCollectionViewCell) -> Void)?
     var bookmarkButtonTapAction: ((FeedCollectionViewCell) -> Void)?
     
@@ -45,27 +45,32 @@ final class FeedCollectionViewCell: UICollectionViewCell, BaseViewType {
     }
     
     func setupLayout() {
-        contentView.addSubviews(userInfoView, commentLabel, photoListView, storeInfoView)
+        self.contentView.addSubviews(
+            self.userInfoButton,
+            self.commentLabel,
+            self.photoListView,
+            self.storeInfoButton
+        )
         
-        userInfoView.snp.makeConstraints {
+        self.userInfoButton.snp.makeConstraints {
             $0.top.leading.trailing.equalToSuperview()
             $0.height.equalTo(64)
         }
         
-        commentLabel.snp.makeConstraints {
-            $0.top.equalTo(userInfoView.snp.bottom)
+        self.commentLabel.snp.makeConstraints {
+            $0.top.equalTo(self.userInfoButton.snp.bottom)
             $0.leading.trailing.equalToSuperview().inset(SizeLiteral.horizantalPadding)
             $0.bottom.equalTo(photoListView.snp.top).offset(-10)
         }
         
-        photoListView.snp.makeConstraints {
-            $0.top.equalTo(commentLabel.snp.bottom)
+        self.photoListView.snp.makeConstraints {
+            $0.top.equalTo(self.commentLabel.snp.bottom)
             $0.leading.trailing.equalToSuperview()
             $0.height.equalTo(100)
         }
         
-        storeInfoView.snp.makeConstraints {
-            $0.top.equalTo(photoListView.snp.bottom).offset(10)
+        self.storeInfoButton.snp.makeConstraints {
+            $0.top.equalTo(self.photoListView.snp.bottom).offset(10)
             $0.leading.trailing.equalToSuperview().inset(SizeLiteral.horizantalPadding)
             $0.bottom.equalToSuperview().inset(20)
             $0.height.equalTo(54)
@@ -91,38 +96,49 @@ final class FeedCollectionViewCell: UICollectionViewCell, BaseViewType {
     }
     
     private func setupAction() {
-        userInfoView.userImageButton.addAction(UIAction { _ in self.userButtonTapAction?(self) }, for: .touchUpInside)
-        userInfoView.userNameButton.addAction(UIAction { _ in self.userButtonTapAction?(self) }, for: .touchUpInside)
-        userInfoView.optionButton.addAction(UIAction { _ in self.optionButtonTapAction?(self) }, for: .touchUpInside)
-        storeInfoView.storeNameButton.addAction(UIAction { _ in self.storeButtonTapAction?(self) }, for: .touchUpInside)
-        storeInfoView.bookmarkButton.addAction(UIAction { _ in self.bookmarkButtonTapAction?(self) }, for: .touchUpInside)
+        self.userInfoButton.addAction(UIAction { _ in self.userButtonTapAction?(self) }, for: .touchUpInside)
+        self.userInfoButton.optionButton.addAction(UIAction { _ in self.optionButtonTapAction?(self) }, for: .touchUpInside)
+        self.storeInfoButton.addAction(UIAction { _ in self.storeButtonTapAction?(self) }, for: .touchUpInside)
+        self.storeInfoButton.bookmarkButton.addAction(UIAction { _ in self.bookmarkButtonTapAction?(self) }, for: .touchUpInside)
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(cellTapped))
+        self.addGestureRecognizer(tapGesture)
+    }
+    
+    @objc 
+    private func cellTapped() {
+        self.cellTapAction?(self)
     }
 }
 
 // MARK: - Public - func
 extension FeedCollectionViewCell {    
-    func configureCell(_ data: Review) {
-        let writer = data.writer
-        let store = data.store
-        let review = data.review
+    func configureCell(
+        _ reviewItem: Review,
+        _ isOwn: Bool = false
+    ) {
+        let member = reviewItem.member
+        let store = reviewItem.store
+        let comment = reviewItem.comment
         
-        self.userInfoView.comfigureUser(writer)
-        self.storeInfoView.configureStore(store)
-        self.commentLabel.text = review.content
-        self.photoListView.photos = review.imagePaths
+        self.userInfoButton.configureUser(member)
+        self.userInfoButton.optionButton.isHidden = member.isMyProfile && !isOwn
+        self.storeInfoButton.configureStore(store)
+        self.commentLabel.text = comment.content
         
-        if review.imagePaths.isEmpty {
+        if comment.imagePaths.isEmpty {
             self.photoListView.isHidden = true
-            
-            self.storeInfoView.snp.remakeConstraints {
+            self.storeInfoButton.snp.remakeConstraints {
                 $0.top.equalTo(self.commentLabel.snp.bottom).offset(10)
                 $0.leading.trailing.equalToSuperview().inset(SizeLiteral.horizantalPadding)
                 $0.bottom.equalToSuperview().inset(14)
                 $0.height.equalTo(54)
             }
         } else {
+            self.photoListView.photos = comment.imagePaths
             self.photoListView.isHidden = false
-            self.storeInfoView.snp.remakeConstraints {
+            
+            self.storeInfoButton.snp.remakeConstraints {
                 $0.top.equalTo(self.photoListView.snp.bottom).offset(10)
                 $0.leading.trailing.equalToSuperview().inset(SizeLiteral.horizantalPadding)
                 $0.bottom.equalToSuperview().inset(14)
