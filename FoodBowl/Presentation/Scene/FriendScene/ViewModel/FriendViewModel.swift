@@ -173,7 +173,12 @@ final class FriendViewModel: BaseViewModelType {
         Task {
             do {
                 guard let location = self.location else { return }
-                let stores = try await self.usecase.getStoresByFollowing(request: location)
+                var stores = try await self.usecase.getStoresByFollowing(request: location)
+                
+                if let category = self.category?.rawValue {
+                    stores = stores.filter { $0.category == category }
+                }
+                
                 self.storesSubject.send(.success(stores))
             } catch(let error) {
                 self.storesSubject.send(.failure(error))
@@ -185,7 +190,12 @@ final class FriendViewModel: BaseViewModelType {
         Task {
             do {
                 guard let location = self.location else { return }
-                let stores = try await self.usecase.getStoresByBookmark(request: location)
+                var stores = try await self.usecase.getStoresByBookmark(request: location)
+                
+                if let category = self.category?.rawValue {
+                    stores = stores.filter { $0.category == category }
+                }
+                
                 self.storesSubject.send(.success(stores))
             } catch(let error) {
                 self.storesSubject.send(.failure(error))

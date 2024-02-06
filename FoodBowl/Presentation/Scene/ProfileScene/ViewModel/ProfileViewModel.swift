@@ -215,10 +215,15 @@ final class ProfileViewModel: BaseViewModelType {
         Task {
             do {
                 guard let location = self.location else { return }
-                let stores = try await self.usecase.getStoresByMember(request: GetStoresByMemberRequestDTO(
+                var stores = try await self.usecase.getStoresByMember(request: GetStoresByMemberRequestDTO(
                     location: location,
                     memberId: memberId
                 ))
+                
+                if let category = self.category?.rawValue {
+                    stores = stores.filter { $0.category == category }
+                }
+                
                 self.storesSubject.send(.success(stores))
             } catch(let error) {
                 self.storesSubject.send(.failure(error))

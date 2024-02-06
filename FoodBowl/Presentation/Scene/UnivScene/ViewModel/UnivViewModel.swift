@@ -174,10 +174,15 @@ final class UnivViewModel: BaseViewModelType {
         Task {
             do {
                 guard let location = self.location, let schoolId = self.schoolId else { return }
-                let stores = try await self.usecase.getStoresBySchool(request: GetStoresBySchoolRequestDTO(
+                var stores = try await self.usecase.getStoresBySchool(request: GetStoresBySchoolRequestDTO(
                     location: location,
                     schoolId: schoolId
                 ))
+                
+                if let category = self.category?.rawValue {
+                    stores = stores.filter { $0.category == category }
+                }
+                
                 self.storesSubject.send(.success(stores))
             } catch(let error) {
                 self.storesSubject.send(.failure(error))
