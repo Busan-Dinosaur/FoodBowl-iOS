@@ -100,7 +100,6 @@
 		CB8306702B5996C400632789 /* FindRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB83066F2B5996C400632789 /* FindRepository.swift */; };
 		CB8306722B5999D500632789 /* ReviewByFeedDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB8306712B5999D500632789 /* ReviewByFeedDTO.swift */; };
 		CB8306752B599CE800632789 /* FindUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB8306742B599CE800632789 /* FindUsecase.swift */; };
-		CB84C9842AD98E9000A2E0F2 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = CB84C9832AD98E9000A2E0F2 /* Lottie */; };
 		CB84CAEC2B602C9100F4591A /* UpdateReviewRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB84CAEB2B602C9100F4591A /* UpdateReviewRequestDTO.swift */; };
 		CB84CAEE2B602E9100F4591A /* UpdateReviewRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB84CAED2B602E9100F4591A /* UpdateReviewRepositoryImpl.swift */; };
 		CB84CAF62B602FAC00F4591A /* ReviewDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB84CAF52B602FAC00F4591A /* ReviewDetailView.swift */; };
@@ -223,7 +222,6 @@
 		CBE61913296C68D9005295AF /* PlusButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBE61912296C68D9005295AF /* PlusButton.swift */; };
 		CBEB005E2ADC2F8200F6EFED /* Double+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBEB005D2ADC2F8200F6EFED /* Double+Extension.swift */; };
 		CBEB00602ADC30AC00F6EFED /* Int+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBEB005F2ADC30AC00F6EFED /* Int+Extension.swift */; };
-		CBEB00662ADC35E000F6EFED /* loading.json in Resources */ = {isa = PBXBuildFile; fileRef = CBEB00652ADC35E000F6EFED /* loading.json */; };
 		CBF617622A6FD94900452B7B /* GrabbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF617612A6FD94900452B7B /* GrabbarView.swift */; };
 		CBF926462B3FED74005E251B /* UpdateProfileImageDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF926452B3FED74005E251B /* UpdateProfileImageDTO.swift */; };
 		CBF926492B411C46005E251B /* BlameUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF926482B411C46005E251B /* BlameUsecase.swift */; };
@@ -443,7 +441,6 @@
 		CBE61912296C68D9005295AF /* PlusButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlusButton.swift; sourceTree = "<group>"; };
 		CBEB005D2ADC2F8200F6EFED /* Double+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Extension.swift"; sourceTree = "<group>"; };
 		CBEB005F2ADC30AC00F6EFED /* Int+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Extension.swift"; sourceTree = "<group>"; };
-		CBEB00652ADC35E000F6EFED /* loading.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = loading.json; sourceTree = "<group>"; };
 		CBF617612A6FD94900452B7B /* GrabbarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrabbarView.swift; sourceTree = "<group>"; };
 		CBF926452B3FED74005E251B /* UpdateProfileImageDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateProfileImageDTO.swift; sourceTree = "<group>"; };
 		CBF926482B411C46005E251B /* BlameUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlameUsecase.swift; sourceTree = "<group>"; };
@@ -465,7 +462,6 @@
 				CBD036322ABA163F00E1AE9A /* Kingfisher in Frameworks */,
 				CB617A552AE28C71000F7FFC /* CombineMoya in Frameworks */,
 				CBDF0D062AE8E6B600177D38 /* YPImagePicker in Frameworks */,
-				CB84C9842AD98E9000A2E0F2 /* Lottie in Frameworks */,
 				CBC747B82A83DC2000F171F5 /* KeychainSwift in Frameworks */,
 				CBADC245295598A200E56C93 /* Then in Frameworks */,
 			);
@@ -966,14 +962,6 @@
 			path = FindScene;
 			sourceTree = "<group>";
 		};
-		CB84C97F2AD98E1C00A2E0F2 /* Lottie */ = {
-			isa = PBXGroup;
-			children = (
-				CBEB00652ADC35E000F6EFED /* loading.json */,
-			);
-			path = Lottie;
-			sourceTree = "<group>";
-		};
 		CB84CAF12B602F8600F4591A /* ReviewDetailScene */ = {
 			isa = PBXGroup;
 			children = (
@@ -1173,7 +1161,6 @@
 		CBADC26F29559BC900E56C93 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
-				CB84C97F2AD98E1C00A2E0F2 /* Lottie */,
 				CBDB8F8029897CCC00DA2B1E /* Fonts */,
 				CBC7310C295550A200C7F198 /* Assets.xcassets */,
 				CBC7310E295550A200C7F198 /* LaunchScreen.storyboard */,
@@ -1712,7 +1699,6 @@
 				CBC747A82A83D95200F171F5 /* Moya */,
 				CBC747B72A83DC2000F171F5 /* KeychainSwift */,
 				CBD036312ABA163F00E1AE9A /* Kingfisher */,
-				CB84C9832AD98E9000A2E0F2 /* Lottie */,
 				CB617A542AE28C71000F7FFC /* CombineMoya */,
 				CB617A562AE28C71000F7FFC /* Moya */,
 				CBDF0D052AE8E6B600177D38 /* YPImagePicker */,
@@ -1752,7 +1738,6 @@
 				CBC747A72A83D95200F171F5 /* XCRemoteSwiftPackageReference "Moya" */,
 				CBC747B62A83DC2000F171F5 /* XCRemoteSwiftPackageReference "keychain-swift" */,
 				CBD036302ABA163E00E1AE9A /* XCRemoteSwiftPackageReference "Kingfisher" */,
-				CB84C9822AD98E9000A2E0F2 /* XCRemoteSwiftPackageReference "lottie-ios" */,
 				CBDF0D042AE8E6B500177D38 /* XCRemoteSwiftPackageReference "YPImagePicker" */,
 			);
 			productRefGroup = CBC73101295550A100C7F198 /* Products */;
@@ -1770,7 +1755,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				CBBB97EC2AB068DE00272CCE /* BMJUAOTF.otf in Resources */,
-				CBEB00662ADC35E000F6EFED /* loading.json in Resources */,
 				CBC73110295550A200C7F198 /* LaunchScreen.storyboard in Resources */,
 				CBC7310D295550A200C7F198 /* Assets.xcassets in Resources */,
 			);
@@ -2240,14 +2224,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		CB84C9822AD98E9000A2E0F2 /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/airbnb/lottie-ios.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 4.3.3;
-			};
-		};
 		CBADC2402955989400E56C93 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
@@ -2316,11 +2292,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = CBC747A72A83D95200F171F5 /* XCRemoteSwiftPackageReference "Moya" */;
 			productName = Moya;
-		};
-		CB84C9832AD98E9000A2E0F2 /* Lottie */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = CB84C9822AD98E9000A2E0F2 /* XCRemoteSwiftPackageReference "lottie-ios" */;
-			productName = Lottie;
 		};
 		CBADC2412955989400E56C93 /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;
