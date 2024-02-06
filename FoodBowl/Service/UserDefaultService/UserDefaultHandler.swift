@@ -12,6 +12,10 @@ struct UserDefaultHandler {
         UserData<Any>.clearAll()
     }
     
+    static func setInAppReviewCount(inAppReviewCount: Int) {
+        UserData.setValue(inAppReviewCount, forKey: .inAppReviewCount)
+    }
+    
     static func setIsLogin(isLogin: Bool) {
         UserData.setValue(isLogin, forKey: .isLogin)
     }
