@@ -248,12 +248,7 @@ extension FindViewController {
 
 extension FindViewController: UISearchResultsUpdating, UISearchBarDelegate {
     func updateSearchResults(for searchController: UISearchController) {
-        guard let text = searchController.searchBar.text?.lowercased(), text != "" else {
-            self.stores = []
-            self.members = []
-            self.findView.findResultViewController.findResultView.listTableView.reloadData()
-            return
-        }
+        guard let text = searchController.searchBar.text?.lowercased(), text != "" else { return }
         self.searchStoresAndMembersPublisher.send(text)
     }
 
@@ -262,9 +257,6 @@ extension FindViewController: UISearchResultsUpdating, UISearchBarDelegate {
     }
     
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
-        self.stores = []
-        self.members = []
-        self.findView.findResultViewController.findResultView.listTableView.reloadData()
         self.findView.searchController.searchBar.showsScopeBar = false
     }
 

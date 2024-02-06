@@ -72,12 +72,14 @@ extension UIViewController {
             }
         }
         
-        let alertViewController = UIAlertController(title: title,
-                                                    message: message,
-                                                    preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "확인", style: .default, handler: okAction)
-        alertViewController.addAction(okAction)
-
-        self.present(alertViewController, animated: true, completion: completion)
+        print(message)
+        
+//        let alertViewController = UIAlertController(title: title,
+//                                                    message: message,
+//                                                    preferredStyle: .alert)
+//        let okAction = UIAlertAction(title: "확인", style: .default, handler: okAction)
+//        alertViewController.addAction(okAction)
+//
+//        self.present(alertViewController, animated: true, completion: completion)
     }
 }
