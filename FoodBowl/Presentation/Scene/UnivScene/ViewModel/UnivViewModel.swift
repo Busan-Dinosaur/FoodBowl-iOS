@@ -13,7 +13,6 @@ final class UnivViewModel: BaseViewModelType {
     // MARK: - property
     
     private var category: CategoryType?
-    var schoolId: Int?
     
     private var location: CustomLocationRequestDTO?
     private let pageSize: Int = 20
@@ -126,12 +125,12 @@ final class UnivViewModel: BaseViewModelType {
     }
     
     private func getSchool() {
-        if let schoolId = UserDefaultStorage.schoolId,
-           let schoolName = UserDefaultStorage.schoolName,
+        if let schoolName = UserDefaultStorage.schoolName,
            let schoolX = UserDefaultStorage.schoolX,
            let schoolY = UserDefaultStorage.schoolY {
-            self.schoolId = schoolId
-            self.univSubject.send((schoolName, schoolX, schoolY))
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
+                self.univSubject.send((schoolName, schoolX, schoolY))
+            }
         }
     }
     
@@ -140,7 +139,6 @@ final class UnivViewModel: BaseViewModelType {
         UserDefaultHandler.setSchoolName(schoolName: school.name)
         UserDefaultHandler.setSchoolX(schoolX: school.x)
         UserDefaultHandler.setSchoolY(schoolY: school.y)
-        self.schoolId = school.id
         self.univSubject.send((school.name, school.x, school.y))
     }
     
@@ -149,7 +147,7 @@ final class UnivViewModel: BaseViewModelType {
     private func getReviewsBySchool(lastReviewId: Int? = nil) {
         Task {
             do {
-                guard let location = self.location, let schoolId = self.schoolId else { return }
+                guard let location = self.location, let schoolId = UserDefaultStorage.schoolId else { return }
                 if self.currentpageSize < self.pageSize { return }
                 
                 let reviews = try await self.usecase.getReviewsBySchool(request: GetReviewsBySchoolRequestDTO(
@@ -173,7 +171,7 @@ final class UnivViewModel: BaseViewModelType {
     private func getStoresBySchool() {
         Task {
             do {
-                guard let location = self.location, let schoolId = self.schoolId else { return }
+                guard let location = self.location, let schoolId = UserDefaultStorage.schoolId else { return }
                 var stores = try await self.usecase.getStoresBySchool(request: GetStoresBySchoolRequestDTO(
                     location: location,
                     schoolId: schoolId
