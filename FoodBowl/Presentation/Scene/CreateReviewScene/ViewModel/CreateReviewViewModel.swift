@@ -38,6 +38,7 @@ final class CreateReviewViewModel: NSObject, BaseViewModelType {
             .store(in: &self.cancellable)
         
         input.completeButtonDidTap
+            .debounce(for: .milliseconds(100), scheduler: RunLoop.main)
             .sink(receiveValue: { [weak self] comment, images in
                 self?.createReview(comment: comment, images: images)
             })
