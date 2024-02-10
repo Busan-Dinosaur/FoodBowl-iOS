@@ -48,6 +48,7 @@ final class UpdateProfileViewModel: NSObject, BaseViewModelType {
             .store(in: &self.cancellable)
         
         input.completeButtonDidTap
+            .throttle(for: .milliseconds(1000), scheduler: RunLoop.main, latest: false)
             .sink(receiveValue: { [weak self] nickname, introduction in
                 guard let self = self else { return }
                 self.updateMemberProfile(nickname: nickname, introduction: introduction)
