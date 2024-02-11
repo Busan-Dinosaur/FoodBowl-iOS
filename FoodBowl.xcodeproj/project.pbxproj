@@ -2134,16 +2134,16 @@
 				BASE_URL = "https://justdoeat.shop";
 				CODE_SIGN_ENTITLEMENTS = FoodBowl/FoodBowl.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 0;
 				DEVELOPMENT_TEAM = 3Y8YH8GWMM;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = FoodBowl/App/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "풋볼";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.food-and-drink";
-				INFOPLIST_KEY_NSCameraUsageDescription = "Camera permissions for taking photos";
-				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "Application wants to use your location";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Application wants to use your location";
-				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Album permissions to save photos";
+				INFOPLIST_KEY_NSCameraUsageDescription = "음식 사진을 찍기 위해, 권한이 필요합니다.";
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "맛집 겸색을 위해, 사용자의 위치가 필요합니다.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "맛집 겸색을 위해, 사용자의 위치가 필요합니다.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "맛집 사진을 올리기 위해, 권한이 필요합니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = "";
@@ -2156,7 +2156,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 1.0.1;
 				NONCE = wH_pSu5wSUHzoFPBUE9Q9ZRs3fcKzGSn;
 				PRODUCT_BUNDLE_IDENTIFIER = com.coby.FoodBowl;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2177,16 +2177,16 @@
 				BASE_URL = "https://justdoeat.shop";
 				CODE_SIGN_ENTITLEMENTS = FoodBowl/FoodBowl.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 0;
 				DEVELOPMENT_TEAM = 3Y8YH8GWMM;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = FoodBowl/App/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "풋볼";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.food-and-drink";
-				INFOPLIST_KEY_NSCameraUsageDescription = "Camera permissions for taking photos";
-				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "Application wants to use your location";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Application wants to use your location";
-				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Album permissions to save photos";
+				INFOPLIST_KEY_NSCameraUsageDescription = "음식 사진을 찍기 위해, 권한이 필요합니다.";
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "맛집 겸색을 위해, 사용자의 위치가 필요합니다.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "맛집 겸색을 위해, 사용자의 위치가 필요합니다.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "맛집 사진을 올리기 위해, 권한이 필요합니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = "";
@@ -2199,7 +2199,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 1.0.1;
 				NONCE = wH_pSu5wSUHzoFPBUE9Q9ZRs3fcKzGSn;
 				PRODUCT_BUNDLE_IDENTIFIER = com.coby.FoodBowl;
 				PRODUCT_NAME = "$(TARGET_NAME)";

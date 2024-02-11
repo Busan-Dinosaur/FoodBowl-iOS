@@ -361,15 +361,7 @@ extension MapViewController: MKMapViewDelegate {
 
     func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
         let center = mapView.centerCoordinate
-        let koreaLatRange = 33.0...38.0
-        let koreaLonRange = 125.0...131.0
-        
-        if !koreaLatRange.contains(center.latitude) || !koreaLonRange.contains(center.longitude) {
-            let correctedLatitude = min(max(center.latitude, koreaLatRange.lowerBound), koreaLatRange.upperBound)
-            let correctedLongitude = min(max(center.longitude, koreaLonRange.lowerBound), koreaLonRange.upperBound)
-            let correctedCenter = CLLocationCoordinate2D(latitude: correctedLatitude, longitude: correctedLongitude)
-            self.mapView.setCenter(correctedCenter, animated: true)
-        } else if let currentLocation = LocationManager.shared.manager.location?.coordinate {
+        if let currentLocation = LocationManager.shared.manager.location?.coordinate {
             let visibleMapRect = mapView.visibleMapRect
             let topLeftCoordinate = MKMapPoint(x: visibleMapRect.minX, y: visibleMapRect.minY).coordinate
             let customLocation = CustomLocationRequestDTO(
