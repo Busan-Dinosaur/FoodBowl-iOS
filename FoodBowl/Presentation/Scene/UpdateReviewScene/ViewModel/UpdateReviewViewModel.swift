@@ -50,6 +50,7 @@ final class UpdateReviewViewModel: BaseViewModelType {
             .store(in: &self.cancellable)
         
         input.completeButtonDidTap
+            .throttle(for: .milliseconds(1000), scheduler: RunLoop.main, latest: false)
             .sink(receiveValue: { [weak self] comment in
                 self?.updateReview(comment: comment)
             })

@@ -15,14 +15,14 @@ final class SplashViewModel: NSObject, BaseViewModelType {
     private let usecase: SplashUsecase
     private var cancellable: Set<AnyCancellable> = Set()
     
-    private let isLoginSubject: PassthroughSubject<Bool, Never> = PassthroughSubject()
+    private let isLoginSubject: PassthroughSubject<Result<Bool,  Error>, Never> = PassthroughSubject()
     
     struct Input {
         let viewDidLoad: AnyPublisher<Void, Never>
     }
     
     struct Output {
-        let isLogin: AnyPublisher<Bool, Never>
+        let isLogin: AnyPublisher<Result<Bool, Error>, Never>
     }
     
     func transform(from input: Input) -> Output {
@@ -64,18 +64,15 @@ final class SplashViewModel: NSObject, BaseViewModelType {
                     let expiryDate = Date().addingTimeInterval(1800)
                     UserDefaultHandler.setTokenExpiryDate(tokenExpiryDate: expiryDate)
                     
-                    self.isLoginSubject.send(true)
+                    self.isLoginSubject.send(.success(true))
                 } else {
                     KeychainManager.clear()
                     UserDefaultHandler.clearAllData()
                     
-                    self.isLoginSubject.send(false)
+                    self.isLoginSubject.send(.success(false))
                 }
-            } catch {
-                KeychainManager.clear()
-                UserDefaultHandler.clearAllData()
-                
-                self.isLoginSubject.send(false)
+            } catch(let error) {
+                self.isLoginSubject.send(.failure(error))
             }
         }
     }

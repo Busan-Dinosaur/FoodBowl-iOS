@@ -69,12 +69,17 @@ final class SplashViewController: UIViewController {
         
         output.isLogin
             .receive(on: DispatchQueue.main)
-            .sink(receiveValue: { [weak self] isLogin in
-                switch isLogin {
-                case true:
-                    self?.presentTapBarController()
-                case false:
-                    self?.presentSignViewController()
+            .sink(receiveValue: { [weak self] result in
+                switch result {
+                case .success(let isLogin):
+                    switch isLogin {
+                    case true:
+                        self?.presentTapBarController()
+                    case false:
+                        self?.presentSignViewController()
+                    }
+                case .failure:
+                    self?.makeAlert(title: "인터넷 연결을 확인해주세요.")
                 }
             })
             .store(in: &self.cancellable)
