@@ -28,7 +28,7 @@ final class CreateReviewView: UIView, BaseViewType {
         $0.frame = CGRect(x: 0, y: 0, width: 150, height: 0)
     }
     private let closeButton = UIButton().then {
-        $0.setTitle("닫기", for: .normal)
+        $0.setTitle("취소", for: .normal)
         $0.setTitleColor(.mainPink, for: .normal)
         $0.titleLabel?.font = UIFont.preferredFont(forTextStyle: .headline, weight: .regular)
     }

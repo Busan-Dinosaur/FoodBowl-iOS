@@ -34,12 +34,12 @@ final class PhotoesSelectView: UIView, BaseViewType {
         $0.frame = CGRect(x: 0, y: 0, width: 150, height: 0)
     }
     private let closeButton = UIButton().then {
-        $0.setTitle("닫기", for: .normal)
+        $0.setTitle("취소", for: .normal)
         $0.setTitleColor(.mainPink, for: .normal)
         $0.titleLabel?.font = UIFont.preferredFont(forTextStyle: .headline, weight: .regular)
     }
     private let guidePhotoLabel = UILabel().then {
-        $0.text = "사진"
+        $0.text = "사진 등록"
         $0.font = .font(.regular, ofSize: 17)
         $0.textColor = .mainTextColor
     }
@@ -112,7 +112,7 @@ final class PhotoesSelectView: UIView, BaseViewType {
         )
 
         self.guidePhotoLabel.snp.makeConstraints {
-            $0.top.equalTo(self.safeAreaLayoutGuide.snp.top)
+            $0.top.equalTo(self.safeAreaLayoutGuide.snp.top).inset(SizeLiteral.verticalPadding)
             $0.leading.equalToSuperview().inset(SizeLiteral.horizantalPadding)
         }
 

@@ -67,7 +67,7 @@ final class PhotoesSelectViewController: UIViewController, PhotoPickerable, Help
                 
                 if self.reviewImages.isEmpty {
                     self.makeRequestAlert(
-                        title: "사진",
+                        title: "후기",
                         message: "사진없이 후기를 작성하시나요?",
                         okTitle: "네",
                         cancelTitle: "아니요",
