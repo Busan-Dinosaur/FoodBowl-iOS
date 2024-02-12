@@ -43,6 +43,9 @@ extension PhotoPickerable where Self: UIViewController {
             if !cancelled {
                 let images: [UIImage] = items.compactMap { item in
                     if case .photo(let photo) = item {
+                        if let location = photo.asset?.location?.coordinate {
+                            print(location)
+                        }
                         return photo.image
                     } else {
                         return nil
