@@ -27,4 +27,9 @@ final class CreateReviewRepositoryImpl: CreateReviewRepository {
     func createReview(request: CreateReviewRequestDTO, images: [Data]) async throws {
         let _ = await provider.request(.createReview(request: request, images: images))
     }
+    
+    func searchStoresByLocation(x: String, y: String) async throws -> PlaceDTO {
+        let response = await providerKakao.request(.searchStoresByLocation(x: x, y: y))
+        return try response.decode()
+    }
 }

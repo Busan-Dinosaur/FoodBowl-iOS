@@ -159,7 +159,7 @@ final class FindViewController: UIViewController, Keyboardable, Helperable {
         self.findView.plusButtonDidTapPublisher
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] _ in
-                self?.presentCreateReviewViewController()
+                self?.presentPhotoesSelectViewController()
             })
             .store(in: &self.cancellable)
     }
