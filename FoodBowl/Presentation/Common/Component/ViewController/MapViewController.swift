@@ -128,6 +128,11 @@ class MapViewController: UIViewController, Navigationable, Optionable, Helperabl
         self.setModalState()
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.tabBarController?.tabBar.frame.origin = CGPoint(x: 0, y: UIScreen.main.bounds.maxY - self.tabBarHeight)
+    }
+    
     // MARK: - func
     
     func setupLayout() {
