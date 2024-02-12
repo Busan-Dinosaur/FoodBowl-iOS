@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import MapKit
 
 // MARK: - PlaceDTO
 struct PlaceDTO: Codable {
@@ -18,7 +19,7 @@ struct PlaceItemDTO: Codable {
     let categoryGroupCode: String
     let categoryGroupName: String
     let categoryName: String
-    let distance, id, phone, placeName: String
+    let id, phone, placeName: String
     let placeURL: String
     let roadAddressName, longitude, latitude: String
 
@@ -27,7 +28,7 @@ struct PlaceItemDTO: Codable {
         case categoryGroupCode = "category_group_code"
         case categoryGroupName = "category_group_name"
         case categoryName = "category_name"
-        case distance, id, phone
+        case id, phone
         case placeName = "place_name"
         case placeURL = "place_url"
         case roadAddressName = "road_address_name"
@@ -45,11 +46,18 @@ extension PlaceItemDTO {
             address: self.roadAddressName,
             phone: self.phone,
             isBookmarked: false,
-            distance: self.distance.prettyDistance,
+            distance: self.getDistance(),
             url: self.placeURL,
             x: Double(self.longitude) ?? 0.0,
             y: Double(self.latitude) ?? 0.0
         )
+    }
+    
+    func getDistance() -> String {
+        guard let currentLoc = LocationManager.shared.manager.location else { return "" }
+        guard let latitude = Double(self.latitude), let longitude = Double(self.longitude) else { return "" }
+        let distance = currentLoc.distance(from: CLLocation(latitude:latitude, longitude: longitude))
+        return String(distance).prettyDistance
     }
     
     func getCategory() -> String {

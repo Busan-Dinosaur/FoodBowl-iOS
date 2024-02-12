@@ -6,13 +6,14 @@
 //
 
 import UIKit
+import MapKit
 import Photos
 
 import YPImagePicker
 
 protocol PhotoPickerable: UIGestureRecognizerDelegate {
     func photoesAddButtonDidTap()
-    func setPhotoes(images: [UIImage])
+    func setPhotoes(images: [UIImage], location: CLLocationCoordinate2D?)
     func setPhoto(image: UIImage)
 }
 
@@ -41,14 +42,18 @@ extension PhotoPickerable where Self: UIViewController {
         
         picker.didFinishPicking { [unowned picker] items, cancelled in
             if !cancelled {
+                var photoLocation: CLLocationCoordinate2D? = nil
                 let images: [UIImage] = items.compactMap { item in
                     if case .photo(let photo) = item {
+                        if let location = photo.asset?.location?.coordinate {
+                            photoLocation = location
+                        }
                         return photo.image
                     } else {
                         return nil
                     }
                 }
-                self.setPhotoes(images: images)
+                self.setPhotoes(images: images, location: photoLocation)
             }
             picker.dismiss(animated: true, completion: nil)
         }
@@ -95,6 +100,6 @@ extension PhotoPickerable where Self: UIViewController {
         present(picker, animated: true, completion: nil)
     }
     
-    func setPhotoes(images: [UIImage]) { }
+    func setPhotoes(images: [UIImage], location: CLLocationCoordinate2D?) { }
     func setPhoto(image: UIImage) { }
 }

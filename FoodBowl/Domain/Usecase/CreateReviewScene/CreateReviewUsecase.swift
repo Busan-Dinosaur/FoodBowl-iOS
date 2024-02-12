@@ -10,6 +10,7 @@ import Foundation
 protocol CreateReviewUsecase {
     func searchStores(x: String, y: String, keyword: String) async throws -> [Store]
     func searchUniv(x: String, y: String) async throws -> Store?
+    func searchStoresByLocation(x: String, y: String) async throws -> [Store]
     func createReview(request: CreateReviewRequestDTO, images: [Data]) async throws
 }
 
@@ -40,6 +41,15 @@ final class CreateReviewUsecaseImpl: CreateReviewUsecase {
         do {
             let placeDTO = try await self.repository.searchUniv(x: x, y: y)
             return placeDTO.documents.filter { $0.placeName.contains("대학교") || $0.placeName.contains("캠퍼스") }.first?.toStore()
+        } catch(let error) {
+            throw error
+        }
+    }
+    
+    func searchStoresByLocation(x: String, y: String) async throws -> [Store] {
+        do {
+            let placeDTO = try await self.repository.searchStoresByLocation(x: x, y: y)
+            return placeDTO.documents.map { $0.toStore() }
         } catch(let error) {
             throw error
         }

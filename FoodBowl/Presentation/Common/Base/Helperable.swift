@@ -6,15 +6,17 @@
 //
 
 import UIKit
+import MapKit
 
 protocol Helperable {
     func presentProfileViewController(id: Int)
     func presentUpdateProfileViewController()
     func presentStoreDetailViewController(id: Int)
     func presentReviewDetailViewController(id: Int)
-    func presentCreateReviewViewController()
+    func presentPhotoesSelectViewController()
+    func presentCreateReviewViewController(reviewImages: [UIImage], location: CLLocationCoordinate2D?)
     func presentUpdateReviewViewController(id: Int)
-    func presentSearchStoreViewController()
+    func presentSearchStoreViewController(location: CLLocationCoordinate2D?)
     func presentFollowerViewController(id: Int, isOwn: Bool)
     func presentFollowingViewController(id: Int)
     func presentShowWebViewController(url: String)
@@ -74,16 +76,28 @@ extension Helperable where Self: UIViewController {
         }
     }
     
-    func presentCreateReviewViewController() {
-        let repository = CreateReviewRepositoryImpl()
-        let usecase = CreateReviewUsecaseImpl(repository: repository)
-        let viewModel = CreateReviewViewModel(usecase: usecase)
-        let viewController = CreateReviewViewController(viewModel: viewModel)
+    func presentPhotoesSelectViewController() {
+        let viewController = PhotoesSelectViewController()
         let navigationController = UINavigationController(rootViewController: viewController)
         navigationController.modalPresentationStyle = .fullScreen
         
         DispatchQueue.main.async { [weak self] in
             self?.present(navigationController, animated: true)
+        }
+    }
+    
+    func presentCreateReviewViewController(reviewImages: [UIImage], location: CLLocationCoordinate2D?) {
+        let repository = CreateReviewRepositoryImpl()
+        let usecase = CreateReviewUsecaseImpl(repository: repository)
+        let viewModel = CreateReviewViewModel(
+            usecase: usecase,
+            reviewImages: reviewImages,
+            location: location
+        )
+        let viewController = CreateReviewViewController(viewModel: viewModel)
+        
+        DispatchQueue.main.async { [weak self] in
+            self?.navigationController?.pushViewController(viewController, animated: true)
         }
     }
     
@@ -103,10 +117,10 @@ extension Helperable where Self: UIViewController {
         }
     }
     
-    func presentSearchStoreViewController() {
+    func presentSearchStoreViewController(location: CLLocationCoordinate2D?) {
         let repository = CreateReviewRepositoryImpl()
         let usecase = CreateReviewUsecaseImpl(repository: repository)
-        let viewModel = SearchStoreViewModel(usecase: usecase)
+        let viewModel = SearchStoreViewModel(usecase: usecase, location: location)
         let viewController = SearchStoreViewController(viewModel: viewModel)
         viewController.delegate = self as? any SearchStoreViewControllerDelegate
         
