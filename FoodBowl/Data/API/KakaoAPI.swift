@@ -12,6 +12,7 @@ import Moya
 enum KakaoAPI {
     case searchStores(x: String, y: String, keyword: String)
     case searchUniv(x: String, y: String)
+    case searchStoresByLocation(x: String, y: String)
 }
 
 extension KakaoAPI: TargetType {
@@ -22,7 +23,12 @@ extension KakaoAPI: TargetType {
     }
 
     var path: String {
-        return "/v2/local/search/keyword"
+        switch self {
+        case .searchStores, .searchUniv:
+            return "/v2/local/search/keyword"
+        case .searchStoresByLocation:
+            return "/v2/local/search/category"
+        }
     }
 
     var method: Moya.Method {
@@ -53,6 +59,19 @@ extension KakaoAPI: TargetType {
                 "size": 1,
                 "radius": 1000,
                 "category_group_code": "SC4"
+            ]
+            return .requestParameters(
+                parameters: params,
+                encoding: URLEncoding.default
+            )
+        case .searchStoresByLocation(let x, let y):
+            let params: [String: Any] = [
+                "x": x,
+                "y": y,
+                "page": 1,
+                "size": 15,
+                "radius": 100,
+                "category_group_code": "FD6,CE7"
             ]
             return .requestParameters(
                 parameters: params,

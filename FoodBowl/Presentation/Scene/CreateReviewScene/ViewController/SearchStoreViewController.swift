@@ -70,6 +70,7 @@ final class SearchStoreViewController: UIViewController, Keyboardable {
     private func transformedOutput() -> SearchStoreViewModel.Output? {
         guard let viewModel = self.viewModel as? SearchStoreViewModel else { return nil }
         let input = SearchStoreViewModel.Input(
+            viewDidLoad: self.viewDidLoadPublisher,
             searchStores: self.searchStoresPublisher.eraseToAnyPublisher(),
             selectStore: self.selectStorePublisher.eraseToAnyPublisher()
         )
