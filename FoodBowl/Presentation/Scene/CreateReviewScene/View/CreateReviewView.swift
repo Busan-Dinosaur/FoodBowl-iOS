@@ -13,17 +13,6 @@ import Then
 
 final class CreateReviewView: UIView, BaseViewType {
     
-    private enum Size {
-        static let cellWidth: CGFloat = 100
-        static let cellHeight: CGFloat = cellWidth
-        static let collectionInset = UIEdgeInsets(
-            top: 0,
-            left: 20,
-            bottom: 0,
-            right: 20
-        )
-    }
-    
     // MARK: - ui component
     
     private let scrollView = UIScrollView().then {
@@ -67,30 +56,11 @@ final class CreateReviewView: UIView, BaseViewType {
         $0.makeBorderLayer(color: .grey002)
         $0.backgroundColor = .mainBackgroundColor
     }
-    private let guidePhotoLabel = UILabel().then {
-        $0.text = "사진"
-        $0.font = .font(.regular, ofSize: 17)
-        $0.textColor = .mainTextColor
-    }
-    private let collectionViewFlowLayout = UICollectionViewFlowLayout().then {
-        $0.scrollDirection = .horizontal
-        $0.sectionInset = Size.collectionInset
-        $0.itemSize = CGSize(width: Size.cellWidth, height: Size.cellHeight)
-        $0.minimumInteritemSpacing = 4
-    }
-    private lazy var listCollectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewFlowLayout).then {
-        $0.showsVerticalScrollIndicator = false
-        $0.register(PhotoPlusCollectionViewCell.self, forCellWithReuseIdentifier: PhotoPlusCollectionViewCell.className)
-        $0.register(PhotoCollectionViewCell.self, forCellWithReuseIdentifier: PhotoCollectionViewCell.className)
-        $0.backgroundColor = .clear
-        $0.showsHorizontalScrollIndicator = false
-    }
     private let completeButton = CompleteButton()
     
     // MARK: - property
     
     private let textViewStoreHolder = "100자 이내"
-    private var reviewImages = [UIImage]()
     
     var closeButtonDidTapPublisher: AnyPublisher<Void, Never> {
         return self.closeButton.buttonTapPublisher
@@ -100,7 +70,7 @@ final class CreateReviewView: UIView, BaseViewType {
     }
     let makeAlertPublisher = PassthroughSubject<String, Never>()
     let showStorePublisher = PassthroughSubject<String, Never>()
-    let completeButtonDidTapPublisher = PassthroughSubject<(String, [UIImage]), Never>()
+    let completeButtonDidTapPublisher = PassthroughSubject<String, Never>()
     
     // MARK: - init
     
@@ -119,18 +89,9 @@ final class CreateReviewView: UIView, BaseViewType {
     
     func configureNavigationBarItem(_ navigationController: UINavigationController) {
         let navigationItem = navigationController.topViewController?.navigationItem
-        let newFeedGuideLabel = navigationController.makeBarButtonItem(with: newFeedGuideLabel)
         let closeButton = navigationController.makeBarButtonItem(with: closeButton)
-        navigationItem?.leftBarButtonItem = newFeedGuideLabel
         navigationItem?.rightBarButtonItem = closeButton
-    }
-    
-    func configureDelegation(_ delegate: UICollectionViewDataSource) {
-        self.listCollectionView.dataSource = delegate
-    }
-    
-    func collectionView() -> UICollectionView {
-        return self.listCollectionView
+        navigationItem?.title = "후기 등록"
     }
     
     // MARK: - base func
@@ -155,9 +116,7 @@ final class CreateReviewView: UIView, BaseViewType {
             self.searchBarButton,
             self.selectedStoreView,
             self.guideCommentLabel,
-            self.commentTextView,
-            self.guidePhotoLabel,
-            self.listCollectionView
+            self.commentTextView
         )
 
         self.searchBarButton.snp.makeConstraints {
@@ -181,17 +140,6 @@ final class CreateReviewView: UIView, BaseViewType {
             $0.top.equalTo(self.guideCommentLabel.snp.bottom).offset(10)
             $0.leading.trailing.equalToSuperview().inset(SizeLiteral.horizantalPadding)
             $0.height.equalTo(100)
-        }
-
-        self.guidePhotoLabel.snp.makeConstraints {
-            $0.top.equalTo(self.commentTextView.snp.bottom).offset(30)
-            $0.leading.equalToSuperview().inset(SizeLiteral.horizantalPadding)
-        }
-
-        self.listCollectionView.snp.makeConstraints {
-            $0.top.equalTo(self.guidePhotoLabel.snp.bottom).offset(10)
-            $0.leading.trailing.equalToSuperview()
-            $0.height.equalTo(100)
             $0.bottom.equalToSuperview()
         }
 
@@ -214,13 +162,9 @@ final class CreateReviewView: UIView, BaseViewType {
                   let comment = self.commentTextView.text,
                   self.completeButton.isEnabled
             else { return }
-            self.completeButtonDidTapPublisher.send((comment, self.reviewImages))
+            self.completeButtonDidTapPublisher.send(comment)
         }
         self.completeButton.addAction(completeAction, for: .touchUpInside)
-    }
-    
-    func setImages(images: [UIImage]) {
-        self.reviewImages = images
     }
     
     func setStore(store: Store) {

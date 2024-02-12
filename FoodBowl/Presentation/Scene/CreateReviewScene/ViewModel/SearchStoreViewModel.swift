@@ -7,10 +7,13 @@
 
 import Combine
 import UIKit
+import MapKit
 
 final class SearchStoreViewModel: NSObject, BaseViewModelType {
     
     // MARK: - property
+    
+    private var location: CLLocationCoordinate2D? = nil
     
     private let usecase: CreateReviewUsecase
     private var cancellable: Set<AnyCancellable> = Set()
@@ -19,6 +22,7 @@ final class SearchStoreViewModel: NSObject, BaseViewModelType {
     private let isSelectedSubject: PassthroughSubject<Result<(Store, Store?), Error>, Never> = PassthroughSubject()
     
     struct Input {
+        let viewDidLoad: AnyPublisher<Void, Never>
         let searchStores: AnyPublisher<String, Never>
         let selectStore: AnyPublisher<Store, Never>
     }
@@ -29,6 +33,15 @@ final class SearchStoreViewModel: NSObject, BaseViewModelType {
     }
     
     func transform(from input: Input) -> Output {
+        input.viewDidLoad
+            .sink(receiveValue: { [weak self] _ in
+                guard let self = self else { return }
+                if let location = self.location {
+                    self.searchStoresByLocation(location: location)
+                }
+            })
+            .store(in: &self.cancellable)
+        
         input.searchStores
             .removeDuplicates()
             .sink(receiveValue: { [weak self] keyword in
@@ -50,11 +63,28 @@ final class SearchStoreViewModel: NSObject, BaseViewModelType {
     
     // MARK: - init
     
-    init(usecase: CreateReviewUsecase) {
+    init(
+        usecase: CreateReviewUsecase,
+        location: CLLocationCoordinate2D?
+    ) {
         self.usecase = usecase
+        self.location = location
     }
     
     // MARK: - network
+    
+    private func searchStoresByLocation(location: CLLocationCoordinate2D) {
+        Task {
+            do {
+                let deviceX = String(location.longitude)
+                let deviceY = String(location.latitude)
+                let stores = try await self.usecase.searchStoresByLocation(x: deviceX, y: deviceY)
+                self.storesSubject.send(.success(stores))
+            } catch(let error) {
+                self.storesSubject.send(.failure(error))
+            }
+        }
+    }
     
     private func searchStores(keyword: String) {
         Task {

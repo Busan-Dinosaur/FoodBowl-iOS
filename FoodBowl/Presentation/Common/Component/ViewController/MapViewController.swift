@@ -223,7 +223,7 @@ class MapViewController: UIViewController, Navigationable, Optionable, Helperabl
     
     func setupAction() {
         let plusAction = UIAction { [weak self] _ in
-            self?.presentCreateReviewViewController()
+            self?.presentPhotoesSelectViewController()
         }
         self.plusButton.addAction(plusAction, for: .touchUpInside)
         
