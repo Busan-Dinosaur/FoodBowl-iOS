@@ -12,6 +12,7 @@ final class CreateReviewViewModel: NSObject, BaseViewModelType {
     
     // MARK: - property
     
+    private var reviewImages = [UIImage]()
     private var store: Store?
     private var univ: Store?
     
@@ -22,7 +23,7 @@ final class CreateReviewViewModel: NSObject, BaseViewModelType {
     
     struct Input {
         let setStore: AnyPublisher<(Store, Store?), Never>
-        let completeButtonDidTap: AnyPublisher<(String, [UIImage]), Never>
+        let completeButtonDidTap: AnyPublisher<String, Never>
     }
     
     struct Output {
@@ -39,8 +40,8 @@ final class CreateReviewViewModel: NSObject, BaseViewModelType {
         
         input.completeButtonDidTap
             .throttle(for: .milliseconds(1000), scheduler: RunLoop.main, latest: false)
-            .sink(receiveValue: { [weak self] comment, images in
-                self?.createReview(comment: comment, images: images)
+            .sink(receiveValue: { [weak self] comment in
+                self?.createReview(comment: comment)
             })
             .store(in: &self.cancellable)
         
@@ -51,13 +52,14 @@ final class CreateReviewViewModel: NSObject, BaseViewModelType {
     
     // MARK: - init
     
-    init(usecase: CreateReviewUsecase) {
+    init(usecase: CreateReviewUsecase, reviewImages: [UIImage]) {
         self.usecase = usecase
+        self.reviewImages = reviewImages
     }
     
     // MARK: - network
     
-    private func createReview(comment: String, images: [UIImage]) {
+    private func createReview(comment: String) {
         Task {
             do {
                 guard let store = self.store else { return }
@@ -92,7 +94,7 @@ final class CreateReviewViewModel: NSObject, BaseViewModelType {
                         )
                     }
                 }
-                let imagesData = images.map { $0.jpegData(compressionQuality: 0.3)! }
+                let imagesData = self.reviewImages.map { $0.jpegData(compressionQuality: 0.3)! }
                 try await self.usecase.createReview(request: request, images: imagesData)
                 self.isCompletedSubject.send(.success(()))
             } catch(let error) {

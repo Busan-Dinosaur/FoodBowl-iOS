@@ -11,15 +11,13 @@ import UIKit
 import SnapKit
 import Then
 
-final class CreateReviewViewController: UIViewController, Keyboardable, PhotoPickerable, Helperable {
+final class CreateReviewViewController: UIViewController, Navigationable, Keyboardable, Helperable {
     
     // MARK: - ui component
     
     private let createReviewView: CreateReviewView = CreateReviewView()
     
     // MARK: - property
-    
-    private var reviewImages = [UIImage]()
     
     private let viewModel: any BaseViewModelType
     private var cancellable: Set<AnyCancellable> = Set()
@@ -52,9 +50,9 @@ final class CreateReviewViewController: UIViewController, Keyboardable, PhotoPic
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.configureDelegation()
         self.bindViewModel()
         self.bindUI()
+        self.setupNavigation()
         self.setupKeyboardGesture()
     }
     
@@ -141,57 +139,9 @@ final class CreateReviewViewController: UIViewController, Keyboardable, PhotoPic
     
     // MARK: - func
     
-    private func configureDelegation() {
-        self.createReviewView.configureDelegation(self)
-    }
-    
     private func configureNavigation() {
         guard let navigationController = self.navigationController else { return }
         self.createReviewView.configureNavigationBarItem(navigationController)
-    }
-    
-    @objc
-    private func photoPlusCellDidTap() {
-        self.photoesAddButtonDidTap()
-    }
-    
-    func setPhotoes(images: [UIImage]) {
-        self.reviewImages = images
-        self.createReviewView.setImages(images: images)
-        self.createReviewView.collectionView().reloadData()
-    }
-}
-
-extension CreateReviewViewController: UICollectionViewDataSource, UICollectionViewDelegate {
-    func collectionView(_: UICollectionView, numberOfItemsInSection _: Int) -> Int {
-        return self.reviewImages.count + 1
-    }
-
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if indexPath.item == 0 {
-            guard let cell = collectionView.dequeueReusableCell(
-                withReuseIdentifier: PhotoPlusCollectionViewCell.className,
-                for: indexPath
-            ) as? PhotoPlusCollectionViewCell else {
-                return UICollectionViewCell()
-            }
-            
-            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.photoPlusCellDidTap))
-            cell.addGestureRecognizer(tapGesture)
-
-            return cell
-        } else {
-            guard let cell = collectionView.dequeueReusableCell(
-                withReuseIdentifier: PhotoCollectionViewCell.className,
-                for: indexPath
-            ) as? PhotoCollectionViewCell else {
-                return UICollectionViewCell()
-            }
-
-            cell.imageView.image = self.reviewImages[indexPath.item - 1]
-
-            return cell
-        }
     }
 }
 

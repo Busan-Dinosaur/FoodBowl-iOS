@@ -12,7 +12,8 @@ protocol Helperable {
     func presentUpdateProfileViewController()
     func presentStoreDetailViewController(id: Int)
     func presentReviewDetailViewController(id: Int)
-    func presentCreateReviewViewController()
+    func presentPhotoesSelectViewController()
+    func presentCreateReviewViewController(reviewImages: [UIImage])
     func presentUpdateReviewViewController(id: Int)
     func presentSearchStoreViewController()
     func presentFollowerViewController(id: Int, isOwn: Bool)
@@ -74,16 +75,24 @@ extension Helperable where Self: UIViewController {
         }
     }
     
-    func presentCreateReviewViewController() {
-        let repository = CreateReviewRepositoryImpl()
-        let usecase = CreateReviewUsecaseImpl(repository: repository)
-        let viewModel = CreateReviewViewModel(usecase: usecase)
-        let viewController = CreateReviewViewController(viewModel: viewModel)
+    func presentPhotoesSelectViewController() {
+        let viewController = PhotoesSelectViewController()
         let navigationController = UINavigationController(rootViewController: viewController)
         navigationController.modalPresentationStyle = .fullScreen
         
         DispatchQueue.main.async { [weak self] in
             self?.present(navigationController, animated: true)
+        }
+    }
+    
+    func presentCreateReviewViewController(reviewImages: [UIImage]) {
+        let repository = CreateReviewRepositoryImpl()
+        let usecase = CreateReviewUsecaseImpl(repository: repository)
+        let viewModel = CreateReviewViewModel(usecase: usecase, reviewImages: reviewImages)
+        let viewController = CreateReviewViewController(viewModel: viewModel)
+        
+        DispatchQueue.main.async { [weak self] in
+            self?.navigationController?.pushViewController(viewController, animated: true)
         }
     }
     
