@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import MapKit
 
 protocol Helperable {
     func presentProfileViewController(id: Int)
@@ -13,9 +14,9 @@ protocol Helperable {
     func presentStoreDetailViewController(id: Int)
     func presentReviewDetailViewController(id: Int)
     func presentPhotoesSelectViewController()
-    func presentCreateReviewViewController(reviewImages: [UIImage])
+    func presentCreateReviewViewController(reviewImages: [UIImage], location: CLLocationCoordinate2D?)
     func presentUpdateReviewViewController(id: Int)
-    func presentSearchStoreViewController()
+    func presentSearchStoreViewController(location: CLLocationCoordinate2D?)
     func presentFollowerViewController(id: Int, isOwn: Bool)
     func presentFollowingViewController(id: Int)
     func presentShowWebViewController(url: String)
@@ -85,10 +86,14 @@ extension Helperable where Self: UIViewController {
         }
     }
     
-    func presentCreateReviewViewController(reviewImages: [UIImage]) {
+    func presentCreateReviewViewController(reviewImages: [UIImage], location: CLLocationCoordinate2D?) {
         let repository = CreateReviewRepositoryImpl()
         let usecase = CreateReviewUsecaseImpl(repository: repository)
-        let viewModel = CreateReviewViewModel(usecase: usecase, reviewImages: reviewImages)
+        let viewModel = CreateReviewViewModel(
+            usecase: usecase,
+            reviewImages: reviewImages,
+            location: location
+        )
         let viewController = CreateReviewViewController(viewModel: viewModel)
         
         DispatchQueue.main.async { [weak self] in
@@ -112,10 +117,10 @@ extension Helperable where Self: UIViewController {
         }
     }
     
-    func presentSearchStoreViewController() {
+    func presentSearchStoreViewController(location: CLLocationCoordinate2D?) {
         let repository = CreateReviewRepositoryImpl()
         let usecase = CreateReviewUsecaseImpl(repository: repository)
-        let viewModel = SearchStoreViewModel(usecase: usecase)
+        let viewModel = SearchStoreViewModel(usecase: usecase, location: location)
         let viewController = SearchStoreViewController(viewModel: viewModel)
         viewController.delegate = self as? any SearchStoreViewControllerDelegate
         

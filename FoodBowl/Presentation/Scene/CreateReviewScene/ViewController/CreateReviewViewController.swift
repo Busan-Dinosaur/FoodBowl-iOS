@@ -100,6 +100,8 @@ final class CreateReviewViewController: UIViewController, Navigationable, Keyboa
     }
     
     private func bindUI() {
+        guard let viewModel = self.viewModel as? CreateReviewViewModel else { return }
+        
         self.createReviewView.closeButtonDidTapPublisher
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] _ in
@@ -118,7 +120,7 @@ final class CreateReviewViewController: UIViewController, Navigationable, Keyboa
         self.createReviewView.searchBarButtonDidTapPublisher
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] _ in
-                self?.presentSearchStoreViewController()
+                self?.presentSearchStoreViewController(location: viewModel.location)
             })
             .store(in: &self.cancellable)
         

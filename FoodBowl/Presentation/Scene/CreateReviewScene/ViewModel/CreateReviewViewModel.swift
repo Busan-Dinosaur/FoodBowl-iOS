@@ -7,12 +7,14 @@
 
 import Combine
 import UIKit
+import MapKit
 
 final class CreateReviewViewModel: NSObject, BaseViewModelType {
     
     // MARK: - property
     
-    private var reviewImages = [UIImage]()
+    private var reviewImages: [UIImage] = []
+    var location: CLLocationCoordinate2D? = nil
     private var store: Store?
     private var univ: Store?
     
@@ -52,9 +54,14 @@ final class CreateReviewViewModel: NSObject, BaseViewModelType {
     
     // MARK: - init
     
-    init(usecase: CreateReviewUsecase, reviewImages: [UIImage]) {
+    init(
+        usecase: CreateReviewUsecase,
+        reviewImages: [UIImage],
+        location: CLLocationCoordinate2D?
+    ) {
         self.usecase = usecase
         self.reviewImages = reviewImages
+        self.location = location
     }
     
     // MARK: - network

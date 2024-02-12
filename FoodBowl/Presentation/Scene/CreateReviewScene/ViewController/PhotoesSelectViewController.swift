@@ -72,11 +72,11 @@ final class PhotoesSelectViewController: UIViewController, PhotoPickerable, Help
                         okTitle: "네",
                         cancelTitle: "아니요",
                         okAction: { _ in
-                            self.presentCreateReviewViewController(reviewImages: self.reviewImages)
+                            self.presentCreateReviewViewController(reviewImages: self.reviewImages, location: self.location)
                         }
                     )
                 } else {
-                    self.presentCreateReviewViewController(reviewImages: self.reviewImages)
+                    self.presentCreateReviewViewController(reviewImages: self.reviewImages, location: self.location)
                 }
             })
             .store(in: &self.cancellable)

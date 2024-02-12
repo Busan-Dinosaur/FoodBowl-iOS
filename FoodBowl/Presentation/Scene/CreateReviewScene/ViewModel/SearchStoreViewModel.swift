@@ -7,10 +7,13 @@
 
 import Combine
 import UIKit
+import MapKit
 
 final class SearchStoreViewModel: NSObject, BaseViewModelType {
     
     // MARK: - property
+    
+    private var location: CLLocationCoordinate2D? = nil
     
     private let usecase: CreateReviewUsecase
     private var cancellable: Set<AnyCancellable> = Set()
@@ -50,8 +53,12 @@ final class SearchStoreViewModel: NSObject, BaseViewModelType {
     
     // MARK: - init
     
-    init(usecase: CreateReviewUsecase) {
+    init(
+        usecase: CreateReviewUsecase,
+        location: CLLocationCoordinate2D?
+    ) {
         self.usecase = usecase
+        self.location = location
     }
     
     // MARK: - network
