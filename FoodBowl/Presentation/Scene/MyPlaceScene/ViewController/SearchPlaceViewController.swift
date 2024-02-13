@@ -19,11 +19,12 @@ final class SearchPlaceViewController: UIViewController, Keyboardable {
 
     // MARK: - property
     
-    private var univs = [Store]()
-    private var filteredUnivs = [Store]()
+    private var places = [Store]()
     
     private let viewModel: any BaseViewModelType
     private var cancellable: Set<AnyCancellable> = Set()
+    
+    let searchPlacesPublisher = PassthroughSubject<String, Never>()
     
     weak var delegate: SearchPlaceViewControllerDelegate?
 
@@ -68,7 +69,7 @@ final class SearchPlaceViewController: UIViewController, Keyboardable {
     private func transformedOutput() -> SearchMyPlaceViewModel.Output? {
         guard let viewModel = self.viewModel as? SearchMyPlaceViewModel else { return nil }
         let input = SearchMyPlaceViewModel.Input(
-            viewDidLoad: self.viewDidLoadPublisher
+            searchPlaces: self.searchPlacesPublisher.eraseToAnyPublisher()
         )
         return viewModel.transform(from: input)
     }
@@ -76,13 +77,12 @@ final class SearchPlaceViewController: UIViewController, Keyboardable {
     private func bindOutputToViewModel(_ output: SearchMyPlaceViewModel.Output?) {
         guard let output else { return }
 
-        output.univs
+        output.places
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] result in
                 switch result {
-                case .success(let univs):
-                    self?.univs = univs
-                    self?.filteredUnivs = univs
+                case .success(let places):
+                    self?.places = places
                     self?.searchPlaceView.tableView().reloadData()
                 case .failure(let error):
                     self?.makeErrorAlert(
@@ -116,8 +116,8 @@ final class SearchPlaceViewController: UIViewController, Keyboardable {
         self.searchPlaceView.configureNavigationBarItem(navigationController)
     }
     
-    private func setUniv(univ: Store) {
-        self.delegate?.setupPlace(place: univ)
+    private func setPlace(place: Store) {
+        self.delegate?.setupPlace(place: place)
         self.dismiss(animated: true)
     }
 }
@@ -133,23 +133,23 @@ extension SearchPlaceViewController: UISearchBarDelegate {
 
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchText == "" {
-            self.filteredUnivs = univs
+            self.places = []
+            self.searchPlaceView.tableView().reloadData()
         } else {
-            self.filteredUnivs = univs.filter { $0.name.contains(searchText) }
+            self.searchPlacesPublisher.send(searchText)
         }
-        self.searchPlaceView.listTableView.reloadData()
     }
 }
 
 extension SearchPlaceViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
-        if self.filteredUnivs.count == 0 {
-            self.searchPlaceView.listTableView.backgroundView = EmptyView(message: "등록된 학교가 없어요.")
+        if self.places.count == 0 {
+            self.searchPlaceView.tableView().backgroundView = EmptyView(message: "검색된 장소가 없어요.")
         } else {
-            self.searchPlaceView.listTableView.backgroundView = nil
+            self.searchPlaceView.tableView().backgroundView = nil
         }
         
-        return self.filteredUnivs.count
+        return self.places.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -158,7 +158,7 @@ extension SearchPlaceViewController: UITableViewDataSource, UITableViewDelegate 
         else { return UITableViewCell() }
 
         cell.selectionStyle = .none
-        cell.configureCell(filteredUnivs[indexPath.item])
+        cell.configureCell(self.places[indexPath.item])
 
         return cell
     }
@@ -168,7 +168,7 @@ extension SearchPlaceViewController: UITableViewDataSource, UITableViewDelegate 
     }
 
     func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
-        self.setUniv(univ: filteredUnivs[indexPath.item])
+        self.setPlace(place: self.places[indexPath.item])
     }
 }
 

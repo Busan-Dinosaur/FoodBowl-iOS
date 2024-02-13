@@ -8,5 +8,5 @@
 import Foundation
 
 protocol SearchPlaceRepository {
-    func getSchools() async throws -> SchoolDTO
+    func searchPlaces(x: String, y: String, keyword: String) async throws -> PlaceDTO
 }

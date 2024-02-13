@@ -18,7 +18,7 @@ final class MyPlaceViewController: MapViewController {
 
     private lazy var myPlaceTitleButton = UnivTitleButton().then {
         let action = UIAction { [weak self] _ in
-            let repository = SearchUnivRepositoryImpl()
+            let repository = SearchPlaceRepositoryImpl()
             let usecase = SearchPlaceUsecaseImpl(repository: repository)
             let viewModel = SearchMyPlaceViewModel(usecase: usecase)
             let viewController = SearchPlaceViewController(viewModel: viewModel)

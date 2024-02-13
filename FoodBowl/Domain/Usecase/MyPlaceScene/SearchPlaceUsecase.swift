@@ -6,7 +6,7 @@
 //
 
 protocol SearchPlaceUsecase {
-    func getSchools() async throws -> [Store]
+    func searchPlaces(x: String, y: String, keyword: String) async throws -> [Store]
 }
 
 final class SearchPlaceUsecaseImpl: SearchPlaceUsecase {
@@ -23,10 +23,10 @@ final class SearchPlaceUsecaseImpl: SearchPlaceUsecase {
     
     // MARK: - Public - func
     
-    func getSchools() async throws -> [Store] {
+    func searchPlaces(x: String, y: String, keyword: String) async throws -> [Store] {
         do {
-            let schoolDTO = try await self.repository.getSchools()
-            return schoolDTO.schools.map { $0.toStore() }
+            let placeDTO = try await self.repository.searchPlaces(x: x, y: y, keyword: keyword)
+            return placeDTO.documents.map { $0.toStore() }
         } catch(let error) {
             throw error
         }

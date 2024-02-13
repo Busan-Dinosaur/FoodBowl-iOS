@@ -199,13 +199,13 @@
 		CBDF0D062AE8E6B600177D38 /* YPImagePicker in Frameworks */ = {isa = PBXBuildFile; productRef = CBDF0D052AE8E6B600177D38 /* YPImagePicker */; };
 		CBDF110D2B5E9CD8007DA3E1 /* MyPlaceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDF110C2B5E9CD8007DA3E1 /* MyPlaceViewModel.swift */; };
 		CBDF11112B5E9D18007DA3E1 /* SearchPlaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDF11102B5E9D18007DA3E1 /* SearchPlaceView.swift */; };
-		CBDF11132B5E9D2E007DA3E1 /* SearchUnivViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDF11122B5E9D2E007DA3E1 /* SearchUnivViewModel.swift */; };
+		CBDF11132B5E9D2E007DA3E1 /* SearchPlaceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDF11122B5E9D2E007DA3E1 /* SearchPlaceViewModel.swift */; };
 		CBDF11192B5EA76D007DA3E1 /* MyPlaceUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDF11182B5EA76D007DA3E1 /* MyPlaceUsecase.swift */; };
 		CBDF111D2B5EA86A007DA3E1 /* MyPlaceRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDF111C2B5EA86A007DA3E1 /* MyPlaceRepositoryImpl.swift */; };
 		CBDF11212B5EA887007DA3E1 /* MyPlaceRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDF11202B5EA887007DA3E1 /* MyPlaceRepository.swift */; };
 		CBDF11252B5EAA12007DA3E1 /* SearchPlaceRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDF11242B5EAA12007DA3E1 /* SearchPlaceRepository.swift */; };
 		CBDF11272B5EAA38007DA3E1 /* SearchPlaceUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDF11262B5EAA38007DA3E1 /* SearchPlaceUsecase.swift */; };
-		CBDF11292B5EAA48007DA3E1 /* SearchUnivRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDF11282B5EAA48007DA3E1 /* SearchUnivRepositoryImpl.swift */; };
+		CBDF11292B5EAA48007DA3E1 /* SearchPlaceRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDF11282B5EAA48007DA3E1 /* SearchPlaceRepositoryImpl.swift */; };
 		CBDF112B2B5EABC0007DA3E1 /* FriendRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDF112A2B5EABC0007DA3E1 /* FriendRepository.swift */; };
 		CBDF112D2B5EABE7007DA3E1 /* ProfileRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDF112C2B5EABE7007DA3E1 /* ProfileRepository.swift */; };
 		CBDF11392B5EAD26007DA3E1 /* UpdateReviewRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDF11382B5EAD26007DA3E1 /* UpdateReviewRepository.swift */; };
@@ -419,13 +419,13 @@
 		CBDECAC92A6B2F6800259350 /* FeedNSCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedNSCollectionViewCell.swift; sourceTree = "<group>"; };
 		CBDF110C2B5E9CD8007DA3E1 /* MyPlaceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPlaceViewModel.swift; sourceTree = "<group>"; };
 		CBDF11102B5E9D18007DA3E1 /* SearchPlaceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPlaceView.swift; sourceTree = "<group>"; };
-		CBDF11122B5E9D2E007DA3E1 /* SearchUnivViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchUnivViewModel.swift; sourceTree = "<group>"; };
+		CBDF11122B5E9D2E007DA3E1 /* SearchPlaceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPlaceViewModel.swift; sourceTree = "<group>"; };
 		CBDF11182B5EA76D007DA3E1 /* MyPlaceUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPlaceUsecase.swift; sourceTree = "<group>"; };
 		CBDF111C2B5EA86A007DA3E1 /* MyPlaceRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPlaceRepositoryImpl.swift; sourceTree = "<group>"; };
 		CBDF11202B5EA887007DA3E1 /* MyPlaceRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPlaceRepository.swift; sourceTree = "<group>"; };
 		CBDF11242B5EAA12007DA3E1 /* SearchPlaceRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPlaceRepository.swift; sourceTree = "<group>"; };
 		CBDF11262B5EAA38007DA3E1 /* SearchPlaceUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPlaceUsecase.swift; sourceTree = "<group>"; };
-		CBDF11282B5EAA48007DA3E1 /* SearchUnivRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchUnivRepositoryImpl.swift; sourceTree = "<group>"; };
+		CBDF11282B5EAA48007DA3E1 /* SearchPlaceRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPlaceRepositoryImpl.swift; sourceTree = "<group>"; };
 		CBDF112A2B5EABC0007DA3E1 /* FriendRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendRepository.swift; sourceTree = "<group>"; };
 		CBDF112C2B5EABE7007DA3E1 /* ProfileRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileRepository.swift; sourceTree = "<group>"; };
 		CBDF11382B5EAD26007DA3E1 /* UpdateReviewRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateReviewRepository.swift; sourceTree = "<group>"; };
@@ -1409,7 +1409,7 @@
 			isa = PBXGroup;
 			children = (
 				CBDF110C2B5E9CD8007DA3E1 /* MyPlaceViewModel.swift */,
-				CBDF11122B5E9D2E007DA3E1 /* SearchUnivViewModel.swift */,
+				CBDF11122B5E9D2E007DA3E1 /* SearchPlaceViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -1544,7 +1544,7 @@
 			isa = PBXGroup;
 			children = (
 				CBDF111C2B5EA86A007DA3E1 /* MyPlaceRepositoryImpl.swift */,
-				CBDF11282B5EAA48007DA3E1 /* SearchUnivRepositoryImpl.swift */,
+				CBDF11282B5EAA48007DA3E1 /* SearchPlaceRepositoryImpl.swift */,
 			);
 			path = MyPlaceScene;
 			sourceTree = "<group>";
@@ -1772,7 +1772,7 @@
 				CB1579092AACCFCB00007183 /* CreateReviewRequestDTO.swift in Sources */,
 				CBEB00602ADC30AC00F6EFED /* Int+Extension.swift in Sources */,
 				CB73E00E2AB5F6BF005B6BF1 /* SearchStoreViewController.swift in Sources */,
-				CBDF11132B5E9D2E007DA3E1 /* SearchUnivViewModel.swift in Sources */,
+				CBDF11132B5E9D2E007DA3E1 /* SearchPlaceViewModel.swift in Sources */,
 				CBFB52612977C9AB0049E8BA /* FindResultViewController.swift in Sources */,
 				CB73E5732B341B3B0026E4D7 /* FollowerViewModel.swift in Sources */,
 				CB4A78A42B58301A0002136F /* CreateReviewUsecase.swift in Sources */,
@@ -1866,7 +1866,7 @@
 				CB1A7C5E295618A900C6431D /* SettingButton.swift in Sources */,
 				CB84CB082B60359300F4591A /* BaseScrollView.swift in Sources */,
 				CBD8D4732B4646B900445C98 /* BlameRepositroyImpl.swift in Sources */,
-				CBDF11292B5EAA48007DA3E1 /* SearchUnivRepositoryImpl.swift in Sources */,
+				CBDF11292B5EAA48007DA3E1 /* SearchPlaceRepositoryImpl.swift in Sources */,
 				CB2A44A62ADFC62D004A4126 /* PanZoomImageView.swift in Sources */,
 				CBDECAC82A6B2F0700259350 /* FeedListView.swift in Sources */,
 				CBDF114B2B5EB4BE007DA3E1 /* FriendUsecase.swift in Sources */,
