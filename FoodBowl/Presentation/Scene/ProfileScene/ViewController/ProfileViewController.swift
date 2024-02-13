@@ -16,7 +16,7 @@ final class ProfileViewController: MapViewController {
     // MARK: - ui component
     
     private let userNicknameLabel = PaddingLabel().then {
-        $0.font = UIFont.preferredFont(forTextStyle: .title2, weight: .bold)
+        $0.font = UIFont.preferredFont(forTextStyle: .title3, weight: .bold)
         $0.text = "그냥저냥"
         $0.textColor = .mainTextColor
         $0.padding = UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 0)

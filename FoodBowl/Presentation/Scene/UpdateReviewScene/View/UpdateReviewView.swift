@@ -21,7 +21,7 @@ final class UpdateReviewView: UIView, BaseViewType {
     }
     private let contentView = UIView()
     private let newFeedGuideLabel = PaddingLabel().then {
-        $0.font = UIFont.preferredFont(forTextStyle: .title2, weight: .bold)
+        $0.font = UIFont.preferredFont(forTextStyle: .title3, weight: .bold)
         $0.text = "후기 수정"
         $0.textColor = .mainTextColor
         $0.padding = UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 0)
