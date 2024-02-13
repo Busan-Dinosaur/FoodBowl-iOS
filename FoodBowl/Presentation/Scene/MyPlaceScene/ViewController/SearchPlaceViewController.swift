@@ -1,5 +1,5 @@
 //
-//  SearchUnivViewController.swift
+//  SearchPlaceViewController.swift
 //  FoodBowl
 //
 //  Created by COBY_PRO on 2023/09/18.
@@ -11,11 +11,11 @@ import UIKit
 import SnapKit
 import Then
 
-final class SearchUnivViewController: UIViewController, Keyboardable {
+final class SearchPlaceViewController: UIViewController, Keyboardable {
     
     // MARK: - ui component
     
-    private let searchUnivView: SearchUnivView = SearchUnivView()
+    private let searchPlaceView: SearchPlaceView = SearchPlaceView()
 
     // MARK: - property
     
@@ -25,7 +25,7 @@ final class SearchUnivViewController: UIViewController, Keyboardable {
     private let viewModel: any BaseViewModelType
     private var cancellable: Set<AnyCancellable> = Set()
     
-    weak var delegate: SearchUnivViewControllerDelegate?
+    weak var delegate: SearchPlaceViewControllerDelegate?
 
     // MARK: - init
     
@@ -46,7 +46,7 @@ final class SearchUnivViewController: UIViewController, Keyboardable {
     // MARK: - life cycle
     
     override func loadView() {
-        self.view = self.searchUnivView
+        self.view = self.searchPlaceView
     }
     
     override func viewDidLoad() {
@@ -65,15 +65,15 @@ final class SearchUnivViewController: UIViewController, Keyboardable {
         self.bindOutputToViewModel(output)
     }
 
-    private func transformedOutput() -> SearchUnivViewModel.Output? {
-        guard let viewModel = self.viewModel as? SearchUnivViewModel else { return nil }
-        let input = SearchUnivViewModel.Input(
+    private func transformedOutput() -> SearchMyPlaceViewModel.Output? {
+        guard let viewModel = self.viewModel as? SearchMyPlaceViewModel else { return nil }
+        let input = SearchMyPlaceViewModel.Input(
             viewDidLoad: self.viewDidLoadPublisher
         )
         return viewModel.transform(from: input)
     }
     
-    private func bindOutputToViewModel(_ output: SearchUnivViewModel.Output?) {
+    private func bindOutputToViewModel(_ output: SearchMyPlaceViewModel.Output?) {
         guard let output else { return }
 
         output.univs
@@ -83,7 +83,7 @@ final class SearchUnivViewController: UIViewController, Keyboardable {
                 case .success(let univs):
                     self?.univs = univs
                     self?.filteredUnivs = univs
-                    self?.searchUnivView.tableView().reloadData()
+                    self?.searchPlaceView.tableView().reloadData()
                 case .failure(let error):
                     self?.makeErrorAlert(
                         title: "에러",
@@ -95,7 +95,7 @@ final class SearchUnivViewController: UIViewController, Keyboardable {
     }
     
     private func bindUI() {
-        self.searchUnivView.closeButtonDidTapPublisher
+        self.searchPlaceView.closeButtonDidTapPublisher
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] _ in
                 self?.dismiss(animated: true)
@@ -106,25 +106,25 @@ final class SearchUnivViewController: UIViewController, Keyboardable {
     // MARK: - func
     
     private func configureDelegation() {
-        self.searchUnivView.searchBar.delegate = self
-        self.searchUnivView.listTableView.delegate = self
-        self.searchUnivView.listTableView.dataSource = self
+        self.searchPlaceView.searchBar.delegate = self
+        self.searchPlaceView.listTableView.delegate = self
+        self.searchPlaceView.listTableView.dataSource = self
     }
     
     private func configureNavigation() {
         guard let navigationController = self.navigationController else { return }
-        self.searchUnivView.configureNavigationBarItem(navigationController)
+        self.searchPlaceView.configureNavigationBarItem(navigationController)
     }
     
     private func setUniv(univ: Store) {
-        self.delegate?.setupUniv(univ: univ)
+        self.delegate?.setupPlace(place: univ)
         self.dismiss(animated: true)
     }
 }
 
-extension SearchUnivViewController: UISearchBarDelegate {
+extension SearchPlaceViewController: UISearchBarDelegate {
     private func dissmissKeyboard() {
-        self.searchUnivView.searchBar.resignFirstResponder()
+        self.searchPlaceView.searchBar.resignFirstResponder()
     }
 
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
@@ -137,16 +137,16 @@ extension SearchUnivViewController: UISearchBarDelegate {
         } else {
             self.filteredUnivs = univs.filter { $0.name.contains(searchText) }
         }
-        self.searchUnivView.listTableView.reloadData()
+        self.searchPlaceView.listTableView.reloadData()
     }
 }
 
-extension SearchUnivViewController: UITableViewDataSource, UITableViewDelegate {
+extension SearchPlaceViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
         if self.filteredUnivs.count == 0 {
-            self.searchUnivView.listTableView.backgroundView = EmptyView(message: "등록된 학교가 없어요.")
+            self.searchPlaceView.listTableView.backgroundView = EmptyView(message: "등록된 학교가 없어요.")
         } else {
-            self.searchUnivView.listTableView.backgroundView = nil
+            self.searchPlaceView.listTableView.backgroundView = nil
         }
         
         return self.filteredUnivs.count
@@ -172,6 +172,6 @@ extension SearchUnivViewController: UITableViewDataSource, UITableViewDelegate {
     }
 }
 
-protocol SearchUnivViewControllerDelegate: AnyObject {
-    func setupUniv(univ: Store)
+protocol SearchPlaceViewControllerDelegate: AnyObject {
+    func setupPlace(place: Store)
 }

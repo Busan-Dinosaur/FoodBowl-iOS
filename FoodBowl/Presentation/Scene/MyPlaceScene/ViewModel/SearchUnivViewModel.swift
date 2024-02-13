@@ -1,5 +1,5 @@
 //
-//  SearchUnivViewModel.swift
+//  SearchMyPlaceViewModel.swift
 //  FoodBowl
 //
 //  Created by Coby on 1/22/24.
@@ -8,11 +8,11 @@
 import Combine
 import UIKit
 
-final class SearchUnivViewModel: NSObject, BaseViewModelType {
+final class SearchMyPlaceViewModel: NSObject, BaseViewModelType {
     
     // MARK: - property
     
-    private let usecase: SearchUnivUsecase
+    private let usecase: SearchPlaceUsecase
     private var cancellable: Set<AnyCancellable> = Set()
     
     private let univsSubject: PassthroughSubject<Result<[Store], Error>, Never> = PassthroughSubject()
@@ -27,7 +27,7 @@ final class SearchUnivViewModel: NSObject, BaseViewModelType {
     
     // MARK: - init
     
-    init(usecase: SearchUnivUsecase) {
+    init(usecase: SearchPlaceUsecase) {
         self.usecase = usecase
     }
     

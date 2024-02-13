@@ -1,5 +1,5 @@
 //
-//  UnivUsecase.swift
+//  MyPlaceUsecase.swift
 //  FoodBowl
 //
 //  Created by Coby on 1/22/24.
@@ -7,22 +7,22 @@
 
 import Foundation
 
-protocol UnivUsecase {
+protocol MyPlaceUsecase {
     func getReviewsBySchool(request: GetReviewsBySchoolRequestDTO) async throws -> Reviews
     func getStoresBySchool(request: GetStoresBySchoolRequestDTO) async throws -> [Store]
     func createBookmark(storeId: Int) async throws
     func removeBookmark(storeId: Int) async throws
 }
 
-final class UnivUsecaseImpl: UnivUsecase {
+final class MyPlaceUsecaseImpl: MyPlaceUsecase {
     
     // MARK: - property
     
-    private let repository: UnivRepository
+    private let repository: MyPlaceRepository
     
     // MARK: - init
     
-    init(repository: UnivRepository) {
+    init(repository: MyPlaceRepository) {
         self.repository = repository
     }
     

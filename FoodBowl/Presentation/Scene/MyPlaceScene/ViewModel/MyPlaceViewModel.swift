@@ -1,5 +1,5 @@
 //
-//  UnivViewModel.swift
+//  MyPlaceViewModel.swift
 //  FoodBowl
 //
 //  Created by Coby on 1/22/24.
@@ -8,7 +8,7 @@
 import Combine
 import Foundation
 
-final class UnivViewModel: BaseViewModelType {
+final class MyPlaceViewModel: BaseViewModelType {
     
     // MARK: - property
     
@@ -19,10 +19,10 @@ final class UnivViewModel: BaseViewModelType {
     private var currentpageSize: Int = 20
     private var lastReviewId: Int?
     
-    private let usecase: UnivUsecase
+    private let usecase: MyPlaceUsecase
     private var cancellable = Set<AnyCancellable>()
     
-    private let univSubject: PassthroughSubject<(String, Double, Double), Never> = PassthroughSubject()
+    private let placeSubject: PassthroughSubject<(String, Double, Double), Never> = PassthroughSubject()
     private let storesSubject: PassthroughSubject<Result<[Store], Error>, Never> = PassthroughSubject()
     private let reviewsSubject: PassthroughSubject<Result<[Review], Error>, Never> = PassthroughSubject()
     private let moreReviewsSubject: PassthroughSubject<Result<[Review], Error>, Never> = PassthroughSubject()
@@ -32,7 +32,7 @@ final class UnivViewModel: BaseViewModelType {
     struct Input {
         let viewDidLoad: AnyPublisher<Void, Never>
         let setCategory: AnyPublisher<CategoryType?, Never>
-        let setUniv: AnyPublisher<Store, Never>
+        let setPlace: AnyPublisher<Store, Never>
         let customLocation: AnyPublisher<CustomLocationRequestDTO, Never>
         let bookmarkButtonDidTap: AnyPublisher<(Int, Bool), Never>
         let scrolledToBottom: AnyPublisher<Void, Never>
@@ -40,7 +40,7 @@ final class UnivViewModel: BaseViewModelType {
     }
     
     struct Output {
-        let univ: AnyPublisher<(String, Double, Double), Never>
+        let place: AnyPublisher<(String, Double, Double), Never>
         let stores: AnyPublisher<Result<[Store], Error>, Never>
         let reviews: AnyPublisher<Result<[Review], Error>, Never>
         let moreReviews: AnyPublisher<Result<[Review], Error>, Never>
@@ -49,7 +49,7 @@ final class UnivViewModel: BaseViewModelType {
     
     // MARK: - init
 
-    init(usecase: UnivUsecase) {
+    init(usecase: MyPlaceUsecase) {
         self.usecase = usecase
     }
     
@@ -74,9 +74,9 @@ final class UnivViewModel: BaseViewModelType {
             })
             .store(in: &self.cancellable)
         
-        input.setUniv
-            .sink(receiveValue: { [weak self] univ in
-                self?.setSchool(school: univ)
+        input.setPlace
+            .sink(receiveValue: { [weak self] place in
+                self?.setPlace(place: place)
             })
             .store(in: &self.cancellable)
         
@@ -116,7 +116,7 @@ final class UnivViewModel: BaseViewModelType {
             .store(in: &self.cancellable)
         
         return Output(
-            univ: self.univSubject.eraseToAnyPublisher(),
+            place: self.placeSubject.eraseToAnyPublisher(),
             stores: self.storesSubject.eraseToAnyPublisher(),
             reviews: self.reviewsSubject.eraseToAnyPublisher(),
             moreReviews: self.moreReviewsSubject.eraseToAnyPublisher(),
@@ -125,21 +125,21 @@ final class UnivViewModel: BaseViewModelType {
     }
     
     private func getSchool() {
-        if let schoolName = UserDefaultStorage.schoolName,
-           let schoolX = UserDefaultStorage.schoolX,
-           let schoolY = UserDefaultStorage.schoolY {
+        if let schoolName = UserDefaultStorage.placeName,
+           let schoolX = UserDefaultStorage.placeX,
+           let schoolY = UserDefaultStorage.placeY {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
-                self.univSubject.send((schoolName, schoolX, schoolY))
+                self.placeSubject.send((schoolName, schoolX, schoolY))
             }
         }
     }
     
-    private func setSchool(school: Store) {
-        UserDefaultHandler.setSchoolId(schoolId: school.id)
-        UserDefaultHandler.setSchoolName(schoolName: school.name)
-        UserDefaultHandler.setSchoolX(schoolX: school.x)
-        UserDefaultHandler.setSchoolY(schoolY: school.y)
-        self.univSubject.send((school.name, school.x, school.y))
+    private func setPlace(place: Store) {
+        UserDefaultHandler.setPlaceId(placeId: place.id)
+        UserDefaultHandler.setPlaceName(placeName: place.name)
+        UserDefaultHandler.setPlaceX(placeX: place.x)
+        UserDefaultHandler.setPlaceY(placeY: place.y)
+        self.placeSubject.send((place.name, place.x, place.y))
     }
     
     // MARK: - network
@@ -147,7 +147,7 @@ final class UnivViewModel: BaseViewModelType {
     private func getReviewsBySchool(lastReviewId: Int? = nil) {
         Task {
             do {
-                guard let location = self.location, let schoolId = UserDefaultStorage.schoolId else { return }
+                guard let location = self.location, let schoolId = UserDefaultStorage.placeId else { return }
                 if self.currentpageSize < self.pageSize { return }
                 
                 let reviews = try await self.usecase.getReviewsBySchool(request: GetReviewsBySchoolRequestDTO(
@@ -171,7 +171,7 @@ final class UnivViewModel: BaseViewModelType {
     private func getStoresBySchool() {
         Task {
             do {
-                guard let location = self.location, let schoolId = UserDefaultStorage.schoolId else { return }
+                guard let location = self.location, let schoolId = UserDefaultStorage.placeId else { return }
                 var stores = try await self.usecase.getStoresBySchool(request: GetStoresBySchoolRequestDTO(
                     location: location,
                     schoolId: schoolId

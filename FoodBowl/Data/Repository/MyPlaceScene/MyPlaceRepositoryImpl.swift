@@ -1,5 +1,5 @@
 //
-//  UnivRepositoryImpl.swift
+//  MyPlaceRepositoryImpl.swift
 //  FoodBowl
 //
 //  Created by Coby on 1/22/24.
@@ -9,7 +9,7 @@ import Foundation
 
 import Moya
 
-final class UnivRepositoryImpl: UnivRepository {
+final class MyPlaceRepositoryImpl: MyPlaceRepository {
     
     private let provider = MoyaProvider<ServiceAPI>()
     

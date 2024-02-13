@@ -10,7 +10,7 @@ import UIKit
 final class TabBarController: UITabBarController {
     private lazy var vc1 = UINavigationController(rootViewController: self.friendViewController)
     private lazy var vc2 = UINavigationController(rootViewController: self.findViewController)
-    private lazy var vc3 = UINavigationController(rootViewController: self.univViewController)
+    private lazy var vc3 = UINavigationController(rootViewController: self.myPlaceViewController)
     private lazy var vc4 = UINavigationController(rootViewController: self.profileViewController)
 
     override func viewDidLoad() {
@@ -21,12 +21,12 @@ final class TabBarController: UITabBarController {
         vc1.tabBarItem.title = "친구들"
 
         vc2.tabBarItem.image = ImageLiteral.search
-            .resize(to: CGSize(width: 20, height: 20))
-        vc2.tabBarItem.title = "찾기"
+            .resize(to: CGSize(width: 18, height: 18))
+        vc2.tabBarItem.title = "둘러보기"
 
-        vc3.tabBarItem.image = ImageLiteral.univ
+        vc3.tabBarItem.image = ImageLiteral.place
             .resize(to: CGSize(width: 20, height: 20))
-        vc3.tabBarItem.title = "대학가"
+        vc3.tabBarItem.title = "내장소"
 
         vc4.tabBarItem.image = ImageLiteral.profile
             .resize(to: CGSize(width: 20, height: 20))
@@ -66,11 +66,11 @@ extension TabBarController {
         return viewController
     }
     
-    var univViewController: UnivViewController {
-        let repository = UnivRepositoryImpl()
-        let usecase = UnivUsecaseImpl(repository: repository)
-        let viewModel = UnivViewModel(usecase: usecase)
-        let viewController = UnivViewController(viewModel: viewModel)
+    var myPlaceViewController: MyPlaceViewController {
+        let repository = MyPlaceRepositoryImpl()
+        let usecase = MyPlaceUsecaseImpl(repository: repository)
+        let viewModel = MyPlaceViewModel(usecase: usecase)
+        let viewController = MyPlaceViewController(viewModel: viewModel)
         return viewController
     }
     

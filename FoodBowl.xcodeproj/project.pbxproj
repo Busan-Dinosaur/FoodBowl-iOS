@@ -174,14 +174,14 @@
 		CBC747B82A83DC2000F171F5 /* KeychainSwift in Frameworks */ = {isa = PBXBuildFile; productRef = CBC747B72A83DC2000F171F5 /* KeychainSwift */; };
 		CBC747BA2A83DD6400F171F5 /* Configurations.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBC747B92A83DD6400F171F5 /* Configurations.swift */; };
 		CBCD0F7C2A66D9BC00A51B32 /* FriendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBCD0F7B2A66D9BC00A51B32 /* FriendViewController.swift */; };
-		CBCD0F7F2A66DA1600A51B32 /* UnivViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBCD0F7E2A66DA1600A51B32 /* UnivViewController.swift */; };
+		CBCD0F7F2A66DA1600A51B32 /* MyPlaceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBCD0F7E2A66DA1600A51B32 /* MyPlaceViewController.swift */; };
 		CBD036322ABA163F00E1AE9A /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = CBD036312ABA163F00E1AE9A /* Kingfisher */; };
 		CBD1B5EF2982A5AD00B0AD51 /* UpdateProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD1B5EE2982A5AD00B0AD51 /* UpdateProfileViewController.swift */; };
 		CBD1B5F12982B0A300B0AD51 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD1B5F02982B0A300B0AD51 /* SettingViewController.swift */; };
 		CBD1B5F42982D39B00B0AD51 /* SettingItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD1B5F32982D39B00B0AD51 /* SettingItemTableViewCell.swift */; };
 		CBD1B5F82982D9E100B0AD51 /* ForwardButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD1B5F72982D9E100B0AD51 /* ForwardButton.swift */; };
 		CBD1B6022984394A00B0AD51 /* FeedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD1B6012984394A00B0AD51 /* FeedButton.swift */; };
-		CBD641A32AB824A2009A05D8 /* SearchUnivViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD641A22AB824A2009A05D8 /* SearchUnivViewController.swift */; };
+		CBD641A32AB824A2009A05D8 /* SearchPlaceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD641A22AB824A2009A05D8 /* SearchPlaceViewController.swift */; };
 		CBD8D4712B4645F400445C98 /* BlameRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD8D4702B4645F400445C98 /* BlameRepository.swift */; };
 		CBD8D4732B4646B900445C98 /* BlameRepositroyImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD8D4722B4646B900445C98 /* BlameRepositroyImpl.swift */; };
 		CBDDF1402A6ADA3800AE3C50 /* EditButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDDF13F2A6ADA3800AE3C50 /* EditButton.swift */; };
@@ -197,15 +197,14 @@
 		CBDECAC82A6B2F0700259350 /* FeedListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDECAC72A6B2F0700259350 /* FeedListView.swift */; };
 		CBDECACA2A6B2F6800259350 /* FeedNSCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDECAC92A6B2F6800259350 /* FeedNSCollectionViewCell.swift */; };
 		CBDF0D062AE8E6B600177D38 /* YPImagePicker in Frameworks */ = {isa = PBXBuildFile; productRef = CBDF0D052AE8E6B600177D38 /* YPImagePicker */; };
-		CBDF110D2B5E9CD8007DA3E1 /* UnivViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDF110C2B5E9CD8007DA3E1 /* UnivViewModel.swift */; };
-		CBDF110F2B5E9D04007DA3E1 /* UnivView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDF110E2B5E9D04007DA3E1 /* UnivView.swift */; };
-		CBDF11112B5E9D18007DA3E1 /* SearchUnivView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDF11102B5E9D18007DA3E1 /* SearchUnivView.swift */; };
+		CBDF110D2B5E9CD8007DA3E1 /* MyPlaceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDF110C2B5E9CD8007DA3E1 /* MyPlaceViewModel.swift */; };
+		CBDF11112B5E9D18007DA3E1 /* SearchPlaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDF11102B5E9D18007DA3E1 /* SearchPlaceView.swift */; };
 		CBDF11132B5E9D2E007DA3E1 /* SearchUnivViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDF11122B5E9D2E007DA3E1 /* SearchUnivViewModel.swift */; };
-		CBDF11192B5EA76D007DA3E1 /* UnivUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDF11182B5EA76D007DA3E1 /* UnivUsecase.swift */; };
-		CBDF111D2B5EA86A007DA3E1 /* UnivRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDF111C2B5EA86A007DA3E1 /* UnivRepositoryImpl.swift */; };
-		CBDF11212B5EA887007DA3E1 /* UnivRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDF11202B5EA887007DA3E1 /* UnivRepository.swift */; };
-		CBDF11252B5EAA12007DA3E1 /* SearchUnivRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDF11242B5EAA12007DA3E1 /* SearchUnivRepository.swift */; };
-		CBDF11272B5EAA38007DA3E1 /* SearchUnivUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDF11262B5EAA38007DA3E1 /* SearchUnivUsecase.swift */; };
+		CBDF11192B5EA76D007DA3E1 /* MyPlaceUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDF11182B5EA76D007DA3E1 /* MyPlaceUsecase.swift */; };
+		CBDF111D2B5EA86A007DA3E1 /* MyPlaceRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDF111C2B5EA86A007DA3E1 /* MyPlaceRepositoryImpl.swift */; };
+		CBDF11212B5EA887007DA3E1 /* MyPlaceRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDF11202B5EA887007DA3E1 /* MyPlaceRepository.swift */; };
+		CBDF11252B5EAA12007DA3E1 /* SearchPlaceRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDF11242B5EAA12007DA3E1 /* SearchPlaceRepository.swift */; };
+		CBDF11272B5EAA38007DA3E1 /* SearchPlaceUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDF11262B5EAA38007DA3E1 /* SearchPlaceUsecase.swift */; };
 		CBDF11292B5EAA48007DA3E1 /* SearchUnivRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDF11282B5EAA48007DA3E1 /* SearchUnivRepositoryImpl.swift */; };
 		CBDF112B2B5EABC0007DA3E1 /* FriendRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDF112A2B5EABC0007DA3E1 /* FriendRepository.swift */; };
 		CBDF112D2B5EABE7007DA3E1 /* ProfileRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDF112C2B5EABE7007DA3E1 /* ProfileRepository.swift */; };
@@ -397,13 +396,13 @@
 		CBC747B42A83DBE300F171F5 /* KeychainManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainManager.swift; sourceTree = "<group>"; };
 		CBC747B92A83DD6400F171F5 /* Configurations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configurations.swift; sourceTree = "<group>"; };
 		CBCD0F7B2A66D9BC00A51B32 /* FriendViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendViewController.swift; sourceTree = "<group>"; };
-		CBCD0F7E2A66DA1600A51B32 /* UnivViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnivViewController.swift; sourceTree = "<group>"; };
+		CBCD0F7E2A66DA1600A51B32 /* MyPlaceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPlaceViewController.swift; sourceTree = "<group>"; };
 		CBD1B5EE2982A5AD00B0AD51 /* UpdateProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateProfileViewController.swift; sourceTree = "<group>"; };
 		CBD1B5F02982B0A300B0AD51 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		CBD1B5F32982D39B00B0AD51 /* SettingItemTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingItemTableViewCell.swift; sourceTree = "<group>"; };
 		CBD1B5F72982D9E100B0AD51 /* ForwardButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForwardButton.swift; sourceTree = "<group>"; };
 		CBD1B6012984394A00B0AD51 /* FeedButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedButton.swift; sourceTree = "<group>"; };
-		CBD641A22AB824A2009A05D8 /* SearchUnivViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchUnivViewController.swift; sourceTree = "<group>"; };
+		CBD641A22AB824A2009A05D8 /* SearchPlaceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPlaceViewController.swift; sourceTree = "<group>"; };
 		CBD8D4702B4645F400445C98 /* BlameRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlameRepository.swift; sourceTree = "<group>"; };
 		CBD8D4722B4646B900445C98 /* BlameRepositroyImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlameRepositroyImpl.swift; sourceTree = "<group>"; };
 		CBDDF13F2A6ADA3800AE3C50 /* EditButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditButton.swift; sourceTree = "<group>"; };
@@ -418,15 +417,14 @@
 		CBDECAC52A6B2B5900259350 /* MapButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapButton.swift; sourceTree = "<group>"; };
 		CBDECAC72A6B2F0700259350 /* FeedListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedListView.swift; sourceTree = "<group>"; };
 		CBDECAC92A6B2F6800259350 /* FeedNSCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedNSCollectionViewCell.swift; sourceTree = "<group>"; };
-		CBDF110C2B5E9CD8007DA3E1 /* UnivViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnivViewModel.swift; sourceTree = "<group>"; };
-		CBDF110E2B5E9D04007DA3E1 /* UnivView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnivView.swift; sourceTree = "<group>"; };
-		CBDF11102B5E9D18007DA3E1 /* SearchUnivView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchUnivView.swift; sourceTree = "<group>"; };
+		CBDF110C2B5E9CD8007DA3E1 /* MyPlaceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPlaceViewModel.swift; sourceTree = "<group>"; };
+		CBDF11102B5E9D18007DA3E1 /* SearchPlaceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPlaceView.swift; sourceTree = "<group>"; };
 		CBDF11122B5E9D2E007DA3E1 /* SearchUnivViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchUnivViewModel.swift; sourceTree = "<group>"; };
-		CBDF11182B5EA76D007DA3E1 /* UnivUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnivUsecase.swift; sourceTree = "<group>"; };
-		CBDF111C2B5EA86A007DA3E1 /* UnivRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnivRepositoryImpl.swift; sourceTree = "<group>"; };
-		CBDF11202B5EA887007DA3E1 /* UnivRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnivRepository.swift; sourceTree = "<group>"; };
-		CBDF11242B5EAA12007DA3E1 /* SearchUnivRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchUnivRepository.swift; sourceTree = "<group>"; };
-		CBDF11262B5EAA38007DA3E1 /* SearchUnivUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchUnivUsecase.swift; sourceTree = "<group>"; };
+		CBDF11182B5EA76D007DA3E1 /* MyPlaceUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPlaceUsecase.swift; sourceTree = "<group>"; };
+		CBDF111C2B5EA86A007DA3E1 /* MyPlaceRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPlaceRepositoryImpl.swift; sourceTree = "<group>"; };
+		CBDF11202B5EA887007DA3E1 /* MyPlaceRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPlaceRepository.swift; sourceTree = "<group>"; };
+		CBDF11242B5EAA12007DA3E1 /* SearchPlaceRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPlaceRepository.swift; sourceTree = "<group>"; };
+		CBDF11262B5EAA38007DA3E1 /* SearchPlaceUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPlaceUsecase.swift; sourceTree = "<group>"; };
 		CBDF11282B5EAA48007DA3E1 /* SearchUnivRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchUnivRepositoryImpl.swift; sourceTree = "<group>"; };
 		CBDF112A2B5EABC0007DA3E1 /* FriendRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendRepository.swift; sourceTree = "<group>"; };
 		CBDF112C2B5EABE7007DA3E1 /* ProfileRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileRepository.swift; sourceTree = "<group>"; };
@@ -639,7 +637,7 @@
 				CBDF113D2B5EAD9C007DA3E1 /* SignScene */,
 				CBDF113E2B5EADA4007DA3E1 /* FriendScene */,
 				CBDF11452B5EADF5007DA3E1 /* FindScene */,
-				CBDF113F2B5EADAA007DA3E1 /* UnivScene */,
+				CBDF113F2B5EADAA007DA3E1 /* MyPlaceScene */,
 				CBDF11402B5EADB8007DA3E1 /* ProfileScene */,
 				CB84CB012B602FF800F4591A /* ReviewDetailScene */,
 				CBDF11412B5EADC7007DA3E1 /* CreateReviewScene */,
@@ -711,7 +709,7 @@
 				CB981C28297A5A2900AF0167 /* SignScene */,
 				CBE6190D296C6423005295AF /* FriendScene */,
 				CB49256E2AB44D4400B66B68 /* FindScene */,
-				CBCD0F7D2A66DA0B00A51B32 /* UnivScene */,
+				CBCD0F7D2A66DA0B00A51B32 /* MyPlaceScene */,
 				CBADC2A52955A07B00E56C93 /* ProfileScene */,
 				CB84CAF12B602F8600F4591A /* ReviewDetailScene */,
 				CBADC2B02955A13800E56C93 /* CreateReviewScene */,
@@ -1106,7 +1104,7 @@
 				CB9332702AFCCCF100B7F87A /* SignScene */,
 				CBDF11322B5EAC56007DA3E1 /* FriendScene */,
 				CB8306732B599CAE00632789 /* FindScene */,
-				CBDF11152B5EA750007DA3E1 /* UnivScene */,
+				CBDF11152B5EA750007DA3E1 /* MyPlaceScene */,
 				CB78A80E2B5D0CA2007EC9C1 /* ProfileScene */,
 				CB84CAFE2B602FE700F4591A /* ReviewDetailScene */,
 				CB4A78A22B5830090002136F /* CreateReviewScene */,
@@ -1316,14 +1314,14 @@
 			path = API;
 			sourceTree = "<group>";
 		};
-		CBCD0F7D2A66DA0B00A51B32 /* UnivScene */ = {
+		CBCD0F7D2A66DA0B00A51B32 /* MyPlaceScene */ = {
 			isa = PBXGroup;
 			children = (
 				CBDF110A2B5E9C89007DA3E1 /* View */,
 				CBDDF13D2A6AD76900AE3C50 /* ViewController */,
 				CBDF110B2B5E9CBB007DA3E1 /* ViewModel */,
 			);
-			path = UnivScene;
+			path = MyPlaceScene;
 			sourceTree = "<group>";
 		};
 		CBD1B5F22982D38300B0AD51 /* Cell */ = {
@@ -1349,8 +1347,8 @@
 		CBDDF13D2A6AD76900AE3C50 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
-				CBCD0F7E2A66DA1600A51B32 /* UnivViewController.swift */,
-				CBD641A22AB824A2009A05D8 /* SearchUnivViewController.swift */,
+				CBCD0F7E2A66DA1600A51B32 /* MyPlaceViewController.swift */,
+				CBD641A22AB824A2009A05D8 /* SearchPlaceViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -1402,8 +1400,7 @@
 		CBDF110A2B5E9C89007DA3E1 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				CBDF110E2B5E9D04007DA3E1 /* UnivView.swift */,
-				CBDF11102B5E9D18007DA3E1 /* SearchUnivView.swift */,
+				CBDF11102B5E9D18007DA3E1 /* SearchPlaceView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1411,7 +1408,7 @@
 		CBDF110B2B5E9CBB007DA3E1 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				CBDF110C2B5E9CD8007DA3E1 /* UnivViewModel.swift */,
+				CBDF110C2B5E9CD8007DA3E1 /* MyPlaceViewModel.swift */,
 				CBDF11122B5E9D2E007DA3E1 /* SearchUnivViewModel.swift */,
 			);
 			path = ViewModel;
@@ -1426,13 +1423,13 @@
 			path = Cell;
 			sourceTree = "<group>";
 		};
-		CBDF11152B5EA750007DA3E1 /* UnivScene */ = {
+		CBDF11152B5EA750007DA3E1 /* MyPlaceScene */ = {
 			isa = PBXGroup;
 			children = (
-				CBDF11182B5EA76D007DA3E1 /* UnivUsecase.swift */,
-				CBDF11262B5EAA38007DA3E1 /* SearchUnivUsecase.swift */,
+				CBDF11182B5EA76D007DA3E1 /* MyPlaceUsecase.swift */,
+				CBDF11262B5EAA38007DA3E1 /* SearchPlaceUsecase.swift */,
 			);
-			path = UnivScene;
+			path = MyPlaceScene;
 			sourceTree = "<group>";
 		};
 		CBDF112E2B5EAC15007DA3E1 /* SignScene */ = {
@@ -1478,8 +1475,8 @@
 		CBDF11332B5EAC6A007DA3E1 /* UnivScene */ = {
 			isa = PBXGroup;
 			children = (
-				CBDF11202B5EA887007DA3E1 /* UnivRepository.swift */,
-				CBDF11242B5EAA12007DA3E1 /* SearchUnivRepository.swift */,
+				CBDF11202B5EA887007DA3E1 /* MyPlaceRepository.swift */,
+				CBDF11242B5EAA12007DA3E1 /* SearchPlaceRepository.swift */,
 			);
 			path = UnivScene;
 			sourceTree = "<group>";
@@ -1543,13 +1540,13 @@
 			path = FriendScene;
 			sourceTree = "<group>";
 		};
-		CBDF113F2B5EADAA007DA3E1 /* UnivScene */ = {
+		CBDF113F2B5EADAA007DA3E1 /* MyPlaceScene */ = {
 			isa = PBXGroup;
 			children = (
-				CBDF111C2B5EA86A007DA3E1 /* UnivRepositoryImpl.swift */,
+				CBDF111C2B5EA86A007DA3E1 /* MyPlaceRepositoryImpl.swift */,
 				CBDF11282B5EAA48007DA3E1 /* SearchUnivRepositoryImpl.swift */,
 			);
-			path = UnivScene;
+			path = MyPlaceScene;
 			sourceTree = "<group>";
 		};
 		CBDF11402B5EADB8007DA3E1 /* ProfileScene */ = {
@@ -1787,7 +1784,7 @@
 				CB8306652B59747000632789 /* FindViewModel.swift in Sources */,
 				CB5DD4312AB59130009FCB43 /* BookmarkMapButton.swift in Sources */,
 				CBDF112B2B5EABC0007DA3E1 /* FriendRepository.swift in Sources */,
-				CBCD0F7F2A66DA1600A51B32 /* UnivViewController.swift in Sources */,
+				CBCD0F7F2A66DA1600A51B32 /* MyPlaceViewController.swift in Sources */,
 				CBADEF422B5D648F0026FACA /* UpdateProfileView.swift in Sources */,
 				CB617A462AE25B1C000F7FFC /* SignView.swift in Sources */,
 				CB1BCAF72958B15B0021617D /* StoreInfoButton.swift in Sources */,
@@ -1815,7 +1812,7 @@
 				CB78A80B2B5D0A51007EC9C1 /* FollowRepository.swift in Sources */,
 				CBADEF3A2B5D5C770026FACA /* UpdateProfileUsecase.swift in Sources */,
 				CB2E82472AA74FB60016820E /* CheckNicknameDTO.swift in Sources */,
-				CBDF11212B5EA887007DA3E1 /* UnivRepository.swift in Sources */,
+				CBDF11212B5EA887007DA3E1 /* MyPlaceRepository.swift in Sources */,
 				CBBB97F12AB0832F00272CCE /* UpdateReviewViewModel.swift in Sources */,
 				CB51C8D12AD7E763002D0BA5 /* SearchStoreRequestDTO.swift in Sources */,
 				CBF9264F2B411F4E005E251B /* BlameView.swift in Sources */,
@@ -1846,14 +1843,14 @@
 				CB84CB032B60300C00F4591A /* ReviewDetailRepositoryImpl.swift in Sources */,
 				CBDECAC62A6B2B5900259350 /* MapButton.swift in Sources */,
 				CB4A789D2B581F8B0002136F /* CreateReviewView.swift in Sources */,
-				CBDF110D2B5E9CD8007DA3E1 /* UnivViewModel.swift in Sources */,
+				CBDF110D2B5E9CD8007DA3E1 /* MyPlaceViewModel.swift in Sources */,
 				CB617A5C2AE29FBA000F7FFC /* StoreDetailView.swift in Sources */,
 				CBB58284297440A600808B0B /* CategoryCollectionViewCell.swift in Sources */,
 				CBC73104295550A100C7F198 /* AppDelegate.swift in Sources */,
 				CB78A8122B5D0F07007EC9C1 /* Token.swift in Sources */,
 				CBE6190C296C635D005295AF /* FollowButton.swift in Sources */,
 				CBDF114D2B5EB77A007DA3E1 /* ProfileUsecase.swift in Sources */,
-				CBDF11112B5E9D18007DA3E1 /* SearchUnivView.swift in Sources */,
+				CBDF11112B5E9D18007DA3E1 /* SearchPlaceView.swift in Sources */,
 				CB5AF8A929854AA0003D16D4 /* MapAnnotation.swift in Sources */,
 				CBC158642AD80AF800FD263B /* SearchMemberRequestDTO.swift in Sources */,
 				CB83066E2B59951A00632789 /* FindRepositoryImpl.swift in Sources */,
@@ -1915,7 +1912,6 @@
 				CB84CB002B602FF300F4591A /* ReviewDetailUsecase.swift in Sources */,
 				CB5BFB192B3EF92700B35062 /* CustomError.swift in Sources */,
 				CBDF113C2B5EAD8D007DA3E1 /* UpdateReviewUsecase.swift in Sources */,
-				CBDF110F2B5E9D04007DA3E1 /* UnivView.swift in Sources */,
 				CBA62D3F2A6EC7B800AA0830 /* FindViewController.swift in Sources */,
 				CB4FBBF22978CFA90052D371 /* FollowerViewController.swift in Sources */,
 				CBADC28B29559BC900E56C93 /* UIColor+Extension.swift in Sources */,
@@ -1936,7 +1932,7 @@
 				CB07CE172B6BBABD001658E2 /* SettingViewModel.swift in Sources */,
 				CBA4C7DB2AB4840100FC9DD8 /* PaddingLabel.swift in Sources */,
 				CB07CE1D2B6BBB85001658E2 /* SettingRepositoryImpl.swift in Sources */,
-				CBDF11272B5EAA38007DA3E1 /* SearchUnivUsecase.swift in Sources */,
+				CBDF11272B5EAA38007DA3E1 /* SearchPlaceUsecase.swift in Sources */,
 				CBE61911296C6804005295AF /* OptionButton.swift in Sources */,
 				CBC19D4A2B6FA2FB009CB3AB /* EmptyView.swift in Sources */,
 				CBADC28E29559BC900E56C93 /* UIView+Extension.swift in Sources */,
@@ -1951,7 +1947,7 @@
 				CBDE390729719CB400DDE49A /* SelectedStoreView.swift in Sources */,
 				CB6D2F332B7282840049CF79 /* AppStoreReviewManager.swift in Sources */,
 				CBADC29129559BC900E56C93 /* UICollectionView+Extension.swift in Sources */,
-				CBD641A32AB824A2009A05D8 /* SearchUnivViewController.swift in Sources */,
+				CBD641A32AB824A2009A05D8 /* SearchPlaceViewController.swift in Sources */,
 				CB617A5E2AE2A386000F7FFC /* SizeLiteral.swift in Sources */,
 				CB78A80D2B5D0AFA007EC9C1 /* FollowRepositoryImpl.swift in Sources */,
 				CB16FD4E2B347C31006D18D6 /* FollowingViewModel.swift in Sources */,
@@ -1961,8 +1957,8 @@
 				CBEB005E2ADC2F8200F6EFED /* Double+Extension.swift in Sources */,
 				CB538EE42B79D3160044AA41 /* PhotoesSelectView.swift in Sources */,
 				CBB94BF62ADD0A4E00F44245 /* StoreDetailViewModel.swift in Sources */,
-				CBDF111D2B5EA86A007DA3E1 /* UnivRepositoryImpl.swift in Sources */,
-				CBDF11252B5EAA12007DA3E1 /* SearchUnivRepository.swift in Sources */,
+				CBDF111D2B5EA86A007DA3E1 /* MyPlaceRepositoryImpl.swift in Sources */,
+				CBDF11252B5EAA12007DA3E1 /* SearchPlaceRepository.swift in Sources */,
 				CBADC2AD2955A0FF00E56C93 /* ProfileViewController.swift in Sources */,
 				CB84CAFD2B602FE100F4591A /* ReviewDetailRepository.swift in Sources */,
 				CBBA9F1B2AB5691900BE37AE /* DownButton.swift in Sources */,
@@ -1976,7 +1972,7 @@
 				CBADEF382B5D5A710026FACA /* Option.swift in Sources */,
 				CBADC29629559BC900E56C93 /* UITableView+Extension.swift in Sources */,
 				CBE32D0E2ADE7648004CCCBE /* CategoryType.swift in Sources */,
-				CBDF11192B5EA76D007DA3E1 /* UnivUsecase.swift in Sources */,
+				CBDF11192B5EA76D007DA3E1 /* MyPlaceUsecase.swift in Sources */,
 				CB51C8C92AD7DFC9002D0BA5 /* ReviewDTO.swift in Sources */,
 				CBDF11492B5EB190007DA3E1 /* ProfileRepositoryImpl.swift in Sources */,
 				CB91E2A42B56D7B2008A0E8E /* StoreDetailUsecase.swift in Sources */,

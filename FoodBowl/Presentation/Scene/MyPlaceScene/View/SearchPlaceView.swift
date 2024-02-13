@@ -1,5 +1,5 @@
 //
-//  SearchUnivView.swift
+//  SearchPlaceView.swift
 //  FoodBowl
 //
 //  Created by Coby on 1/22/24.
@@ -11,7 +11,7 @@ import UIKit
 import SnapKit
 import Then
 
-final class SearchUnivView: UIView, BaseViewType {
+final class SearchPlaceView: UIView, BaseViewType {
     
     // MARK: - ui component
     

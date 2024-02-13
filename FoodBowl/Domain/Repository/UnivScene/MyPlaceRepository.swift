@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol UnivRepository {
+protocol MyPlaceRepository {
     func getReviewsBySchool(request: GetReviewsBySchoolRequestDTO) async throws -> ReviewDTO
     func getStoresBySchool(request: GetStoresBySchoolRequestDTO) async throws -> StoreDTO
     func createBookmark(storeId: Int) async throws

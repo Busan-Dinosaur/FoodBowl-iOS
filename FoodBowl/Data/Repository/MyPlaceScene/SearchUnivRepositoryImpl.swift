@@ -9,7 +9,7 @@ import Foundation
 
 import Moya
 
-final class SearchUnivRepositoryImpl: SearchUnivRepository {
+final class SearchUnivRepositoryImpl: SearchPlaceRepository {
     
     private let provider = MoyaProvider<ServiceAPI>()
     

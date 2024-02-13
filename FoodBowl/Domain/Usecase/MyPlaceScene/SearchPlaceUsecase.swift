@@ -1,23 +1,23 @@
 //
-//  SearchUnivUsecase.swift
+//  SearchPlaceUsecase.swift
 //  FoodBowl
 //
 //  Created by Coby on 1/22/24.
 //
 
-protocol SearchUnivUsecase {
+protocol SearchPlaceUsecase {
     func getSchools() async throws -> [Store]
 }
 
-final class SearchUnivUsecaseImpl: SearchUnivUsecase {
+final class SearchPlaceUsecaseImpl: SearchPlaceUsecase {
     
     // MARK: - property
     
-    private let repository: SearchUnivRepository
+    private let repository: SearchPlaceRepository
     
     // MARK: - init
     
-    init(repository: SearchUnivRepository) {
+    init(repository: SearchPlaceRepository) {
         self.repository = repository
     }
     

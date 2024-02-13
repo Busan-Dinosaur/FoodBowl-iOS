@@ -1,5 +1,5 @@
 //
-//  SearchUnivRepository.swift
+//  SearchPlaceRepository.swift
 //  FoodBowl
 //
 //  Created by Coby on 1/22/24.
@@ -7,6 +7,6 @@
 
 import Foundation
 
-protocol SearchUnivRepository {
+protocol SearchPlaceRepository {
     func getSchools() async throws -> SchoolDTO
 }
