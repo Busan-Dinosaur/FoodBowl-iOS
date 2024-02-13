@@ -32,7 +32,7 @@ final class UpdateProfileView: UIView, BaseViewType {
     
     private let nicknameLabel = UILabel().then {
         $0.text = "닉네임"
-        $0.font = .font(.regular, ofSize: 17)
+        $0.font = UIFont.preferredFont(forTextStyle: .body, weight: .medium)
         $0.textColor = .mainTextColor
     }
     private lazy var nicknameField = UITextField().then {
@@ -54,7 +54,7 @@ final class UpdateProfileView: UIView, BaseViewType {
     }
     private let introductionLabel = UILabel().then {
         $0.text = "한줄 소개"
-        $0.font = .font(.regular, ofSize: 17)
+        $0.font = UIFont.preferredFont(forTextStyle: .body, weight: .medium)
         $0.textColor = .mainTextColor
     }
     private lazy var introductionField = UITextField().then {

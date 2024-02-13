@@ -16,7 +16,7 @@ final class UnivTitleButton: UIButton, BaseViewType {
     
     let label = UILabel().then {
         $0.textColor = .mainTextColor
-        $0.font = .font(.regular, ofSize: 22)
+        $0.font = UIFont.preferredFont(forTextStyle: .title2, weight: .bold)
     }
     private let downButton = DownButton()
 

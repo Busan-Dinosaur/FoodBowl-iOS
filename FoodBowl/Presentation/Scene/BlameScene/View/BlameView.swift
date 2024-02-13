@@ -16,7 +16,7 @@ final class BlameView: UIView, BaseViewType {
     // MARK: - ui component
     
     private let blameGuideLabel = PaddingLabel().then {
-        $0.font = .font(.regular, ofSize: 22)
+        $0.font = UIFont.preferredFont(forTextStyle: .title2, weight: .bold)
         $0.text = "신고"
         $0.textColor = .mainTextColor
         $0.padding = UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 0)
@@ -29,7 +29,7 @@ final class BlameView: UIView, BaseViewType {
     }
     private let guideCommentLabel = UILabel().then {
         $0.text = "신고 내용"
-        $0.font = .font(.regular, ofSize: 17)
+        $0.font = UIFont.preferredFont(forTextStyle: .body, weight: .medium)
         $0.textColor = .mainTextColor
     }
     private lazy var commentTextView = UITextView().then {
