@@ -39,9 +39,15 @@ final class PhotoesSelectView: UIView, BaseViewType {
         $0.titleLabel?.font = UIFont.preferredFont(forTextStyle: .headline, weight: .regular)
     }
     private let guidePhotoLabel = UILabel().then {
-        $0.text = "사진 등록"
+        $0.text = "사진"
         $0.font = UIFont.preferredFont(forTextStyle: .body, weight: .medium)
         $0.textColor = .mainTextColor
+    }
+    private let guideDetailLabel = UILabel().then {
+        $0.text = "음식 사진을 등록하면, 자동으로 해당 가게가 검색됩니다."
+        $0.font = UIFont.preferredFont(forTextStyle: .footnote, weight: .regular)
+        $0.textColor = .subTextColor
+        $0.numberOfLines = 0
     }
     private let collectionViewFlowLayout = UICollectionViewFlowLayout().then {
         $0.scrollDirection = .horizontal
@@ -107,6 +113,7 @@ final class PhotoesSelectView: UIView, BaseViewType {
     func setupLayout() {
         self.addSubviews(
             self.guidePhotoLabel,
+            self.guideDetailLabel,
             self.listCollectionView,
             self.nextButton
         )
@@ -115,9 +122,14 @@ final class PhotoesSelectView: UIView, BaseViewType {
             $0.top.equalTo(self.safeAreaLayoutGuide.snp.top).inset(SizeLiteral.verticalPadding)
             $0.leading.equalToSuperview().inset(SizeLiteral.horizantalPadding)
         }
-
+        
+        self.guideDetailLabel.snp.makeConstraints {
+            $0.top.equalTo(self.guidePhotoLabel.snp.bottom).offset(4)
+            $0.leading.trailing.equalToSuperview().inset(SizeLiteral.horizantalPadding)
+        }
+        
         self.listCollectionView.snp.makeConstraints {
-            $0.top.equalTo(self.guidePhotoLabel.snp.bottom).offset(10)
+            $0.top.equalTo(self.guideDetailLabel.snp.bottom).offset(10)
             $0.leading.trailing.equalToSuperview()
             $0.height.equalTo(100)
         }
