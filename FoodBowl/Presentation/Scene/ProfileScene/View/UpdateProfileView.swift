@@ -179,17 +179,16 @@ final class UpdateProfileView: UIView, BaseViewType {
         let completeAction = UIAction { [weak self] _ in
             guard let self = self else { return }
             guard let nickname = self.nicknameField.text,
-                  let introduction = self.introductionField.text,
                   self.completeButton.isEnabled
             else { return }
-            self.completeButtonDidTapPublisher.send((nickname, introduction))
+            self.completeButtonDidTapPublisher.send((nickname, self.introductionField.text ?? ""))
         }
         self.completeButton.addAction(completeAction, for: .touchUpInside)
     }
     
     @objc
     private func textFieldDidChange(_ textField: UITextField) {
-        self.completeButton.isEnabled = !(self.nicknameField.text?.isEmpty ?? true) && !(self.introductionField.text?.isEmpty ?? true)
+        self.completeButton.isEnabled = !(self.nicknameField.text?.isEmpty ?? true)
     }
 }
 
@@ -231,6 +230,6 @@ extension UpdateProfileView {
         
         self.nicknameField.text = member.nickname
         self.introductionField.text = member.introduction
-        self.completeButton.isEnabled = member.nickname.count != 0 && member.introduction.count != 0
+        self.completeButton.isEnabled = member.nickname.count != 0
     }
 }
