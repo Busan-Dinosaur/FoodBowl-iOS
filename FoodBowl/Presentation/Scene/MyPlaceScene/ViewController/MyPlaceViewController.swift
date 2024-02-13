@@ -37,7 +37,24 @@ final class MyPlaceViewController: MapViewController {
     
     // MARK: - property
     
+    private var placeX: Double? = nil
+    private var placeY: Double? = nil
+    
     private let setPlacePublisher = PassthroughSubject<Store, Never>()
+    
+    override func configureUI() {
+        super.configureUI()
+        self.myPlaceButton.isHidden = false
+    }
+    
+    override func setupAction() {
+        super.setupAction()
+        
+        let buttonAction = UIAction { [weak self] _ in
+            self?.moveCameraToPlace()
+        }
+        self.myPlaceButton.addAction(buttonAction, for: .touchUpInside)
+    }
     
     // MARK: - func - bind
     
@@ -66,9 +83,11 @@ final class MyPlaceViewController: MapViewController {
         
         output.place
             .receive(on: DispatchQueue.main)
-            .sink(receiveValue: { [weak self] schoolName, schoolX, schoolY in
-                self?.myPlaceTitleButton.label.text = schoolName
-                self?.moveCameraToPlace(placeX: schoolX, placeY: schoolY)
+            .sink(receiveValue: { [weak self] placeName, placeX, placeY in
+                self?.myPlaceTitleButton.label.text = placeName
+                self?.placeX = placeX
+                self?.placeY = placeY
+                self?.moveCameraToPlace()
             })
             .store(in: &self.cancellable)
         
@@ -144,7 +163,9 @@ final class MyPlaceViewController: MapViewController {
         self.navigationItem.rightBarButtonItem = plusButton
     }
 
-    private func moveCameraToPlace(placeX: Double, placeY: Double) {
+    private func moveCameraToPlace() {
+        guard let placeX = self.placeX, let placeY = self.placeY else { return }
+        
         self.mapView.setRegion(
             MKCoordinateRegion(
                 center: CLLocationCoordinate2D(latitude: placeY, longitude: placeX),

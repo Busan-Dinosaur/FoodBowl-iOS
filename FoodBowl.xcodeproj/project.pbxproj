@@ -33,6 +33,7 @@
 		CB2E4F7F297702A800FD2566 /* StoreInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2E4F7E297702A800FD2566 /* StoreInfoTableViewCell.swift */; };
 		CB2E4F81297702B800FD2566 /* UserInfoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2E4F80297702B800FD2566 /* UserInfoCollectionViewCell.swift */; };
 		CB2E4F892977393700FD2566 /* FollowInfoButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2E4F882977393700FD2566 /* FollowInfoButton.swift */; };
+		CB2E5DC22B7BFF5D001968C3 /* MyPlaceButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2E5DC12B7BFF5D001968C3 /* MyPlaceButton.swift */; };
 		CB2E82412AA74A050016820E /* UpdateMemberProfileRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2E82402AA74A050016820E /* UpdateMemberProfileRequestDTO.swift */; };
 		CB2E82472AA74FB60016820E /* CheckNicknameDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2E82462AA74FB60016820E /* CheckNicknameDTO.swift */; };
 		CB40C6F82A83E812003E3F06 /* SignViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB40C6F72A83E812003E3F06 /* SignViewModel.swift */; };
@@ -259,6 +260,7 @@
 		CB2E4F7E297702A800FD2566 /* StoreInfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreInfoTableViewCell.swift; sourceTree = "<group>"; };
 		CB2E4F80297702B800FD2566 /* UserInfoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoCollectionViewCell.swift; sourceTree = "<group>"; };
 		CB2E4F882977393700FD2566 /* FollowInfoButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowInfoButton.swift; sourceTree = "<group>"; };
+		CB2E5DC12B7BFF5D001968C3 /* MyPlaceButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPlaceButton.swift; sourceTree = "<group>"; };
 		CB2E82402AA74A050016820E /* UpdateMemberProfileRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateMemberProfileRequestDTO.swift; sourceTree = "<group>"; };
 		CB2E82462AA74FB60016820E /* CheckNicknameDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckNicknameDTO.swift; sourceTree = "<group>"; };
 		CB40C6F72A83E812003E3F06 /* SignViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignViewModel.swift; sourceTree = "<group>"; };
@@ -1393,6 +1395,7 @@
 				CBDECAC52A6B2B5900259350 /* MapButton.swift */,
 				CBDECABD2A6B07DD00259350 /* BookmarkButton.swift */,
 				CB5DD4302AB59130009FCB43 /* BookmarkMapButton.swift */,
+				CB2E5DC12B7BFF5D001968C3 /* MyPlaceButton.swift */,
 			);
 			path = ImageButton;
 			sourceTree = "<group>";
@@ -1960,6 +1963,7 @@
 				CBDF111D2B5EA86A007DA3E1 /* MyPlaceRepositoryImpl.swift in Sources */,
 				CBDF11252B5EAA12007DA3E1 /* SearchPlaceRepository.swift in Sources */,
 				CBADC2AD2955A0FF00E56C93 /* ProfileViewController.swift in Sources */,
+				CB2E5DC22B7BFF5D001968C3 /* MyPlaceButton.swift in Sources */,
 				CB84CAFD2B602FE100F4591A /* ReviewDetailRepository.swift in Sources */,
 				CBBA9F1B2AB5691900BE37AE /* DownButton.swift in Sources */,
 				CB84CAF62B602FAC00F4591A /* ReviewDetailView.swift in Sources */,

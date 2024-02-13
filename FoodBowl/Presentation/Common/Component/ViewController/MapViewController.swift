@@ -54,6 +54,14 @@ class MapViewController: UIViewController, Navigationable, Optionable, Helperabl
         $0.layer.masksToBounds = true
         $0.isHidden = true
     }
+    let myPlaceButton = MyPlaceButton().then {
+        $0.layer.backgroundColor = UIColor.mainBackgroundColor.cgColor
+        $0.layer.borderColor = UIColor.grey002.cgColor
+        $0.layer.borderWidth = 1
+        $0.layer.cornerRadius = 10
+        $0.layer.masksToBounds = true
+        $0.isHidden = true
+    }
     let categoryListView = CategoryListView()
     let grabbarView = GrabbarView()
     let feedListView = FeedListView()
@@ -141,6 +149,7 @@ class MapViewController: UIViewController, Navigationable, Optionable, Helperabl
             self.categoryListView,
             self.trackingButton,
             self.bookmarkButton,
+            self.myPlaceButton,
             self.grabbarView,
             self.feedListView
         )
@@ -163,6 +172,12 @@ class MapViewController: UIViewController, Navigationable, Optionable, Helperabl
         }
         
         self.bookmarkButton.snp.makeConstraints {
+            $0.trailing.equalToSuperview().inset(10)
+            $0.top.equalTo(self.trackingButton.snp.bottom).offset(8)
+            $0.height.width.equalTo(40)
+        }
+        
+        self.myPlaceButton.snp.makeConstraints {
             $0.trailing.equalToSuperview().inset(10)
             $0.top.equalTo(self.trackingButton.snp.bottom).offset(8)
             $0.height.width.equalTo(40)

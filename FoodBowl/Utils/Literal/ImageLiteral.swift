@@ -18,6 +18,7 @@ enum ImageLiteral {
     static var profile: UIImage { .load(name: "profile") }
 
     static var bookmarkFill: UIImage { .load(name: "bookmark_fill") }
+    static var placeFill: UIImage { .load(name: "place_fill") }
 
     static var btnClose: UIImage { .load(systemName: "xmark") }
     static var btnSetting: UIImage { .load(name: "settings") }
