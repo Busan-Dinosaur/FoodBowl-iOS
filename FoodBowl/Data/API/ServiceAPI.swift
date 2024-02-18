@@ -46,6 +46,7 @@ enum ServiceAPI {
     case removeFollower(memberId: Int)
     case getFollowingMember(memberId: Int, page: Int, size: Int)
     case getFollowerMember(memberId: Int, page: Int, size: Int)
+    case getRecommendMember(page: Int, size: Int)
 }
 
 extension ServiceAPI: TargetType {
@@ -115,6 +116,8 @@ extension ServiceAPI: TargetType {
             return "/v1/follows/\(memberId)/followings"
         case .getFollowerMember(let memberId, _, _):
             return "/v1/follows/\(memberId)/followers"
+        case .getRecommendMember:
+            return "/v1/members/by-reviews"
         }
     }
 
@@ -435,6 +438,15 @@ extension ServiceAPI: TargetType {
                 encoding: URLEncoding.default
             )
         case .getFollowerMember(_, let page, let size):
+            let params: [String: Int] = [
+                "page": page,
+                "size": size
+            ]
+            return .requestParameters(
+                parameters: params,
+                encoding: URLEncoding.default
+            )
+        case .getRecommendMember(let page, let size):
             let params: [String: Int] = [
                 "page": page,
                 "size": size
