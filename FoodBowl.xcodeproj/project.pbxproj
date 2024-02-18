@@ -129,6 +129,7 @@
 		CB9B92722B8218A2001184BE /* RecommendRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB9B92712B8218A2001184BE /* RecommendRepositoryImpl.swift */; };
 		CB9B92752B8218E3001184BE /* RecommendRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB9B92742B8218E3001184BE /* RecommendRepository.swift */; };
 		CB9B92782B8219F7001184BE /* RecommendUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB9B92772B8219F7001184BE /* RecommendUsecase.swift */; };
+		CB9B927A2B8235BF001184BE /* FindButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB9B92792B8235BF001184BE /* FindButton.swift */; };
 		CBA4C7DB2AB4840100FC9DD8 /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA4C7DA2AB4840100FC9DD8 /* PaddingLabel.swift */; };
 		CBA4C7DD2AB49B4900FC9DD8 /* ReviewToggleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA4C7DC2AB49B4900FC9DD8 /* ReviewToggleButton.swift */; };
 		CBA62D3F2A6EC7B800AA0830 /* FindViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA62D3E2A6EC7B800AA0830 /* FindViewController.swift */; };
@@ -360,6 +361,7 @@
 		CB9B92712B8218A2001184BE /* RecommendRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendRepositoryImpl.swift; sourceTree = "<group>"; };
 		CB9B92742B8218E3001184BE /* RecommendRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendRepository.swift; sourceTree = "<group>"; };
 		CB9B92772B8219F7001184BE /* RecommendUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendUsecase.swift; sourceTree = "<group>"; };
+		CB9B92792B8235BF001184BE /* FindButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindButton.swift; sourceTree = "<group>"; };
 		CBA4C7DA2AB4840100FC9DD8 /* PaddingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddingLabel.swift; sourceTree = "<group>"; };
 		CBA4C7DC2AB49B4900FC9DD8 /* ReviewToggleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewToggleButton.swift; sourceTree = "<group>"; };
 		CBA62D3E2A6EC7B800AA0830 /* FindViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindViewController.swift; sourceTree = "<group>"; };
@@ -1459,6 +1461,7 @@
 				CBDECABD2A6B07DD00259350 /* BookmarkButton.swift */,
 				CB5DD4302AB59130009FCB43 /* BookmarkMapButton.swift */,
 				CB2E5DC12B7BFF5D001968C3 /* MyPlaceButton.swift */,
+				CB9B92792B8235BF001184BE /* FindButton.swift */,
 			);
 			path = ImageButton;
 			sourceTree = "<group>";
@@ -1979,6 +1982,7 @@
 				CB558E9A29746B5D00921943 /* PhotoPlusCollectionViewCell.swift in Sources */,
 				CB617A3E2AE248BB000F7FFC /* UIViewController+Keyboard.swift in Sources */,
 				CB78A8162B5D5511007EC9C1 /* SettingView.swift in Sources */,
+				CB9B927A2B8235BF001184BE /* FindButton.swift in Sources */,
 				CB84CB002B602FF300F4591A /* ReviewDetailUsecase.swift in Sources */,
 				CB5BFB192B3EF92700B35062 /* CustomError.swift in Sources */,
 				CBDF113C2B5EAD8D007DA3E1 /* UpdateReviewUsecase.swift in Sources */,
@@ -2202,7 +2206,7 @@
 				DEVELOPMENT_TEAM = 3Y8YH8GWMM;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = FoodBowl/App/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "풋볼";
+				INFOPLIST_KEY_CFBundleDisplayName = "푸드볼";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.food-and-drink";
 				INFOPLIST_KEY_NSCameraUsageDescription = "음식 사진을 찍기 위해, 권한이 필요합니다.";
 				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "맛집 겸색을 위해, 사용자의 위치가 필요합니다.";
@@ -2220,7 +2224,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.2;
+				MARKETING_VERSION = 1.2.0;
 				NONCE = wH_pSu5wSUHzoFPBUE9Q9ZRs3fcKzGSn;
 				PRODUCT_BUNDLE_IDENTIFIER = com.coby.FoodBowl;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2245,7 +2249,7 @@
 				DEVELOPMENT_TEAM = 3Y8YH8GWMM;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = FoodBowl/App/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "풋볼";
+				INFOPLIST_KEY_CFBundleDisplayName = "푸드볼";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.food-and-drink";
 				INFOPLIST_KEY_NSCameraUsageDescription = "음식 사진을 찍기 위해, 권한이 필요합니다.";
 				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "맛집 겸색을 위해, 사용자의 위치가 필요합니다.";
@@ -2263,7 +2267,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.2;
+				MARKETING_VERSION = 1.2.0;
 				NONCE = wH_pSu5wSUHzoFPBUE9Q9ZRs3fcKzGSn;
 				PRODUCT_BUNDLE_IDENTIFIER = com.coby.FoodBowl;
 				PRODUCT_NAME = "$(TARGET_NAME)";

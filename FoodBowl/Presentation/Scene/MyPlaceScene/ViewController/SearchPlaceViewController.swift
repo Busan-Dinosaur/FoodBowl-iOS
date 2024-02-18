@@ -144,7 +144,7 @@ extension SearchPlaceViewController: UISearchBarDelegate {
 extension SearchPlaceViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
         if self.places.count == 0 {
-            let emptyView = EmptyView(message: "검색된 장소가 없어요.")
+            let emptyView = EmptyView(message: "검색된 장소가 없어요.", isFind: false)
             emptyView.findButtonTapAction = { [weak self] _ in
                 self?.presentRecommendViewController()
             }

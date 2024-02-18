@@ -18,10 +18,7 @@ final class EmptyView: UIView, BaseViewType {
         $0.font = UIFont.preferredFont(forTextStyle: .subheadline, weight: .regular)
         $0.textColor = .subTextColor
     }
-    
-    let findButton = EditButton().then {
-        $0.label.text = "추천 친구 보기"
-    }
+    let findButton = FindButton()
     
     // MARK: - property
     
@@ -50,12 +47,12 @@ final class EmptyView: UIView, BaseViewType {
         
         self.emptyLabel.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.centerY.equalToSuperview().offset(-50)
+            $0.centerY.equalToSuperview().offset(-60)
         }
         
         self.findButton.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.top.equalTo(self.emptyLabel.snp.bottom).offset(20)
+            $0.top.equalTo(self.emptyLabel.snp.bottom).offset(4)
         }
     }
 

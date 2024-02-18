@@ -46,6 +46,8 @@ enum ImageLiteral {
     static var seafood: UIImage { .load(name: "seafood") }
     static var salad: UIImage { .load(name: "salad") }
     static var etc: UIImage { .load(name: "etc") }
+    
+    static var next: UIImage { .load(name: "next") }
 }
 
 extension UIImage {

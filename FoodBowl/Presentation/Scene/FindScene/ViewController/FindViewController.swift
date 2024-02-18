@@ -275,7 +275,7 @@ extension FindViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
         if self.scope == 0 {
             if self.stores.count == 0 {
-                let emptyView = EmptyView(message: "검색된 맛집이 없어요.")
+                let emptyView = EmptyView(message: "검색된 맛집이 없어요.", isFind: false)
                 emptyView.findButtonTapAction = { [weak self] _ in
                     self?.presentRecommendViewController()
                 }

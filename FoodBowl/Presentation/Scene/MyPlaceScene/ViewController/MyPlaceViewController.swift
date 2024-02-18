@@ -56,6 +56,13 @@ final class MyPlaceViewController: MapViewController {
         self.myPlaceButton.addAction(buttonAction, for: .touchUpInside)
     }
     
+    // MARK: - life cycle
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.emptyView.findButton.isHidden = true
+    }
+    
     // MARK: - func - bind
     
     override func bindViewModel() {

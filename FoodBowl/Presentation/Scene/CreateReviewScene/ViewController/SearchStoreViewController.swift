@@ -141,7 +141,7 @@ extension SearchStoreViewController: UISearchBarDelegate {
 extension SearchStoreViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
         if self.stores.count == 0 {
-            let emptyView = EmptyView(message: "검색된 가게가 없어요.")
+            let emptyView = EmptyView(message: "검색된 가게가 없어요.", isFind: false)
             emptyView.findButtonTapAction = { [weak self] _ in
                 self?.presentRecommendViewController()
             }
