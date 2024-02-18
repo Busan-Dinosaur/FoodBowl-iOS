@@ -60,6 +60,11 @@ final class ProfileViewController: MapViewController {
     
     // MARK: - life cycle
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.emptyView.findButton.isHidden = !self.isOwn
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.viewWillAppearPublisher.send(())
@@ -241,7 +246,7 @@ final class ProfileViewController: MapViewController {
         let followingAction = UIAction { [weak self] _ in
             guard let self = self else { return }
             guard let viewModel = self.viewModel as? ProfileViewModel else { return }
-            self.presentFollowingViewController(id: viewModel.memberId)
+            self.presentFollowingViewController(id: viewModel.memberId, isOwn: self.isOwn)
         }
         let followButtonAction = UIAction { [weak self] _ in
             guard let self = self else { return }

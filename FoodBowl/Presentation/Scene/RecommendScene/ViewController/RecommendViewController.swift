@@ -136,7 +136,7 @@ final class RecommendViewController: UIViewController, Navigationable, Helperabl
     // MARK: - func
     
     private func configureNavigation() {
-        self.title = "팔로잉"
+        self.title = "추천 친구"
     }
 }
 

@@ -11,7 +11,7 @@ import UIKit
 import SnapKit
 import Then
 
-final class SearchPlaceViewController: UIViewController, Keyboardable {
+final class SearchPlaceViewController: UIViewController, Keyboardable, Helperable {
     
     // MARK: - ui component
     
@@ -144,7 +144,12 @@ extension SearchPlaceViewController: UISearchBarDelegate {
 extension SearchPlaceViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
         if self.places.count == 0 {
-            self.searchPlaceView.tableView().backgroundView = EmptyView(message: "검색된 장소가 없어요.")
+            let emptyView = EmptyView(message: "검색된 장소가 없어요.")
+            emptyView.findButtonTapAction = { [weak self] _ in
+                self?.presentRecommendViewController()
+            }
+            
+            self.searchPlaceView.tableView().backgroundView = emptyView
         } else {
             self.searchPlaceView.tableView().backgroundView = nil
         }

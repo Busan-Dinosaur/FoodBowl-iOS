@@ -1,5 +1,5 @@
 //
-//  RecommendRepositroyImpl.swift
+//  RecommendRepositoryImpl.swift
 //  FoodBowl
 //
 //  Created by Coby on 2/18/24.
@@ -9,7 +9,7 @@ import Foundation
 
 import Moya
 
-final class RecommendRepositroyImpl: RecommendRepository {
+final class RecommendRepositoryImpl: RecommendRepository {
     
     private let provider = MoyaProvider<ServiceAPI>()
     

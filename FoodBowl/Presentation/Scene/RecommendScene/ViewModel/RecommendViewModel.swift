@@ -15,7 +15,6 @@ final class RecommendViewModel: BaseViewModelType {
     private let usecase: RecommendUsecase
     private var cancellable = Set<AnyCancellable>()
     
-    private let memberId: Int
     private let size: Int = 20
     private var currentPage: Int = 0
     private var currentSize: Int = 20
@@ -38,12 +37,8 @@ final class RecommendViewModel: BaseViewModelType {
     
     // MARK: - init
 
-    init(
-        usecase: RecommendUsecase,
-        memberId: Int
-    ) {
+    init(usecase: RecommendUsecase) {
         self.usecase = usecase
-        self.memberId = memberId
     }
     
     // MARK: - Public - func
