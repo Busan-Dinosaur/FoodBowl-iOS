@@ -22,7 +22,7 @@ final class CreateReviewViewController: UIViewController, Navigationable, Keyboa
     private let viewModel: any BaseViewModelType
     private var cancellable: Set<AnyCancellable> = Set()
     
-    let setStorePublisher = PassthroughSubject<(Store, Store?), Never>()
+    let setStorePublisher = PassthroughSubject<Store, Never>()
     
     weak var delegate: CreateReviewViewControllerDelegate?
     
@@ -148,8 +148,8 @@ final class CreateReviewViewController: UIViewController, Navigationable, Keyboa
 }
 
 extension CreateReviewViewController: SearchStoreViewControllerDelegate {
-    func setStore(store: Store, univ: Store?) {
-        self.setStorePublisher.send((store, univ))
+    func setStore(store: Store) {
+        self.setStorePublisher.send(store)
         self.createReviewView.setStore(store: store)
     }
 }

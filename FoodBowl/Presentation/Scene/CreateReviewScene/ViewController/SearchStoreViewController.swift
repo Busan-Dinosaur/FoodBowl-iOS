@@ -11,7 +11,7 @@ import UIKit
 import SnapKit
 import Then
 
-final class SearchStoreViewController: UIViewController, Keyboardable {
+final class SearchStoreViewController: UIViewController, Keyboardable, Helperable {
     
     // MARK: - ui component
     
@@ -25,7 +25,6 @@ final class SearchStoreViewController: UIViewController, Keyboardable {
     private var cancellable: Set<AnyCancellable> = Set()
     
     let searchStoresPublisher = PassthroughSubject<String, Never>()
-    let selectStorePublisher = PassthroughSubject<Store, Never>()
     
     weak var delegate: SearchStoreViewControllerDelegate?
     
@@ -71,8 +70,7 @@ final class SearchStoreViewController: UIViewController, Keyboardable {
         guard let viewModel = self.viewModel as? SearchStoreViewModel else { return nil }
         let input = SearchStoreViewModel.Input(
             viewDidLoad: self.viewDidLoadPublisher,
-            searchStores: self.searchStoresPublisher.eraseToAnyPublisher(),
-            selectStore: self.selectStorePublisher.eraseToAnyPublisher()
+            searchStores: self.searchStoresPublisher.eraseToAnyPublisher()
         )
         return viewModel.transform(from: input)
     }
@@ -87,23 +85,6 @@ final class SearchStoreViewController: UIViewController, Keyboardable {
                 case .success(let stores):
                     self?.stores = stores
                     self?.searchStoreView.tableView().reloadData()
-                case .failure(let error):
-                    self?.makeErrorAlert(
-                        title: "에러",
-                        error: error
-                    )
-                }
-            })
-            .store(in: &self.cancellable)
-        
-        output.isSelected
-            .receive(on: DispatchQueue.main)
-            .sink(receiveValue: { [weak self] result in
-                switch result {
-                case .success((let store, let univ)):
-                    self?.delegate?.setStore(store: store, univ: univ)
-                    self?.dissmissKeyboard()
-                    self?.navigationController?.popViewController(animated: true)
                 case .failure(let error):
                     self?.makeErrorAlert(
                         title: "에러",
@@ -160,7 +141,12 @@ extension SearchStoreViewController: UISearchBarDelegate {
 extension SearchStoreViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
         if self.stores.count == 0 {
-            self.searchStoreView.tableView().backgroundView = EmptyView(message: "검색된 가게가 없어요.")
+            let emptyView = EmptyView(message: "검색된 가게가 없어요.", isFind: false)
+            emptyView.findButtonTapAction = { [weak self] _ in
+                self?.presentRecommendViewController()
+            }
+            
+            self.searchStoreView.tableView().backgroundView = emptyView
         } else {
             self.searchStoreView.tableView().backgroundView = nil
         }
@@ -184,10 +170,12 @@ extension SearchStoreViewController: UITableViewDataSource, UITableViewDelegate 
     }
 
     func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
-        self.selectStorePublisher.send(self.stores[indexPath.item])
+        self.delegate?.setStore(store: self.stores[indexPath.item])
+        self.dissmissKeyboard()
+        self.navigationController?.popViewController(animated: true)
     }
 }
 
 protocol SearchStoreViewControllerDelegate: AnyObject {
-    func setStore(store: Store, univ: Store?)
+    func setStore(store: Store)
 }

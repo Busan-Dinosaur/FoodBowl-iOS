@@ -54,9 +54,22 @@ class MapViewController: UIViewController, Navigationable, Optionable, Helperabl
         $0.layer.masksToBounds = true
         $0.isHidden = true
     }
+    let myPlaceButton = MyPlaceButton().then {
+        $0.layer.backgroundColor = UIColor.mainBackgroundColor.cgColor
+        $0.layer.borderColor = UIColor.grey002.cgColor
+        $0.layer.borderWidth = 1
+        $0.layer.cornerRadius = 10
+        $0.layer.masksToBounds = true
+        $0.isHidden = true
+    }
     let categoryListView = CategoryListView()
     let grabbarView = GrabbarView()
     let feedListView = FeedListView()
+    lazy var emptyView = EmptyView(message: "해당 지역에 후기가 없어요.").then {
+        $0.findButtonTapAction = { [weak self] _ in
+            self?.presentRecommendViewController()
+        }
+    }
     
     // MARK: - property
     
@@ -141,6 +154,7 @@ class MapViewController: UIViewController, Navigationable, Optionable, Helperabl
             self.categoryListView,
             self.trackingButton,
             self.bookmarkButton,
+            self.myPlaceButton,
             self.grabbarView,
             self.feedListView
         )
@@ -163,6 +177,12 @@ class MapViewController: UIViewController, Navigationable, Optionable, Helperabl
         }
         
         self.bookmarkButton.snp.makeConstraints {
+            $0.trailing.equalToSuperview().inset(10)
+            $0.top.equalTo(self.trackingButton.snp.bottom).offset(8)
+            $0.height.width.equalTo(40)
+        }
+        
+        self.myPlaceButton.snp.makeConstraints {
             $0.trailing.equalToSuperview().inset(10)
             $0.top.equalTo(self.trackingButton.snp.bottom).offset(8)
             $0.height.width.equalTo(40)
@@ -312,7 +332,7 @@ extension MapViewController {
         self.snapshot.appendItems(items, toSection: .main)
         self.dataSource.applySnapshotUsingReloadData(self.snapshot) {
             if self.snapshot.numberOfItems == 0 {
-                self.feedListView.collectionView().backgroundView = EmptyView(message: "해당 지역에 후기가 없어요.")
+                self.feedListView.collectionView().backgroundView = self.emptyView
             } else {
                 self.feedListView.collectionView().backgroundView = nil
             }

@@ -11,7 +11,7 @@ import UIKit
 import SnapKit
 import Then
 
-final class FollowerViewController: UIViewController, Navigationable {
+final class FollowerViewController: UIViewController, Navigationable, Helperable {
     
     enum Section: CaseIterable {
         case main
@@ -199,7 +199,8 @@ extension FollowerViewController {
         self.snapshot.appendItems(items, toSection: .main)
         self.dataSource.applySnapshotUsingReloadData(self.snapshot) {
             if self.snapshot.numberOfItems == 0 {
-                self.followView.collectionView().backgroundView = EmptyView(message: "팔로워 중인 유저가 없어요.")
+                let emptyView = EmptyView( message: "팔로우 중인 유저가 없어요.", isFind: false)
+                self.followView.collectionView().backgroundView = emptyView
             } else {
                 self.followView.collectionView().backgroundView = nil
             }
@@ -234,19 +235,5 @@ extension FollowerViewController {
                 return
             }
         }
-    }
-}
-
-// MARK: - Helper
-extension FollowerViewController {
-    private func presentProfileViewController(id: Int) {
-        let repository = ProfileRepositoryImpl()
-        let usecase = ProfileUsecaseImpl(repository: repository)
-        let viewModel = ProfileViewModel(
-            usecase: usecase,
-            memberId: id
-        )
-        let viewController = ProfileViewController(viewModel: viewModel)
-        self.navigationController?.pushViewController(viewController, animated: true)
     }
 }

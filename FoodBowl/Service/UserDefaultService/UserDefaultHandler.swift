@@ -40,19 +40,19 @@ struct UserDefaultHandler {
         UserData.setValue(profileImageUrl, forKey: .profileImageUrl)
     }
     
-    static func setSchoolId(schoolId: Int) {
-        UserData.setValue(schoolId, forKey: .schoolId)
+    static func setPlaceId(placeId: Int) {
+        UserData.setValue(placeId, forKey: .placeId)
     }
     
-    static func setSchoolName(schoolName: String) {
-        UserData.setValue(schoolName, forKey: .schoolName)
+    static func setPlaceName(placeName: String) {
+        UserData.setValue(placeName, forKey: .placeName)
     }
     
-    static func setSchoolX(schoolX: Double) {
-        UserData.setValue(schoolX, forKey: .schoolX)
+    static func setPlaceX(placeX: Double) {
+        UserData.setValue(placeX, forKey: .placeX)
     }
     
-    static func setSchoolY(schoolY: Double) {
-        UserData.setValue(schoolY, forKey: .schoolY)
+    static func setPlaceY(placeY: Double) {
+        UserData.setValue(placeY, forKey: .placeY)
     }
 }

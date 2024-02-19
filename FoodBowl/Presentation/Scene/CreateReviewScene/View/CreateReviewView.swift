@@ -21,7 +21,7 @@ final class CreateReviewView: UIView, BaseViewType {
     }
     private let contentView = UIView()
     private let newFeedGuideLabel = PaddingLabel().then {
-        $0.font = .font(.regular, ofSize: 22)
+        $0.font = UIFont.preferredFont(forTextStyle: .title3, weight: .bold)
         $0.text = "후기 작성"
         $0.textColor = .mainTextColor
         $0.padding = UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 0)
@@ -38,7 +38,7 @@ final class CreateReviewView: UIView, BaseViewType {
     }
     private let guideCommentLabel = UILabel().then {
         $0.text = "한줄평"
-        $0.font = .font(.regular, ofSize: 17)
+        $0.font = UIFont.preferredFont(forTextStyle: .body, weight: .medium)
         $0.textColor = .mainTextColor
     }
     private lazy var commentTextView = UITextView().then {
