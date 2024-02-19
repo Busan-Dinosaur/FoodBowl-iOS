@@ -232,8 +232,13 @@ extension FindViewController {
         self.snapshot.deleteItems(previousReviewsData)
         self.snapshot.appendItems(items, toSection: .main)
         self.dataSource.applySnapshotUsingReloadData(self.snapshot) {
+            let emptyView = EmptyView(message: "사진이 첨부된 후기가 없어요.")
+            emptyView.findButtonTapAction = { [weak self] _ in
+                self?.presentRecommendViewController()
+            }
+            
             if self.snapshot.numberOfItems == 0 {
-                self.findView.collectionView().backgroundView = EmptyView(message: "사진이 첨부된 후기가 없어요.")
+                self.findView.collectionView().backgroundView = emptyView
             } else {
                 self.findView.collectionView().backgroundView = nil
             }
@@ -270,7 +275,12 @@ extension FindViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
         if self.scope == 0 {
             if self.stores.count == 0 {
-                self.findView.findResultViewController.findResultView.listTableView.backgroundView = EmptyView(message: "검색된 맛집이 없어요.")
+                let emptyView = EmptyView(message: "검색된 맛집이 없어요.", isFind: false)
+                emptyView.findButtonTapAction = { [weak self] _ in
+                    self?.presentRecommendViewController()
+                }
+                
+                self.findView.findResultViewController.findResultView.listTableView.backgroundView = emptyView
             } else {
                 self.findView.findResultViewController.findResultView.listTableView.backgroundView = nil
             }
@@ -278,7 +288,12 @@ extension FindViewController: UITableViewDataSource, UITableViewDelegate {
             return self.stores.count
         } else {
             if self.members.count == 0 {
-                self.findView.findResultViewController.findResultView.listTableView.backgroundView = EmptyView(message: "검색된 유저가 없어요.")
+                let emptyView = EmptyView(message: "검색된 유저가 없어요.")
+                emptyView.findButtonTapAction = { [weak self] _ in
+                    self?.presentRecommendViewController()
+                }
+                
+                self.findView.findResultViewController.findResultView.listTableView.backgroundView = emptyView
             } else {
                 self.findView.findResultViewController.findResultView.listTableView.backgroundView = nil
             }

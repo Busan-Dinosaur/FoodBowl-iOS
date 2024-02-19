@@ -15,13 +15,3 @@ extension UIFont {
         return metrics.scaledFont(for: font)
     }
 }
-
-enum AppFontName: String {
-    case regular = "BMJUAOTF"
-}
-
-extension UIFont {
-    static func font(_ style: AppFontName, ofSize size: CGFloat) -> UIFont {
-        return UIFont(name: style.rawValue, size: size)!
-    }
-}

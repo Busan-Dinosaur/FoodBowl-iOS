@@ -16,6 +16,7 @@ final class FollowingViewModel: BaseViewModelType {
     private var cancellable = Set<AnyCancellable>()
     
     private let memberId: Int
+    let isOwn: Bool
     private let size: Int = 20
     private var currentPage: Int = 0
     private var currentSize: Int = 20
@@ -40,10 +41,12 @@ final class FollowingViewModel: BaseViewModelType {
 
     init(
         usecase: FollowUsecase,
-        memberId: Int
+        memberId: Int,
+        isOwn: Bool = false
     ) {
         self.usecase = usecase
         self.memberId = memberId
+        self.isOwn = isOwn
     }
     
     // MARK: - Public - func
@@ -88,8 +91,6 @@ final class FollowingViewModel: BaseViewModelType {
                     page: self.currentPage,
                     size: self.size
                 )
-                self.followingsSubject.send(.success(members.content))
-                
                 self.currentPage = members.currentPage
                 self.currentSize = members.currentSize
                 

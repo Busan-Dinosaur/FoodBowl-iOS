@@ -32,8 +32,8 @@ final class FindView: UIView, BaseViewType {
     
     private let plusButton = PlusButton()
     private let findGuideLabel = PaddingLabel().then {
-        $0.font = .font(.regular, ofSize: 22)
-        $0.text = "찾기"
+        $0.font = UIFont.preferredFont(forTextStyle: .title3, weight: .bold)
+        $0.text = "둘러보기"
         $0.textColor = .mainTextColor
         $0.padding = UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 0)
         $0.frame = CGRect(x: 0, y: 0, width: 150, height: 0)

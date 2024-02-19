@@ -23,12 +23,12 @@ enum ServiceAPI {
     case getReviewsByFollowing(request: GetReviewsRequestDTO)
     case getReviewsByBookmark(request: GetReviewsRequestDTO)
     case getReviewsByStore(request: GetReviewsByStoreRequestDTO)
-    case getReviewsBySchool(request: GetReviewsBySchoolRequestDTO)
+    case getReviewsByBound(request: GetReviewsRequestDTO)
     case getReviewsByMember(request: GetReviewsByMemberRequestDTO)
     case getReviewsByFeed(request: GetReviewsByFeedRequestDTO)
     
     case getStoresBySearch(request: SearchStoreRequestDTO)
-    case getStoresBySchool(request: GetStoresBySchoolRequestDTO)
+    case getStoresByBound(request: CustomLocationRequestDTO)
     case getStoresByMember(request: GetStoresByMemberRequestDTO)
     case getStoresByFollowing(request: CustomLocationRequestDTO)
     case getStoresByBookmark(request: CustomLocationRequestDTO)
@@ -46,6 +46,7 @@ enum ServiceAPI {
     case removeFollower(memberId: Int)
     case getFollowingMember(memberId: Int, page: Int, size: Int)
     case getFollowerMember(memberId: Int, page: Int, size: Int)
+    case getRecommendMember(page: Int, size: Int)
 }
 
 extension ServiceAPI: TargetType {
@@ -75,8 +76,8 @@ extension ServiceAPI: TargetType {
             return "/v1/reviews/\(request.id)"
         case .getReviewsByStore:
             return "/v1/reviews/stores"
-        case .getReviewsBySchool:
-            return "/v1/reviews/schools"
+        case .getReviewsByBound:
+            return "/v1/reviews/bounds"
         case .getReviewsByMember:
             return "/v1/reviews/members"
         case .getReviewsByFollowing:
@@ -87,8 +88,8 @@ extension ServiceAPI: TargetType {
             return "/v1/reviews/feeds"
         case .getStoresBySearch:
             return "/v1/stores/search"
-        case .getStoresBySchool:
-            return "/v1/stores/schools"
+        case .getStoresByBound:
+            return "/v1/stores/bounds"
         case .getStoresByMember:
             return "/v1/stores/members"
         case .getStoresByFollowing:
@@ -115,6 +116,8 @@ extension ServiceAPI: TargetType {
             return "/v1/follows/\(memberId)/followings"
         case .getFollowerMember(let memberId, _, _):
             return "/v1/follows/\(memberId)/followers"
+        case .getRecommendMember:
+            return "/v1/members/by-reviews"
         }
     }
 
@@ -223,9 +226,8 @@ extension ServiceAPI: TargetType {
                 parameters: params,
                 encoding: URLEncoding.default
             )
-        case .getReviewsBySchool(let request):
+        case .getReviewsByBound(let request):
             var params: [String: Any] = [
-                "schoolId": request.schoolId,
                 "x": request.location.x,
                 "y": request.location.y,
                 "deltaX": request.location.deltaX,
@@ -343,13 +345,12 @@ extension ServiceAPI: TargetType {
                 parameters: params,
                 encoding: URLEncoding.default
             )
-        case .getStoresBySchool(let request):
+        case .getStoresByBound(let request):
             let params: [String: Any] = [
-                "x": request.location.x,
-                "y": request.location.y,
-                "deltaX": request.location.deltaX,
-                "deltaY": request.location.deltaY,
-                "schoolId": request.schoolId
+                "x": request.x,
+                "y": request.y,
+                "deltaX": request.deltaX,
+                "deltaY": request.deltaY
             ]
             return .requestParameters(
                 parameters: params,
@@ -435,6 +436,15 @@ extension ServiceAPI: TargetType {
                 encoding: URLEncoding.default
             )
         case .getFollowerMember(_, let page, let size):
+            let params: [String: Int] = [
+                "page": page,
+                "size": size
+            ]
+            return .requestParameters(
+                parameters: params,
+                encoding: URLEncoding.default
+            )
+        case .getRecommendMember(let page, let size):
             let params: [String: Int] = [
                 "page": page,
                 "size": size
