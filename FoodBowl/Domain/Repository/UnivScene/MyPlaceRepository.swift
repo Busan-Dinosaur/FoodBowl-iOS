@@ -8,7 +8,7 @@
 import Foundation
 
 protocol MyPlaceRepository {
-    func getReviewsByBound(request: GetReviewsBySchoolRequestDTO) async throws -> ReviewDTO
+    func getReviewsByBound(request: GetReviewsRequestDTO) async throws -> ReviewDTO
     func getStoresByBound(request: CustomLocationRequestDTO) async throws -> StoreDTO
     func createBookmark(storeId: Int) async throws
     func removeBookmark(storeId: Int) async throws

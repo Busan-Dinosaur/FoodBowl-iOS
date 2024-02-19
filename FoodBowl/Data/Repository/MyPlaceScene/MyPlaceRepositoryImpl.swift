@@ -13,8 +13,8 @@ final class MyPlaceRepositoryImpl: MyPlaceRepository {
     
     private let provider = MoyaProvider<ServiceAPI>()
     
-    func getReviewsByBound(request: GetReviewsBySchoolRequestDTO) async throws -> ReviewDTO {
-        let response = await provider.request(.getReviewsBySchool(request: request))
+    func getReviewsByBound(request: GetReviewsRequestDTO) async throws -> ReviewDTO {
+        let response = await provider.request(.getReviewsByBound(request: request))
         return try response.decode()
     }
     

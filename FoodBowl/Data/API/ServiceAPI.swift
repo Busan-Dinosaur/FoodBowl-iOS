@@ -23,7 +23,7 @@ enum ServiceAPI {
     case getReviewsByFollowing(request: GetReviewsRequestDTO)
     case getReviewsByBookmark(request: GetReviewsRequestDTO)
     case getReviewsByStore(request: GetReviewsByStoreRequestDTO)
-    case getReviewsBySchool(request: GetReviewsBySchoolRequestDTO)
+    case getReviewsByBound(request: GetReviewsRequestDTO)
     case getReviewsByMember(request: GetReviewsByMemberRequestDTO)
     case getReviewsByFeed(request: GetReviewsByFeedRequestDTO)
     
@@ -76,8 +76,8 @@ extension ServiceAPI: TargetType {
             return "/v1/reviews/\(request.id)"
         case .getReviewsByStore:
             return "/v1/reviews/stores"
-        case .getReviewsBySchool:
-            return "/v1/reviews/schools"
+        case .getReviewsByBound:
+            return "/v1/reviews/bounds"
         case .getReviewsByMember:
             return "/v1/reviews/members"
         case .getReviewsByFollowing:
@@ -226,9 +226,8 @@ extension ServiceAPI: TargetType {
                 parameters: params,
                 encoding: URLEncoding.default
             )
-        case .getReviewsBySchool(let request):
+        case .getReviewsByBound(let request):
             var params: [String: Any] = [
-                "schoolId": request.schoolId,
                 "x": request.location.x,
                 "y": request.location.y,
                 "deltaX": request.location.deltaX,

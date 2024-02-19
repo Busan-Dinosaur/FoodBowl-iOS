@@ -69,7 +69,7 @@ final class MyPlaceViewModel: BaseViewModelType {
                 self.category = category
                 self.currentpageSize = self.pageSize
                 self.lastReviewId = nil
-                self.getReviewsBySchool()
+                self.getReviewsByBound()
                 self.getStoresByBound()
             })
             .store(in: &self.cancellable)
@@ -87,7 +87,7 @@ final class MyPlaceViewModel: BaseViewModelType {
                 self.location = location
                 self.currentpageSize = self.pageSize
                 self.lastReviewId = nil
-                self.getReviewsBySchool()
+                self.getReviewsByBound()
                 self.getStoresByBound()
             })
             .store(in: &self.cancellable)
@@ -102,7 +102,7 @@ final class MyPlaceViewModel: BaseViewModelType {
         input.scrolledToBottom
             .sink(receiveValue: { [weak self] _ in
                 guard let self = self else { return }
-                self.getReviewsBySchool(lastReviewId: self.lastReviewId)
+                self.getReviewsByBound(lastReviewId: self.lastReviewId)
             })
             .store(in: &self.cancellable)
         
@@ -111,7 +111,7 @@ final class MyPlaceViewModel: BaseViewModelType {
                 guard let self = self else { return }
                 self.currentpageSize = self.pageSize
                 self.lastReviewId = nil
-                self.getReviewsBySchool()
+                self.getReviewsByBound()
             })
             .store(in: &self.cancellable)
         
@@ -144,18 +144,17 @@ final class MyPlaceViewModel: BaseViewModelType {
     
     // MARK: - network
     
-    private func getReviewsBySchool(lastReviewId: Int? = nil) {
+    private func getReviewsByBound(lastReviewId: Int? = nil) {
         Task {
             do {
-                guard let location = self.location, let schoolId = UserDefaultStorage.placeId else { return }
+                guard let location = self.location else { return }
                 if self.currentpageSize < self.pageSize { return }
                 
-                let reviews = try await self.usecase.getReviewsBySchool(request: GetReviewsBySchoolRequestDTO(
+                let reviews = try await self.usecase.getReviewsBySchool(request: GetReviewsRequestDTO(
                     location: location,
                     lastReviewId: lastReviewId,
                     pageSize: self.pageSize,
-                    category: self.category?.rawValue,
-                    schoolId: schoolId
+                    category: self.category?.rawValue
                 ))
                 
                 self.lastReviewId = reviews.page.lastId

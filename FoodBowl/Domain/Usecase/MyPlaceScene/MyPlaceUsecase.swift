@@ -8,7 +8,7 @@
 import Foundation
 
 protocol MyPlaceUsecase {
-    func getReviewsBySchool(request: GetReviewsBySchoolRequestDTO) async throws -> Reviews
+    func getReviewsBySchool(request: GetReviewsRequestDTO) async throws -> Reviews
     func getStoresByBound(request: CustomLocationRequestDTO) async throws -> [Store]
     func createBookmark(storeId: Int) async throws
     func removeBookmark(storeId: Int) async throws
@@ -28,7 +28,7 @@ final class MyPlaceUsecaseImpl: MyPlaceUsecase {
     
     // MARK: - Public - func
     
-    func getReviewsBySchool(request: GetReviewsBySchoolRequestDTO) async throws -> Reviews {
+    func getReviewsBySchool(request: GetReviewsRequestDTO) async throws -> Reviews {
         do {
             let reviewDTO = try await self.repository.getReviewsByBound(request: request)
             return reviewDTO.toReviews()
