@@ -28,7 +28,7 @@ enum ServiceAPI {
     case getReviewsByFeed(request: GetReviewsByFeedRequestDTO)
     
     case getStoresBySearch(request: SearchStoreRequestDTO)
-    case getStoresBySchool(request: GetStoresBySchoolRequestDTO)
+    case getStoresByBound(request: CustomLocationRequestDTO)
     case getStoresByMember(request: GetStoresByMemberRequestDTO)
     case getStoresByFollowing(request: CustomLocationRequestDTO)
     case getStoresByBookmark(request: CustomLocationRequestDTO)
@@ -88,8 +88,8 @@ extension ServiceAPI: TargetType {
             return "/v1/reviews/feeds"
         case .getStoresBySearch:
             return "/v1/stores/search"
-        case .getStoresBySchool:
-            return "/v1/stores/schools"
+        case .getStoresByBound:
+            return "/v1/stores/bounds"
         case .getStoresByMember:
             return "/v1/stores/members"
         case .getStoresByFollowing:
@@ -346,13 +346,12 @@ extension ServiceAPI: TargetType {
                 parameters: params,
                 encoding: URLEncoding.default
             )
-        case .getStoresBySchool(let request):
+        case .getStoresByBound(let request):
             let params: [String: Any] = [
-                "x": request.location.x,
-                "y": request.location.y,
-                "deltaX": request.location.deltaX,
-                "deltaY": request.location.deltaY,
-                "schoolId": request.schoolId
+                "x": request.x,
+                "y": request.y,
+                "deltaX": request.deltaX,
+                "deltaY": request.deltaY
             ]
             return .requestParameters(
                 parameters: params,

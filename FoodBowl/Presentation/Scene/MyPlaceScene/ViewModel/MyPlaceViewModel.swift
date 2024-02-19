@@ -70,7 +70,7 @@ final class MyPlaceViewModel: BaseViewModelType {
                 self.currentpageSize = self.pageSize
                 self.lastReviewId = nil
                 self.getReviewsBySchool()
-                self.getStoresBySchool()
+                self.getStoresByBound()
             })
             .store(in: &self.cancellable)
         
@@ -88,7 +88,7 @@ final class MyPlaceViewModel: BaseViewModelType {
                 self.currentpageSize = self.pageSize
                 self.lastReviewId = nil
                 self.getReviewsBySchool()
-                self.getStoresBySchool()
+                self.getStoresByBound()
             })
             .store(in: &self.cancellable)
         
@@ -168,14 +168,11 @@ final class MyPlaceViewModel: BaseViewModelType {
         }
     }
     
-    private func getStoresBySchool() {
+    private func getStoresByBound() {
         Task {
             do {
-                guard let location = self.location, let schoolId = UserDefaultStorage.placeId else { return }
-                var stores = try await self.usecase.getStoresBySchool(request: GetStoresBySchoolRequestDTO(
-                    location: location,
-                    schoolId: schoolId
-                ))
+                guard let location = self.location else { return }
+                var stores = try await self.usecase.getStoresByBound(request: location)
                 
                 if let category = self.category?.rawValue {
                     stores = stores.filter { $0.category == category }
