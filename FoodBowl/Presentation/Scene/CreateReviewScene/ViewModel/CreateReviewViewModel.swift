@@ -13,6 +13,8 @@ final class CreateReviewViewModel: NSObject, BaseViewModelType {
     
     // MARK: - property
     
+    private var isEnabled: Bool = true
+    
     private var reviewImages: [UIImage] = []
     var location: CLLocationCoordinate2D? = nil
     private var store: Store?
@@ -39,9 +41,12 @@ final class CreateReviewViewModel: NSObject, BaseViewModelType {
             .store(in: &self.cancellable)
         
         input.completeButtonDidTap
-            .throttle(for: .milliseconds(1000), scheduler: RunLoop.main, latest: false)
             .sink(receiveValue: { [weak self] comment in
-                self?.createReview(comment: comment)
+                guard let self = self else { return }
+                if self.isEnabled {
+                    self.isEnabled = false
+                    self.createReview(comment: comment)
+                }
             })
             .store(in: &self.cancellable)
         
@@ -85,6 +90,7 @@ final class CreateReviewViewModel: NSObject, BaseViewModelType {
                 try await self.usecase.createReview(request: request, images: imagesData)
                 self.isCompletedSubject.send(.success(()))
             } catch(let error) {
+                self.isEnabled = true
                 self.isCompletedSubject.send(.failure(error))
             }
         }
