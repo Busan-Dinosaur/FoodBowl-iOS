@@ -13,10 +13,12 @@ enum ImageLiteral {
     static var friends: UIImage { .load(name: "friends") }
     static var bookmark: UIImage { .load(name: "bookmark") }
     static var search: UIImage { .load(name: "search") }
+    static var place: UIImage { .load(name: "place") }
     static var univ: UIImage { .load(name: "univ") }
     static var profile: UIImage { .load(name: "profile") }
 
     static var bookmarkFill: UIImage { .load(name: "bookmark_fill") }
+    static var placeFill: UIImage { .load(name: "place_fill") }
 
     static var btnClose: UIImage { .load(systemName: "xmark") }
     static var btnSetting: UIImage { .load(name: "settings") }
@@ -44,6 +46,8 @@ enum ImageLiteral {
     static var seafood: UIImage { .load(name: "seafood") }
     static var salad: UIImage { .load(name: "salad") }
     static var etc: UIImage { .load(name: "etc") }
+    
+    static var next: UIImage { .load(name: "next") }
 }
 
 extension UIImage {

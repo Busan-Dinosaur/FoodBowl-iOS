@@ -18,8 +18,9 @@ protocol Helperable {
     func presentUpdateReviewViewController(id: Int)
     func presentSearchStoreViewController(location: CLLocationCoordinate2D?)
     func presentFollowerViewController(id: Int, isOwn: Bool)
-    func presentFollowingViewController(id: Int)
+    func presentFollowingViewController(id: Int, isOwn: Bool)
     func presentShowWebViewController(url: String)
+    func presentRecommendViewController()
 }
 
 extension Helperable where Self: UIViewController {
@@ -144,12 +145,13 @@ extension Helperable where Self: UIViewController {
         }
     }
     
-    func presentFollowingViewController(id: Int) {
+    func presentFollowingViewController(id: Int, isOwn: Bool) {
         let repository = FollowRepositoryImpl()
         let usecase = FollowUsecaseImpl(repository: repository)
         let viewModel = FollowingViewModel(
             usecase: usecase,
-            memberId: id
+            memberId: id,
+            isOwn: isOwn
         )
         let viewController = FollowingViewController(viewModel: viewModel)
         
@@ -172,6 +174,17 @@ extension Helperable where Self: UIViewController {
         let usecase = SettingUsecaseImpl(repository: repository)
         let viewModel = SettingViewModel(usecase: usecase)
         let viewController = SettingViewController(viewModel: viewModel)
+        
+        DispatchQueue.main.async { [weak self] in
+            self?.navigationController?.pushViewController(viewController, animated: true)
+        }
+    }
+    
+    func presentRecommendViewController() {
+        let repository = RecommendRepositoryImpl()
+        let usecase = RecommendUsecaseImpl(repository: repository)
+        let viewModel = RecommendViewModel(usecase: usecase)
+        let viewController = RecommendViewController(viewModel: viewModel)
         
         DispatchQueue.main.async { [weak self] in
             self?.navigationController?.pushViewController(viewController, animated: true)

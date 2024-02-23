@@ -98,8 +98,6 @@ final class FollowerViewModel: BaseViewModelType {
                     page: self.currentPage,
                     size: self.size
                 )
-                self.followersSubject.send(.success(members.content))
-                
                 self.currentPage = members.currentPage
                 self.currentSize = members.currentSize
                 

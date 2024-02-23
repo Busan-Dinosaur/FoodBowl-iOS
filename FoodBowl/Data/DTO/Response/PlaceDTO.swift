@@ -41,9 +41,10 @@ extension PlaceItemDTO {
     func toStore() -> Store {
         Store(
             id: Int(self.id) ?? 0,
+            originalCategory: self.categoryName.components(separatedBy: ">").map { $0.trimmingCharacters(in: .whitespaces) }.first ?? "",
             category: self.getCategory(),
             name: self.placeName,
-            address: self.roadAddressName,
+            address: self.roadAddressName != "" ? self.roadAddressName : self.addressName,
             phone: self.phone,
             isBookmarked: false,
             distance: self.getDistance(),

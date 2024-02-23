@@ -15,10 +15,10 @@ enum DataKeys: String, CaseIterable {
     case nickname
     case introduction
     case profileImageUrl
-    case schoolId
-    case schoolName
-    case schoolX
-    case schoolY
+    case placeId
+    case placeName
+    case placeX
+    case placeY
 }
 
 enum UserDefaultStorage {
@@ -50,20 +50,20 @@ enum UserDefaultStorage {
         return UserData<String>.getValue(forKey: .profileImageUrl)
     }
     
-    static var schoolId: Int? {
-        return UserData<Int>.getValue(forKey: .schoolId)
+    static var placeId: Int? {
+        return UserData<Int>.getValue(forKey: .placeId)
     }
     
-    static var schoolName: String? {
-        return UserData<String>.getValue(forKey: .schoolName)
+    static var placeName: String? {
+        return UserData<String>.getValue(forKey: .placeName)
     }
     
-    static var schoolX: Double? {
-        return UserData<Double>.getValue(forKey: .schoolX)
+    static var placeX: Double? {
+        return UserData<Double>.getValue(forKey: .placeX)
     }
     
-    static var schoolY: Double? {
-        return UserData<Double>.getValue(forKey: .schoolY)
+    static var placeY: Double? {
+        return UserData<Double>.getValue(forKey: .placeY)
     }
 }
 

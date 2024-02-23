@@ -10,6 +10,7 @@ import Foundation
 // MARK: - Store
 struct Store: Codable {
     let id: Int
+    let originalCategory: String
     let category: String
     let name: String
     let address: String
@@ -22,6 +23,7 @@ struct Store: Codable {
     
     init(
         id: Int = 0,
+        originalCategory: String = "",
         category: String = "",
         name: String = "",
         address: String = "",
@@ -34,6 +36,7 @@ struct Store: Codable {
         reviewCount: String = ""
     ) {
         self.id = id
+        self.originalCategory = originalCategory
         self.category = category
         self.name = name
         self.address = address

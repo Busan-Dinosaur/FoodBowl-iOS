@@ -66,19 +66,19 @@ final class ProfileHeaderView: UIView, BaseViewType {
         }
 
         self.followerInfoButton.snp.makeConstraints {
-            $0.leading.equalTo(userImageView.snp.trailing).offset(SizeLiteral.horizantalPadding)
+            $0.leading.equalTo(userImageView.snp.trailing).offset(14)
             $0.top.equalToSuperview().inset(4)
             $0.height.equalTo(20)
         }
 
         self.followingInfoButton.snp.makeConstraints {
-            $0.leading.equalTo(self.followerInfoButton.snp.trailing).offset(20)
+            $0.leading.equalTo(self.followerInfoButton.snp.trailing).offset(12)
             $0.top.equalToSuperview().inset(4)
             $0.height.equalTo(20)
         }
 
         self.userInfoLabel.snp.makeConstraints {
-            $0.leading.equalTo(userImageView.snp.trailing).offset(20)
+            $0.leading.equalTo(userImageView.snp.trailing).offset(14)
             $0.top.equalTo(self.followerInfoButton.snp.bottom).offset(6)
             $0.width.equalTo(SizeLiteral.fullWidth - 140)
         }

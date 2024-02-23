@@ -16,7 +16,6 @@ final class CreateReviewViewModel: NSObject, BaseViewModelType {
     private var reviewImages: [UIImage] = []
     var location: CLLocationCoordinate2D? = nil
     private var store: Store?
-    private var univ: Store?
     
     private let usecase: CreateReviewUsecase
     private var cancellable: Set<AnyCancellable> = Set()
@@ -24,7 +23,7 @@ final class CreateReviewViewModel: NSObject, BaseViewModelType {
     private let isCompletedSubject: PassthroughSubject<Result<Void, Error>, Never> = PassthroughSubject()
     
     struct Input {
-        let setStore: AnyPublisher<(Store, Store?), Never>
+        let setStore: AnyPublisher<Store, Never>
         let completeButtonDidTap: AnyPublisher<String, Never>
     }
     
@@ -34,9 +33,8 @@ final class CreateReviewViewModel: NSObject, BaseViewModelType {
     
     func transform(from input: Input) -> Output {
         input.setStore
-            .sink(receiveValue: { [weak self] store, univ in
+            .sink(receiveValue: { [weak self] store in
                 self?.store = store
-                self?.univ = univ
             })
             .store(in: &self.cancellable)
         
@@ -71,35 +69,17 @@ final class CreateReviewViewModel: NSObject, BaseViewModelType {
             do {
                 guard let store = self.store else { return }
                 var request: CreateReviewRequestDTO {
-                    if let univ = self.univ {
-                        CreateReviewRequestDTO(
-                            locationId: String(store.id),
-                            storeName: store.name,
-                            storeAddress: store.address,
-                            x: store.x,
-                            y: store.y,
-                            storeUrl: store.url,
-                            phone: store.phone,
-                            category: store.category,
-                            reviewContent: comment,
-                            schoolName: univ.name,
-                            schoolAddress: univ.address,
-                            schoolX: univ.x,
-                            schoolY: univ.y
-                        )
-                    } else {
-                        CreateReviewRequestDTO(
-                            locationId: String(store.id),
-                            storeName: store.name,
-                            storeAddress: store.address,
-                            x: store.x,
-                            y: store.y,
-                            storeUrl: store.url,
-                            phone: store.phone,
-                            category: store.category,
-                            reviewContent: comment
-                        )
-                    }
+                    CreateReviewRequestDTO(
+                        locationId: String(store.id),
+                        storeName: store.name,
+                        storeAddress: store.address,
+                        x: store.x,
+                        y: store.y,
+                        storeUrl: store.url,
+                        phone: store.phone,
+                        category: store.category,
+                        reviewContent: comment
+                    )
                 }
                 let imagesData = self.reviewImages.map { $0.jpegData(compressionQuality: 0.3)! }
                 try await self.usecase.createReview(request: request, images: imagesData)

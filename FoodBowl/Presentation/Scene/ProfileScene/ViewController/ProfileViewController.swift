@@ -16,7 +16,7 @@ final class ProfileViewController: MapViewController {
     // MARK: - ui component
     
     private let userNicknameLabel = PaddingLabel().then {
-        $0.font = .font(.regular, ofSize: 22)
+        $0.font = UIFont.preferredFont(forTextStyle: .title3, weight: .bold)
         $0.text = "그냥저냥"
         $0.textColor = .mainTextColor
         $0.padding = UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 0)
@@ -59,6 +59,11 @@ final class ProfileViewController: MapViewController {
     }
     
     // MARK: - life cycle
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.emptyView.findButton.isHidden = !self.isOwn
+    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -241,7 +246,7 @@ final class ProfileViewController: MapViewController {
         let followingAction = UIAction { [weak self] _ in
             guard let self = self else { return }
             guard let viewModel = self.viewModel as? ProfileViewModel else { return }
-            self.presentFollowingViewController(id: viewModel.memberId)
+            self.presentFollowingViewController(id: viewModel.memberId, isOwn: self.isOwn)
         }
         let followButtonAction = UIAction { [weak self] _ in
             guard let self = self else { return }

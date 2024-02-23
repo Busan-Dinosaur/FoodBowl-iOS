@@ -13,6 +13,7 @@ enum KakaoAPI {
     case searchStores(x: String, y: String, keyword: String)
     case searchUniv(x: String, y: String)
     case searchStoresByLocation(x: String, y: String)
+    case searchPlaces(x: String, y: String, keyword: String)
 }
 
 extension KakaoAPI: TargetType {
@@ -24,7 +25,7 @@ extension KakaoAPI: TargetType {
 
     var path: String {
         switch self {
-        case .searchStores, .searchUniv:
+        case .searchStores, .searchUniv, .searchPlaces:
             return "/v2/local/search/keyword"
         case .searchStoresByLocation:
             return "/v2/local/search/category"
@@ -72,6 +73,18 @@ extension KakaoAPI: TargetType {
                 "size": 15,
                 "radius": 100,
                 "category_group_code": "FD6,CE7"
+            ]
+            return .requestParameters(
+                parameters: params,
+                encoding: URLEncoding.default
+            )
+        case .searchPlaces(let x, let y, let keyword):
+            let params: [String: Any] = [
+                "query": keyword,
+                "x": x,
+                "y": y,
+                "page": 1,
+                "size": 15
             ]
             return .requestParameters(
                 parameters: params,

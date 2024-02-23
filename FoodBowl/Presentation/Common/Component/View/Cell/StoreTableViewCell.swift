@@ -84,5 +84,9 @@ extension StoreTableViewCell {
         self.storeCategoryLabel.text = store.category
         self.storeAddressLabel.text = store.address
         self.storeDistanceLabel.text = store.distance
+        
+        if store.originalCategory != "음식점" {
+            self.storeCategoryLabel.text = store.originalCategory
+        }
     }
 }
