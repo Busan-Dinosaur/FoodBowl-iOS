@@ -14,6 +14,8 @@ final class UpdateProfileViewModel: NSObject, BaseViewModelType {
     
     // MARK: - property
     
+    private var isEnabled: Bool = true
+    
     private var profileImage: UIImage = ImageLiteral.defaultProfile
     
     private let usecase: UpdateProfileUsecase
@@ -48,10 +50,12 @@ final class UpdateProfileViewModel: NSObject, BaseViewModelType {
             .store(in: &self.cancellable)
         
         input.completeButtonDidTap
-            .throttle(for: .milliseconds(1000), scheduler: RunLoop.main, latest: false)
             .sink(receiveValue: { [weak self] nickname, introduction in
                 guard let self = self else { return }
-                self.updateMemberProfile(nickname: nickname, introduction: introduction)
+                if self.isEnabled {
+                    self.isEnabled = false
+                    self.updateMemberProfile(nickname: nickname, introduction: introduction)
+                }
             })
             .store(in: &self.cancellable)
         
@@ -107,6 +111,7 @@ final class UpdateProfileViewModel: NSObject, BaseViewModelType {
                 try await imageUpdate
                 self.isCompletedSubject.send(.success(()))
             } catch(let error) {
+                self.isEnabled = true
                 self.isCompletedSubject.send(.failure(error))
             }
         }
